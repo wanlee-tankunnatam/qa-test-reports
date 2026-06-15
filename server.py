@@ -460,7 +460,13 @@ class ReportHandler(BaseHTTPRequestHandler):
             return self._send_json(200, {
                 "repo_root": REPO_ROOT,
                 "projects": [
-                    {"id": p["id"], "name": p["name"], "run_cmd": p.get("run_cmd", {})}
+                    {
+                        "id": p["id"],
+                        "name": p["name"],
+                        "format": p.get("format"),
+                        "collections_dir": p.get("collections_dir"),
+                        "run_cmd": p.get("run_cmd", {}),
+                    }
                     for p in self.projects
                 ]
             })

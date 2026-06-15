@@ -18,6 +18,29 @@ header h1{font-size:17px;font-weight:700;white-space:nowrap}
 header .sub{font-size:11px;opacity:.5;margin-left:auto}
 
 /* ============================================================
+ * LAYOUT — sidebar (project menu) + main content
+ * ============================================================ */
+.layout{max-width:1740px;margin:20px auto;padding:0 20px;display:flex;align-items:flex-start;gap:24px}
+.layout .container{margin:0;padding:0;flex:1;min-width:0;max-width:none}
+
+/* Sidebar (aside) — project menu แนวตั้ง */
+.sidebar{flex:0 0 200px;position:sticky;top:20px}
+.sidebar-label{font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#9ca3af;padding:0 12px 8px}
+.project-menu{display:flex;flex-direction:column;gap:4px;background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:6px;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.project-menu button{display:block;width:100%;text-align:left;padding:9px 12px;font-size:13px;font-weight:600;border:none;background:transparent;color:#374151;cursor:pointer;border-radius:7px;transition:all .12s;font-family:inherit}
+.project-menu button:hover:not(.active){background:#f3f4f6;color:#1a1a2e}
+.project-menu button.active{background:#1a1a2e;color:#fff;box-shadow:0 2px 6px rgba(26,26,46,.25)}
+
+/* จอแคบ → sidebar ขึ้นบน, เมนูเรียงแนวนอน */
+@media(max-width:900px){
+  .layout{flex-direction:column}
+  .sidebar{position:static;flex:none;width:100%}
+  .sidebar-label{padding-bottom:6px}
+  .project-menu{flex-direction:row;flex-wrap:wrap}
+  .project-menu button{width:auto}
+}
+
+/* ============================================================
  * LAYOUT CONTAINER — ขอบเขตหลักของเนื้อหา
  * ============================================================ */
 .container{max-width:1500px;margin:20px auto;padding:0 20px}
@@ -204,30 +227,34 @@ tr:last-child td{border-bottom:none}
      ========================================================== -->
 <header>
   <h1>🧪 Test Reports</h1>
-  <div class="toolbar" style="margin:0">
-    <label>Project:</label>
-    <select id="projectSelect" onchange="onProjectChange()"></select>
-  </div>
   <div class="sub" id="statusBar">loading...</div>
 </header>
 
 <!-- ==========================================================
-     MAIN CONTAINER
-     - แท็บหลัก 2 อัน (ผลการรัน / รวมผลการรัน)
-     - 2 view containers ที่ render ตามแท็บที่เลือก
+     MAIN LAYOUT — sidebar (project menu) + main content
+     - aside.sidebar: เมนูเลือก project (เรียงแนวตั้ง)
+     - main: แท็บหลัก + view containers ที่ render ตามแท็บ
      ========================================================== -->
-<div class="container">
-  <!-- Main tabs (📋 ผลการรัน / 🗂 รวมผลการรัน / 🐛 JIRA) -->
-  <div class="tabs">
-    <button class="tab active" id="tabRuns" onclick="setMainTab('runs')">📋 ผลการรัน</button>
-    <button class="tab" id="tabCols" onclick="setMainTab('collections')">🗂 รวมผลการรัน</button>
-    <button class="tab" id="tabJira" onclick="setMainTab('jira')">🐛 JIRA</button>
-  </div>
+<div class="layout">
+  <!-- Project menu (aside) — populate จาก GET /api/projects ผ่าน renderProjectMenu() -->
+  <aside class="sidebar">
+    <div class="sidebar-label">Project</div>
+    <nav id="projectMenu" class="project-menu"></nav>
+  </aside>
 
-  <!-- View containers — JS render เนื้อหาเข้า 1 ในสามนี้ ตาม mainTab -->
-  <div id="viewRuns"></div>
-  <div id="viewCollections" style="display:none"></div>
-  <div id="viewJira" style="display:none"></div>
+  <div class="container">
+    <!-- Main tabs (🗂 รวมผลการรัน / 📋 ผลการรัน / 🐛 JIRA) -->
+    <div class="tabs">
+      <button class="tab active" id="tabCols" onclick="setMainTab('collections')">🗂 รวมผลการรัน</button>
+      <button class="tab" id="tabRuns" onclick="setMainTab('runs')">📋 ผลการรัน</button>
+      <button class="tab" id="tabJira" onclick="setMainTab('jira')">🐛 JIRA</button>
+    </div>
+
+    <!-- View containers — JS render เนื้อหาเข้า 1 ในสามนี้ ตาม mainTab -->
+    <div id="viewRuns"></div>
+    <div id="viewCollections" style="display:none"></div>
+    <div id="viewJira" style="display:none"></div>
+  </div>
 </div>
 
 <!-- Modal root — popup เปิด/ปิดผ่าน openModal()/closeModal() -->
@@ -262,7 +289,7 @@ let STATE = {
   repoRoot: '',  // absolute path ของ repo (ใช้ gen cmd แบบ cd absolute)
   projects: [],
   currentProject: null,
-  mainTab: 'runs',
+  mainTab: 'collections',
   runs: [],        // slim list for current project
   selectedRunId: null,
   selectedRunDetail: null,   // {run, meta}
@@ -305,6 +332,13 @@ const api = {
 function esc(s) {
   if (s === null || s === undefined) return '';
   return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+// Project ใช้รูปแบบ "backoffice" หรือไม่ (Category/Test-Case-paths modal, case_statuses, ฯลฯ)
+// คุมด้วย field "format":"backoffice" ใน projects.json — ไม่ผูกกับ id ใด id หนึ่ง
+// (legacy: id === 'backoffice' ยังถือว่าใช้รูปแบบนี้ แม้ไม่ได้ใส่ format)
+function isBackofficeFormat(proj) {
+  return !!proj && (proj.format === 'backoffice' || proj.id === 'backoffice');
 }
 
 // Extract YYYY-MM-DD จาก run.timestamp (fallback: parse จาก run_id ที่มี YYYYMMDD)
@@ -1148,13 +1182,18 @@ async function applyUrlToState(parsed) {
     await loadRuns();
     await loadCollections();
   }
-  const sel = document.getElementById('projectSelect');
-  if (STATE.currentProject) sel.value = STATE.currentProject.id;
+  renderProjectMenu();
 
-  // Section / main tab
-  if (parsed.section === 'collections') {
+  // Section / main tab — collections เป็น default เมื่อ URL ไม่ระบุ section
+  if (parsed.section === 'runs') {
+    STATE.mainTab = 'runs';
+    if (parsed.query) {
+      STATE.selectedRunId = parsed.query;
+      STATE.selectedRunDetail = null;
+    }
+  } else {
     STATE.mainTab = 'collections';
-    if (parsed.id1) {
+    if (parsed.section === 'collections' && parsed.id1) {
       STATE.selectedCollectionId = parsed.id1;
       STATE.selectedCollection = null;
       // subTab: รองรับทั้ง legacy (?runs/?jira) และใหม่ (?subTab=runs)
@@ -1165,12 +1204,6 @@ async function applyUrlToState(parsed) {
         STATE._runInstrTab = STATE._runInstrTab || {};
         STATE._runInstrTab[parsed.id1] = runInstr;
       }
-    }
-  } else {
-    STATE.mainTab = 'runs';
-    if (parsed.section === 'runs' && parsed.query) {
-      STATE.selectedRunId = parsed.query;
-      STATE.selectedRunDetail = null;
     }
   }
 
@@ -1191,31 +1224,41 @@ async function init() {
   const res = await api.get('/api/projects');
   STATE.repoRoot = res.repo_root || '';
   STATE.projects = res.projects || [];
-  const sel = document.getElementById('projectSelect');
-  sel.innerHTML = '';
-  STATE.projects.forEach(p => {
-    const o = document.createElement('option');
-    o.value = p.id;
-    o.text = p.name;
-    sel.appendChild(o);
-  });
   if (!STATE.projects.length) {
     document.getElementById('statusBar').textContent = 'no projects configured';
     return;
   }
+  renderProjectMenu();
   await applyUrlToState(parseUrl());
   syncUrl(true);  // normalize URL (e.g. / → /<pid>/runs)
   render();
 }
 
+// Render project menu (aside) — ปุ่ม 1 อันต่อ project, highlight ตัวที่เลือก
+function renderProjectMenu() {
+  const nav = document.getElementById('projectMenu');
+  if (!nav) return;
+  nav.innerHTML = '';
+  STATE.projects.forEach(p => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.textContent = p.name;
+    btn.dataset.pid = p.id;
+    if (STATE.currentProject && p.id === STATE.currentProject.id) btn.classList.add('active');
+    btn.onclick = () => onProjectChange(p.id);
+    nav.appendChild(btn);
+  });
+}
+
 // เปลี่ยน project → reset state + โหลด runs/collections ใหม่
-async function onProjectChange() {
-  const pid = document.getElementById('projectSelect').value;
+async function onProjectChange(pid) {
+  if (STATE.currentProject && pid === STATE.currentProject.id) return;
   STATE.currentProject = STATE.projects.find(p => p.id === pid);
   STATE.selectedRunId = null;
   STATE.selectedRunDetail = null;
   STATE.selectedCollectionId = null;
   STATE.selectedCollection = null;
+  renderProjectMenu();
   await loadRuns();
   await loadCollections();
   syncUrl();
@@ -1543,7 +1586,7 @@ async function backofficeCaseSummary(col, runResults) {
   if (!paths) return {caseIds: [], total: 0, counts: {}, byCategory: {}};
   let rows = [];
   try {
-    const url = `/api/projects/backoffice/test-cases-content?paths=${encodeURIComponent(paths)}`;
+    const url = `/api/projects/${STATE.currentProject.id}/test-cases-content?paths=${encodeURIComponent(paths)}`;
     const data = await api.get(url);
     rows = data.rows || [];
   } catch (e) {
@@ -2089,7 +2132,8 @@ function renderRunInstructions(col) {
 // แสดงคำสั่งรัน Playwright สำหรับ Backoffice collection
 function renderBackofficeRunCommands(col) {
   const tcPath = (col.test_case_path || '').trim();
-  const cwd = 'services/backoffice/frontend';
+  const cwd = (STATE.currentProject && STATE.currentProject.run_cmd && STATE.currentProject.run_cmd.cwd)
+    || 'services/backoffice/frontend';
 
   // Map xlsx filename (ไม่มี .xlsx) → spec folder path
   const XLSX_TO_SPEC = {
@@ -2271,7 +2315,9 @@ function renderBackofficeJiraPush(col) {
 
   // หมายเหตุ: ไม่ใช้ link localhost — JIRA reviewer เปิดไม่ได้
   // ส่งเป็นชื่อ collection + collection JSON path บน repo แทน เพื่อให้ Claude upload เนื้อหา
-  const collectionJsonPath = `docs/implementation-artifacts/tests/backoffice/results/collections/${col.id}.json`;
+  const _colDir = (STATE.currentProject && STATE.currentProject.collections_dir)
+    || 'docs/implementation-artifacts/tests/backoffice/results/collections';
+  const collectionJsonPath = `${_colDir}/${col.id}.json`;
 
   let html = `<div style="background:#fff;border:1px solid #e5e7eb;border-radius:8px;padding:14px 16px;margin-top:12px">
     <div style="font-weight:700;font-size:13px;color:#1a1a2e;margin-bottom:2px">📤 คำสั่งอัปเดต JIRA</div>
@@ -3460,7 +3506,7 @@ async function renderCollections() {
         // Verdict:
         //   Backoffice: ไม่มี FAIL = ผ่าน (PENDING = intentional test.skip() — ครอบคลุมโดย TC อื่น)
         //   อื่นๆ (Avatar/Kiosk): (PASS + IMPROVEMENT) / Total ≥ 95% → ผ่าน
-        const _isBackoffice = STATE.currentProject && STATE.currentProject.id === 'backoffice';
+        const _isBackoffice = isBackofficeFormat(STATE.currentProject);
         let verdictCell;
         if (s.total === 0) {
           verdictCell = '<span style="color:#9ca3af">—</span>';
@@ -3575,7 +3621,7 @@ async function renderCollections() {
   //   - "+ เพิ่มการรัน" (ไม่มี automated runs)
   //   - "📦 Copy JSON" (admin set status เอง — ไม่มี effective results เป็น JSON)
   //   - "✎ แก้ไข" (ย้ายไปอยู่ใต้ชื่อ Collection พร้อม 🐛 JIRA)
-  const _isBackofficeToolbar = STATE.currentProject && STATE.currentProject.id === 'backoffice';
+  const _isBackofficeToolbar = isBackofficeFormat(STATE.currentProject);
   let html = `<!-- ===== SECTION 1: Action Toolbar ===== -->
   <div class="toolbar">
     <button class="btn btn-ghost btn-sm" onclick="backToCollectionList()">← กลับไปรายการ</button>
@@ -3591,7 +3637,7 @@ async function renderCollections() {
   const eff = STATE.selectedCollection.effective;
   const meta = STATE.selectedCollection.meta || {};
   const runs = STATE.selectedCollection.runs || [];
-  const isBackoffice = STATE.currentProject && STATE.currentProject.id === 'backoffice';
+  const isBackoffice = isBackofficeFormat(STATE.currentProject);
 
   if (isBackoffice) {
     // Backoffice header block: ชื่อ Collection ใหญ่ + ปุ่ม [✎ แก้ไข] ใต้ชื่อ
@@ -3796,7 +3842,7 @@ function openCreateCollectionModal(prefill) {
   // Avatar projects: prepend "all" so users can group multi-type runs (crawl + walk + run)
   // into one collection from creation. Backoffice + chat-ai don't expose "all" — use their own types.
   const rawTypes = (proj && proj.run_cmd && proj.run_cmd.types) || ['crawl','walk','run','manual'];
-  const isBackoffice = proj && proj.id === 'backoffice';
+  const isBackoffice = isBackofficeFormat(proj);
   const types = (isBackoffice || (proj && proj.id === 'chat-ai'))
     ? rawTypes
     : (rawTypes.includes('all') ? rawTypes : ['all', ...rawTypes]);
@@ -3915,7 +3961,7 @@ const BO_STATUS_STYLE = {
 
 async function updateBackofficeCaseStatus(collectionId, caseId, newStatus) {
   try {
-    const res = await api.patch(`/api/projects/backoffice/collections/${collectionId}`, {
+    const res = await api.patch(`/api/projects/${STATE.currentProject.id}/collections/${collectionId}`, {
       case_status_update: {case_id: caseId, status: newStatus},
     });
     if (res.collection && STATE.selectedCollection && STATE.selectedCollection.collection) {
@@ -3951,7 +3997,7 @@ function cssEscape(s) {
 
 async function updateBackofficeCaseRemark(collectionId, caseId, newRemark) {
   try {
-    const res = await api.patch(`/api/projects/backoffice/collections/${collectionId}`, {
+    const res = await api.patch(`/api/projects/${STATE.currentProject.id}/collections/${collectionId}`, {
       case_remark_update: {case_id: caseId, remark: newRemark},
     });
     if (res.collection && STATE.selectedCollection && STATE.selectedCollection.collection) {
@@ -4014,7 +4060,7 @@ async function loadBackofficePreviewTable(testCasePaths, runResults) {
     return;
   }
   try {
-    const url = `/api/projects/backoffice/test-cases-content?paths=${encodeURIComponent(testCasePaths)}`;
+    const url = `/api/projects/${STATE.currentProject.id}/test-cases-content?paths=${encodeURIComponent(testCasePaths)}`;
     const data = await api.get(url);
     const rows = data.rows || [];
     if (!rows.length) {
@@ -4478,7 +4524,7 @@ function toggleKbField(preset) {
 
 // submit ฟอร์ม → POST /api/projects/<pid>/collections → เปิด detail ทันที
 async function submitCreateCollection() {
-  const isBackoffice = STATE.currentProject && STATE.currentProject.id === 'backoffice';
+  const isBackoffice = isBackofficeFormat(STATE.currentProject);
   const getVal = (id) => {
     const el = document.getElementById(id);
     return el ? (el.value || '').trim() : '';
@@ -4739,7 +4785,7 @@ function renameCollection() {
   const curKbPath = col.kb_path || '';
   const isRag = /-rag$/i.test(curPreset);
   const proj = STATE.currentProject;
-  const isBackoffice = proj && proj.id === 'backoffice';
+  const isBackoffice = isBackofficeFormat(proj);
   const presets = (proj && proj.run_cmd && proj.run_cmd.presets) || [];
   const sel = (v, opt) => v === opt ? 'selected' : '';
   const presetOpts = [`<option value="" ${sel(curPreset,'')}>— ไม่ระบุ —</option>`]
