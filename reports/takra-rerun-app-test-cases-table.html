@@ -3008,52 +3008,95 @@ async function publishToGH() {
   btn.textContent = '⏳ กำลังบันทึก…';
   save();
 
-  try {
-    // Snapshot the page with the button in its idle/enabled state so the
-    // committed file is never frozen mid-save (otherwise reopening it shows
-    // a permanently-disabled "⏳ กำลังบันทึก…" button).
+  var API = 'https://api.github.com/repos/' + GH_OWNER + '/' + GH_REPO + '/contents/' + GH_PATH;
+
+  // Serialize the page with the button forced to its idle/enabled state, so the
+  // committed file is never frozen mid-save (otherwise reopening it shows a
+  // permanently-disabled "⏳ กำลังบันทึก…" button).
+  function buildEncoded() {
+    var dis = btn.disabled, txt = btn.textContent;
     btn.disabled = false;
     btn.textContent = '☁️ บันทึกขึ้น GitHub';
     var html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
-    btn.disabled = true;
-    btn.textContent = '⏳ กำลังบันทึก…';
-    var encoded = btoa(unescape(encodeURIComponent(html)));
+    btn.disabled = dis;
+    btn.textContent = txt;
+    return btoa(unescape(encodeURIComponent(html)));
+  }
 
-    // Get current file SHA (required for update)
-    var r1 = await fetch(
-      'https://api.github.com/repos/' + GH_OWNER + '/' + GH_REPO + '/contents/' + GH_PATH + '?ref=' + GH_BRANCH,
-      { headers: { Authorization: 'token ' + token, Accept: 'application/vnd.github+json' } }
+  // Fetch current remote file (sha + content), bypassing any cache.
+  async function fetchRemote() {
+    var r = await fetch(
+      API + '?ref=' + GH_BRANCH + '&t=' + Date.now(),
+      { cache: 'no-store', headers: { Authorization: 'token ' + token, Accept: 'application/vnd.github+json' } }
     );
-    if (!r1.ok) {
-      if (r1.status === 401) { sessionStorage.removeItem('gh_pat'); }
-      throw new Error('ดึง SHA ไม่ได้ (HTTP ' + r1.status + ') — ตรวจ token หรือ branch');
+    if (!r.ok) {
+      if (r.status === 401) { sessionStorage.removeItem('gh_pat'); }
+      throw new Error('ดึงไฟล์ไม่ได้ (HTTP ' + r.status + ') — ตรวจ token หรือ branch');
     }
-    var meta = await r1.json();
+    return r.json();
+  }
 
-    // Commit updated file
-    var now = new Date();
-    var ts  = now.toISOString().slice(0, 16).replace('T', ' ');
-    var r2  = await fetch(
-      'https://api.github.com/repos/' + GH_OWNER + '/' + GH_REPO + '/contents/' + GH_PATH,
-      {
-        method: 'PUT',
-        headers: {
-          Authorization: 'token ' + token,
-          Accept: 'application/vnd.github+json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          message: 'chore(qa): update test results ' + ts,
-          content: encoded,
-          sha: meta.sha,
-          branch: GH_BRANCH
-        })
+  // Merge statuses that exist on the remote copy but NOT locally, so a
+  // teammate's concurrent edit is not silently overwritten (local always wins
+  // for keys we changed; we only add keys we don't have).
+  function mergeRemote(remote) {
+    try {
+      var remoteHtml = decodeURIComponent(escape(atob((remote.content || '').replace(/\s/g, ''))));
+      var m = remoteHtml.match(/<script id="store-data"[^>]*>([\s\S]*?)<\/script>/);
+      if (!m) return;
+      var rs = JSON.parse((m[1] || '{}').trim() || '{}');
+      var added = 0;
+      Object.keys(rs).forEach(function(uid) {
+        if (uid in store) return;
+        store[uid] = rs[uid];
+        added++;
+        var st = rs[uid] && rs[uid].st;
+        if (st && SMAP[st]) {
+          var cell = document.querySelector('tr.trow td.status[data-uid="' + uid + '"] .stb');
+          if (cell) { cell.className = 'stb ' + SMAP[st][0]; cell.textContent = SMAP[st][1]; }
+          var opt = document.querySelector('.opt[data-uid="' + uid + '"][data-st="' + st + '"]');
+          if (opt) opt.classList.add('sel');
+        }
+      });
+      if (added) { save(); recount(); }
+    } catch (_) {}
+  }
+
+  async function commit(sha) {
+    var ts = new Date().toISOString().slice(0, 16).replace('T', ' ');
+    return fetch(API, {
+      method: 'PUT',
+      headers: { Authorization: 'token ' + token, Accept: 'application/vnd.github+json', 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        message: 'chore(qa): update test results ' + ts,
+        content: buildEncoded(),
+        sha: sha,
+        branch: GH_BRANCH
+      })
+    });
+  }
+
+  try {
+    var r2, lastErr;
+    // Up to 4 attempts. Re-fetch the SHA and merge remote statuses each time;
+    // a stale SHA returns 409/422 ("does not match …") which we retry.
+    for (var attempt = 0; attempt < 4; attempt++) {
+      var remote = await fetchRemote();
+      mergeRemote(remote);
+      r2 = await commit(remote.sha);
+      if (r2.ok) break;
+      if (r2.status === 409 || r2.status === 422) {
+        lastErr = 'SHA ชนกัน (HTTP ' + r2.status + ')';
+        await new Promise(function(res) { setTimeout(res, 400 * (attempt + 1)); });
+        continue;
       }
-    );
-    if (!r2.ok) {
       var e = await r2.json();
       throw new Error(e.message || 'HTTP ' + r2.status);
     }
+    if (!r2.ok) {
+      throw new Error((lastErr || 'conflict') + ' — มีการแก้ไฟล์พร้อมกัน ลองกดบันทึกอีกครั้ง หรือ refresh หน้าก่อนบันทึก');
+    }
+
     btn.textContent = '✅ บันทึกแล้ว!';
     btn.style.background = 'var(--pass)';
     setTimeout(function() {
