@@ -157,7 +157,10 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
     <button class="btn" onclick="toggleAll(true)">▸ กางทั้งหมด</button>
     <button class="btn" onclick="toggleAll(false)">▾ ยุบทั้งหมด</button>
     <span class="hint">💡 คลิกแถว → ดู Steps / Expected <span class="lv lvl-ui">🌐 UI</span> <span class="lv lvl-e2e">🔄 E2E</span></span>
-    <span style="margin-left:auto;display:flex;gap:8px;align-items:center">
+    <span style="margin-left:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+      <span id="save-status" class="hint" style="white-space:nowrap"></span>
+      <label class="hint" style="display:flex;gap:4px;align-items:center;white-space:nowrap;cursor:pointer" title="บันทึกขึ้น GitHub อัตโนมัติหลังหยุดแก้ ~5 วินาที"><input type="checkbox" id="chk-autosave" checked> auto-save</label>
+      <button class="btn" id="btn-refresh" title="ดึงผลล่าสุดจาก GitHub มา merge (ไม่ต้อง reload)">🔄 ดึงล่าสุด</button>
       <button class="btn primary" id="btn-publish">☁️ บันทึกขึ้น GitHub</button>
       <button class="btn" id="btn-save-file" title="ดาวน์โหลด HTML ไว้ใช้ offline">💾 ดาวน์โหลด</button>
       <button class="btn" style="color:var(--fail)" id="btn-reset">🗑 ล้างผล</button>
@@ -2901,6 +2904,7 @@ document.querySelectorAll('.opt').forEach(function(o) {
     }
     save();
     recount();
+    markDirty();
   });
 });
 
@@ -2915,6 +2919,7 @@ document.querySelectorAll('.actualbox').forEach(function(box) {
     store[uid] = store[uid] || {};
     store[uid].actual = box.textContent.trim() || '';
     save();
+    markDirty();
   });
 });
 
@@ -2992,6 +2997,12 @@ var GH_OWNER  = 'wanlee-tankunnatam';
 var GH_REPO   = 'qa-test-reports';
 var GH_PATH   = 'reports/takra-rerun-app-test-cases-table.html';
 var GH_BRANCH = 'master';
+var GH_API    = 'https://api.github.com/repos/' + GH_OWNER + '/' + GH_REPO + '/contents/' + GH_PATH;
+
+// ── Save state (dirty tracking + auto-publish) ──
+var dirty = false;
+var autoTimer = null;
+var publishing = false;
 
 function ghToken() {
   var t = sessionStorage.getItem('gh_pat');
@@ -3002,10 +3013,13 @@ function ghToken() {
   return t ? t.trim() : null;
 }
 
-async function publishToGH() {
+async function publishToGH(auto) {
+  if (publishing) return;
   var btn = document.getElementById('btn-publish');
-  var token = ghToken();
-  if (!token) return;
+  var token = auto ? sessionStorage.getItem('gh_pat') : ghToken();
+  if (!token) return;          // auto-save stays quiet until a token exists
+  publishing = true;
+  if (autoTimer) { clearTimeout(autoTimer); autoTimer = null; }
 
   btn.disabled = true;
   btn.textContent = '⏳ กำลังบันทึก…';
@@ -3100,21 +3114,113 @@ async function publishToGH() {
       throw new Error((lastErr || 'conflict') + ' — มีการแก้ไฟล์พร้อมกัน ลองกดบันทึกอีกครั้ง หรือ refresh หน้าก่อนบันทึก');
     }
 
+    dirty = false;
+    publishing = false;
     btn.textContent = '✅ บันทึกแล้ว!';
     btn.style.background = 'var(--pass)';
     setTimeout(function() {
-      btn.textContent = '☁️ บันทึกขึ้น GitHub';
       btn.style.background = '';
       btn.disabled = false;
+      updateIndicator();
     }, 3000);
   } catch (err) {
-    alert('❌ บันทึกไม่สำเร็จ: ' + err.message);
-    btn.textContent = '☁️ บันทึกขึ้น GitHub';
+    publishing = false;
+    if (!auto) alert('❌ บันทึกไม่สำเร็จ: ' + err.message);
     btn.disabled = false;
+    updateIndicator();
   }
 }
 
-document.getElementById('btn-publish').addEventListener('click', publishToGH);
+document.getElementById('btn-publish').addEventListener('click', function() { publishToGH(false); });
+
+// ── Dirty tracking / unsaved indicator ──
+function autoOn() {
+  var c = document.getElementById('chk-autosave');
+  return c ? c.checked : false;
+}
+function updateIndicator() {
+  var s = document.getElementById('save-status');
+  var b = document.getElementById('btn-publish');
+  if (dirty) {
+    if (s) { s.textContent = '● ยังไม่ได้บันทึก'; s.style.color = 'var(--hold)'; }
+    if (b && !b.disabled && b.textContent.indexOf('✅') < 0) b.textContent = '☁️ บันทึกขึ้น GitHub *';
+  } else {
+    if (s) { s.textContent = '✓ ตรงกับ GitHub'; s.style.color = 'var(--muted)'; }
+    if (b && !b.disabled && b.textContent.indexOf('✅') < 0) b.textContent = '☁️ บันทึกขึ้น GitHub';
+  }
+}
+function markDirty() {
+  dirty = true;
+  updateIndicator();
+  // Auto-publish after the user stops editing — only once a token exists,
+  // so we never interrupt with a token prompt mid-edit.
+  if (autoOn() && sessionStorage.getItem('gh_pat')) {
+    if (autoTimer) clearTimeout(autoTimer);
+    autoTimer = setTimeout(function() { autoTimer = null; publishToGH(true); }, 5000);
+  }
+}
+window.addEventListener('beforeunload', function(e) {
+  if (dirty) { e.preventDefault(); e.returnValue = 'มีงานที่ยังไม่ได้บันทึกขึ้น GitHub'; return e.returnValue; }
+});
+
+// ── Re-render every badge from the store (used after pulling remote) ──
+function applyAllStatuses() {
+  document.querySelectorAll('.opt.sel').forEach(function(o) { o.classList.remove('sel'); });
+  document.querySelectorAll('tr.trow td.status .stb').forEach(function(s) {
+    s.className = 'stb pending'; s.textContent = 'รอเทส';
+  });
+  Object.keys(store).forEach(function(uid) {
+    var st = store[uid] && store[uid].st;
+    if (st && SMAP[st]) {
+      var cell = document.querySelector('tr.trow td.status[data-uid="' + uid + '"] .stb');
+      if (cell) { cell.className = 'stb ' + SMAP[st][0]; cell.textContent = SMAP[st][1]; }
+      var opt = document.querySelector('.opt[data-uid="' + uid + '"][data-st="' + st + '"]');
+      if (opt) opt.classList.add('sel');
+    }
+    if (store[uid] && store[uid].actual) {
+      document.querySelectorAll('tr.detail').forEach(function(d) {
+        if (!d.querySelector('.opt[data-uid="' + uid + '"]')) return;
+        var box = d.querySelector('.actualbox');
+        if (box) box.textContent = store[uid].actual;
+      });
+    }
+  });
+}
+
+// ── Pull latest results from GitHub (remote wins on overlap; keeps local-only) ──
+async function pullLatest() {
+  var rbtn = document.getElementById('btn-refresh');
+  if (dirty && !confirm('มีงานที่ยังไม่ได้บันทึก — การดึงล่าสุดจะใช้สถานะจาก GitHub ทับเฉพาะรายการที่ซ้ำกัน ต้องการต่อ?')) return;
+  if (rbtn) { rbtn.disabled = true; rbtn.textContent = '⏳ กำลังดึง…'; }
+  try {
+    var token = sessionStorage.getItem('gh_pat');
+    var html;
+    if (token) {
+      var r = await fetch(GH_API + '?ref=' + GH_BRANCH + '&t=' + Date.now(),
+        { cache: 'no-store', headers: { Authorization: 'token ' + token, Accept: 'application/vnd.github+json' } });
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      html = decodeURIComponent(escape(atob(((await r.json()).content || '').replace(/\s/g, ''))));
+    } else {
+      var rr = await fetch('https://raw.githubusercontent.com/' + GH_OWNER + '/' + GH_REPO + '/' + GH_BRANCH + '/' + GH_PATH + '?t=' + Date.now(),
+        { cache: 'no-store' });
+      if (!rr.ok) throw new Error('HTTP ' + rr.status);
+      html = await rr.text();
+    }
+    var m = html.match(/<script id="store-data"[^>]*>([\s\S]*?)<\/script>/);
+    var rs = m ? JSON.parse((m[1] || '{}').trim() || '{}') : {};
+    Object.keys(rs).forEach(function(uid) { store[uid] = rs[uid]; });
+    save();
+    applyAllStatuses();
+    recount();
+    dirty = false;
+    updateIndicator();
+    if (rbtn) { rbtn.textContent = '✅ ดึงแล้ว'; setTimeout(function() { rbtn.textContent = '🔄 ดึงล่าสุด'; rbtn.disabled = false; }, 2000); }
+  } catch (err) {
+    alert('❌ ดึงล่าสุดไม่สำเร็จ: ' + err.message);
+    if (rbtn) { rbtn.textContent = '🔄 ดึงล่าสุด'; rbtn.disabled = false; }
+  }
+}
+document.getElementById('btn-refresh').addEventListener('click', pullLatest);
 
 // ── Download file (offline backup) ──
 document.getElementById('btn-save-file').addEventListener('click', function() {
@@ -3134,6 +3240,7 @@ document.getElementById('btn-reset').addEventListener('click', function() {
   if (!confirm('ล้างผลทดสอบทั้งหมด?')) return;
   store = {};
   save();
+  dirty = false;
   location.reload();
 });
 
@@ -3150,6 +3257,7 @@ var gd = document.getElementById('gen-date');
 if (gd) gd.textContent = document.lastModified || '';
 
 recount();
+updateIndicator();
 </script>
 
 
