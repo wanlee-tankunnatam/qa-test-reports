@@ -1,0 +1,3007 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>POC K.Book — E2E Manual Test Cases · TAKRA</title>
+<style>
+:root{
+  --bg:#f5f6f8;--card:#fff;--card2:#f0f2f5;--line:#dce0e7;
+  --txt:#1f2430;--muted:#6b7280;--accent:#2563eb;
+  --p0:#dc2626;--p1:#ea7a18;--p2:#2563eb;--p3:#94a3b8;
+  --pass:#16a34a;--fail:#dc2626;--hold:#d97706;--skip:#9ca3af;--block:#7c3aed;
+  --lv-ui:#db2777;--lv-e2e:#ea580c;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--txt);font-family:"Segoe UI","Sarabun",system-ui,sans-serif;line-height:1.5;font-size:13px}
+a{color:var(--accent)}
+header.top{padding:20px 28px 14px;border-bottom:1px solid var(--line);background:linear-gradient(135deg,#1e3a8a,#2563eb);color:#fff}
+header.top h1{margin:0 0 4px;font-size:20px}
+header.top .sub{font-size:12.5px;opacity:.88}
+header.top .meta{margin-top:10px;display:flex;flex-wrap:wrap;gap:8px}
+.pill{display:inline-block;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:600;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.35);color:#fff}
+.wrap{padding:16px 22px 80px;max-width:1280px;margin:0 auto}
+.counts{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 12px}
+.cnt{font-size:12px;font-weight:700;padding:5px 12px;border-radius:8px;border:1px solid var(--line);background:#fff}
+.cnt b{font-size:14px}
+.cnt.pass{color:var(--pass);border-color:#bbf7d0}.cnt.fail{color:var(--fail);border-color:#fecaca}
+.cnt.hold{color:var(--hold);border-color:#fde68a}.cnt.block{color:var(--block);border-color:#e9d5ff}
+.cnt.pending{color:var(--muted)}
+.runsum{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin:0 0 14px}
+.runsum h3{margin:0 0 8px;font-size:13px}
+.sumchips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px}
+.progress{height:10px;background:var(--card2);border-radius:6px;overflow:hidden;border:1px solid var(--line)}
+.progressbar{height:100%;background:var(--pass);width:0;transition:width .3s}
+.hint{color:var(--muted);font-size:12px}
+.toolbar{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;margin:0 0 12px}
+.btn{font-size:12px;font-weight:600;padding:5px 12px;border-radius:7px;border:1px solid var(--line);background:#fff;color:var(--txt);cursor:pointer}
+.btn:hover{border-color:var(--accent);color:var(--accent)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.btn.primary:hover{opacity:.88}
+.filters{background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:0 0 14px}
+.filters .row{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:3px 0}
+.filters label{font-size:11px;font-weight:700;color:var(--muted);min-width:60px}
+.fchip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:3px 11px;font-size:11.5px;cursor:pointer;color:var(--txt)}
+.fchip:hover{border-color:var(--accent);color:var(--accent)}
+.fchip.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.clearbtn{font-size:11px;padding:3px 10px;border:1px solid var(--line);border-radius:6px;background:#fff;color:var(--muted);cursor:pointer;margin-left:4px}
+.clearbtn:hover{color:var(--fail);border-color:var(--fail)}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:#fff}
+table.tc{border-collapse:collapse;width:100%;min-width:900px;background:#fff}
+table.tc th,table.tc td{padding:8px 10px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+table.tc thead th{position:sticky;top:0;background:var(--card2);color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.4px;z-index:3;border-bottom:2px solid var(--line)}
+tr.epicrow td{background:#1e3a8a;color:#fff;font-weight:700;font-size:13px;padding:9px 12px}
+tr.epicrow .rp{font-weight:400;font-size:11px;opacity:.75;margin-left:6px}
+tr.featrow td{background:#eaf1fb;color:#1d4ed8;font-weight:700;font-size:12px}
+tr.featrow .rp{font-weight:500;font-size:11px;color:#3b6fc4;margin-left:8px}
+tr.trow{cursor:pointer}tr.trow:hover{background:#f7f9fc}tr.trow.open{background:#eef4fe}
+.tog{display:inline-block;width:14px;color:var(--muted);transition:transform .15s;font-size:11px}
+tr.trow.open .tog{transform:rotate(90deg);color:var(--accent)}
+.cid{font-family:monospace;font-size:10px;color:var(--muted);white-space:nowrap}
+.ctitle{font-weight:600;font-size:12.5px;max-width:400px}
+td.lvl{white-space:nowrap}
+.lv{font-size:10px;font-weight:700;padding:2px 7px;border-radius:5px;border:1px solid;background:#fff;display:inline-block;vertical-align:middle}
+.lv.lvl-ui{color:var(--lv-ui);border-color:var(--lv-ui)}
+.lv.lvl-e2e{color:var(--lv-e2e);border-color:var(--lv-e2e)}
+.ac{font-size:10px;color:var(--muted);font-family:monospace;margin-left:4px}
+.prio{font-weight:800;font-size:10px;padding:3px 7px;border-radius:5px;color:#fff;display:inline-block;white-space:nowrap}
+.p0{background:var(--p0)}.p1{background:var(--p1)}.p2{background:var(--p2)}
+td.status{white-space:nowrap}
+.stb{font-weight:700;font-size:10px;padding:3px 8px;border-radius:5px;display:inline-block}
+.stb.pending{background:#fff;border:1px solid var(--line);color:var(--muted)}
+.stb.pass{background:var(--pass);color:#fff}.stb.fail{background:var(--fail);color:#fff}
+.stb.hold{background:var(--hold);color:#fff}.stb.block{background:var(--block);color:#fff}
+.stb.skip{background:var(--skip);color:#fff}
+tr.detail{display:none}tr.detail.show{display:table-row}
+tr.detail>td{background:#fafbfc;padding:0;border-bottom:2px solid var(--line)}
+.card{padding:16px 20px}
+.card .h-title{font-size:14px;font-weight:700;margin:0 0 3px}
+.card .h-prio{font-size:12px;color:var(--muted);margin:0 0 12px}
+.card .sec{margin:0 0 12px}.card .sec:last-child{margin-bottom:0}
+.card .sec h4{margin:0 0 5px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.3px;color:#374151}
+.card .sec ol,.card .sec ul{margin:0;padding-left:18px}
+.card .sec li{margin:2px 0;font-size:12.5px}
+.card .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:760px){.card .grid{grid-template-columns:1fr}}
+.actualbox{background:#fff;border:1px dashed var(--line);border-radius:7px;padding:7px 11px;color:var(--muted);font-style:italic;font-size:12px}
+.statusrow{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.opt{font-size:11px;font-weight:700;padding:4px 11px;border-radius:6px;border:1px solid var(--line);background:#fff;color:var(--muted);cursor:pointer}
+.opt:hover{opacity:.8}
+.opt.pass{border-color:var(--pass)}.opt.fail{border-color:var(--fail)}
+.opt.hold{border-color:var(--hold)}.opt.block{border-color:var(--block)}.opt.skip{border-color:var(--skip)}
+.opt.sel.pass{background:var(--pass);color:#fff}
+.opt.sel.fail{background:var(--fail);color:#fff}
+.opt.sel.hold{background:var(--hold);color:#fff}
+.opt.sel.block{background:var(--block);color:#fff}
+.opt.sel.skip{background:var(--skip);color:#fff}
+tr.trow.hide,tr.detail.hide{display:none!important}
+tr.epicrow.hide,tr.featrow.hide{display:none!important}
+.note-box{background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:8px 12px;font-size:12px;color:#92400e;margin:0 0 12px}
+footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
+@media print{.tablewrap{overflow:visible}table.tc{min-width:0}tr.detail{display:table-row!important}.toolbar,.filters,.runsum{display:none}}
+</style>
+</head>
+<body>
+
+<script id="store-data" type="application/json">
+{}
+</script>
+
+<header class="top">
+  <h1>🧪 POC K.Book — E2E Manual Test Cases</h1>
+  <div class="sub">สำหรับทดสอบด้วยมือ (Manual) บน Electron Desktop App · Develop branch</div>
+  <div class="meta">
+    <span class="pill">69 test cases</span>
+    <span class="pill">8 Features</span>
+    <span class="pill">UI + E2E</span>
+    <span class="pill">Desktop-first</span>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="note-box">💡 <b>วิธีใช้:</b> ทดสอบแต่ละ TC → เลือกผล PASS/FAIL/HOLD/BLOCKED → กด <b>"💾 บันทึกไฟล์"</b> เพื่อดาวน์โหลด HTML ที่มีผลฝังอยู่ → แชร์ไฟล์นั้นให้เพื่อนเปิดดูผลได้เลย</div>
+
+  <div class="runsum">
+    <h3>📊 สรุปผล Manual Test</h3>
+    <div class="sumchips">
+      <span class="cnt pass">PASS <b id="sum-pass">0</b></span>
+      <span class="cnt fail">FAIL <b id="sum-fail">0</b></span>
+      <span class="cnt hold">HOLD <b id="sum-hold">0</b></span>
+      <span class="cnt block">BLOCKED <b id="sum-block">0</b></span>
+      <span class="cnt pending">รอเทส <b id="sum-pending">69</b></span>
+    </div>
+    <div class="progress"><div id="sumbar" class="progressbar"></div></div>
+    <div class="hint" id="sumpct" style="margin-top:5px">0% ทดสอบแล้ว (0/69)</div>
+  </div>
+
+  <div class="toolbar">
+    <button class="btn" onclick="toggleAll(true)">▸ กางทั้งหมด</button>
+    <button class="btn" onclick="toggleAll(false)">▾ ยุบทั้งหมด</button>
+    <span class="hint">💡 คลิกแถว → ดู Steps / Expected <span class="lv lvl-ui">🌐 UI</span> <span class="lv lvl-e2e">🔄 E2E</span></span>
+    <span style="margin-left:auto;display:flex;gap:8px">
+      <button class="btn primary" id="btn-save-file">💾 บันทึกไฟล์ (แชร์ได้)</button>
+      <button class="btn" style="color:var(--fail)" id="btn-reset">🗑 ล้างผล</button>
+    </span>
+  </div>
+
+  <div class="filters">
+    <div class="row"><label>Feature</label>
+      <button class="fchip" data-f="feat" data-v="basket">🛒 ปักตะกร้า (6)</button>
+      <button class="fchip" data-f="feat" data-v="overlay">🎨 Overlay (6)</button>
+      <button class="fchip" data-f="feat" data-v="proxy">🔌 Proxy (4)</button>
+      <button class="fchip" data-f="feat" data-v="chat">💬 Chat (5)</button>
+      <button class="fchip" data-f="feat" data-v="gmv">💰 GMV (4)</button>
+      <button class="fchip" data-f="feat" data-v="reply">↩️ Reply (5)</button>
+      <button class="fchip" data-f="feat" data-v="login">🔑 Login (5)</button>
+      <button class="fchip" data-f="feat" data-v="audio">🔊 Audio (1)</button>
+      <button class="fchip" data-f="feat" data-v="fullflow">🔄 Full Flow (7)</button>
+      <button class="fchip" data-f="feat" data-v="edgecase">⚡ Edge Cases (4)</button>
+      <button class="fchip" data-f="feat" data-v="auth">🔐 Auth (5)</button>
+      <button class="fchip" data-f="feat" data-v="video">🎬 วีดีโอ (6)</button>
+      <button class="fchip" data-f="feat" data-v="livesettings">📡 Live Settings (5)</button>
+      <button class="fchip" data-f="feat" data-v="settings">⚙️ ตั้งค่า (6)</button>
+      <button class="clearbtn" data-clear="feat">✕</button>
+    </div>
+    <div class="row"><label>ประเภท</label>
+      <button class="fchip" data-f="level" data-v="ui">🌐 UI</button>
+      <button class="fchip" data-f="level" data-v="e2e">🔄 E2E</button>
+      <button class="clearbtn" data-clear="level">✕</button>
+    </div>
+    <div class="row"><label>Priority</label>
+      <button class="fchip" data-f="prio" data-v="P0">P0</button>
+      <button class="fchip" data-f="prio" data-v="P1">P1</button>
+      <button class="fchip" data-f="prio" data-v="P2">P2</button>
+      <button class="clearbtn" data-clear="prio">✕</button>
+    </div>
+  </div>
+
+  <div class="tablewrap">
+  <table class="tc" id="main-table">
+    <thead><tr><th style="width:22px"></th><th style="width:130px">TC ID</th><th>Test Case</th><th style="width:90px">Level</th><th style="width:55px">Pri</th><th style="width:80px">Status</th></tr></thead>
+    <tbody>
+
+<!-- ═══════════════════════════════════════════════ #1 ปักตะกร้า ═══ -->
+<tr class="epicrow"><td colspan="6">🛒 #1 ปักตะกร้า — Auto-pin Products <span class="rp">(5 TCs)</span></td></tr>
+<tr class="featrow"><td colspan="6">📁 basket — ดึงชุดสินค้า + เลือก + auto-pin ตอน go-live <span class="rp"><span class="lv lvl-e2e">🔄 3</span> <span class="lv lvl-ui">🌐 2</span></span></td></tr>
+
+<tr class="trow" data-feat="basket" data-level="e2e" data-prio="P0" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-BK.1</td>
+  <td class="ctitle">ดึงชุดสินค้าจาก TikTok Shop สำเร็จ (desktop)</td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-1"><span class="stb pending">รอเทส</span></td>
+</tr>
+<tr class="detail">
+  <td colspan="6"><div class="card">
+    <div class="h-title">ดึงชุดสินค้าจาก TikTok Shop สำเร็จ (desktop)</div>
+    <div class="h-prio">Priority: <b>P0</b> · E2E · #1 basket</div>
+    <div class="sec"><h4>Precondition</h4><ul>
+      <li>เปิดบน Electron desktop app</li>
+      <li>มี account ที่ login ผ่าน TikTok popup แล้ว (TC-LG.1 ผ่านก่อน)</li>
+      <li>account นั้นมี TikTok Shop พร้อม product sets</li>
+    </ul></div>
+    <div class="sec"><h4>Test Steps</h4><ol>
+      <li>ไปที่ Account Detail ของ account นั้น</li>
+      <li>คลิกแท็บ "ตะกร้า"</li>
+      <li>กดปุ่ม "ดึงชุดสินค้าจาก TikTok"</li>
+      <li>รอ popup เปิด-ปิด (oracle importSets)</li>
+    </ol></div>
+    <div class="sec"><h4>Test Data</h4><ul><li>Account ที่มี TikTok Shop และ product sets ≥ 1 ชุด</li></ul></div>
+    <div class="grid">
+      <div class="sec"><h4>Expected Result</h4><ul>
+        <li>popup เปิดชั่วคราวแล้วปิดอัตโนมัติ</li>
+        <li>รายการ product sets แสดงใน BasketPanel</li>
+        <li>แต่ละ set มี products พร้อม ชื่อ + ราคา</li>
+        <li>ไม่มี error message</li>
+      </ul></div>
+      <div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div>
+    </div>
+    <div class="sec"><h4>Status</h4><div class="statusrow">
+      <span class="opt pass" data-uid="tc-1" data-st="pass">PASS</span>
+      <span class="opt fail" data-uid="tc-1" data-st="fail">FAIL</span>
+      <span class="opt hold" data-uid="tc-1" data-st="hold">HOLD</span>
+      <span class="opt block" data-uid="tc-1" data-st="block">BLOCKED</span>
+      <span class="opt skip" data-uid="tc-1" data-st="skip">SKIP</span>
+    </div></div>
+  </div></td>
+</tr>
+
+<tr class="trow" data-feat="basket" data-level="ui" data-prio="P1" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-BK.2</td>
+  <td class="ctitle">เปิดบน web browser → ไม่แสดงปุ่มดึงสินค้า</td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-2"><span class="stb pending">รอเทส</span></td>
+</tr>
+<tr class="detail">
+  <td colspan="6"><div class="card">
+    <div class="h-title">เปิดบน web browser → ไม่แสดงปุ่มดึงสินค้า</div>
+    <div class="h-prio">Priority: <b>P1</b> · UI · #1 basket</div>
+    <div class="sec"><h4>Precondition</h4><ul>
+      <li>เปิดผ่าน browser ปกติ (ไม่ใช่ Electron) เช่น Chrome/Safari</li>
+      <li>มี account ในระบบ</li>
+    </ul></div>
+    <div class="sec"><h4>Test Steps</h4><ol>
+      <li>เปิด http://localhost:3040 ใน browser</li>
+      <li>ไปที่ Account Detail > แท็บ "ตะกร้า"</li>
+    </ol></div>
+    <div class="grid">
+      <div class="sec"><h4>Expected Result</h4><ul>
+        <li>แสดงข้อความ "เปิดบนแอป desktop เพื่อดึงชุดสินค้า"</li>
+        <li>ไม่มีปุ่ม "ดึงชุดสินค้าจาก TikTok" (TikTok black button)</li>
+      </ul></div>
+      <div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div>
+    </div>
+    <div class="sec"><h4>Status</h4><div class="statusrow">
+      <span class="opt pass" data-uid="tc-2" data-st="pass">PASS</span>
+      <span class="opt fail" data-uid="tc-2" data-st="fail">FAIL</span>
+      <span class="opt hold" data-uid="tc-2" data-st="hold">HOLD</span>
+      <span class="opt block" data-uid="tc-2" data-st="block">BLOCKED</span>
+      <span class="opt skip" data-uid="tc-2" data-st="skip">SKIP</span>
+    </div></div>
+  </div></td>
+</tr>
+
+<tr class="trow" data-feat="basket" data-level="ui" data-prio="P0" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-BK.3</td>
+  <td class="ctitle">เลือก/ยกเลิกสินค้า → selection บันทึก server-side</td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-3"><span class="stb pending">รอเทส</span></td>
+</tr>
+<tr class="detail">
+  <td colspan="6"><div class="card">
+    <div class="h-title">เลือก/ยกเลิกสินค้า → selection บันทึก server-side</div>
+    <div class="h-prio">Priority: <b>P0</b> · UI · #1 basket</div>
+    <div class="sec"><h4>Precondition</h4><ul>
+      <li>TC-BK.1 ผ่านแล้ว (มี product sets อยู่)</li>
+    </ul></div>
+    <div class="sec"><h4>Test Steps</h4><ol>
+      <li>tick checkbox สินค้า 2 ชิ้น</li>
+      <li>ปิดและเปิดหน้า Account Detail ใหม่</li>
+      <li>กลับมาดูแท็บ "ตะกร้า"</li>
+    </ol></div>
+    <div class="grid">
+      <div class="sec"><h4>Expected Result</h4><ul>
+        <li>checkbox ยังติ๊กอยู่ (persist server-side)</li>
+        <li>untick แล้ว reload → ไม่ติ๊ก</li>
+      </ul></div>
+      <div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div>
+    </div>
+    <div class="sec"><h4>Status</h4><div class="statusrow">
+      <span class="opt pass" data-uid="tc-3" data-st="pass">PASS</span>
+      <span class="opt fail" data-uid="tc-3" data-st="fail">FAIL</span>
+      <span class="opt hold" data-uid="tc-3" data-st="hold">HOLD</span>
+      <span class="opt block" data-uid="tc-3" data-st="block">BLOCKED</span>
+      <span class="opt skip" data-uid="tc-3" data-st="skip">SKIP</span>
+    </div></div>
+  </div></td>
+</tr>
+
+<tr class="trow" data-feat="basket" data-level="e2e" data-prio="P0" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-BK.4</td>
+  <td class="ctitle">เริ่มไลฟ์ → oracle auto-pin สินค้าที่เลือกเข้า TikTok live</td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-4"><span class="stb pending">รอเทส</span></td>
+</tr>
+<tr class="detail">
+  <td colspan="6"><div class="card">
+    <div class="h-title">เริ่มไลฟ์ → oracle auto-pin สินค้าที่เลือกเข้า TikTok live</div>
+    <div class="h-prio">Priority: <b>P0</b> · E2E · #1 basket</div>
+    <div class="sec"><h4>Precondition</h4><ul>
+      <li>TC-BK.3 ผ่านแล้ว (มีสินค้าที่เลือกไว้)</li>
+      <li>session ตั้งค่าครบ (video, live settings)</li>
+      <li>oracle.js pollPins interval 4s</li>
+    </ul></div>
+    <div class="sec"><h4>Test Steps</h4><ol>
+      <li>กด Start session</li>
+      <li>รอ session state เป็น "live"</li>
+      <li>รอ ~10s ให้ oracle pollPins ทำงาน</li>
+      <li>เปิด TikTok Live Center → ดู live product list</li>
+    </ol></div>
+    <div class="grid">
+      <div class="sec"><h4>Expected Result</h4><ul>
+        <li>สินค้าที่ tick ไว้ปรากฏใน live product list บน TikTok</li>
+        <li>log "[oracle] pinning X product(s)" แสดงใน stage log</li>
+      </ul></div>
+      <div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div>
+    </div>
+    <div class="sec"><h4>Status</h4><div class="statusrow">
+      <span class="opt pass" data-uid="tc-4" data-st="pass">PASS</span>
+      <span class="opt fail" data-uid="tc-4" data-st="fail">FAIL</span>
+      <span class="opt hold" data-uid="tc-4" data-st="hold">HOLD</span>
+      <span class="opt block" data-uid="tc-4" data-st="block">BLOCKED</span>
+      <span class="opt skip" data-uid="tc-4" data-st="skip">SKIP</span>
+    </div></div>
+  </div></td>
+</tr>
+
+<tr class="trow" data-feat="basket" data-level="e2e" data-prio="P1" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-BK.5</td>
+  <td class="ctitle">ดึงสินค้าขณะ pending → ปุ่มแสดง "กำลังดึง…" และ disabled</td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-5"><span class="stb pending">รอเทส</span></td>
+</tr>
+<tr class="detail">
+  <td colspan="6"><div class="card">
+    <div class="h-title">ดึงสินค้าขณะ pending → ปุ่มแสดง "กำลังดึง…" และ disabled</div>
+    <div class="h-prio">Priority: <b>P1</b> · E2E · #1 basket</div>
+    <div class="sec"><h4>Test Steps</h4><ol>
+      <li>กดปุ่ม "ดึงชุดสินค้าจาก TikTok"</li>
+      <li>สังเกตปุ่มทันทีขณะรอ importSets</li>
+    </ol></div>
+    <div class="grid">
+      <div class="sec"><h4>Expected Result</h4><ul>
+        <li>ปุ่มเปลี่ยนเป็น "กำลังดึงจาก TikTok…"</li>
+        <li>ปุ่ม disabled (คลิกซ้ำไม่ได้)</li>
+        <li>หลัง importSets เสร็จ → ปุ่มกลับมาปกติ</li>
+      </ul></div>
+      <div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div>
+    </div>
+    <div class="sec"><h4>Status</h4><div class="statusrow">
+      <span class="opt pass" data-uid="tc-5" data-st="pass">PASS</span>
+      <span class="opt fail" data-uid="tc-5" data-st="fail">FAIL</span>
+      <span class="opt hold" data-uid="tc-5" data-st="hold">HOLD</span>
+      <span class="opt block" data-uid="tc-5" data-st="block">BLOCKED</span>
+      <span class="opt skip" data-uid="tc-5" data-st="skip">SKIP</span>
+    </div></div>
+  </div></td>
+</tr>
+
+<!-- ═══════════════════════════════════════════════ #2 Overlay ═══ -->
+<tr class="trow" data-feat="basket" data-level="ui" data-prio="P1" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-BK.6</td>
+  <td class="ctitle">ร้านค้าว่าง ไม่มี product sets → empty state แสดงถูกต้อง</td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-30"><span class="stb pending">รอเทส</span></td>
+</tr>
+<tr class="detail">
+  <td colspan="6"><div class="card">
+    <div class="h-title">ร้านค้าว่าง ไม่มี product sets → empty state แสดงถูกต้อง</div>
+    <div class="h-prio">Priority: <b>P1</b> · UI · #1 basket</div>
+    <div class="sec"><h4>Precondition</h4><ul>
+      <li>desktop app เปิด, account logged in</li>
+      <li>TikTok Shop ของ account นี้ไม่มี product sets เลย</li>
+    </ul></div>
+    <div class="sec"><h4>Test Steps</h4><ol>
+      <li>กด "ดึงชุดสินค้าจาก TikTok"</li>
+      <li>รอ importSets เสร็จ</li>
+      <li>ดู BasketPanel</li>
+    </ol></div>
+    <div class="grid">
+      <div class="sec"><h4>Expected Result</h4><ul>
+        <li>ไม่มีรายการ sets แสดง</li>
+        <li>แสดง empty state message (เช่น "ไม่เจอชุดสินค้า")</li>
+        <li>ไม่ crash และไม่แสดง error สีแดง</li>
+      </ul></div>
+      <div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div>
+    </div>
+    <div class="sec"><h4>Status</h4><div class="statusrow">
+      <span class="opt pass" data-uid="tc-30" data-st="pass">PASS</span>
+      <span class="opt fail" data-uid="tc-30" data-st="fail">FAIL</span>
+      <span class="opt hold" data-uid="tc-30" data-st="hold">HOLD</span>
+      <span class="opt block" data-uid="tc-30" data-st="block">BLOCKED</span>
+      <span class="opt skip" data-uid="tc-30" data-st="skip">SKIP</span>
+    </div></div>
+  </div></td>
+</tr>
+
+<tr class="epicrow"><td colspan="6">🎨 #2 Overlay — Clock &amp; Message on Stream <span class="rp">(5 TCs)</span></td></tr>
+<tr class="featrow"><td colspan="6">📁 overlay — OverlayPanel editor + ffmpeg drawtext บน stream จริง <span class="rp"><span class="lv lvl-e2e">🔄 2</span> <span class="lv lvl-ui">🌐 3</span></span></td></tr>
+
+<tr class="trow" data-feat="overlay" data-level="ui" data-prio="P0" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-OV.1</td>
+  <td class="ctitle">เพิ่ม layer นาฬิกา → layer ปรากฏใน OverlayPanel</td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-6"><span class="stb pending">รอเทส</span></td>
+</tr>
+<tr class="detail">
+  <td colspan="6"><div class="card">
+    <div class="h-title">เพิ่ม layer นาฬิกา → layer ปรากฏใน OverlayPanel</div>
+    <div class="h-prio">Priority: <b>P0</b> · UI · #2 overlay</div>
+    <div class="sec"><h4>Precondition</h4><ul>
+      <li>เปิด Account Detail > แท็บ "โอเวอร์เลย์"</li>
+      <li>ยังไม่มี layer ใดๆ (empty state)</li>
+    </ul></div>
+    <div class="sec"><h4>Test Steps</h4><ol>
+      <li>กดปุ่ม "+ นาฬิกา"</li>
+      <li>ดูรายการ layers</li>
+    </ol></div>
+    <div class="grid">
+      <div class="sec"><h4>Expected Result</h4><ul>
+        <li>layer นาฬิกาปรากฏในรายการ (data-testid="overlay-layer")</li>
+        <li>preview แสดง clock layer</li>
+        <li>ข้อความ "ยังไม่มีเลเยอร์" หายไป</li>
+      </ul></div>
+      <div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div>
+    </div>
+    <div class="sec"><h4>Status</h4><div class="statusrow">
+      <span class="opt pass" data-uid="tc-6" data-st="pass">PASS</span>
+      <span class="opt fail" data-uid="tc-6" data-st="fail">FAIL</span>
+      <span class="opt hold" data-uid="tc-6" data-st="hold">HOLD</span>
+      <span class="opt block" data-uid="tc-6" data-st="block">BLOCKED</span>
+      <span class="opt skip" data-uid="tc-6" data-st="skip">SKIP</span>
+    </div></div>
+  </div></td>
+</tr>
+
+<tr class="trow" data-feat="overlay" data-level="ui" data-prio="P0" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-OV.2</td>
+  <td class="ctitle">เพิ่ม layer ข้อความ → กรอกข้อความ → บันทึก → reload ยังอยู่</td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-7"><span class="stb pending">รอเทส</span></td>
+</tr>
+<tr class="detail">
+  <td colspan="6"><div class="card">
+    <div class="h-title">เพิ่ม layer ข้อความ → กรอกข้อความ → บันทึก → reload ยังอยู่</div>
+    <div class="h-prio">Priority: <b>P0</b> · UI · #2 overlay</div>
+    <div class="sec"><h4>Test Steps</h4><ol>
+      <li>กดปุ่ม "+ ข้อความ"</li>
+      <li>กรอก "สวัสดีนะ 🙏" ในช่อง text</li>
+      <li>กดปุ่ม "บันทึก"</li>
+      <li>reload หน้า Account Detail</li>
+      <li>เปิดแท็บ "โอเวอร์เลย์" อีกครั้ง</li>
+    </ol></div>
+    <div class="grid">
+      <div class="sec"><h4>Expected Result</h4><ul>
+        <li>บันทึกสำเร็จ (ไม่มี error)</li>
+        <li>reload แล้ว → layer ข้อความยังอยู่ พร้อมข้อความ "สวัสดีนะ 🙏"</li>
+        <li>API PUT /api/v1/accounts/{id}/overlay ตอบ 200</li>
+      </ul></div>
+      <div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div>
+    </div>
+    <div class="sec"><h4>Status</h4><div class="statusrow">
+      <span class="opt pass" data-uid="tc-7" data-st="pass">PASS</span>
+      <span class="opt fail" data-uid="tc-7" data-st="fail">FAIL</span>
+      <span class="opt hold" data-uid="tc-7" data-st="hold">HOLD</span>
+      <span class="opt block" data-uid="tc-7" data-st="block">BLOCKED</span>
+      <span class="opt skip" data-uid="tc-7" data-st="skip">SKIP</span>
+    </div></div>
+  </div></td>
+</tr>
+
+<tr class="trow" data-feat="overlay" data-level="e2e" data-prio="P0" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-OV.3</td>
+  <td class="ctitle">บันทึก overlay → เริ่มไลฟ์ → overlay ปรากฏบน stream จริง</td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-8"><span class="stb pending">รอเทส</span></td>
+</tr>
+<tr class="detail">
+  <td colspan="6"><div class="card">
+    <div class="h-title">บันทึก overlay → เริ่มไลฟ์ → overlay ปรากฏบน stream จริง</div>
+    <div class="h-prio">Priority: <b>P0</b> · E2E · #2 overlay (verified ใน commit 7d458bd)</div>
+    <div class="sec"><h4>Precondition</h4><ul>
+      <li>TC-OV.2 ผ่านแล้ว (มี overlay layers บันทึกไว้)</li>
+      <li>session ตั้งค่าครบ, ffmpeg bundled</li>
+      <li>probe clip ได้ WxH จริง (ไม่ใช่ hardcode 1080x1920)</li>
+    </ul></div>
+    <div class="sec"><h4>Test Steps</h4><ol>
+      <li>Start session</li>
+      <li>รอ state เป็น "live"</li>
+      <li>เปิด TikTok Live / preview stream</li>
+      <li>สังเกต overlay บน video</li>
+    </ol></div>
+    <div class="grid">
+      <div class="sec"><h4>Expected Result</h4><ul>
+        <li>นาฬิกา (เวลาปัจจุบัน hh:mm:ss) แสดงบน stream</li>
+        <li>ข้อความที่กรอกแสดงบน stream</li>
+        <li>font Sarabun/DSEG7 render ได้ (ไม่ box)</li>
+        <li>layer ไม่หลุดออกนอกเฟรม</li>
+      </ul></div>
+      <div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div>
+    </div>
+    <div class="sec"><h4>Status</h4><div class="statusrow">
+      <span class="opt pass" data-uid="tc-8" data-st="pass">PASS</span>
+      <span class="opt fail" data-uid="tc-8" data-st="fail">FAIL</span>
+      <span class="opt hold" data-uid="tc-8" data-st="hold">HOLD</span>
+      <span class="opt block" data-uid="tc-8" data-st="block">BLOCKED</span>
+      <span class="opt skip" data-uid="tc-8" data-st="skip">SKIP</span>
+    </div></div>
+  </div></td>
+</tr>
+
+<tr class="trow" data-feat="overlay" data-level="ui" data-prio="P1" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-OV.4</td>
+  <td class="ctitle">โหลดหน้า overlay ที่มี layers เดิม → โหลด layers กลับครบ</td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-9"><span class="stb pending">รอเทส</span></td>
+</tr>
+<tr class="detail">
+  <td colspan="6"><div class="card">
+    <div class="h-title">โหลดหน้า overlay ที่มี layers เดิม → โหลด layers กลับครบ</div>
+    <div class="h-prio">Priority: <b>P1</b> · UI · #2 overlay</div>
+    <div class="sec"><h4>Test Steps</h4><ol>
+      <li>บันทึก clock layer + text layer ไว้ก่อน</li>
+      <li>navigate ออกจาก Account Detail</li>
+      <li>กลับเข้า Account Detail > แท็บ "โอเวอร์เลย์"</li>
+    </ol></div>
+    <div class="grid">
+      <div class="sec"><h4>Expected Result</h4><ul>
+        <li>GET /api/v1/accounts/{id}/overlay ดึง layers กลับมา</li>
+        <li>layers ทั้งหมดแสดงใน panel ครบถ้วน</li>
+        <li>ข้อความใน text layer ถูกต้อง</li>
+      </ul></div>
+      <div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div>
+    </div>
+    <div class="sec"><h4>Status</h4><div class="statusrow">
+      <span class="opt pass" data-uid="tc-9" data-st="pass">PASS</span>
+      <span class="opt fail" data-uid="tc-9" data-st="fail">FAIL</span>
+      <span class="opt hold" data-uid="tc-9" data-st="hold">HOLD</span>
+      <span class="opt block" data-uid="tc-9" data-st="block">BLOCKED</span>
+      <span class="opt skip" data-uid="tc-9" data-st="skip">SKIP</span>
+    </div></div>
+  </div></td>
+</tr>
+
+<tr class="trow" data-feat="overlay" data-level="e2e" data-prio="P1" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-OV.5</td>
+  <td class="ctitle">ลบ layer ทั้งหมด → บันทึก → ไลฟ์ไม่มี overlay</td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-10"><span class="stb pending">รอเทส</span></td>
+</tr>
+<tr class="detail">
+  <td colspan="6"><div class="card">
+    <div class="h-title">ลบ layer ทั้งหมด → บันทึก → ไลฟ์ไม่มี overlay</div>
+    <div class="h-prio">Priority: <b>P1</b> · E2E · #2 overlay</div>
+    <div class="sec"><h4>Test Steps</h4><ol>
+      <li>ลบทุก layer ใน OverlayPanel</li>
+      <li>กด "บันทึก"</li>
+      <li>Start session → ดู stream</li>
+    </ol></div>
+    <div class="grid">
+      <div class="sec"><h4>Expected Result</h4><ul>
+        <li>PUT overlay ส่ง layers: [] สำเร็จ</li>
+        <li>stream ไม่มีข้อความหรือนาฬิกา overlay</li>
+      </ul></div>
+      <div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div>
+    </div>
+    <div class="sec"><h4>Status</h4><div class="statusrow">
+      <span class="opt pass" data-uid="tc-10" data-st="pass">PASS</span>
+      <span class="opt fail" data-uid="tc-10" data-st="fail">FAIL</span>
+      <span class="opt hold" data-uid="tc-10" data-st="hold">HOLD</span>
+      <span class="opt block" data-uid="tc-10" data-st="block">BLOCKED</span>
+      <span class="opt skip" data-uid="tc-10" data-st="skip">SKIP</span>
+    </div></div>
+  </div></td>
+</tr>
+
+<!-- ═══════════════════════════════════════════════ #3 Proxy ═══ -->
+<tr class="trow" data-feat="overlay" data-level="ui" data-prio="P2" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-OV.6</td>
+  <td class="ctitle">Drag/resize layer ใน preview WYSIWYG → ตำแหน่งบันทึกถูกต้อง</td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p2">P2</span></td>
+  <td class="status" data-uid="tc-31"><span class="stb pending">รอเทส</span></td>
+</tr>
+<tr class="detail">
+  <td colspan="6"><div class="card">
+    <div class="h-title">Drag/resize layer ใน preview WYSIWYG → ตำแหน่งบันทึกถูกต้อง</div>
+    <div class="h-prio">Priority: <b>P2</b> · UI · #2 overlay</div>
+    <div class="sec"><h4>Precondition</h4><ul>
+      <li>มี layer นาฬิกา หรือ text อยู่ใน OverlayPanel</li>
+      <li>preview แสดง WYSIWYG canvas</li>
+    </ul></div>
+    <div class="sec"><h4>Test Steps</h4><ol>
+      <li>คลิกค้างที่ layer แล้ว drag ไปตำแหน่งใหม่</li>
+      <li>resize layer โดยดึงมุม</li>
+      <li>กด "บันทึก" → reload</li>
+    </ol></div>
+    <div class="grid">
+      <div class="sec"><h4>Expected Result</h4><ul>
+        <li>layer ย้ายตำแหน่งได้ใน preview</li>
+        <li>หลัง reload → ตำแหน่ง x, y, w, h ยังตรงกับที่ drag ไว้</li>
+        <li>ไลฟ์แสดง overlay ตรงตำแหน่งที่ตั้ง</li>
+      </ul></div>
+      <div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div>
+    </div>
+    <div class="sec"><h4>Status</h4><div class="statusrow">
+      <span class="opt pass" data-uid="tc-31" data-st="pass">PASS</span>
+      <span class="opt fail" data-uid="tc-31" data-st="fail">FAIL</span>
+      <span class="opt hold" data-uid="tc-31" data-st="hold">HOLD</span>
+      <span class="opt block" data-uid="tc-31" data-st="block">BLOCKED</span>
+      <span class="opt skip" data-uid="tc-31" data-st="skip">SKIP</span>
+    </div></div>
+  </div></td>
+</tr>
+
+<tr class="epicrow"><td colspan="6">🔌 #3 Proxy — Per-account Egress <span class="rp">(3 TCs)</span></td></tr>
+<tr class="featrow"><td colspan="6">📁 proxy — ตั้งค่า + ทดสอบ + ใช้จริงตอน stream <span class="rp"><span class="lv lvl-e2e">🔄 2</span> <span class="lv lvl-ui">🌐 1</span></span></td></tr>
+
+<tr class="trow" data-feat="proxy" data-level="ui" data-prio="P0" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-PX.1</td>
+  <td class="ctitle">ตั้งค่า proxy HTTP → test connection → แสดง IP exit สำเร็จ</td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-11"><span class="stb pending">รอเทส</span></td>
+</tr>
+<tr class="detail">
+  <td colspan="6"><div class="card">
+    <div class="h-title">ตั้งค่า proxy HTTP → test connection → แสดง IP exit สำเร็จ</div>
+    <div class="h-prio">Priority: <b>P0</b> · UI · #3 proxy</div>
+    <div class="sec"><h4>Precondition</h4><ul><li>มี proxy server ที่ใช้งานได้ (HTTP หรือ SOCKS5)</li></ul></div>
+    <div class="sec"><h4>Test Steps</h4><ol>
+      <li>ไปที่ Account Detail > แท็บ "Proxy"</li>
+      <li>กรอก host, port, username, password</li>
+      <li>กดปุ่ม "ทดสอบการเชื่อมต่อ"</li>
+    </ol></div>
+    <div class="grid">
+      <div class="sec"><h4>Expected Result</h4><ul>
+        <li>แสดง IP ปลายทาง (exit IP) ที่ต่างจาก IP ของเครื่อง</li>
+        <li>status indicator สีเขียว</li>
+        <li>ไม่มี error message</li>
+      </ul></div>
+      <div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div>
+    </div>
+    <div class="sec"><h4>Status</h4><div class="statusrow">
+      <span class="opt pass" data-uid="tc-11" data-st="pass">PASS</span>
+      <span class="opt fail" data-uid="tc-11" data-st="fail">FAIL</span>
+      <span class="opt hold" data-uid="tc-11" data-st="hold">HOLD</span>
+      <span class="opt block" data-uid="tc-11" data-st="block">BLOCKED</span>
+      <span class="opt skip" data-uid="tc-11" data-st="skip">SKIP</span>
+    </div></div>
+  </div></td>
+</tr>
+
+<tr class="trow" data-feat="proxy" data-level="ui" data-prio="P1" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-PX.2</td>
+  <td class="ctitle">proxy credentials ผิด → test แสดง error</td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-12"><span class="stb pending">รอเทส</span></td>
+</tr>
+<tr class="detail">
+  <td colspan="6"><div class="card">
+    <div class="h-title">proxy credentials ผิด → test แสดง error</div>
+    <div class="h-prio">Priority: <b>P1</b> · UI · #3 proxy</div>
+    <div class="sec"><h4>Test Steps</h4><ol>
+      <li>กรอก host/port ถูก แต่ password ผิด</li>
+      <li>กด "ทดสอบการเชื่อมต่อ"</li>
+    </ol></div>
+    <div class="grid">
+      <div class="sec"><h4>Expected Result</h4><ul>
+        <li>แสดง error message (เช่น "ไม่สามารถเชื่อมต่อ" หรือ 407)</li>
+        <li>status indicator สีแดง</li>
+        <li>ไม่ crash app</li>
+      </ul></div>
+      <div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div>
+    </div>
+    <div class="sec"><h4>Status</h4><div class="statusrow">
+      <span class="opt pass" data-uid="tc-12" data-st="pass">PASS</span>
+      <span class="opt fail" data-uid="tc-12" data-st="fail">FAIL</span>
+      <span class="opt hold" data-uid="tc-12" data-st="hold">HOLD</span>
+      <span class="opt block" data-uid="tc-12" data-st="block">BLOCKED</span>
+      <span class="opt skip" data-uid="tc-12" data-st="skip">SKIP</span>
+    </div></div>
+  </div></td>
+</tr>
+
+<tr class="trow" data-feat="proxy" data-level="e2e" data-prio="P0" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-PX.3</td>
+  <td class="ctitle">Start session ผ่าน proxy → stream ขึ้นปกติ IP ออกผ่าน proxy</td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-13"><span class="stb pending">รอเทส</span></td>
+</tr>
+<tr class="detail">
+  <td colspan="6"><div class="card">
+    <div class="h-title">Start session ผ่าน proxy → stream ขึ้นปกติ IP ออกผ่าน proxy</div>
+    <div class="h-prio">Priority: <b>P0</b> · E2E · #3 proxy</div>
+    <div class="sec"><h4>Precondition</h4><ul><li>TC-PX.1 ผ่าน (proxy configured + tested)</li></ul></div>
+    <div class="sec"><h4>Test Steps</h4><ol>
+      <li>Start session บน account ที่ตั้ง proxy ไว้</li>
+      <li>ดู stage log ระหว่างสร้าง session</li>
+      <li>รอ state เป็น "live"</li>
+    </ol></div>
+    <div class="grid">
+      <div class="sec"><h4>Expected Result</h4><ul>
+        <li>session state เป็น "live" สำเร็จ</li>
+        <li>TikTok accept push URL (ไม่ ban IP ทันที)</li>
+        <li>utls transport ใช้ proxy egress (เห็นใน log)</li>
+      </ul></div>
+      <div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div>
+    </div>
+    <div class="sec"><h4>Status</h4><div class="statusrow">
+      <span class="opt pass" data-uid="tc-13" data-st="pass">PASS</span>
+      <span class="opt fail" data-uid="tc-13" data-st="fail">FAIL</span>
+      <span class="opt hold" data-uid="tc-13" data-st="hold">HOLD</span>
+      <span class="opt block" data-uid="tc-13" data-st="block">BLOCKED</span>
+      <span class="opt skip" data-uid="tc-13" data-st="skip">SKIP</span>
+    </div></div>
+  </div></td>
+</tr>
+
+<!-- ═══════════════════════════════════════════════ #4 Realtime Chat ═══ -->
+<tr class="trow" data-feat="proxy" data-level="ui" data-prio="P1" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-PX.4</td>
+  <td class="ctitle">ตั้งค่า SOCKS5 proxy → test connection สำเร็จ</td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-32"><span class="stb pending">รอเทส</span></td>
+</tr>
+<tr class="detail">
+  <td colspan="6"><div class="card">
+    <div class="h-title">ตั้งค่า SOCKS5 proxy → test connection สำเร็จ</div>
+    <div class="h-prio">Priority: <b>P1</b> · UI · #3 proxy</div>
+    <div class="sec"><h4>Precondition</h4><ul>
+      <li>มี SOCKS5 proxy server ที่ใช้งานได้</li>
+    </ul></div>
+    <div class="sec"><h4>Test Steps</h4><ol>
+      <li>เลือก type = "SOCKS5" ใน Proxy Settings</li>
+      <li>กรอก host, port, username, password</li>
+      <li>กด "ทดสอบการเชื่อมต่อ"</li>
+    </ol></div>
+    <div class="grid">
+      <div class="sec"><h4>Expected Result</h4><ul>
+        <li>แสดง exit IP สำเร็จ (ต่างจาก IP เครื่อง)</li>
+        <li>SOCKS5 handshake ไม่ error</li>
+        <li>ใช้กับ session ได้เหมือน HTTP proxy</li>
+      </ul></div>
+      <div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div>
+    </div>
+    <div class="sec"><h4>Status</h4><div class="statusrow">
+      <span class="opt pass" data-uid="tc-32" data-st="pass">PASS</span>
+      <span class="opt fail" data-uid="tc-32" data-st="fail">FAIL</span>
+      <span class="opt hold" data-uid="tc-32" data-st="hold">HOLD</span>
+      <span class="opt block" data-uid="tc-32" data-st="block">BLOCKED</span>
+      <span class="opt skip" data-uid="tc-32" data-st="skip">SKIP</span>
+    </div></div>
+  </div></td>
+</tr>
+
+<tr class="epicrow"><td colspan="6">💬 #4 Realtime Chat — Live Comment Stream <span class="rp">(4 TCs)</span></td></tr>
+<tr class="featrow"><td colspan="6">📁 chat — oracle webcast decode → /ingest/chat → SSE → LiveChatPanel <span class="rp"><span class="lv lvl-e2e">🔄 2</span> <span class="lv lvl-ui">🌐 2</span></span></td></tr>
+
+<tr class="trow" data-feat="chat" data-level="e2e" data-prio="P0" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-CH.1</td>
+  <td class="ctitle">ไลฟ์ขึ้น → oracle decode webcast → chat panel แสดง comment realtime</td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-14"><span class="stb pending">รอเทส</span></td>
+</tr>
+<tr class="detail">
+  <td colspan="6"><div class="card">
+    <div class="h-title">ไลฟ์ขึ้น → oracle decode webcast → chat panel แสดง comment realtime</div>
+    <div class="h-prio">Priority: <b>P0</b> · E2E · #4 chat (⚠️ UNVERIFIED จนกว่าจะทดสอบกับ TikTok live จริง)</div>
+    <div class="sec"><h4>Precondition</h4><ul>
+      <li>session กำลัง live</li>
+      <li>oracle.js รันพร้อม tiktok-live-connector</li>
+      <li>hidden oracle window เปิดอยู่ (pollRooms ทำงาน)</li>
+      <li>มีคนส่ง comment บน TikTok live</li>
+    </ul></div>
+    <div class="sec"><h4>Test Steps</h4><ol>
+      <li>Start session → รอ live</li>
+      <li>เปิด Session Detail → ดู chat panel</li>
+      <li>ให้คนอื่น (หรือ test account) comment บน TikTok live</li>
+      <li>รอ ~5s</li>
+    </ol></div>
+    <div class="grid">
+      <div class="sec"><h4>Expected Result</h4><ul>
+        <li>comment ปรากฏใน chat panel ภายใน ~5s</li>
+        <li>แสดง username + ข้อความ</li>
+        <li>ไม่มี duplicate (dedup ด้วย msgId)</li>
+      </ul></div>
+      <div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div>
+    </div>
+    <div class="sec"><h4>Status</h4><div class="statusrow">
+      <span class="opt pass" data-uid="tc-14" data-st="pass">PASS</span>
+      <span class="opt fail" data-uid="tc-14" data-st="fail">FAIL</span>
+      <span class="opt hold" data-uid="tc-14" data-st="hold">HOLD</span>
+      <span class="opt block" data-uid="tc-14" data-st="block">BLOCKED</span>
+      <span class="opt skip" data-uid="tc-14" data-st="skip">SKIP</span>
+    </div></div>
+  </div></td>
+</tr>
+
+<tr class="trow" data-feat="chat" data-level="e2e" data-prio="P1" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-CH.2</td>
+  <td class="ctitle">chat panel แสดง viewer count realtime (format th-TH)</td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-15"><span class="stb pending">รอเทส</span></td>
+</tr>
+<tr class="detail">
+  <td colspan="6"><div class="card">
+    <div class="h-title">chat panel แสดง viewer count realtime (format th-TH)</div>
+    <div class="h-prio">Priority: <b>P1</b> · E2E · #4 chat</div>
+    <div class="sec"><h4>Test Steps</h4><ol>
+      <li>ไลฟ์กำลังรัน, มี viewer</li>
+      <li>ดู header ของ chat panel</li>
+    </ol></div>
+    <div class="grid">
+      <div class="sec"><h4>Expected Result</h4><ul>
+        <li>data-testid="live-chat-viewers" แสดงอยู่</li>
+        <li>ตัวเลข format th-TH เช่น "1,234 คน"</li>
+        <li>อัพเดทเมื่อมีการเปลี่ยนแปลง</li>
+      </ul></div>
+      <div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div>
+    </div>
+    <div class="sec"><h4>Status</h4><div class="statusrow">
+      <span class="opt pass" data-uid="tc-15" data-st="pass">PASS</span>
+      <span class="opt fail" data-uid="tc-15" data-st="fail">FAIL</span>
+      <span class="opt hold" data-uid="tc-15" data-st="hold">HOLD</span>
+      <span class="opt block" data-uid="tc-15" data-st="block">BLOCKED</span>
+      <span class="opt skip" data-uid="tc-15" data-st="skip">SKIP</span>
+    </div></div>
+  </div></td>
+</tr>
+
+<tr class="trow" data-feat="chat" data-level="ui" data-prio="P1" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-CH.3</td>
+  <td class="ctitle">ก่อนมี comment → แสดง "ยังไม่มีคอมเมนต์"</td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-16"><span class="stb pending">รอเทส</span></td>
+</tr>
+<tr class="detail">
+  <td colspan="6"><div class="card">
+    <div class="h-title">ก่อนมี comment → แสดง "ยังไม่มีคอมเมนต์"</div>
+    <div class="h-prio">Priority: <b>P1</b> · UI · #4 chat</div>
+    <div class="sec"><h4>Test Steps</h4><ol>
+      <li>Start session</li>
+      <li>เปิด Session Detail ทันที (ยังไม่มีคน comment)</li>
+      <li>ดู chat panel</li>
+    </ol></div>
+    <div class="grid">
+      <div class="sec"><h4>Expected Result</h4><ul>
+        <li>แสดงข้อความ "ยังไม่มีคอมเมนต์"</li>
+        <li>ไม่ crash หรือ loading ค้าง</li>
+      </ul></div>
+      <div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div>
+    </div>
+    <div class="sec"><h4>Status</h4><div class="statusrow">
+      <span class="opt pass" data-uid="tc-16" data-st="pass">PASS</span>
+      <span class="opt fail" data-uid="tc-16" data-st="fail">FAIL</span>
+      <span class="opt hold" data-uid="tc-16" data-st="hold">HOLD</span>
+      <span class="opt block" data-uid="tc-16" data-st="block">BLOCKED</span>
+      <span class="opt skip" data-uid="tc-16" data-st="skip">SKIP</span>
+    </div></div>
+  </div></td>
+</tr>
+
+<tr class="trow" data-feat="chat" data-level="ui" data-prio="P2" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-CH.4</td>
+  <td class="ctitle">chat panel auto-scroll ลงล่างเมื่อ comment ใหม่มา</td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p2">P2</span></td>
+  <td class="status" data-uid="tc-17"><span class="stb pending">รอเทส</span></td>
+</tr>
+<tr class="detail">
+  <td colspan="6"><div class="card">
+    <div class="h-title">chat panel auto-scroll ลงล่างเมื่อ comment ใหม่มา</div>
+    <div class="h-prio">Priority: <b>P2</b> · UI · #4 chat</div>
+    <div class="sec"><h4>Test Steps</h4><ol>
+      <li>รอให้มี comment หลายข้อ จน scroll ได้</li>
+      <li>อย่า scroll ขึ้นบน (อยู่ล่างสุด)</li>
+      <li>รอ comment ใหม่</li>
+    </ol></div>
+    <div class="grid">
+      <div class="sec"><h4>Expected Result</h4><ul>
+        <li>panel scroll ลงแสดง comment ใหม่อัตโนมัติ</li>
+        <li>ไม่ค้างอยู่ข้างบน</li>
+      </ul></div>
+      <div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div>
+    </div>
+    <div class="sec"><h4>Status</h4><div class="statusrow">
+      <span class="opt pass" data-uid="tc-17" data-st="pass">PASS</span>
+      <span class="opt fail" data-uid="tc-17" data-st="fail">FAIL</span>
+      <span class="opt hold" data-uid="tc-17" data-st="hold">HOLD</span>
+      <span class="opt block" data-uid="tc-17" data-st="block">BLOCKED</span>
+      <span class="opt skip" data-uid="tc-17" data-st="skip">SKIP</span>
+    </div></div>
+  </div></td>
+</tr>
+
+<!-- ═══════════════════════════════════════════════ #5 GMV ═══ -->
+<tr class="trow" data-feat="chat" data-level="e2e" data-prio="P1" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-CH.5</td>
+  <td class="ctitle">tiktok-live-connector ไม่ติดตั้ง → oracle warn แต่ไม่ crash</td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-33"><span class="stb pending">รอเทส</span></td>
+</tr>
+<tr class="detail">
+  <td colspan="6"><div class="card">
+    <div class="h-title">tiktok-live-connector ไม่ติดตั้ง → oracle warn แต่ไม่ crash</div>
+    <div class="h-prio">Priority: <b>P1</b> · E2E · #4 chat (graceful degradation)</div>
+    <div class="sec"><h4>Precondition</h4><ul>
+      <li>ลบหรือ rename package tiktok-live-connector ออกชั่วคราว</li>
+      <li>หรือทดสอบบน environment ที่ไม่มี dep นี้</li>
+    </ul></div>
+    <div class="sec"><h4>Test Steps</h4><ol>
+      <li>Start Electron app โดยไม่มี tiktok-live-connector</li>
+      <li>Start session → live</li>
+      <li>ดู console log + chat panel</li>
+    </ol></div>
+    <div class="grid">
+      <div class="sec"><h4>Expected Result</h4><ul>
+        <li>log แสดง "[oracle] tiktok-live-connector not installed — live chat decode disabled"</li>
+        <li>app ไม่ crash</li>
+        <li>chat panel แสดง empty state (ไม่มี comment) ได้ปกติ</li>
+        <li>features อื่น (session, overlay, basket) ยังทำงาน</li>
+      </ul></div>
+      <div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div>
+    </div>
+    <div class="sec"><h4>Status</h4><div class="statusrow">
+      <span class="opt pass" data-uid="tc-33" data-st="pass">PASS</span>
+      <span class="opt fail" data-uid="tc-33" data-st="fail">FAIL</span>
+      <span class="opt hold" data-uid="tc-33" data-st="hold">HOLD</span>
+      <span class="opt block" data-uid="tc-33" data-st="block">BLOCKED</span>
+      <span class="opt skip" data-uid="tc-33" data-st="skip">SKIP</span>
+    </div></div>
+  </div></td>
+</tr>
+
+<tr class="epicrow"><td colspan="6">💰 #5 GMV — Gross Merchandise Value <span class="rp">(3 TCs)</span></td></tr>
+<tr class="featrow"><td colspan="6">📁 gmv — oracle push shop cookie → backend poll → SSE → GmvPanel <span class="rp"><span class="lv lvl-e2e">🔄 2</span> <span class="lv lvl-ui">🌐 1</span></span></td></tr>
+
+<tr class="trow" data-feat="gmv" data-level="e2e" data-prio="P0" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-GV.1</td>
+  <td class="ctitle">ไลฟ์ขึ้น → oracle push shop cookie → GMV panel แสดงยอดขาย</td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-18"><span class="stb pending">รอเทส</span></td>
+</tr>
+<tr class="detail">
+  <td colspan="6"><div class="card">
+    <div class="h-title">ไลฟ์ขึ้น → oracle push shop cookie → GMV panel แสดงยอดขาย</div>
+    <div class="h-prio">Priority: <b>P0</b> · E2E · #5 GMV</div>
+    <div class="sec"><h4>Precondition</h4><ul>
+      <li>account logged in บน shop.tiktok.com (มี uid_tt cookie)</li>
+      <li>session กำลัง live</li>
+      <li>มีการขายเกิดขึ้นในไลฟ์</li>
+    </ul></div>
+    <div class="sec"><h4>Test Steps</h4><ol>
+      <li>Start session → ไลฟ์</li>
+      <li>oracle pollCookies (ทุก 30s) push shop cookie</li>
+      <li>เปิด Session Detail → ดู GMV panel</li>
+    </ol></div>
+    <div class="grid">
+      <div class="sec"><h4>Expected Result</h4><ul>
+        <li>data-testid="gmv-panel" แสดงอยู่</li>
+        <li>ยอด GMV รวม (฿XX,XXX format th-TH)</li>
+        <li>จำนวน units + products แสดง</li>
+      </ul></div>
+      <div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div>
+    </div>
+    <div class="sec"><h4>Status</h4><div class="statusrow">
+      <span class="opt pass" data-uid="tc-18" data-st="pass">PASS</span>
+      <span class="opt fail" data-uid="tc-18" data-st="fail">FAIL</span>
+      <span class="opt hold" data-uid="tc-18" data-st="hold">HOLD</span>
+      <span class="opt block" data-uid="tc-18" data-st="block">BLOCKED</span>
+      <span class="opt skip" data-uid="tc-18" data-st="skip">SKIP</span>
+    </div></div>
+  </div></td>
+</tr>
+
+<tr class="trow" data-feat="gmv" data-level="ui" data-prio="P1" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-GV.2</td>
+  <td class="ctitle">GMV panel แสดง top products พร้อมยอดรายสินค้า</td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-19"><span class="stb pending">รอเทส</span></td>
+</tr>
+<tr class="detail">
+  <td colspan="6"><div class="card">
+    <div class="h-title">GMV panel แสดง top products พร้อมยอดรายสินค้า</div>
+    <div class="h-prio">Priority: <b>P1</b> · UI · #5 GMV</div>
+    <div class="sec"><h4>Test Steps</h4><ol>
+      <li>มียอดขายจากหลาย products</li>
+      <li>ดู GMV panel ส่วน top products</li>
+    </ol></div>
+    <div class="grid">
+      <div class="sec"><h4>Expected Result</h4><ul>
+        <li>รายการ top products เรียงตาม GMV สูงสุด</li>
+        <li>แต่ละ product แสดง ชื่อ + GMV + units</li>
+      </ul></div>
+      <div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div>
+    </div>
+    <div class="sec"><h4>Status</h4><div class="statusrow">
+      <span class="opt pass" data-uid="tc-19" data-st="pass">PASS</span>
+      <span class="opt fail" data-uid="tc-19" data-st="fail">FAIL</span>
+      <span class="opt hold" data-uid="tc-19" data-st="hold">HOLD</span>
+      <span class="opt block" data-uid="tc-19" data-st="block">BLOCKED</span>
+      <span class="opt skip" data-uid="tc-19" data-st="skip">SKIP</span>
+    </div></div>
+  </div></td>
+</tr>
+
+<tr class="trow" data-feat="gmv" data-level="e2e" data-prio="P1" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-GV.3</td>
+  <td class="ctitle">GMV อัพเดทอัตโนมัติ ~30s หลังมียอดขายใหม่</td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-20"><span class="stb pending">รอเทส</span></td>
+</tr>
+<tr class="detail">
+  <td colspan="6"><div class="card">
+    <div class="h-title">GMV อัพเดทอัตโนมัติ ~30s หลังมียอดขายใหม่</div>
+    <div class="h-prio">Priority: <b>P1</b> · E2E · #5 GMV</div>
+    <div class="sec"><h4>Test Steps</h4><ol>
+      <li>จด GMV ปัจจุบัน</li>
+      <li>มีการขายเพิ่ม (buy product ใน TikTok live)</li>
+      <li>รอ ~30-60s</li>
+      <li>ดู GMV panel อีกครั้ง</li>
+    </ol></div>
+    <div class="grid">
+      <div class="sec"><h4>Expected Result</h4><ul>
+        <li>ยอด GMV เพิ่มขึ้นตามยอดขายใหม่</li>
+        <li>ไม่ต้อง refresh หน้าเอง</li>
+      </ul></div>
+      <div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div>
+    </div>
+    <div class="sec"><h4>Status</h4><div class="statusrow">
+      <span class="opt pass" data-uid="tc-20" data-st="pass">PASS</span>
+      <span class="opt fail" data-uid="tc-20" data-st="fail">FAIL</span>
+      <span class="opt hold" data-uid="tc-20" data-st="hold">HOLD</span>
+      <span class="opt block" data-uid="tc-20" data-st="block">BLOCKED</span>
+      <span class="opt skip" data-uid="tc-20" data-st="skip">SKIP</span>
+    </div></div>
+  </div></td>
+</tr>
+
+<!-- ═══════════════════════════════════════════════ #6 Manual Reply ═══ -->
+<tr class="trow" data-feat="gmv" data-level="ui" data-prio="P1" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-GV.4</td>
+  <td class="ctitle">account ไม่มี shop cookie (ไม่ได้ login shop) → GMV panel แสดง placeholder</td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-34"><span class="stb pending">รอเทส</span></td>
+</tr>
+<tr class="detail">
+  <td colspan="6"><div class="card">
+    <div class="h-title">account ไม่มี shop cookie → GMV panel แสดง placeholder</div>
+    <div class="h-prio">Priority: <b>P1</b> · UI · #5 GMV (graceful empty state)</div>
+    <div class="sec"><h4>Precondition</h4><ul>
+      <li>account login ด้วย paste curl (ไม่ได้ผ่าน TikTok popup)</li>
+      <li>ไม่มี uid_tt cookie บน shop.tiktok.com</li>
+      <li>session กำลัง live</li>
+    </ul></div>
+    <div class="sec"><h4>Test Steps</h4><ol>
+      <li>Start session → live</li>
+      <li>เปิด Session Detail → ดู GMV panel</li>
+    </ol></div>
+    <div class="grid">
+      <div class="sec"><h4>Expected Result</h4><ul>
+        <li>GMV panel แสดง empty state หรือ placeholder message</li>
+        <li>ไม่แสดงตัวเลข 0 ที่ทำให้เข้าใจผิดว่า "ยอดขาย 0"</li>
+        <li>ไม่ crash และไม่ loop error</li>
+      </ul></div>
+      <div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div>
+    </div>
+    <div class="sec"><h4>Status</h4><div class="statusrow">
+      <span class="opt pass" data-uid="tc-34" data-st="pass">PASS</span>
+      <span class="opt fail" data-uid="tc-34" data-st="fail">FAIL</span>
+      <span class="opt hold" data-uid="tc-34" data-st="hold">HOLD</span>
+      <span class="opt block" data-uid="tc-34" data-st="block">BLOCKED</span>
+      <span class="opt skip" data-uid="tc-34" data-st="skip">SKIP</span>
+    </div></div>
+  </div></td>
+</tr>
+
+<tr class="epicrow"><td colspan="6">↩️ #6 Manual Reply Chat — ตอบแชทด้วยมือ <span class="rp">(4 TCs)</span></td></tr>
+<tr class="featrow"><td colspan="6">📁 reply — reply box → /ingest/chat-replies → oracle pollReplies → TikTok live <span class="rp"><span class="lv lvl-e2e">🔄 2</span> <span class="lv lvl-ui">🌐 2</span></span></td></tr>
+
+<tr class="trow" data-feat="reply" data-level="e2e" data-prio="P0" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-RP.1</td>
+  <td class="ctitle">พิมพ์ข้อความ → กด "ส่ง" → oracle ส่งข้อความเข้า TikTok live จริง</td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-21"><span class="stb pending">รอเทส</span></td>
+</tr>
+<tr class="detail">
+  <td colspan="6"><div class="card">
+    <div class="h-title">พิมพ์ข้อความ → กด "ส่ง" → oracle ส่งข้อความเข้า TikTok live จริง</div>
+    <div class="h-prio">Priority: <b>P0</b> · E2E · #6 reply</div>
+    <div class="sec"><h4>Precondition</h4><ul>
+      <li>session กำลัง live</li>
+      <li>oracle.js pollReplies รัน (interval 3s)</li>
+      <li>oracle มี roomId + streamer_desktop base URL แล้ว</li>
+    </ul></div>
+    <div class="sec"><h4>Test Steps</h4><ol>
+      <li>ใน Session Detail → reply box → พิมพ์ "ขอบคุณนะคะ 🙏"</li>
+      <li>กดปุ่ม "ส่ง" หรือ Enter</li>
+      <li>รอ ~3-5s</li>
+      <li>ดู TikTok live chat</li>
+    </ol></div>
+    <div class="grid">
+      <div class="sec"><h4>Expected Result</h4><ul>
+        <li>ข้อความ "ขอบคุณนะคะ 🙏" ปรากฏใน TikTok live chat จริง</li>
+        <li>chat panel แสดงข้อความด้วย self badge</li>
+        <li>reply box ล้างหลังส่ง</li>
+      </ul></div>
+      <div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div>
+    </div>
+    <div class="sec"><h4>Status</h4><div class="statusrow">
+      <span class="opt pass" data-uid="tc-21" data-st="pass">PASS</span>
+      <span class="opt fail" data-uid="tc-21" data-st="fail">FAIL</span>
+      <span class="opt hold" data-uid="tc-21" data-st="hold">HOLD</span>
+      <span class="opt block" data-uid="tc-21" data-st="block">BLOCKED</span>
+      <span class="opt skip" data-uid="tc-21" data-st="skip">SKIP</span>
+    </div></div>
+  </div></td>
+</tr>
+
+<tr class="trow" data-feat="reply" data-level="ui" data-prio="P0" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-RP.2</td>
+  <td class="ctitle">reply ล้มเหลว → แสดง "(ส่งไม่สำเร็จ)" ข้างข้อความ</td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-22"><span class="stb pending">รอเทส</span></td>
+</tr>
+<tr class="detail">
+  <td colspan="6"><div class="card">
+    <div class="h-title">reply ล้มเหลว → แสดง "(ส่งไม่สำเร็จ)" ข้างข้อความ</div>
+    <div class="h-prio">Priority: <b>P0</b> · UI · #6 reply</div>
+    <div class="sec"><h4>Precondition</h4><ul>
+      <li>oracle window ปิด หรือ TikTok API ตอบ error</li>
+      <li>backend ส่ง reply-result กลับมาว่า ok: false</li>
+    </ul></div>
+    <div class="sec"><h4>Test Steps</h4><ol>
+      <li>ส่ง reply ขณะ oracle ไม่พร้อม</li>
+      <li>รอ result กลับมา</li>
+      <li>ดูข้อความใน chat panel</li>
+    </ol></div>
+    <div class="grid">
+      <div class="sec"><h4>Expected Result</h4><ul>
+        <li>ข้อความแสดงพร้อม "(ส่งไม่สำเร็จ)" tag</li>
+        <li>ไม่หายไปจาก panel</li>
+        <li>ไม่ crash app</li>
+      </ul></div>
+      <div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div>
+    </div>
+    <div class="sec"><h4>Status</h4><div class="statusrow">
+      <span class="opt pass" data-uid="tc-22" data-st="pass">PASS</span>
+      <span class="opt fail" data-uid="tc-22" data-st="fail">FAIL</span>
+      <span class="opt hold" data-uid="tc-22" data-st="hold">HOLD</span>
+      <span class="opt block" data-uid="tc-22" data-st="block">BLOCKED</span>
+      <span class="opt skip" data-uid="tc-22" data-st="skip">SKIP</span>
+    </div></div>
+  </div></td>
+</tr>
+
+<tr class="trow" data-feat="reply" data-level="ui" data-prio="P1" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-RP.3</td>
+  <td class="ctitle">ข้อความว่าง → ปุ่ม "ส่ง" disabled</td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-23"><span class="stb pending">รอเทส</span></td>
+</tr>
+<tr class="detail">
+  <td colspan="6"><div class="card">
+    <div class="h-title">ข้อความว่าง → ปุ่ม "ส่ง" disabled</div>
+    <div class="h-prio">Priority: <b>P1</b> · UI · #6 reply</div>
+    <div class="sec"><h4>Test Steps</h4><ol>
+      <li>เปิด Session Detail (session กำลัง live)</li>
+      <li>ดูปุ่ม "ส่ง" โดยไม่พิมพ์อะไร</li>
+      <li>ลอง Enter ใน reply box</li>
+    </ol></div>
+    <div class="grid">
+      <div class="sec"><h4>Expected Result</h4><ul>
+        <li>ปุ่ม "ส่ง" disabled (คลิกไม่ได้)</li>
+        <li>Enter ไม่ส่งข้อความ</li>
+        <li>ไม่มี API call</li>
+      </ul></div>
+      <div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div>
+    </div>
+    <div class="sec"><h4>Status</h4><div class="statusrow">
+      <span class="opt pass" data-uid="tc-23" data-st="pass">PASS</span>
+      <span class="opt fail" data-uid="tc-23" data-st="fail">FAIL</span>
+      <span class="opt hold" data-uid="tc-23" data-st="hold">HOLD</span>
+      <span class="opt block" data-uid="tc-23" data-st="block">BLOCKED</span>
+      <span class="opt skip" data-uid="tc-23" data-st="skip">SKIP</span>
+    </div></div>
+  </div></td>
+</tr>
+
+<tr class="trow" data-feat="reply" data-level="e2e" data-prio="P0" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-RP.4</td>
+  <td class="ctitle">reply สำเร็จ → แสดงใน chat panel ด้วย self styling (ต่างจาก viewer)</td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-24"><span class="stb pending">รอเทส</span></td>
+</tr>
+<tr class="detail">
+  <td colspan="6"><div class="card">
+    <div class="h-title">reply สำเร็จ → แสดงใน chat panel ด้วย self styling (ต่างจาก viewer)</div>
+    <div class="h-prio">Priority: <b>P0</b> · E2E · #6 reply</div>
+    <div class="sec"><h4>Test Steps</h4><ol>
+      <li>ส่ง reply สำเร็จ (TC-RP.1 ผ่านก่อน)</li>
+      <li>ดูรูปแบบของข้อความใน chat panel</li>
+      <li>เปรียบเทียบกับ comment ของ viewer ทั่วไป</li>
+    </ol></div>
+    <div class="grid">
+      <div class="sec"><h4>Expected Result</h4><ul>
+        <li>ข้อความของเรา (self: true) แสดง styling ที่ต่างจาก viewer</li>
+        <li>เช่น สีอื่น / aligned ขวา / badge "ผม/ฉัน"</li>
+        <li>ชัดเจนว่าเป็นข้อความที่ host ส่ง</li>
+      </ul></div>
+      <div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div>
+    </div>
+    <div class="sec"><h4>Status</h4><div class="statusrow">
+      <span class="opt pass" data-uid="tc-24" data-st="pass">PASS</span>
+      <span class="opt fail" data-uid="tc-24" data-st="fail">FAIL</span>
+      <span class="opt hold" data-uid="tc-24" data-st="hold">HOLD</span>
+      <span class="opt block" data-uid="tc-24" data-st="block">BLOCKED</span>
+      <span class="opt skip" data-uid="tc-24" data-st="skip">SKIP</span>
+    </div></div>
+  </div></td>
+</tr>
+
+<!-- ═══════════════════════════════════════════════ #7 Login ═══ -->
+<tr class="trow" data-feat="reply" data-level="ui" data-prio="P1" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-RP.5</td>
+  <td class="ctitle">session ไม่ live → reply box ไม่แสดง</td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-35"><span class="stb pending">รอเทส</span></td>
+</tr>
+<tr class="detail">
+  <td colspan="6"><div class="card">
+    <div class="h-title">session ไม่ live → reply box ไม่แสดง</div>
+    <div class="h-prio">Priority: <b>P1</b> · UI · #6 reply (guard)</div>
+    <div class="sec"><h4>Precondition</h4><ul>
+      <li>session state เป็น "stopped" หรือ "idle"</li>
+    </ul></div>
+    <div class="sec"><h4>Test Steps</h4><ol>
+      <li>เปิด Session Detail ของ session ที่ไม่ live</li>
+      <li>ดูบริเวณ chat panel</li>
+    </ol></div>
+    <div class="grid">
+      <div class="sec"><h4>Expected Result</h4><ul>
+        <li>ไม่มี reply input box (aria-label="ตอบแชท")</li>
+        <li>ไม่มีปุ่ม "ส่ง"</li>
+        <li>chat panel ยังแสดง history (ถ้ามี) ได้ปกติ</li>
+      </ul></div>
+      <div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div>
+    </div>
+    <div class="sec"><h4>Status</h4><div class="statusrow">
+      <span class="opt pass" data-uid="tc-35" data-st="pass">PASS</span>
+      <span class="opt fail" data-uid="tc-35" data-st="fail">FAIL</span>
+      <span class="opt hold" data-uid="tc-35" data-st="hold">HOLD</span>
+      <span class="opt block" data-uid="tc-35" data-st="block">BLOCKED</span>
+      <span class="opt skip" data-uid="tc-35" data-st="skip">SKIP</span>
+    </div></div>
+  </div></td>
+</tr>
+
+<tr class="epicrow"><td colspan="6">🔑 #7 Improve Curl K.Book — Login / Scan QR <span class="rp">(4 TCs)</span></td></tr>
+<tr class="featrow"><td colspan="6">📁 login — tiktok:addViaLogin popup → curl synthesize → POST /api/v1/accounts <span class="rp"><span class="lv lvl-e2e">🔄 3</span> <span class="lv lvl-ui">🌐 1</span></span></td></tr>
+
+<tr class="trow" data-feat="login" data-level="e2e" data-prio="P0" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-LG.1</td>
+  <td class="ctitle">เพิ่มบัญชีผ่าน "Login ด้วย TikTok" popup → account สร้างพร้อม verified</td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-25"><span class="stb pending">รอเทส</span></td>
+</tr>
+<tr class="detail">
+  <td colspan="6"><div class="card">
+    <div class="h-title">เพิ่มบัญชีผ่าน "Login ด้วย TikTok" popup → account สร้างพร้อม verified</div>
+    <div class="h-prio">Priority: <b>P0</b> · E2E · #7 login</div>
+    <div class="sec"><h4>Precondition</h4><ul>
+      <li>เปิดบน Electron desktop app</li>
+      <li>มี TikTok account credentials พร้อม login</li>
+    </ul></div>
+    <div class="sec"><h4>Test Steps</h4><ol>
+      <li>กดปุ่ม "เพิ่มบัญชี"</li>
+      <li>เลือก "Login ด้วย TikTok" (ipcMain handle tiktok:addViaLogin)</li>
+      <li>popup เปิด → login ด้วย credentials จริง</li>
+      <li>รอ popup ปิดอัตโนมัติ (capture webcast request)</li>
+    </ol></div>
+    <div class="grid">
+      <div class="sec"><h4>Expected Result</h4><ul>
+        <li>popup ปิด, account ปรากฏในรายการ</li>
+        <li>status badge "verified" สีเขียว</li>
+        <li>credential เป็น cookie จาก webcast request (ไม่ต้องวาง curl เอง)</li>
+        <li>backend POST /api/v1/accounts สำเร็จ</li>
+      </ul></div>
+      <div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div>
+    </div>
+    <div class="sec"><h4>Status</h4><div class="statusrow">
+      <span class="opt pass" data-uid="tc-25" data-st="pass">PASS</span>
+      <span class="opt fail" data-uid="tc-25" data-st="fail">FAIL</span>
+      <span class="opt hold" data-uid="tc-25" data-st="hold">HOLD</span>
+      <span class="opt block" data-uid="tc-25" data-st="block">BLOCKED</span>
+      <span class="opt skip" data-uid="tc-25" data-st="skip">SKIP</span>
+    </div></div>
+  </div></td>
+</tr>
+
+<tr class="trow" data-feat="login" data-level="e2e" data-prio="P0" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-LG.2</td>
+  <td class="ctitle">ยกเลิก popup ก่อน login เสร็จ → ไม่สร้าง account</td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-26"><span class="stb pending">รอเทส</span></td>
+</tr>
+<tr class="detail">
+  <td colspan="6"><div class="card">
+    <div class="h-title">ยกเลิก popup ก่อน login เสร็จ → ไม่สร้าง account</div>
+    <div class="h-prio">Priority: <b>P0</b> · E2E · #7 login</div>
+    <div class="sec"><h4>Test Steps</h4><ol>
+      <li>กด "Login ด้วย TikTok" → popup เปิด</li>
+      <li>ปิด popup กลาง (ก่อน login ครบ)</li>
+      <li>ดูรายการ accounts</li>
+    </ol></div>
+    <div class="grid">
+      <div class="sec"><h4>Expected Result</h4><ul>
+        <li>ไม่มี account ใหม่ในรายการ</li>
+        <li>ไม่มี error notification</li>
+        <li>app ยังทำงานปกติ</li>
+      </ul></div>
+      <div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div>
+    </div>
+    <div class="sec"><h4>Status</h4><div class="statusrow">
+      <span class="opt pass" data-uid="tc-26" data-st="pass">PASS</span>
+      <span class="opt fail" data-uid="tc-26" data-st="fail">FAIL</span>
+      <span class="opt hold" data-uid="tc-26" data-st="hold">HOLD</span>
+      <span class="opt block" data-uid="tc-26" data-st="block">BLOCKED</span>
+      <span class="opt skip" data-uid="tc-26" data-st="skip">SKIP</span>
+    </div></div>
+  </div></td>
+</tr>
+
+<tr class="trow" data-feat="login" data-level="e2e" data-prio="P1" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-LG.3</td>
+  <td class="ctitle">Login สำเร็จ → wizard ย้ายไป step 2 (verify success) อัตโนมัติ</td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-27"><span class="stb pending">รอเทส</span></td>
+</tr>
+<tr class="detail">
+  <td colspan="6"><div class="card">
+    <div class="h-title">Login สำเร็จ → wizard ย้ายไป step 2 (verify success) อัตโนมัติ</div>
+    <div class="h-prio">Priority: <b>P1</b> · E2E · #7 login</div>
+    <div class="sec"><h4>Test Steps</h4><ol>
+      <li>เริ่ม AddAccountWizard → เลือก Login popup</li>
+      <li>Login ใน popup สำเร็จ → popup ปิด</li>
+      <li>ดู wizard state</li>
+    </ol></div>
+    <div class="grid">
+      <div class="sec"><h4>Expected Result</h4><ul>
+        <li>wizard ข้ามไป step 2 โดยอัตโนมัติ</li>
+        <li>แสดง "เชื่อมต่อสำเร็จ" หรือ verified indicator</li>
+        <li>ไม่ต้องกด confirm เพิ่ม</li>
+      </ul></div>
+      <div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div>
+    </div>
+    <div class="sec"><h4>Status</h4><div class="statusrow">
+      <span class="opt pass" data-uid="tc-27" data-st="pass">PASS</span>
+      <span class="opt fail" data-uid="tc-27" data-st="fail">FAIL</span>
+      <span class="opt hold" data-uid="tc-27" data-st="hold">HOLD</span>
+      <span class="opt block" data-uid="tc-27" data-st="block">BLOCKED</span>
+      <span class="opt skip" data-uid="tc-27" data-st="skip">SKIP</span>
+    </div></div>
+  </div></td>
+</tr>
+
+<tr class="trow" data-feat="login" data-level="ui" data-prio="P1" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-LG.4</td>
+  <td class="ctitle">เปิดบน web browser → ไม่มีปุ่ม "Login ด้วย TikTok"</td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-28"><span class="stb pending">รอเทส</span></td>
+</tr>
+<tr class="detail">
+  <td colspan="6"><div class="card">
+    <div class="h-title">เปิดบน web browser → ไม่มีปุ่ม "Login ด้วย TikTok"</div>
+    <div class="h-prio">Priority: <b>P1</b> · UI · #7 login (desktop-only guard)</div>
+    <div class="sec"><h4>Test Steps</h4><ol>
+      <li>เปิด http://localhost:3040 ใน browser ปกติ</li>
+      <li>กด "เพิ่มบัญชี"</li>
+      <li>ดูตัวเลือกใน AddAccountWizard</li>
+    </ol></div>
+    <div class="grid">
+      <div class="sec"><h4>Expected Result</h4><ul>
+        <li>ไม่มีปุ่ม "Login ด้วย TikTok"</li>
+        <li>มีแค่ช่อง paste curl</li>
+        <li>ไม่มี error หรือ broken UI</li>
+      </ul></div>
+      <div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div>
+    </div>
+    <div class="sec"><h4>Status</h4><div class="statusrow">
+      <span class="opt pass" data-uid="tc-28" data-st="pass">PASS</span>
+      <span class="opt fail" data-uid="tc-28" data-st="fail">FAIL</span>
+      <span class="opt hold" data-uid="tc-28" data-st="hold">HOLD</span>
+      <span class="opt block" data-uid="tc-28" data-st="block">BLOCKED</span>
+      <span class="opt skip" data-uid="tc-28" data-st="skip">SKIP</span>
+    </div></div>
+  </div></td>
+</tr>
+
+<!-- ═══════════════════════════════════════════════ #8 Audio Drop ═══ -->
+<tr class="trow" data-feat="login" data-level="e2e" data-prio="P1" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-LG.5</td>
+  <td class="ctitle">login popup เปิดแต่ TikTok ไม่ fire webcast request → timeout แสดง error</td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-36"><span class="stb pending">รอเทส</span></td>
+</tr>
+<tr class="detail">
+  <td colspan="6"><div class="card">
+    <div class="h-title">login popup เปิดแต่ TikTok ไม่ fire webcast request → timeout แสดง error</div>
+    <div class="h-prio">Priority: <b>P1</b> · E2E · #7 login (timeout / edge case)</div>
+    <div class="sec"><h4>Precondition</h4><ul>
+      <li>desktop app เปิด</li>
+      <li>สถานการณ์: login สำเร็จแต่ไม่ได้เข้า Live Center (TikTok ไม่ fire webcast request)</li>
+    </ul></div>
+    <div class="sec"><h4>Test Steps</h4><ol>
+      <li>กด "Login ด้วย TikTok" → popup เปิด</li>
+      <li>login สำเร็จแต่ไม่เข้า Live Center</li>
+      <li>รอ popup นาน (เกิน timeout ที่ตั้งไว้)</li>
+    </ol></div>
+    <div class="grid">
+      <div class="sec"><h4>Expected Result</h4><ul>
+        <li>popup ปิดอัตโนมัติหลัง timeout</li>
+        <li>แสดง error "ไม่พบ webcast request กรุณาเข้า Live Center ก่อน" หรือใกล้เคียง</li>
+        <li>ไม่สร้าง account ที่ใช้งานไม่ได้</li>
+        <li>user สามารถลองใหม่ได้</li>
+      </ul></div>
+      <div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div>
+    </div>
+    <div class="sec"><h4>Status</h4><div class="statusrow">
+      <span class="opt pass" data-uid="tc-36" data-st="pass">PASS</span>
+      <span class="opt fail" data-uid="tc-36" data-st="fail">FAIL</span>
+      <span class="opt hold" data-uid="tc-36" data-st="hold">HOLD</span>
+      <span class="opt block" data-uid="tc-36" data-st="block">BLOCKED</span>
+      <span class="opt skip" data-uid="tc-36" data-st="skip">SKIP</span>
+    </div></div>
+  </div></td>
+</tr>
+
+<tr class="epicrow"><td colspan="6">🔊 #8 Check Video Audio Drop &gt; 3 min <span class="rp">(1 TC)</span></td></tr>
+<tr class="featrow"><td colspan="6">📁 audio-monitor — ตรวจจับเสียงหลุดเกิน 3 นาที → แจ้งเตือน <span class="rp">⚠️ ยังไม่มี implementation</span></td></tr>
+
+<tr class="trow" data-feat="audio" data-level="e2e" data-prio="P1" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-AD.1</td>
+  <td class="ctitle">[BLOCKED] วิดีโอเสียงหลุดเกิน 3 นาที → ระบบแจ้งเตือน operator</td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-29"><span class="stb block">BLOCKED</span></td>
+</tr>
+<tr class="detail">
+  <td colspan="6"><div class="card">
+    <div class="h-title">[BLOCKED] วิดีโอเสียงหลุดเกิน 3 นาที → ระบบแจ้งเตือน</div>
+    <div class="h-prio">Priority: <b>P1</b> · E2E · #8 audio-monitor</div>
+    <div class="sec"><h4>Precondition</h4><ul>
+      <li>⛔ <b>BLOCKED</b>: ยังไม่มี implementation (audio drop detection ไม่อยู่ใน codebase)</li>
+      <li>ต้องเพิ่ม: ffprobe/ffmpeg silencedetect filter หรือ monitor loop ตรวจสอบ audio level</li>
+    </ul></div>
+    <div class="sec"><h4>Test Steps</h4><ol>
+      <li>(รอ implement ก่อน)</li>
+      <li>ใช้ video clip ที่มีเสียงหลุด (silent) เกิน 3 นาที</li>
+      <li>Start session</li>
+      <li>รอ 3+ นาที</li>
+    </ol></div>
+    <div class="grid">
+      <div class="sec"><h4>Expected Result</h4><ul>
+        <li>ระบบตรวจจับ audio silence เกิน 3 นาที</li>
+        <li>แจ้งเตือนผ่าน Telegram หรือ UI notification</li>
+        <li>บันทึกใน audit log</li>
+      </ul></div>
+      <div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div>
+    </div>
+    <div class="sec"><h4>Status</h4><div class="statusrow">
+      <span class="opt pass" data-uid="tc-29" data-st="pass">PASS</span>
+      <span class="opt fail" data-uid="tc-29" data-st="fail">FAIL</span>
+      <span class="opt hold" data-uid="tc-29" data-st="hold">HOLD</span>
+      <span class="opt block" data-uid="tc-29" data-st="block">BLOCKED</span>
+      <span class="opt skip" data-uid="tc-29" data-st="skip">SKIP</span>
+    </div></div>
+  </div></td>
+</tr>
+
+<!-- ═══════════════════════════════════════════════ Auth ═══ -->
+<tr class="epicrow"><td colspan="6">🔐 App Auth — Login / Logout Takra Rerun (Zitadel OIDC) <span class="rp">(5 TCs)</span></td></tr>
+<tr class="featrow"><td colspan="6">📁 auth — OIDC PKCE flow · session cookie · route guard <span class="rp"><span class="lv lvl-e2e">🔄 4</span> <span class="lv lvl-ui">🌐 1</span></span></td></tr>
+
+<tr class="trow" data-feat="auth" data-level="e2e" data-prio="P0" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-AUTH.1</td>
+  <td class="ctitle">เปิด app ครั้งแรก (ยังไม่ login) → redirect ไปหน้า Login อัตโนมัติ</td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-38"><span class="stb pending">รอเทส</span></td>
+</tr>
+<tr class="detail">
+  <td colspan="6"><div class="card">
+    <div class="h-title">เปิด app ครั้งแรก (ยังไม่ login) → redirect ไปหน้า Login อัตโนมัติ</div>
+    <div class="h-prio">Priority: <b>P0</b> · E2E · App Auth</div>
+    <div class="sec"><h4>Precondition</h4><ul>
+      <li>เปิด Electron app หรือ browser ใหม่ (ไม่มี session cookie)</li>
+      <li>ยังไม่เคย login</li>
+    </ul></div>
+    <div class="sec"><h4>Test Steps</h4><ol>
+      <li>เปิด app / เปิด http://localhost:3040</li>
+      <li>สังเกต URL / หน้าที่แสดง</li>
+    </ol></div>
+    <div class="grid">
+      <div class="sec"><h4>Expected Result</h4><ul>
+        <li>redirect ไปหน้า Login (LoginScreen) อัตโนมัติ</li>
+        <li>ไม่แสดง dashboard หรือข้อมูล account ก่อน login</li>
+        <li>มีปุ่ม "เข้าสู่ระบบ" ชัดเจน</li>
+      </ul></div>
+      <div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div>
+    </div>
+    <div class="sec"><h4>Status</h4><div class="statusrow">
+      <span class="opt pass" data-uid="tc-38" data-st="pass">PASS</span>
+      <span class="opt fail" data-uid="tc-38" data-st="fail">FAIL</span>
+      <span class="opt hold" data-uid="tc-38" data-st="hold">HOLD</span>
+      <span class="opt block" data-uid="tc-38" data-st="block">BLOCKED</span>
+      <span class="opt skip" data-uid="tc-38" data-st="skip">SKIP</span>
+    </div></div>
+  </div></td>
+</tr>
+
+<tr class="trow" data-feat="auth" data-level="e2e" data-prio="P0" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-AUTH.2</td>
+  <td class="ctitle">Login ผ่าน Zitadel OIDC สำเร็จ → redirect กลับ app → เห็น dashboard</td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-39"><span class="stb pending">รอเทส</span></td>
+</tr>
+<tr class="detail">
+  <td colspan="6"><div class="card">
+    <div class="h-title">Login ผ่าน Zitadel OIDC สำเร็จ → redirect กลับ app → เห็น dashboard</div>
+    <div class="h-prio">Priority: <b>P0</b> · E2E · App Auth (PKCE flow)</div>
+    <div class="sec"><h4>Precondition</h4><ul>
+      <li>Zitadel service รันอยู่ (local docker หรือ cloud)</li>
+      <li>มี user account ใน Zitadel พร้อม workspace</li>
+    </ul></div>
+    <div class="sec"><h4>Test Steps</h4><ol>
+      <li>กดปุ่ม "เข้าสู่ระบบ" บนหน้า Login</li>
+      <li>กรอก email + password บนหน้า Zitadel</li>
+      <li>กด Login → รอ redirect กลับ /auth/callback</li>
+      <li>ดูหน้าที่แสดง</li>
+    </ol></div>
+    <div class="grid">
+      <div class="sec"><h4>Expected Result</h4><ul>
+        <li>redirect กลับ app ที่ /auth/callback → เข้า dashboard</li>
+        <li>session cookie set แล้ว</li>
+        <li>แสดง accounts list หรือ welcome screen</li>
+        <li>ชื่อ user / workspace แสดงใน navbar</li>
+      </ul></div>
+      <div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div>
+    </div>
+    <div class="sec"><h4>Status</h4><div class="statusrow">
+      <span class="opt pass" data-uid="tc-39" data-st="pass">PASS</span>
+      <span class="opt fail" data-uid="tc-39" data-st="fail">FAIL</span>
+      <span class="opt hold" data-uid="tc-39" data-st="hold">HOLD</span>
+      <span class="opt block" data-uid="tc-39" data-st="block">BLOCKED</span>
+      <span class="opt skip" data-uid="tc-39" data-st="skip">SKIP</span>
+    </div></div>
+  </div></td>
+</tr>
+
+<tr class="trow" data-feat="auth" data-level="e2e" data-prio="P0" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-AUTH.3</td>
+  <td class="ctitle">Logout → session cookie clear → redirect กลับหน้า Login</td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-40"><span class="stb pending">รอเทส</span></td>
+</tr>
+<tr class="detail">
+  <td colspan="6"><div class="card">
+    <div class="h-title">Logout → session cookie clear → redirect กลับหน้า Login</div>
+    <div class="h-prio">Priority: <b>P0</b> · E2E · App Auth</div>
+    <div class="sec"><h4>Precondition</h4><ul>
+      <li>Login เข้า app แล้ว (TC-AUTH.2 ผ่าน)</li>
+    </ul></div>
+    <div class="sec"><h4>Test Steps</h4><ol>
+      <li>คลิก Logout (จาก navbar หรือ user menu)</li>
+      <li>ยืนยัน (ถ้ามี confirm dialog)</li>
+      <li>สังเกต URL + หน้าที่แสดง</li>
+      <li>ลอง navigate ไป /accounts โดยตรง</li>
+    </ol></div>
+    <div class="grid">
+      <div class="sec"><h4>Expected Result</h4><ul>
+        <li>session cookie ถูก clear</li>
+        <li>redirect ไปหน้า Login</li>
+        <li>navigate ไป /accounts → redirect กลับ Login (route guard ทำงาน)</li>
+        <li>ไม่เห็นข้อมูล account หลัง logout</li>
+      </ul></div>
+      <div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div>
+    </div>
+    <div class="sec"><h4>Status</h4><div class="statusrow">
+      <span class="opt pass" data-uid="tc-40" data-st="pass">PASS</span>
+      <span class="opt fail" data-uid="tc-40" data-st="fail">FAIL</span>
+      <span class="opt hold" data-uid="tc-40" data-st="hold">HOLD</span>
+      <span class="opt block" data-uid="tc-40" data-st="block">BLOCKED</span>
+      <span class="opt skip" data-uid="tc-40" data-st="skip">SKIP</span>
+    </div></div>
+  </div></td>
+</tr>
+
+<tr class="trow" data-feat="auth" data-level="ui" data-prio="P0" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-AUTH.4</td>
+  <td class="ctitle">เข้า URL ตรง (/accounts) โดยไม่ login → route guard redirect หน้า Login</td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-41"><span class="stb pending">รอเทส</span></td>
+</tr>
+<tr class="detail">
+  <td colspan="6"><div class="card">
+    <div class="h-title">เข้า URL ตรง (/accounts) โดยไม่ login → route guard redirect หน้า Login</div>
+    <div class="h-prio">Priority: <b>P0</b> · UI · App Auth (route guard)</div>
+    <div class="sec"><h4>Precondition</h4><ul>
+      <li>ไม่มี session cookie (ยังไม่ login หรือ logout แล้ว)</li>
+    </ul></div>
+    <div class="sec"><h4>Test Steps</h4><ol>
+      <li>พิมพ์ URL http://localhost:3040/accounts ตรงๆ ใน address bar</li>
+      <li>กด Enter</li>
+    </ol></div>
+    <div class="grid">
+      <div class="sec"><h4>Expected Result</h4><ul>
+        <li>redirect ไปหน้า Login ทันที</li>
+        <li>ไม่แสดง accounts data แม้ชั่วขณะ (no flash of content)</li>
+        <li>route guard ทำงานก่อน render</li>
+      </ul></div>
+      <div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div>
+    </div>
+    <div class="sec"><h4>Status</h4><div class="statusrow">
+      <span class="opt pass" data-uid="tc-41" data-st="pass">PASS</span>
+      <span class="opt fail" data-uid="tc-41" data-st="fail">FAIL</span>
+      <span class="opt hold" data-uid="tc-41" data-st="hold">HOLD</span>
+      <span class="opt block" data-uid="tc-41" data-st="block">BLOCKED</span>
+      <span class="opt skip" data-uid="tc-41" data-st="skip">SKIP</span>
+    </div></div>
+  </div></td>
+</tr>
+
+<tr class="trow" data-feat="auth" data-level="e2e" data-prio="P1" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-AUTH.5</td>
+  <td class="ctitle">Session หมดอายุ → refresh page → redirect หน้า Login อัตโนมัติ</td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-42"><span class="stb pending">รอเทส</span></td>
+</tr>
+<tr class="detail">
+  <td colspan="6"><div class="card">
+    <div class="h-title">Session หมดอายุ → refresh page → redirect หน้า Login อัตโนมัติ</div>
+    <div class="h-prio">Priority: <b>P1</b> · E2E · App Auth (session expiry)</div>
+    <div class="sec"><h4>Precondition</h4><ul>
+      <li>Login แล้ว</li>
+      <li>ลบ session cookie ด้วยมือ (DevTools → Application → Cookies → ลบ) หรือรอให้หมดอายุจริง</li>
+    </ul></div>
+    <div class="sec"><h4>Test Steps</h4><ol>
+      <li>Login เข้า app</li>
+      <li>ลบ session cookie จาก DevTools</li>
+      <li>Refresh หน้า (F5 / Cmd+R)</li>
+      <li>สังเกตพฤติกรรม</li>
+    </ol></div>
+    <div class="grid">
+      <div class="sec"><h4>Expected Result</h4><ul>
+        <li>redirect ไปหน้า Login</li>
+        <li>ไม่แสดง 500 error หรือ broken UI</li>
+        <li>login ใหม่แล้วกลับมาได้ปกติ</li>
+      </ul></div>
+      <div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div>
+    </div>
+    <div class="sec"><h4>Status</h4><div class="statusrow">
+      <span class="opt pass" data-uid="tc-42" data-st="pass">PASS</span>
+      <span class="opt fail" data-uid="tc-42" data-st="fail">FAIL</span>
+      <span class="opt hold" data-uid="tc-42" data-st="hold">HOLD</span>
+      <span class="opt block" data-uid="tc-42" data-st="block">BLOCKED</span>
+      <span class="opt skip" data-uid="tc-42" data-st="skip">SKIP</span>
+    </div></div>
+  </div></td>
+</tr>
+
+<!-- ═══════════════════════════════════════════════ Video ═══ -->
+<tr class="epicrow"><td colspan="6">🎬 เมนูวีดีโอ — Video Library <span class="rp">(6 TCs)</span></td></tr>
+<tr class="featrow"><td colspan="6">📁 video — อัปโหลด · preview · ลบ · quota <span class="rp"><span class="lv lvl-ui">🌐 5</span> <span class="lv lvl-e2e">🔄 1</span></span></td></tr>
+
+<tr class="trow" data-feat="video" data-level="ui" data-prio="P0" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-VD.1</td>
+  <td class="ctitle">อัปโหลดวีดีโอ → แสดงในรายการพร้อมชื่อและขนาด</td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td><td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-43"><span class="stb pending">รอเทส</span></td>
+</tr>
+<tr class="detail"><td colspan="6"><div class="card">
+  <div class="h-title">อัปโหลดวีดีโอ → แสดงในรายการพร้อมชื่อและขนาด</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · เมนูวีดีโอ</div>
+  <div class="sec"><h4>Test Steps</h4><ol>
+    <li>เปิดเมนู "วีดีโอ"</li>
+    <li>กดปุ่ม "อัปโหลด" หรือ drag-and-drop ไฟล์ .mp4</li>
+    <li>รอ upload เสร็จ</li>
+  </ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul>
+      <li>ไฟล์ปรากฏในรายการพร้อมชื่อ + ขนาดไฟล์</li>
+      <li>quota bar อัพเดท</li>
+      <li>ไม่มี error</li>
+    </ul></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-43" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-43" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-43" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-43" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-43" data-st="skip">SKIP</span>
+  </div></div>
+</div></td></tr>
+
+<tr class="trow" data-feat="video" data-level="ui" data-prio="P0" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-VD.2</td>
+  <td class="ctitle">คลิก preview วีดีโอ → VideoPreviewDialog เปิดและเล่นได้</td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td><td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-44"><span class="stb pending">รอเทส</span></td>
+</tr>
+<tr class="detail"><td colspan="6"><div class="card">
+  <div class="h-title">คลิก preview วีดีโอ → VideoPreviewDialog เปิดและเล่นได้</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · เมนูวีดีโอ</div>
+  <div class="sec"><h4>Test Steps</h4><ol>
+    <li>มีวีดีโอในรายการอยู่แล้ว</li>
+    <li>คลิกปุ่ม preview / thumbnail ของวีดีโอ</li>
+    <li>ดู dialog ที่เปิดขึ้น</li>
+  </ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul>
+      <li>VideoPreviewDialog เปิด</li>
+      <li>กด play → วีดีโอเล่นได้</li>
+      <li>ปิด dialog → กลับรายการปกติ</li>
+    </ul></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-44" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-44" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-44" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-44" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-44" data-st="skip">SKIP</span>
+  </div></div>
+</div></td></tr>
+
+<tr class="trow" data-feat="video" data-level="ui" data-prio="P0" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-VD.3</td>
+  <td class="ctitle">ลบวีดีโอ → ยืนยัน → หายจากรายการ + quota ลด</td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td><td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-45"><span class="stb pending">รอเทส</span></td>
+</tr>
+<tr class="detail"><td colspan="6"><div class="card">
+  <div class="h-title">ลบวีดีโอ → ยืนยัน → หายจากรายการ + quota ลด</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · เมนูวีดีโอ</div>
+  <div class="sec"><h4>Test Steps</h4><ol>
+    <li>คลิกปุ่มลบบนวีดีโอที่ต้องการ</li>
+    <li>ยืนยันใน DeleteVideoDialog</li>
+  </ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul>
+      <li>วีดีโอหายจากรายการ</li>
+      <li>quota bar ลดลงตามขนาดไฟล์</li>
+      <li>ยกเลิกใน dialog → วีดีโอยังอยู่</li>
+    </ul></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-45" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-45" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-45" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-45" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-45" data-st="skip">SKIP</span>
+  </div></div>
+</div></td></tr>
+
+<tr class="trow" data-feat="video" data-level="ui" data-prio="P1" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-VD.4</td>
+  <td class="ctitle">อัปโหลดไฟล์ที่ไม่ใช่ video → validation error แสดง</td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td><td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-46"><span class="stb pending">รอเทส</span></td>
+</tr>
+<tr class="detail"><td colspan="6"><div class="card">
+  <div class="h-title">อัปโหลดไฟล์ที่ไม่ใช่ video → validation error แสดง</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · เมนูวีดีโอ</div>
+  <div class="sec"><h4>Test Steps</h4><ol>
+    <li>ลอง drag-and-drop ไฟล์ .pdf หรือ .jpg</li>
+  </ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul>
+      <li>แสดง error "ไฟล์ไม่ถูกต้อง รองรับเฉพาะ video"</li>
+      <li>ไม่มี API call</li>
+      <li>รายการไม่เปลี่ยน</li>
+    </ul></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-46" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-46" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-46" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-46" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-46" data-st="skip">SKIP</span>
+  </div></div>
+</div></td></tr>
+
+<tr class="trow" data-feat="video" data-level="ui" data-prio="P1" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-VD.5</td>
+  <td class="ctitle">Quota เต็ม → อัปโหลดเพิ่มไม่ได้ + แสดง quota banner</td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td><td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-47"><span class="stb pending">รอเทส</span></td>
+</tr>
+<tr class="detail"><td colspan="6"><div class="card">
+  <div class="h-title">Quota เต็ม → อัปโหลดเพิ่มไม่ได้ + แสดง quota banner</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · เมนูวีดีโอ</div>
+  <div class="sec"><h4>Test Steps</h4><ol>
+    <li>อัปโหลดจนเต็ม quota ของ workspace</li>
+    <li>ลองอัปโหลดไฟล์เพิ่มอีก</li>
+  </ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul>
+      <li>quota bar เต็ม (แดง)</li>
+      <li>ปุ่มอัปโหลด disabled หรือแสดง error "quota เต็ม"</li>
+      <li>EntitlementBanner แสดง</li>
+    </ul></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-47" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-47" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-47" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-47" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-47" data-st="skip">SKIP</span>
+  </div></div>
+</div></td></tr>
+
+<tr class="trow" data-feat="video" data-level="e2e" data-prio="P1" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-VD.6</td>
+  <td class="ctitle">วีดีโอที่ session กำลังใช้งาน → ลบไม่ได้หรือมี warning</td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td><td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-48"><span class="stb pending">รอเทส</span></td>
+</tr>
+<tr class="detail"><td colspan="6"><div class="card">
+  <div class="h-title">วีดีโอที่ session กำลังใช้งาน → ลบไม่ได้หรือมี warning</div>
+  <div class="h-prio">Priority: <b>P1</b> · E2E · เมนูวีดีโอ</div>
+  <div class="sec"><h4>Precondition</h4><ul>
+    <li>session กำลัง live และใช้วีดีโอนั้นอยู่</li>
+  </ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol>
+    <li>Start session ที่เลือกวีดีโอ A</li>
+    <li>ไปเมนูวีดีโอ → ลองลบวีดีโอ A</li>
+  </ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul>
+      <li>แสดง warning "วีดีโอนี้กำลังถูกใช้งาน" หรือ disable ปุ่มลบ</li>
+      <li>ไม่ลบได้ระหว่าง session live</li>
+    </ul></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-48" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-48" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-48" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-48" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-48" data-st="skip">SKIP</span>
+  </div></div>
+</div></td></tr>
+
+<!-- ═══════════════════════════════════════════════ Live Settings ═══ -->
+<tr class="epicrow"><td colspan="6">📡 เมนูไลฟ์ — Live Settings <span class="rp">(5 TCs)</span></td></tr>
+<tr class="featrow"><td colspan="6">📁 live-settings — ชื่อ · category · auto-restart · video · playlist <span class="rp"><span class="lv lvl-ui">🌐 4</span> <span class="lv lvl-e2e">🔄 1</span></span></td></tr>
+
+<tr class="trow" data-feat="livesettings" data-level="ui" data-prio="P0" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-LS.1</td>
+  <td class="ctitle">ตั้งชื่อไลฟ์ → บันทึก → persist หลัง reload</td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td><td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-49"><span class="stb pending">รอเทส</span></td>
+</tr>
+<tr class="detail"><td colspan="6"><div class="card">
+  <div class="h-title">ตั้งชื่อไลฟ์ → บันทึก → persist หลัง reload</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · เมนูไลฟ์</div>
+  <div class="sec"><h4>Test Steps</h4><ol>
+    <li>เปิด Live Settings (แท็บ Live) ของ account</li>
+    <li>กรอกชื่อไลฟ์ เช่น "ไลฟ์ทดสอบ 001"</li>
+    <li>กด "บันทึก" → reload หน้า</li>
+  </ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul>
+      <li>ชื่อยังคงอยู่หลัง reload</li>
+      <li>ใช้ชื่อนี้ตอน Start session จริง</li>
+    </ul></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-49" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-49" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-49" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-49" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-49" data-st="skip">SKIP</span>
+  </div></div>
+</div></td></tr>
+
+<tr class="trow" data-feat="livesettings" data-level="ui" data-prio="P0" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-LS.2</td>
+  <td class="ctitle">เลือก category → บันทึก → persist และใช้ตอน Start</td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td><td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-50"><span class="stb pending">รอเทส</span></td>
+</tr>
+<tr class="detail"><td colspan="6"><div class="card">
+  <div class="h-title">เลือก category → บันทึก → persist และใช้ตอน Start</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · เมนูไลฟ์</div>
+  <div class="sec"><h4>Test Steps</h4><ol>
+    <li>เปิด Live Settings → แท็บ Live</li>
+    <li>เลือก category จาก dropdown (เช่น "Entertainment")</li>
+    <li>บันทึก → reload</li>
+  </ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul>
+      <li>category ยังถูกเลือกอยู่หลัง reload</li>
+      <li>ตอน Start session → TikTok ใช้ category นี้</li>
+    </ul></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-50" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-50" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-50" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-50" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-50" data-st="skip">SKIP</span>
+  </div></div>
+</div></td></tr>
+
+<tr class="trow" data-feat="livesettings" data-level="ui" data-prio="P0" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-LS.3</td>
+  <td class="ctitle">เปิด auto-restart + ตั้ง countdown → บันทึก → persist</td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td><td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-51"><span class="stb pending">รอเทส</span></td>
+</tr>
+<tr class="detail"><td colspan="6"><div class="card">
+  <div class="h-title">เปิด auto-restart + ตั้ง countdown → บันทึก → persist</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · เมนูไลฟ์ (แท็บ AUTO)</div>
+  <div class="sec"><h4>Test Steps</h4><ol>
+    <li>เปิด Live Settings → แท็บ AUTO</li>
+    <li>toggle auto-restart เป็น ON</li>
+    <li>ตั้ง countdown เช่น 5 วินาที</li>
+    <li>บันทึก → reload</li>
+  </ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul>
+      <li>auto-restart ยังเป็น ON หลัง reload</li>
+      <li>countdown แสดงถูกต้อง</li>
+      <li>ตอน session หยุด → countdown เริ่มนับก่อน restart</li>
+    </ul></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-51" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-51" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-51" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-51" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-51" data-st="skip">SKIP</span>
+  </div></div>
+</div></td></tr>
+
+<tr class="trow" data-feat="livesettings" data-level="ui" data-prio="P0" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-LS.4</td>
+  <td class="ctitle">เลือกวีดีโอใน Live Settings → บันทึก → Start session ใช้วีดีโอนั้น</td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td><td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-52"><span class="stb pending">รอเทส</span></td>
+</tr>
+<tr class="detail"><td colspan="6"><div class="card">
+  <div class="h-title">เลือกวีดีโอใน Live Settings → บันทึก → Start session ใช้วีดีโอนั้น</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · เมนูไลฟ์ (แท็บ Video)</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>มีวีดีโออยู่ใน library แล้ว (TC-VD.1 ผ่าน)</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol>
+    <li>เปิด Live Settings → แท็บ Video</li>
+    <li>เลือกวีดีโอจากรายการ</li>
+    <li>บันทึก → Start session</li>
+  </ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul>
+      <li>วีดีโอที่เลือก highlight อยู่หลัง reload</li>
+      <li>ffmpeg ใช้ไฟล์นั้น stream จริง</li>
+    </ul></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-52" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-52" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-52" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-52" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-52" data-st="skip">SKIP</span>
+  </div></div>
+</div></td></tr>
+
+<tr class="trow" data-feat="livesettings" data-level="e2e" data-prio="P1" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-LS.5</td>
+  <td class="ctitle">auto-restart เปิด → session หยุด → นับ countdown → restart อัตโนมัติ</td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td><td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-53"><span class="stb pending">รอเทส</span></td>
+</tr>
+<tr class="detail"><td colspan="6"><div class="card">
+  <div class="h-title">auto-restart เปิด → session หยุด → นับ countdown → restart อัตโนมัติ</div>
+  <div class="h-prio">Priority: <b>P1</b> · E2E · เมนูไลฟ์</div>
+  <div class="sec"><h4>Precondition</h4><ul>
+    <li>TC-LS.3 ผ่าน (auto-restart ON, countdown 5s)</li>
+    <li>session กำลัง live</li>
+  </ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol>
+    <li>หยุด session (หรือรอให้ error)</li>
+    <li>ดู UI countdown</li>
+    <li>รอครบ countdown</li>
+  </ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul>
+      <li>countdown นับถอยหลังใน UI</li>
+      <li>หลังครบ → session restart อัตโนมัติ</li>
+      <li>state กลับเป็น "live" โดยไม่ต้องกดเอง</li>
+    </ul></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-53" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-53" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-53" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-53" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-53" data-st="skip">SKIP</span>
+  </div></div>
+</div></td></tr>
+
+<!-- ═══════════════════════════════════════════════ Settings ═══ -->
+<tr class="epicrow"><td colspan="6">⚙️ เมนูตั้งค่า — Settings (Telegram · Audit · System) <span class="rp">(6 TCs)</span></td></tr>
+<tr class="featrow"><td colspan="6">📁 settings — Telegram config + notify · Audit log · System status <span class="rp"><span class="lv lvl-ui">🌐 4</span> <span class="lv lvl-e2e">🔄 2</span></span></td></tr>
+
+<tr class="trow" data-feat="settings" data-level="ui" data-prio="P0" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-ST.1</td>
+  <td class="ctitle">กรอก Telegram bot token + chat ID → test → สำเร็จ</td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td><td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-54"><span class="stb pending">รอเทส</span></td>
+</tr>
+<tr class="detail"><td colspan="6"><div class="card">
+  <div class="h-title">กรอก Telegram bot token + chat ID → test → สำเร็จ</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · Settings → Telegram</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>มี Telegram bot token และ chat ID จริง</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol>
+    <li>เปิด Settings → แท็บ Telegram</li>
+    <li>กรอก bot token และ chat ID</li>
+    <li>กด "ทดสอบ"</li>
+  </ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul>
+      <li>ส่ง test message ไป Telegram สำเร็จ</li>
+      <li>แสดง "ส่งสำเร็จ" ใน UI</li>
+      <li>รับ message ใน Telegram จริง</li>
+    </ul></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-54" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-54" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-54" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-54" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-54" data-st="skip">SKIP</span>
+  </div></div>
+</div></td></tr>
+
+<tr class="trow" data-feat="settings" data-level="ui" data-prio="P1" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-ST.2</td>
+  <td class="ctitle">Telegram token ผิด → test แสดง error ชัดเจน</td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td><td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-55"><span class="stb pending">รอเทส</span></td>
+</tr>
+<tr class="detail"><td colspan="6"><div class="card">
+  <div class="h-title">Telegram token ผิด → test แสดง error ชัดเจน</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · Settings → Telegram</div>
+  <div class="sec"><h4>Test Steps</h4><ol>
+    <li>กรอก bot token ผิด (random string)</li>
+    <li>กด "ทดสอบ"</li>
+  </ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul>
+      <li>แสดง error "token ไม่ถูกต้อง" หรือ Telegram API error</li>
+      <li>ไม่ crash app</li>
+    </ul></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-55" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-55" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-55" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-55" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-55" data-st="skip">SKIP</span>
+  </div></div>
+</div></td></tr>
+
+<tr class="trow" data-feat="settings" data-level="e2e" data-prio="P1" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-ST.3</td>
+  <td class="ctitle">session เริ่ม/หยุด → Telegram ส่ง notification จริง</td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td><td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-56"><span class="stb pending">รอเทส</span></td>
+</tr>
+<tr class="detail"><td colspan="6"><div class="card">
+  <div class="h-title">session เริ่ม/หยุด → Telegram ส่ง notification จริง</div>
+  <div class="h-prio">Priority: <b>P1</b> · E2E · Settings → Telegram</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>TC-ST.1 ผ่าน (Telegram configured)</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol>
+    <li>Start session → รอ state "live"</li>
+    <li>ดู Telegram</li>
+    <li>Stop session</li>
+    <li>ดู Telegram อีกครั้ง</li>
+  </ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul>
+      <li>รับ notification "session เริ่มแล้ว" ตอน Start</li>
+      <li>รับ notification "session หยุดแล้ว" ตอน Stop</li>
+      <li>ระบุ account name ใน message</li>
+    </ul></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-56" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-56" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-56" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-56" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-56" data-st="skip">SKIP</span>
+  </div></div>
+</div></td></tr>
+
+<tr class="trow" data-feat="settings" data-level="ui" data-prio="P1" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-ST.4</td>
+  <td class="ctitle">Audit log viewer แสดง entries ล่าสุดพร้อม timestamp</td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td><td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-57"><span class="stb pending">รอเทส</span></td>
+</tr>
+<tr class="detail"><td colspan="6"><div class="card">
+  <div class="h-title">Audit log viewer แสดง entries ล่าสุดพร้อม timestamp</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · Settings → Audit</div>
+  <div class="sec"><h4>Test Steps</h4><ol>
+    <li>ทำ action ที่ trigger audit เช่น Start/Stop session, เพิ่ม account</li>
+    <li>เปิด Settings → Audit</li>
+  </ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul>
+      <li>รายการ audit entries แสดงล่าสุดก่อน</li>
+      <li>แต่ละ entry มี timestamp + action + actor</li>
+      <li>ไม่แสดงหน้าว่างเมื่อมี entries</li>
+    </ul></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-57" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-57" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-57" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-57" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-57" data-st="skip">SKIP</span>
+  </div></div>
+</div></td></tr>
+
+<tr class="trow" data-feat="settings" data-level="ui" data-prio="P1" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-ST.5</td>
+  <td class="ctitle">System Status แสดง version + health ของ backend</td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td><td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-58"><span class="stb pending">รอเทส</span></td>
+</tr>
+<tr class="detail"><td colspan="6"><div class="card">
+  <div class="h-title">System Status แสดง version + health ของ backend</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · Settings → System Status</div>
+  <div class="sec"><h4>Test Steps</h4><ol>
+    <li>เปิด Settings → System Status</li>
+  </ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul>
+      <li>แสดง version ของ app (commit hash / tag)</li>
+      <li>สถานะ backend health (online/offline)</li>
+      <li>ไม่แสดง error หรือ blank</li>
+    </ul></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-58" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-58" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-58" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-58" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-58" data-st="skip">SKIP</span>
+  </div></div>
+</div></td></tr>
+
+<tr class="trow" data-feat="settings" data-level="e2e" data-prio="P2" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-ST.6</td>
+  <td class="ctitle">Audit Settings — ตั้งค่า retention → entries เก่ากว่ากำหนดถูกลบ</td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td><td><span class="prio p2">P2</span></td>
+  <td class="status" data-uid="tc-59"><span class="stb pending">รอเทส</span></td>
+</tr>
+<tr class="detail"><td colspan="6"><div class="card">
+  <div class="h-title">Audit Settings — ตั้งค่า retention → entries เก่ากว่ากำหนดถูกลบ</div>
+  <div class="h-prio">Priority: <b>P2</b> · E2E · Settings → Audit</div>
+  <div class="sec"><h4>Test Steps</h4><ol>
+    <li>เปิด Settings → Audit → AuditSettingsTab</li>
+    <li>ตั้ง retention เช่น 7 วัน</li>
+    <li>บันทึก → ดู audit entries</li>
+  </ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul>
+      <li>ตั้งค่า persist</li>
+      <li>entries เก่ากว่า 7 วัน ถูก purge (หรือ hidden)</li>
+    </ul></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-59" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-59" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-59" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-59" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-59" data-st="skip">SKIP</span>
+  </div></div>
+</div></td></tr>
+
+<!-- ═══════════════════════════════════════════════ Edge Cases ═══ -->
+<tr class="epicrow"><td colspan="6">⚡ Edge Cases — Multi-account · Network · Cookie · Pin fail <span class="rp">(4 TCs)</span></td></tr>
+<tr class="featrow"><td colspan="6">📁 edge-case — สถานการณ์ที่ซับซ้อนและอาจเกิดขึ้นจริงระหว่าง live <span class="rp"><span class="lv lvl-e2e">🔄 4</span></span></td></tr>
+
+<tr class="trow" data-feat="edgecase" data-level="e2e" data-prio="P1" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-EC.1</td>
+  <td class="ctitle">2 account live พร้อมกัน — oracle จัดการ session แยกกัน ไม่ปนกัน</td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td><td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-61"><span class="stb pending">รอเทส</span></td>
+</tr>
+<tr class="detail"><td colspan="6"><div class="card">
+  <div class="h-title">2 account live พร้อมกัน — oracle จัดการ session แยกกัน ไม่ปนกัน</div>
+  <div class="h-prio">Priority: <b>P1</b> · E2E · Multi-account</div>
+  <div class="sec"><h4>Precondition</h4><ul>
+    <li>มี TikTok account 2 บัญชี login ไว้ใน Takra (TC-LG.1 ผ่าน 2 ครั้ง)</li>
+    <li>แต่ละ account มี product set และ video พร้อม</li>
+  </ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol>
+    <li>Start session ของ Account A → รอ state "live"</li>
+    <li>Start session ของ Account B → รอ state "live"</li>
+    <li>ดู chat panel ของแต่ละ account แยกกัน</li>
+    <li>ให้คนอื่น comment ใน live ของ A → ดูว่า comment ขึ้นแค่ใน panel ของ A เท่านั้น</li>
+    <li>ให้คนอื่น comment ใน live ของ B → ดูว่า comment ขึ้นแค่ใน panel ของ B เท่านั้น</li>
+    <li>ดู GMV panel ของแต่ละ account — ยอดแยกกัน ไม่รวมกัน</li>
+    <li>Stop session A → session B ยังคง live อยู่</li>
+    <li>Stop session B</li>
+  </ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul>
+      <li>oracle สร้าง hidden window แยกต่อ session — ไม่ปนกัน</li>
+      <li>chat, GMV, pin ของแต่ละ account แยกอิสระ</li>
+      <li>Stop A ไม่กระทบ B</li>
+      <li>ไม่มี memory spike หรือ crash เมื่อ 2 session live พร้อมกัน</li>
+    </ul></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-61" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-61" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-61" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-61" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-61" data-st="skip">SKIP</span>
+  </div></div>
+</div></td></tr>
+
+<tr class="trow" data-feat="edgecase" data-level="e2e" data-prio="P1" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-EC.2</td>
+  <td class="ctitle">Network ดับ 30s ระหว่าง live → กลับมา → stream และ oracle recover</td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td><td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-62"><span class="stb pending">รอเทส</span></td>
+</tr>
+<tr class="detail"><td colspan="6"><div class="card">
+  <div class="h-title">Network ดับ 30s ระหว่าง live → กลับมา → stream และ oracle recover</div>
+  <div class="h-prio">Priority: <b>P1</b> · E2E · Network Resilience</div>
+  <div class="sec"><h4>Precondition</h4><ul>
+    <li>Session กำลัง live (state "live") อยู่</li>
+    <li>chat, GMV, auto-pin ทำงานอยู่ปกติ</li>
+  </ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol>
+    <li>ตัด internet (ปิด Wi-Fi หรือ unplug LAN) ขณะ session live อยู่</li>
+    <li>รอ 30 วินาที → สังเกต state ใน Takra UI</li>
+    <li>เปิด internet กลับ</li>
+    <li>รอ ~15s → ดู state และ chat panel</li>
+    <li>ให้คนอื่น comment ใน live → เช็คว่า chat กลับมาแสดงได้</li>
+    <li>เช็ค stream บน TikTok ว่ากลับมาหรือเปล่า</li>
+  </ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul>
+      <li>ขณะ offline: UI แสดง state "disconnected" หรือ warning ชัดเจน — ไม่ crash</li>
+      <li>หลัง internet กลับ: oracle reconnect อัตโนมัติ (หรือ auto-restart ถ้าเปิดไว้)</li>
+      <li>chat กลับมา decode ได้หลัง reconnect</li>
+      <li>ถ้า stream หลุด: ffmpeg restart และ state กลับเป็น "live"</li>
+    </ul></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div>
+  </div>
+  <div class="sec"><h4>Notes</h4><ul>
+    <li>ถ้า auto-restart เปิดอยู่ (TC-LS.3) → คาดว่า restart เองได้</li>
+    <li>ถ้า auto-restart ปิด → คาดว่า UI แสดง error และรอ operator กด Start ใหม่</li>
+  </ul></div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-62" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-62" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-62" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-62" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-62" data-st="skip">SKIP</span>
+  </div></div>
+</div></td></tr>
+
+<tr class="trow" data-feat="edgecase" data-level="e2e" data-prio="P1" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-EC.3</td>
+  <td class="ctitle">TikTok session cookie หมดอายุกลาง live → oracle reconnect หรือ alert operator</td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td><td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-63"><span class="stb pending">รอเทส</span></td>
+</tr>
+<tr class="detail"><td colspan="6"><div class="card">
+  <div class="h-title">TikTok session cookie หมดอายุกลาง live → oracle reconnect หรือ alert operator</div>
+  <div class="h-prio">Priority: <b>P1</b> · E2E · Cookie/Session Expiry</div>
+  <div class="sec"><h4>Precondition</h4><ul>
+    <li>Session กำลัง live อยู่</li>
+    <li>สามารถจำลอง cookie expiry ได้ (ลบ cookie ใน oracle partition ด้วย DevTools หรือรอจนหมดอายุจริง)</li>
+  </ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol>
+    <li>ขณะ live อยู่ → เปิด Electron DevTools (oracle window) → ลบ cookie ของ tiktok.com ใน partition ของ oracle</li>
+    <li>รอ pollCookies รอบถัดไป (~30s) → ดู backend log หรือ UI</li>
+    <li>รอ pollReplies รอบถัดไป (~3s) → ลอง reply → ดูผล</li>
+    <li>ดูว่า app แจ้งเตือน operator หรือพยายาม re-login เอง</li>
+  </ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul>
+      <li>app ตรวจพบ 401/403 จาก TikTok → แจ้งเตือน operator "session หมดอายุ กรุณา login ใหม่"</li>
+      <li>ไม่ crash หรือ loop error ซ้ำ</li>
+      <li>reply ที่ส่งขณะ expire → แสดง "(ส่งไม่สำเร็จ)" ไม่ส่งซ้ำ</li>
+      <li>หลัง re-login (TC-LG.1 ซ้ำ) → oracle กลับทำงานได้ปกติ</li>
+    </ul></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div>
+  </div>
+  <div class="sec"><h4>Notes</h4><ul>
+    <li>bindOracleSession() ใน tiktok-login.js คือจุดที่ copy cookie → oracle partition ตรงนี้คือ root cause</li>
+    <li>ถ้าทดสอบด้วยการลบ cookie จริงไม่ได้ → Mark HOLD และ note ไว้</li>
+  </ul></div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-63" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-63" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-63" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-63" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-63" data-st="skip">SKIP</span>
+  </div></div>
+</div></td></tr>
+
+<tr class="trow" data-feat="edgecase" data-level="e2e" data-prio="P1" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-EC.4</td>
+  <td class="ctitle">Basket pin ล้มเหลว (TikTok ปฏิเสธ) → app แสดง error ไม่ retry วนซ้ำ</td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td><td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-64"><span class="stb pending">รอเทส</span></td>
+</tr>
+<tr class="detail"><td colspan="6"><div class="card">
+  <div class="h-title">Basket pin ล้มเหลว (TikTok ปฏิเสธ) → app แสดง error ไม่ retry วนซ้ำ</div>
+  <div class="h-prio">Priority: <b>P1</b> · E2E · Basket Pin Failure</div>
+  <div class="sec"><h4>Precondition</h4><ul>
+    <li>Session กำลัง live อยู่</li>
+    <li>มีสินค้าที่ tick ไว้ใน Basket</li>
+    <li>จำลอง pin failure ได้โดย: ทำให้สินค้า unavailable บน TikTok Shop ก่อน Start หรือ mock API ให้ return error</li>
+  </ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol>
+    <li>เลือกสินค้าที่รู้ว่าจะ pin ล้มเหลว (out of stock หรือ delisted) ใน Basket</li>
+    <li>Start session → รอ auto-pin รอบแรก (~4–10s)</li>
+    <li>ดู UI ใน Basket panel หรือ session log</li>
+    <li>รอ pollPins รอบถัดไป (~4s) → ดูว่า retry หรือไม่</li>
+  </ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul>
+      <li>pin job แสดงสถานะ failed ใน UI (ไม่ใช่ pending ค้างตลอด)</li>
+      <li>ไม่ retry วนซ้ำไม่สิ้นสุด — job ถูก mark เป็น failed และหยุด</li>
+      <li>สินค้าอื่นที่ pin ได้ → ยัง pin สำเร็จตามปกติ (partial failure ไม่ block ทั้งหมด)</li>
+      <li>session ยัง live ต่อได้ — pin failure ไม่ crash app</li>
+    </ul></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div>
+  </div>
+  <div class="sec"><h4>Notes</h4><ul>
+    <li>pollPins ใน oracle.js (4s interval) คือจุดที่ claim + execute pin jobs — ดู log ตรงนี้</li>
+    <li>ถ้าทดสอบด้วย out-of-stock จริงไม่ได้ → Mark HOLD</li>
+  </ul></div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-64" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-64" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-64" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-64" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-64" data-st="skip">SKIP</span>
+  </div></div>
+</div></td></tr>
+
+<!-- ═══════════════════════════════════════════════ Full E2E Flow ═══ -->
+<tr class="epicrow"><td colspan="6">🔄 Full E2E Flow — ทดสอบต่อเนื่องครบ workflow <span class="rp">(2 TCs)</span></td></tr>
+<tr class="featrow"><td colspan="6">📁 fullflow — Login → ตั้งค่า → Start → ลูกค้าซื้อสินค้าสำเร็จ · variations <span class="rp"><span class="lv lvl-e2e">🔄 7</span></span></td></tr>
+
+<tr class="trow" data-feat="fullflow" data-level="e2e" data-prio="P0" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-E2E.1</td>
+  <td class="ctitle">Full flow: Login → ดึงสินค้า → ตั้ง Overlay → Start → ดู Chat/GMV + auto-pin ในไลฟ์เดียว</td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-37"><span class="stb pending">รอเทส</span></td>
+</tr>
+<tr class="detail">
+  <td colspan="6"><div class="card">
+    <div class="h-title">Full flow: Login → ดึงสินค้า → ตั้ง Overlay → Start → ดู Chat/GMV + auto-pin</div>
+    <div class="h-prio">Priority: <b>P0</b> · E2E · Full Integration — ทำหลังจาก TC-LG.1, TC-BK.1, TC-OV.3 ผ่านแล้ว</div>
+    <div class="sec"><h4>Precondition</h4><ul>
+      <li>Electron desktop app เปิด</li>
+      <li>TikTok account พร้อม credentials + Shop + Live Center</li>
+      <li>proxy (ถ้ามี) ตั้งค่าแล้ว</li>
+      <li>video file พร้อม</li>
+    </ul></div>
+    <div class="sec"><h4>Test Steps — Phase A: เพิ่มบัญชี TikTok (#7)</h4><ol>
+      <li>เปิด Takra Rerun (Electron) → ล็อกอินด้วย Zitadel (email/password) → เห็น Dashboard</li>
+      <li>กด "เพิ่มบัญชี" → เลือก "เข้าสู่ระบบ TikTok" → popup TikTok เปิดขึ้น</li>
+      <li>กรอก username/password TikTok ใน popup → ยืนยัน 2FA (ถ้ามี) → login สำเร็จ</li>
+      <li>popup ปิดเอง → บัญชี TikTok ปรากฏในรายการ account พร้อม avatar และชื่อ</li>
+    </ol></div>
+    <div class="sec"><h4>Test Steps — Phase B: ดึงชุดสินค้า + เลือก pin (#1)</h4><ol start="5">
+      <li>คลิกที่ account → ไปแท็บ "ตะกร้า" (Basket)</li>
+      <li>กด "ดึงชุดสินค้าจาก TikTok" → รอ ~5–10s จนรายการสินค้าโหลดเสร็จ</li>
+      <li>เห็น product set อย่างน้อย 1 ชุด พร้อมรายการสินค้าข้างใน</li>
+      <li>tick checkbox สินค้าที่ต้องการให้ auto-pin อย่างน้อย 1 รายการ → checkbox ติ๊กเป็น checked (สีส้ม)</li>
+    </ol></div>
+    <div class="sec"><h4>Test Steps — Phase C: ตั้ง Overlay (#2)</h4><ol start="9">
+      <li>ไปแท็บ "โอเวอร์เลย์"</li>
+      <li>กด "+ นาฬิกา" → เห็น clock layer ปรากฏใน layer list</li>
+      <li>กด "+ ข้อความ" → พิมพ์ข้อความ เช่น "SALE" → ปรับตำแหน่ง x/y ตามต้องการ</li>
+      <li>กด "บันทึก" → ไม่มี error → layer list ยังแสดงอยู่หลัง save</li>
+    </ol></div>
+    <div class="sec"><h4>Test Steps — Phase D: ตรวจ Proxy (#3) — ข้ามถ้าไม่มี proxy</h4><ol start="13">
+      <li>ไปแท็บ "พร็อกซี" → กรอก host:port ของ proxy</li>
+      <li>กด "ทดสอบ" → รอผล → แสดง "เชื่อมต่อสำเร็จ" (สีเขียว)</li>
+    </ol></div>
+    <div class="sec"><h4>Test Steps — Phase E: Start Session</h4><ol start="15">
+      <li>กด "Start Session" บน account นั้น → state เปลี่ยนเป็น "กำลังเริ่ม…"</li>
+      <li>รอ ~5–15s → state เป็น "live" (สีเขียว) → ไม่มี error dialog</li>
+    </ol></div>
+    <div class="sec"><h4>Test Steps — Phase F: ตรวจ Overlay บน stream (#2)</h4><ol start="17">
+      <li>เปิด TikTok live ด้วยบัญชีอื่น (mobile หรือ browser) เพื่อดู stream จากภายนอก</li>
+      <li>ต้องเห็น: นาฬิกาดิจิตอล (DSEG7 font) ซ้อนบนวีดีโอในตำแหน่งที่ตั้งไว้</li>
+      <li>ต้องเห็น: ข้อความ "SALE" (หรือที่พิมพ์ไว้) ซ้อนบนวีดีโอถูกตำแหน่ง</li>
+    </ol></div>
+    <div class="sec"><h4>Test Steps — Phase G: ตรวจ Auto-Pin สินค้า (#1)</h4><ol start="20">
+      <li>รอประมาณ 10s หลัง state เป็น "live"</li>
+      <li>เช็คใน TikTok live (บัญชีลูกค้า) → กดไอคอน Shopping Cart</li>
+      <li>ต้องเห็นสินค้าที่ tick ไว้ใน Basket ปรากฏใน Cart ของ live (auto-pin สำเร็จ)</li>
+    </ol></div>
+    <div class="sec"><h4>Test Steps — Phase H: Chat Realtime (#4)</h4><ol start="23">
+      <li>ให้คนอื่น (หรือบัญชีทดสอบ) พิมพ์ comment ใน TikTok live</li>
+      <li>กลับมาที่ Takra → แท็บ "แชท" → ต้องเห็น comment ปรากฏภายใน ~3s</li>
+      <li>เห็นชื่อ user + ข้อความถูกต้อง ไม่มี duplicate</li>
+    </ol></div>
+    <div class="sec"><h4>Test Steps — Phase I: Manual Reply (#6)</h4><ol start="26">
+      <li>คลิกช่อง "ตอบแชท" ใน Takra → พิมพ์ข้อความ เช่น "ขอบคุณที่ถามนะครับ"</li>
+      <li>กด "ส่ง"</li>
+      <li>ดู TikTok live chat ภายนอก → ต้องเห็นข้อความนั้นปรากฏในนาม account TikTok ที่ล็อกไว้</li>
+      <li>ใน Takra chat panel → message แสดง self: true (รูปแบบต่างจาก comment ทั่วไป)</li>
+    </ol></div>
+    <div class="sec"><h4>Test Steps — Phase J: GMV (#5)</h4><ol start="30">
+      <li>รอ ~30s (cookie push interval)</li>
+      <li>ให้บัญชีลูกค้าซื้อสินค้าจาก live cart (หรือใช้ mock order ถ้า sandbox พร้อม)</li>
+      <li>ไปแท็บ "GMV" → ต้องเห็น "ยอดขายสด" มียอด ≥ 0 บาท</li>
+      <li>Top Products list แสดงสินค้าที่ขายได้</li>
+    </ol></div>
+    <div class="sec"><h4>Test Steps — Phase K: Stop</h4><ol start="34">
+      <li>กด "Stop Session" → รอ state เป็น "stopped"</li>
+      <li>oracle window ปิดตัว → stream บน TikTok หยุด → ไม่มี process ค้าง</li>
+    </ol></div>
+    <div class="grid">
+      <div class="sec"><h4>Expected Result</h4><ul>
+        <li>ทุก feature ทำงานร่วมกันได้โดยไม่มี conflict</li>
+        <li>ไม่มี memory leak หรือ crash ระหว่าง session</li>
+        <li>oracle window ทำงาน: chat decode + pin + reply + cookie push</li>
+        <li>overlay บน stream ไม่หลุดหรือค้าง</li>
+        <li>Session หยุดด้วย Stop → state เป็น "stopped" สะอาด</li>
+      </ul></div>
+      <div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div>
+    </div>
+    <div class="sec"><h4>Status</h4><div class="statusrow">
+      <span class="opt pass" data-uid="tc-37" data-st="pass">PASS</span>
+      <span class="opt fail" data-uid="tc-37" data-st="fail">FAIL</span>
+      <span class="opt hold" data-uid="tc-37" data-st="hold">HOLD</span>
+      <span class="opt block" data-uid="tc-37" data-st="block">BLOCKED</span>
+      <span class="opt skip" data-uid="tc-37" data-st="skip">SKIP</span>
+    </div></div>
+  </div></td>
+</tr>
+
+<!-- ═══════════════════════════════════════════════ Purchase Flow ═══ -->
+<tr class="trow" data-feat="fullflow" data-level="e2e" data-prio="P0" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-PUR.1</td>
+  <td class="ctitle">Full Purchase Flow: Login → ตั้งค่า → Start → ลูกค้าซื้อสินค้าสำเร็จ → GMV อัพเดท</td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td><td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-60"><span class="stb pending">รอเทส</span></td>
+</tr>
+<tr class="detail"><td colspan="6"><div class="card">
+  <div class="h-title">Full Purchase Flow: Login → ตั้งค่า → Start → ลูกค้าซื้อสินค้าสำเร็จ → GMV อัพเดท</div>
+  <div class="h-prio">Priority: <b>P0</b> · E2E · End-to-End Purchase Journey — ทดสอบครั้งเดียวครบทั้ง workflow</div>
+
+  <div class="sec"><h4>Precondition</h4><ul>
+    <li>เครื่อง Electron desktop app ติดตั้งแล้ว และเปิดอยู่</li>
+    <li>บัญชี TikTok ที่มีสิทธิ์ Shop + Live Center (go-live ได้)</li>
+    <li>สินค้าใน TikTok Shop มีอยู่แล้ว (มี product set อย่างน้อย 1 ชุด)</li>
+    <li>มีไฟล์ video .mp4 พร้อมอัปโหลด</li>
+    <li>มีบัญชีลูกค้าทดสอบที่เปิด TikTok live บน mobile ได้</li>
+  </ul></div>
+
+  <div class="sec"><h4>Test Steps — Phase 1: ตั้งค่าก่อน Live</h4><ol>
+    <li><b>[App Auth]</b> เปิด Takra Rerun → หน้า Login → กด Sign In → redirect Zitadel → กรอก email/password → กลับ app → เห็น Dashboard</li>
+    <li><b>[Add Account]</b> กด "เพิ่มบัญชี" → เลือก "เข้าสู่ระบบ TikTok" → popup TikTok เปิด → login TikTok จนสำเร็จ → popup ปิด → account ปรากฏใน list</li>
+    <li><b>[Upload Video]</b> ไปเมนู "วีดีโอ" → กด อัปโหลด → เลือก .mp4 → รอ upload เสร็จ → ไฟล์ปรากฏในรายการ</li>
+    <li><b>[Live Settings — Video]</b> ไปเมนู "ไลฟ์" → เลือกวีดีโอที่อัปโหลด → บันทึก</li>
+    <li><b>[Live Settings — Title/Category]</b> ตั้งชื่อไลฟ์ เช่น "Flash Sale ทดสอบ" → เลือก category → บันทึก</li>
+    <li><b>[Overlay]</b> แท็บ "โอเวอร์เลย์" → กด "+ นาฬิกา" → กด "+ ข้อความ" พิมพ์ "SALE 50%" → บันทึก</li>
+    <li><b>[Basket]</b> แท็บ "ตะกร้า" → กด "ดึงชุดสินค้าจาก TikTok" → รอ → เลือก (tick) สินค้าที่ต้องการ pin อย่างน้อย 1 รายการ</li>
+    <li><b>[Proxy]</b> (ถ้ามี) แท็บ "พร็อกซี" → กรอก host:port → Test → สำเร็จ</li>
+  </ol></div>
+
+  <div class="sec"><h4>Test Steps — Phase 2: Start Live</h4><ol start="9">
+    <li><b>[Start]</b> กด "Start Session" → รอ state เปลี่ยนเป็น <code>live</code> (~5–15s)</li>
+    <li><b>[Overlay Check]</b> เปิด TikTok live บน mobile/browser → ดู stream → ต้องเห็น clock และข้อความ "SALE 50%" ซ้อนบน video</li>
+    <li><b>[Auto-Pin]</b> รอ ~10s → เช็ค TikTok live: สินค้าที่ tick ไว้ปรากฏใน Shopping Cart ของ live</li>
+  </ol></div>
+
+  <div class="sec"><h4>Test Steps — Phase 3: ลูกค้าซื้อสินค้า</h4><ol start="12">
+    <li><b>[Customer View]</b> เปิด TikTok ด้วยบัญชีลูกค้า → เข้าชม live stream ที่กำลัง live</li>
+    <li><b>[Find Product]</b> กดไอคอน Shopping Cart ใน live → เห็นสินค้าที่ pin ไว้</li>
+    <li><b>[Add to Cart]</b> กด "หยิบใส่ตะกร้า" บนสินค้าที่ต้องการ</li>
+    <li><b>[Checkout]</b> กด "ซื้อเลย" → เลือกที่อยู่จัดส่ง → ยืนยันการชำระ (ใช้ TikTok test payment หรือ sandbox ถ้ามี)</li>
+    <li><b>[Order Confirm]</b> หน้า order confirmation แสดง → จด Order ID</li>
+  </ol></div>
+
+  <div class="sec"><h4>Test Steps — Phase 4: ตรวจสอบ Takra</h4><ol start="17">
+    <li><b>[Chat Panel]</b> กลับมาที่ Takra → แท็บ "แชท" → ต้องเห็น comment ลูกค้าระหว่าง live realtime</li>
+    <li><b>[Manual Reply]</b> พิมพ์ reply ในช่องตอบกลับ → กด "ส่ง" → ต้องเห็น reply ปรากฏใน TikTok live chat</li>
+    <li><b>[GMV Panel]</b> แท็บ "GMV" → ต้องเห็น "ยอดขายสด" อัพเดท (มียอด ≥ ราคาสินค้า 1 ชิ้น)</li>
+    <li><b>[GMV Top Products]</b> ต้องเห็นสินค้าที่ลูกค้าซื้อติด Top Products list</li>
+  </ol></div>
+
+  <div class="sec"><h4>Test Steps — Phase 5: Stop</h4><ol start="21">
+    <li><b>[Stop]</b> กด "Stop Session" → รอ state เป็น <code>stopped</code></li>
+    <li><b>[Verify Clean]</b> oracle window ปิด → ไม่มี process ค้าง → stream บน TikTok หยุด</li>
+    <li><b>[Final GMV]</b> ดู GMV panel สุดท้าย → ยอด final ตรงกับ order ที่สั่ง</li>
+  </ol></div>
+
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul>
+      <li>ทุก Phase ผ่านตามลำดับ ไม่มี crash หรือ error ที่ block flow</li>
+      <li>สินค้าถูก pin ใน TikTok live ภายใน 10s หลัง Start</li>
+      <li>Clock + text overlay แสดงถูกต้องบน stream ตลอดการ live</li>
+      <li>ลูกค้าสั่งซื้อสำเร็จ → ได้ Order ID จาก TikTok</li>
+      <li>GMV panel แสดงยอดขายที่ตรงกับ order ของลูกค้า (currency ฿)</li>
+      <li>Chat realtime และ manual reply ทำงานได้ในระหว่าง session เดียวกัน</li>
+      <li>Stop session สะอาด — ไม่มี zombie oracle process</li>
+    </ul></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div>
+  </div>
+
+  <div class="sec"><h4>Notes</h4><ul>
+    <li>ถ้า TikTok sandbox/test payment ไม่พร้อม → Mark HOLD และ test GMV โดยดู mock order แทน</li>
+    <li>Phase 3 (ลูกค้าซื้อ) ต้องใช้บัญชี TikTok จริงและ account ที่มี Live Commerce enabled</li>
+    <li>ถ้า shop ยังไม่ approved → TC นี้ให้ mark BLOCKED จนกว่าจะมี Shop approval</li>
+  </ul></div>
+
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-60" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-60" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-60" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-60" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-60" data-st="skip">SKIP</span>
+  </div></div>
+</div></td></tr>
+
+<!-- Purchase Variations -->
+<tr class="trow" data-feat="fullflow" data-level="e2e" data-prio="P1" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-PUR.2</td>
+  <td class="ctitle">ลูกค้าซื้อสินค้าหลายชิ้นในออเดอร์เดียว → GMV รวมทุกรายการถูกต้อง</td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td><td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-65"><span class="stb pending">รอเทส</span></td>
+</tr>
+<tr class="detail"><td colspan="6"><div class="card">
+  <div class="h-title">ลูกค้าซื้อสินค้าหลายชิ้นในออเดอร์เดียว → GMV รวมทุกรายการถูกต้อง</div>
+  <div class="h-prio">Priority: <b>P1</b> · E2E · Purchase Variation — TC-PUR.1 ผ่านก่อน</div>
+  <div class="sec"><h4>Precondition</h4><ul>
+    <li>Session live อยู่ + มีสินค้า pin ไว้อย่างน้อย 2 รายการ</li>
+    <li>บัญชีลูกค้าทดสอบพร้อม</li>
+  </ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol>
+    <li>ลูกค้าเปิด TikTok live → กดไอคอน Shopping Cart</li>
+    <li>กด "หยิบใส่ตะกร้า" สินค้า A (qty 1)</li>
+    <li>กด "หยิบใส่ตะกร้า" สินค้า B (qty 2)</li>
+    <li>กด "ซื้อเลย" → checkout ออเดอร์รวม A + B → ยืนยันชำระ</li>
+    <li>กลับมาที่ Takra → ดู GMV panel หลัง ~30s</li>
+  </ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul>
+      <li>GMV แสดงยอดรวม = ราคา A + (ราคา B × 2)</li>
+      <li>Top Products แสดง A และ B แยกกันพร้อมยอดแต่ละรายการ</li>
+      <li>totalUnits = 3 (1+2)</li>
+    </ul></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-65" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-65" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-65" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-65" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-65" data-st="skip">SKIP</span>
+  </div></div>
+</div></td></tr>
+
+<tr class="trow" data-feat="fullflow" data-level="e2e" data-prio="P1" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-PUR.3</td>
+  <td class="ctitle">ลูกค้าหลายคนซื้อพร้อมกัน → GMV รวมทุก order ถูกต้อง ไม่ตก</td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td><td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-66"><span class="stb pending">รอเทส</span></td>
+</tr>
+<tr class="detail"><td colspan="6"><div class="card">
+  <div class="h-title">ลูกค้าหลายคนซื้อพร้อมกัน → GMV รวมทุก order ถูกต้อง ไม่ตก</div>
+  <div class="h-prio">Priority: <b>P1</b> · E2E · Concurrent Purchase</div>
+  <div class="sec"><h4>Precondition</h4><ul>
+    <li>Session live อยู่ + สินค้า pin ไว้</li>
+    <li>มีบัญชีลูกค้าทดสอบ 2–3 บัญชี (คนละ device หรือ คนละ browser)</li>
+  </ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol>
+    <li>ลูกค้า A, B, C เปิด live พร้อมกัน</li>
+    <li>ลูกค้า A ซื้อสินค้า X → ลูกค้า B ซื้อสินค้า X → ลูกค้า C ซื้อสินค้า Y (ทำพร้อมกันโดยประมาณ)</li>
+    <li>รอ ~30s → ดู GMV panel ใน Takra</li>
+  </ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul>
+      <li>GMV รวม = ราคา X×2 + ราคา Y</li>
+      <li>totalUnits = 3</li>
+      <li>ไม่มี order ตกหาย (นับครบทุก order)</li>
+      <li>Top Products แสดง X (2 units) และ Y (1 unit)</li>
+    </ul></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-66" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-66" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-66" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-66" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-66" data-st="skip">SKIP</span>
+  </div></div>
+</div></td></tr>
+
+<tr class="trow" data-feat="fullflow" data-level="e2e" data-prio="P2" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-PUR.4</td>
+  <td class="ctitle">ลูกค้า Add to Cart แต่ไม่ checkout (abandoned) → GMV ไม่นับ order นั้น</td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td><td><span class="prio p2">P2</span></td>
+  <td class="status" data-uid="tc-67"><span class="stb pending">รอเทส</span></td>
+</tr>
+<tr class="detail"><td colspan="6"><div class="card">
+  <div class="h-title">ลูกค้า Add to Cart แต่ไม่ checkout (abandoned) → GMV ไม่นับ order นั้น</div>
+  <div class="h-prio">Priority: <b>P2</b> · E2E · Abandoned Cart</div>
+  <div class="sec"><h4>Test Steps</h4><ol>
+    <li>ลูกค้าเปิด live → กด "หยิบใส่ตะกร้า" สินค้า A</li>
+    <li>ไม่กด checkout — ปิด cart หรือออกจาก live</li>
+    <li>รอ ~30s → ดู GMV panel ใน Takra</li>
+  </ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul>
+      <li>GMV ไม่เพิ่ม (ยังเป็น 0 หรือยอดเดิม)</li>
+      <li>Abandoned cart ไม่ถูกนับเป็น revenue</li>
+    </ul></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div>
+  </div>
+  <div class="sec"><h4>Notes</h4><ul>
+    <li>GMV มาจาก shop.tiktok.com cookie — นับเฉพาะ confirmed order เท่านั้น ไม่นับ cart</li>
+  </ul></div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-67" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-67" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-67" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-67" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-67" data-st="skip">SKIP</span>
+  </div></div>
+</div></td></tr>
+
+<tr class="trow" data-feat="fullflow" data-level="e2e" data-prio="P1" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-PUR.5</td>
+  <td class="ctitle">ลูกค้าซื้อสำเร็จ → operator reply "ขอบคุณ" ทันที → ปรากฏใน TikTok live</td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td><td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-68"><span class="stb pending">รอเทส</span></td>
+</tr>
+<tr class="detail"><td colspan="6"><div class="card">
+  <div class="h-title">ลูกค้าซื้อสำเร็จ → operator reply "ขอบคุณ" ทันที → ปรากฏใน TikTok live</div>
+  <div class="h-prio">Priority: <b>P1</b> · E2E · Purchase + Reply combo</div>
+  <div class="sec"><h4>Precondition</h4><ul>
+    <li>Session live + สินค้า pin ไว้ + TC-PUR.1 ผ่านแล้ว</li>
+  </ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol>
+    <li>ลูกค้าซื้อสินค้าสำเร็จ → comment "ซื้อแล้วนะคะ" ใน live</li>
+    <li>Takra chat panel แสดง comment "ซื้อแล้วนะคะ" ของลูกค้า</li>
+    <li>Operator คลิก reply box ใน Takra → พิมพ์ "ขอบคุณมากนะครับ รอสินค้าได้เลย" → กด ส่ง</li>
+    <li>ดู TikTok live chat ภายนอก</li>
+    <li>ดู GMV panel ใน Takra ว่าอัพเดทแล้ว</li>
+  </ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul>
+      <li>Reply "ขอบคุณมากนะครับ…" ปรากฏใน TikTok live chat ภายใน ~3s</li>
+      <li>Takra chat panel แสดง reply ด้วย self styling (ต่างจาก comment ทั่วไป)</li>
+      <li>GMV แสดงยอดขายของ order ลูกค้าแล้ว (อัพเดทใน ~30s)</li>
+      <li>ทั้ง reply และ GMV ทำงานพร้อมกันใน session เดียวได้ ไม่มี conflict</li>
+    </ul></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-68" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-68" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-68" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-68" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-68" data-st="skip">SKIP</span>
+  </div></div>
+</div></td></tr>
+
+<tr class="trow" data-feat="fullflow" data-level="e2e" data-prio="P2" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-PUR.6</td>
+  <td class="ctitle">ลูกค้าใช้ coupon/ส่วนลด → checkout สำเร็จ → GMV แสดงราคาหลังหักส่วนลด</td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td><td><span class="prio p2">P2</span></td>
+  <td class="status" data-uid="tc-69"><span class="stb pending">รอเทส</span></td>
+</tr>
+<tr class="detail"><td colspan="6"><div class="card">
+  <div class="h-title">ลูกค้าใช้ coupon/ส่วนลด → checkout สำเร็จ → GMV แสดงราคาหลังหักส่วนลด</div>
+  <div class="h-prio">Priority: <b>P2</b> · E2E · Coupon/Discount</div>
+  <div class="sec"><h4>Precondition</h4><ul>
+    <li>Session live + มี coupon ที่ออกจาก TikTok Shop (เช่น ส่วนลด 20%)</li>
+  </ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol>
+    <li>ลูกค้าเพิ่มสินค้า X (ราคา ฿100) เข้า cart</li>
+    <li>ใส่ coupon code ส่วนลด 20% → ราคาหลังหัก ฿80</li>
+    <li>Checkout ยืนยัน order ฿80</li>
+    <li>รอ ~30s → ดู GMV panel ใน Takra</li>
+  </ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul>
+      <li>GMV เพิ่ม ฿80 (ราคาหลังหัก) — ไม่ใช่ ฿100 ราคาเต็ม</li>
+      <li>Top Products แสดงสินค้า X ด้วยยอด ฿80</li>
+      <li>totalUnits = 1</li>
+    </ul></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div>
+  </div>
+  <div class="sec"><h4>Notes</h4><ul>
+    <li>ถ้า TikTok Shop API ส่ง GMV เป็นราคาก่อนหักส่วนลด → note ไว้ใน Actual Result และ mark HOLD</li>
+    <li>ขึ้นอยู่กับว่า TikTok นิยาม GMV ว่าราคาก่อนหรือหลัง discount</li>
+  </ul></div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-69" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-69" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-69" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-69" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-69" data-st="skip">SKIP</span>
+  </div></div>
+</div></td></tr>
+
+    </tbody>
+  </table>
+  </div>
+
+</div>
+<footer>Takra Rerun · POC K.Book Manual Test Cases · 69 TCs · <span id="gen-date"></span></footer>
+
+<script>
+// ── Load store from embedded JSON ──
+var storeEl = document.getElementById('store-data');
+var store = {};
+try { store = JSON.parse(storeEl.textContent || '{}'); } catch(_) {}
+
+var SMAP = {
+  pass:  ['pass',  'PASS'],
+  fail:  ['fail',  'FAIL'],
+  hold:  ['hold',  'HOLD'],
+  block: ['block', 'BLOCKED'],
+  skip:  ['skip',  'SKIP'],
+};
+
+// Restore saved statuses
+Object.keys(store).forEach(function(uid) {
+  var st = store[uid] && store[uid].st;
+  if (!st || !SMAP[st]) return;
+  // badge
+  var rowStatus = document.querySelector('tr.trow td.status[data-uid="' + uid + '"]');
+  if (rowStatus) {
+    var stb = rowStatus.querySelector('.stb');
+    if (stb) { stb.className = 'stb ' + SMAP[st][0]; stb.textContent = SMAP[st][1]; }
+  }
+  // opt button
+  var opt = document.querySelector('.opt[data-uid="' + uid + '"][data-st="' + st + '"]');
+  if (opt) opt.classList.add('sel');
+  // also restore actual result text
+  if (store[uid].actual) {
+    var boxes = document.querySelectorAll('tr.detail');
+    boxes.forEach(function(d) {
+      var badge = d.querySelector('.opt[data-uid="' + uid + '"]');
+      if (!badge) return;
+      var box = d.querySelector('.actualbox');
+      if (box) box.textContent = store[uid].actual;
+    });
+  }
+});
+
+// ── Toggle row expand ──
+function tg(row) {
+  var detail = row.nextElementSibling;
+  var isOpen = row.classList.contains('open');
+  row.classList.toggle('open', !isOpen);
+  if (detail && detail.classList.contains('detail')) {
+    detail.classList.toggle('show', !isOpen);
+  }
+}
+function toggleAll(open) {
+  document.querySelectorAll('tr.trow').forEach(function(r) {
+    if (r.classList.contains('hide')) return;
+    r.classList.toggle('open', open);
+    var d = r.nextElementSibling;
+    if (d && d.classList.contains('detail')) d.classList.toggle('show', open);
+  });
+}
+
+// ── Save store back into the embedded script tag ──
+function save() {
+  storeEl.textContent = '\n' + JSON.stringify(store, null, 2) + '\n';
+}
+
+// ── Status opt buttons ──
+document.querySelectorAll('.opt').forEach(function(o) {
+  o.addEventListener('click', function(e) {
+    e.stopPropagation();
+    var uid = o.dataset.uid, st = o.dataset.st;
+    var allOpts = document.querySelectorAll('.opt[data-uid="' + uid + '"]');
+    var alreadySel = o.classList.contains('sel');
+    allOpts.forEach(function(x) { x.classList.remove('sel'); });
+    store[uid] = store[uid] || {};
+    if (alreadySel) {
+      delete store[uid].st;
+    } else {
+      o.classList.add('sel');
+      store[uid].st = st;
+    }
+    var rowStatus = document.querySelector('tr.trow td.status[data-uid="' + uid + '"]');
+    if (rowStatus) {
+      var stb = rowStatus.querySelector('.stb');
+      if (stb) {
+        if (!alreadySel && SMAP[st]) { stb.className = 'stb ' + SMAP[st][0]; stb.textContent = SMAP[st][1]; }
+        else { stb.className = 'stb pending'; stb.textContent = 'รอเทส'; }
+      }
+    }
+    save();
+    recount();
+  });
+});
+
+// ── Actual result editable on blur ──
+document.querySelectorAll('.actualbox').forEach(function(box) {
+  box.contentEditable = 'true';
+  box.addEventListener('blur', function() {
+    // find uid from nearest .opt
+    var opts = box.closest('tr.detail').querySelectorAll('.opt');
+    if (!opts.length) return;
+    var uid = opts[0].dataset.uid;
+    store[uid] = store[uid] || {};
+    store[uid].actual = box.textContent.trim() || '';
+    save();
+  });
+});
+
+// ── Filters ──
+var filters = { feat: new Set(), level: new Set(), prio: new Set() };
+document.querySelectorAll('.fchip').forEach(function(c) {
+  c.addEventListener('click', function() {
+    var f = c.dataset.f, v = c.dataset.v;
+    if (filters[f].has(v)) { filters[f].delete(v); c.classList.remove('active'); }
+    else { filters[f].add(v); c.classList.add('active'); }
+    applyFilters();
+  });
+});
+document.querySelectorAll('.clearbtn').forEach(function(b) {
+  b.addEventListener('click', function() {
+    var key = b.dataset.clear;
+    filters[key].clear();
+    document.querySelectorAll('.fchip[data-f="' + key + '"]').forEach(function(c) { c.classList.remove('active'); });
+    applyFilters();
+  });
+});
+function applyFilters() {
+  document.querySelectorAll('tr.trow').forEach(function(row) {
+    var ok = true;
+    if (filters.feat.size  && !filters.feat.has(row.dataset.feat))   ok = false;
+    if (filters.level.size && !filters.level.has(row.dataset.level)) ok = false;
+    if (filters.prio.size  && !filters.prio.has(row.dataset.prio))   ok = false;
+    row.classList.toggle('hide', !ok);
+    var d = row.nextElementSibling;
+    if (d && d.classList.contains('detail')) d.classList.toggle('hide', !ok);
+  });
+  document.querySelectorAll('tr.featrow').forEach(function(fr) {
+    var n = fr.nextElementSibling, any = false;
+    while (n && !n.classList.contains('featrow') && !n.classList.contains('epicrow')) {
+      if (n.classList.contains('trow') && !n.classList.contains('hide')) { any = true; break; }
+      n = n.nextElementSibling;
+    }
+    fr.classList.toggle('hide', !any);
+  });
+  document.querySelectorAll('tr.epicrow').forEach(function(er) {
+    var n = er.nextElementSibling, any = false;
+    while (n && !n.classList.contains('epicrow')) {
+      if (n.classList.contains('trow') && !n.classList.contains('hide')) { any = true; break; }
+      n = n.nextElementSibling;
+    }
+    er.classList.toggle('hide', !any);
+  });
+  recount();
+}
+
+function recount() {
+  var c = { pass:0, fail:0, hold:0, block:0, pending:0 };
+  document.querySelectorAll('tr.trow').forEach(function(row) {
+    var stb = row.querySelector('td.status .stb');
+    if (!stb) return;
+    var cls = stb.className.replace('stb','').trim().split(' ')[0];
+    if (c.hasOwnProperty(cls)) c[cls]++; else c.pending++;
+  });
+  var total = c.pass + c.fail + c.hold + c.block + c.pending;
+  var done  = c.pass + c.fail + c.hold + c.block;
+  var pct   = total ? Math.round(done / total * 100) : 0;
+  ['pass','fail','hold','block'].forEach(function(k) {
+    var e = document.getElementById('sum-'+k); if (e) e.textContent = c[k];
+    var h = document.getElementById('hdr-'+k); if (h) h.textContent = c[k];
+  });
+  var ep = document.getElementById('sum-pending'); if (ep) ep.textContent = c.pending;
+  var hp = document.getElementById('hdr-pending'); if (hp) hp.textContent = c.pending;
+  var bar = document.getElementById('sumbar'); if (bar) bar.style.width = pct + '%';
+  var pctEl = document.getElementById('sumpct');
+  if (pctEl) pctEl.textContent = pct + '% ทดสอบแล้ว (' + done + '/' + total + ')';
+}
+
+// ── Save file (bake results into HTML) ──
+document.getElementById('btn-save-file').addEventListener('click', function() {
+  save(); // update the script tag in DOM first
+  var html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+  var blob = new Blob([html], { type: 'text/html; charset=utf-8' });
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'takra-poc-kbook-test-cases-table.html';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(a.href);
+});
+
+document.getElementById('btn-reset').addEventListener('click', function() {
+  if (!confirm('ล้างผลทดสอบทั้งหมด?')) return;
+  store = {};
+  save();
+  location.reload();
+});
+
+// Set TC-AD.1 default to BLOCKED
+(function() {
+  if (!store['tc-29'] || !store['tc-29'].st) {
+    store['tc-29'] = { st: 'block' };
+    save();
+  }
+})();
+
+// Footer date
+var gd = document.getElementById('gen-date');
+if (gd) gd.textContent = document.lastModified || '';
+
+recount();
+</script>
+</body>
+</html>
