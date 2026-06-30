@@ -160,6 +160,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
     <span style="margin-left:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
       <span id="save-status" class="hint" style="white-space:nowrap"></span>
       <label class="hint" style="display:flex;gap:4px;align-items:center;white-space:nowrap;cursor:pointer" title="บันทึกขึ้น GitHub อัตโนมัติหลังหยุดแก้ ~5 วินาที"><input type="checkbox" id="chk-autosave" checked> auto-save</label>
+      <button class="btn" id="btn-token" title="ใส่/เปลี่ยน GitHub token (ถ้าเซฟไม่ขึ้น/token เสีย กดอันนี้)">🔑 Token</button>
       <button class="btn" id="btn-refresh" title="ดึงผลล่าสุดจาก GitHub มา merge (ไม่ต้อง reload)">🔄 ดึงล่าสุด</button>
       <button class="btn primary" id="btn-publish">☁️ บันทึกขึ้น GitHub</button>
       <button class="btn" id="btn-save-file" title="ดาวน์โหลด HTML ไว้ใช้ offline">💾 ดาวน์โหลด</button>
@@ -3240,6 +3241,16 @@ async function pullLatest() {
   }
 }
 document.getElementById('btn-refresh').addEventListener('click', pullLatest);
+
+// ── Set / change GitHub token (one click to escape a bad/expired token) ──
+document.getElementById('btn-token').addEventListener('click', function() {
+  clearToken();
+  var t = ghToken();   // prompts for a fresh token
+  if (t) {
+    alert('บันทึก token แล้ว ✅\nลองกดเปลี่ยนสถานะ TC สัก 1 อัน — ปุ่มควรเด้ง "✅ บันทึกแล้ว!" ใน ~5 วิ');
+    updateIndicator();
+  }
+});
 
 // ── Download file (offline backup) ──
 document.getElementById('btn-save-file').addEventListener('click', function() {
