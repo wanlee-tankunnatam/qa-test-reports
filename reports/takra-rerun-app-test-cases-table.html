@@ -146,7 +146,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
     <button class="btn" onclick="toggleAll(false)">▾ ยุบทั้งหมด</button>
     <span class="hint">💡 คลิกแถว → ดู Steps / Expected <span class="lv lvl-ui">🌐 UI</span> <span class="lv lvl-e2e">🔄 E2E</span></span>
     <span style="margin-left:auto;display:flex;gap:8px;align-items:center">
-      <button class="btn primary" id="btn-publish" disabled="">⏳ กำลังบันทึก…</button>
+      <button class="btn primary" id="btn-publish">☁️ บันทึกขึ้น GitHub</button>
       <button class="btn" id="btn-save-file" title="ดาวน์โหลด HTML ไว้ใช้ offline">💾 ดาวน์โหลด</button>
       <button class="btn" style="color:var(--fail)" id="btn-reset">🗑 ล้างผล</button>
     </span>
@@ -3000,7 +3000,14 @@ async function publishToGH() {
   save();
 
   try {
+    // Snapshot the page with the button in its idle/enabled state so the
+    // committed file is never frozen mid-save (otherwise reopening it shows
+    // a permanently-disabled "⏳ กำลังบันทึก…" button).
+    btn.disabled = false;
+    btn.textContent = '☁️ บันทึกขึ้น GitHub';
     var html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+    btn.disabled = true;
+    btn.textContent = '⏳ กำลังบันทึก…';
     var encoded = btoa(unescape(encodeURIComponent(html)));
 
     // Get current file SHA (required for update)
