@@ -121,6 +121,21 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
   },
   "tc-2": {
     "st": "skip"
+  },
+  "tc-47": {
+    "st": "pass"
+  },
+  "tc-46": {
+    "st": "pass"
+  },
+  "tc-45": {
+    "st": "pass"
+  },
+  "tc-44": {
+    "st": "pass"
+  },
+  "tc-43": {
+    "st": "pass"
   }
 }
 </script>
@@ -143,14 +158,14 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
   <div class="runsum">
     <h3>📊 สรุปผล Manual Test</h3>
     <div class="sumchips">
-      <span class="cnt pass">PASS <b id="sum-pass">3</b></span>
+      <span class="cnt pass">PASS <b id="sum-pass">8</b></span>
       <span class="cnt fail">FAIL <b id="sum-fail">0</b></span>
       <span class="cnt hold">HOLD <b id="sum-hold">0</b></span>
       <span class="cnt block">BLOCKED <b id="sum-block">1</b></span>
-      <span class="cnt pending">รอเทส <b id="sum-pending">65</b></span>
+      <span class="cnt pending">รอเทส <b id="sum-pending">60</b></span>
     </div>
-    <div class="progress"><div id="sumbar" class="progressbar" style="width: 6%;"></div></div>
-    <div class="hint" id="sumpct" style="margin-top:5px">6% ทดสอบแล้ว (4/69)</div>
+    <div class="progress"><div id="sumbar" class="progressbar" style="width: 13%;"></div></div>
+    <div class="hint" id="sumpct" style="margin-top:5px">13% ทดสอบแล้ว (9/69)</div>
   </div>
 
   <div class="toolbar">
@@ -158,8 +173,8 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
     <button class="btn" onclick="toggleAll(false)">▾ ยุบทั้งหมด</button>
     <span class="hint">💡 คลิกแถว → ดู Steps / Expected <span class="lv lvl-ui">🌐 UI</span> <span class="lv lvl-e2e">🔄 E2E</span></span>
     <span style="margin-left:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-      <span id="save-status" class="hint" style="white-space:nowrap"></span>
-      <label class="hint" style="display:flex;gap:4px;align-items:center;white-space:nowrap;cursor:pointer" title="บันทึกขึ้น GitHub อัตโนมัติหลังหยุดแก้ ~5 วินาที"><input type="checkbox" id="chk-autosave" checked> auto-save</label>
+      <span id="save-status" class="hint" style="white-space: nowrap; color: var(--hold);">● ยังไม่ได้บันทึก</span>
+      <label class="hint" style="display:flex;gap:4px;align-items:center;white-space:nowrap;cursor:pointer" title="บันทึกขึ้น GitHub อัตโนมัติหลังหยุดแก้ ~5 วินาที"><input type="checkbox" id="chk-autosave" checked=""> auto-save</label>
       <button class="btn" id="btn-token" title="ใส่/เปลี่ยน GitHub token (ถ้าเซฟไม่ขึ้น/token เสีย กดอันนี้)">🔑 Token</button>
       <button class="btn" id="btn-refresh" title="ดึงผลล่าสุดจาก GitHub มา merge (ไม่ต้อง reload)">🔄 ดึงล่าสุด</button>
       <button class="btn primary" id="btn-publish">☁️ บันทึกขึ้น GitHub</button>
@@ -1742,13 +1757,13 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
 <tr class="epicrow"><td colspan="6">🎬 เมนูวีดีโอ — Video Library <span class="rp">(6 TCs)</span></td></tr>
 <tr class="featrow"><td colspan="6">📁 video — อัปโหลด · preview · ลบ · quota <span class="rp"><span class="lv lvl-ui">🌐 5</span> <span class="lv lvl-e2e">🔄 1</span></span></td></tr>
 
-<tr class="trow" data-feat="video" data-level="ui" data-prio="P0" onclick="tg(this)">
+<tr class="trow open" data-feat="video" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-VD.1</td>
   <td class="ctitle">อัปโหลดวีดีโอ → แสดงในรายการพร้อมชื่อและขนาด</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td><td><span class="prio p0">P0</span></td>
-  <td class="status" data-uid="tc-43"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-43"><span class="stb pass">PASS</span></td>
 </tr>
-<tr class="detail"><td colspan="6"><div class="card">
+<tr class="detail show"><td colspan="6"><div class="card">
   <div class="h-title">อัปโหลดวีดีโอ → แสดงในรายการพร้อมชื่อและขนาด</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · เมนูวีดีโอ</div>
   <div class="sec"><h4>Test Steps</h4><ol>
@@ -1765,7 +1780,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
     <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-43" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-43" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-43" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-43" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-43" data-st="block">BLOCKED</span>
@@ -1773,13 +1788,13 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
   </div></div>
 </div></td></tr>
 
-<tr class="trow" data-feat="video" data-level="ui" data-prio="P0" onclick="tg(this)">
+<tr class="trow open" data-feat="video" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-VD.2</td>
   <td class="ctitle">คลิก preview วีดีโอ → VideoPreviewDialog เปิดและเล่นได้</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td><td><span class="prio p0">P0</span></td>
-  <td class="status" data-uid="tc-44"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-44"><span class="stb pass">PASS</span></td>
 </tr>
-<tr class="detail"><td colspan="6"><div class="card">
+<tr class="detail show"><td colspan="6"><div class="card">
   <div class="h-title">คลิก preview วีดีโอ → VideoPreviewDialog เปิดและเล่นได้</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · เมนูวีดีโอ</div>
   <div class="sec"><h4>Test Steps</h4><ol>
@@ -1796,7 +1811,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
     <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-44" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-44" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-44" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-44" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-44" data-st="block">BLOCKED</span>
@@ -1804,13 +1819,13 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
   </div></div>
 </div></td></tr>
 
-<tr class="trow" data-feat="video" data-level="ui" data-prio="P0" onclick="tg(this)">
+<tr class="trow open" data-feat="video" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-VD.3</td>
   <td class="ctitle">ลบวีดีโอ → ยืนยัน → หายจากรายการ + quota ลด</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td><td><span class="prio p0">P0</span></td>
-  <td class="status" data-uid="tc-45"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-45"><span class="stb pass">PASS</span></td>
 </tr>
-<tr class="detail"><td colspan="6"><div class="card">
+<tr class="detail show"><td colspan="6"><div class="card">
   <div class="h-title">ลบวีดีโอ → ยืนยัน → หายจากรายการ + quota ลด</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · เมนูวีดีโอ</div>
   <div class="sec"><h4>Test Steps</h4><ol>
@@ -1826,7 +1841,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
     <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-45" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-45" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-45" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-45" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-45" data-st="block">BLOCKED</span>
@@ -1834,13 +1849,13 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
   </div></div>
 </div></td></tr>
 
-<tr class="trow" data-feat="video" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow open" data-feat="video" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-VD.4</td>
   <td class="ctitle">อัปโหลดไฟล์ที่ไม่ใช่ video → validation error แสดง</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td><td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-46"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-46"><span class="stb pass">PASS</span></td>
 </tr>
-<tr class="detail"><td colspan="6"><div class="card">
+<tr class="detail show"><td colspan="6"><div class="card">
   <div class="h-title">อัปโหลดไฟล์ที่ไม่ใช่ video → validation error แสดง</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · เมนูวีดีโอ</div>
   <div class="sec"><h4>Test Steps</h4><ol>
@@ -1855,7 +1870,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
     <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-46" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-46" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-46" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-46" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-46" data-st="block">BLOCKED</span>
@@ -1863,13 +1878,13 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
   </div></div>
 </div></td></tr>
 
-<tr class="trow" data-feat="video" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow open" data-feat="video" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-VD.5</td>
   <td class="ctitle">Quota เต็ม → อัปโหลดเพิ่มไม่ได้ + แสดง quota banner</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td><td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-47"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-47"><span class="stb pass">PASS</span></td>
 </tr>
-<tr class="detail"><td colspan="6"><div class="card">
+<tr class="detail show"><td colspan="6"><div class="card">
   <div class="h-title">Quota เต็ม → อัปโหลดเพิ่มไม่ได้ + แสดง quota banner</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · เมนูวีดีโอ</div>
   <div class="sec"><h4>Test Steps</h4><ol>
@@ -1885,7 +1900,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
     <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-47" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-47" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-47" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-47" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-47" data-st="block">BLOCKED</span>
@@ -2816,7 +2831,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
   </div>
 
 </div>
-<footer>Takra Rerun · POC K.Book Manual Test Cases · 69 TCs · <span id="gen-date">06/30/2026 16:42:03</span></footer>
+<footer>Takra Rerun · POC K.Book Manual Test Cases · 69 TCs · <span id="gen-date">06/30/2026 17:02:58</span></footer>
 
 <script>
 // ── Load store from embedded JSON ──
