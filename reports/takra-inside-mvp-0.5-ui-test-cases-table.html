@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MVP 0.5 — UI Test Cases (ตาราง) · จาก case/*/ui.md</title>
+
+<!-- ═══════════════════════ ส่วนที่ 1 · CSS / ธีม — ตัวแปรสี (priority/status/type) + สไตล์ตาราง การ์ด badge แท็บ ═══════════════════════ -->
+<style>
+/* === UI-tier base (mvp-0.5-ui-test-cases) === */
+
+  :root{
+    --bg:#f5f6f8; --card:#fff; --card2:#f0f2f5; --line:#dce0e7;
+    --txt:#1f2430; --muted:#6b7280; --accent:#2563eb;
+    --p0:#dc2626; --p1:#ea7a18; --p2:#2563eb;
+    --pass:#16a34a; --fail:#dc2626; --hold:#d97706; --inprog:#2563eb; --skip:#9ca3af; --block:#7c3aed;
+    --lv-ui:#2563eb; --lv-live:#7c3aed;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--txt);font-family:"Segoe UI","Sarabun",system-ui,sans-serif;line-height:1.5;font-size:13px}
+  header.top{padding:24px 28px 16px;border-bottom:1px solid var(--line);background:#fff}
+  header.top h1{margin:0 0 6px;font-size:20px}
+  header.top .sub{color:var(--muted);font-size:12.5px}
+  header.top .meta{margin-top:10px;display:flex;flex-wrap:wrap;gap:8px}
+  .pill{display:inline-block;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:600;border:1px solid var(--line);background:var(--card2)}
+  .wrap{padding:18px 24px 80px;max-width:1180px;margin:0 auto}
+  .toolbar{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;margin:0 0 14px}
+  .btn{font-size:12px;font-weight:600;padding:6px 13px;border-radius:7px;border:1px solid var(--line);background:#fff;color:var(--txt);cursor:pointer}
+  .btn:hover{border-color:var(--accent);color:var(--accent)}
+  .hint{color:var(--muted);font-size:12px}
+  .counts{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px}
+  .cnt{font-size:12px;font-weight:700;padding:5px 12px;border-radius:8px;border:1px solid var(--line);background:#fff}
+  .cnt b{font-size:14px}
+  .cnt.pending{color:var(--muted)} .cnt.block{color:var(--block);border-color:#e9d5ff} .cnt.warn{color:var(--p1);border-color:#fed7aa}
+
+  .req{background:#fff;border:1px solid var(--line);border-radius:12px;margin:0 0 18px;overflow:hidden}
+  .req-head{display:flex;align-items:center;gap:10px;padding:13px 18px;background:var(--card2);border-bottom:1px solid var(--line)}
+  .req-head h3{margin:0;font-size:14px} .req-head .tag{margin-left:auto;font-size:11px;color:var(--muted);font-family:monospace}
+  .req-grid{display:grid;grid-template-columns:1fr 1fr;gap:0}
+  @media(max-width:820px){.req-grid{grid-template-columns:1fr}}
+  .req-cell{padding:14px 18px;border-bottom:1px solid var(--line)}
+  .req-cell:nth-child(odd){border-right:1px solid var(--line)}
+  .req-cell h4{margin:0 0 8px;font-size:11px;letter-spacing:.4px;text-transform:uppercase;color:var(--accent)}
+  .req-cell ul{margin:0;padding-left:18px} .req-cell li{margin:4px 0;font-size:12.5px} .req-cell li b{color:#111}
+  .req-cell.full{grid-column:1 / -1;border-right:none}
+  .req-note{font-size:11.5px;color:#b45309;margin-top:6px}
+
+  .tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:#fff}
+  table.tc{border-collapse:collapse;width:100%;min-width:880px;background:#fff}
+  table.tc th,table.tc td{padding:9px 11px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+  table.tc thead th{position:sticky;top:0;background:var(--card2);color:var(--muted);font-size:10.5px;text-transform:uppercase;letter-spacing:.4px;z-index:2;border-bottom:2px solid var(--line)}
+  tr.featrow td{background:#eaf1fb;color:#1d4ed8;font-weight:700;font-size:12.5px}
+  tr.featrow .rp{font-family:monospace;font-weight:500;color:#3b6fc4;font-size:11px;margin-left:8px}
+  tr.trow{cursor:pointer} tr.trow:hover{background:#f7f9fc} tr.trow.open{background:#eef4fe}
+  tr.trow.block{background:#f6f1fb} tr.trow.block:hover{background:#efe7f7}
+  .tog{display:inline-block;width:16px;color:var(--muted);transition:transform .15s;font-size:11px}
+  tr.trow.open .tog{transform:rotate(90deg);color:var(--accent)}
+  .cid{font-family:monospace;font-size:10px;color:var(--muted);white-space:nowrap}
+  .ctitle{font-weight:600;font-size:12.5px}
+  td.lvl{white-space:nowrap}
+  .lv{font-size:10px;font-weight:700;padding:2px 7px;border-radius:5px;border:1px solid;background:#fff}
+  .lv.ui{color:var(--lv-ui);border-color:var(--lv-ui)} .lv.live{color:var(--lv-live);border-color:var(--lv-live)}
+  .ac{font-size:10px;color:var(--muted);font-family:monospace;margin-left:4px}
+  .flag{font-size:9.5px;font-weight:800;padding:1px 6px;border-radius:4px;color:#fff;margin-left:4px}
+  .flag.block{background:var(--block)} .flag.reg{background:#0891b2} .flag.xfail{background:var(--p1)}
+  .prio{font-weight:800;font-size:10px;padding:3px 8px;border-radius:5px;color:#fff;display:inline-block}
+  .prio.p0{background:var(--p0)} .prio.p1{background:var(--p1)} .prio.p2{background:var(--p2)}
+  td.status{white-space:nowrap}
+  .stb{font-weight:700;font-size:10px;padding:3px 8px;border-radius:5px;display:inline-block}
+  .stb.pending{background:#fff;border:1px solid var(--line);color:var(--muted)}
+  .stb.block{background:var(--block);color:#fff}
+  tr.detail{display:none} tr.detail.show{display:table-row}
+  tr.detail > td{background:#fafbfc;padding:0;border-bottom:2px solid var(--line)}
+  .card{padding:18px 22px}
+  .card .h-title{font-size:15px;font-weight:700;margin:0 0 4px}
+  .card .h-prio{font-size:12px;color:var(--muted);margin:0 0 14px} .card .h-prio b{color:var(--txt)}
+  .card .sec{margin:0 0 14px} .card .sec:last-child{margin-bottom:0}
+  .card .sec h4{margin:0 0 6px;font-size:12px;font-weight:700;color:#374151}
+  .card .sec ol,.card .sec ul{margin:0;padding-left:20px} .card .sec li{margin:3px 0;font-size:13px}
+  .card .sec.pre li{color:#52606d;font-size:12.5px}
+  .card .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:760px){.card .grid{grid-template-columns:1fr}}
+  .card .actualbox{background:#fff;border:1px dashed var(--line);border-radius:8px;padding:8px 12px;color:var(--muted);font-style:italic;font-size:12.5px}
+  .warnbox{background:#fff7ed;border:1px solid #fed7aa;border-radius:8px;padding:8px 12px;margin-top:8px;font-size:12px;color:#b45309}
+  .blockbox{background:#faf5ff;border:1px solid #e9d5ff;border-radius:8px;padding:8px 12px;margin-top:8px;font-size:12px;color:#6b21a8}
+  .statusrow{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+  .opt{font-size:11px;font-weight:700;padding:5px 11px;border-radius:6px;border:1px solid var(--line);background:#fff;color:var(--muted)}
+  .opt.pass{border-color:var(--pass)} .opt.fail{border-color:var(--fail)} .opt.hold{border-color:var(--hold)}
+  .opt.block{border-color:var(--block)} .opt.skip{border-color:var(--skip)}
+  footer{color:var(--muted);font-size:12px;text-align:center;padding:22px}
+  a{color:var(--accent)}
+  @media print{.tablewrap{overflow:visible}table.tc{min-width:0}tr.detail{display:table-row !important}.toolbar{display:none}}
+
+/* === reference template override (mvp-0.5-manual-test-cases-table) === */
+
+  :root{
+    --bg:#f5f6f8; --card:#ffffff; --card2:#f0f2f5; --line:#dce0e7;
+    --txt:#1f2430; --muted:#6b7280; --accent:#2563eb;
+    --crit:#dc2626; --high:#ea7a18; --med:#2563eb; --low:#94a3b8;
+    --pass:#16a34a; --fail:#dc2626; --hold:#d97706; --devdone:#7c3aed;
+    --inprog:#2563eb; --return:#ea580c; --skip:#9ca3af;
+    --t-func:#16a34a; --t-neg:#dc2626; --t-ui:#2563eb; --t-sec:#7c3aed;
+    --t-res:#d97706; --t-comp:#ca8a04; --t-int:#0891b2; --t-data:#64748b;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--txt);
+    font-family:"Segoe UI","Sarabun",system-ui,-apple-system,sans-serif;line-height:1.5;font-size:13px}
+  header.top{padding:24px 28px 16px;border-bottom:1px solid var(--line);background:#fff}
+  header.top h1{margin:0 0 6px;font-size:20px}
+  header.top .sub{color:var(--muted);font-size:12.5px}
+  header.top .meta{margin-top:10px;display:flex;flex-wrap:wrap;gap:8px}
+  .pill{display:inline-block;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:600;border:1px solid var(--line);background:var(--card2)}
+  .wrap{padding:18px 24px 80px;max-width:1180px;margin:0 auto}
+
+  .toolbar{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;margin:0 0 14px}
+  .btn{font-size:12px;font-weight:600;padding:6px 13px;border-radius:7px;border:1px solid var(--line);
+    background:#fff;color:var(--txt);cursor:pointer}
+  .btn:hover{border-color:var(--accent);color:var(--accent)}
+  .hint{color:var(--muted);font-size:12px}
+
+  .counts{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px}
+  .cnt{font-size:12px;font-weight:700;padding:5px 12px;border-radius:8px;border:1px solid var(--line);background:#fff}
+  .cnt b{font-size:14px}
+  .cnt.pass{color:var(--pass);border-color:#bbf7d0} .cnt.fail{color:var(--fail);border-color:#fecaca}
+  .cnt.return{color:var(--return);border-color:#fed7aa} .cnt.skip{color:var(--skip);border-color:#e5e7eb}
+  .cnt.hold{color:var(--hold);border-color:#fde68a} .cnt.na{color:var(--muted);border-color:#e5e7eb}
+  .cnt.pending{color:var(--muted)}
+
+  .legend{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;background:var(--card);border:1px solid var(--line);
+    border-radius:10px;padding:12px 16px;margin:0 0 16px;font-size:11.5px}
+  .legend b{color:var(--muted);margin-right:2px}
+  .st{display:inline-flex;align-items:center;font-weight:700;padding:2px 8px;border-radius:5px;color:#fff;font-size:10.5px}
+  .st.pass{background:var(--pass)} .st.fail{background:var(--fail)}
+  .st.hold{background:var(--hold)} .st.devdone{background:var(--devdone)}
+  .st.inprog{background:var(--inprog)} .st.return{background:var(--return)}
+  .st.skip{background:var(--skip)}
+  .tt{display:inline-flex;align-items:center;font-weight:700;font-size:10px;padding:2px 7px;border-radius:5px;border:1px solid;white-space:nowrap;background:#fff}
+  .tt.func{color:var(--t-func);border-color:var(--t-func)} .tt.neg{color:var(--t-neg);border-color:var(--t-neg)}
+  .tt.ui{color:var(--t-ui);border-color:var(--t-ui)} .tt.sec{color:var(--t-sec);border-color:var(--t-sec)}
+  .tt.res{color:var(--t-res);border-color:var(--t-res)} .tt.comp{color:var(--t-comp);border-color:var(--t-comp)}
+  .tt.int{color:var(--t-int);border-color:var(--t-int)} .tt.data{color:var(--t-data);border-color:var(--t-data)}
+
+  /* requirements */
+  .req{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:0;margin:0 0 18px;overflow:hidden}
+  .req-head{display:flex;align-items:center;gap:10px;padding:13px 18px;background:var(--card2);border-bottom:1px solid var(--line)}
+  .req-head h3{margin:0;font-size:14px}
+  .req-head .tag{margin-left:auto;font-size:11px;color:var(--muted);font-family:monospace}
+  .req-grid{display:grid;grid-template-columns:1fr 1fr;gap:0}
+  @media(max-width:820px){.req-grid{grid-template-columns:1fr}}
+  .req-cell{padding:14px 18px;border-bottom:1px solid var(--line)}
+  .req-cell:nth-child(odd){border-right:1px solid var(--line)}
+  .req-cell h4{margin:0 0 8px;font-size:11px;letter-spacing:.4px;text-transform:uppercase;color:var(--accent)}
+  .req-cell ul{margin:0;padding-left:18px}
+  .req-cell li{margin:4px 0;font-size:12.5px}
+  .req-cell li b{color:#111}
+  .req-cell.full{grid-column:1 / -1;border-right:none}
+  .chip{display:inline-block;font-size:10.5px;font-weight:700;padding:2px 8px;border-radius:5px;margin:0 4px 4px 0;border:1px solid var(--line);background:var(--card2)}
+  .chip.in{border-color:#bbf7d0;color:var(--t-func)}
+  .chip.out{border-color:var(--line);color:var(--muted)}
+  .req-note{font-size:11.5px;color:#b45309;margin-top:8px}
+
+  .tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:#fff}
+  table.tc{border-collapse:collapse;width:100%;min-width:840px;background:#fff}
+  table.tc th,table.tc td{padding:9px 11px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+  table.tc thead th{position:sticky;top:0;background:var(--card2);color:var(--muted);font-size:10.5px;
+    text-transform:uppercase;letter-spacing:.4px;z-index:2;border-bottom:2px solid var(--line)}
+  tr.routerow td{background:#eaf1fb;color:#1d4ed8;font-weight:700;font-size:12.5px}
+  tr.routerow .rp{font-family:monospace;font-weight:500;color:#3b6fc4;font-size:11px;margin-left:8px}
+
+  tr.trow{cursor:pointer}
+  tr.trow:hover{background:#f7f9fc}
+  tr.trow.open{background:#eef4fe}
+  tr.trow.skip{background:#f1f3f5}
+  tr.trow.skip:hover{background:#eceef1}
+  tr.trow.skip .ctitle{color:var(--muted)}
+  tr.trow.na{background:#f1f3f5}
+  tr.trow.na:hover{background:#eceef1}
+  tr.trow.na .ctitle{color:var(--muted);text-decoration:line-through;text-decoration-color:#9ca3af}
+  .tog{display:inline-block;width:16px;color:var(--muted);transition:transform .15s;font-size:11px}
+  tr.trow.open .tog{transform:rotate(90deg);color:var(--accent)}
+  .cid{font-family:monospace;font-size:10.5px;color:var(--muted);white-space:nowrap}
+  .ctitle{font-weight:600;font-size:12.5px}
+  .warnflag{color:#b45309;font-weight:700}
+  td.types{white-space:nowrap} td.types .tt{margin:0 2px 3px 0}
+  .prio{font-weight:800;font-size:10px;letter-spacing:.3px;padding:3px 8px;border-radius:5px;color:#fff;white-space:nowrap;display:inline-block}
+  .prio.crit{background:var(--crit)} .prio.high{background:var(--high)}
+  .prio.med{background:var(--med)} .prio.low{background:var(--low)}
+  td.status{white-space:nowrap}
+  .stb{font-weight:700;font-size:10px;padding:3px 8px;border-radius:5px;display:inline-block;color:#fff}
+  .stb.pass{background:var(--pass)} .stb.fail{background:var(--fail)} .stb.return{background:var(--return)}
+  .stb.hold{background:var(--hold)} .stb.devdone{background:var(--devdone)} .stb.inprog{background:var(--inprog)}
+  .stb.skip{background:var(--skip)}
+  .stb.na{background:#6b7280}
+  .stb.pending{background:#fff;border:1px solid var(--line);color:var(--muted)}
+
+  tr.detail{display:none}
+  tr.detail.show{display:table-row}
+  tr.detail > td{background:#fafbfc;padding:0;border-bottom:2px solid var(--line)}
+  .card{padding:18px 22px}
+  .card .h-title{font-size:15px;font-weight:700;margin:0 0 4px}
+  .card .h-prio{font-size:12px;color:var(--muted);margin:0 0 14px}
+  .card .h-prio b{color:var(--txt)}
+  .card .sec{margin:0 0 14px}
+  .card .sec:last-child{margin-bottom:0}
+  .card .sec h4{margin:0 0 6px;font-size:12px;font-weight:700;letter-spacing:.3px;color:#374151}
+  .card .sec ol,.card .sec ul{margin:0;padding-left:20px}
+  .card .sec li{margin:3px 0;font-size:13px}
+  .card .sec.actual ul li{color:#b45309}
+  .card .sec.actual.pending{color:var(--muted);font-style:italic;font-size:12.5px}
+  .card .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:760px){.card .grid{grid-template-columns:1fr}}
+  .warnbox{background:#fff7ed;border:1px solid #fed7aa;border-radius:8px;padding:8px 12px;margin-top:8px;font-size:12px;color:#b45309}
+  .skipnote{background:#f1f3f5;border:1px solid #d8dce3;border-radius:8px;padding:8px 12px;margin-top:8px;font-size:12px;color:#52606d}
+  .jira{background:#f0f5ff;border:1px solid #c7dafe;border-radius:8px;padding:10px 12px;margin-top:12px}
+  .jira h4{margin:0 0 6px;font-size:11px;letter-spacing:.3px;color:#1d4ed8;text-transform:uppercase}
+  .jira .ji{font-size:12px;margin:3px 0;display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
+  .jira a{font-family:monospace;font-weight:700;text-decoration:none}
+  .js{font-size:9.5px;font-weight:800;padding:1px 7px;border-radius:4px;color:#fff;white-space:nowrap}
+  .js.done{background:var(--pass)} .js.todo{background:var(--return)} .js.hold{background:var(--hold)}
+  .statusrow{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+  .opt{font-size:11px;font-weight:700;padding:5px 11px;border-radius:6px;border:1px solid var(--line);background:#fff;color:var(--muted)}
+  .opt.pass{border-color:var(--pass)} .opt.fail{border-color:var(--fail)} .opt.hold{border-color:var(--hold)}
+  .opt.inprog{border-color:var(--inprog)} .opt.return{border-color:var(--return)} .opt.skip{border-color:var(--skip)}
+  .opt.sel.pass{background:var(--pass);color:#fff}
+  .opt.sel.fail{background:var(--fail);color:#fff}
+  .opt.sel.return{background:var(--return);color:#fff}
+  .opt.sel.skip{background:var(--skip);color:#fff}
+  .opt.sel.hold{background:var(--hold);color:#fff}
+
+  footer{color:var(--muted);font-size:12px;text-align:center;padding:22px}
+  a{color:var(--accent)}
+  @media print{.tablewrap{overflow:visible}table.tc{min-width:0}
+    tr.detail{display:table-row !important}.toolbar{display:none}}
+
+  /* tabs */
+  .tabbar{display:flex;gap:8px;margin:0 0 16px;border-bottom:2px solid var(--line)}
+  .tabbtn{font-size:13px;font-weight:700;padding:9px 16px;border:none;background:none;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px}
+  .tabbtn:hover{color:var(--accent)}
+  .tabbtn.active{color:var(--accent);border-bottom-color:var(--accent)}
+  .tabbtn .n{font-size:11px;background:var(--card2);border:1px solid var(--line);border-radius:999px;padding:1px 7px;margin-left:6px}
+  .tabpane{display:none} .tabpane.active{display:block}
+  .runsum{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 18px;margin:0 0 16px}
+  .runsum h3{margin:0 0 10px;font-size:14px}
+  .sumchips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+  .progress{height:12px;background:var(--card2);border-radius:7px;overflow:hidden;border:1px solid var(--line)}
+  .progressbar{height:100%;background:var(--pass);width:0;transition:width .3s}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════ ส่วนที่ 2 · HEADER — ชื่อรายงาน (h1) + คำอธิบาย (.sub) + ป้ายสรุป epic/stage/env (.pill) ═══════════════════════ -->
+<header class="top">
+  <h1>🧪 MVP 0.5 — UI Test Cases (ตาราง)</h1>
+  <div class="sub">ที่มา: <b>_bmad-output/test-artifacts/case/*/ui.md + emotion-read/live-manual.md</b> (AC-based ที่ทีมออกแบบไว้) · QA: Wanlee T (Ice)</div>
+  <div class="meta">
+    <span class="pill">Source: case/*/ui.md (8) + live-manual</span>
+    <span class="pill">Stage: MVP 0.5</span>
+    <span class="pill">Env: UAT (uat-v0.1.13)</span>
+    <span class="pill">37 test cases / 9 ไฟล์</span>
+  </div>
+</header>
+
+<div class="wrap">
+
+<!-- ═══════════════════════ COUNTS — แถบสรุปจำนวนสถานะ (static เริ่มต้น) ═══════════════════════ -->
+  <div class="counts">
+    <span class="cnt pass"><b>7</b> PASS</span>
+    <span class="cnt fail"><b>0</b> FAIL</span>
+    <span class="cnt hold"><b>2</b> HOLD</span>
+    <span class="cnt block"><b>3</b> BLOCKED</span>
+    <span class="cnt pending"><b>25</b> รอเทส</span>
+  </div>
+
+<!-- ═══════════════════════ 📊 สรุปผลการรัน (live · อัปเดตเมื่อเลือกผล) ═══════════════════════ -->
+  <div class="runsum">
+    <h3>📊 สรุปผลการรัน <span class="hint" style="font-weight:400">(อัปเดตอัตโนมัติเมื่อเลือกผลในแต่ละเคส)</span></h3>
+    <div class="sumchips">
+      <span class="cnt pass">PASS <b id="sum-pass">0</b></span>
+      <span class="cnt fail">FAIL <b id="sum-fail">0</b></span>
+      <span class="cnt hold">HOLD <b id="sum-hold">0</b></span>
+      <span class="cnt block">BLOCKED <b id="sum-block">0</b></span>
+      <span class="cnt pending">รอเทส <b id="sum-pending">0</b></span>
+    </div>
+    <div class="progress"><div id="sumbar" class="progressbar"></div></div>
+    <div class="hint" id="sumpct" style="margin-top:6px">0%</div>
+  </div>
+
+<!-- ═══════════════════════ ===== แท็บ A · UI TEST CASES (จากเอกสาร case/*/ui.md) ===== ═══════════════════════ -->
+  <div id="pane-doc" class="tabpane active">
+<!-- ส่วนที่ 6 · REQUIREMENTS -->
+  <div class="req">
+    <div class="req-head"><h3>📋 ข้อกำหนดการทดสอบรอบนี้ (Test Requirements)</h3><span class="tag">UI tier + live-manual · 37 cases · 8 features</span></div>
+    <div class="req-grid">
+      <div class="req-cell">
+        <h4>🎯 ขอบเขต (Scope)</h4>
+        <ul>
+          <li>UI test case ที่ <b>ทีมออกแบบไว้</b> ใน <code>case/*/ui.md</code> (30) + <code>emotion-read/live-manual.md</code> (7) = <b>37 เคส</b></li>
+          <li>2 level: <b>UI</b> (mock-driven, Playwright-style) · <b>Live-manual</b> (ดูไลฟ์จริงบนเครื่อง)</li>
+          <li>ID + AC ตรงกับไฟล์ออกแบบจริง (เช่น <code>TC-0.5-LOGIN-AC1-UI-POS-01</code>)</li>
+        </ul>
+      </div>
+      <div class="req-cell">
+        <h4>🖥️ สภาพแวดล้อม (Environment) — UAT</h4>
+        <ul>
+          <li><b>UI tier:</b> รันบน build (mock feed: comment/auth/signal) — local, ไม่ต้องไลฟ์จริง</li>
+          <li><b>Live-manual:</b> UAT build + <b>Python ML backend</b> (<code>:8765</code>) + host enroll + pair TikTok Live จริง + <b>อุปกรณ์ที่ 2</b> (ดูฝั่งผู้ชม)</li>
+          <li>local-only · ยังไม่มี cloud</li>
+        </ul>
+      </div>
+      <div class="req-cell">
+        <h4>🔑 สิ่งที่ต้องเตรียม (Prerequisites)</h4>
+        <ul>
+          <li>บัญชี: entitled / denied / expired (สำหรับ login + entitlement-guard)</li>
+          <li>host ที่ <b>enroll หน้าแล้ว</b> + ไลฟ์จริง (live-manual)</li>
+          <li>PDPA: live-manual = biometric ม.26 → ต้องได้ capture consent (FR2) ก่อน</li>
+        </ul>
+      </div>
+      <div class="req-cell">
+        <h4>⚠️ จุดที่รู้ล่วงหน้า (Known)</h4>
+        <ul>
+          <li><b>3 BLOCKED</b> — emotion-read AC1 (POS/NEG/EDGE): mapping FER+→Ekman-7 (Decision D2) ยัง ship ไม่ครบ = code-gap M1</li>
+          <li><b>2 คาด FAIL บน 0.5</b> — EMO-LIVE-04 (HUD invisible/FR25) · EMO-LIVE-07 (เลือก primary ตาม bbox ไม่ใช่ identity)</li>
+        </ul>
+      </div>
+      <div class="req-cell full">
+        <h4>🚫 นอกขอบเขต / หมายเหตุ</h4>
+        <div class="req-note">นี่คือ level <b>ui + live-manual</b> เท่านั้น — ไม่รวม api / integration / fullloop-e2e ที่ออกแบบใน case เดียวกัน · ดู master docs ต่อ epic ที่ <a href="epic-5/">epic-5/</a> ฯลฯ · ⚠️ ไฟล์นี้ render จาก source design จริง ไม่ใช่จาก TI-80</div>
+      </div>
+    </div>
+  </div>
+
+
+<!-- TAB BAR + TOOLBAR (ก่อนตาราง · แบบ mvp-1) -->
+  <div class="tabbar">
+    <button class="tabbtn active" data-pane="pane-doc" onclick="showTab(this,'pane-doc')">📋 UI Test Cases (เอกสาร)<span class="n">37</span></button>
+    <button class="tabbtn" data-pane="pane-manual" onclick="showTab(this,'pane-manual')">🐞 เคสทีมแมนนัวพบเอง<span class="n">39</span></button>
+    <button class="tabbtn" data-pane="pane-scope" onclick="showTab(this,'pane-scope')">🎯 MVP 0.5 Scope</button>
+  </div>
+  <div class="toolbar">
+    <button class="btn" onclick="toggleAll(true)">▸ กางทั้งหมด</button>
+    <button class="btn" onclick="toggleAll(false)">▾ ยุบทั้งหมด</button>
+    <span class="hint">💡 คลิกแถว → ดู Precondition / Steps / Expected · level: <span class="lv ui">UI</span> = mock-driven · <span class="lv live">Live-manual</span> = ไลฟ์จริง</span>
+  </div>
+
+<!-- ═══════════════════════ ส่วนที่ 7 · ตารางเคสหลัก ═══════════════════════ -->
+  <div class="tablewrap">
+  <table class="tc">
+    <thead><tr><th style="width:24px"></th><th>TC ID</th><th>Test Case</th><th>Level / AC</th><th>Pri</th><th>Status</th></tr></thead>
+    <tbody>
+
+      <!-- comment-capture -->
+      <tr class="featrow"><td colspan="6">💬 comment-capture <span class="rp">FR10/11 · ui.md (4)</span></td></tr>
+
+      <tr class="trow" onclick="tg(this)"><td><span class="tog">▸</span></td><td class="cid">TC-0.5-CAP-AC1-UI-POS-01</td><td class="ctitle">comment เข้า → แสดงใน list พร้อม count + label "Live Comments"</td><td class="lvl"><span class="lv ui">UI</span><span class="ac">AC1</span></td><td><span class="prio p0">P0</span></td><td class="status"><span class="stb pending">รอเทส</span></td></tr>
+      <tr class="detail"><td colspan="6"><div class="card"><div class="h-title">comment เข้า → แสดงใน list พร้อม count + label "Live Comments"</div><div class="h-prio">Priority: <b>P0</b> · Level: UI · AC1 · comment-capture</div>
+        <div class="sec pre"><h4>Precondition</h4><ul><li>หน้า SessionRecording เปิดอยู่</li><li>feed comment ผ่าน window.liveHost.onComment (mock)</li></ul></div>
+        <div class="sec"><h4>Test Steps</h4><ol><li>ส่ง comment ทดสอบ 3 รายการ (ต่าง user)</li><li>ตรวจ list + header</li></ol></div>
+        <div class="grid"><div class="sec"><h4>Expected Result</h4><ul><li>comment ทั้ง 3 ปรากฏใน list (ข้อความตรงกับที่ส่ง)</li><li>มี label <b>Live Comments</b> + จุด pulse แดง + <b>count = 3</b> มุมขวา</li></ul></div><div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div></div>
+        <div class="sec"><h4>Status</h4><div class="statusrow"><span class="opt pass">PASS</span><span class="opt fail">FAIL</span><span class="opt hold">HOLD</span></div></div></div></td></tr>
+
+      <tr class="trow" onclick="tg(this)"><td><span class="tog">▸</span></td><td class="cid">TC-0.5-CAP-AC1-UI-POS-02</td><td class="ctitle">user ใหม่ → avatar+ชื่อ; user เดิมติดกัน → ซ่อน avatar แสดงแค่ข้อความ</td><td class="lvl"><span class="lv ui">UI</span><span class="ac">AC1</span></td><td><span class="prio p1">P1</span></td><td class="status"><span class="stb pass">PASS</span></td></tr>
+      <tr class="detail"><td colspan="6"><div class="card"><div class="h-title">user ใหม่ → avatar+ชื่อ; user เดิมติดกัน → ซ่อน avatar</div><div class="h-prio">Priority: <b>P1</b> · Level: UI · AC1 · comment-capture</div>
+        <div class="sec pre"><h4>Precondition</h4><ul><li>หน้า SessionRecording · mock comment feed</li></ul></div>
+        <div class="sec"><h4>Test Steps</h4><ol><li>ส่ง comment จาก "alice" 2 รายการติดกัน แล้ว "bob" 1 รายการ</li><li>ตรวจการแสดง avatar/ชื่อ แต่ละแถว</li></ol></div>
+        <div class="grid"><div class="sec"><h4>Expected Result</h4><ul><li>comment แรกของ alice → <b>avatar + ชื่อ + ข้อความ</b></li><li>comment ที่ 2 ของ alice (ติดกัน) → <b>ซ่อน avatar/ชื่อ</b> แสดงแค่ข้อความ</li><li>comment ของ bob → avatar+ชื่อใหม่</li></ul></div><div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div></div>
+        <div class="jira"><h4>🔗 Jira (TI-80) — bug อ้างอิงสถานะ</h4><div class="ji"><a href="https://kitdi.atlassian.net/browse/TI-129">TI-129</a><span class="js done">Done · QA-passed</span> ชื่อ user ในคอมเมนต์ไลฟ์ไม่ตรงกับชื่อที่แสดงใน Insight</div></div>
+        <div class="sec"><h4>Status</h4><div class="statusrow"><span class="opt pass">PASS</span><span class="opt fail">FAIL</span><span class="opt hold">HOLD</span></div></div></div></td></tr>
+
+      <tr class="trow" onclick="tg(this)"><td><span class="tog">▸</span></td><td class="cid">TC-0.5-CAP-AC1-UI-NEG-01</td><td class="ctitle">ยังไม่มี comment → empty state "ยังไม่มีคอมเมนต์" ไม่ใช่จอว่าง</td><td class="lvl"><span class="lv ui">UI</span><span class="ac">AC1</span></td><td><span class="prio p1">P1</span></td><td class="status"><span class="stb pending">รอเทส</span></td></tr>
+      <tr class="detail"><td colspan="6"><div class="card"><div class="h-title">ยังไม่มี comment → empty state "ยังไม่มีคอมเมนต์"</div><div class="h-prio">Priority: <b>P1</b> · Level: UI · AC1 · comment-capture</div>
+        <div class="sec pre"><h4>Precondition</h4><ul><li>หน้า SessionRecording เปิด · ยังไม่มี comment เข้า</li></ul></div>
+        <div class="sec"><h4>Test Steps</h4><ol><li>เปิดหน้าโดยไม่ feed comment</li><li>ตรวจส่วน comment</li></ol></div>
+        <div class="grid"><div class="sec"><h4>Expected Result</h4><ul><li>แสดง empty <b>ยังไม่มีคอมเมนต์</b> จัดกลาง สีเทา</li><li>ไม่ใช่จอว่างเปล่า/ไม่มี element ค้าง</li></ul></div><div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div></div>
+        <div class="sec"><h4>Status</h4><div class="statusrow"><span class="opt pass">PASS</span><span class="opt fail">FAIL</span><span class="opt hold">HOLD</span></div></div></div></td></tr>
+
+      <tr class="trow" onclick="tg(this)"><td><span class="tog">▸</span></td><td class="cid">TC-0.5-CAP-AC1-UI-EDGE-01</td><td class="ctitle">comment เข้ารัวขณะ user อยู่ล่างสุด → auto-scroll ตามล่าสุด</td><td class="lvl"><span class="lv ui">UI</span><span class="ac">AC1</span></td><td><span class="prio p2">P2</span></td><td class="status"><span class="stb pass">PASS</span></td></tr>
+      <tr class="detail"><td colspan="6"><div class="card"><div class="h-title">comment เข้ารัว → auto-scroll ตามล่าสุด</div><div class="h-prio">Priority: <b>P2</b> · Level: UI · AC1 · comment-capture</div>
+        <div class="sec pre"><h4>Precondition</h4><ul><li>list มี comment จนเลื่อนได้ · user อยู่ล่างสุด</li></ul></div>
+        <div class="sec"><h4>Test Steps</h4><ol><li>เลื่อน list ไปล่างสุด</li><li>feed comment ใหม่เข้ามารัวๆ</li><li>ตรวจตำแหน่ง scroll</li></ol></div>
+        <div class="grid"><div class="sec"><h4>Expected Result</h4><ul><li>list <b>auto-scroll ตาม comment ล่าสุด</b> เมื่ออยู่ล่างสุด</li><li>ถ้า user เลื่อนขึ้นอ่านอันเก่า → ไม่กระชากลง (เคารพตำแหน่ง user)</li></ul></div><div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div></div>
+        <div class="jira"><h4>🔗 Jira (TI-80) — bug อ้างอิงสถานะ</h4><div class="ji"><a href="https://kitdi.atlassian.net/browse/TI-111">TI-111</a><span class="js done">Done · QA-passed</span> Panel คอมเมนต์สด ไม่ auto-scroll ตามคอมเมนต์ใหม่</div></div>
+        <div class="sec"><h4>Status</h4><div class="statusrow"><span class="opt pass">PASS</span><span class="opt fail">FAIL</span><span class="opt hold">HOLD</span></div></div></div></td></tr>
+
+      <!-- emotion-read UI (BLOCKED) -->
+      <tr class="featrow"><td colspan="6">😊 emotion-read · UI <span class="rp">FR22 · ui.md (3) · ⚠ BLOCKED code-gap D2</span></td></tr>
+
+      <tr class="trow block" onclick="tg(this)"><td><span class="tog">▸</span></td><td class="cid">TC-0.5-EMO-AC1-POS-01</td><td class="ctitle">Fixture อารมณ์ที่รู้ล่วงหน้า → map Ekman-7 ถูกต้อง + composites valid</td><td class="lvl"><span class="lv ui">UI</span><span class="ac">AC1</span><span class="flag block">BLOCKED</span></td><td><span class="prio p0">P0</span></td><td class="status"><span class="stb block">BLOCKED</span></td></tr>
+      <tr class="detail"><td colspan="6"><div class="card"><div class="h-title">Fixture อารมณ์ที่รู้ล่วงหน้า → map Ekman-7 ถูกต้อง + composites valid</div><div class="h-prio">Priority: <b>P0</b> · Level: UI · AC1 · emotion-read</div>
+        <div class="sec pre"><h4>Precondition</h4><ul><li>เลเยอร์ map Ekman-7 ตาม D2 ship แล้ว</li><li>Face fixture ที่มีอารมณ์ ground-truth (เช่น ยิ้มชัด → Joy)</li></ul></div>
+        <div class="sec"><h4>Test Steps</h4><ol><li>ป้อน fixture ที่รู้อารมณ์ล่วงหน้าเข้า engine โดยเปิด mapping</li><li>อ่าน label อารมณ์บน HUD</li><li>อ่าน composites (Energy/Smile/Eye-Contact/Engagement)</li></ol></div>
+        <div class="grid"><div class="sec"><h4>Expected Result</h4><ul><li>HUD แสดง <b>label Ekman-7 ที่ถูกต้อง</b> (Joy/Surprise/Confident/Neutral/Concerned/Sad/Anger) ตรงกับ ground-truth</li><li>composites ทั้งสี่มีครบและอยู่ในช่วง valid</li></ul></div><div class="sec"><h4>Actual Result</h4><div class="actualbox">— execute ไม่ได้ —</div></div></div>
+        <div class="blockbox">🚫 <b>BLOCKED (code-gap):</b> mapping FER+→Ekman-7 (Decision D2) ยังไม่ ship · โค้ดยัง emit raw FER+ → execute ไม่ได้จนกว่า D2 จะ ship (งาน M1)</div></div></td></tr>
+
+      <tr class="trow block" onclick="tg(this)"><td><span class="tog">▸</span></td><td class="cid">TC-0.5-EMO-AC1-NEG-01</td><td class="ctitle">ไม่มี label FER+ ดิบรั่วขึ้น HUD — แสดงเฉพาะ Ekman-7</td><td class="lvl"><span class="lv ui">UI</span><span class="ac">AC1</span><span class="flag block">BLOCKED</span></td><td><span class="prio p0">P0</span></td><td class="status"><span class="stb block">BLOCKED</span></td></tr>
+      <tr class="detail"><td colspan="6"><div class="card"><div class="h-title">ไม่มี label FER+ ดิบรั่วขึ้น HUD — แสดงเฉพาะ Ekman-7</div><div class="h-prio">Priority: <b>P0</b> · Level: UI · AC1 · emotion-read</div>
+        <div class="sec pre"><h4>Precondition</h4><ul><li>เลเยอร์ map ตาม D2 ship แล้ว · engine ยังคำนวณ FER+ ดิบ upstream</li></ul></div>
+        <div class="sec"><h4>Test Steps</h4><ol><li>รัน emotion read end-to-end โดยเปิด mapping</li><li>ตรวจ label ทุกตัวที่ปรากฏบน HUD ตลอด session</li></ol></div>
+        <div class="grid"><div class="sec"><h4>Expected Result</h4><ul><li><b>ไม่มี label FER+ ดิบรั่ว</b> — แสดงเฉพาะ Ekman-7 เสมอ</li><li>ไม่มี string taxonomy ภายใน/ดิบ ปรากฏที่ user เห็น</li></ul></div><div class="sec"><h4>Actual Result</h4><div class="actualbox">— execute ไม่ได้ —</div></div></div>
+        <div class="blockbox">🚫 <b>BLOCKED (code-gap):</b> รอ D2 mapping ship (M1)</div></div></td></tr>
+
+      <tr class="trow block" onclick="tg(this)"><td><span class="tog">▸</span></td><td class="cid">TC-0.5-EMO-AC1-EDGE-01</td><td class="ctitle">Input กำกวม/confidence ต่ำ → "uncertain" ไม่ใช่ label มั่นใจผิดๆ</td><td class="lvl"><span class="lv ui">UI</span><span class="ac">AC1</span><span class="flag block">BLOCKED</span></td><td><span class="prio p1">P1</span></td><td class="status"><span class="stb block">BLOCKED</span></td></tr>
+      <tr class="detail"><td colspan="6"><div class="card"><div class="h-title">Input กำกวม/confidence ต่ำ → "uncertain"</div><div class="h-prio">Priority: <b>P1</b> · Level: UI · AC1 · emotion-read</div>
+        <div class="sec pre"><h4>Precondition</h4><ul><li>D2 ship แล้ว · Fixture สีหน้ากำกวม/confidence ต่ำ (เช่น Neutral↔Concerned ใกล้กัน)</li></ul></div>
+        <div class="sec"><h4>Test Steps</h4><ol><li>ป้อน fixture กำกวมเข้า engine โดยเปิด mapping</li><li>สังเกต label + confidence บน HUD</li></ol></div>
+        <div class="grid"><div class="sec"><h4>Expected Result</h4><ul><li>HUD แสดง <b>สถานะ confidence ต่ำ</b> (ตาม Story 5.4/FR21) แทนการยืนยัน label เดียว</li><li>ไม่ render label มั่นใจผิดสำหรับ input กำกวม → ลดระดับเป็น "uncertain"</li></ul></div><div class="sec"><h4>Actual Result</h4><div class="actualbox">— execute ไม่ได้ —</div></div></div>
+        <div class="blockbox">🚫 <b>BLOCKED (code-gap):</b> รอ D2 mapping ship (M1)</div></div></td></tr>
+
+      <!-- emotion-read live-manual -->
+      <tr class="featrow"><td colspan="6">😊 emotion-read · Live-manual <span class="rp">FR22/25 · live-manual.md (7) · ดูไลฟ์จริง</span></td></tr>
+
+      <tr class="trow" onclick="tg(this)"><td><span class="tog">▸</span></td><td class="cid">TC-0.5-EMO-LIVE-01</td><td class="ctitle">สีหน้าจริงของ host ตรงกับอารมณ์ที่ HUD แสดงสด</td><td class="lvl"><span class="lv live">Live-manual</span><span class="ac">AC2</span></td><td><span class="prio p0">P0</span></td><td class="status"><span class="stb hold">HOLD</span></td></tr>
+      <tr class="detail"><td colspan="6"><div class="card"><div class="h-title">สีหน้าจริงของ host ตรงกับอารมณ์ที่ HUD แสดงสด</div><div class="h-prio">Priority: <b>P0</b> · Level: Live-manual · AC2 · emotion-read</div>
+        <div class="sec pre"><h4>Precondition</h4><ul><li>Desktop app + Python backend (:8765) บนเครื่อง target จริง · host enroll + pair ไลฟ์จริง</li><li>PDPA: ได้ capture consent (FR2) ก่อน · มีอุปกรณ์ที่ 2 ดูฝั่งผู้ชม</li></ul></div>
+        <div class="sec"><h4>Test Steps</h4><ol><li>เริ่มไลฟ์จริง ให้ host มองกล้อง</li><li>host ยิ้มกว้างค้าง 5 วิ → อ่านค่า HUD</li><li>หน้าเฉยๆ 5 วิ → อ่านค่า</li><li>หน้ากังวล/ขมวดคิ้ว 5 วิ → อ่านค่า</li></ol></div>
+        <div class="grid"><div class="sec"><h4>Expected Result</h4><ul><li>ยิ้ม → โทน <b>happy</b> · เฉย → <b>neutral</b> · กังวล → <b>sad</b>/frown</li><li><b>เกณฑ์ผ่าน = ทิศทางถูก</b> (เปลี่ยนตามหน้าจริง) ไม่บังคับ % เป๊ะ</li><li>เก็บวิดีโอ/แคปเป็นหลักฐาน → golden fixture</li></ul></div><div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div></div>
+        <div class="jira"><h4>🔗 Jira (TI-80) — bug อ้างอิงสถานะ</h4><div class="ji"><a href="https://kitdi.atlassian.net/browse/TI-153">TI-153</a><span class="js hold">HOLD · returned-to-dev</span> ระหว่างไลฟ์ AI ติดตามใบหน้าล่าช้า + ตรวจอารมณ์ผิด</div><div class="ji"><a href="https://kitdi.atlassian.net/browse/TI-154">TI-154</a><span class="js hold">HOLD · returned-to-dev</span> ระหว่างไลฟ์ AI ติดตามใบหน้าล่าช้า + ตรวจอารมณ์ผิด (ซ้ำ)</div></div>
+        <div class="sec"><h4>Status</h4><div class="statusrow"><span class="opt pass">PASS</span><span class="opt fail">FAIL</span><span class="opt hold">HOLD</span></div></div></div></td></tr>
+
+      <tr class="trow" onclick="tg(this)"><td><span class="tog">▸</span></td><td class="cid">TC-0.5-EMO-LIVE-02</td><td class="ctitle">พลังงาน (energy) ขยับตามจริง: พูดเยอะ→สูง / นิ่ง→ต่ำ</td><td class="lvl"><span class="lv live">Live-manual</span><span class="ac">AC2</span></td><td><span class="prio p1">P1</span></td><td class="status"><span class="stb pending">รอเทส</span></td></tr>
+      <tr class="detail"><td colspan="6"><div class="card"><div class="h-title">พลังงาน (energy) ขยับตามจริง</div><div class="h-prio">Priority: <b>P1</b> · Level: Live-manual · AC2 · emotion-read</div>
+        <div class="sec pre"><h4>Precondition</h4><ul><li>app + backend จริง · host enroll + pair ไลฟ์ · PDPA consent · อุปกรณ์ที่ 2</li></ul></div>
+        <div class="sec"><h4>Test Steps</h4><ol><li>host พูดต่อเนื่อง + ขยับมือ/หัว + แสดงออกเยอะ 10 วิ → จด energy</li><li>นั่งนิ่งเงียบ มองกล้อง 10 วิ → จด energy</li></ol></div>
+        <div class="grid"><div class="sec"><h4>Expected Result</h4><ul><li>energy ขั้น 1 <b>สูงกว่า</b> ขั้น 2 ชัดเจน (เทียบทิศทาง ไม่ใช่เลขสัมบูรณ์)</li><li>energy ต้อง gated ด้วย looking — ไม่มองกล้อง energy ไม่ควรพุ่งจาก noise</li></ul></div><div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div></div>
+        <div class="sec"><h4>Status</h4><div class="statusrow"><span class="opt pass">PASS</span><span class="opt fail">FAIL</span><span class="opt hold">HOLD</span></div></div></div></td></tr>
+
+      <tr class="trow" onclick="tg(this)"><td><span class="tog">▸</span></td><td class="cid">TC-0.5-EMO-LIVE-03</td><td class="ctitle">HUD อัปเดต real-time ไม่หน่วง/ไม่ค้างตอนไลฟ์ (5 นาที)</td><td class="lvl"><span class="lv live">Live-manual</span><span class="ac">AC2</span></td><td><span class="prio p0">P0</span></td><td class="status"><span class="stb hold">HOLD</span></td></tr>
+      <tr class="detail"><td colspan="6"><div class="card"><div class="h-title">HUD อัปเดต real-time ไม่หน่วง/ไม่ค้าง</div><div class="h-prio">Priority: <b>P0</b> · Level: Live-manual · AC2 · emotion-read</div>
+        <div class="sec pre"><h4>Precondition</h4><ul><li>app + backend จริง · host enroll + pair ไลฟ์ · PDPA consent · อุปกรณ์ที่ 2</li></ul></div>
+        <div class="sec"><h4>Test Steps</h4><ol><li>ไลฟ์จริงต่อเนื่อง ≥5 นาที (capture+stream+ML พร้อมกัน)</li><li>host เปลี่ยนสีหน้าเร็วๆ (ยิ้ม→เฉย→ยิ้ม) ดู HUD ตามทันไหม</li><li>สังเกตค้าง/กระตุก/ดีเลย์สะสมเมื่อนานขึ้น</li></ol></div>
+        <div class="grid"><div class="sec"><h4>Expected Result</h4><ul><li>HUD เปลี่ยนตามสีหน้าภายในราว 1 วิ ("สด") ไม่หน่วงสะสม</li><li>ไม่ค้าง/freeze/ดีเลย์โตขึ้นตลอด 5 นาที</li><li>ถ้าหน่วงชัด → เครื่อง target ต่ำกว่า min spec (feed กลับ decision #3)</li></ul></div><div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div></div>
+        <div class="jira"><h4>🔗 Jira (TI-80) — bug อ้างอิงสถานะ</h4><div class="ji"><a href="https://kitdi.atlassian.net/browse/TI-153">TI-153</a><span class="js hold">HOLD · returned-to-dev</span> ระหว่างไลฟ์ AI ติดตามใบหน้าล่าช้า + ตรวจอารมณ์ผิด</div></div>
+        <div class="sec"><h4>Status</h4><div class="statusrow"><span class="opt pass">PASS</span><span class="opt fail">FAIL</span><span class="opt hold">HOLD</span></div></div></div></td></tr>
+
+      <tr class="trow" onclick="tg(this)"><td><span class="tog">▸</span></td><td class="cid">TC-0.5-EMO-LIVE-04</td><td class="ctitle">ผู้ชมในไลฟ์ มองไม่เห็น HUD overlay (invisible-to-viewer)</td><td class="lvl"><span class="lv live">Live-manual</span><span class="ac">FR25</span><span class="flag xfail">คาด FAIL</span></td><td><span class="prio p0">P0</span></td><td class="status"><span class="stb pending">รอเทส</span></td></tr>
+      <tr class="detail"><td colspan="6"><div class="card"><div class="h-title">ผู้ชมในไลฟ์ มองไม่เห็น HUD overlay</div><div class="h-prio">Priority: <b>P0</b> · Level: Live-manual · FR25 · emotion-read</div>
+        <div class="sec pre"><h4>Precondition</h4><ul><li>app + backend จริง · host enroll + pair ไลฟ์ · PDPA consent · อุปกรณ์ที่ 2 ดูฝั่งผู้ชม</li></ul></div>
+        <div class="sec"><h4>Test Steps</h4><ol><li>host เริ่มไลฟ์ มี HUD บนจอ host</li><li>ใช้อุปกรณ์ที่ 2 ดูไลฟ์ในฐานะผู้ชมจริง</li><li>เทียบจอ host กับจอผู้ชม</li></ol></div>
+        <div class="grid"><div class="sec"><h4>Expected Result</h4><ul><li>จอ host เห็น HUD · จอผู้ชม <b>ไม่เห็น HUD เลย</b> เห็นแต่วิดีโอปกติ</li></ul></div><div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div></div>
+        <div class="warnbox">⚠️ <b>คาด FAIL บน 0.5:</b> ถ้าผู้ชมเห็น HUD = ตรงกับ gap FR25 ที่ยังไม่แก้ → mark FAIL + อ้าง checklist (invisible HUD = งาน M1)</div></div></td></tr>
+
+      <tr class="trow" onclick="tg(this)"><td><span class="tog">▸</span></td><td class="cid">TC-0.5-EMO-LIVE-05</td><td class="ctitle">หน้าหาย/หันหนี/แสงมืด → HUD บอก degrade ไม่เดามั่ว</td><td class="lvl"><span class="lv live">Live-manual</span><span class="ac">AC3</span></td><td><span class="prio p1">P1</span></td><td class="status"><span class="stb pending">รอเทส</span></td></tr>
+      <tr class="detail"><td colspan="6"><div class="card"><div class="h-title">หน้าหาย/หันหนี/แสงมืด → degrade ไม่เดามั่ว</div><div class="h-prio">Priority: <b>P1</b> · Level: Live-manual · AC3 · emotion-read</div>
+        <div class="sec pre"><h4>Precondition</h4><ul><li>app + backend จริง · host enroll + pair ไลฟ์ · PDPA consent · อุปกรณ์ที่ 2</li></ul></div>
+        <div class="sec"><h4>Test Steps</h4><ol><li>host หันหน้าหนีกล้อง 5 วิ</li><li>เอามือบังหน้า 5 วิ</li><li>หรี่ไฟ/ปิดไฟให้หน้ามืด 5 วิ</li><li>กลับมามองกล้องแสงปกติ</li></ol></div>
+        <div class="grid"><div class="sec"><h4>Expected Result</h4><ul><li>หน้าหาย/มืด → HUD <b>ไม่เดามั่ว</b> (ไม่ค้าง ไม่สุ่ม) บอก "อ่านหน้าไม่ได้" / degrade comment-only</li><li>signal #1 ลดน้ำหนัก แต่<b>ไม่ crash</b> session ไปต่อได้</li><li>กลับมามองกล้อง → อ่านอารมณ์กลับมาปกติ</li></ul></div><div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div></div>
+        <div class="sec"><h4>Status</h4><div class="statusrow"><span class="opt pass">PASS</span><span class="opt fail">FAIL</span><span class="opt hold">HOLD</span></div></div></div></td></tr>
+
+      <tr class="trow" onclick="tg(this)"><td><span class="tog">▸</span></td><td class="cid">TC-0.5-EMO-LIVE-06</td><td class="ctitle">host enroll → จับเป็น host; คนแปลกหน้า → ไม่ใช่ host</td><td class="lvl"><span class="lv live">Live-manual</span><span class="ac">AC2</span></td><td><span class="prio p0">P0</span></td><td class="status"><span class="stb pending">รอเทส</span></td></tr>
+      <tr class="detail"><td colspan="6"><div class="card"><div class="h-title">host enroll → จับเป็น host; คนแปลกหน้า → ไม่ใช่ host</div><div class="h-prio">Priority: <b>P0</b> · Level: Live-manual · AC2 · emotion-read</div>
+        <div class="sec pre"><h4>Precondition</h4><ul><li>app + backend จริง · host enroll + pair ไลฟ์ · PDPA consent · อุปกรณ์ที่ 2</li></ul></div>
+        <div class="sec"><h4>Test Steps</h4><ol><li>host (enroll ไว้) เริ่มไลฟ์คนเดียว → ดู HUD ระบุเป็น host</li><li>ให้คนที่ไม่ได้ enroll เข้ามาในเฟรมแทน → ดูระบบระบุเป็นใคร</li><li>host กลับเข้าเฟรม → ดูกลับมาเป็น host</li></ol></div>
+        <div class="grid"><div class="sec"><h4>Expected Result</h4><ul><li>host → ระบุเป็น host (score เกิน threshold 0.6)</li><li>คนแปลกหน้า → <b>ไม่ถูกระบุเป็น host</b> (unknown)</li><li>host กลับมา → ระบุถูกอีกครั้ง ไม่สลับ identity มั่ว</li></ul></div><div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div></div>
+        <div class="sec"><h4>Status</h4><div class="statusrow"><span class="opt pass">PASS</span><span class="opt fail">FAIL</span><span class="opt hold">HOLD</span></div></div></div></td></tr>
+
+      <tr class="trow" onclick="tg(this)"><td><span class="tog">▸</span></td><td class="cid">TC-0.5-EMO-LIVE-07</td><td class="ctitle">หลายคนในเฟรม → HUD โฟกัสอารมณ์ host ถูกคน</td><td class="lvl"><span class="lv live">Live-manual</span><span class="ac">AC2</span><span class="flag xfail">คาด FAIL</span></td><td><span class="prio p0">P0</span></td><td class="status"><span class="stb pending">รอเทส</span></td></tr>
+      <tr class="detail"><td colspan="6"><div class="card"><div class="h-title">หลายคนในเฟรม → HUD โฟกัสอารมณ์ host ถูกคน</div><div class="h-prio">Priority: <b>P0</b> · Level: Live-manual · AC2 · emotion-read</div>
+        <div class="sec pre"><h4>Precondition</h4><ul><li>app + backend จริง · host enroll + pair ไลฟ์ · PDPA consent · อุปกรณ์ที่ 2</li></ul></div>
+        <div class="sec"><h4>Test Steps</h4><ol><li>host + คนที่ 2 อยู่ในเฟรม โดย host ใกล้กล้องกว่า → อ่าน HUD ของใคร</li><li>คนที่ 2 เดินเข้าใกล้กว่า host (bbox ใหญ่กว่า) → HUD ยังโฟกัส host ไหม</li><li>host ยิ้ม ขณะคนที่ 2 หน้าเฉย → อารมณ์ตามใคร</li></ol></div>
+        <div class="grid"><div class="sec"><h4>Expected Result</h4><ul><li>HUD อ่านอารมณ์ของ <b>host</b> เสมอ (ตาม identity ไม่ใช่ขนาดหน้า)</li></ul></div><div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div></div>
+        <div class="warnbox">⚠️ <b>คาด FAIL บน 0.5:</b> เมื่อคนที่ 2 หน้าใหญ่กว่า → คาด HUD ไปอ่านอารมณ์คนที่ 2 = FAIL → regression guard ให้แก้ logic เลือก primary ตาม identity ก่อนขนาด</div></div></td></tr>
+
+      <!-- entitlement-guard -->
+      <tr class="featrow"><td colspan="6">🚪 entitlement-guard <span class="rp">FR59 · ui.md (4)</span></td></tr>
+
+      <tr class="trow" onclick="tg(this)"><td><span class="tog">▸</span></td><td class="cid">TC-0.5-ENT-AC4-UI-POS-01</td><td class="ctitle">entitled=false → redirect /expired + หน้าหมดอายุ (ข้อความไทย)</td><td class="lvl"><span class="lv ui">UI</span><span class="ac">AC4</span></td><td><span class="prio p0">P0</span></td><td class="status"><span class="stb pass">PASS</span></td></tr>
+      <tr class="detail"><td colspan="6"><div class="card"><div class="h-title">entitled=false → redirect /expired + หน้าหมดอายุ</div><div class="h-prio">Priority: <b>P0</b> · Level: UI · AC4 · entitlement-guard</div>
+        <div class="sec pre"><h4>Precondition</h4><ul><li>mock auth: ล็อกอินแล้ว แต่ entitled=false</li></ul></div>
+        <div class="sec"><h4>Test Steps</h4><ol><li>นำทางไปหน้าที่มี RequireAuth (เช่น /setup)</li><li>ตรวจ URL ปลายทาง + element</li></ol></div>
+        <div class="grid"><div class="sec"><h4>Expected Result</h4><ul><li>redirect ไป <b>/expired</b> (ไม่ค้างหน้าที่ guard ป้องกัน)</li><li>ไอคอน CalendarX + หัวข้อไทย <b>แพ็กเกจของคุณหมดอายุแล้ว</b></li><li>ไม่หลุดเข้าเนื้อหาที่ต้องมีสิทธิ์</li></ul></div><div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div></div>
+        <div class="jira"><h4>🔗 Jira (TI-80) — bug อ้างอิงสถานะ</h4><div class="ji"><a href="https://kitdi.atlassian.net/browse/TI-115">TI-115</a><span class="js done">Done · QA-passed</span> หน้า Login แสดง Error State และ Expired ผิดเมื่อเปิดโปรแกรม</div><div class="ji"><a href="https://kitdi.atlassian.net/browse/TI-123">TI-123</a><span class="js done">Done · QA-passed</span> หน้า Login แสดงข้อมูล Expired ทั้งที่ยังไม่ได้ login</div></div>
+        <div class="sec"><h4>Status</h4><div class="statusrow"><span class="opt pass">PASS</span><span class="opt fail">FAIL</span><span class="opt hold">HOLD</span></div></div></div></td></tr>
+
+      <tr class="trow" onclick="tg(this)"><td><span class="tog">▸</span></td><td class="cid">TC-0.5-ENT-AC4-UI-NEG-01</td><td class="ctitle">entitled=true → ไม่ redirect, เข้าหน้าปกติได้ (guard ไม่บล็อกผิด)</td><td class="lvl"><span class="lv ui">UI</span><span class="ac">AC4</span></td><td><span class="prio p0">P0</span></td><td class="status"><span class="stb pending">รอเทส</span></td></tr>
+      <tr class="detail"><td colspan="6"><div class="card"><div class="h-title">entitled=true → ไม่ redirect (guard ไม่บล็อกผิด)</div><div class="h-prio">Priority: <b>P0</b> · Level: UI · AC4 · entitlement-guard</div>
+        <div class="sec pre"><h4>Precondition</h4><ul><li>mock auth: ล็อกอินแล้ว + entitled=true</li></ul></div>
+        <div class="sec"><h4>Test Steps</h4><ol><li>นำทางไปหน้าที่มี RequireAuth</li><li>ตรวจ URL + เนื้อหา</li></ol></div>
+        <div class="grid"><div class="sec"><h4>Expected Result</h4><ul><li><b>ไม่</b> redirect ไป /expired — เข้าหน้าที่ขอได้ปกติ</li><li>ไม่มีหน้าหมดอายุปรากฏ</li></ul></div><div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div></div>
+        <div class="sec"><h4>Status</h4><div class="statusrow"><span class="opt pass">PASS</span><span class="opt fail">FAIL</span><span class="opt hold">HOLD</span></div></div></div></td></tr>
+
+      <tr class="trow" onclick="tg(this)"><td><span class="tog">▸</span></td><td class="cid">TC-0.5-ENT-AC4-UI-POS-02</td><td class="ctitle">หน้า Expired แสดง plan name + วันหมดอายุ + ปุ่มต่ออายุ/เช็กใหม่</td><td class="lvl"><span class="lv ui">UI</span><span class="ac">AC4</span></td><td><span class="prio p1">P1</span></td><td class="status"><span class="stb pass">PASS</span></td></tr>
+      <tr class="detail"><td colspan="6"><div class="card"><div class="h-title">หน้า Expired แสดง plan name + วันหมดอายุ + ปุ่ม</div><div class="h-prio">Priority: <b>P1</b> · Level: UI · AC4 · entitlement-guard</div>
+        <div class="sec pre"><h4>Precondition</h4><ul><li>อยู่หน้า /expired · mock plan data (planName + expiresAt)</li></ul></div>
+        <div class="sec"><h4>Test Steps</h4><ol><li>อ่าน info card บนหน้า Expired</li><li>ตรวจปุ่ม 2 ปุ่ม</li></ol></div>
+        <div class="grid"><div class="sec"><h4>Expected Result</h4><ul><li>แสดง <b>planName</b> + <b>วันหมดอายุ</b></li><li>ปุ่ม <b>ต่ออายุแพ็กเกจ</b> + <b>ฉันต่ออายุแล้ว · เช็กอีกครั้ง</b> กดได้ทั้งคู่</li></ul></div><div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div></div>
+        <div class="jira"><h4>🔗 Jira (TI-80) — bug อ้างอิงสถานะ</h4><div class="ji"><a href="https://kitdi.atlassian.net/browse/TI-117">TI-117</a><span class="js done">Done</span> หน้า Expired แสดงข้อมูลไม่ถูกต้อง ปุ่มไม่ตอบสนอง</div><div class="ji"><a href="https://kitdi.atlassian.net/browse/TI-121">TI-121</a><span class="js done">Done</span> Expired แสดงปุ่ม "ออกจากระบบ" ทั้งที่ยังไม่ได้ login</div></div>
+        <div class="sec"><h4>Status</h4><div class="statusrow"><span class="opt pass">PASS</span><span class="opt fail">FAIL</span><span class="opt hold">HOLD</span></div></div></div></td></tr>
+
+      <tr class="trow" onclick="tg(this)"><td><span class="tog">▸</span></td><td class="cid">TC-0.5-ENT-AC4-UI-EDGE-01</td><td class="ctitle">กด "เช็กอีกครั้ง" → ปุ่มเข้า loading "กำลังตรวจสอบ…"</td><td class="lvl"><span class="lv ui">UI</span><span class="ac">AC4</span></td><td><span class="prio p2">P2</span></td><td class="status"><span class="stb pending">รอเทส</span></td></tr>
+      <tr class="detail"><td colspan="6"><div class="card"><div class="h-title">กด "เช็กอีกครั้ง" → loading "กำลังตรวจสอบ…"</div><div class="h-prio">Priority: <b>P2</b> · Level: UI · AC4 · entitlement-guard</div>
+        <div class="sec pre"><h4>Precondition</h4><ul><li>อยู่หน้า /expired · mock re-check ให้ตอบช้า</li></ul></div>
+        <div class="sec"><h4>Test Steps</h4><ol><li>กดปุ่ม "เช็กอีกครั้ง"</li><li>ตรวจ state ปุ่มทันทีหลังกด</li></ol></div>
+        <div class="grid"><div class="sec"><h4>Expected Result</h4><ul><li>ปุ่มเป็น <b>กำลังตรวจสอบ…</b> + disabled ระหว่างรอ (กดซ้ำไม่ได้)</li><li>ผล entitled=true → ออกจากหน้า; ยัง false → คงหน้า + ปุ่มกลับมากดได้</li></ul></div><div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div></div>
+        <div class="sec"><h4>Status</h4><div class="statusrow"><span class="opt pass">PASS</span><span class="opt fail">FAIL</span><span class="opt hold">HOLD</span></div></div></div></td></tr>
+
+      <!-- health-score -->
+      <tr class="featrow"><td colspan="6">📈 health-score <span class="rp">FR116/117 · ui.md (4)</span></td></tr>
+
+      <tr class="trow" onclick="tg(this)"><td><span class="tog">▸</span></td><td class="cid">TC-0.5-HS-AC2-POS-01</td><td class="ctitle">Drill-down แสดง contribution ของแต่ละ signal (ตรวจสอบได้ · Σ ≈ คะแนน)</td><td class="lvl"><span class="lv ui">UI</span><span class="ac">AC2</span></td><td><span class="prio p0">P0</span></td><td class="status"><span class="stb pending">รอเทส</span></td></tr>
+      <tr class="detail"><td colspan="6"><div class="card"><div class="h-title">Drill-down แสดง contribution ของแต่ละ signal</div><div class="h-prio">Priority: <b>P0</b> · Level: UI · AC2 · health-score</div>
+        <div class="sec pre"><h4>Precondition</h4><ul><li>live session ด้วย fixture signals-all-present (face+comments+viewers ครบ) · Health Score แสดงอยู่</li></ul></div>
+        <div class="sec"><h4>Test Steps</h4><ol><li>รอ Live Health Score แสดงค่า 0–100 = S</li><li>เปิด drill-down ของคะแนน</li><li>อ่านแต่ละแถว: label, weight, normalized value, contribution</li><li>รวมค่า contribution ทั้งหมด</li></ol></div>
+        <div class="grid"><div class="sec"><h4>Expected Result</h4><ul><li>แสดง contribution <b>ทุก signal ที่ป้อนเข้ามา</b> (#1 emotion/energy, #3 comment-rate, #4 viewers)</li><li>เปิดเผย weight × normalized → contribution <b>ตรวจสอบได้</b></li><li>Σ(contributions) ≈ S ภายใน ±1 · ไม่มีแถว signal ที่ไม่ได้ป้อน</li></ul></div><div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div></div>
+        <div class="sec"><h4>Status</h4><div class="statusrow"><span class="opt pass">PASS</span><span class="opt fail">FAIL</span><span class="opt hold">HOLD</span></div></div></div></td></tr>
+
+      <tr class="trow" onclick="tg(this)"><td><span class="tog">▸</span></td><td class="cid">TC-0.5-HS-AC2-NEG-01</td><td class="ctitle">Drill-down ต้องไม่แสดง contribution ของ CTA ที่กุขึ้นมา</td><td class="lvl"><span class="lv ui">UI</span><span class="ac">AC2</span></td><td><span class="prio p0">P0</span></td><td class="status"><span class="stb pending">รอเทส</span></td></tr>
+      <tr class="detail"><td colspan="6"><div class="card"><div class="h-title">Drill-down ไม่แสดง CTA ที่กุขึ้นมา</div><div class="h-prio">Priority: <b>P0</b> · Level: UI · AC2 · health-score</div>
+        <div class="sec pre"><h4>Precondition</h4><ul><li>live session ด้วย fixture signals-cta-absent (CTA/intent ไม่ได้ป้อน — สภาพจริงของ 0.5)</li></ul></div>
+        <div class="sec"><h4>Test Steps</h4><ol><li>รอ Health Score เป็นตัวเลข</li><li>เปิด drill-down · ไล่ดูแถว contribution/label ทั้งหมด</li></ol></div>
+        <div class="grid"><div class="sec"><h4>Expected Result</h4><ul><li><b>ไม่มี</b> แถว CTA-frequency / CTA 25% / purchase-prompt</li><li>มี<b>เฉพาะ signal จริงที่ป้อน</b> · CTA contribute = 0 เพราะไม่อยู่ ไม่ใช่ phantom 25%</li></ul></div><div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div></div>
+        <div class="sec"><h4>Status</h4><div class="statusrow"><span class="opt pass">PASS</span><span class="opt fail">FAIL</span><span class="opt hold">HOLD</span></div></div></div></td></tr>
+
+      <tr class="trow" onclick="tg(this)"><td><span class="tog">▸</span></td><td class="cid">TC-0.5-HS-AC1-NEG-01</td><td class="ctitle">comment-rate ไม่มี comment → 0 / "no data" ไม่ใช่ค่าค้าง</td><td class="lvl"><span class="lv ui">UI</span><span class="ac">AC1</span></td><td><span class="prio p1">P1</span></td><td class="status"><span class="stb pending">รอเทส</span></td></tr>
+      <tr class="detail"><td colspan="6"><div class="card"><div class="h-title">comment-rate ไม่มี comment → 0 / "no data"</div><div class="h-prio">Priority: <b>P1</b> · Level: UI · AC1 · health-score</div>
+        <div class="sec pre"><h4>Precondition</h4><ul><li>live session · comment มีช่วงแรกแล้วเงียบไปนานกว่า rolling window</li></ul></div>
+        <div class="sec"><h4>Test Steps</h4><ol><li>ช่วง active สังเกต comment-rate = r0 (ไม่ศูนย์)</li><li>หยุด feed; รอเลย rolling-window</li><li>อ่านค่า comment-rate + trend</li></ol></div>
+        <div class="grid"><div class="sec"><h4>Expected Result</h4><ul><li>rate กลายเป็น <b>0/min</b> (หรือ "no data"/dash) — ไม่ใช่ค่าค้าง r0</li><li>Trend สะท้อน falling/แบนลงศูนย์ ไม่ใช่ลูกศรค้าง</li><li>ไม่มี NaN/blank-glitch</li></ul></div><div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div></div>
+        <div class="sec"><h4>Status</h4><div class="statusrow"><span class="opt pass">PASS</span><span class="opt fail">FAIL</span><span class="opt hold">HOLD</span></div></div></div></td></tr>
+
+      <tr class="trow" onclick="tg(this)"><td><span class="tog">▸</span></td><td class="cid">TC-0.5-HS-AC2-EDGE-01</td><td class="ctitle">face หายกลางคัน → re-weight signal #1 ลด, score ยังแสดงต่อ</td><td class="lvl"><span class="lv ui">UI</span><span class="ac">AC2</span></td><td><span class="prio p1">P1</span></td><td class="status"><span class="stb pending">รอเทส</span></td></tr>
+      <tr class="detail"><td colspan="6"><div class="card"><div class="h-title">face หายกลางคัน → re-weight, score ยังแสดงต่อ</div><div class="h-prio">Priority: <b>P1</b> · Level: UI · AC2 · health-score</div>
+        <div class="sec pre"><h4>Precondition</h4><ul><li>fixture signals-face-cut (face ปกติช่วงต้น → หายช่วงกลาง) · drill-down แสดง</li></ul></div>
+        <div class="sec"><h4>Test Steps</h4><ol><li>ช่วง face ปกติ → เปิด drill-down จด weight #1 > 0</li><li>ถึงจุด face-cut</li><li>เปิด drill-down ใหม่ → อ่าน weight #1 + score</li></ol></div>
+        <div class="grid"><div class="sec"><h4>Expected Result</h4><ul><li>หลัง face-cut → weight #1 <b>ลด (เข้าใกล้ 0)</b> · contribution re-normalize ไป #3/#4</li><li>คะแนนบน HUD <b>ยังแสดง 0–100 ต่อเนื่อง</b> ไม่เป็น null/NaN/--</li><li>Σ ≈ คะแนน</li></ul></div><div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div></div>
+        <div class="sec"><h4>Status</h4><div class="statusrow"><span class="opt pass">PASS</span><span class="opt fail">FAIL</span><span class="opt hold">HOLD</span></div></div></div></td></tr>
+
+      <!-- kpi-panel -->
+      <tr class="featrow"><td colspan="6">📊 kpi-panel <span class="rp">FR118 · ui.md (4)</span></td></tr>
+
+      <tr class="trow" onclick="tg(this)"><td><span class="tog">▸</span></td><td class="cid">TC-0.5-KPI-AC1-POS-01</td><td class="ctitle">Panel แสดง Quality KPI ครบ 5 ตัว พร้อมค่า live จริง</td><td class="lvl"><span class="lv ui">UI</span><span class="ac">AC1</span></td><td><span class="prio p0">P0</span></td><td class="status"><span class="stb pending">รอเทส</span></td></tr>
+      <tr class="detail"><td colspan="6"><div class="card"><div class="h-title">Panel แสดง Quality KPI ครบ 5 ตัว</div><div class="h-prio">Priority: <b>P0</b> · Level: UI · AC1 · kpi-panel</div>
+        <div class="sec pre"><h4>Precondition</h4><ul><li>fixture signals-all-present · panel Live KPIs แสดง · CTA-frequency (FR115) ยังไม่ถูกป้อนที่ 0.5</li></ul></div>
+        <div class="sec"><h4>Test Steps</h4><ol><li>ไล่ slot KPI ตาม label</li><li>ยืนยันมี slot: Health Score, emotion/energy, CTA-frequency, comment-rate, viewers</li><li>อ่านค่า signal ที่ถูกป้อน (4 ตัว)</li><li>รันผ่าน ≥2 tick แล้วอ่านซ้ำ</li></ol></div>
+        <div class="grid"><div class="sec"><h4>Expected Result</h4><ul><li>มี slot Quality KPI ครบ <b>ทั้ง 5</b> + label</li><li>4 ตัวที่ป้อนแสดง <b>ค่าจริง</b> ไม่ใช่ --/ว่าง</li><li>ค่า <b>เปลี่ยนข้าม tick</b> (ไม่ใช่ snapshot นิ่ง) · ไม่มี KPI นอก Quality</li></ul></div><div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div></div>
+        <div class="sec"><h4>Status</h4><div class="statusrow"><span class="opt pass">PASS</span><span class="opt fail">FAIL</span><span class="opt hold">HOLD</span></div></div></div></td></tr>
+
+      <tr class="trow" onclick="tg(this)"><td><span class="tog">▸</span></td><td class="cid">TC-0.5-KPI-AC1-NEG-01</td><td class="ctitle">CTA-frequency (ยังไม่ป้อน) → "no data" ไม่ใช่ตัวเลขกุ</td><td class="lvl"><span class="lv ui">UI</span><span class="ac">AC1</span></td><td><span class="prio p0">P0</span></td><td class="status"><span class="stb pending">รอเทส</span></td></tr>
+      <tr class="detail"><td colspan="6"><div class="card"><div class="h-title">CTA-frequency (ยังไม่ป้อน) → "no data"</div><div class="h-prio">Priority: <b>P0</b> · Level: UI · AC1 · kpi-panel</div>
+        <div class="sec pre"><h4>Precondition</h4><ul><li>fixture signals-cta-absent (CTA ไม่ป้อน — ความจริง 0.5) · อีก 4 signal ปกติ</li></ul></div>
+        <div class="sec"><h4>Test Steps</h4><ol><li>อ่าน slot CTA-frequency</li><li>อ่าน slot อีก 4 ตัว</li><li>รันหลาย tick แล้วอ่าน CTA-frequency ซ้ำ</li></ol></div>
+        <div class="grid"><div class="sec"><h4>Expected Result</h4><ul><li>CTA-frequency render <b>no data / -- </b> — ไม่ใช่ตัวเลข, ไม่ใช่ 0 ปลอม, ไม่ใช่ค่าค้าง</li><li>อีก 4 ตัวยังแสดงค่าจริง (signal ขาด 1 ไม่ทำทั้ง panel ว่าง)</li><li>ไม่มีค่า CTA กุที่ tick ใด (real fed signals only)</li></ul></div><div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div></div>
+        <div class="sec"><h4>Status</h4><div class="statusrow"><span class="opt pass">PASS</span><span class="opt fail">FAIL</span><span class="opt hold">HOLD</span></div></div></div></td></tr>
+
+      <tr class="trow" onclick="tg(this)"><td><span class="tog">▸</span></td><td class="cid">TC-0.5-KPI-AC2-POS-01</td><td class="ctitle">มีเฉพาะ Quality config — ไม่มี Sales KPI ถูก render</td><td class="lvl"><span class="lv ui">UI</span><span class="ac">AC2</span></td><td><span class="prio p0">P0</span></td><td class="status"><span class="stb pending">รอเทส</span></td></tr>
+      <tr class="detail"><td colspan="6"><div class="card"><div class="h-title">มีเฉพาะ Quality — ไม่มี Sales KPI</div><div class="h-prio">Priority: <b>P0</b> · Level: UI · AC2 · kpi-panel</div>
+        <div class="sec pre"><h4>Precondition</h4><ul><li>fixture signals-all-present · panel config 0.5 ค่าเริ่มต้น</li></ul></div>
+        <div class="sec"><h4>Test Steps</h4><ol><li>ไล่ label/row/header KPI ทุกตัว (สแกน DOM ทั้ง container)</li><li>เทียบกับ Quality allow-list (5 ตัว)</li><li>ค้นคำ Sales: Conversion/AOV/GMV/Revenue/Sales/Order</li></ol></div>
+        <div class="grid"><div class="sec"><h4>Expected Result</h4><ul><li>ชุด KPI = Quality sub-group พอดี (ไม่มี row เกิน)</li><li><b>ไม่มี</b> label Sales ที่ใด — ไม่ใช่ display:none-แต่มี, ไม่ใช่ placeholder 0</li></ul></div><div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div></div>
+        <div class="sec"><h4>Status</h4><div class="statusrow"><span class="opt pass">PASS</span><span class="opt fail">FAIL</span><span class="opt hold">HOLD</span></div></div></div></td></tr>
+
+      <tr class="trow" onclick="tg(this)"><td><span class="tog">▸</span></td><td class="cid">TC-0.5-KPI-AC2-EDGE-01</td><td class="ctitle">toggle flag Sales → ก็ไม่ทำให้ Sales KPI โผล่ (แม้เป็น 0) ที่ 0.5</td><td class="lvl"><span class="lv ui">UI</span><span class="ac">AC2</span></td><td><span class="prio p1">P1</span></td><td class="status"><span class="stb pending">รอเทส</span></td></tr>
+      <tr class="detail"><td colspan="6"><div class="card"><div class="h-title">toggle flag Sales → ไม่ทำให้ Sales โผล่</div><div class="h-prio">Priority: <b>P1</b> · Level: UI · AC2 · kpi-panel</div>
+        <div class="sec pre"><h4>Precondition</h4><ul><li>fixture signals-all-present · มี toggle เปิด Sales (env/flag/SHOW_BLOCKED) · ถ้าไม่มี toggle ใช้ assertion degenerate</li></ul></div>
+        <div class="sec"><h4>Test Steps</h4><ol><li>บันทึกชุด KPI ตอน toggle off</li><li>flip toggle เปิด Sales (หรือ set sales-config key)</li><li>restart/refresh panel → ไล่ label ใหม่</li><li>ค้นคำ Sales</li></ol></div>
+        <div class="grid"><div class="sec"><h4>Expected Result</h4><ul><li>หลัง toggle → panel <b>ยังมีเฉพาะ Quality</b> — ไม่มี Sales แม้ render เป็น 0</li><li>ที่ 0.5 Sales <b>สร้างจาก flag ไม่ได้</b> (degenerate: ไม่มี toggle = ผ่านปริยาย)</li><li>ไม่มี console error/crash</li></ul></div><div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div></div>
+        <div class="sec"><h4>Status</h4><div class="statusrow"><span class="opt pass">PASS</span><span class="opt fail">FAIL</span><span class="opt hold">HOLD</span></div></div></div></td></tr>
+
+      <!-- live-pairing -->
+      <tr class="featrow"><td colspan="6">🔗 live-pairing <span class="rp">FR7 · ui.md (4)</span></td></tr>
+
+      <tr class="trow" onclick="tg(this)"><td><span class="tog">▸</span></td><td class="cid">TC-0.5-PAIR-AC1-UI-POS-01</td><td class="ctitle">BrowserPanel แสดง toolbar (back/fwd/reload) + URL bar + ปุ่ม TikTok/FB</td><td class="lvl"><span class="lv ui">UI</span><span class="ac">AC1</span></td><td><span class="prio p1">P1</span></td><td class="status"><span class="stb pending">รอเทส</span></td></tr>
+      <tr class="detail"><td colspan="6"><div class="card"><div class="h-title">BrowserPanel แสดง toolbar + URL bar + ปุ่ม TikTok/FB</div><div class="h-prio">Priority: <b>P1</b> · Level: UI · AC1 · live-pairing</div>
+        <div class="sec pre"><h4>Precondition</h4><ul><li>เปิดหน้าที่มี BrowserPanel (เช่น SessionPre) ใน Electron mode</li></ul></div>
+        <div class="sec"><h4>Test Steps</h4><ol><li>render BrowserPanel · ตรวจ toolbar elements</li></ol></div>
+        <div class="grid"><div class="sec"><h4>Expected Result</h4><ul><li>มีปุ่ม <b>Back / Forward / Reload</b> (กดได้)</li><li>มี <b>URL bar</b> + ปุ่ม "Go" + lock icon</li><li>มีปุ่ม quick-launch <b>TikTok + Facebook</b></li></ul></div><div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div></div>
+        <div class="sec"><h4>Status</h4><div class="statusrow"><span class="opt pass">PASS</span><span class="opt fail">FAIL</span><span class="opt hold">HOLD</span></div></div></div></td></tr>
+
+      <tr class="trow" onclick="tg(this)"><td><span class="tog">▸</span></td><td class="cid">TC-0.5-PAIR-AC1-UI-POS-02</td><td class="ctitle">โหลดครั้งแรก → นำทางไป TikTok live home (initialUrl)</td><td class="lvl"><span class="lv ui">UI</span><span class="ac">AC1</span></td><td><span class="prio p1">P1</span></td><td class="status"><span class="stb pending">รอเทส</span></td></tr>
+      <tr class="detail"><td colspan="6"><div class="card"><div class="h-title">โหลดครั้งแรก → นำทางไป TikTok live home</div><div class="h-prio">Priority: <b>P1</b> · Level: UI · AC1 · live-pairing</div>
+        <div class="sec pre"><h4>Precondition</h4><ul><li>BrowserPanel mount ครั้งแรก (ยังไม่ pair)</li></ul></div>
+        <div class="sec"><h4>Test Steps</h4><ol><li>mount panel · อ่าน URL ที่ viewport นำทางไป</li></ol></div>
+        <div class="grid"><div class="sec"><h4>Expected Result</h4><ul><li>นำทางไป <b>https://www.tiktok.com/live</b> (initialUrl) อัตโนมัติ</li><li>URL bar สะท้อน URL ปัจจุบัน</li></ul></div><div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div></div>
+        <div class="sec"><h4>Status</h4><div class="statusrow"><span class="opt pass">PASS</span><span class="opt fail">FAIL</span><span class="opt hold">HOLD</span></div></div></div></td></tr>
+
+      <tr class="trow" onclick="tg(this)"><td><span class="tog">▸</span></td><td class="cid">TC-0.5-PAIR-AC1-UI-NEG-01</td><td class="ctitle">หน้าโหลดไม่ได้ (เน็ตหลุด) → reload ใช้ได้ ไม่ค้างหน้าขาว</td><td class="lvl"><span class="lv ui">UI</span><span class="ac">AC1</span></td><td><span class="prio p1">P1</span></td><td class="status"><span class="stb pending">รอเทส</span></td></tr>
+      <tr class="detail"><td colspan="6"><div class="card"><div class="h-title">หน้าโหลดไม่ได้ → reload ใช้ได้ ไม่ค้างหน้าขาว</div><div class="h-prio">Priority: <b>P1</b> · Level: UI · AC1 · live-pairing</div>
+        <div class="sec pre"><h4>Precondition</h4><ul><li>BrowserPanel Electron mode · จำลอง embedded view โหลดไม่สำเร็จ (did-fail-load)</li></ul></div>
+        <div class="sec"><h4>Test Steps</h4><ol><li>ให้ viewport โหลดหน้าที่ล้มเหลว</li><li>ตรวจสถานะ UI (toolbar ยังกดได้ไหม)</li><li>กดปุ่ม Reload</li></ol></div>
+        <div class="grid"><div class="sec"><h4>Expected Result</h4><ul><li>UI <b>ไม่ค้างหน้าขาว/ไม่ crash</b> — toolbar ยังใช้ได้</li><li>Reload → โหลดใหม่ได้ (กู้เองไม่ต้องปิดแอป)</li><li>ไม่มีสถานะ paired ปลอมตอนโหลดไม่สำเร็จ</li></ul></div><div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div></div>
+        <div class="sec"><h4>Status</h4><div class="statusrow"><span class="opt pass">PASS</span><span class="opt fail">FAIL</span><span class="opt hold">HOLD</span></div></div></div></td></tr>
+
+      <tr class="trow" onclick="tg(this)"><td><span class="tog">▸</span></td><td class="cid">TC-0.5-PAIR-AC1-UI-EDGE-01</td><td class="ctitle">web build (ไม่มี Electron) → fallback "เบราว์เซอร์ไม่พร้อมใช้งาน"</td><td class="lvl"><span class="lv ui">UI</span><span class="ac">AC1</span></td><td><span class="prio p2">P2</span></td><td class="status"><span class="stb pending">รอเทส</span></td></tr>
+      <tr class="detail"><td colspan="6"><div class="card"><div class="h-title">web build → fallback "เบราว์เซอร์ไม่พร้อมใช้งาน"</div><div class="h-prio">Priority: <b>P2</b> · Level: UI · AC1 · live-pairing</div>
+        <div class="sec pre"><h4>Precondition</h4><ul><li>รันใน web build (ไม่มี Electron host)</li></ul></div>
+        <div class="sec"><h4>Test Steps</h4><ol><li>render BrowserPanel โหมด web · ตรวจสิ่งที่แสดง</li></ol></div>
+        <div class="grid"><div class="sec"><h4>Expected Result</h4><ul><li>notice <b>เบราว์เซอร์ไม่พร้อมใช้งาน</b> + ไอคอน MonitorPlay (ไม่ขาว/ไม่ crash)</li><li>ไม่เรียก native WebContentsView (degrade graceful)</li></ul></div><div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div></div>
+        <div class="sec"><h4>Status</h4><div class="statusrow"><span class="opt pass">PASS</span><span class="opt fail">FAIL</span><span class="opt hold">HOLD</span></div></div></div></td></tr>
+
+      <!-- login-sso -->
+      <tr class="featrow"><td colspan="6">🔐 login-sso <span class="rp">FR1 · ui.md (6)</span></td></tr>
+
+      <tr class="trow" onclick="tg(this)"><td><span class="tog">▸</span></td><td class="cid">TC-0.5-LOGIN-AC3-POS-01</td><td class="ctitle">entitlement ไม่ผ่าน → ข้อความปฏิเสธภาษาไทยอ่านง่าย + ไม่ให้สิทธิ์เข้า</td><td class="lvl"><span class="lv ui">UI</span><span class="ac">AC3</span></td><td><span class="prio p1">P1</span></td><td class="status"><span class="stb pending">รอเทส</span></td></tr>
+      <tr class="detail"><td colspan="6"><div class="card"><div class="h-title">entitlement ไม่ผ่าน → ข้อความปฏิเสธภาษาไทย + ไม่ให้สิทธิ์เข้า</div><div class="h-prio">Priority: <b>P1</b> · Level: UI · AC3 · login-sso</div>
+        <div class="sec pre"><h4>Precondition</h4><ul><li>build แล้ว · entitlement check คืน deny สำหรับ u-denied · Zitadel local + Hub mock พร้อม</li></ul></div>
+        <div class="sec"><h4>Test Steps</h4><ol><li>Sign in เป็น u-denied เข้าสู่ denial state</li><li>ตรวจข้อความที่ render</li></ol></div>
+        <div class="grid"><div class="sec"><h4>Expected Result</h4><ul><li>ข้อความ <b>ภาษาไทยอ่านง่าย/ชัดเจน</b> (แจ้งไม่มีสิทธิ์) — <b>ไม่มี</b> error code/English stack/ศัพท์ dev</li><li>ไม่มีปุ่ม/เส้นทางใดให้สิทธิ์เข้า workspace จากหน้านี้</li></ul></div><div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div></div>
+        <div class="sec"><h4>Status</h4><div class="statusrow"><span class="opt pass">PASS</span><span class="opt fail">FAIL</span><span class="opt hold">HOLD</span></div></div></div></td></tr>
+
+      <tr class="trow" onclick="tg(this)"><td><span class="tog">▸</span></td><td class="cid">TC-0.5-LOGIN-AC1-UI-POS-01</td><td class="ctitle">หน้า Login แสดงปุ่ม "เข้าสู่ระบบด้วยบัญชี TAKRA" + โลโก้ + tagline</td><td class="lvl"><span class="lv ui">UI</span><span class="ac">AC1</span></td><td><span class="prio p1">P1</span></td><td class="status"><span class="stb pass">PASS</span></td></tr>
+      <tr class="detail"><td colspan="6"><div class="card"><div class="h-title">หน้า Login แสดงปุ่ม TAKRA + โลโก้ + tagline</div><div class="h-prio">Priority: <b>P1</b> · Level: UI · AC1 · login-sso</div>
+        <div class="sec pre"><h4>Precondition</h4><ul><li>เปิดหน้า Login (ยังไม่ล็อกอิน, loading=false)</li></ul></div>
+        <div class="sec"><h4>Test Steps</h4><ol><li>render หน้า Login · ตรวจ element หลัก</li></ol></div>
+        <div class="grid"><div class="sec"><h4>Expected Result</h4><ul><li>ปุ่ม <b>เข้าสู่ระบบด้วยบัญชี TAKRA</b> + ไอคอน LogIn</li><li>โลโก้ mascot + wordmark + tagline <b>เข้าใจทุก Live ตัดสินใจอย่างมั่นใจ</b></li><li>มีลิงก์ Terms / Privacy</li></ul></div><div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div></div>
+        <div class="jira"><h4>🔗 Jira (TI-80) — bug อ้างอิงสถานะ</h4><div class="ji"><a href="https://kitdi.atlassian.net/browse/TI-147">TI-147</a><span class="js done">Done · QA-passed</span> ปรับปุ่ม login เป็น "เข้าสู่ระบบด้วยบัญชี TAKRA"</div></div>
+        <div class="sec"><h4>Status</h4><div class="statusrow"><span class="opt pass">PASS</span><span class="opt fail">FAIL</span><span class="opt hold">HOLD</span></div></div></div></td></tr>
+
+      <tr class="trow" onclick="tg(this)"><td><span class="tog">▸</span></td><td class="cid">TC-0.5-LOGIN-AC1-UI-EDGE-01</td><td class="ctitle">กด sign-in → ปุ่มเข้า loading "กำลังเชื่อมต่อ…" + disabled</td><td class="lvl"><span class="lv ui">UI</span><span class="ac">AC1</span></td><td><span class="prio p2">P2</span></td><td class="status"><span class="stb pending">รอเทส</span></td></tr>
+      <tr class="detail"><td colspan="6"><div class="card"><div class="h-title">กด sign-in → loading "กำลังเชื่อมต่อ…" + disabled</div><div class="h-prio">Priority: <b>P2</b> · Level: UI · AC1 · login-sso</div>
+        <div class="sec pre"><h4>Precondition</h4><ul><li>หน้า Login · mock OIDC flow ให้ตอบช้า</li></ul></div>
+        <div class="sec"><h4>Test Steps</h4><ol><li>กดปุ่ม sign-in · ตรวจ state ปุ่มทันที</li></ol></div>
+        <div class="grid"><div class="sec"><h4>Expected Result</h4><ul><li>ปุ่มเข้า loading: spinner + <b>กำลังเชื่อมต่อ…</b> + <b>disabled</b> (กดซ้ำไม่ได้)</li></ul></div><div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div></div>
+        <div class="sec"><h4>Status</h4><div class="statusrow"><span class="opt pass">PASS</span><span class="opt fail">FAIL</span><span class="opt hold">HOLD</span></div></div></div></td></tr>
+
+      <tr class="trow" onclick="tg(this)"><td><span class="tog">▸</span></td><td class="cid">TC-0.5-LOGIN-AC1-UI-NEG-01</td><td class="ctitle">sign-in ล้มเหลว → กล่อง error แดง + ลิงก์ติดต่อทีมงาน</td><td class="lvl"><span class="lv ui">UI</span><span class="ac">AC1</span></td><td><span class="prio p1">P1</span></td><td class="status"><span class="stb pending">รอเทส</span></td></tr>
+      <tr class="detail"><td colspan="6"><div class="card"><div class="h-title">sign-in ล้มเหลว → กล่อง error แดง + ลิงก์ติดต่อ</div><div class="h-prio">Priority: <b>P1</b> · Level: UI · AC1 · login-sso</div>
+        <div class="sec pre"><h4>Precondition</h4><ul><li>หน้า Login · mock sign-in ให้ล้มเหลว</li></ul></div>
+        <div class="sec"><h4>Test Steps</h4><ol><li>กด sign-in แล้วให้ flow คืน error · ตรวจส่วน error</li></ol></div>
+        <div class="grid"><div class="sec"><h4>Expected Result</h4><ul><li>กล่อง error แดง + AlertTriangle + หัวข้อ <b>เข้าสู่ระบบไม่สำเร็จ</b></li><li>ลิงก์ <b>ติดต่อทีมงาน</b> + ข้อความอ่านง่าย (ไม่ใช่ raw error)</li><li>ปุ่ม sign-in กลับมากดได้ (ไม่ค้าง loading)</li></ul></div><div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div></div>
+        <div class="sec"><h4>Status</h4><div class="statusrow"><span class="opt pass">PASS</span><span class="opt fail">FAIL</span><span class="opt hold">HOLD</span></div></div></div></td></tr>
+
+      <tr class="trow" onclick="tg(this)"><td><span class="tog">▸</span></td><td class="cid">TC-0.5-LOGIN-REG-76-01</td><td class="ctitle">ปุ่ม "ติดต่อทีมงาน" บนหน้า Expired เปิดลิงก์ติดต่อ ไม่ใช่กลับ Login</td><td class="lvl"><span class="lv ui">UI</span><span class="ac">REG #76</span><span class="flag reg">REG</span></td><td><span class="prio p2">P2</span></td><td class="status"><span class="stb pass">PASS</span></td></tr>
+      <tr class="detail"><td colspan="6"><div class="card"><div class="h-title">regression #76 — ปุ่ม "ติดต่อทีมงาน" บน Expired เปิดลิงก์ ไม่ใช่กลับ Login</div><div class="h-prio">Priority: <b>P2</b> · Level: UI · regression #76 · login-sso</div>
+        <div class="sec pre"><h4>Precondition</h4><ul><li>session authenticated แต่ entitlement หมดอายุ → อยู่หน้า /expired</li></ul></div>
+        <div class="sec"><h4>Test Steps</h4><ol><li>หา element "ติดต่อทีมงาน" บนหน้า Expired</li><li>คลิก · สังเกต route + พฤติกรรม</li></ol></div>
+        <div class="grid"><div class="sec"><h4>Expected Result</h4><ul><li>กด → <b>เปิดช่องทาง/ฟอร์มติดต่อ</b> (contact action ถูกต้อง)</li><li><b>ไม่</b> navigate กลับ /login และ<b>ไม่</b>ออก session (route ยังเป็น /expired)</li></ul></div><div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div></div>
+        <div class="jira"><h4>🔗 Jira (TI-80) — bug อ้างอิงสถานะ</h4><div class="ji"><a href="https://kitdi.atlassian.net/browse/TI-119">TI-119</a><span class="js done">Done · QA-passed</span> ปุ่ม "ติดต่อเจ้าหน้าที่" บน Expired กลับไปหน้า Login</div></div>
+        <div class="sec"><h4>Status</h4><div class="statusrow"><span class="opt pass">PASS</span><span class="opt fail">FAIL</span><span class="opt hold">HOLD</span></div></div></div></td></tr>
+
+      <tr class="trow" onclick="tg(this)"><td><span class="tog">▸</span></td><td class="cid">TC-0.5-LOGIN-REG-73-02</td><td class="ctitle">dev-only preview shortcut (error/expired) ถูกซ่อนใน packaged build</td><td class="lvl"><span class="lv ui">UI</span><span class="ac">REG #73</span><span class="flag reg">REG</span></td><td><span class="prio p2">P2</span></td><td class="status"><span class="stb pending">รอเทส</span></td></tr>
+      <tr class="detail"><td colspan="6"><div class="card"><div class="h-title">regression #73 — dev-only preview shortcut ถูกซ่อนใน packaged build</div><div class="h-prio">Priority: <b>P2</b> · Level: UI · regression #73 · login-sso</div>
+        <div class="sec pre"><h4>Precondition</h4><ul><li>Packaged build (uat/prod, DEV=false) · อยู่หน้า /login (logged-out)</li></ul></div>
+        <div class="sec"><h4>Test Steps</h4><ol><li>เปิดหน้า Login บน packaged build</li><li>หา shortcut: ปุ่ม "ดู error state" + ลิงก์ "หน้า expired"</li></ol></div>
+        <div class="grid"><div class="sec"><h4>Expected Result</h4><ul><li>packaged build <b>ไม่มี</b> ปุ่ม "ดู error state" และ "หน้า expired" บนหน้า Login</li><li>ไม่มีเส้นทางจาก Login (logged-out) ไปหน้า expired/error</li><li>(dev build: shortcuts ปรากฏปกติ — ตั้งใจสำหรับ dev)</li></ul></div><div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div></div>
+        <div class="sec"><h4>Status</h4><div class="statusrow"><span class="opt pass">PASS</span><span class="opt fail">FAIL</span><span class="opt hold">HOLD</span></div></div></div></td></tr>
+
+      <!-- session-detail -->
+      <tr class="featrow"><td colspan="6">📄 session-detail <span class="rp">ui.md (1)</span></td></tr>
+
+      <tr class="trow" onclick="tg(this)"><td><span class="tog">▸</span></td><td class="cid">TC-0.5-SESS-REG-79-01</td><td class="ctitle">แท็บ "โฮสต์" แสดงภาษาไทยทั้งหมด (legend + หัวข้อการ์ดไม่ปน EN)</td><td class="lvl"><span class="lv ui">UI</span><span class="ac">REG #79</span><span class="flag reg">REG</span></td><td><span class="prio p2">P2</span></td><td class="status"><span class="stb pass">PASS</span></td></tr>
+      <tr class="detail"><td colspan="6"><div class="card"><div class="h-title">regression #79 — แท็บ "โฮสต์" แสดงภาษาไทยทั้งหมด</div><div class="h-prio">Priority: <b>P2</b> · Level: UI · regression #79 · session-detail</div>
+        <div class="sec pre"><h4>Precondition</h4><ul><li>ภาษาแอป = ไทย · มี session ที่มีข้อมูล host emotion (เคยอัดจริง)</li></ul></div>
+        <div class="sec"><h4>Test Steps</h4><ol><li>เปิด session detail → เข้าแท็บ "โฮสต์"</li><li>ตรวจ legend ของกราฟอารมณ์โฮสต์</li><li>ตรวจหัวข้อการ์ดสรุป (smile/energy/eye-contact/mood)</li></ol></div>
+        <div class="grid"><div class="sec"><h4>Expected Result</h4><ul><li>legend กราฟ → ไทยทั้งหมด (ไม่มี Joy/Neutral/Surprise EN)</li><li>หัวข้อการ์ด → ไทยทั้งหมด (ไม่มี SMILE/ENERGY/EYE CONTACT/MOOD EN)</li><li>ไม่ปนภาษาในหน้าเดียว · สลับ EN → label EN ครบทั้งหน้า</li></ul></div><div class="sec"><h4>Actual Result</h4><div class="actualbox">— บันทึกผลตอนทดสอบ —</div></div></div>
+        <div class="jira"><h4>🔗 Jira (TI-80) — bug อ้างอิงสถานะ</h4><div class="ji"><a href="https://kitdi.atlassian.net/browse/TI-125">TI-125</a><span class="js done">Done · QA-passed</span> รายงานแท็บ "โฮสต์" แสดงภาษาปน (legend/หัวข้อ EN ในหน้าไทย)</div></div>
+        <div class="sec"><h4>Status</h4><div class="statusrow"><span class="opt pass">PASS</span><span class="opt fail">FAIL</span><span class="opt hold">HOLD</span></div></div></div></td></tr>
+
+    </tbody>
+  </table>
+  </div>
+  </div><!-- /pane-doc -->
+
+
+<!-- ═══════════════════════ ===== แท็บ B · เคสทีมแมนนัวพบเอง (bug TI-80 ที่ไม่มีในเอกสาร) ===== ═══════════════════════ -->
+  <div id="pane-manual" class="tabpane">
+    <div class="tabbar">
+      <button class="tabbtn" data-pane="pane-doc" onclick="showTab(this,'pane-doc')">📋 UI Test Cases (เอกสาร)<span class="n">37</span></button>
+      <button class="tabbtn active" data-pane="pane-manual" onclick="showTab(this,'pane-manual')">🐞 เคสทีมแมนนัวพบเอง<span class="n">39</span></button>
+      <button class="tabbtn" data-pane="pane-scope" onclick="showTab(this,'pane-scope')">🎯 MVP 0.5 Scope</button>
+    </div>
+    <div class="legend" style="margin-bottom:14px">🐞 <b>เคสจากการทดสอบแมนนัวที่ทีม QA พบเอง</b> — bug ลูกใน <a href="https://kitdi.atlassian.net/browse/TI-80">TI-80</a> ที่ <b>ยังไม่มีเคสตรงใน UI test design</b> (39 รายการ) · FIXED = bug ปิดแล้ว · OPEN/HOLD = ยังเปิดอยู่</div>
+  <div class="tablewrap"><table class="tc">
+    <thead><tr><th style="width:24px"></th><th>Bug</th><th>อาการ</th><th>Labels</th><th>Priority</th><th>สถานะ</th></tr></thead>
+    <tbody>
+      <tr class="featrow"><td colspan="6">🔐 Login / Session persistence <span class="rp">5 bug</span></td></tr>
+      <tr class="trow" onclick="tg(this)"><td><span class="tog">▸</span></td><td class="cid">TI-109</td><td class="ctitle">Social Login สำเร็จบนเบราว์เซอร์ แต่โปรแกรมไม่อัปเดตสถานะ login</td><td class="lvl"><span class="ac">ready-for-QA</span></td><td><span class="prio med">MEDIUM</span></td><td class="status"><span class="stb pass">FIXED</span></td></tr>
+      <tr class="detail"><td colspan="6"><div class="card"><div class="h-title">Social Login สำเร็จบนเบราว์เซอร์ แต่โปรแกรมไม่อัปเดตสถานะ login</div><div class="h-prio">Bug <b>TI-109</b> · Priority: <b>Medium</b> · สถานะ Jira: <b>Done</b></div><div class="sec"><h4>หมายเหตุ</h4><ul><li>เคสนี้ทีมแมนนัวพบเอง — <b>ยังไม่มีใน UI test design (case/*/ui.md)</b></li><li>labels: ready-for-QA</li></ul></div><div class="jira"><h4>🔗 Jira</h4><div class="ji"><a href="https://kitdi.atlassian.net/browse/TI-109">TI-109</a><span class="js done">Done</span> Social Login สำเร็จบนเบราว์เซอร์ แต่โปรแกรมไม่อัปเดตสถานะ login</div></div></div></td></tr>
+      <tr class="trow" onclick="tg(this)"><td><span class="tog">▸</span></td><td class="cid">TI-141</td><td class="ctitle">หลัง login ผ่านเบราว์เซอร์ ไม่กลับมาแอปอัตโนมัติ</td><td class="lvl"><span class="ac">QA-passed</span></td><td><span class="prio med">MEDIUM</span></td><td class="status"><span class="stb pass">FIXED</span></td></tr>
+      <tr class="detail"><td colspan="6"><div class="card"><div class="h-title">หลัง login ผ่านเบราว์เซอร์ ไม่กลับมาแอปอัตโนมัติ</div><div class="h-prio">Bug <b>TI-141</b> · Priority: <b>Medium</b> · สถานะ Jira: <b>Done</b></div><div class="sec"><h4>หมายเหตุ</h4><ul><li>เคสนี้ทีมแมนนัวพบเอง — <b>ยังไม่มีใน UI test design (case/*/ui.md)</b></li><li>labels: QA-passed</li></ul></div><div class="jira"><h4>🔗 Jira</h4><div class="ji"><a href="https://kitdi.atlassian.net/browse/TI-141">TI-141</a><span class="js done">Done · QA-passed</span> หลัง login ผ่านเบราว์เซอร์ ไม่กลับมาแอปอัตโนมัติ</div></div></div></td></tr>
+      <tr class="trow" onclick="tg(this)"><td><span class="tog">▸</span></td><td class="cid">TI-158</td><td class="ctitle">ลิงก์ "ข้อตกลงการใช้งาน"/"นโยบายความเป็นส่วนตัว" บน Login ใช้ไม่ได้</td><td class="lvl"></td><td><span class="prio high">HIGH</span></td><td class="status"><span class="stb return">OPEN</span></td></tr>
+      <tr class="detail"><td colspan="6"><div class="card"><div class="h-title">ลิงก์ "ข้อตกลงการใช้งาน"/"นโยบายความเป็นส่วนตัว" บน Login ใช้ไม่ได้</div><div class="h-prio">Bug <b>TI-158</b> · Priority: <b>High</b> · สถานะ Jira: <b>To Do</b></div><div class="sec"><h4>หมายเหตุ</h4><ul><li>เคสนี้ทีมแมนนัวพบเอง — <b>ยังไม่มีใน UI test design (case/*/ui.md)</b></li><li>labels: —</li></ul></div><div class="jira"><h4>🔗 Jira</h4><div class="ji"><a href="https://kitdi.atlassian.net/browse/TI-158">TI-158</a><span class="js todo">To Do</span> ลิงก์ "ข้อตกลงการใช้งาน"/"นโยบายความเป็นส่วนตัว" บน Login ใช้ไม่ได้</div></div></div></td></tr>
+      <tr class="trow" onclick="tg(this)"><td><span class="tog">▸</span></td><td class="cid">TI-162</td><td class="ctitle">การแสดงผลหลังออกจากระบบไม่ถูกต้อง</td><td class="lvl"></td><td><span class="prio high">HIGH</span></td><td class="status"><span class="stb return">OPEN</span></td></tr>
+      <tr class="detail"><td colspan="6"><div class="card"><div class="h-title">การแสดงผลหลังออกจากระบบไม่ถูกต้อง</div><div class="h-prio">Bug <b>TI-162</b> · Priority: <b>High</b> · สถานะ Jira: <b>To Do</b></div><div class="sec"><h4>หมายเหตุ</h4><ul><li>เคสนี้ทีมแมนนัวพบเอง — <b>ยังไม่มีใน UI test design (case/*/ui.md)</b></li><li>labels: —</li></ul></div><div class="jira"><h4>🔗 Jira</h4><div class="ji"><a href="https://kitdi.atlassian.net/browse/TI-162">TI-162</a><span class="js todo">To Do</span> การแสดงผลหลังออกจากระบบไม่ถูกต้อง</div></div></div></td></tr>
+      <tr class="trow" onclick="tg(this)"><td><span class="tog">▸</span></td><td class="cid">TI-164</td><td class="ctitle">แอปไม่จดจำสถานะ login ต้อง Login ใหม่ทุกครั้งหลังปิด-เปิด</td><td class="lvl"></td><td><span class="prio high">HIGH</span></td><td class="status"><span class="stb return">OPEN</span></td></tr>
+      <tr class="detail"><td colspan="6"><div class="card"><div class="h-title">แอปไม่จดจำสถานะ login ต้อง Login ใหม่ทุกครั้งหลังปิด-เปิด</div><div class="h-prio">Bug <b>TI-164</b> · Priority: <b>High</b> · สถานะ Jira: <b>To Do</b></div><div class="sec"><h4>หมายเหตุ</h4><ul><li>เคสนี้ทีมแมนนัวพบเอง — <b>ยังไม่มีใน UI test design (case/*/ui.md)</b></li><li>labels: —</li></ul></div><div class="jira"><h4>🔗 Jira</h4><div class="ji"><a href="https://kitdi.atlassian.net/browse/TI-164">TI-164</a><span class="js todo">To Do</span> แอปไม่จดจำสถานะ login ต้อง Login ใหม่ทุกครั้งหลังปิด-เปิด</div></div></div></td></tr>
+      <tr class="featrow"><td colspan="6">🔗 Session naming / recording lifecycle <span class="rp">10 bug</span></td></tr>
+      <tr class="trow" onclick="tg(this)"><td><span class="tog">▸</span></td><td class="cid">TI-95</td><td class="ctitle">ต้องแสดงชื่อเซสชันตามข้อมูลจริง ไม่ใช่ชื่อ Mock</td><td class="lvl"><span class="ac">QA-passed</span></td><td><span class="prio med">MEDIUM</span></td><td class="status"><span class="stb pass">FIXED</span></td></tr>
+      <tr class="detail"><td colspan="6"><div class="card"><div class="h-title">ต้องแสดงชื่อเซสชันตามข้อมูลจริง ไม่ใช่ชื่อ Mock</div><div class="h-prio">Bug <b>TI-95</b> · Priority: <b>Medium</b> · สถานะ Jira: <b>Done</b></div><div class="sec"><h4>หมายเหตุ</h4><ul><li>เคสนี้ทีมแมนนัวพบเอง — <b>ยังไม่มีใน UI test design (case/*/ui.md)</b></li><li>labels: QA-passed</li></ul></div><div class="jira"><h4>🔗 Jira</h4><div class="ji"><a href="https://kitdi.atlassian.net/browse/TI-95">TI-95</a><span class="js done">Done · QA-passed</span> ต้องแสดงชื่อเซสชันตามข้อมูลจริง ไม่ใช่ชื่อ Mock</div></div></div></td></tr>
+      <tr class="trow" onclick="tg(this)"><td><span class="tog">▸</span></td><td class="cid">TI-133</td><td class="ctitle">ไม่ควรสร้างเซสชันเมื่อไลฟ์สิ้นสุดไปนานแล้ว</td><td class="lvl"><span class="ac">QA-passed</span></td><td><span class="prio med">MEDIUM</span></td><td class="status"><span class="stb pass">FIXED</span></td></tr>
+      <tr class="detail"><td colspan="6"><div class="card"><div class="h-title">ไม่ควรสร้างเซสชันเมื่อไลฟ์สิ้นสุดไปนานแล้ว</div><div class="h-prio">Bug <b>TI-133</b> · Priority: <b>Medium</b> · สถานะ Jira: <b>Done</b></div><div class="sec"><h4>หมายเหตุ</h4><ul><li>เคสนี้ทีมแมนนัวพบเอง — <b>ยังไม่มีใน UI test design (case/*/ui.md)</b></li><li>labels: QA-passed</li></ul></div><div class="jira"><h4>🔗 Jira</h4><div class="ji"><a href="https://kitdi.atlassian.net/browse/TI-133">TI-133</a><span class="js done">Done · QA-passed</span> ไม่ควรสร้างเซสชันเมื่อไลฟ์สิ้นสุดไปนานแล้ว</div></div></div></td></tr>
+      <tr class="trow" onclick="tg(this)"><td><span class="tog">▸</span></td><td class="cid">TI-135</td><td class="ctitle">ชื่อเซสชันที่ตั้งเอง ไม่ถูกบันทึก ใช้ timestamp แทน</td><td class="lvl"><span class="ac">QA-passed</span></td><td><span class="prio high">HIGH</span></td><td class="status"><span class="stb pass">FIXED</span></td></tr>
+      <tr class="detail"><td colspan="6"><div class="card"><div class="h-title">ชื่อเซสชันที่ตั้งเอง ไม่ถูกบันทึก ใช้ timestamp แทน</div><div class="h-prio">Bug <b>TI-135</b> · Priority: <b>High</b> · สถานะ Jira: <b>Done</b></div><div class="sec"><h4>หมายเหตุ</h4><ul><li>เคสนี้ทีมแมนนัวพบเอง — <b>ยังไม่มีใน UI test design (case/*/ui.md)</b></li><li>labels: QA-passed</li></ul></div><div class="jira"><h4>🔗 Jira</h4><div class="ji"><a href="https://kitdi.atlassian.net/browse/TI-135">TI-135</a><span class="js done">Done · QA-passed</span> ชื่อเซสชันที่ตั้งเอง ไม่ถูกบันทึก ใช้ timestamp แทน</div></div></div></td></tr>
+      <tr class="trow" onclick="tg(this)"><td><span class="tog">▸</span></td><td class="cid">TI-137</td><td class="ctitle">ชื่อเซสชันจากปุ่ม "เริ่มติดตาม" ไม่อัปเดตตามช่องไลฟ์</td><td class="lvl"><span class="ac">QA-passed</span></td><td><span class="prio high">HIGH</span></td><td class="status"><span class="stb pass">FIXED</span></td></tr>
+      <tr class="detail"><td colspan="6"><div class="card"><div class="h-title">ชื่อเซสชันจากปุ่ม "เริ่มติดตาม" ไม่อัปเดตตามช่องไลฟ์</div><div class="h-prio">Bug <b>TI-137</b> · Priority: <b>High</b> · สถานะ Jira: <b>Done</b></div><div class="sec"><h4>หมายเหตุ</h4><ul><li>เคสนี้ทีมแมนนัวพบเอง — <b>ยังไม่มีใน UI test design (case/*/ui.md)</b></li><li>labels: QA-passed</li></ul></div><div class="jira"><h4>🔗 Jira</h4><div class="ji"><a href="https://kitdi.atlassian.net/browse/TI-137">TI-137</a><span class="js done">Done · QA-passed</span> ชื่อเซสชันจากปุ่ม "เริ่มติดตาม" ไม่อัปเดตตามช่องไลฟ์</div></div></div></td></tr>
+      <tr class="trow" onclick="tg(this)"><td><span class="tog">▸</span></td><td class="cid">TI-139</td><td class="ctitle">ชื่อเซสชันไม่อัปเดตตาม URL ไลฟ์หลังแก้ URL</td><td class="lvl"><span class="ac">QA-passed</span></td><td><span class="prio high">HIGH</span></td><td class="status"><span class="stb pass">FIXED</span></td></tr>
+      <tr class="detail"><td colspan="6"><div class="card"><div class="h-title">ชื่อเซสชันไม่อัปเดตตาม URL ไลฟ์หลังแก้ URL</div><div class="h-prio">Bug <b>TI-139</b> · Priority: <b>High</b> · สถานะ Jira: <b>Done</b></div><div class="sec"><h4>หมายเหตุ</h4><ul><li>เคสนี้ทีมแมนนัวพบเอง — <b>ยังไม่มีใน UI test design (case/*/ui.md)</b></li><li>labels: QA-passed</li></ul></div><div class="jira"><h4>🔗 Jira</h4><div class="ji"><a href="https://kitdi.atlassian.net/browse/TI-139">TI-139</a><span class="js done">Done · QA-passed</span> ชื่อเซสชันไม่อัปเดตตาม URL ไลฟ์หลังแก้ URL</div></div></div></td></tr>
+      <tr class="trow" onclick="tg(this)"><td><span class="tog">▸</span></td><td class="cid">TI-143</td><td class="ctitle">ข้อความ "มี Session ก่อนหน้า" แสดงค้างตลอด ไม่เคลียร์</td><td class="lvl"><span class="ac">QA-passed</span></td><td><span class="prio med">MEDIUM</span></td><td class="status"><span class="stb pass">FIXED</span></td></tr>
+      <tr class="detail"><td colspan="6"><div class="card"><div class="h-title">ข้อความ "มี Session ก่อนหน้า" แสดงค้างตลอด ไม่เคลียร์</div><div class="h-prio">Bug <b>TI-143</b> · Priority: <b>Medium</b> · สถานะ Jira: <b>Done</b></div><div class="sec"><h4>หมายเหตุ</h4><ul><li>เคสนี้ทีมแมนนัวพบเอง — <b>ยังไม่มีใน UI test design (case/*/ui.md)</b></li><li>labels: QA-passed</li></ul></div><div class="jira"><h4>🔗 Jira</h4><div class="ji"><a href="https://kitdi.atlassian.net/browse/TI-143">TI-143</a><span class="js done">Done · QA-passed</span> ข้อความ "มี Session ก่อนหน้า" แสดงค้างตลอด ไม่เคลียร์</div></div></div></td></tr>
+      <tr class="trow" onclick="tg(this)"><td><span class="tog">▸</span></td><td class="cid">TI-160</td><td class="ctitle">ยังบันทึกเซสชันต่อเนื่องหลังไลฟ์จบ ข้อมูลไลฟ์ถัดไปปนกัน</td><td class="lvl"><span class="ac">ready-for-QA</span></td><td><span class="prio high">HIGH</span></td><td class="status"><span class="stb return">OPEN</span></td></tr>
+      <tr class="detail"><td colspan="6"><div class="card"><div class="h-title">ยังบันทึกเซสชันต่อเนื่องหลังไลฟ์จบ ข้อมูลไลฟ์ถัดไปปนกัน</div><div class="h-prio">Bug <b>TI-160</b> · Priority: <b>High</b> · สถานะ Jira: <b>To Do</b></div><div class="sec"><h4>หมายเหตุ</h4><ul><li>เคสนี้ทีมแมนนัวพบเอง — <b>ยังไม่มีใน UI test design (case/*/ui.md)</b></li><li>labels: ready-for-QA</li></ul></div><div class="jira"><h4>🔗 Jira</h4><div class="ji"><a href="https://kitdi.atlassian.net/browse/TI-160">TI-160</a><span class="js todo">To Do</span> ยังบันทึกเซสชันต่อเนื่องหลังไลฟ์จบ ข้อมูลไลฟ์ถัดไปปนกัน</div></div></div></td></tr>
+      <tr class="trow" onclick="tg(this)"><td><span class="tog">▸</span></td><td class="cid">TI-166</td><td class="ctitle">สลับไลฟ์ขณะ REC โดยไม่เตือนให้บันทึกไลฟ์เก่าก่อน</td><td class="lvl"></td><td><span class="prio high">HIGH</span></td><td class="status"><span class="stb return">OPEN</span></td></tr>
+      <tr class="detail"><td colspan="6"><div class="card"><div class="h-title">สลับไลฟ์ขณะ REC โดยไม่เตือนให้บันทึกไลฟ์เก่าก่อน</div><div class="h-prio">Bug <b>TI-166</b> · Priority: <b>High</b> · สถานะ Jira: <b>To Do</b></div><div class="sec"><h4>หมายเหตุ</h4><ul><li>เคสนี้ทีมแมนนัวพบเอง — <b>ยังไม่มีใน UI test design (case/*/ui.md)</b></li><li>labels: —</li></ul></div><div class="jira"><h4>🔗 Jira</h4><div class="ji"><a href="https://kitdi.atlassian.net/browse/TI-166">TI-166</a><span class="js todo">To Do</span> สลับไลฟ์ขณะ REC โดยไม่เตือนให้บันทึกไลฟ์เก่าก่อน</div></div></div></td></tr>
+      <tr class="trow" onclick="tg(this)"><td><span class="tog">▸</span></td><td class="cid">TI-170</td><td class="ctitle">ระยะเวลาไลฟ์แสดงเป็น "-"/"0" หลังจบไลฟ์ในบางกรณี</td><td class="lvl"><span class="ac">critical</span></td><td><span class="prio crit">CRITICAL</span></td><td class="status"><span class="stb return">OPEN</span></td></tr>
+      <tr class="detail"><td colspan="6"><div class="card"><div class="h-title">ระยะเวลาไลฟ์แสดงเป็น "-"/"0" หลังจบไลฟ์ในบางกรณี</div><div class="h-prio">Bug <b>TI-170</b> · Priority: <b>Highest</b> · สถานะ Jira: <b>To Do</b></div><div class="sec"><h4>หมายเหตุ</h4><ul><li>เคสนี้ทีมแมนนัวพบเอง — <b>ยังไม่มีใน UI test design (case/*/ui.md)</b></li><li>labels: critical</li></ul></div><div class="jira"><h4>🔗 Jira</h4><div class="ji"><a href="https://kitdi.atlassian.net/browse/TI-170">TI-170</a><span class="js todo">To Do</span> ระยะเวลาไลฟ์แสดงเป็น "-"/"0" หลังจบไลฟ์ในบางกรณี</div></div></div></td></tr>
+      <tr class="trow" onclick="tg(this)"><td><span class="tog">▸</span></td><td class="cid">TI-85</td><td class="ctitle">แสดงข้อมูลเซสชันก่อนหน้าของช่อง ทั้งที่ยังไม่เคยรับชมไลฟ์</td><td class="lvl"><span class="ac">QA-passed</span></td><td><span class="prio med">MEDIUM</span></td><td class="status"><span class="stb pass">FIXED</span></td></tr>
+      <tr class="detail"><td colspan="6"><div class="card"><div class="h-title">แสดงข้อมูลเซสชันก่อนหน้าของช่อง ทั้งที่ยังไม่เคยรับชมไลฟ์</div><div class="h-prio">Bug <b>TI-85</b> · Priority: <b>Medium</b> · สถานะ Jira: <b>Done</b></div><div class="sec"><h4>หมายเหตุ</h4><ul><li>เคสนี้ทีมแมนนัวพบเอง — <b>ยังไม่มีใน UI test design (case/*/ui.md)</b></li><li>labels: QA-passed</li></ul></div><div class="jira"><h4>🔗 Jira</h4><div class="ji"><a href="https://kitdi.atlassian.net/browse/TI-85">TI-85</a><span class="js done">Done · QA-passed</span> แสดงข้อมูลเซสชันก่อนหน้าของช่อง ทั้งที่ยังไม่เคยรับชมไลฟ์</div></div></div></td></tr>
+      <tr class="featrow"><td colspan="6">📄 Session detail / report / export <span class="rp">5 bug</span></td></tr>
+      <tr class="trow" onclick="tg(this)"><td><span class="tog">▸</span></td><td class="cid">TI-81</td><td class="ctitle">เปิดรายงาน(เบราว์เซอร์)จากหน้าเซสชัน ขึ้น Internal Server Error (500)</td><td class="lvl"><span class="ac">QA-passed</span></td><td><span class="prio med">MEDIUM</span></td><td class="status"><span class="stb pass">FIXED</span></td></tr>
+      <tr class="detail"><td colspan="6"><div class="card"><div class="h-title">เปิดรายงาน(เบราว์เซอร์)จากหน้าเซสชัน ขึ้น Internal Server Error (500)</div><div class="h-prio">Bug <b>TI-81</b> · Priority: <b>Medium</b> · สถานะ Jira: <b>Done</b></div><div class="sec"><h4>หมายเหตุ</h4><ul><li>เคสนี้ทีมแมนนัวพบเอง — <b>ยังไม่มีใน UI test design (case/*/ui.md)</b></li><li>labels: QA-passed</li></ul></div><div class="jira"><h4>🔗 Jira</h4><div class="ji"><a href="https://kitdi.atlassian.net/browse/TI-81">TI-81</a><span class="js done">Done · QA-passed</span> เปิดรายงาน(เบราว์เซอร์)จากหน้าเซสชัน ขึ้น Internal Server Error (500)</div></div></div></td></tr>
+      <tr class="trow" onclick="tg(this)"><td><span class="tog">▸</span></td><td class="cid">TI-105</td><td class="ctitle">กดเปิดรายละเอียดเซสชันแล้วขึ้น Internal Server Error</td><td class="lvl"><span class="ac">QA-passed</span></td><td><span class="prio med">MEDIUM</span></td><td class="status"><span class="stb pass">FIXED</span></td></tr>
+      <tr class="detail"><td colspan="6"><div class="card"><div class="h-title">กดเปิดรายละเอียดเซสชันแล้วขึ้น Internal Server Error</div><div class="h-prio">Bug <b>TI-105</b> · Priority: <b>Medium</b> · สถานะ Jira: <b>Done</b></div><div class="sec"><h4>หมายเหตุ</h4><ul><li>เคสนี้ทีมแมนนัวพบเอง — <b>ยังไม่มีใน UI test design (case/*/ui.md)</b></li><li>labels: QA-passed</li></ul></div><div class="jira"><h4>🔗 Jira</h4><div class="ji"><a href="https://kitdi.atlassian.net/browse/TI-105">TI-105</a><span class="js done">Done · QA-passed</span> กดเปิดรายละเอียดเซสชันแล้วขึ้น Internal Server Error</div></div></div></td></tr>
+      <tr class="trow" onclick="tg(this)"><td><span class="tog">▸</span></td><td class="cid">TI-107</td><td class="ctitle">ข้อมูลหน้า Session Detail ผิดเมื่อกดดูตัวอย่างรายงาน</td><td class="lvl"><span class="ac">QA-passed</span></td><td><span class="prio high">HIGH</span></td><td class="status"><span class="stb pass">FIXED</span></td></tr>
+      <tr class="detail"><td colspan="6"><div class="card"><div class="h-title">ข้อมูลหน้า Session Detail ผิดเมื่อกดดูตัวอย่างรายงาน</div><div class="h-prio">Bug <b>TI-107</b> · Priority: <b>High</b> · สถานะ Jira: <b>Done</b></div><div class="sec"><h4>หมายเหตุ</h4><ul><li>เคสนี้ทีมแมนนัวพบเอง — <b>ยังไม่มีใน UI test design (case/*/ui.md)</b></li><li>labels: QA-passed</li></ul></div><div class="jira"><h4>🔗 Jira</h4><div class="ji"><a href="https://kitdi.atlassian.net/browse/TI-107">TI-107</a><span class="js done">Done · QA-passed</span> ข้อมูลหน้า Session Detail ผิดเมื่อกดดูตัวอย่างรายงาน</div></div></div></td></tr>
+      <tr class="trow" onclick="tg(this)"><td><span class="tog">▸</span></td><td class="cid">TI-131</td><td class="ctitle">ดาวน์โหลด PDF จาก Session Detail ไม่สำเร็จ แม้แจ้งว่าสำเร็จ</td><td class="lvl"><span class="ac">QA-passed</span></td><td><span class="prio med">MEDIUM</span></td><td class="status"><span class="stb pass">FIXED</span></td></tr>
+      <tr class="detail"><td colspan="6"><div class="card"><div class="h-title">ดาวน์โหลด PDF จาก Session Detail ไม่สำเร็จ แม้แจ้งว่าสำเร็จ</div><div class="h-prio">Bug <b>TI-131</b> · Priority: <b>Medium</b> · สถานะ Jira: <b>Done</b></div><div class="sec"><h4>หมายเหตุ</h4><ul><li>เคสนี้ทีมแมนนัวพบเอง — <b>ยังไม่มีใน UI test design (case/*/ui.md)</b></li><li>labels: QA-passed</li></ul></div><div class="jira"><h4>🔗 Jira</h4><div class="ji"><a href="https://kitdi.atlassian.net/browse/TI-131">TI-131</a><span class="js done">Done · QA-passed</span> ดาวน์โหลด PDF จาก Session Detail ไม่สำเร็จ แม้แจ้งว่าสำเร็จ</div></div></div></td></tr>
+      <tr class="trow" onclick="tg(this)"><td><span class="tog">▸</span></td><td class="cid">TI-87</td><td class="ctitle">กดลบถาวรเซสชันแล้ว แต่ยังแสดงอยู่ในลิสต์ — ลบไม่มีผล</td><td class="lvl"><span class="ac">QA-passed</span></td><td><span class="prio med">MEDIUM</span></td><td class="status"><span class="stb pass">FIXED</span></td></tr>
+      <tr class="detail"><td colspan="6"><div class="card"><div class="h-title">กดลบถาวรเซสชันแล้ว แต่ยังแสดงอยู่ในลิสต์ — ลบไม่มีผล</div><div class="h-prio">Bug <b>TI-87</b> · Priority: <b>Medium</b> · สถานะ Jira: <b>Done</b></div><div class="sec"><h4>หมายเหตุ</h4><ul><li>เคสนี้ทีมแมนนัวพบเอง — <b>ยังไม่มีใน UI test design (case/*/ui.md)</b></li><li>labels: QA-passed</li></ul></div><div class="jira"><h4>🔗 Jira</h4><div class="ji"><a href="https://kitdi.atlassian.net/browse/TI-87">TI-87</a><span class="js done">Done · QA-passed</span> กดลบถาวรเซสชันแล้ว แต่ยังแสดงอยู่ในลิสต์ — ลบไม่มีผล</div></div></div></td></tr>
+      <tr class="featrow"><td colspan="6">🔌 Channels <span class="rp">2 bug</span></td></tr>
+      <tr class="trow" onclick="tg(this)"><td><span class="tog">▸</span></td><td class="cid">TI-97</td><td class="ctitle">กดดูช่องที่ติดตามแล้วแสดง URL ไลฟ์ไม่ถูกต้อง</td><td class="lvl"><span class="ac">QA-passed</span></td><td><span class="prio high">HIGH</span></td><td class="status"><span class="stb pass">FIXED</span></td></tr>
+      <tr class="detail"><td colspan="6"><div class="card"><div class="h-title">กดดูช่องที่ติดตามแล้วแสดง URL ไลฟ์ไม่ถูกต้อง</div><div class="h-prio">Bug <b>TI-97</b> · Priority: <b>High</b> · สถานะ Jira: <b>Done</b></div><div class="sec"><h4>หมายเหตุ</h4><ul><li>เคสนี้ทีมแมนนัวพบเอง — <b>ยังไม่มีใน UI test design (case/*/ui.md)</b></li><li>labels: QA-passed</li></ul></div><div class="jira"><h4>🔗 Jira</h4><div class="ji"><a href="https://kitdi.atlassian.net/browse/TI-97">TI-97</a><span class="js done">Done · QA-passed</span> กดดูช่องที่ติดตามแล้วแสดง URL ไลฟ์ไม่ถูกต้อง</div></div></div></td></tr>
+      <tr class="trow" onclick="tg(this)"><td><span class="tog">▸</span></td><td class="cid">TI-113</td><td class="ctitle">ติดตามแชนเนลแล้ว แต่หน้า "แชนเนลที่ติดตาม" แสดง 0 ช่อง</td><td class="lvl"></td><td><span class="prio high">HIGH</span></td><td class="status"><span class="stb pass">FIXED</span></td></tr>
+      <tr class="detail"><td colspan="6"><div class="card"><div class="h-title">ติดตามแชนเนลแล้ว แต่หน้า "แชนเนลที่ติดตาม" แสดง 0 ช่อง</div><div class="h-prio">Bug <b>TI-113</b> · Priority: <b>High</b> · สถานะ Jira: <b>Done</b></div><div class="sec"><h4>หมายเหตุ</h4><ul><li>เคสนี้ทีมแมนนัวพบเอง — <b>ยังไม่มีใน UI test design (case/*/ui.md)</b></li><li>labels: —</li></ul></div><div class="jira"><h4>🔗 Jira</h4><div class="ji"><a href="https://kitdi.atlassian.net/browse/TI-113">TI-113</a><span class="js done">Done</span> ติดตามแชนเนลแล้ว แต่หน้า "แชนเนลที่ติดตาม" แสดง 0 ช่อง</div></div></div></td></tr>
+      <tr class="featrow"><td colspan="6">💬 Comments / emoji / metrics <span class="rp">2 bug</span></td></tr>
+      <tr class="trow" onclick="tg(this)"><td><span class="tog">▸</span></td><td class="cid">TI-127</td><td class="ctitle">ยอดไลก์ไม่ sync ระหว่าง header ไลฟ์ กับการ์ด Insight</td><td class="lvl"><span class="ac">QA-passed</span></td><td><span class="prio med">MEDIUM</span></td><td class="status"><span class="stb pass">FIXED</span></td></tr>
+      <tr class="detail"><td colspan="6"><div class="card"><div class="h-title">ยอดไลก์ไม่ sync ระหว่าง header ไลฟ์ กับการ์ด Insight</div><div class="h-prio">Bug <b>TI-127</b> · Priority: <b>Medium</b> · สถานะ Jira: <b>Done</b></div><div class="sec"><h4>หมายเหตุ</h4><ul><li>เคสนี้ทีมแมนนัวพบเอง — <b>ยังไม่มีใน UI test design (case/*/ui.md)</b></li><li>labels: QA-passed</li></ul></div><div class="jira"><h4>🔗 Jira</h4><div class="ji"><a href="https://kitdi.atlassian.net/browse/TI-127">TI-127</a><span class="js done">Done · QA-passed</span> ยอดไลก์ไม่ sync ระหว่าง header ไลฟ์ กับการ์ด Insight</div></div></div></td></tr>
+      <tr class="trow" onclick="tg(this)"><td><span class="tog">▸</span></td><td class="cid">TI-156</td><td class="ctitle">อิโมจิในแชท/คอมเมนต์แสดงเป็นโค้ด [laugh][heart] แทนรูป</td><td class="lvl"><span class="ac">ready-for-QA</span></td><td><span class="prio med">MEDIUM</span></td><td class="status"><span class="stb return">OPEN</span></td></tr>
+      <tr class="detail"><td colspan="6"><div class="card"><div class="h-title">อิโมจิในแชท/คอมเมนต์แสดงเป็นโค้ด [laugh][heart] แทนรูป</div><div class="h-prio">Bug <b>TI-156</b> · Priority: <b>Medium</b> · สถานะ Jira: <b>To Do</b></div><div class="sec"><h4>หมายเหตุ</h4><ul><li>เคสนี้ทีมแมนนัวพบเอง — <b>ยังไม่มีใน UI test design (case/*/ui.md)</b></li><li>labels: ready-for-QA</li></ul></div><div class="jira"><h4>🔗 Jira</h4><div class="ji"><a href="https://kitdi.atlassian.net/browse/TI-156">TI-156</a><span class="js todo">To Do</span> อิโมจิในแชท/คอมเมนต์แสดงเป็นโค้ด [laugh][heart] แทนรูป</div></div></div></td></tr>
+      <tr class="featrow"><td colspan="6">🔄 App lifecycle / first-run / sync <span class="rp">6 bug</span></td></tr>
+      <tr class="trow" onclick="tg(this)"><td><span class="tog">▸</span></td><td class="cid">TI-99</td><td class="ctitle">ปิด-เปิดโปรแกรมใหม่ แสดงหน้าตั้งค่าครั้งแรก/แจ้งอัปเดตซ้ำ</td><td class="lvl"><span class="ac">QA-passed</span></td><td><span class="prio med">MEDIUM</span></td><td class="status"><span class="stb pass">FIXED</span></td></tr>
+      <tr class="detail"><td colspan="6"><div class="card"><div class="h-title">ปิด-เปิดโปรแกรมใหม่ แสดงหน้าตั้งค่าครั้งแรก/แจ้งอัปเดตซ้ำ</div><div class="h-prio">Bug <b>TI-99</b> · Priority: <b>Medium</b> · สถานะ Jira: <b>Done</b></div><div class="sec"><h4>หมายเหตุ</h4><ul><li>เคสนี้ทีมแมนนัวพบเอง — <b>ยังไม่มีใน UI test design (case/*/ui.md)</b></li><li>labels: QA-passed</li></ul></div><div class="jira"><h4>🔗 Jira</h4><div class="ji"><a href="https://kitdi.atlassian.net/browse/TI-99">TI-99</a><span class="js done">Done · QA-passed</span> ปิด-เปิดโปรแกรมใหม่ แสดงหน้าตั้งค่าครั้งแรก/แจ้งอัปเดตซ้ำ</div></div></div></td></tr>
+      <tr class="trow" onclick="tg(this)"><td><span class="tog">▸</span></td><td class="cid">TI-149</td><td class="ctitle">หน้าขาว/โหลดนานหลังสลับไปแอปอื่นนาน</td><td class="lvl"><span class="ac">critical</span><span class="ac">ready-for-QA</span></td><td><span class="prio crit">CRITICAL</span></td><td class="status"><span class="stb pass">FIXED</span></td></tr>
+      <tr class="detail"><td colspan="6"><div class="card"><div class="h-title">หน้าขาว/โหลดนานหลังสลับไปแอปอื่นนาน</div><div class="h-prio">Bug <b>TI-149</b> · Priority: <b>Highest</b> · สถานะ Jira: <b>Done</b></div><div class="sec"><h4>หมายเหตุ</h4><ul><li>เคสนี้ทีมแมนนัวพบเอง — <b>ยังไม่มีใน UI test design (case/*/ui.md)</b></li><li>labels: critical, ready-for-QA</li></ul></div><div class="jira"><h4>🔗 Jira</h4><div class="ji"><a href="https://kitdi.atlassian.net/browse/TI-149">TI-149</a><span class="js done">Done</span> หน้าขาว/โหลดนานหลังสลับไปแอปอื่นนาน</div></div></div></td></tr>
+      <tr class="trow" onclick="tg(this)"><td><span class="tog">▸</span></td><td class="cid">TI-151</td><td class="ctitle">แสดงหน้าตั้งค่าครั้งแรกซ้ำหลังกลับจากแอปอื่น</td><td class="lvl"><span class="ac">critical</span><span class="ac">ready-for-QA</span></td><td><span class="prio crit">CRITICAL</span></td><td class="status"><span class="stb pass">FIXED</span></td></tr>
+      <tr class="detail"><td colspan="6"><div class="card"><div class="h-title">แสดงหน้าตั้งค่าครั้งแรกซ้ำหลังกลับจากแอปอื่น</div><div class="h-prio">Bug <b>TI-151</b> · Priority: <b>Highest</b> · สถานะ Jira: <b>Done</b></div><div class="sec"><h4>หมายเหตุ</h4><ul><li>เคสนี้ทีมแมนนัวพบเอง — <b>ยังไม่มีใน UI test design (case/*/ui.md)</b></li><li>labels: critical, ready-for-QA</li></ul></div><div class="jira"><h4>🔗 Jira</h4><div class="ji"><a href="https://kitdi.atlassian.net/browse/TI-151">TI-151</a><span class="js done">Done</span> แสดงหน้าตั้งค่าครั้งแรกซ้ำหลังกลับจากแอปอื่น</div></div></div></td></tr>
+      <tr class="trow" onclick="tg(this)"><td><span class="tog">▸</span></td><td class="cid">TI-168</td><td class="ctitle">ข้อมูลช่อง/เซสชันไม่ sync ข้ามอุปกรณ์เมื่อ login บัญชีเดียวกัน</td><td class="lvl"><span class="ac">HOLD</span><span class="ac">critical</span></td><td><span class="prio crit">CRITICAL</span></td><td class="status"><span class="stb hold">HOLD</span></td></tr>
+      <tr class="detail"><td colspan="6"><div class="card"><div class="h-title">ข้อมูลช่อง/เซสชันไม่ sync ข้ามอุปกรณ์เมื่อ login บัญชีเดียวกัน</div><div class="h-prio">Bug <b>TI-168</b> · Priority: <b>Highest</b> · สถานะ Jira: <b>To Do</b></div><div class="sec"><h4>หมายเหตุ</h4><ul><li>เคสนี้ทีมแมนนัวพบเอง — <b>ยังไม่มีใน UI test design (case/*/ui.md)</b></li><li>labels: HOLD, critical</li></ul></div><div class="jira"><h4>🔗 Jira</h4><div class="ji"><a href="https://kitdi.atlassian.net/browse/TI-168">TI-168</a><span class="js hold">HOLD · returned-to-dev</span> ข้อมูลช่อง/เซสชันไม่ sync ข้ามอุปกรณ์เมื่อ login บัญชีเดียวกัน</div></div></div></td></tr>
+      <tr class="trow" onclick="tg(this)"><td><span class="tog">▸</span></td><td class="cid">TI-91</td><td class="ctitle">ระบบเล่นเสียงจาก TikTok ขณะไม่ได้เปิดรับชมไลฟ์/วิดีโอ</td><td class="lvl"><span class="ac">QA-passed</span></td><td><span class="prio med">MEDIUM</span></td><td class="status"><span class="stb pass">FIXED</span></td></tr>
+      <tr class="detail"><td colspan="6"><div class="card"><div class="h-title">ระบบเล่นเสียงจาก TikTok ขณะไม่ได้เปิดรับชมไลฟ์/วิดีโอ</div><div class="h-prio">Bug <b>TI-91</b> · Priority: <b>Medium</b> · สถานะ Jira: <b>Done</b></div><div class="sec"><h4>หมายเหตุ</h4><ul><li>เคสนี้ทีมแมนนัวพบเอง — <b>ยังไม่มีใน UI test design (case/*/ui.md)</b></li><li>labels: QA-passed</li></ul></div><div class="jira"><h4>🔗 Jira</h4><div class="ji"><a href="https://kitdi.atlassian.net/browse/TI-91">TI-91</a><span class="js done">Done · QA-passed</span> ระบบเล่นเสียงจาก TikTok ขณะไม่ได้เปิดรับชมไลฟ์/วิดีโอ</div></div></div></td></tr>
+      <tr class="trow" onclick="tg(this)"><td><span class="tog">▸</span></td><td class="cid">TI-145</td><td class="ctitle">เสียง TikTok เล่นต่อหลังกลับจากไลฟ์ไป Dashboard</td><td class="lvl"><span class="ac">QA-passed</span></td><td><span class="prio high">HIGH</span></td><td class="status"><span class="stb pass">FIXED</span></td></tr>
+      <tr class="detail"><td colspan="6"><div class="card"><div class="h-title">เสียง TikTok เล่นต่อหลังกลับจากไลฟ์ไป Dashboard</div><div class="h-prio">Bug <b>TI-145</b> · Priority: <b>High</b> · สถานะ Jira: <b>Done</b></div><div class="sec"><h4>หมายเหตุ</h4><ul><li>เคสนี้ทีมแมนนัวพบเอง — <b>ยังไม่มีใน UI test design (case/*/ui.md)</b></li><li>labels: QA-passed</li></ul></div><div class="jira"><h4>🔗 Jira</h4><div class="ji"><a href="https://kitdi.atlassian.net/browse/TI-145">TI-145</a><span class="js done">Done · QA-passed</span> เสียง TikTok เล่นต่อหลังกลับจากไลฟ์ไป Dashboard</div></div></div></td></tr>
+      <tr class="featrow"><td colspan="6">⚙️ Install / update / system <span class="rp">5 bug</span></td></tr>
+      <tr class="trow" onclick="tg(this)"><td><span class="tog">▸</span></td><td class="cid">TI-83</td><td class="ctitle">ปุ่มลูกศรเลื่อน(ดูไลฟ์ถัดไป/ก่อนหน้า)แสดงซ้อนกัน 2 ปุ่ม</td><td class="lvl"></td><td><span class="prio med">MEDIUM</span></td><td class="status"><span class="stb pass">FIXED</span></td></tr>
+      <tr class="detail"><td colspan="6"><div class="card"><div class="h-title">ปุ่มลูกศรเลื่อน(ดูไลฟ์ถัดไป/ก่อนหน้า)แสดงซ้อนกัน 2 ปุ่ม</div><div class="h-prio">Bug <b>TI-83</b> · Priority: <b>Medium</b> · สถานะ Jira: <b>Done</b></div><div class="sec"><h4>หมายเหตุ</h4><ul><li>เคสนี้ทีมแมนนัวพบเอง — <b>ยังไม่มีใน UI test design (case/*/ui.md)</b></li><li>labels: —</li></ul></div><div class="jira"><h4>🔗 Jira</h4><div class="ji"><a href="https://kitdi.atlassian.net/browse/TI-83">TI-83</a><span class="js done">Done</span> ปุ่มลูกศรเลื่อน(ดูไลฟ์ถัดไป/ก่อนหน้า)แสดงซ้อนกัน 2 ปุ่ม</div></div></div></td></tr>
+      <tr class="trow" onclick="tg(this)"><td><span class="tog">▸</span></td><td class="cid">TI-89</td><td class="ctitle">เปลี่ยนโลโก้โปรแกรมเป็นเวอร์ชันล่าสุดที่อนุมัติ</td><td class="lvl"><span class="ac">QA-passed</span></td><td><span class="prio med">MEDIUM</span></td><td class="status"><span class="stb pass">FIXED</span></td></tr>
+      <tr class="detail"><td colspan="6"><div class="card"><div class="h-title">เปลี่ยนโลโก้โปรแกรมเป็นเวอร์ชันล่าสุดที่อนุมัติ</div><div class="h-prio">Bug <b>TI-89</b> · Priority: <b>Medium</b> · สถานะ Jira: <b>Done</b></div><div class="sec"><h4>หมายเหตุ</h4><ul><li>เคสนี้ทีมแมนนัวพบเอง — <b>ยังไม่มีใน UI test design (case/*/ui.md)</b></li><li>labels: QA-passed</li></ul></div><div class="jira"><h4>🔗 Jira</h4><div class="ji"><a href="https://kitdi.atlassian.net/browse/TI-89">TI-89</a><span class="js done">Done · QA-passed</span> เปลี่ยนโลโก้โปรแกรมเป็นเวอร์ชันล่าสุดที่อนุมัติ</div></div></div></td></tr>
+      <tr class="trow" onclick="tg(this)"><td><span class="tog">▸</span></td><td class="cid">TI-93</td><td class="ctitle">ถอนการติดตั้งแล้วติดตั้งใหม่ ดาวน์โหลด Model ไม่ได้</td><td class="lvl"><span class="ac">QA-passed</span></td><td><span class="prio med">MEDIUM</span></td><td class="status"><span class="stb pass">FIXED</span></td></tr>
+      <tr class="detail"><td colspan="6"><div class="card"><div class="h-title">ถอนการติดตั้งแล้วติดตั้งใหม่ ดาวน์โหลด Model ไม่ได้</div><div class="h-prio">Bug <b>TI-93</b> · Priority: <b>Medium</b> · สถานะ Jira: <b>Done</b></div><div class="sec"><h4>หมายเหตุ</h4><ul><li>เคสนี้ทีมแมนนัวพบเอง — <b>ยังไม่มีใน UI test design (case/*/ui.md)</b></li><li>labels: QA-passed</li></ul></div><div class="jira"><h4>🔗 Jira</h4><div class="ji"><a href="https://kitdi.atlassian.net/browse/TI-93">TI-93</a><span class="js done">Done · QA-passed</span> ถอนการติดตั้งแล้วติดตั้งใหม่ ดาวน์โหลด Model ไม่ได้</div></div></div></td></tr>
+      <tr class="trow" onclick="tg(this)"><td><span class="tog">▸</span></td><td class="cid">TI-101</td><td class="ctitle">ปุ่ม "รีสตาร์ท" ใน "รีสตาร์ทเพื่อใช้เวอร์ชันใหม่" กดไม่ได้</td><td class="lvl"><span class="ac">ready-for-QA</span></td><td><span class="prio med">MEDIUM</span></td><td class="status"><span class="stb pass">FIXED</span></td></tr>
+      <tr class="detail"><td colspan="6"><div class="card"><div class="h-title">ปุ่ม "รีสตาร์ท" ใน "รีสตาร์ทเพื่อใช้เวอร์ชันใหม่" กดไม่ได้</div><div class="h-prio">Bug <b>TI-101</b> · Priority: <b>Medium</b> · สถานะ Jira: <b>Done</b></div><div class="sec"><h4>หมายเหตุ</h4><ul><li>เคสนี้ทีมแมนนัวพบเอง — <b>ยังไม่มีใน UI test design (case/*/ui.md)</b></li><li>labels: ready-for-QA</li></ul></div><div class="jira"><h4>🔗 Jira</h4><div class="ji"><a href="https://kitdi.atlassian.net/browse/TI-101">TI-101</a><span class="js done">Done</span> ปุ่ม "รีสตาร์ท" ใน "รีสตาร์ทเพื่อใช้เวอร์ชันใหม่" กดไม่ได้</div></div></div></td></tr>
+      <tr class="trow" onclick="tg(this)"><td><span class="tog">▸</span></td><td class="cid">TI-103</td><td class="ctitle">ต้องรัน xattr -cr ทุกครั้งก่อนเปิดโปรแกร</td><td class="lvl"><span class="ac">QA-passed</span></td><td><span class="prio med">MEDIUM</span></td><td class="status"><span class="stb pass">FIXED</span></td></tr>
+      <tr class="detail"><td colspan="6"><div class="card"><div class="h-title">ต้องรัน xattr -cr ทุกครั้งก่อนเปิดโปรแกร</div><div class="h-prio">Bug <b>TI-103</b> · Priority: <b>Medium</b> · สถานะ Jira: <b>Done</b></div><div class="sec"><h4>หมายเหตุ</h4><ul><li>เคสนี้ทีมแมนนัวพบเอง — <b>ยังไม่มีใน UI test design (case/*/ui.md)</b></li><li>labels: QA-passed</li></ul></div><div class="jira"><h4>🔗 Jira</h4><div class="ji"><a href="https://kitdi.atlassian.net/browse/TI-103">TI-103</a><span class="js done">Done · QA-passed</span> ต้องรัน xattr -cr ทุกครั้งก่อนเปิดโปรแกร</div></div></div></td></tr>
+      <tr class="featrow"><td colspan="6">🌐 Hub (web · นอกแอป desktop) <span class="rp">4 bug</span></td></tr>
+      <tr class="trow" onclick="tg(this)"><td><span class="tog">▸</span></td><td class="cid">TI-172</td><td class="ctitle">[Hub] ช่องรหัสผ่านสมัครสมาชิก: จุด placeholder ค้าง</td><td class="lvl"><span class="ac">hub</span></td><td><span class="prio med">MEDIUM</span></td><td class="status"><span class="stb pass">FIXED</span></td></tr>
+      <tr class="detail"><td colspan="6"><div class="card"><div class="h-title">[Hub] ช่องรหัสผ่านสมัครสมาชิก: จุด placeholder ค้าง</div><div class="h-prio">Bug <b>TI-172</b> · Priority: <b>Medium</b> · สถานะ Jira: <b>Done</b></div><div class="sec"><h4>หมายเหตุ</h4><ul><li>เคสนี้ทีมแมนนัวพบเอง — <b>ยังไม่มีใน UI test design (case/*/ui.md)</b></li><li>labels: hub</li></ul></div><div class="jira"><h4>🔗 Jira</h4><div class="ji"><a href="https://kitdi.atlassian.net/browse/TI-172">TI-172</a><span class="js done">Done</span> [Hub] ช่องรหัสผ่านสมัครสมาชิก: จุด placeholder ค้าง</div></div></div></td></tr>
+      <tr class="trow" onclick="tg(this)"><td><span class="tog">▸</span></td><td class="cid">TI-174</td><td class="ctitle">[Hub] ปิดปุ่ม free trial ของ takra ai/takra rerun ก่อน</td><td class="lvl"><span class="ac">hub</span></td><td><span class="prio med">MEDIUM</span></td><td class="status"><span class="stb pass">FIXED</span></td></tr>
+      <tr class="detail"><td colspan="6"><div class="card"><div class="h-title">[Hub] ปิดปุ่ม free trial ของ takra ai/takra rerun ก่อน</div><div class="h-prio">Bug <b>TI-174</b> · Priority: <b>Medium</b> · สถานะ Jira: <b>Done</b></div><div class="sec"><h4>หมายเหตุ</h4><ul><li>เคสนี้ทีมแมนนัวพบเอง — <b>ยังไม่มีใน UI test design (case/*/ui.md)</b></li><li>labels: hub</li></ul></div><div class="jira"><h4>🔗 Jira</h4><div class="ji"><a href="https://kitdi.atlassian.net/browse/TI-174">TI-174</a><span class="js done">Done</span> [Hub] ปิดปุ่ม free trial ของ takra ai/takra rerun ก่อน</div></div></div></td></tr>
+      <tr class="trow" onclick="tg(this)"><td><span class="tog">▸</span></td><td class="cid">TI-176</td><td class="ctitle">[Hub] สมัครสมาชิกสำเร็จ แต่ไม่ได้รับอีเมลยืนยัน</td><td class="lvl"><span class="ac">hub</span></td><td><span class="prio med">MEDIUM</span></td><td class="status"><span class="stb pass">FIXED</span></td></tr>
+      <tr class="detail"><td colspan="6"><div class="card"><div class="h-title">[Hub] สมัครสมาชิกสำเร็จ แต่ไม่ได้รับอีเมลยืนยัน</div><div class="h-prio">Bug <b>TI-176</b> · Priority: <b>Medium</b> · สถานะ Jira: <b>Done</b></div><div class="sec"><h4>หมายเหตุ</h4><ul><li>เคสนี้ทีมแมนนัวพบเอง — <b>ยังไม่มีใน UI test design (case/*/ui.md)</b></li><li>labels: hub</li></ul></div><div class="jira"><h4>🔗 Jira</h4><div class="ji"><a href="https://kitdi.atlassian.net/browse/TI-176">TI-176</a><span class="js done">Done</span> [Hub] สมัครสมาชิกสำเร็จ แต่ไม่ได้รับอีเมลยืนยัน</div></div></div></td></tr>
+      <tr class="trow" onclick="tg(this)"><td><span class="tog">▸</span></td><td class="cid">TI-178</td><td class="ctitle">[Hub] "ลืมรหัสผ่าน" ไม่ส่งอีเมลรีเซ็ต</td><td class="lvl"><span class="ac">hub</span></td><td><span class="prio med">MEDIUM</span></td><td class="status"><span class="stb pass">FIXED</span></td></tr>
+      <tr class="detail"><td colspan="6"><div class="card"><div class="h-title">[Hub] "ลืมรหัสผ่าน" ไม่ส่งอีเมลรีเซ็ต</div><div class="h-prio">Bug <b>TI-178</b> · Priority: <b>Medium</b> · สถานะ Jira: <b>Done</b></div><div class="sec"><h4>หมายเหตุ</h4><ul><li>เคสนี้ทีมแมนนัวพบเอง — <b>ยังไม่มีใน UI test design (case/*/ui.md)</b></li><li>labels: hub</li></ul></div><div class="jira"><h4>🔗 Jira</h4><div class="ji"><a href="https://kitdi.atlassian.net/browse/TI-178">TI-178</a><span class="js done">Done</span> [Hub] "ลืมรหัสผ่าน" ไม่ส่งอีเมลรีเซ็ต</div></div></div></td></tr>
+    </tbody>
+  </table></div>
+  </div><!-- /pane-manual -->
+
+
+<!-- ===== แท็บ C · MVP 0.5 User Flow Checklist ===== -->
+  <div id="pane-scope" class="tabpane">
+    <div class="tabbar">
+      <button class="tabbtn" data-pane="pane-doc" onclick="showTab(this,'pane-doc')">📋 UI Test Cases (เอกสาร)<span class="n">37</span></button>
+      <button class="tabbtn" data-pane="pane-manual" onclick="showTab(this,'pane-manual')">🐞 เคสทีมแมนนัวพบเอง<span class="n">39</span></button>
+      <button class="tabbtn active" data-pane="pane-scope" onclick="showTab(this,'pane-scope')">🎯 MVP 0.5 Scope</button>
+    </div>
+
+    <div class="runsum">
+      <h3>🎯 MVP 0.5 — User Flow Checklist (ทุก route ใน desktop app)</h3>
+      <div class="hint" style="margin-bottom:10px">ที่มา: <code>mvp-0.5-checklist.md</code> · เรียงตาม user flow จริง · 10 route · Local-only by design · <b>QA = doc-final ทุก feature</b> (103 TC เขียนครบ ยังไม่ execute)</div>
+      <div class="legend">
+        <b>Dev:</b> <span class="stb pass" style="display:inline-block">done</span> <span class="stb hold" style="display:inline-block">done⚠️ / partial</span> <span class="stb block" style="display:inline-block">blocked</span>
+        &nbsp;&nbsp; <b>QA:</b> <span class="stb devdone" style="display:inline-block">doc-final</span> <span class="lv live" style="display:inline-block">live-manual</span> <span class="stb skip" style="display:inline-block">skip</span> <span class="stb pending" style="display:inline-block">—</span>
+      </div>
+    </div>
+
+    <!-- SECTION 1 -->
+    <div style="margin:0 0 6px;font-size:13px;font-weight:700;color:var(--txt)">🚪 1. เข้าระบบ &amp; ตั้งค่าครั้งแรก <span style="color:var(--muted);font-weight:400;font-size:11.5px">(Epic 1–2)</span></div>
+    <div class="tablewrap" style="margin:0 0 6px">
+      <table class="tc">
+        <thead><tr><th>Route</th><th>Story</th><th>FR</th><th>Dev</th><th>QA</th><th>🧪</th><th>หมายเหตุ</th></tr></thead>
+        <tbody>
+          <tr><td class="cid">/login</td><td>2.1</td><td>FR1</td><td><span class="stb pass">done</span></td><td><span class="stb devdone">doc-final</span></td><td><b>15</b></td><td>Login / SSO (OIDC+PKCE · auth.js)</td></tr>
+          <tr><td class="cid">/expired</td><td>1.5</td><td>FR59</td><td><span class="stb pass">done</span></td><td><span class="stb devdone">doc-final</span></td><td><b>13</b></td><td>Entitlement หมดอายุ → gate <code>/verify</code> ต่อ call</td></tr>
+          <tr><td class="cid">/setup</td><td>2.2</td><td>FR2</td><td><span class="stb hold">partial</span></td><td><span class="stb devdone">doc-final</span></td><td>—</td><td>First-run setup + PDPA consent · <span class="req-note">⚠️ consent ยังเป็นข้อความ static · ยังไม่มี checkbox/บันทึก · FR2 เต็มอยู่ใน M1</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="font-size:12px;color:var(--muted);margin:0 0 16px 4px">✅ Login + Entitlement gate = done (FR1/FR59) · creds ไม่ออกเครื่อง</div>
+
+    <!-- SECTION 2 -->
+    <div style="margin:0 0 6px;font-size:13px;font-weight:700;color:var(--txt)">❤️ 2. เลือกช่อง &amp; จับคู่ไลฟ์ <span style="color:var(--muted);font-weight:400;font-size:11.5px">(Epic 2 · 4)</span></div>
+    <div class="tablewrap" style="margin:0 0 6px">
+      <table class="tc">
+        <thead><tr><th>Route</th><th>Story</th><th>FR</th><th>Dev</th><th>QA</th><th>🧪</th><th>หมายเหตุ</th></tr></thead>
+        <tbody>
+          <tr><td class="cid">/dashboard</td><td>5.7</td><td>FR118</td><td><span class="stb pass">done</span></td><td><span class="stb devdone">doc-final</span></td><td><b>8</b></td><td>Dashboard — stat strip + channels/sessions list</td></tr>
+          <tr><td class="cid">/channels</td><td>—</td><td>FR119</td><td><span class="stb hold">partial</span></td><td><span class="stb pending">—</span></td><td>—</td><td>Channel watchlist · CRUD ✅ · follower/live-status = placeholder (TikTok gate fetchRoomInfo)</td></tr>
+          <tr><td class="cid">/session/new</td><td>2.6</td><td>FR7</td><td><span class="stb pass">done</span></td><td><span class="stb devdone">doc-final</span></td><td><b>11</b></td><td>Pairing ไลฟ์ (embedded browser · creds ไม่ออกเครื่อง)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="font-size:12px;color:var(--muted);margin:0 0 16px 4px">✅ Pairing = done (FR7) · 🟡 /channels follower/live-status เป็น placeholder</div>
+
+    <!-- SECTION 3 -->
+    <div style="margin:0 0 6px;font-size:13px;font-weight:700;color:var(--txt)">📡 3. ออกอากาศ &amp; อ่านสัญญาณสด <span style="color:var(--muted);font-weight:400;font-size:11.5px">(Epic 4 · 5 — หัวใจ 0.5)</span></div>
+    <div class="tablewrap" style="margin:0 0 8px">
+      <table class="tc">
+        <thead><tr><th>Route</th><th>Story</th><th>FR</th><th>Dev</th><th>QA</th><th>🧪</th><th>หมายเหตุ</th></tr></thead>
+        <tbody>
+          <tr><td class="cid">/session/recording</td><td>4.1</td><td>FR10</td><td><span class="stb pass">done</span></td><td><span class="stb devdone">doc-final</span></td><td><b>14</b></td><td>จับ comments (TikTok WS + DOM scrape)</td></tr>
+          <tr><td class="cid">/session/recording</td><td>4.1</td><td>FR11</td><td><span class="stb hold">done⚠️</span></td><td><span class="stb devdone">doc-final</span></td><td>(ใน 14)</td><td>จับ engagement · <span class="req-note">⚠️ ขาด new-followers + shares</span></td></tr>
+          <tr><td class="cid">/session/recording</td><td>5.3</td><td>FR22</td><td><span class="stb hold">done⚠️</span></td><td><span class="stb devdone">doc-final</span></td><td><b>29</b></td><td>Emotion ML 4-stage · <span class="req-note">⚠️ label FER+ ดิบ ยังไม่ map Ekman-7</span></td></tr>
+          <tr><td class="cid">/session/recording</td><td>5.6</td><td>FR116/117</td><td><span class="stb hold">done⚠️</span></td><td><span class="stb devdone">doc-final</span></td><td><b>13</b></td><td>Comment-rate + Live Health Score 0–100 · <span class="req-note">⚠️ เคยรวม phantom CTA</span></td></tr>
+          <tr><td class="cid">/session/recording</td><td>5.7</td><td>FR118</td><td><span class="stb pass">done</span></td><td><span class="stb devdone">doc-final</span></td><td><b>8</b></td><td>Live KPIs HUD panel (Quality sub-group · Sales = M1)</td></tr>
+          <tr><td class="cid">/session/recording</td><td>5.3</td><td>FR25</td><td><span class="stb hold">done⚠️</span></td><td><span class="lv live">live-manual</span></td><td>(ใน 29)</td><td>HUD overlay · <span class="req-note">⚠️ ยังโชว์บนวิดีโอ ยังไม่ invisible-to-viewer</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="warnbox" style="margin:0 0 16px">
+      🔴 <b>P0 — FR6/FR13 (PDPA ม.26 blocker):</b> face vector ยังเก็บที่ disk (<code>employees.npz</code> + SQLite plaintext) → ดัก EMO-06 · <b>คาด FAIL</b><br>
+      🟡 <b>P1:</b> FR22-AC1 label FER+ ยังไม่ map Ekman-7 (3 UI TC BLOCKED) · FR25 HUD ยังโชว์ผู้ชม (EMO-LIVE-04 คาด FAIL)<br>
+      🔵 <b>P2:</b> FR11 engagement ขาด follow/share (CAP-04) · FR117 phantom CTA ในสูตร (HS-04)
+    </div>
+
+    <!-- SECTION 4 -->
+    <div style="margin:0 0 6px;font-size:13px;font-weight:700;color:var(--txt)">📁 4. ดูผลย้อนหลัง <span style="color:var(--muted);font-weight:400;font-size:11.5px">(Post-Live · Epic 6)</span></div>
+    <div class="tablewrap" style="margin:0 0 6px">
+      <table class="tc">
+        <thead><tr><th>Route</th><th>Story</th><th>FR</th><th>Dev</th><th>QA</th><th>🧪</th><th>หมายเหตุ</th></tr></thead>
+        <tbody>
+          <tr><td class="cid">/sessions</td><td>6.x</td><td>FR114</td><td><span class="stb pass">done</span></td><td><span class="stb devdone">doc-final</span></td><td>—</td><td>รายการ session ที่อัดไว้ (channel/platform/comments)</td></tr>
+          <tr><td class="cid">/sessions/:id</td><td>6.x</td><td>FR114</td><td><span class="stb hold">partial</span></td><td><span class="stb devdone">doc-final</span></td><td>—</td><td>Post-live summary · engagement/emotion จริง ✅ · AI verdict/transcript/products/intent = mock (<code>SHOW_BLOCKED</code>)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="font-size:12px;color:var(--muted);margin:0 0 16px 4px">🟡 /sessions/:id = partial · FR114 เต็ม = M1+</div>
+
+    <!-- SECTION 5 -->
+    <div style="margin:0 0 6px;font-size:13px;font-weight:700;color:var(--txt)">🛡️ 5. หน้า blocked <span style="color:var(--muted);font-weight:400;font-size:11.5px">(ซ่อนหลัง flag · M1+)</span></div>
+    <div class="tablewrap" style="margin:0 0 16px">
+      <table class="tc">
+        <thead><tr><th>Route</th><th>Story</th><th>FR</th><th>Dev</th><th>QA</th><th>🧪</th><th>หมายเหตุ</th></tr></thead>
+        <tbody>
+          <tr style="background:#f1f3f5;color:var(--muted)"><td class="cid">/avoid-words</td><td>—</td><td>FR22+</td><td><span class="stb block">blocked</span></td><td><span class="stb skip">skip</span></td><td>—</td><td>ซ่อนเมื่อ <code>SHOW_BLOCKED=false</code> → redirect /dashboard · Section C pause decision</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- APPENDIX ML/BE -->
+    <div style="margin:0 0 6px;font-size:13px;font-weight:700;color:var(--txt)">🔧 ภาคผนวก — ML/BE เบื้องหลัง <span style="color:var(--muted);font-weight:400;font-size:11.5px">(ไม่มีหน้า UI แยก · แต่ต้องทดสอบ)</span></div>
+    <div class="tablewrap" style="margin:0 0 8px">
+      <table class="tc">
+        <thead><tr><th>Component</th><th>FR</th><th>Dev</th><th>QA</th><th>หมายเหตุ</th></tr></thead>
+        <tbody>
+          <tr><td>Python ML server (<code>server.py :8765</code>)</td><td>FR22</td><td><span class="stb hold">done⚠️</span></td><td><span class="stb devdone">doc-final</span></td><td>MTCNN→FaceNet→ViT→MediaPipe · sole DB writer</td></tr>
+          <tr><td>① Face Detection</td><td>FR22-AC2</td><td><span class="stb pass">done</span></td><td><span class="stb devdone">doc-final</span></td><td>MTCNN · <code>MIN_FACE=60</code> · detect_mesh_crop fallback</td></tr>
+          <tr><td>② Recognition</td><td>FR22-AC2</td><td><span class="stb hold">done⚠️</span></td><td><span class="stb devdone">doc-final</span></td><td>FaceNet cosine · <code>MATCH_TH=0.6</code> · <span class="req-note">⚠️ primary = bbox ใหญ่สุด (เลือกผิดคนได้ · SEL-NEG)</span></td></tr>
+          <tr><td>③ Emotion ViT (FER+ 7-class)</td><td>FR22-AC2</td><td><span class="stb hold">done⚠️</span></td><td><span class="stb devdone">doc-final</span></td><td><span class="req-note">⚠️ raw label ยังไม่ map Ekman-7 · 3 UI TC BLOCKED รอ D2</span></td></tr>
+          <tr><td>④ Landmarks</td><td>FR22-AC2</td><td><span class="stb pass">done</span></td><td><span class="stb devdone">doc-final</span></td><td>MediaPipe blendshapes · smile/talking/looking/energy v2</td></tr>
+          <tr style="background:#fff8f8"><td>SQLite store (<code>traka.db</code> WAL)</td><td>FR13</td><td><span class="stb hold">done⚠️</span></td><td><span class="stb devdone">doc-final</span></td><td><span style="color:#dc2626;font-weight:700">🔴 P0 — plaintext + face vector at rest (PDPA ม.26)</span></td></tr>
+          <tr><td>Entitlement <code>/verify</code></td><td>FR59</td><td><span class="stb pass">done</span></td><td><span class="stb devdone">doc-final</span></td><td>Hub gate ต่อ call (service-account = M2)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="blockbox" style="margin:0 0 16px">
+      ⚠️ <b>golden fixtures ยังไม่มีไฟล์จริง</b> → automated 12 TC ของ Group A (4-stage ML) = blocked-on-fixtures · ต้องอัดไลฟ์ manual → ตัดเฟรม label ก่อน ถึงจะปลดล็อกได้
+    </div>
+
+    <!-- SUMMARY TABLE -->
+    <div style="margin:0 0 6px;font-size:13px;font-weight:700;color:var(--txt)">📊 สรุปสถานะ Dev vs QA ต่อ epic</div>
+    <div class="tablewrap" style="margin:0 0 16px">
+      <table class="tc">
+        <thead><tr><th>Epic / กลุ่ม</th><th>Dev เสร็จ</th><th>QA ขั้นสูงสุด</th><th>ช่องว่างที่เหลือ</th></tr></thead>
+        <tbody>
+          <tr><td><b>1. เข้าระบบ &amp; ตั้งค่า</b></td><td>2/3 (setup partial)</td><td><span class="stb devdone">doc-final</span></td><td>login/entitlement done · /setup consent ยัง static (FR2 = M1)</td></tr>
+          <tr><td><b>2. ช่อง &amp; จับคู่</b></td><td>2/3 (channels partial)</td><td><span class="stb devdone">doc-final</span></td><td>pairing done · /channels follower/status placeholder</td></tr>
+          <tr style="background:#fffbf0"><td><b>3. ออกอากาศ &amp; สัญญาณสด</b></td><td>8/8 (5 จุด ⚠️)</td><td><span class="stb devdone">doc-final</span> + <span class="lv live">live-manual</span></td><td>demo spine ครบ · <b style="color:#dc2626">5 จุด ⚠️ ไม่ตรง spec</b> (FR6/13 P0 · FR22/25 P1 · FR11/117 P2)</td></tr>
+          <tr><td><b>4. Post-Live</b></td><td>1/2 (detail partial)</td><td><span class="stb devdone">doc-final</span></td><td>summary จริงบางส่วน · AI verdict mock (SHOW_BLOCKED)</td></tr>
+          <tr><td><b>5. หน้า blocked</b></td><td>0/1 (ซ่อน flag)</td><td><span class="stb skip">skip</span></td><td>Section C pause decision (M1+)</td></tr>
+          <tr><td><b>ML/BE (เบื้องหลัง)</b></td><td>7/7 (3 จุด ⚠️)</td><td><span class="stb devdone">doc-final</span></td><td>4-stage pipeline ทำงาน · golden fixtures ยังไม่มี → 12 TC blocked</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="hint" style="margin:0 0 8px 4px">รวม 103 TC (api/integration/ui/fullloop-e2e/live-manual) · Design coverage 100% · Runnable ~76% (ที่เหลือ blocked รอโค้ด/feature/harness)</div>
+
+    <!-- DEFINITION OF DONE -->
+    <div class="req" style="margin-top:16px">
+      <div class="req-head"><h3>🎯 Definition of Done — MVP 0.5</h3></div>
+      <div class="req-grid">
+        <div class="req-cell full">
+          <ul style="list-style:none;padding:0;margin:0;line-height:2">
+            <li>✅ 8 ฟีเจอร์ demo spine ทำงานได้ (login→pair→capture→emotion→score→KPI)</li>
+            <li>✅ Test coverage เขียนครบทุก AC ในขอบเขต (103 TC · doc-final)</li>
+            <li style="color:#dc2626"><span class="prio p0" style="margin-right:6px">P0</span>☐ แก้ FR6/FR13 biometric-at-rest — ลบ face vector ออกจาก disk ก่อน claim PDPA</li>
+            <li style="color:#ea7a18"><span class="prio p1" style="margin-right:6px">P1</span>☐ map Ekman-7 label (FR22-AC1) — 3 UI TC ยัง BLOCKED รอ D2 ship</li>
+            <li style="color:#ea7a18"><span class="prio p1" style="margin-right:6px">P1</span>☐ HUD invisible-to-viewer (FR25) — EMO-LIVE-04 คาด FAIL บน 0.5</li>
+            <li style="color:var(--muted)">☐ รัน test ที่ executable ใน CI ให้เขียว (ตอนนี้เป็น authored ยังไม่ execute · ~76% runnable)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /pane-scope -->
+
+
+</div>
+
+
+<!-- ═══════════════════════ ส่วนที่ 9 · FOOTER ═══════════════════════ -->
+<footer>
+  MVP 0.5 UI Test Cases · 37 เคส (ui 30 + live-manual 7) · 8 features ·
+  ที่มา: _bmad-output/test-artifacts/case/*/ui.md + emotion-read/live-manual.md (design จริง) ·
+  34 รอเทส · 3 BLOCKED (emotion AC1 / D2) · 2 คาด FAIL (EMO-LIVE-04, EMO-LIVE-07)
+</footer>
+
+
+<!-- ═══════════════════════ ส่วนที่ 8 · SCRIPT — tg() กาง/ยุบแถว · toggleAll() กาง/ยุบหมด · showTab() สลับแท็บ ═══════════════════════ -->
+<script>
+  function tg(row){var d=row.nextElementSibling;if(!d||!d.classList.contains('detail'))return;var o=d.classList.toggle('show');row.classList.toggle('open',o);}
+  function toggleAll(open){document.querySelectorAll('tr.detail').forEach(function(d){d.classList.toggle('show',open);var r=d.previousElementSibling;if(r&&r.classList.contains('trow'))r.classList.toggle('open',open);});}
+  function showTab(btn,id){
+    document.querySelectorAll('.tabpane').forEach(function(p){p.classList.toggle('active',p.id===id)});
+    document.querySelectorAll('.tabbtn').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-pane')===id)});
+    window.scrollTo(0,0);
+  }
+  // live summary (อัปเดตเมื่อเลือกผลในแต่ละเคส — เฉพาะแท็บเอกสาร)
+  var SMAP={pass:['pass','PASS'],fail:['fail','FAIL'],hold:['hold','HOLD'],block:['block','BLOCKED']};
+  function recount(){
+    var c={pass:0,fail:0,hold:0,block:0,pending:0};
+    document.querySelectorAll('#pane-doc tr.trow').forEach(function(r){
+      var b=r.querySelector('.stb'); if(!b) return;
+      ['pass','fail','hold','block','pending'].forEach(function(k){ if(b.classList.contains(k)) c[k]++; });
+    });
+    Object.keys(c).forEach(function(k){ var el=document.getElementById('sum-'+k); if(el) el.textContent=c[k]; });
+    var tested=c.pass+c.fail+c.hold+c.block, denom=tested+c.pending, pct=denom?Math.round(tested/denom*100):0;
+    var bar=document.getElementById('sumbar'); if(bar) bar.style.width=pct+'%';
+    var pl=document.getElementById('sumpct'); if(pl) pl.textContent=pct+'% ทดสอบแล้ว ('+tested+'/'+denom+')';
+  }
+  document.querySelectorAll('#pane-doc .statusrow .opt').forEach(function(o){
+    o.addEventListener('click',function(e){
+      e.stopPropagation();
+      o.parentElement.querySelectorAll('.opt').forEach(function(s){s.classList.remove('sel')});
+      o.classList.add('sel');
+      var detail=o.closest('tr.detail');
+      if(detail){var row=detail.previousElementSibling; var stb=row&&row.querySelector('.stb');
+        if(stb){var key=['pass','fail','hold','block'].find(function(k){return o.classList.contains(k)});
+          if(key&&SMAP[key]){stb.className='stb '+SMAP[key][0]; stb.textContent=SMAP[key][1];}}}
+      recount();
+    });
+  });
+  recount();
+</script>
+</body>
+</html>
