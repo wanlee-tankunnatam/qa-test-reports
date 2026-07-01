@@ -3708,15 +3708,34 @@ async function publishToGH(auto) {
     } catch (_) {}
   }
 
-  async function commit(sha) {
+  // Commit content = the LATEST remote file with ONLY its store-data block
+  // swapped for our (merged) results. This makes auto-save a results-only
+  // overlay: a stale tab can never overwrite the repo's structure/layout —
+  // it always publishes on top of whatever structure is currently on GitHub.
+  function buildFromRemote(remote) {
+    try {
+      var remoteHtml = decodeURIComponent(escape(atob((remote.content || '').replace(/\s/g, ''))));
+      if (!/<script id="store-data"[^>]*>[\s\S]*?<\/script>/.test(remoteHtml)) return buildEncoded();
+      var json = '\n' + JSON.stringify(store, null, 2) + '\n';
+      var replaced = remoteHtml.replace(
+        /(<script id="store-data"[^>]*>)[\s\S]*?(<\/script>)/,
+        function(_m, o, c) { return o + json + c; }
+      );
+      return btoa(unescape(encodeURIComponent(replaced)));
+    } catch (_) {
+      return buildEncoded();   // fallback: serialize local DOM
+    }
+  }
+
+  async function commit(remote) {
     var ts = new Date().toISOString().slice(0, 16).replace('T', ' ');
     return fetch(API, {
       method: 'PUT',
       headers: { Authorization: 'token ' + token, Accept: 'application/vnd.github+json', 'Content-Type': 'application/json' },
       body: JSON.stringify({
         message: 'chore(qa): update test results ' + ts,
-        content: buildEncoded(),
-        sha: sha,
+        content: buildFromRemote(remote),
+        sha: remote.sha,
         branch: GH_BRANCH
       })
     });
@@ -3729,7 +3748,7 @@ async function publishToGH(auto) {
     for (var attempt = 0; attempt < 4; attempt++) {
       var remote = await fetchRemote();
       mergeRemote(remote);
-      r2 = await commit(remote.sha);
+      r2 = await commit(remote);
       if (r2.ok) break;
       if (r2.status === 409 || r2.status === 422) {
         lastErr = 'SHA ชนกัน (HTTP ' + r2.status + ')';
