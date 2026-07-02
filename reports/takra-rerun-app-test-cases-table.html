@@ -379,62 +379,97 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
 
     <div style="margin-top:14px;border-top:1px dashed var(--line);padding-top:12px">
       <h3 style="margin:0 0 8px;font-size:13px;color:var(--fail)">🚨 เคสที่ต้องแก้ไขด่วน — เรียงจากด่วนสุด → เบาสุด</h3>
-      <div style="font-size:11.5px;color:var(--muted);margin-bottom:12px">ฝั่งซ้าย = การ์ด test case ในไฟล์นี้ · ฝั่งขวา = การ์ดตั๋ว Jira ที่เกี่ยวข้อง (<a href="https://kitdi.atlassian.net/browse/TAK-1" target="_blank" rel="noopener" style="color:var(--accent)">TAK-1</a>) · FAIL 9 · HOLD 1</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px 14px;align-items:stretch">
-        <div style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.3px;color:var(--muted);padding:0 4px">⬅️ Test Case (ในไฟล์)</div>
-        <div style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.3px;color:var(--muted);padding:0 4px">Jira (TAK) ➡️</div>
-        <div style="border:1.5px solid #c3cad6;border-left:5px solid var(--p0);border-radius:10px;background:#fff;padding:10px 14px;box-shadow:0 1px 3px rgba(15,23,42,.08)">
-          <div style="font-size:12.5px"><span style="font-weight:800;color:var(--p0)">🔴 1 · P0</span> &nbsp; <b>TC-E2E.1</b> <span style="color:var(--muted);font-family:monospace;font-size:10px">tc-37</span></div>
-          <div style="color:var(--muted);font-size:11.5px;margin-top:3px">Full flow หลักรวมทุกอย่างในไลฟ์เดียว — พังทั้งเส้น</div>
+      <div style="font-size:11.5px;color:var(--muted);margin-bottom:12px">2 ลิสต์แยกอิสระ (ไม่จับคู่แถวต่อแถว) — <b>ซ้าย</b>: test case ที่ต้องแก้ตามผลเทสในไฟล์นี้ · <b>ขวา</b>: บั๊กใน Jira (<a href="https://kitdi.atlassian.net/browse/TAK-1" target="_blank" rel="noopener" style="color:var(--accent)">TAK-1</a>) เรียงตาม priority ของ Jira เอง</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start">
+        <div>
+          <div style="font-size:11px;font-weight:800;margin:0 0 8px;padding-bottom:5px;border-bottom:2px solid var(--line);color:var(--txt)">🧪 Test case ที่ต้องแก้ด่วน (จากผลเทส)</div>
+          <div style="border:1.5px solid #c3cad6;border-left:5px solid var(--p0);border-radius:10px;background:#fff;padding:10px 14px;box-shadow:0 1px 3px rgba(15,23,42,.08);margin-bottom:8px">
+            <div style="font-size:12.5px"><span style="font-weight:800;color:var(--p0)">🔴 1</span> &nbsp; <b>TC-E2E.1</b> <span style="color:var(--muted);font-family:monospace;font-size:10px">tc-37</span></div>
+            <div style="color:var(--muted);font-size:11.5px;margin-top:3px">Full flow หลักรวมทุกอย่างในไลฟ์เดียว — พังทั้งเส้น</div>
+          </div>
+          <div style="border:1.5px solid #c3cad6;border-left:5px solid var(--p0);border-radius:10px;background:#fff;padding:10px 14px;box-shadow:0 1px 3px rgba(15,23,42,.08);margin-bottom:8px">
+            <div style="font-size:12.5px"><span style="font-weight:800;color:var(--p0)">🔴 2</span> &nbsp; <b>TC-GV.1</b> <span style="color:var(--muted);font-family:monospace;font-size:10px">tc-18</span></div>
+            <div style="color:var(--muted);font-size:11.5px;margin-top:3px">ฐาน GMV: push shop cookie → แสดงยอดขาย</div>
+          </div>
+          <div style="border:1.5px solid #c3cad6;border-left:5px solid var(--p0);border-radius:10px;background:#fff;padding:10px 14px;box-shadow:0 1px 3px rgba(15,23,42,.08);margin-bottom:8px">
+            <div style="font-size:12.5px"><span style="font-weight:800;color:var(--p0)">🔴 3</span> &nbsp; <b>TC-PUR.1</b> <span style="color:var(--muted);font-family:monospace;font-size:10px">tc-60</span></div>
+            <div style="color:var(--muted);font-size:11.5px;margin-top:3px">Full Purchase Flow: ซื้อสำเร็จ → GMV อัพเดท</div>
+          </div>
+          <div style="border:1.5px solid #c3cad6;border-left:5px solid var(--hold);border-radius:10px;background:#fff;padding:10px 14px;box-shadow:0 1px 3px rgba(15,23,42,.08);margin-bottom:8px">
+            <div style="font-size:12.5px"><span style="font-weight:800;color:var(--hold)">🔴 4</span> &nbsp; <b>TC-LS.2</b> <span style="color:var(--muted);font-family:monospace;font-size:10px">tc-50</span></div>
+            <div style="color:var(--muted);font-size:11.5px;margin-top:3px">เลือก category → persist · HOLD</div>
+          </div>
+          <div style="border:1.5px solid #c3cad6;border-left:5px solid var(--p1);border-radius:10px;background:#fff;padding:10px 14px;box-shadow:0 1px 3px rgba(15,23,42,.08);margin-bottom:8px">
+            <div style="font-size:12.5px"><span style="font-weight:800;color:var(--p1)">🟠 5</span> &nbsp; <b>TC-GV.3</b> <span style="color:var(--muted);font-family:monospace;font-size:10px">tc-20</span></div>
+            <div style="color:var(--muted);font-size:11.5px;margin-top:3px">GMV อัพเดทอัตโนมัติ ~30s</div>
+          </div>
+          <div style="border:1.5px solid #c3cad6;border-left:5px solid var(--p1);border-radius:10px;background:#fff;padding:10px 14px;box-shadow:0 1px 3px rgba(15,23,42,.08);margin-bottom:8px">
+            <div style="font-size:12.5px"><span style="font-weight:800;color:var(--p1)">🟠 6</span> &nbsp; <b>TC-GV.2</b> <span style="color:var(--muted);font-family:monospace;font-size:10px">tc-19</span></div>
+            <div style="color:var(--muted);font-size:11.5px;margin-top:3px">GMV panel แสดง top products</div>
+          </div>
+          <div style="border:1.5px solid #c3cad6;border-left:5px solid var(--p1);border-radius:10px;background:#fff;padding:10px 14px;box-shadow:0 1px 3px rgba(15,23,42,.08);margin-bottom:8px">
+            <div style="font-size:12.5px"><span style="font-weight:800;color:var(--p1)">🟠 7</span> &nbsp; <b>TC-PUR.5</b> <span style="color:var(--muted);font-family:monospace;font-size:10px">tc-68</span></div>
+            <div style="color:var(--muted);font-size:11.5px;margin-top:3px">ลูกค้าซื้อ → operator reply ปรากฏใน live</div>
+          </div>
+          <div style="border:1.5px solid #c3cad6;border-left:5px solid var(--p1);border-radius:10px;background:#fff;padding:10px 14px;box-shadow:0 1px 3px rgba(15,23,42,.08);margin-bottom:8px">
+            <div style="font-size:12.5px"><span style="font-weight:800;color:var(--p1)">🟠 8</span> &nbsp; <b>TC-EC.2</b> <span style="color:var(--muted);font-family:monospace;font-size:10px">tc-62</span></div>
+            <div style="color:var(--muted);font-size:11.5px;margin-top:3px">Network ดับ 30s → recover</div>
+          </div>
+          <div style="border:1.5px solid #c3cad6;border-left:5px solid var(--p1);border-radius:10px;background:#fff;padding:10px 14px;box-shadow:0 1px 3px rgba(15,23,42,.08);margin-bottom:8px">
+            <div style="font-size:12.5px"><span style="font-weight:800;color:var(--p1)">🟠 9</span> &nbsp; <b>TC-EC.1</b> <span style="color:var(--muted);font-family:monospace;font-size:10px">tc-61</span></div>
+            <div style="color:var(--muted);font-size:11.5px;margin-top:3px">2 account live พร้อมกันไม่ปนกัน</div>
+          </div>
+          <div style="border:1.5px solid #c3cad6;border-left:5px solid var(--skip);border-radius:10px;background:#fff;padding:10px 14px;box-shadow:0 1px 3px rgba(15,23,42,.08);margin-bottom:8px">
+            <div style="font-size:12.5px"><span style="font-weight:800;color:var(--skip)">🟡 10</span> &nbsp; <b>TC-AC.2</b> <span style="color:var(--muted);font-family:monospace;font-size:10px">tc-71</span></div>
+            <div style="color:var(--muted);font-size:11.5px;margin-top:3px">Control Room empty state</div>
+          </div>
         </div>
-        <div style="display:flex;flex-direction:column;justify-content:center;border:1.5px solid #c3cad6;border-left:5px solid var(--p0);border-radius:10px;background:var(--card2);padding:10px 14px;box-shadow:0 1px 3px rgba(15,23,42,.08)"><a href="https://kitdi.atlassian.net/browse/TAK-150" target="_blank" rel="noopener" style="font-family:monospace;font-weight:800;font-size:13px;color:var(--accent);text-decoration:none">TAK-150</a><span style="color:var(--muted);font-size:10.5px;margin-top:3px">ต้นเหตุ GMV (cascade)</span></div>
-        <div style="border:1.5px solid #c3cad6;border-left:5px solid var(--p0);border-radius:10px;background:#fff;padding:10px 14px;box-shadow:0 1px 3px rgba(15,23,42,.08)">
-          <div style="font-size:12.5px"><span style="font-weight:800;color:var(--p0)">🔴 2 · P0</span> &nbsp; <b>TC-GV.1</b> <span style="color:var(--muted);font-family:monospace;font-size:10px">tc-18</span></div>
-          <div style="color:var(--muted);font-size:11.5px;margin-top:3px">ฐาน GMV: push shop cookie → แสดงยอดขาย</div>
+        <div>
+          <div style="font-size:11px;font-weight:800;margin:0 0 8px;padding-bottom:5px;border-bottom:2px solid var(--line);color:var(--txt)">🐞 Bug ด่วนใน Jira (TAK)</div>
+          <div style="border:1.5px solid #c3cad6;border-left:5px solid var(--p0);border-radius:10px;background:var(--card2);padding:10px 14px;box-shadow:0 1px 3px rgba(15,23,42,.08);margin-bottom:8px">
+            <div style="font-size:12.5px"><a href="https://kitdi.atlassian.net/browse/TAK-144" target="_blank" rel="noopener" style="font-family:monospace;font-weight:800;color:var(--accent);text-decoration:none">TAK-144</a> <span style="font-weight:700;font-size:9.5px;color:var(--p0);border:1px solid var(--p0);border-radius:4px;padding:1px 5px;margin-left:4px">Highest</span></div>
+            <div style="color:var(--muted);font-size:11.5px;margin-top:3px">UI หยุดไลฟ์หลังเน็ตกลับ ทั้งที่ TikTok ยังไลฟ์</div>
+          </div>
+          <div style="border:1.5px solid #c3cad6;border-left:5px solid var(--p0);border-radius:10px;background:var(--card2);padding:10px 14px;box-shadow:0 1px 3px rgba(15,23,42,.08);margin-bottom:8px">
+            <div style="font-size:12.5px"><a href="https://kitdi.atlassian.net/browse/TAK-142" target="_blank" rel="noopener" style="font-family:monospace;font-weight:800;color:var(--accent);text-decoration:none">TAK-142</a> <span style="font-weight:700;font-size:9.5px;color:var(--p0);border:1px solid var(--p0);border-radius:4px;padding:1px 5px;margin-left:4px">Highest</span></div>
+            <div style="color:var(--muted);font-size:11.5px;margin-top:3px">เริ่มไลฟ์ช่องเดียวจากหลายเครื่อง → สถานะทับซ้อน</div>
+          </div>
+          <div style="border:1.5px solid #c3cad6;border-left:5px solid var(--p0);border-radius:10px;background:var(--card2);padding:10px 14px;box-shadow:0 1px 3px rgba(15,23,42,.08);margin-bottom:8px">
+            <div style="font-size:12.5px"><a href="https://kitdi.atlassian.net/browse/TAK-112" target="_blank" rel="noopener" style="font-family:monospace;font-weight:800;color:var(--accent);text-decoration:none">TAK-112</a> <span style="font-weight:700;font-size:9.5px;color:var(--p0);border:1px solid var(--p0);border-radius:4px;padding:1px 5px;margin-left:4px">Highest</span></div>
+            <div style="color:var(--muted);font-size:11.5px;margin-top:3px">สมัครบัญชีใหม่ แต่แสดงแพ็กเกจหมดอายุทันที</div>
+          </div>
+          <div style="border:1.5px solid #c3cad6;border-left:5px solid var(--p1);border-radius:10px;background:var(--card2);padding:10px 14px;box-shadow:0 1px 3px rgba(15,23,42,.08);margin-bottom:8px">
+            <div style="font-size:12.5px"><a href="https://kitdi.atlassian.net/browse/TAK-150" target="_blank" rel="noopener" style="font-family:monospace;font-weight:800;color:var(--accent);text-decoration:none">TAK-150</a> <span style="font-weight:700;font-size:9.5px;color:var(--p1);border:1px solid var(--p1);border-radius:4px;padding:1px 5px;margin-left:4px">High · In Progress</span></div>
+            <div style="color:var(--muted);font-size:11.5px;margin-top:3px">GMV / อิโมจิ / ประวัติแชท แสดงผลไม่ถูกต้อง</div>
+          </div>
+          <div style="border:1.5px solid #c3cad6;border-left:5px solid var(--p1);border-radius:10px;background:var(--card2);padding:10px 14px;box-shadow:0 1px 3px rgba(15,23,42,.08);margin-bottom:8px">
+            <div style="font-size:12.5px"><a href="https://kitdi.atlassian.net/browse/TAK-145" target="_blank" rel="noopener" style="font-family:monospace;font-weight:800;color:var(--accent);text-decoration:none">TAK-145</a> <span style="font-weight:700;font-size:9.5px;color:var(--p1);border:1px solid var(--p1);border-radius:4px;padding:1px 5px;margin-left:4px">High</span></div>
+            <div style="color:var(--muted);font-size:11.5px;margin-top:3px">ดึงสินค้าชุดใหม่ไม่ครบ + รีเซ็ตการเลือก</div>
+          </div>
+          <div style="border:1.5px solid #c3cad6;border-left:5px solid var(--p1);border-radius:10px;background:var(--card2);padding:10px 14px;box-shadow:0 1px 3px rgba(15,23,42,.08);margin-bottom:8px">
+            <div style="font-size:12.5px"><a href="https://kitdi.atlassian.net/browse/TAK-141" target="_blank" rel="noopener" style="font-family:monospace;font-weight:800;color:var(--accent);text-decoration:none">TAK-141</a> <span style="font-weight:700;font-size:9.5px;color:var(--p1);border:1px solid var(--p1);border-radius:4px;padding:1px 5px;margin-left:4px">High</span></div>
+            <div style="color:var(--muted);font-size:11.5px;margin-top:3px">สแกน QR สำเร็จ แต่ Rerun ไม่เข้าสู่ระบบอัตโนมัติ</div>
+          </div>
+          <div style="border:1.5px solid #c3cad6;border-left:5px solid var(--p1);border-radius:10px;background:var(--card2);padding:10px 14px;box-shadow:0 1px 3px rgba(15,23,42,.08);margin-bottom:8px">
+            <div style="font-size:12.5px"><a href="https://kitdi.atlassian.net/browse/TAK-126" target="_blank" rel="noopener" style="font-family:monospace;font-weight:800;color:var(--accent);text-decoration:none">TAK-126</a> <span style="font-weight:700;font-size:9.5px;color:var(--p1);border:1px solid var(--p1);border-radius:4px;padding:1px 5px;margin-left:4px">High</span></div>
+            <div style="color:var(--muted);font-size:11.5px;margin-top:3px">delete guard — ห้ามลบบัญชีตอนไลฟ์/AUTO</div>
+          </div>
+          <div style="border:1.5px solid #c3cad6;border-left:5px solid var(--p1);border-radius:10px;background:var(--card2);padding:10px 14px;box-shadow:0 1px 3px rgba(15,23,42,.08);margin-bottom:8px">
+            <div style="font-size:12.5px"><a href="https://kitdi.atlassian.net/browse/TAK-110" target="_blank" rel="noopener" style="font-family:monospace;font-weight:800;color:var(--accent);text-decoration:none">TAK-110</a> <span style="font-weight:700;font-size:9.5px;color:var(--p1);border:1px solid var(--p1);border-radius:4px;padding:1px 5px;margin-left:4px">High</span></div>
+            <div style="color:var(--muted);font-size:11.5px;margin-top:3px">พื้นที่ดิสก์แสดงข้อมูลรวม ไม่ใช่ร้านปัจจุบัน</div>
+          </div>
+          <div style="border:1.5px solid #c3cad6;border-left:5px solid var(--p1);border-radius:10px;background:var(--card2);padding:10px 14px;box-shadow:0 1px 3px rgba(15,23,42,.08);margin-bottom:8px">
+            <div style="font-size:12.5px"><a href="https://kitdi.atlassian.net/browse/TAK-107" target="_blank" rel="noopener" style="font-family:monospace;font-weight:800;color:var(--accent);text-decoration:none">TAK-107</a> <span style="font-weight:700;font-size:9.5px;color:var(--p1);border:1px solid var(--p1);border-radius:4px;padding:1px 5px;margin-left:4px">High</span></div>
+            <div style="color:var(--muted);font-size:11.5px;margin-top:3px">Audit Log แสดงผู้ดำเนินการเป็น 'ระบบ'</div>
+          </div>
+          <div style="border:1.5px solid #c3cad6;border-left:5px solid var(--p1);border-radius:10px;background:var(--card2);padding:10px 14px;box-shadow:0 1px 3px rgba(15,23,42,.08);margin-bottom:8px">
+            <div style="font-size:12.5px"><a href="https://kitdi.atlassian.net/browse/TAK-104" target="_blank" rel="noopener" style="font-family:monospace;font-weight:800;color:var(--accent);text-decoration:none">TAK-104</a> <span style="font-weight:700;font-size:9.5px;color:var(--p1);border:1px solid var(--p1);border-radius:4px;padding:1px 5px;margin-left:4px">High</span></div>
+            <div style="color:var(--muted);font-size:11.5px;margin-top:3px">แพ็กเกจหมดอายุ → จัดการบัญชี/วิดีโอไม่ได้ (403)</div>
+          </div>
+          <div style="font-size:10.5px;color:var(--muted);margin-top:2px">+ อีก 8 ใบ (Medium/Low) — ดูในคอลัมน์ Jira ของตารางด้านล่าง</div>
         </div>
-        <div style="display:flex;flex-direction:column;justify-content:center;border:1.5px solid #c3cad6;border-left:5px solid var(--p0);border-radius:10px;background:var(--card2);padding:10px 14px;box-shadow:0 1px 3px rgba(15,23,42,.08)"><a href="https://kitdi.atlassian.net/browse/TAK-150" target="_blank" rel="noopener" style="font-family:monospace;font-weight:800;font-size:13px;color:var(--accent);text-decoration:none">TAK-150</a><span style="color:var(--muted);font-size:10.5px;margin-top:3px">GMV แสดงผลไม่ถูกต้อง</span></div>
-        <div style="border:1.5px solid #c3cad6;border-left:5px solid var(--p0);border-radius:10px;background:#fff;padding:10px 14px;box-shadow:0 1px 3px rgba(15,23,42,.08)">
-          <div style="font-size:12.5px"><span style="font-weight:800;color:var(--p0)">🔴 3 · P0</span> &nbsp; <b>TC-PUR.1</b> <span style="color:var(--muted);font-family:monospace;font-size:10px">tc-60</span></div>
-          <div style="color:var(--muted);font-size:11.5px;margin-top:3px">Full Purchase Flow: ซื้อสำเร็จ → GMV อัพเดท</div>
-        </div>
-        <div style="display:flex;flex-direction:column;justify-content:center;border:1.5px solid #c3cad6;border-left:5px solid var(--p0);border-radius:10px;background:var(--card2);padding:10px 14px;box-shadow:0 1px 3px rgba(15,23,42,.08)"><a href="https://kitdi.atlassian.net/browse/TAK-150" target="_blank" rel="noopener" style="font-family:monospace;font-weight:800;font-size:13px;color:var(--accent);text-decoration:none">TAK-150</a><span style="color:var(--muted);font-size:10.5px;margin-top:3px">GMV (cascade)</span></div>
-        <div style="border:1.5px solid #c3cad6;border-left:5px solid var(--hold);border-radius:10px;background:#fff;padding:10px 14px;box-shadow:0 1px 3px rgba(15,23,42,.08)">
-          <div style="font-size:12.5px"><span style="font-weight:800;color:var(--hold)">🔴 4 · P0</span> &nbsp; <b>TC-LS.2</b> <span style="color:var(--muted);font-family:monospace;font-size:10px">tc-50</span></div>
-          <div style="color:var(--muted);font-size:11.5px;margin-top:3px">เลือก category → persist · <b style='color:var(--hold)'>HOLD</b></div>
-        </div>
-        <div style="display:flex;flex-direction:column;justify-content:center;border:1.5px solid #c3cad6;border-left:5px solid var(--line);border-radius:10px;background:var(--card2);padding:10px 14px;box-shadow:0 1px 3px rgba(15,23,42,.08)"><span style="color:var(--muted);font-size:11.5px">— ยังไม่มีตั๋ว</span><span style="color:var(--muted);font-size:10.5px;margin-top:3px">ตามให้เทสจบก่อน</span></div>
-        <div style="border:1.5px solid #c3cad6;border-left:5px solid var(--p1);border-radius:10px;background:#fff;padding:10px 14px;box-shadow:0 1px 3px rgba(15,23,42,.08)">
-          <div style="font-size:12.5px"><span style="font-weight:800;color:var(--p1)">🟠 5 · P1</span> &nbsp; <b>TC-GV.3</b> <span style="color:var(--muted);font-family:monospace;font-size:10px">tc-20</span></div>
-          <div style="color:var(--muted);font-size:11.5px;margin-top:3px">GMV อัพเดทอัตโนมัติ ~30s</div>
-        </div>
-        <div style="display:flex;flex-direction:column;justify-content:center;border:1.5px solid #c3cad6;border-left:5px solid var(--p1);border-radius:10px;background:var(--card2);padding:10px 14px;box-shadow:0 1px 3px rgba(15,23,42,.08)"><a href="https://kitdi.atlassian.net/browse/TAK-150" target="_blank" rel="noopener" style="font-family:monospace;font-weight:800;font-size:13px;color:var(--accent);text-decoration:none">TAK-150</a><span style="color:var(--muted);font-size:10.5px;margin-top:3px">cluster เดียวกับ GV.1</span></div>
-        <div style="border:1.5px solid #c3cad6;border-left:5px solid var(--p1);border-radius:10px;background:#fff;padding:10px 14px;box-shadow:0 1px 3px rgba(15,23,42,.08)">
-          <div style="font-size:12.5px"><span style="font-weight:800;color:var(--p1)">🟠 6 · P1</span> &nbsp; <b>TC-GV.2</b> <span style="color:var(--muted);font-family:monospace;font-size:10px">tc-19</span></div>
-          <div style="color:var(--muted);font-size:11.5px;margin-top:3px">GMV panel แสดง top products</div>
-        </div>
-        <div style="display:flex;flex-direction:column;justify-content:center;border:1.5px solid #c3cad6;border-left:5px solid var(--p1);border-radius:10px;background:var(--card2);padding:10px 14px;box-shadow:0 1px 3px rgba(15,23,42,.08)"><a href="https://kitdi.atlassian.net/browse/TAK-150" target="_blank" rel="noopener" style="font-family:monospace;font-weight:800;font-size:13px;color:var(--accent);text-decoration:none">TAK-150</a><span style="color:var(--muted);font-size:10.5px;margin-top:3px">cluster เดียวกับ GV.1</span></div>
-        <div style="border:1.5px solid #c3cad6;border-left:5px solid var(--p1);border-radius:10px;background:#fff;padding:10px 14px;box-shadow:0 1px 3px rgba(15,23,42,.08)">
-          <div style="font-size:12.5px"><span style="font-weight:800;color:var(--p1)">🟠 7 · P1</span> &nbsp; <b>TC-PUR.5</b> <span style="color:var(--muted);font-family:monospace;font-size:10px">tc-68</span></div>
-          <div style="color:var(--muted);font-size:11.5px;margin-top:3px">ลูกค้าซื้อ → operator reply ปรากฏใน live</div>
-        </div>
-        <div style="display:flex;flex-direction:column;justify-content:center;border:1.5px solid #c3cad6;border-left:5px solid var(--line);border-radius:10px;background:var(--card2);padding:10px 14px;box-shadow:0 1px 3px rgba(15,23,42,.08)"><span style="color:var(--muted);font-size:11.5px">— ยังไม่มีตั๋ว</span><span style="color:var(--muted);font-size:10.5px;margin-top:3px">ยังไม่มีตั๋ว</span></div>
-        <div style="border:1.5px solid #c3cad6;border-left:5px solid var(--p1);border-radius:10px;background:#fff;padding:10px 14px;box-shadow:0 1px 3px rgba(15,23,42,.08)">
-          <div style="font-size:12.5px"><span style="font-weight:800;color:var(--p1)">🟠 8 · P1</span> &nbsp; <b>TC-EC.2</b> <span style="color:var(--muted);font-family:monospace;font-size:10px">tc-62</span></div>
-          <div style="color:var(--muted);font-size:11.5px;margin-top:3px">Network ดับ 30s → recover</div>
-        </div>
-        <div style="display:flex;flex-direction:column;justify-content:center;border:1.5px solid #c3cad6;border-left:5px solid var(--p1);border-radius:10px;background:var(--card2);padding:10px 14px;box-shadow:0 1px 3px rgba(15,23,42,.08)"><a href="https://kitdi.atlassian.net/browse/TAK-144" target="_blank" rel="noopener" style="font-family:monospace;font-weight:800;font-size:13px;color:var(--accent);text-decoration:none">TAK-144</a><span style="color:var(--muted);font-size:10.5px;margin-top:3px">UI หยุดไลฟ์หลังเน็ตกลับ · Highest</span></div>
-        <div style="border:1.5px solid #c3cad6;border-left:5px solid var(--p1);border-radius:10px;background:#fff;padding:10px 14px;box-shadow:0 1px 3px rgba(15,23,42,.08)">
-          <div style="font-size:12.5px"><span style="font-weight:800;color:var(--p1)">🟠 9 · P1</span> &nbsp; <b>TC-EC.1</b> <span style="color:var(--muted);font-family:monospace;font-size:10px">tc-61</span></div>
-          <div style="color:var(--muted);font-size:11.5px;margin-top:3px">2 account live พร้อมกันไม่ปนกัน</div>
-        </div>
-        <div style="display:flex;flex-direction:column;justify-content:center;border:1.5px solid #c3cad6;border-left:5px solid var(--p1);border-radius:10px;background:var(--card2);padding:10px 14px;box-shadow:0 1px 3px rgba(15,23,42,.08)"><a href="https://kitdi.atlassian.net/browse/TAK-142" target="_blank" rel="noopener" style="font-family:monospace;font-weight:800;font-size:13px;color:var(--accent);text-decoration:none">TAK-142</a><span style="color:var(--muted);font-size:10.5px;margin-top:3px">ไลฟ์ช่องเดียวหลายเครื่อง · Highest</span></div>
-        <div style="border:1.5px solid #c3cad6;border-left:5px solid var(--skip);border-radius:10px;background:#fff;padding:10px 14px;box-shadow:0 1px 3px rgba(15,23,42,.08)">
-          <div style="font-size:12.5px"><span style="font-weight:800;color:var(--skip)">🟡 10 · P1</span> &nbsp; <b>TC-AC.2</b> <span style="color:var(--muted);font-family:monospace;font-size:10px">tc-71</span></div>
-          <div style="color:var(--muted);font-size:11.5px;margin-top:3px">Control Room empty state</div>
-        </div>
-        <div style="display:flex;flex-direction:column;justify-content:center;border:1.5px solid #c3cad6;border-left:5px solid var(--skip);border-radius:10px;background:var(--card2);padding:10px 14px;box-shadow:0 1px 3px rgba(15,23,42,.08)"><a href="https://kitdi.atlassian.net/browse/TAK-146" target="_blank" rel="noopener" style="font-family:monospace;font-weight:800;font-size:13px;color:var(--accent);text-decoration:none">TAK-146</a><span style="color:var(--muted);font-size:10.5px;margin-top:3px">empty state ไม่สอดคล้อง</span></div>
       </div>
-      <div class="note-box" style="margin:12px 0 0">💡 <b>ข้อเสนอ:</b> เจาะ <b>TC-GV.1 → TAK-150</b> ก่อน (ต้นเหตุที่ลาก GMV cluster + full flow พังตาม) แล้วรันซ้ำ E2E.1/PUR.1 — มีโอกาสสูงหลายเคสเขียวพร้อมกัน</div>
+      <div class="note-box" style="margin:12px 0 0">💡 <b>ข้อเสนอ:</b> ฝั่ง QA เริ่มที่ <b>TC-GV.1</b> (ต้นเหตุ GMV cascade) · ฝั่ง Dev บั๊กที่ควรปิดก่อนคือ <b>TAK-144 / TAK-142</b> (Highest)</div>
     </div>
   </div>
 
