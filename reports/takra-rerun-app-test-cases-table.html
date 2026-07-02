@@ -375,6 +375,35 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
     </div>
     <div class="progress"><div id="sumbar" class="progressbar" style="width: 36%;"></div></div>
     <div class="hint" id="sumpct" style="margin-top:5px">36% ทดสอบแล้ว (25/69)</div>
+
+    <div style="margin-top:14px;border-top:1px dashed var(--line);padding-top:12px">
+      <h3 style="margin:0 0 8px;font-size:13px;color:var(--fail)">🚨 เคสที่ต้องแก้ไขด่วน — เรียงจากด่วนสุด → เบาสุด</h3>
+      <div style="font-size:11.5px;color:var(--muted);margin-bottom:10px">FAIL 9 · HOLD 1 · น่าจะมาจาก 2 ต้นเหตุร่วม (GMV cluster + Full-flow cluster) ไม่ใช่ 9 บั๊กแยกกัน</div>
+
+      <div style="font-size:11px;font-weight:800;color:var(--p0);margin:0 0 4px">🔴 P0 — แก้ก่อน (blocker ปล่อยไม่ได้)</div>
+      <ol style="margin:0 0 10px;padding-left:20px;font-size:12.5px">
+        <li style="margin:3px 0"><b>TC-E2E.1</b> (tc-37) · E2E — Full flow หลักรวมทุกอย่างในไลฟ์เดียวพังทั้งเส้น <span style="color:var(--muted)">→ blast radius กว้างสุด</span></li>
+        <li style="margin:3px 0"><b>TC-GV.1</b> (tc-18) · E2E — ฐานฟีเจอร์ GMV (push shop cookie→แสดงยอด) <span style="color:var(--muted)">→ น่าจะเป็นต้นเหตุที่ลาก GV.2/GV.3 + purchase flow พังตาม</span></li>
+        <li style="margin:3px 0"><b>TC-PUR.1</b> (tc-60) · E2E — Full Purchase Flow: ซื้อสำเร็จ→GMV อัพเดท <span style="color:var(--muted)">→ เส้นทางรายได้ กระทบยอดขายจริง</span></li>
+        <li style="margin:3px 0"><b>TC-LS.2</b> (tc-50) · UI · <span style="color:var(--hold);font-weight:700">HOLD</span> — เลือก category→persist <span style="color:var(--muted)">→ P0 แต่ยังค้าง HOLD ต้องตามให้เทสจบ ไม่ใช่แก้โค้ดทันที</span></li>
+      </ol>
+
+      <div style="font-size:11px;font-weight:800;color:var(--p1);margin:0 0 4px">🟠 P1 — แก้ตามหลัง</div>
+      <ol start="5" style="margin:0 0 10px;padding-left:20px;font-size:12.5px">
+        <li style="margin:3px 0"><b>TC-GV.3</b> (tc-20) · E2E — GMV อัพเดทอัตโนมัติ ~30s <span style="color:var(--muted)">→ cluster เดียวกับ GV.1</span></li>
+        <li style="margin:3px 0"><b>TC-GV.2</b> (tc-19) · UI — GMV panel แสดง top products <span style="color:var(--muted)">→ น่าจะหายพร้อม GV.1</span></li>
+        <li style="margin:3px 0"><b>TC-PUR.5</b> (tc-68) · E2E — ลูกค้าซื้อ→operator reply "ขอบคุณ" ปรากฏใน live</li>
+        <li style="margin:3px 0"><b>TC-EC.2</b> (tc-62) · E2E — Network ดับ 30s→recover <span style="color:var(--muted)">→ edge case แต่เกิดบ่อยตอนไลฟ์จริง</span></li>
+        <li style="margin:3px 0"><b>TC-EC.1</b> (tc-61) · E2E — 2 account live พร้อมกันไม่ปนกัน <span style="color:var(--muted)">→ edge case ความถี่ต่ำกว่า</span></li>
+      </ol>
+
+      <div style="font-size:11px;font-weight:800;color:var(--skip);margin:0 0 4px">🟡 เบาสุด</div>
+      <ol start="10" style="margin:0;padding-left:20px;font-size:12.5px">
+        <li style="margin:3px 0"><b>TC-AC.2</b> (tc-71) · UI — Control Room empty state "ยังไม่มีบัญชี TikTok" <span style="color:var(--muted)">→ UI ล้วน ไม่กระทบไลฟ์ แก้เร็วสุด</span></li>
+      </ol>
+
+      <div class="note-box" style="margin:12px 0 0">💡 <b>ข้อเสนอ:</b> เจาะ <b>TC-GV.1</b> ก่อน (ต้นเหตุที่น่าจะ cascade) แล้วรันซ้ำ E2E.1/PUR.1 — มีโอกาสสูงหลายเคสเขียวพร้อมกัน</div>
+    </div>
   </div>
 
   <div class="toolbar">
