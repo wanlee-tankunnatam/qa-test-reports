@@ -167,6 +167,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   "tc-15": {
     "actual": "ปัญหา: /auth/callback?error=access_denied คืน 404 แทนที่จะ redirect ไป /login?error=access_deniedผลกระทบ: เมื่อ Zitadel callback มี error → user เจอ 404 · ไม่มีข้อความอธิบายแนะนำ: เพิ่ม error handling ที่ callback route",
     "st": "fail"
+  },
+  "tc-17": {
+    "actual": "ปัญหา: Triple-click ที่ปุ่ม \"ดำเนินการด้วยอีเมล\" → ปุ่ม ยัง enabled อยู่ ทันทีหลังคลิก · ไม่มี debounce ฝั่ง clientผลกระทบ: อาจส่ง duplicate requests ไปเซิร์ฟเวอร์ 3 ครั้งพร้อมกันแนะนำ: เพิ่ม disabled={loading} prop ที่ปุ่ม submit หลังคลิกแรก",
+    "st": "fail"
   }
 }
 </script>
