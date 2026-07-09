@@ -420,6 +420,117 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   },
   "tc-41": {
     "st": "fail"
+  },
+  "tc-121": {
+    "st": "skip"
+  },
+  "tc-100": {
+    "st": "skip"
+  },
+  "tc-102": {
+    "st": "skip"
+  },
+  "tc-66": {
+    "st": "skip"
+  },
+  "tc-147": {
+    "st": "skip"
+  },
+  "tc-174": {
+    "st": "skip"
+  },
+  "tc-149": {
+    "st": "skip"
+  },
+  "tc-154": {
+    "st": "skip"
+  },
+  "tc-165": {
+    "st": "skip"
+  },
+  "tc-161": {
+    "st": "skip"
+  },
+  "tc-233": {
+    "st": "skip"
+  },
+  "tc-234": {
+    "st": "skip"
+  },
+  "tc-218": {
+    "st": "skip"
+  },
+  "tc-220": {
+    "st": "skip"
+  },
+  "tc-222": {
+    "st": "skip"
+  },
+  "tc-224": {
+    "st": "skip"
+  },
+  "tc-226": {
+    "st": "skip"
+  },
+  "tc-192": {
+    "st": "skip"
+  },
+  "tc-207": {
+    "st": "skip"
+  },
+  "tc-208": {
+    "st": "skip"
+  },
+  "tc-196": {
+    "st": "skip"
+  },
+  "tc-199": {
+    "st": "skip"
+  },
+  "tc-201": {
+    "st": "skip"
+  },
+  "tc-203": {
+    "st": "skip"
+  },
+  "tc-256": {
+    "st": "skip"
+  },
+  "tc-277": {
+    "st": "skip"
+  },
+  "tc-289": {
+    "st": "skip"
+  },
+  "tc-296": {
+    "st": "skip"
+  },
+  "tc-282": {
+    "st": "skip"
+  },
+  "tc-283": {
+    "st": "skip"
+  },
+  "tc-299": {
+    "st": "skip"
+  },
+  "tc-300": {
+    "st": "skip"
+  },
+  "tc-301": {
+    "st": "skip"
+  },
+  "tc-302": {
+    "st": "skip"
+  },
+  "tc-304": {
+    "st": "skip"
+  },
+  "tc-297": {
+    "st": "skip"
+  },
+  "tc-298": {
+    "st": "skip"
   }
 }
 </script>
@@ -1245,9 +1356,9 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">guard block แสดง feedback ที่เหมาะสม</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · switch-workspace · Epic 1</div>
-  <div class="sec"><h4>Precondition</h4><ul><li>ล็อกอินเข้าเว็บด้วยบัญชีที่เป็นสมาชิกธรรมดา (member ไม่ใช่ owner) ของ workspace</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เปิด Hub deep-link หน้าตั้งค่า workspace: https://uat-hub.takra.ai/workspace/settings (ในฐานะ member ที่ไม่ใช่ owner)</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ผู้ใช้เป็น member (ไม่ใช่ owner)</li></ul></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>ล็อกอินเข้าเว็บแล้ว</li><li>มี workspace ที่ผู้ใช้ไม่ได้เป็นสมาชิก</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>พยายามเข้า workspace ที่ไม่ใช่สมาชิก โดยยิงผ่าน URL</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>URL = /workspace/{ไอดี workspace ที่ไม่ได้เป็นสมาชิก}/home</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>หน้าจอแสดงแบบอ่านอย่างเดียว หรือขึ้นข้อความว่าไม่มีสิทธิ์เข้าถึง</li><li>ไม่เห็นฟอร์มที่แก้ไขได้</li><li>ไม่มีปุ่มบันทึก หรือถ้ามีก็ต้องกดไม่ได้ (ปุ่มเป็นสีจาง/disabled)</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>แสดงหน้า error หรือข้อความแจ้งเตือน (toast) ว่า "ไม่มีสิทธิ์เข้าถึง workspace นี้"</li><li>ต้องไม่เป็นหน้าว่างเปล่าหรือหมุนค้างไม่รู้จบ</li><li>มีลิงก์พากลับไป workspace ที่มีสิทธิ์เข้า</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1273,9 +1384,9 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">switch ขณะมี unsaved changes</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · switch-workspace · Epic 1</div>
-  <div class="sec"><h4>Precondition</h4><ul><li>ล็อกอินด้วยบัญชี owner และเปิดหน้าตั้งค่า workspace ได้</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ลบข้อมูลในช่องที่จำเป็นออกให้ว่าง (เช่น ช่องชื่อบริษัท companyName)</li><li>กดปุ่มบันทึก (save)</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ช่องที่จำเป็นถูกเว้นว่างทั้งหมด</li></ul></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>ล็อกอินเข้าเว็บแล้ว และเป็นสมาชิกของ workspace ตั้งแต่ 2 อันขึ้นไป</li><li>อยู่ในหน้าที่มีฟอร์ม/ตัวแก้ไขที่แก้ไว้แล้วแต่ยังไม่ได้บันทึก</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>แก้ไขฟอร์มแต่ยังไม่กดบันทึก</li><li>กดตัวสลับ workspace (switcher) แล้วเลือก workspace อื่น</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ฟอร์มมีข้อมูลที่แก้ไว้แต่ยังไม่บันทึก</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ระบบขึ้นข้อความแจ้งเตือน (error) ที่ช่องที่ยังว่างทันที ก่อนส่งข้อมูล</li><li>ระบบไม่ส่งคำขอบันทึกไปที่เซิร์ฟเวอร์</li><li>เคอร์เซอร์ (โฟกัส) เด้งกลับไปที่ช่องที่มีปัญหาให้แก้ได้ทันที</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>แสดงกล่องยืนยัน "มีข้อมูลที่ยังไม่บันทึก ต้องการออกหรือไม่?"</li><li>ถ้ากดยืนยัน → สลับ workspace และทิ้งข้อมูลที่แก้ไว้</li><li>ถ้ากดยกเลิก → ยังอยู่ที่หน้าเดิม ไม่สลับ</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1301,9 +1412,9 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">network error ขณะ switch workspace</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · switch-workspace · Epic 1</div>
-  <div class="sec"><h4>Precondition</h4><ul><li>ล็อกอินด้วยบัญชี owner</li><li>จำลองสถานการณ์ที่ Hub ไม่ส่งลิงก์ (deep-link) มาให้ คือค่าลิงก์เป็นว่าง/ไม่มี</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เปิดหน้าตั้งค่า workspace</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ค่าลิงก์ deep-link จาก Hub เป็นว่าง (ไม่มี URL)</li></ul></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>ล็อกอินเข้าเว็บแล้ว และเป็นสมาชิกของ workspace ตั้งแต่ 2 อันขึ้นไป</li><li>workspace ที่ใช้งานอยู่ตอนนี้คือ W1</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>กดตัวสลับ workspace แล้วเลือก W2</li><li>จำลองสภาพเน็ตหลุดระหว่างที่ระบบกำลังเปลี่ยน workspace</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>เน็ตค้าง/หลุดระหว่างเปลี่ยน workspace</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>หน้าจอไม่แสดงลิงก์ที่เสีย/กดแล้วไปหน้าเปล่า</li><li>แสดงข้อความสำรองแทน เช่น "ติดต่อ admin"</li><li>หน้าไม่ค้างและไม่พัง (ยังใช้งานส่วนอื่นได้ปกติ)</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>แสดงข้อความแจ้งเตือน (toast) ว่า "ไม่สามารถเปลี่ยน workspace ได้ กรุณาลองใหม่"</li><li>workspace ที่ใช้งานยังคงเป็น W1 (ไม่เปลี่ยนค้างครึ่งๆ กลางๆ)</li><li>ไม่ค้าง ไม่หมุนวนไม่รู้จบ</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1329,9 +1440,9 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">deep link หลัง switch workspace</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · switch-workspace · Epic 1</div>
-  <div class="sec"><h4>Precondition</h4><ul><li>ล็อกอินด้วยบัญชี owner และเปิดหน้าตั้งค่า workspace ได้</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>แก้ไขข้อมูลในช่องใดช่องหนึ่ง</li><li>ปิดการเชื่อมต่ออินเทอร์เน็ต (offline) แล้วกดปุ่มบันทึก</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>สภาพเน็ตหลุด/ไม่มีสัญญาณ หรือคำขอค้างจนหมดเวลา (timeout)</li></ul></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>ล็อกอินเข้าเว็บแล้ว และเป็นสมาชิกของ workspace ตั้งแต่ 2 อันขึ้นไป</li><li>workspace ที่ใช้งานอยู่ตอนนี้คือ W1</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เปิด URL /lives/123/edit ซึ่งเป็นทรัพยากรของ W2</li><li>สังเกตว่าระบบสลับไป W2 ให้เองอัตโนมัติหรือไม่ (ถ้าผู้ใช้เป็นสมาชิก W2)</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ลิงก์ที่ชี้ไปทรัพยากรของอีก workspace</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ขึ้นข้อความแจ้งเตือน (toast) ว่า "บันทึกไม่สำเร็จ กรุณาลองใหม่"</li><li>ข้อมูลที่แก้ไว้ยังอยู่ในฟอร์ม ไม่ถูกล้างทิ้ง</li><li>มีช่องทางให้ลองบันทึกใหม่อีกครั้ง (retry)</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ถ้าผู้ใช้เป็นสมาชิกของ W2 → ระบบสลับไป W2 ให้เองและเปิดหน้านั้น</li><li>ถ้าผู้ใช้ไม่ใช่สมาชิก → แสดงหน้า 403 พร้อมแจ้งให้เข้าใจ</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1357,9 +1468,9 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">switcher dropdown empty state (0 workspace)</div>
   <div class="h-prio">Priority: <b>P2</b> · UI · switch-workspace · Epic 1</div>
-  <div class="sec"><h4>Precondition</h4><ul><li>ล็อกอินด้วยบัญชี owner และเปิดหน้าตั้งค่า workspace ได้</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>แก้ไขข้อมูลในช่องใดช่องหนึ่ง</li><li>กดปุ่มบันทึกรัวๆ สองครั้งติดกันเร็วๆ (double-click)</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ข้อมูลถูกต้องครบ แล้วกดปุ่มบันทึกซ้ำเร็วๆ</li></ul></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>ล็อกอินเข้าเว็บแล้ว แต่ยังไม่มี workspace เลย (เป็นสมาชิก 0 อัน)</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>กดเปิดตัวสลับ workspace (switcher dropdown)</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ผู้ใช้มี 0 workspace</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ระบบบันทึกให้เพียงครั้งเดียว</li><li>ปุ่มบันทึกกลายเป็นกดไม่ได้ (disabled) ทันทีหลังกดครั้งแรก</li><li>ไม่เกิดการบันทึกซ้ำซ้อน</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>แสดงสถานะว่างเปล่า เช่น "ไม่มี workspace" หรือ "รอการเชิญ"</li><li>หน้าไม่พัง ไม่แสดงค่าเพี้ยนอย่าง undefined</li><li>มีลิงก์ติดต่อ admin หรือขอเข้า workspace</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1385,9 +1496,9 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">switch workspace ขณะ page กำลัง load</div>
   <div class="h-prio">Priority: <b>P2</b> · UI · switch-workspace · Epic 1</div>
-  <div class="sec"><h4>Precondition</h4><ul><li>ล็อกอินด้วยบัญชี owner และเปิดหน้าตั้งค่า workspace ค้างไว้</li><li>เซสชันการล็อกอินใกล้หมดอายุ</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ทิ้งหน้าไว้จนเซสชันหมดอายุ</li><li>กดปุ่มบันทึก</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>เซสชันหมดอายุแล้ว</li></ul></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>ล็อกอินเข้าเว็บแล้ว และเป็นสมาชิกของ workspace ตั้งแต่ 2 อันขึ้นไป</li><li>อยู่ในหน้าที่กำลังดึงข้อมูลอยู่ (มี spinner หมุนแสดงว่ากำลังโหลด)</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ระหว่างที่หน้ากำลังดึงข้อมูล (เห็น spinner หมุน)</li><li>กดตัวสลับ workspace แล้วเลือก workspace อื่น</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>หน้ากำลังโหลดข้อมูลอยู่</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ระบบพาไปหน้า /login</li><li>หลังล็อกอินใหม่ ระบบพากลับมาที่หน้าตั้งค่า workspace เดิม</li><li>ถ้ายังมีข้อมูลที่แก้ไว้แต่ยังไม่บันทึก ระบบต้องเตือนก่อนพาออกจากหน้า</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ยกเลิกคำขอข้อมูลของ workspace เดิมที่ยังค้างอยู่</li><li>สลับ workspace สำเร็จ แล้วดึงข้อมูลใหม่ตาม workspace ใหม่</li><li>ต้องไม่แสดงข้อมูลปนกัน (ข้อมูลของ W1 โผล่ในหน้าของ W2)</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -5104,9 +5215,9 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">Multiple risk words highlighted (non-overlapping)</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · risk-word-check · Epic 3</div>
-  <div class="sec"><h4>Precondition</h4><ul><li>อยู่ในหน้า Control Room ของ session ที่ Live</li><li>มีคอมเมนต์เสี่ยงถูกบล็อกถี่ๆ 20 ครั้งภายใน 5 วินาที</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เปิด Control Room</li><li>ให้มีการบล็อก 20 ครั้งภายใน 5 วินาที</li><li>สังเกตแผงความเสี่ยง</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>20 เหตุการณ์บล็อกภายใน 5 วินาที</li></ul></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>ล็อกอินด้วยบัญชี ops หรือ admin</li><li>อยู่ในสถานการณ์ที่ระบบดึงข้อมูล metric จากฝั่งเซิร์ฟเวอร์ไม่ได้ (เซิร์ฟเวอร์ตอบกลับด้วย error 500)</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>จำลองให้ระบบดึงข้อมูล metric ล้มเหลว (เซิร์ฟเวอร์ตอบ error 500)</li><li>เปิดหน้าแดชบอร์ด /admin/observability/dashboard</li><li>สังเกตว่าแดชบอร์ดแสดงผลอย่างไรเมื่อดึงข้อมูลไม่ได้</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>จำลองสถานการณ์ที่บริการ metric ตอบกลับด้วยข้อผิดพลาด (error 500)</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>แผงแสดงจำนวน = 20</li><li>หน้าไม่ค้างหรือกระตุก</li><li>รายการยาวๆ ยังเลื่อนดูหรือแบ่งหน้าได้ลื่น</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>หน้าจอแสดงแถบแจ้งเตือนข้อผิดพลาด (error banner) แทนที่จะเป็นวิดเจ็ตว่างเปล่า</li><li>มีปุ่ม "ลองใหม่" (Retry) ให้กดได้</li><li>ถ้ามีวิดเจ็ตบางตัวดึงข้อมูลสำเร็จ ก็ยังแสดงข้อมูลเท่าที่มีได้</li><li>แอปไม่ค้าง ไม่แครช</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -5132,9 +5243,9 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">Tooltip keyboard accessible (A11y)</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · risk-word-check · Epic 3</div>
-  <div class="sec"><h4>Precondition</h4><ul><li>แผงความเสี่ยงมีรายการที่ถูกบล็อกแสดงอยู่</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>อ่านแผงความเสี่ยงด้วยสกรีนรีดเดอร์</li></ol></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>ล็อกอินด้วยบัญชีผู้ใช้ทั่วไป (ไม่มีสิทธิ์ ops หรือ admin)</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ล็อกอินเข้าเว็บด้วยบัญชีผู้ใช้ทั่วไป</li><li>พิมพ์ที่อยู่หน้า /admin/observability/dashboard ตรง ๆ บนแถบ URL แล้วเข้า</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>บัญชีผู้ใช้ทั่วไปที่ไม่มีสิทธิ์เข้าหน้า admin</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>แผงมี role ที่เหมาะสม</li><li>รายการอยู่ในรูปแบบลิสต์ที่เข้าถึงได้</li><li>การจัดการโฟกัสถูกต้อง</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ระบบขึ้นหน้าปฏิเสธการเข้าถึง (403) หรือเด้งกลับไปหน้าแรก</li><li>แดชบอร์ดไม่ถูกแสดงให้ผู้ใช้ทั่วไปเห็น</li><li>ไม่มีข้อมูล metric ใด ๆ รั่วออกมาให้เห็น</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -5160,9 +5271,9 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">Scan loading state (debounced)</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · risk-word-check · Epic 3</div>
-  <div class="sec"><h4>Precondition</h4><ul><li>อยู่ในหน้า Control Room ของ session ที่ Live</li><li>ยังไม่มีคอมเมนต์เสี่ยงถูกบล็อกเลย</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เปิด Control Room ที่ยังไม่มีการบล็อกใดๆ</li><li>ดูแผงความเสี่ยง</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ไม่มีรายการบล็อก</li></ul></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เปิดหน้าแดชบอร์ดค้างไว้ และแดชบอร์ดกำลังรีเฟรชข้อมูลอัตโนมัติเป็นระยะ</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ปล่อยให้แดชบอร์ดรีเฟรชข้อมูลอัตโนมัติตามรอบ</li><li>ระหว่างที่กำลังดึงข้อมูล ให้ตัดการเชื่อมต่อเน็ตกลางคัน</li><li>รอสักครู่แล้วต่อเน็ตกลับเข้ามาใหม่</li><li>สังเกตพฤติกรรมของแดชบอร์ดตลอดช่วงที่เน็ตหลุดและกลับมา</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>จำลองเน็ตหลุด ๆ ติด ๆ (network flap) ระหว่างการรีเฟรช</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>แผงแสดงข้อความ "No blocked comments" / ไม่มีคอมเมนต์ถูกบล็อก</li><li>จำนวน = 0</li><li>หน้าไม่เพี้ยน ไม่พัง</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>หน้าจอขึ้นสัญลักษณ์บอกว่าข้อมูลที่เห็นเป็นข้อมูลเก่า (stale)</li><li>เมื่อเน็ตกลับมา ระบบลองดึงข้อมูลใหม่ให้เองอัตโนมัติ</li><li>ไม่ค้างอยู่ในสถานะ error ตลอดเวลา</li><li>เมื่อเน็ตกลับมานิ่ง ข้อมูลบนแดชบอร์ดอัปเดตเป็นข้อมูลล่าสุด</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -6514,9 +6625,9 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">SSE disconnect without reconnect</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · live-controls · Epic 4</div>
-  <div class="sec"><h4>Precondition</h4><ul><li>หน้าต่างแนะนำเริ่มไลฟ์กำลังอยู่ขั้นที่ 2</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ปิดหน้าต่าง (กดปุ่ม X)</li><li>กดปุ่ม Start ใหม่อีกครั้ง</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ปิดหน้าต่างกลางคัน</li></ul></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>การเชื่อมต่ออัปเดตเรียลไทม์ทำงานอยู่ (เชื่อมต่อแล้ว)</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ตัดเน็ตนาน 60 วินาที (นานเกินกว่าที่ระบบจะต่อกลับเองได้)</li><li>ดูสถานะบนหน้าจอ</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ตัดเน็ตยาวๆ</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>หน้าต่างปิดลง</li><li>สถานะไลฟ์ไม่เปลี่ยน</li><li>เปิดใหม่แล้วเริ่มที่ขั้น 1 (รีเซ็ต) หรือกลับมาที่ขั้น 2 ที่ค้างไว้</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>หน้าจอแสดงชัดว่า "ขาดการเชื่อมต่อ" (Disconnected)</li><li>มีปุ่มให้กดเชื่อมต่อใหม่เอง</li><li>ไม่แสดงข้อมูลเก่าค้าง</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -6542,9 +6653,9 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">Rapid click Pause/Resume</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · live-controls · Epic 4</div>
-  <div class="sec"><h4>Precondition</h4><ul><li>เน็ตหลุดหลังจากกด Start</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>กดปุ่ม Start</li><li>ทำให้เน็ตหลุดระหว่างที่ระบบกำลังเริ่มไลฟ์</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>เน็ตหลุดกลางคัน</li></ul></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>ไลฟ์สถานะ Live</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>กดปุ่ม Pause/Resume รัวๆ 10 ครั้งใน 1 วินาที</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>กดรัว</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>แสดงข้อความ error</li><li>มีปุ่มลองใหม่ให้กด</li><li>ไม่ค้างหมุนโหลดไม่จบ</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ปุ่มมีการหน่วงกันกดรัว (ราว 300 มิลลิวินาที)</li><li>สถานะสุดท้ายตรงกับระบบจริง</li><li>ไม่มีสถานะบนหน้าจอมั่วหรือชนกัน</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -6570,9 +6681,9 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">Focus lost during state change</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · live-controls · Epic 4</div>
-  <div class="sec"><h4>Precondition</h4><ul><li>เบราว์เซอร์ปฏิเสธสิทธิ์การคัดลอก (clipboard)</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>กดปุ่มคัดลอกลิงก์</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>คัดลอกไม่ได้ (ถูกปฏิเสธ)</li></ul></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>โฟกัสอยู่ที่ปุ่ม Pause</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>กดปุ่ม Pause</li><li>ปุ่มแปลงร่างเป็น Resume</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>การจัดการโฟกัส</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>มีทางสำรอง: แสดงลิงก์เป็นข้อความที่เลือกได้</li><li>มีคำแนะนำ "กด Ctrl+C เพื่อคัดลอก"</li><li>ไม่แครช</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>โฟกัสย้ายไปที่ปุ่ม Resume</li><li>โปรแกรมอ่านหน้าจอประกาศ "Live paused"</li><li>โฟกัสไม่หลุดหายไปที่พื้นหน้า</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -6598,9 +6709,9 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">Browser back during Live</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · live-controls · Epic 4</div>
-  <div class="sec"><h4>Precondition</h4><ul><li>หน้าต่างแนะนำเริ่มไลฟ์เปิดอยู่</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ไล่ดูด้วยโปรแกรมอ่านหน้าจอ</li><li>ตรวจว่ามีการบอกโครงสร้างหน้าต่างให้รับรู้</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ทดสอบการเข้าถึง</li></ul></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>ไลฟ์สถานะ Live และ Owner อยู่ที่หน้าคอนโซล</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>กดปุ่มย้อนกลับของเบราว์เซอร์</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ออกจากหน้า</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ระบบบอกว่านี่คือหน้าต่างโต้ตอบ (dialog)</li><li>โปรแกรมอ่านหน้าจออ่านชื่อหัวข้อของหน้าต่างได้</li><li>โฟกัสวนอยู่แค่ในหน้าต่าง</li><li>อ่านออกว่า "ขั้นที่ 1 จาก 3"</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ขึ้นกล่องยืนยัน "Live still broadcasting. Leave?" (ยังถ่ายทอดอยู่ ออกเลยไหม)</li><li>ถ้าตอบใช่ → ออกจากหน้า (ไลฟ์ยังถ่ายทอดต่อเบื้องหลัง)</li><li>ถ้าตอบไม่ → อยู่หน้าคอนโซลต่อ</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -7641,9 +7752,9 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">High volume comments (100 in 10s)</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · live-control-room · Epic 5</div>
-  <div class="sec"><h4>Precondition</h4><ul><li>หน้าต่างแนะนำเริ่มไลฟ์กำลังอยู่ขั้นที่ 2</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ปิดหน้าต่าง (กดปุ่ม X)</li><li>กดปุ่ม Start ใหม่อีกครั้ง</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ปิดหน้าต่างกลางคัน</li></ul></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>อยู่ในหน้า Control Room ของ session ที่ Live</li><li>มีคอมเมนต์เข้ามาถี่มาก 100 รายการภายใน 10 วินาที</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เปิด Control Room</li><li>ให้มีคอมเมนต์เข้ามา 100 รายการภายใน 10 วินาที</li><li>สังเกตการทำงานของฟีดคอมเมนต์</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>คอมเมนต์ 100 รายการภายใน 10 วินาที</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>หน้าต่างปิดลง</li><li>สถานะไลฟ์ไม่เปลี่ยน</li><li>เปิดใหม่แล้วเริ่มที่ขั้น 1 (รีเซ็ต) หรือกลับมาที่ขั้น 2 ที่ค้างไว้</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ฟีดอัปเดตได้ลื่น ไม่กระตุก</li><li>รายการเก่าเลื่อนหายพ้นจอไป</li><li>ระบบยังตอบสนองปกติ ไม่หน่วง</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -7669,9 +7780,9 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">Session ended while viewing</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · live-control-room · Epic 5</div>
-  <div class="sec"><h4>Precondition</h4><ul><li>เน็ตหลุดหลังจากกด Start</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>กดปุ่ม Start</li><li>ทำให้เน็ตหลุดระหว่างที่ระบบกำลังเริ่มไลฟ์</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>เน็ตหลุดกลางคัน</li></ul></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เปิด Control Room ค้างไว้ระหว่าง Live</li><li>ระหว่างที่ดูอยู่ session จบ (Live จบ)</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เปิด Control Room ของ session ที่ Live</li><li>ให้ session จบระหว่างที่ยังดูอยู่</li><li>สังเกตหน้าจอ</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>เหตุการณ์ session จบ</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>แสดงข้อความ error</li><li>มีปุ่มลองใหม่ให้กด</li><li>ไม่ค้างหมุนโหลดไม่จบ</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>แสดงแบนเนอร์หรือ popup ว่า "Live ended" / "Live จบแล้ว"</li><li>พาไปหน้าสรุป (recap) หรือเปลี่ยนเป็นสถานะจบชัดเจน</li><li>ไม่มีตัวเลขอัปเดตค้างวิ่งต่อทั้งที่ Live จบแล้ว</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -7697,9 +7808,9 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">A11y for Control Room panels</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · live-control-room · Epic 5</div>
-  <div class="sec"><h4>Precondition</h4><ul><li>เบราว์เซอร์ปฏิเสธสิทธิ์การคัดลอก (clipboard)</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>กดปุ่มคัดลอกลิงก์</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>คัดลอกไม่ได้ (ถูกปฏิเสธ)</li></ul></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เปิด Control Room ที่มีแผงครบทุกส่วน</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ตรวจการเข้าถึงหน้าจอ (a11y)</li><li>ไล่โฟกัสด้วยคีย์บอร์ด</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>มีทางสำรอง: แสดงลิงก์เป็นข้อความที่เลือกได้</li><li>มีคำแนะนำ "กด Ctrl+C เพื่อคัดลอก"</li><li>ไม่แครช</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ไม่มีปัญหาการเข้าถึงระดับร้ายแรง</li><li>แต่ละแผงมีป้ายกำกับบอกว่าเป็นส่วนอะไร</li><li>ข้อมูลที่อัปเดตแบบเรียลไทม์ถูกประกาศให้สกรีนรีดเดอร์ได้ยิน</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -7782,9 +7893,9 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">Banner dismiss + re-appear</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · risk-filter · Epic 5</div>
-  <div class="sec"><h4>Precondition</h4><ul><li>อยู่ในหน้า Control Room ของ session ที่ Live</li><li>มีคอมเมนต์เสี่ยงถูกบล็อกถี่ๆ 20 ครั้งภายใน 5 วินาที</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เปิด Control Room</li><li>ให้มีการบล็อก 20 ครั้งภายใน 5 วินาที</li><li>สังเกตแผงความเสี่ยง</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>20 เหตุการณ์บล็อกภายใน 5 วินาที</li></ul></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>มีแบนเนอร์ circuit-open แสดงอยู่บน Console</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>กดปิด (dismiss) แบนเนอร์</li><li>ให้มีเหตุ circuit-open ครั้งใหม่เข้ามา</li><li>ดูแบนเนอร์</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>กดปิดแบนเนอร์แล้วเกิดเหตุใหม่</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>แผงแสดงจำนวน = 20</li><li>หน้าไม่ค้างหรือกระตุก</li><li>รายการยาวๆ ยังเลื่อนดูหรือแบ่งหน้าได้ลื่น</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>แบนเนอร์กลับมาแสดงเมื่อมีเหตุใหม่</li><li>สถานะที่เคยกดปิดไปถูกรีเซ็ต</li><li>ผู้ใช้กดปิดได้อีกครั้ง</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -7810,9 +7921,9 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">Multiple concurrent alerts</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · risk-filter · Epic 5</div>
-  <div class="sec"><h4>Precondition</h4><ul><li>แผงความเสี่ยงมีรายการที่ถูกบล็อกแสดงอยู่</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>อ่านแผงความเสี่ยงด้วยสกรีนรีดเดอร์</li></ol></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เกิด circuit-open พร้อมกับการแจ้งเตือนอื่นในเวลาเดียวกัน</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ให้มีการแจ้งเตือน 2 อย่างเข้ามาพร้อมกัน</li><li>ดูการแสดงผลบนหน้า</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>การแจ้งเตือน 2 อย่างพร้อมกัน</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>แผงมี role ที่เหมาะสม</li><li>รายการอยู่ในรูปแบบลิสต์ที่เข้าถึงได้</li><li>การจัดการโฟกัสถูกต้อง</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>แสดงทั้งสองอย่าง (เรียงซ้อนหรือรวมกัน)</li><li>เรียงตามความสำคัญ โดย circuit-open สำคัญสุดอยู่บน</li><li>ไม่มีการแจ้งเตือนหายไป</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -7838,9 +7949,9 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">A11y for circuit banner</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · risk-filter · Epic 5</div>
-  <div class="sec"><h4>Precondition</h4><ul><li>อยู่ในหน้า Control Room ของ session ที่ Live</li><li>ยังไม่มีคอมเมนต์เสี่ยงถูกบล็อกเลย</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เปิด Control Room ที่ยังไม่มีการบล็อกใดๆ</li><li>ดูแผงความเสี่ยง</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ไม่มีรายการบล็อก</li></ul></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>มีแบนเนอร์ circuit-open แสดงอยู่</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>อ่านหน้าด้วยสกรีนรีดเดอร์</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>แผงแสดงข้อความ "No blocked comments" / ไม่มีคอมเมนต์ถูกบล็อก</li><li>จำนวน = 0</li><li>หน้าไม่เพี้ยน ไม่พัง</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>แบนเนอร์มี role="alert"</li><li>ตั้งค่าให้ประกาศทันที (aria-live="assertive")</li><li>การจัดการโฟกัสถูกต้อง</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -8233,9 +8344,9 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">Very long session duration formatting</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · post-live-recap · Epic 5</div>
-  <div class="sec"><h4>Precondition</h4><ul><li>หน้าต่างแนะนำเริ่มไลฟ์กำลังอยู่ขั้นที่ 2</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ปิดหน้าต่าง (กดปุ่ม X)</li><li>กดปุ่ม Start ใหม่อีกครั้ง</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ปิดหน้าต่างกลางคัน</li></ul></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>มี session ที่ถ่ายยาว 10 ชั่วโมง</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เปิดหน้าสรุป recap ของ session ที่ยาว 10 ชั่วโมง</li><li>ดูช่องระยะเวลา</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ระยะเวลา = 36000 วินาที (10 ชม.)</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>หน้าต่างปิดลง</li><li>สถานะไลฟ์ไม่เปลี่ยน</li><li>เปิดใหม่แล้วเริ่มที่ขั้น 1 (รีเซ็ต) หรือกลับมาที่ขั้น 2 ที่ค้างไว้</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ระยะเวลาแสดงถูกต้อง เช่น "10:00:00" หรือ "10 ชั่วโมง"</li><li>ไม่ล้นกรอบ</li><li>อ่านง่าย</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -8261,9 +8372,9 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">Zero comments session recap</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · post-live-recap · Epic 5</div>
-  <div class="sec"><h4>Precondition</h4><ul><li>เน็ตหลุดหลังจากกด Start</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>กดปุ่ม Start</li><li>ทำให้เน็ตหลุดระหว่างที่ระบบกำลังเริ่มไลฟ์</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>เน็ตหลุดกลางคัน</li></ul></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>มี session ที่ไม่มีคอมเมนต์เลย (0 คอมเมนต์)</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เปิดหน้าสรุป recap ของ session ที่ไม่มีคอมเมนต์</li><li>ดูค่าสรุปบนหน้า</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>จำนวนคอมเมนต์ = 0</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>แสดงข้อความ error</li><li>มีปุ่มลองใหม่ให้กด</li><li>ไม่ค้างหมุนโหลดไม่จบ</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>แสดง "ไม่มี comment" หรือเลข 0</li><li>ไม่มี error จากการคำนวณ (เช่น หารด้วยศูนย์)</li><li>กรณีไม่มีสินค้าขายดีก็แสดงได้ปกติ ไม่พัง</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -8289,9 +8400,9 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">A11y for recap page</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · post-live-recap · Epic 5</div>
-  <div class="sec"><h4>Precondition</h4><ul><li>เบราว์เซอร์ปฏิเสธสิทธิ์การคัดลอก (clipboard)</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>กดปุ่มคัดลอกลิงก์</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>คัดลอกไม่ได้ (ถูกปฏิเสธ)</li></ul></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>หน้า recap มีข้อมูลครบ</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ตรวจการเข้าถึง (a11y)</li><li>อ่านหน้าด้วยสกรีนรีดเดอร์</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>มีทางสำรอง: แสดงลิงก์เป็นข้อความที่เลือกได้</li><li>มีคำแนะนำ "กด Ctrl+C เพื่อคัดลอก"</li><li>ไม่แครช</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ไม่มีปัญหาการเข้าถึงระดับร้ายแรง</li><li>ตัวเลขสรุปทุกช่องถูกอ่านออกมาถูกต้อง</li><li>กราฟมีคำอธิบาย (alt text หรือ aria-label)</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
