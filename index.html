@@ -161,8 +161,7 @@
     </div>
     <nav id="nav">
       <div class="nav-label">โปรเจค</div>
-      <div class="nav-item active" data-project="all"><span class="emoji">📚</span><span class="name">ทั้งหมด</span><span class="n">20</span></div>
-      <div class="nav-item" data-project="rerun"><span class="emoji">🎬</span><span class="name">TAKRA Rerun</span><span class="n">5</span></div>
+      <div class="nav-item active" data-project="rerun"><span class="emoji">🎬</span><span class="name">TAKRA Rerun</span><span class="n">5</span></div>
       <div class="nav-item" data-project="ai"><span class="emoji">🤖</span><span class="name">TAKRA AI</span><span class="n">3</span></div>
       <div class="nav-item" data-project="insight"><span class="emoji">🐘</span><span class="name">TAKRA Insight</span><span class="n">5</span></div>
       <div class="nav-item" data-project="live"><span class="emoji">📺</span><span class="name">TAKRA Live</span><span class="n">4</span></div>
@@ -178,13 +177,13 @@
   <main>
     <div class="topbar">
       <h1>Reports Hub</h1>
-      <span class="sub">รวมลิงก์รายงาน QA · เรียงใหม่ล่าสุดขึ้นก่อน</span>
+      <span class="sub">เลือกโปรเจคจากเมนูซ้าย · เรียงใหม่ล่าสุดขึ้นก่อน</span>
     </div>
 
     <div class="controls">
       <label class="search">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
-        <input id="q" type="search" placeholder="ค้นหา… (เช่น mvp-2, insight, dod, closeout)" autocomplete="off">
+        <input id="q" type="search" placeholder="ค้นหาทุกโปรเจค… (เช่น mvp-2, insight, dod)" autocomplete="off">
       </label>
       <div class="chips" id="chips">
         <span class="chip" data-filter="all">ทั้งหมด</span>
@@ -371,7 +370,7 @@
   var dclr = document.getElementById('dclr');
   var empty = document.getElementById('empty');
   var typeFilter = 'test';
-  var projectFilter = 'all';
+  var projectFilter = 'rerun';   // one project at a time; default = newest project
 
   function rowDate(r){
     var c = r.querySelector('.c-date');
@@ -379,14 +378,27 @@
     var m = c.textContent.match(/\d{4}-\d{2}-\d{2}/);
     return m ? m[0] : '';
   }
+  function projectHasType(proj, type){
+    return rows.some(function(r){
+      return r.closest('.group').getAttribute('data-project') === proj
+          && r.getAttribute('data-type') === type;
+    });
+  }
+  function setTypeChip(){
+    typeChips.forEach(function(x){ x.classList.toggle('active', x.getAttribute('data-filter') === typeFilter); });
+  }
+  function setNavActive(){
+    navItems.forEach(function(x){ x.classList.toggle('active', x.getAttribute('data-project') === projectFilter); });
+  }
 
   function apply(){
     var term = (q.value || '').trim().toLowerCase();
     var from = dfrom.value, to = dto.value;
+    var searching = term.length > 0;   // search spans all projects; browsing shows one project
     var shown = 0;
     rows.forEach(function(r){
-      var sec = r.closest('.group');
-      var projOk = projectFilter === 'all' || sec.getAttribute('data-project') === projectFilter;
+      var proj = r.closest('.group').getAttribute('data-project');
+      var projOk = searching ? true : (proj === projectFilter);
       var typeOk = typeFilter === 'all' || r.getAttribute('data-type') === typeFilter;
       var text = (r.getAttribute('data-title') || '') + ' ' + r.textContent.toLowerCase();
       var textOk = !term || text.indexOf(term) !== -1;
@@ -397,6 +409,7 @@
       if(ok) shown++;
     });
     groups.forEach(function(g){
+      if(!searching && g.getAttribute('data-project') !== projectFilter){ g.style.display = 'none'; return; }
       var visible = g.querySelectorAll('tbody tr:not([style*="display: none"])').length;
       g.style.display = visible ? '' : 'none';
     });
@@ -409,24 +422,20 @@
   dclr.addEventListener('click', function(){ dfrom.value=''; dto.value=''; apply(); });
   typeChips.forEach(function(ch){
     ch.addEventListener('click', function(){
-      typeChips.forEach(function(x){ x.classList.remove('active'); });
-      ch.classList.add('active');
       typeFilter = ch.getAttribute('data-filter');
+      setTypeChip();
       apply();
     });
   });
   navItems.forEach(function(it){
     it.addEventListener('click', function(){
-      navItems.forEach(function(x){ x.classList.remove('active'); });
-      it.classList.add('active');
       projectFilter = it.getAttribute('data-project');
+      q.value = '';                                                       // leave global-search mode
+      typeFilter = projectHasType(projectFilter, 'test') ? 'test' : 'all';  // focus Test Cases when the project has any
+      setNavActive();
+      setTypeChip();
       apply();
-      if(projectFilter !== 'all'){
-        var sec = document.getElementById('sec-' + projectFilter);
-        if(sec) sec.scrollIntoView({behavior:'smooth', block:'start'});
-      } else {
-        window.scrollTo({top:0, behavior:'smooth'});
-      }
+      window.scrollTo({top:0, behavior:'smooth'});
     });
   });
 
@@ -451,6 +460,8 @@
     try { localStorage.setItem('qa-hub-theme', next); } catch(e){}
   });
 
+  setNavActive();
+  setTypeChip();
   apply();
 })();
 </script>
