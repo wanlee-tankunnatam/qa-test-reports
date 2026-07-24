@@ -870,6 +870,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   "tc-185": {
     "actual": "[QA - FAIL] ผูกสคริปต์จากคลังทีละฉาก (สูงสุด 3 ตัว/ฉาก) จนครบ 4 ฉาก x 3 = 12 สคริปต์รวมทั้งไลฟ์ (ตรงตามขีดจำกัด PRD ≤12). เพิ่มฉากที่ 5 แล้วลองผูกสคริปต์ตัวที่ 13 — ระบบ \"ไม่ให้\" ติ๊กเลือกได้จริง (checkbox ไม่ติ๊ก) ตรงตาม expected ข้อ 1-2 (ไม่ให้เกินขีดจำกัดรวม). นำสคริปต์ออก 1 ตัวจากฉากที่เต็ม (เหลือ 11 รวม) แล้วผูกสคริปต์ใหม่ในฉากที่ 5 ได้สำเร็จ (กลับมาเป็น 12) ตรงตาม expected ข้อ 3. แต่ \"ไม่พบข้อความแจ้งเตือน/toast ใดๆ\" อธิบายว่าติดขีดจำกัดสูงสุดเมื่อพยายามผูกตัวที่ 13 (ระบบแค่เงียบไม่ให้ติ๊ก ไม่มีข้อความบอกจำนวนสูงสุดตามที่ expected ข้อ 1 ระบุว่าต้อง \"แจ้งจำนวนสูงสุด\") จึงไม่ผ่านตาม expected ครบถ้วน",
     "st": "fail"
+  },
+  "tc-187": {
+    "actual": "[QA] ทดสอบในหน้าแก้ไขสคริปต์กลาง (/scripts/.../edit) เพิ่ม Content 2 ในบล็อกเดียวกัน (บล็อกมี Content 2 รายการ). กดสวิตช์ (ไอคอนวงกลม) ที่ Content 2 — เปลี่ยนจากติ๊กสีส้ม (เปิด) เป็นวงกลมโปร่ง (ปิด) ทันที และกรอบ/พื้นหลังจางลงชัดเจนต่างจาก Content ที่เปิดอยู่. ตรวจสอบ accessible label ของสวิตช์พบว่าเปลี่ยนจาก \"ปิด Content 2\" เป็น \"เปิด Content 2\" ตามสถานะ (อธิบายการกดเพื่อเปิด/ปิดชัดเจน). กดเปิดกลับ สถานะกลับเป็นปกติทันที ตรงตาม expected ครบทุกข้อ (ไม่ได้บันทึกการเปลี่ยนแปลงนี้ไว้ถาวร - กดยกเลิกหลังทดสอบ)",
+    "st": "pass"
   }
 }
 </script>
@@ -894,15 +898,15 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="runsum">
     <h3>📊 สรุปผล Manual Test</h3>
     <div class="sumchips">
-      <span class="cnt pass">PASS <b id="sum-pass">96</b></span>
+      <span class="cnt pass">PASS <b id="sum-pass">97</b></span>
       <span class="cnt fail">FAIL <b id="sum-fail">65</b></span>
       <span class="cnt hold">HOLD <b id="sum-hold">1</b></span>
       <span class="cnt block">BLOCKED <b id="sum-block">0</b></span>
       <span class="cnt skip">SKIP <b id="sum-skip">16</b></span>
-      <span class="cnt pending">รอเทส <b id="sum-pending">79</b></span>
+      <span class="cnt pending">รอเทส <b id="sum-pending">78</b></span>
     </div>
-    <div class="progress"><div id="sumbar" class="progressbar" style="width: 67%;"></div></div>
-    <div class="hint" id="sumpct" style="margin-top:5px">67% ทดสอบแล้ว (162/241) · ข้าม 16</div>
+    <div class="progress"><div id="sumbar" class="progressbar" style="width: 68%;"></div></div>
+    <div class="hint" id="sumpct" style="margin-top:5px">68% ทดสอบแล้ว (163/241) · ข้าม 16</div>
   </div>
 
   <div class="toolbar">
@@ -6685,25 +6689,25 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow" data-feat="epic3" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow open" data-feat="epic3" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-SA3.E2</td>
   <td class="ctitle">ปิดการใช้งาน Content รายตัวเพื่อไม่ให้ AI นำไปเล่นได้</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-187"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-187"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-187"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail show"><td colspan="7"><div class="card">
   <div class="h-title">ปิดการใช้งาน Content รายตัวเพื่อไม่ให้ AI นำไปเล่นได้</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · script-authoring · Epic 3 · Story 3.7 · FR33c</div>
   <div class="sec"><h4>Precondition</h4><ul><li>มีสคริปต์ใน Studio ที่มี Content มากกว่า 1 รายการในบล็อกเดียว</li></ul></div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดบล็อกที่มีหลาย Content</li><li>กดสวิตช์ปิดที่ Content หนึ่ง</li><li>อ่านคำอธิบายที่กำกับสวิตช์</li><li>เปิดกลับแล้วดูสถานะ</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>สวิตช์มีคำอธิบายว่ากดเพื่อปิดไม่ให้ AI ใช้ (และกดเพื่อเปิดให้ใช้)</li><li>Content ที่ปิดแสดงสถานะต่างจากที่เปิดอย่างชัดเจน</li><li>เปิดกลับแล้วสถานะกลับมาปกติ</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —">[QA] ทดสอบในหน้าแก้ไขสคริปต์กลาง (/scripts/.../edit) เพิ่ม Content 2 ในบล็อกเดียวกัน (บล็อกมี Content 2 รายการ). กดสวิตช์ (ไอคอนวงกลม) ที่ Content 2 — เปลี่ยนจากติ๊กสีส้ม (เปิด) เป็นวงกลมโปร่ง (ปิด) ทันที และกรอบ/พื้นหลังจางลงชัดเจนต่างจาก Content ที่เปิดอยู่. ตรวจสอบ accessible label ของสวิตช์พบว่าเปลี่ยนจาก "ปิด Content 2" เป็น "เปิด Content 2" ตามสถานะ (อธิบายการกดเพื่อเปิด/ปิดชัดเจน). กดเปิดกลับ สถานะกลับเป็นปกติทันที ตรงตาม expected ครบทุกข้อ (ไม่ได้บันทึกการเปลี่ยนแปลงนี้ไว้ถาวร - กดยกเลิกหลังทดสอบ)</textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-187" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-187" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-187" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-187" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-187" data-st="block">BLOCKED</span>
