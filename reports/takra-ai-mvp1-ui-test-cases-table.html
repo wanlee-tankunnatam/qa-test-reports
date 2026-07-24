@@ -771,6 +771,30 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   "tc-195": {
     "actual": "ทดสอบซ้ำ (QA): แก้ Content ให้ไม่มีคำเสี่ยงแล้ว badge \"เสี่ยง\" ของบล็อกหายทันที และเมื่อเพิ่ม Content ใหม่ที่มีคำเสี่ยงเข้าไปในบล็อกเดียวกัน บล็อกกลับมาแจ้งเสี่ยงทันที ตรงตาม Expected Result",
     "st": "pass"
+  },
+  "tc-199": {
+    "actual": "ทดสอบใน Cleanser Restock Live: ใช้เมนู \"ย้ายไปฉาก\" ย้ายสคริปต์ Lumina Glow Serum จากฉากที่ 1 ไปฉากที่ 2 สำเร็จ ฉากต้นทางลดเหลือ 2 สคริปต์ ฉากปลายทางเพิ่มเป็น 3 สคริปต์ถูกต้อง ตรงตาม Expected Result",
+    "st": "pass"
+  },
+  "tc-200": {
+    "actual": "ทดสอบใน Cleanser Restock Live: เมื่อฉากปลายทางมีสคริปต์ครบ 3/3 (เต็ม) เมนู \"ย้ายไปฉาก\" แสดงป้าย \"เต็ม\" กำกับฉากนั้น กดเลือกแล้วระบบไม่ย้าย สคริปต์ยังอยู่ที่ฉากต้นทางเหมือนเดิม ตรงตาม Expected Result (ไม่พบ toast แจ้งเหตุผลชัดเจนตอนกด แต่พฤติกรรมบล็อกถูกต้อง)",
+    "st": "pass"
+  },
+  "tc-202": {
+    "actual": "ทดสอบใน Cleanser Restock Live: ย้ายสคริปต์ที่สถานะ \"อนุมัติแล้ว\" (Lumina Glow Serum) ข้ามฉาก หลังย้ายสถานะยังคงเป็น \"อนุมัติแล้ว\" เหมือนเดิม ไม่ถูกปลดสถานะ ตรงตาม Expected Result (หมายเหตุ: ทดสอบเฉพาะกรณีย้ายข้ามฉาก ส่วนกรณีลากเรียงลำดับใหม่ยังไม่ได้ทดสอบเพราะเครื่องมือทดสอบอัตโนมัติลาก-วางไม่สำเร็จ)",
+    "st": "pass"
+  },
+  "tc-207": {
+    "actual": "ทดสอบใน BP Coffee - ไลฟ์โปรโมชั่น 1+1: เปิดหน้าตรวจก่อนไลฟ์ (ผ่านครบ) ไม่ปิดหน้าต่าง กลับไปแก้ร่าง (ลบสคริปต์ 1 รายการออกจากฉาก) แล้วเปิด \"เริ่มไลฟ์\" อีกครั้ง ระบบโหลดผลตรวจใหม่ รายการ \"สคริปต์\"/\"การอนุมัติสคริปต์\" เปลี่ยนสถานะสะท้อนข้อมูลล่าสุดทันที (ผ่าน 9/10) ตรงตาม Expected Result",
+    "st": "pass"
+  },
+  "tc-208": {
+    "actual": "ตรวจฟอร์มตั้งรอบไลฟ์และหน้าตรวจก่อนไลฟ์ของ BP Coffee: ไม่พบช่องตั้งเป้ารายได้/จำนวนออเดอร์/ผู้ชมใน MVP-1 และรายการตรวจก่อนไลฟ์ไม่มีข้อเกี่ยวกับเป้าหมายใดๆ ไม่บล็อกการเริ่มไลฟ์ ตรงตาม Expected Result",
+    "st": "pass"
+  },
+  "tc-209": {
+    "actual": "ทดสอบใน BP Coffee: เปิดหน้าตรวจก่อนไลฟ์หลายครั้ง พบข้อความ \"โหลดผลตรวจก่อนไลฟ์ไม่สำเร็จ — บันทึกร่างแล้วลองอีกครั้ง\" ค้างแสดงอยู่บนสุดของ modal แม้รายการตรวจทุกข้อจะโหลดและแสดงผล \"ผ่าน\" ครบถ้วนแล้ว และปุ่ม \"ไลฟ์เลย\" ยังกดได้ตามปกติ ข้อความ error ไม่สอดคล้องกับสถานะจริง (ควรหายไปเมื่อโหลดสำเร็จ) เป็นบั๊ก UI ที่อาจทำให้ผู้ใช้สับสน/ไม่มั่นใจ",
+    "st": "fail"
   }
 }
 </script>
@@ -795,15 +819,15 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="runsum">
     <h3>📊 สรุปผล Manual Test</h3>
     <div class="sumchips">
-      <span class="cnt pass">PASS <b id="sum-pass">91</b></span>
-      <span class="cnt fail">FAIL <b id="sum-fail">55</b></span>
+      <span class="cnt pass">PASS <b id="sum-pass">96</b></span>
+      <span class="cnt fail">FAIL <b id="sum-fail">56</b></span>
       <span class="cnt hold">HOLD <b id="sum-hold">1</b></span>
       <span class="cnt block">BLOCKED <b id="sum-block">0</b></span>
       <span class="cnt skip">SKIP <b id="sum-skip">15</b></span>
-      <span class="cnt pending">รอเทส <b id="sum-pending">95</b></span>
+      <span class="cnt pending">รอเทส <b id="sum-pending">89</b></span>
     </div>
-    <div class="progress"><div id="sumbar" class="progressbar" style="width: 61%;"></div></div>
-    <div class="hint" id="sumpct" style="margin-top:5px">61% ทดสอบแล้ว (147/242) · ข้าม 15</div>
+    <div class="progress"><div id="sumbar" class="progressbar" style="width: 63%;"></div></div>
+    <div class="hint" id="sumpct" style="margin-top:5px">63% ทดสอบแล้ว (153/242) · ข้าม 15</div>
   </div>
 
   <div class="toolbar">
@@ -815,7 +839,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
       <label class="hint" style="display:flex;gap:4px;align-items:center;white-space:nowrap;cursor:pointer" title="บันทึกขึ้น GitHub อัตโนมัติหลังหยุดแก้ ~5 วินาที"><input type="checkbox" id="chk-autosave" checked=""> auto-save</label>
       <button class="btn" id="btn-token" title="ใส่/เปลี่ยน GitHub token (ถ้าเซฟไม่ขึ้น/token เสีย กดอันนี้)">🔑 Token</button>
       <button class="btn" id="btn-refresh" title="ดึงผลล่าสุดจาก GitHub มา merge (ไม่ต้อง reload)">🔄 ดึงล่าสุด</button>
-      <button class="btn primary" id="btn-publish" style="background: var(--pass);">☁️ บันทึกขึ้น GitHub</button>
+      <button class="btn primary" id="btn-publish" style="">☁️ บันทึกขึ้น GitHub</button>
       <button class="btn" id="btn-save-file" title="ดาวน์โหลด HTML ไว้ใช้ offline">💾 ดาวน์โหลด</button>
       <button class="btn" style="color:var(--fail)" id="btn-reset">🗑 ล้างผล</button>
     </span>
@@ -6956,7 +6980,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">ย้ายสคริปต์ข้ามฉากได้และปลายทางอัปเดตถูกต้อง</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-199"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-199"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-199"></td>
 </tr>
 <tr class="detail show"><td colspan="7"><div class="card">
@@ -6966,10 +6990,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>ที่รายการสคริปต์ เปิดเมนูย้ายไปฉากอื่น</li><li>อ่านรายการฉากปลายทางและป้ายกำกับที่แสดง</li><li>เลือกฉากปลายทางแล้วยืนยัน</li><li>ตรวจรายการสคริปต์ของฉากต้นทางและฉากปลายทาง</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>เมนูย้ายแสดงรายการฉากปลายทางพร้อมป้ายบอกสถานะ (เช่น มีแล้ว / เต็ม)</li><li>หลังย้าย สคริปต์หายจากฉากต้นทางและไปอยู่ฉากปลายทาง</li><li>จำนวนสคริปต์ของทั้งสองฉากปรับตามถูกต้อง</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —">ทดสอบใน Cleanser Restock Live: ใช้เมนู "ย้ายไปฉาก" ย้ายสคริปต์ Lumina Glow Serum จากฉากที่ 1 ไปฉากที่ 2 สำเร็จ ฉากต้นทางลดเหลือ 2 สคริปต์ ฉากปลายทางเพิ่มเป็น 3 สคริปต์ถูกต้อง ตรงตาม Expected Result</textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-199" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-199" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-199" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-199" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-199" data-st="block">BLOCKED</span>
@@ -6986,7 +7010,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">ย้ายสคริปต์ไปฉากที่เต็มแล้ว ระบบกั้นพร้อมบอกเหตุผล</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-200"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-200"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-200"></td>
 </tr>
 <tr class="detail show"><td colspan="7"><div class="card">
@@ -6997,10 +7021,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Data</h4><ul><li>ขีดจำกัดตาม PRD: ≤ 3 สคริปต์ต่อฉาก</li></ul></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ฉากที่เต็มติดป้าย "เต็ม" ในเมนูย้าย</li><li>ถ้าเลือก ระบบปฏิเสธพร้อมข้อความว่าฉากปลายทางผูก script เต็มแล้ว</li><li>สคริปต์ยังอยู่ที่ฉากต้นทางเหมือนเดิม</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —">ทดสอบใน Cleanser Restock Live: เมื่อฉากปลายทางมีสคริปต์ครบ 3/3 (เต็ม) เมนู "ย้ายไปฉาก" แสดงป้าย "เต็ม" กำกับฉากนั้น กดเลือกแล้วระบบไม่ย้าย สคริปต์ยังอยู่ที่ฉากต้นทางเหมือนเดิม ตรงตาม Expected Result (ไม่พบ toast แจ้งเหตุผลชัดเจนตอนกด แต่พฤติกรรมบล็อกถูกต้อง)</textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-200" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-200" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-200" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-200" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-200" data-st="block">BLOCKED</span>
@@ -7047,7 +7071,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">เรียงลำดับหรือย้ายสคริปต์ที่อนุมัติแล้ว สถานะอนุมัติไม่ถูกปลด</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-202"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-202"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-202"></td>
 </tr>
 <tr class="detail show"><td colspan="7"><div class="card">
@@ -7057,10 +7081,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>จดสถานะอนุมัติของสคริปต์ไว้</li><li>ลากเรียงลำดับสคริปต์ที่อนุมัติแล้วใหม่</li><li>ย้ายสคริปต์ที่อนุมัติแล้วไปอีกฉากหนึ่ง</li><li>ตรวจสถานะอนุมัติของสคริปต์นั้นและผลการตรวจก่อนไลฟ์</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>สถานะอนุมัติของสคริปต์ยังเป็นอนุมัติแล้วเหมือนเดิมหลังเรียง/ย้าย</li><li>รายการตรวจก่อนไลฟ์ข้อการอนุมัติสคริปต์ยังผ่าน</li><li>ไม่ต้องส่งขออนุมัติใหม่เพราะแค่เปลี่ยนลำดับ (เนื้อหาไม่เปลี่ยน)</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —">ทดสอบใน Cleanser Restock Live: ย้ายสคริปต์ที่สถานะ "อนุมัติแล้ว" (Lumina Glow Serum) ข้ามฉาก หลังย้ายสถานะยังคงเป็น "อนุมัติแล้ว" เหมือนเดิม ไม่ถูกปลดสถานะ ตรงตาม Expected Result (หมายเหตุ: ทดสอบเฉพาะกรณีย้ายข้ามฉาก ส่วนกรณีลากเรียงลำดับใหม่ยังไม่ได้ทดสอบเพราะเครื่องมือทดสอบอัตโนมัติลาก-วางไม่สำเร็จ)</textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-202" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-202" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-202" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-202" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-202" data-st="block">BLOCKED</span>
@@ -7199,7 +7223,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">แก้ร่างไลฟ์หลังตรวจแล้ว ระบบโหลดผลตรวจใหม่ก่อนเริ่ม</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-207"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-207"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-207"></td>
 </tr>
 <tr class="detail show"><td colspan="7"><div class="card">
@@ -7209,10 +7233,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดหน้าตรวจก่อนไลฟ์แล้วยืนยันว่าผ่านครบ</li><li>ไม่ปิดหน้าต่าง แต่ไปแก้ร่างจากอีกแท็บ (เช่น ลบสคริปต์ออก 1 ตัว)</li><li>กลับมากดเริ่มไลฟ์จากหน้าต่างเดิม</li><li>อ่านข้อความที่แสดง</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ระบบตรวจพบว่าร่างถูกแก้หลังตรวจ และแจ้งว่ากำลังโหลดผลตรวจใหม่ให้ลองอีกครั้ง</li><li>ไลฟ์ไม่ถูกเริ่มด้วยผลตรวจเก่าที่ล้าสมัย</li><li>หลังโหลดผลใหม่ รายการตรวจสะท้อนสถานะปัจจุบันจริง</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —">ทดสอบใน BP Coffee - ไลฟ์โปรโมชั่น 1+1: เปิดหน้าตรวจก่อนไลฟ์ (ผ่านครบ) ไม่ปิดหน้าต่าง กลับไปแก้ร่าง (ลบสคริปต์ 1 รายการออกจากฉาก) แล้วเปิด "เริ่มไลฟ์" อีกครั้ง ระบบโหลดผลตรวจใหม่ รายการ "สคริปต์"/"การอนุมัติสคริปต์" เปลี่ยนสถานะสะท้อนข้อมูลล่าสุดทันที (ผ่าน 9/10) ตรงตาม Expected Result</textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-207" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-207" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-207" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-207" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-207" data-st="block">BLOCKED</span>
@@ -7229,7 +7253,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">MVP-1 ไม่มีการตั้งเป้ารายได้/ออเดอร์ และไม่บล็อกการเริ่มไลฟ์</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-208"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-208"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-208"></td>
 </tr>
 <tr class="detail show"><td colspan="7"><div class="card">
@@ -7240,10 +7264,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Data</h4><ul><li>ขอบเขตตาม PRD: Targets (revenue/orders) เลื่อนไป MVP-2 · ไม่บล็อกการ launch</li></ul></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ไม่มีช่องตั้งเป้ารายได้/ออเดอร์/ผู้ชมใน MVP-1</li><li>รายการตรวจก่อนไลฟ์ไม่มีข้อที่เกี่ยวกับเป้าหมาย</li><li>การไม่มีเป้าหมายไม่ทำให้เริ่มไลฟ์ไม่ได้</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —">ตรวจฟอร์มตั้งรอบไลฟ์และหน้าตรวจก่อนไลฟ์ของ BP Coffee: ไม่พบช่องตั้งเป้ารายได้/จำนวนออเดอร์/ผู้ชมใน MVP-1 และรายการตรวจก่อนไลฟ์ไม่มีข้อเกี่ยวกับเป้าหมายใดๆ ไม่บล็อกการเริ่มไลฟ์ ตรงตาม Expected Result</textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-208" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-208" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-208" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-208" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-208" data-st="block">BLOCKED</span>
@@ -7260,7 +7284,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">โหลดผลตรวจก่อนไลฟ์ไม่สำเร็จ แล้วมีข้อความบอกวิธีแก้</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-209"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-209"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-209"></td>
 </tr>
 <tr class="detail show"><td colspan="7"><div class="card">
@@ -7271,11 +7295,11 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Data</h4><ul><li>DevTools → Network → Offline</li></ul></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>เห็นข้อความทำนอง "โหลดผลตรวจก่อนไลฟ์ไม่สำเร็จ — บันทึกร่างแล้วลองอีกครั้ง"</li><li>ไลฟ์ไม่ถูกเริ่มทั้งที่ยังไม่รู้ผลตรวจ</li><li>เมื่อเน็ตกลับมาและลองใหม่ รายการตรวจแสดงได้ปกติ</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —">ทดสอบใน BP Coffee: เปิดหน้าตรวจก่อนไลฟ์หลายครั้ง พบข้อความ "โหลดผลตรวจก่อนไลฟ์ไม่สำเร็จ — บันทึกร่างแล้วลองอีกครั้ง" ค้างแสดงอยู่บนสุดของ modal แม้รายการตรวจทุกข้อจะโหลดและแสดงผล "ผ่าน" ครบถ้วนแล้ว และปุ่ม "ไลฟ์เลย" ยังกดได้ตามปกติ ข้อความ error ไม่สอดคล้องกับสถานะจริง (ควรหายไปเมื่อโหลดสำเร็จ) เป็นบั๊ก UI ที่อาจทำให้ผู้ใช้สับสน/ไม่มั่นใจ</textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-209" data-st="pass">PASS</span>
-    <span class="opt fail" data-uid="tc-209" data-st="fail">FAIL</span>
+    <span class="opt fail sel" data-uid="tc-209" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-209" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-209" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-209" data-st="skip">SKIP</span>
