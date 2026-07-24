@@ -426,6 +426,23 @@
     empty.classList.toggle('show', shown === 0);
   }
 
+  var VALID = navItems.map(function(x){ return x.getAttribute('data-project'); });
+  function selectProject(proj, opts){
+    opts = opts || {};
+    if(VALID.indexOf(proj) === -1) proj = 'rerun';
+    projectFilter = proj;
+    q.value = '';                                              // leave global-search mode
+    typeFilter = projectHasType(proj, 'test') ? 'test' : 'all';  // focus Test Cases when the project has any
+    setNavActive();
+    setTypeChip();
+    apply();
+    if(opts.scroll !== false) window.scrollTo({top:0, behavior:'smooth'});
+    try {
+      if(opts.push) history.pushState({project:proj}, '', '?project=' + proj);
+      else if(opts.replace) history.replaceState({project:proj}, '', '?project=' + proj);
+    } catch(e){}
+  }
+
   q.addEventListener('input', apply);
   dfrom.addEventListener('change', apply);
   dto.addEventListener('change', apply);
@@ -439,14 +456,13 @@
   });
   navItems.forEach(function(it){
     it.addEventListener('click', function(){
-      projectFilter = it.getAttribute('data-project');
-      q.value = '';                                                       // leave global-search mode
-      typeFilter = projectHasType(projectFilter, 'test') ? 'test' : 'all';  // focus Test Cases when the project has any
-      setNavActive();
-      setTypeChip();
-      apply();
-      window.scrollTo({top:0, behavior:'smooth'});
+      selectProject(it.getAttribute('data-project'), {push:true});
     });
+  });
+  window.addEventListener('popstate', function(e){
+    var p = (e.state && e.state.project) ||
+            (new URLSearchParams(location.search)).get('project') || 'rerun';
+    selectProject(p, {scroll:false});
   });
 
   // whole-row click navigates (unless the click landed on the actual link)
@@ -470,9 +486,12 @@
     try { localStorage.setItem('qa-hub-theme', next); } catch(e){}
   });
 
-  setNavActive();
-  setTypeChip();
-  apply();
+  var initial = (new URLSearchParams(location.search)).get('project');
+  if(initial && VALID.indexOf(initial) !== -1){
+    selectProject(initial, {scroll:false, replace:true});   // deep-link: keep the ?project= in the URL
+  } else {
+    selectProject('rerun', {scroll:false});                 // default project, leave URL clean
+  }
 })();
 </script>
 </body>
