@@ -83,7 +83,10 @@ tr.detail>td{background:#fafbfc;padding:0;border-bottom:2px solid var(--line)}
 .card .sec li{margin:2px 0;font-size:12.5px}
 .card .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 @media(max-width:760px){.card .grid{grid-template-columns:1fr}}
-.actualbox{background:#fff;border:1px dashed var(--line);border-radius:7px;padding:7px 11px;color:var(--muted);font-style:italic;font-size:12px}
+.actualbox{display:block;width:100%;box-sizing:border-box;background:#fff;border:1px dashed var(--line);border-radius:7px;padding:7px 11px;color:var(--txt);font:inherit;font-size:12px;line-height:1.55;min-height:78px;resize:vertical}
+.actualbox::placeholder{color:var(--muted);font-style:italic}
+.actualbox:focus{outline:none;border-style:solid;border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,99,235,.13)}
+.actualbox.filled{border-style:solid;border-color:var(--accent)}
 .statusrow{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
 .opt{font-size:11px;font-weight:700;padding:4px 11px;border-radius:6px;border:1px solid var(--line);background:#fff;color:var(--muted);cursor:pointer}
 .opt:hover{opacity:.8}
@@ -608,7 +611,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
         <li>แต่ละ set มี products พร้อม ชื่อ + ราคา</li>
         <li>ไม่มี error message</li>
       </ul></div>
-      <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
+      <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
     </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
       <span class="opt pass sel" data-uid="tc-1" data-st="pass">PASS</span>
@@ -644,7 +647,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
         <li>แสดงข้อความ "เปิดบนแอป desktop เพื่อดึงชุดสินค้า"</li>
         <li>ไม่มีปุ่ม "ดึงชุดสินค้าจาก TikTok" (TikTok black button)</li>
       </ul></div>
-      <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
+      <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
     </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
       <span class="opt pass" data-uid="tc-2" data-st="pass">PASS</span>
@@ -680,7 +683,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
         <li>checkbox ยังติ๊กอยู่ (persist server-side)</li>
         <li>untick แล้ว reload → ไม่ติ๊ก</li>
       </ul></div>
-      <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
+      <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
     </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
       <span class="opt pass sel" data-uid="tc-3" data-st="pass">PASS</span>
@@ -719,7 +722,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
         <li>สินค้าที่ tick ไว้ปรากฏใน live product list บน TikTok</li>
         <li>log "[oracle] pinning X product(s)" แสดงใน stage log</li>
       </ul></div>
-      <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
+      <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
     </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
       <span class="opt pass" data-uid="tc-4" data-st="pass">PASS</span>
@@ -752,7 +755,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
         <li>ปุ่ม disabled (คลิกซ้ำไม่ได้)</li>
         <li>หลัง importSets เสร็จ → ปุ่มกลับมาปกติ</li>
       </ul></div>
-      <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
+      <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
     </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
       <span class="opt pass sel" data-uid="tc-5" data-st="pass">PASS</span>
@@ -791,7 +794,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
         <li>แสดง empty state message (เช่น "ไม่เจอชุดสินค้า")</li>
         <li>ไม่ crash และไม่แสดง error สีแดง</li>
       </ul></div>
-      <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">https://kitdi.atlassian.net/browse/TAK-129</div></div>
+      <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —">https://kitdi.atlassian.net/browse/TAK-129</textarea></div>
     </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
       <span class="opt pass sel" data-uid="tc-30" data-st="pass">PASS</span>
@@ -831,7 +834,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
         <li>preview แสดง clock layer</li>
         <li>ข้อความ "ยังไม่มีเลเยอร์" หายไป</li>
       </ul></div>
-      <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
+      <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
     </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
       <span class="opt pass sel" data-uid="tc-6" data-st="pass">PASS</span>
@@ -867,7 +870,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
         <li>reload แล้ว → layer ข้อความยังอยู่ พร้อมข้อความ "สวัสดีนะ 🙏"</li>
         <li>API PUT /api/v1/accounts/{id}/overlay ตอบ 200</li>
       </ul></div>
-      <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
+      <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
     </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
       <span class="opt pass sel" data-uid="tc-7" data-st="pass">PASS</span>
@@ -908,7 +911,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
         <li>font Sarabun/DSEG7 render ได้ (ไม่ box)</li>
         <li>layer ไม่หลุดออกนอกเฟรม</li>
       </ul></div>
-      <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
+      <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
     </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
       <span class="opt pass" data-uid="tc-8" data-st="pass">PASS</span>
@@ -942,7 +945,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
         <li>layers ทั้งหมดแสดงใน panel ครบถ้วน</li>
         <li>ข้อความใน text layer ถูกต้อง</li>
       </ul></div>
-      <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
+      <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
     </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
       <span class="opt pass sel" data-uid="tc-9" data-st="pass">PASS</span>
@@ -975,7 +978,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
         <li>PUT overlay ส่ง layers: [] สำเร็จ</li>
         <li>stream ไม่มีข้อความหรือนาฬิกา overlay</li>
       </ul></div>
-      <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
+      <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
     </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
       <span class="opt pass sel" data-uid="tc-10" data-st="pass">PASS</span>
@@ -1014,7 +1017,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
         <li>หลัง reload → ตำแหน่ง x, y, w, h ยังตรงกับที่ drag ไว้</li>
         <li>ไลฟ์แสดง overlay ตรงตำแหน่งที่ตั้ง</li>
       </ul></div>
-      <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
+      <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
     </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
       <span class="opt pass sel" data-uid="tc-31" data-st="pass">PASS</span>
@@ -1052,7 +1055,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
         <li>status indicator สีเขียว</li>
         <li>ไม่มี error message</li>
       </ul></div>
-      <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
+      <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
     </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
       <span class="opt pass" data-uid="tc-11" data-st="pass">PASS</span>
@@ -1085,7 +1088,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
         <li>status indicator สีแดง</li>
         <li>ไม่ crash app</li>
       </ul></div>
-      <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
+      <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
     </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
       <span class="opt pass" data-uid="tc-12" data-st="pass">PASS</span>
@@ -1120,7 +1123,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
         <li>TikTok accept push URL (ไม่ ban IP ทันที)</li>
         <li>utls transport ใช้ proxy egress (เห็นใน log)</li>
       </ul></div>
-      <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
+      <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
     </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
       <span class="opt pass" data-uid="tc-13" data-st="pass">PASS</span>
@@ -1158,7 +1161,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
         <li>SOCKS5 handshake ไม่ error</li>
         <li>ใช้กับ session ได้เหมือน HTTP proxy</li>
       </ul></div>
-      <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
+      <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
     </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
       <span class="opt pass" data-uid="tc-32" data-st="pass">PASS</span>
@@ -1202,7 +1205,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
         <li>แสดง username + ข้อความ</li>
         <li>ไม่มี duplicate (dedup ด้วย msgId)</li>
       </ul></div>
-      <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
+      <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
     </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
       <span class="opt pass" data-uid="tc-14" data-st="pass">PASS</span>
@@ -1235,7 +1238,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
         <li>ตัวเลข format th-TH เช่น "1,234 คน"</li>
         <li>อัพเดทเมื่อมีการเปลี่ยนแปลง</li>
       </ul></div>
-      <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
+      <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
     </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
       <span class="opt pass" data-uid="tc-15" data-st="pass">PASS</span>
@@ -1268,7 +1271,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
         <li>แสดงข้อความ "ยังไม่มีคอมเมนต์"</li>
         <li>ไม่ crash หรือ loading ค้าง</li>
       </ul></div>
-      <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
+      <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
     </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
       <span class="opt pass" data-uid="tc-16" data-st="pass">PASS</span>
@@ -1301,7 +1304,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
         <li>panel scroll ลงแสดง comment ใหม่อัตโนมัติ</li>
         <li>ไม่ค้างอยู่ข้างบน</li>
       </ul></div>
-      <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
+      <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
     </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
       <span class="opt pass" data-uid="tc-17" data-st="pass">PASS</span>
@@ -1341,7 +1344,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
         <li>chat panel แสดง empty state (ไม่มี comment) ได้ปกติ</li>
         <li>features อื่น (session, overlay, basket) ยังทำงาน</li>
       </ul></div>
-      <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
+      <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
     </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
       <span class="opt pass" data-uid="tc-33" data-st="pass">PASS</span>
@@ -1383,7 +1386,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
         <li>ยอด GMV รวม (฿XX,XXX format th-TH)</li>
         <li>จำนวน units + products แสดง</li>
       </ul></div>
-      <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
+      <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
     </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
       <span class="opt pass" data-uid="tc-18" data-st="pass">PASS</span>
@@ -1415,7 +1418,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
         <li>รายการ top products เรียงตาม GMV สูงสุด</li>
         <li>แต่ละ product แสดง ชื่อ + GMV + units</li>
       </ul></div>
-      <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
+      <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
     </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
       <span class="opt pass" data-uid="tc-19" data-st="pass">PASS</span>
@@ -1449,7 +1452,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
         <li>ยอด GMV เพิ่มขึ้นตามยอดขายใหม่</li>
         <li>ไม่ต้อง refresh หน้าเอง</li>
       </ul></div>
-      <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
+      <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
     </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
       <span class="opt pass" data-uid="tc-20" data-st="pass">PASS</span>
@@ -1488,7 +1491,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
         <li>ไม่แสดงตัวเลข 0 ที่ทำให้เข้าใจผิดว่า "ยอดขาย 0"</li>
         <li>ไม่ crash และไม่ loop error</li>
       </ul></div>
-      <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
+      <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
     </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
       <span class="opt pass" data-uid="tc-34" data-st="pass">PASS</span>
@@ -1531,7 +1534,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
         <li>chat panel แสดงข้อความด้วย self badge</li>
         <li>reply box ล้างหลังส่ง</li>
       </ul></div>
-      <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
+      <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
     </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
       <span class="opt pass" data-uid="tc-21" data-st="pass">PASS</span>
@@ -1569,7 +1572,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
         <li>ไม่หายไปจาก panel</li>
         <li>ไม่ crash app</li>
       </ul></div>
-      <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
+      <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
     </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
       <span class="opt pass" data-uid="tc-22" data-st="pass">PASS</span>
@@ -1603,7 +1606,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
         <li>Enter ไม่ส่งข้อความ</li>
         <li>ไม่มี API call</li>
       </ul></div>
-      <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
+      <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
     </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
       <span class="opt pass" data-uid="tc-23" data-st="pass">PASS</span>
@@ -1637,7 +1640,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
         <li>เช่น สีอื่น / aligned ขวา / badge "ผม/ฉัน"</li>
         <li>ชัดเจนว่าเป็นข้อความที่ host ส่ง</li>
       </ul></div>
-      <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
+      <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
     </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
       <span class="opt pass" data-uid="tc-24" data-st="pass">PASS</span>
@@ -1674,7 +1677,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
         <li>ไม่มีปุ่ม "ส่ง"</li>
         <li>chat panel ยังแสดง history (ถ้ามี) ได้ปกติ</li>
       </ul></div>
-      <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
+      <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
     </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
       <span class="opt pass" data-uid="tc-35" data-st="pass">PASS</span>
@@ -1717,7 +1720,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
         <li>credential เป็น cookie จาก webcast request (ไม่ต้องวาง curl เอง)</li>
         <li>backend POST /api/v1/accounts สำเร็จ</li>
       </ul></div>
-      <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
+      <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
     </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
       <span class="opt pass sel" data-uid="tc-25" data-st="pass">PASS</span>
@@ -1751,7 +1754,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
         <li>ไม่มี error notification</li>
         <li>app ยังทำงานปกติ</li>
       </ul></div>
-      <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
+      <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
     </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
       <span class="opt pass sel" data-uid="tc-26" data-st="pass">PASS</span>
@@ -1785,7 +1788,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
         <li>แสดง "เชื่อมต่อสำเร็จ" หรือ verified indicator</li>
         <li>ไม่ต้องกด confirm เพิ่ม</li>
       </ul></div>
-      <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
+      <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
     </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
       <span class="opt pass sel" data-uid="tc-27" data-st="pass">PASS</span>
@@ -1819,7 +1822,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
         <li>มีแค่ช่อง paste curl</li>
         <li>ไม่มี error หรือ broken UI</li>
       </ul></div>
-      <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
+      <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
     </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
       <span class="opt pass" data-uid="tc-28" data-st="pass">PASS</span>
@@ -1859,7 +1862,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
         <li>ไม่สร้าง account ที่ใช้งานไม่ได้</li>
         <li>user สามารถลองใหม่ได้</li>
       </ul></div>
-      <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
+      <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
     </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
       <span class="opt pass" data-uid="tc-36" data-st="pass">PASS</span>
@@ -1906,7 +1909,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
         <li>แต่ละ card แสดง: @handle, ชื่อไลฟ์, uptime/วิดีโอ, ปุ่ม "เริ่มไลฟ์", ไอคอน settings</li>
         <li>TopBar แสดงปุ่ม "＋ เพิ่มบัญชี" สีส้ม</li>
       </ul></div>
-      <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
+      <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
     </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
       <span class="opt pass" data-uid="tc-70" data-st="pass">PASS</span>
@@ -1943,7 +1946,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
         <li>TopBar แสดงปุ่ม "＋ เพิ่มบัญชี" สีส้มด้วย</li>
         <li>ไม่มี error หรือ broken layout</li>
       </ul></div>
-      <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
+      <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
     </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
       <span class="opt pass" data-uid="tc-71" data-st="pass">PASS</span>
@@ -1987,7 +1990,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
         <li>account card ใหม่ปรากฏใน grid พร้อม badge "พร้อม" สีเขียว</li>
         <li>แสดง @handle และชื่อที่กรอก (ถ้ากรอก)</li>
       </ul></div>
-      <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
+      <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
     </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
       <span class="opt pass" data-uid="tc-72" data-st="pass">PASS</span>
@@ -2027,7 +2030,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
         <li>subtitle เปลี่ยนเป็น "ขั้นที่ 2 จาก 6"</li>
         <li>ปุ่ม "ย้อนกลับ" ใช้งานได้ — กลับไป step 1 ดูชื่อที่กรอกได้</li>
       </ul></div>
-      <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
+      <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
     </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
       <span class="opt pass" data-uid="tc-73" data-st="pass">PASS</span>
@@ -2061,7 +2064,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
         <li><b>ไม่มี</b>ปุ่ม "เข้าสู่ระบบด้วย TikTok"</li>
         <li>ไม่มี error crash หรือ broken layout</li>
       </ul></div>
-      <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
+      <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
     </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
       <span class="opt pass" data-uid="tc-74" data-st="pass">PASS</span>
@@ -2102,7 +2105,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
         <li>6 tabs: <b>ไลฟ์ / พร็อกซี / วิดีโอ / AUTO / ตะกร้าสินค้า / โอเวอร์เลย์</b></li>
         <li>กด "← บัญชีไลฟ์" → navigate กลับ <code>/</code></li>
       </ul></div>
-      <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
+      <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
     </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
       <span class="opt pass" data-uid="tc-75" data-st="pass">PASS</span>
@@ -2143,7 +2146,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
         <li>ชื่อบัญชีบน header และ card ใน Control Room อัปเดตเป็นชื่อใหม่</li>
         <li>curl ไม่เปลี่ยน — ใช้ cookie เดิม (write-only, ไม่ส่งกลับ client)</li>
       </ul></div>
-      <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
+      <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
     </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
       <span class="opt pass" data-uid="tc-76" data-st="pass">PASS</span>
@@ -2185,7 +2188,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
         <li>border แดงบน card หายไป</li>
         <li>"✓ ตรวจ session" ยืนยันว่า session ทำงานได้</li>
       </ul></div>
-      <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
+      <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
     </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
       <span class="opt pass" data-uid="tc-77" data-st="pass">PASS</span>
@@ -2224,7 +2227,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
         <li>account card หายจาก grid</li>
         <li>entitlement count "บัญชี n/N" ใน TopBar ลดลง 1</li>
       </ul></div>
-      <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
+      <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
     </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
       <span class="opt pass" data-uid="tc-78" data-st="pass">PASS</span>
@@ -2263,7 +2266,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
         <li>dialog ไม่ปิดอัตโนมัติ — user ต้องหยุดไลฟ์ก่อน</li>
         <li>account ไม่ถูกลบ</li>
       </ul></div>
-      <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
+      <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
     </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
       <span class="opt pass" data-uid="tc-79" data-st="pass">PASS</span>
@@ -2305,7 +2308,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
         <li>แจ้งเตือนผ่าน Telegram หรือ UI notification</li>
         <li>บันทึกใน audit log</li>
       </ul></div>
-      <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
+      <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
     </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
       <span class="opt pass" data-uid="tc-29" data-st="pass">PASS</span>
@@ -2346,7 +2349,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
         <li>ไม่แสดง dashboard หรือข้อมูล account ก่อน login</li>
         <li>มีปุ่ม "เข้าสู่ระบบ" ชัดเจน</li>
       </ul></div>
-      <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
+      <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
     </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
       <span class="opt pass sel" data-uid="tc-38" data-st="pass">PASS</span>
@@ -2386,7 +2389,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
         <li>แสดง accounts list หรือ welcome screen</li>
         <li>ชื่อ user / workspace แสดงใน navbar</li>
       </ul></div>
-      <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
+      <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
     </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
       <span class="opt pass sel" data-uid="tc-39" data-st="pass">PASS</span>
@@ -2425,7 +2428,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
         <li>navigate ไป /accounts → redirect กลับ Login (route guard ทำงาน)</li>
         <li>ไม่เห็นข้อมูล account หลัง logout</li>
       </ul></div>
-      <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
+      <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
     </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
       <span class="opt pass sel" data-uid="tc-40" data-st="pass">PASS</span>
@@ -2461,7 +2464,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
         <li>ไม่แสดง accounts data แม้ชั่วขณะ (no flash of content)</li>
         <li>route guard ทำงานก่อน render</li>
       </ul></div>
-      <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
+      <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
     </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
       <span class="opt pass" data-uid="tc-41" data-st="pass">PASS</span>
@@ -2500,7 +2503,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
         <li>ไม่แสดง 500 error หรือ broken UI</li>
         <li>login ใหม่แล้วกลับมาได้ปกติ</li>
       </ul></div>
-      <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
+      <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
     </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
       <span class="opt pass" data-uid="tc-42" data-st="pass">PASS</span>
@@ -2536,7 +2539,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
       <li>quota bar อัพเดท</li>
       <li>ไม่มี error</li>
     </ul></div>
-    <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass sel" data-uid="tc-43" data-st="pass">PASS</span>
@@ -2567,7 +2570,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
       <li>กด play → วีดีโอเล่นได้</li>
       <li>ปิด dialog → กลับรายการปกติ</li>
     </ul></div>
-    <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass sel" data-uid="tc-44" data-st="pass">PASS</span>
@@ -2597,7 +2600,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
       <li>quota bar ลดลงตามขนาดไฟล์</li>
       <li>ยกเลิกใน dialog → วีดีโอยังอยู่</li>
     </ul></div>
-    <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass sel" data-uid="tc-45" data-st="pass">PASS</span>
@@ -2626,7 +2629,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
       <li>ไม่มี API call</li>
       <li>รายการไม่เปลี่ยน</li>
     </ul></div>
-    <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass sel" data-uid="tc-46" data-st="pass">PASS</span>
@@ -2656,7 +2659,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
       <li>ปุ่มอัปโหลด disabled หรือแสดง error "quota เต็ม"</li>
       <li>EntitlementBanner แสดง</li>
     </ul></div>
-    <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass sel" data-uid="tc-47" data-st="pass">PASS</span>
@@ -2688,7 +2691,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
       <li>แสดง warning "วีดีโอนี้กำลังถูกใช้งาน" หรือ disable ปุ่มลบ</li>
       <li>ไม่ลบได้ระหว่าง session live</li>
     </ul></div>
-    <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-48" data-st="pass">PASS</span>
@@ -2722,7 +2725,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
       <li>ชื่อยังคงอยู่หลัง reload</li>
       <li>ใช้ชื่อนี้ตอน Start session จริง</li>
     </ul></div>
-    <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-49" data-st="pass">PASS</span>
@@ -2752,7 +2755,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
       <li>category ยังถูกเลือกอยู่หลัง reload</li>
       <li>ตอน Start session → TikTok ใช้ category นี้</li>
     </ul></div>
-    <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-50" data-st="pass">PASS</span>
@@ -2784,7 +2787,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
       <li>countdown แสดงถูกต้อง</li>
       <li>ตอน session หยุด → countdown เริ่มนับก่อน restart</li>
     </ul></div>
-    <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-51" data-st="pass">PASS</span>
@@ -2815,7 +2818,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
       <li>วีดีโอที่เลือก highlight อยู่หลัง reload</li>
       <li>ffmpeg ใช้ไฟล์นั้น stream จริง</li>
     </ul></div>
-    <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-52" data-st="pass">PASS</span>
@@ -2850,7 +2853,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
       <li>หลังครบ → session restart อัตโนมัติ</li>
       <li>state กลับเป็น "live" โดยไม่ต้องกดเอง</li>
     </ul></div>
-    <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-53" data-st="pass">PASS</span>
@@ -2886,7 +2889,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
       <li>แสดง "ส่งสำเร็จ" ใน UI</li>
       <li>รับ message ใน Telegram จริง</li>
     </ul></div>
-    <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass sel" data-uid="tc-54" data-st="pass">PASS</span>
@@ -2915,7 +2918,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
       <li>แสดง error "token ไม่ถูกต้อง" หรือ Telegram API error</li>
       <li>ไม่ crash app</li>
     </ul></div>
-    <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass sel" data-uid="tc-55" data-st="pass">PASS</span>
@@ -2948,7 +2951,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
       <li>รับ notification "session หยุดแล้ว" ตอน Stop</li>
       <li>ระบุ account name ใน message</li>
     </ul></div>
-    <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-56" data-st="pass">PASS</span>
@@ -2978,7 +2981,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
       <li>แต่ละ entry มี timestamp + action + actor</li>
       <li>ไม่แสดงหน้าว่างเมื่อมี entries</li>
     </ul></div>
-    <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass sel" data-uid="tc-57" data-st="pass">PASS</span>
@@ -3007,7 +3010,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
       <li>สถานะ backend health (online/offline)</li>
       <li>ไม่แสดง error หรือ blank</li>
     </ul></div>
-    <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass sel" data-uid="tc-58" data-st="pass">PASS</span>
@@ -3037,7 +3040,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
       <li>ตั้งค่า persist</li>
       <li>entries เก่ากว่า 7 วัน ถูก purge (หรือ hidden)</li>
     </ul></div>
-    <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-59" data-st="pass">PASS</span>
@@ -3082,7 +3085,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
       <li>Stop A ไม่กระทบ B</li>
       <li>ไม่มี memory spike หรือ crash เมื่อ 2 session live พร้อมกัน</li>
     </ul></div>
-    <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-61" data-st="pass">PASS</span>
@@ -3121,7 +3124,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
       <li>chat กลับมา decode ได้หลัง reconnect</li>
       <li>ถ้า stream หลุด: ffmpeg restart และ state กลับเป็น "live"</li>
     </ul></div>
-    <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Notes</h4><ul>
     <li>ถ้า auto-restart เปิดอยู่ (TC-LS.3) → คาดว่า restart เองได้</li>
@@ -3162,7 +3165,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
       <li>reply ที่ส่งขณะ expire → แสดง "(ส่งไม่สำเร็จ)" ไม่ส่งซ้ำ</li>
       <li>หลัง re-login (TC-LG.1 ซ้ำ) → oracle กลับทำงานได้ปกติ</li>
     </ul></div>
-    <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Notes</h4><ul>
     <li>bindOracleSession() ใน tiktok-login.js คือจุดที่ copy cookie → oracle partition ตรงนี้คือ root cause</li>
@@ -3204,7 +3207,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
       <li>สินค้าอื่นที่ pin ได้ → ยัง pin สำเร็จตามปกติ (partial failure ไม่ block ทั้งหมด)</li>
       <li>session ยัง live ต่อได้ — pin failure ไม่ crash app</li>
     </ul></div>
-    <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Notes</h4><ul>
     <li>pollPins ใน oracle.js (4s interval) คือจุดที่ claim + execute pin jobs — ดู log ตรงนี้</li>
@@ -3305,7 +3308,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
         <li>overlay บน stream ไม่หลุดหรือค้าง</li>
         <li>Session หยุดด้วย Stop → state เป็น "stopped" สะอาด</li>
       </ul></div>
-      <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
+      <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
     </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
       <span class="opt pass" data-uid="tc-37" data-st="pass">PASS</span>
@@ -3384,7 +3387,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
       <li>Chat realtime และ manual reply ทำงานได้ในระหว่าง session เดียวกัน</li>
       <li>Stop session สะอาด — ไม่มี zombie oracle process</li>
     </ul></div>
-    <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
 
   <div class="sec"><h4>Notes</h4><ul>
@@ -3429,7 +3432,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
       <li>Top Products แสดง A และ B แยกกันพร้อมยอดแต่ละรายการ</li>
       <li>totalUnits = 3 (1+2)</li>
     </ul></div>
-    <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-65" data-st="pass">PASS</span>
@@ -3465,7 +3468,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
       <li>ไม่มี order ตกหาย (นับครบทุก order)</li>
       <li>Top Products แสดง X (2 units) และ Y (1 unit)</li>
     </ul></div>
-    <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-66" data-st="pass">PASS</span>
@@ -3495,7 +3498,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
       <li>GMV ไม่เพิ่ม (ยังเป็น 0 หรือยอดเดิม)</li>
       <li>Abandoned cart ไม่ถูกนับเป็น revenue</li>
     </ul></div>
-    <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Notes</h4><ul>
     <li>GMV มาจาก shop.tiktok.com cookie — นับเฉพาะ confirmed order เท่านั้น ไม่นับ cart</li>
@@ -3535,7 +3538,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
       <li>GMV แสดงยอดขายของ order ลูกค้าแล้ว (อัพเดทใน ~30s)</li>
       <li>ทั้ง reply และ GMV ทำงานพร้อมกันใน session เดียวได้ ไม่มี conflict</li>
     </ul></div>
-    <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-68" data-st="pass">PASS</span>
@@ -3570,7 +3573,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
       <li>Top Products แสดงสินค้า X ด้วยยอด ฿80</li>
       <li>totalUnits = 1</li>
     </ul></div>
-    <div class="sec"><h4>Actual Result</h4><div class="actualbox" contenteditable="true">— บันทึกผลตอนทดสอบ —</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Notes</h4><ul>
     <li>ถ้า TikTok Shop API ส่ง GMV เป็นราคาก่อนหักส่วนลด → note ไว้ใน Actual Result และ mark HOLD</li>
@@ -3626,7 +3629,7 @@ Object.keys(store).forEach(function(uid) {
       var badge = d.querySelector('.opt[data-uid="' + uid + '"]');
       if (!badge) return;
       var box = d.querySelector('.actualbox');
-      if (box) box.textContent = store[uid].actual;
+      if (box) { box.value = store[uid].actual; box.classList.add('filled'); }
     });
   }
 });
@@ -3685,14 +3688,20 @@ document.querySelectorAll('.opt').forEach(function(o) {
 
 // ── Actual result editable on blur ──
 document.querySelectorAll('.actualbox').forEach(function(box) {
-  box.contentEditable = 'true';
+  // a <textarea> — clicking/typing must not bubble up to the row toggle
+  box.addEventListener('click', function(ev) { ev.stopPropagation(); });
+  box.addEventListener('input', function() { box.classList.toggle('filled', box.value.trim() !== ''); });
   box.addEventListener('blur', function() {
     // find uid from nearest .opt
     var opts = box.closest('tr.detail').querySelectorAll('.opt');
     if (!opts.length) return;
     var uid = opts[0].dataset.uid;
+    var txt = box.value.trim();
+    var prev = (store[uid] && store[uid].actual) || '';
+    if (txt === prev) return;
     store[uid] = store[uid] || {};
-    store[uid].actual = box.textContent.trim() || '';
+    if (txt) { store[uid].actual = txt; }
+    else { delete store[uid].actual; if (!Object.keys(store[uid]).length) delete store[uid]; }
     save();
     markDirty();
   });
@@ -4000,7 +4009,7 @@ function applyAllStatuses() {
       document.querySelectorAll('tr.detail').forEach(function(d) {
         if (!d.querySelector('.opt[data-uid="' + uid + '"]')) return;
         var box = d.querySelector('.actualbox');
-        if (box) box.textContent = store[uid].actual;
+        if (box) { box.value = store[uid].actual; box.classList.toggle('filled', !!store[uid].actual); }
       });
     }
   });
