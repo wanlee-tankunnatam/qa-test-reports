@@ -743,6 +743,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   "tc-194": {
     "actual": "ไม่ผ่าน: สร้างสคริปต์ในคลังสคริปต์ที่มีคำเสี่ยงจากคลัง (รักษามะเร็ง) แล้วส่งขออนุมัติ พบว่า ปุ่ม \"อนุมัติ\" ในคลังสคริปต์ ยังคงกดได้ตามปกติ ไม่ถูกปิด/เตือนเรื่องคำเสี่ยงเลย และ modal ยืนยันการอนุมัติหลังกดก็ไม่มีข้อความเตือนเรื่องคำเสี่ยงเลย ขัดกับ expected ที่ระบุว่าปุ่มอนุมัติต้องถูกปิดพร้อมข้อความว่าต้องแก้คำเสี่ยงก่อน หมายเหตุ: หน้าตรวจก่อนไลฟ์ของเวิร์ซตัวนี้แสดงข้อ \"เตือน: ยังไม่ได้ตั้งค่าคลังคำเสี่ยง\" อาจหมายความว่า auto risk-check ของ workspace นี้ยังไม่เปิดใช้งาน ซึ่งอาจเป็นสาเหตุที่ทำให้ปุ่มอนุมัติไม่ถูกบล็อก ควรตรวจสอบ Settings ของ workspace เพิ่มเติม",
     "st": "fail"
+  },
+  "tc-196": {
+    "actual": "ผ่าน: หน้าตรวจก่อนไลฟ์ของ workspace นี้แสดงข้อ \"เตือน: ยังไม่ได้ตั้งค่าคลังคำเสี่ยง — ตั้งค่าใน Settings เพื่อให้ตรวจอัตโนมัติ\" สอดคล้องกับ expected เป็นคำแนะนำเชิงเตือน (ไม่ใช่ error) และจากการทดสอบใน TC-RC.2 ยืนยันว่าสคริปต์อนุมัติได้ตามปกติโดยไม่ถูกบล็อกผิดๆ ตรงตาม expected ที่ระบุว่าต้องไม่บล็อกผิดๆ แต่มีคำแนะนำ ไม่มี error หรือหน้าค้าง",
+    "st": "pass"
   }
 }
 </script>
@@ -767,15 +771,15 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="runsum">
     <h3>📊 สรุปผล Manual Test</h3>
     <div class="sumchips">
-      <span class="cnt pass">PASS <b id="sum-pass">86</b></span>
+      <span class="cnt pass">PASS <b id="sum-pass">87</b></span>
       <span class="cnt fail">FAIL <b id="sum-fail">53</b></span>
       <span class="cnt hold">HOLD <b id="sum-hold">1</b></span>
       <span class="cnt block">BLOCKED <b id="sum-block">0</b></span>
       <span class="cnt skip">SKIP <b id="sum-skip">15</b></span>
-      <span class="cnt pending">รอเทส <b id="sum-pending">102</b></span>
+      <span class="cnt pending">รอเทส <b id="sum-pending">101</b></span>
     </div>
     <div class="progress"><div id="sumbar" class="progressbar" style="width: 58%;"></div></div>
-    <div class="hint" id="sumpct" style="margin-top:5px">58% ทดสอบแล้ว (140/242) · ข้าม 15</div>
+    <div class="hint" id="sumpct" style="margin-top:5px">58% ทดสอบแล้ว (141/242) · ข้าม 15</div>
   </div>
 
   <div class="toolbar">
@@ -6771,7 +6775,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow open" data-feat="epic3" data-level="ui" data-prio="P0" onclick="tg(this)">
+<tr class="trow" data-feat="epic3" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-RC.2</td>
   <td class="ctitle">สคริปต์ที่ยังพบคำเสี่ยงถูกกั้นไม่ให้อนุมัติจนกว่าจะแก้</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -6779,7 +6783,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-194"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-194"></td>
 </tr>
-<tr class="detail show"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">สคริปต์ที่ยังพบคำเสี่ยงถูกกั้นไม่ให้อนุมัติจนกว่าจะแก้</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · risk-check-inline · Epic 3 · Story 3.8b · FR33</div>
   <div class="sec"><h4>Precondition</h4><ul><li>มีสคริปต์ในฉากที่ตรวจแล้วพบคำเสี่ยง</li><li>ล็อกอินด้วยผู้มีสิทธิ์อนุมัติ</li></ul></div>
@@ -6831,25 +6835,25 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow" data-feat="epic3" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow open" data-feat="epic3" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-RC.E1</td>
   <td class="ctitle">Workspace ที่ยังไม่ได้ตั้งคลังคำเสี่ยง ต้องไม่บล็อกผิด ๆ แต่มีคำแนะนำ</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-196"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-196"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-196"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail show"><td colspan="7"><div class="card">
   <div class="h-title">Workspace ที่ยังไม่ได้ตั้งคลังคำเสี่ยง ต้องไม่บล็อกผิด ๆ แต่มีคำแนะนำ</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · risk-check-inline · Epic 3 · Story 3.8b (edge)</div>
   <div class="sec"><h4>Precondition</h4><ul><li>มี workspace ทดสอบที่คลังคำเสี่ยงยังว่าง</li></ul></div>
   <div class="sec"><h4>Test Steps</h4><ol><li>สลับไป workspace ที่ยังไม่ได้ตั้งคลังคำเสี่ยง</li><li>สร้างสคริปต์ที่มีเนื้อหาทั่วไปแล้วบันทึก</li><li>ดูสถานะคำเสี่ยงของสคริปต์</li><li>อ่านข้อความแนะนำที่แสดง</li><li>ลองกดอนุมัติสคริปต์นั้น</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>สคริปต์ไม่ถูก flag ว่าพบคำเสี่ยงทั้งที่คลังยังว่าง (ไม่บล็อกผิด)</li><li>มีคำแนะนำทำนอง "ยังไม่ได้ตั้งค่า Risk Word Library — ตั้งค่าเพื่อให้ระบบช่วยตรวจคำเสี่ยง"</li><li>อนุมัติสคริปต์ได้ตามปกติ</li><li>ไม่มีข้อความ error หรือหน้าค้าง</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —">ผ่าน: หน้าตรวจก่อนไลฟ์ของ workspace นี้แสดงข้อ "เตือน: ยังไม่ได้ตั้งค่าคลังคำเสี่ยง — ตั้งค่าใน Settings เพื่อให้ตรวจอัตโนมัติ" สอดคล้องกับ expected เป็นคำแนะนำเชิงเตือน (ไม่ใช่ error) และจากการทดสอบใน TC-RC.2 ยืนยันว่าสคริปต์อนุมัติได้ตามปกติโดยไม่ถูกบล็อกผิดๆ ตรงตาม expected ที่ระบุว่าต้องไม่บล็อกผิดๆ แต่มีคำแนะนำ ไม่มี error หรือหน้าค้าง</textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-196" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-196" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-196" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-196" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-196" data-st="block">BLOCKED</span>
@@ -9264,4 +9268,4 @@ document.querySelectorAll('.feat-owner').forEach(function(sel){var e=sel.dataset
         <path d="M128,20A108,108,0,1,0,236,128,108.12,108.12,0,0,0,128,20Zm0,192a84,84,0,1,1,84-84A84.09,84.09,0,0,1,128,212Zm40-112v56a12,12,0,0,1-12,12H100a12,12,0,0,1-12-12V100a12,12,0,0,1,12-12h56A12,12,0,0,1,168,100Z"></path>
       </svg>
       <span style="vertical-align: middle;">Stop Claude</span>
-    </button></div><div id="claude-phantom-cursor" aria-hidden="true" style="position: fixed; top: 0px; left: 0px; pointer-events: none; z-index: 2147483646; transform: translate3d(435px, 682px, 0px); transition: transform 180ms cubic-bezier(0.2, 0, 0, 1); will-change: transform;"><svg id="claude-phantom-cursor-plain" width="20" height="26" viewBox="0 0 20 26" style="position: absolute; top: 0px; left: 0px; overflow: visible;"><path d="M0 0 L0 18 L4.5 14 L7.5 21.5 L11 20 L8 13 L14 13 Z" stroke="white" stroke-width="3" stroke-linejoin="round" fill="white"></path><path d="M0 0 L0 18 L4.5 14 L7.5 21.5 L11 20 L8 13 L14 13 Z" fill="#111"></path></svg><svg id="claude-phantom-cursor-styled" width="20" height="26" viewBox="0 0 20 26" style="position: absolute; top: 0px; left: 0px; overflow: visible; filter: drop-shadow(rgba(217, 119, 87, 0.9) 0px 0px 4px) drop-shadow(rgba(217, 119, 87, 0.45) 0px 0px 10px); display: none;"><path d="M0 0 L0 18 L4.5 14 L7.5 21.5 L11 20 L8 13 L14 13 Z" stroke="#D97757" stroke-width="3" stroke-linejoin="round" fill="#D97757"></path><path d="M0 0 L0 18 L4.5 14 L7.5 21.5 L11 20 L8 13 L14 13 Z" fill="#FAF9F5"></path></svg></div></body></html>
+    </button></div><div id="claude-phantom-cursor" aria-hidden="true" style="position: fixed; top: 0px; left: 0px; pointer-events: none; z-index: 2147483646; transform: translate3d(380px, 439px, 0px); transition: transform 180ms cubic-bezier(0.2, 0, 0, 1); will-change: transform;"><svg id="claude-phantom-cursor-plain" width="20" height="26" viewBox="0 0 20 26" style="position: absolute; top: 0px; left: 0px; overflow: visible;"><path d="M0 0 L0 18 L4.5 14 L7.5 21.5 L11 20 L8 13 L14 13 Z" stroke="white" stroke-width="3" stroke-linejoin="round" fill="white"></path><path d="M0 0 L0 18 L4.5 14 L7.5 21.5 L11 20 L8 13 L14 13 Z" fill="#111"></path></svg><svg id="claude-phantom-cursor-styled" width="20" height="26" viewBox="0 0 20 26" style="position: absolute; top: 0px; left: 0px; overflow: visible; filter: drop-shadow(rgba(217, 119, 87, 0.9) 0px 0px 4px) drop-shadow(rgba(217, 119, 87, 0.45) 0px 0px 10px); display: none;"><path d="M0 0 L0 18 L4.5 14 L7.5 21.5 L11 20 L8 13 L14 13 Z" stroke="#D97757" stroke-width="3" stroke-linejoin="round" fill="#D97757"></path><path d="M0 0 L0 18 L4.5 14 L7.5 21.5 L11 20 L8 13 L14 13 Z" fill="#FAF9F5"></path></svg></div></body></html>
