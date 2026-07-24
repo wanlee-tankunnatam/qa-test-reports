@@ -767,6 +767,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   "tc-142": {
     "actual": "ผ่านบางส่วน: พบคำแนะนำ \"ใช้ปุ่มลูกศรซ้าย/ขวาเพื่อเลื่อนช่วงเวลา และกด Enter ที่วันเพื่อเปิดดูวันนั้น\" แสดงอยู่บนหน้าจริง ตรงตาม expected. กดลูกศรซ้าย/ขวาเมื่อโฟกัสที่ปฏิทิน (มีกรอบ focus สีส้มรอบปฏิทิน) เลื่อนเดือนไปข้างหน้า/ถอยหลังได้ถูกต้องจริง แต่เมื่อกด Tab เพื่อโฟกัสไปยังช่องวันที่ ระบบข้ามไปที่ปุ่มก่อนหน้า/ถัดไปทันที ไม่พบว่าช่องวันแต่ละวันรับ focus ได้ จึงไม่สามารถยืนยันได้ว่ากด Enter ที่วันที่โฟกัสแล้วจะเปิดดูรายการของวันนั้นตามที่ expected ระบุ - ไม่ผ่านเกณฑ์ข้อนี้อย่างสมบูรณ์",
     "st": "fail"
+  },
+  "tc-145": {
+    "actual": "ผ่าน: เปิด /live/projects เห็นหัวข้อ \"โปรเจกต์ของฉัน\" พร้อมคำบรรยาย \"ไลฟ์ที่กำลังเตรียม — เปิดแก้ไขต่อใน Studio ได้ทุกเมื่อ\" ตรงตาม expected แต่ละแถวแสดงจำนวนฉาก/สินค้า/สคริปต์ และสถานะ (เช่น \"ยังไม่กำหนดเวลา\") ครบถ้วน กด \"แก้ไขต่อ\" ที่รายการจริง (ไม่ใช่รายการที่มาจากการทำซ้ำ) แล้วเข้าสู่ Studio ของร่างนั้นถูกต้อง พบฉาก อวาตาร์ (มีคำเตือนอวาตาร์เดิมถูกลบแล้ว - เป็นเคสแยกไม่เกี่ยวกับ TC นี้) และสคริปต์ที่เคยตั้งไว้ครบ ตรงตาม expected ทุกข้อ",
+    "st": "pass"
   }
 }
 </script>
@@ -791,15 +795,15 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="runsum">
     <h3>📊 สรุปผล Manual Test</h3>
     <div class="sumchips">
-      <span class="cnt pass">PASS <b id="sum-pass">90</b></span>
+      <span class="cnt pass">PASS <b id="sum-pass">91</b></span>
       <span class="cnt fail">FAIL <b id="sum-fail">55</b></span>
       <span class="cnt hold">HOLD <b id="sum-hold">1</b></span>
       <span class="cnt block">BLOCKED <b id="sum-block">0</b></span>
       <span class="cnt skip">SKIP <b id="sum-skip">15</b></span>
-      <span class="cnt pending">รอเทส <b id="sum-pending">96</b></span>
+      <span class="cnt pending">รอเทส <b id="sum-pending">95</b></span>
     </div>
-    <div class="progress"><div id="sumbar" class="progressbar" style="width: 60%;"></div></div>
-    <div class="hint" id="sumpct" style="margin-top:5px">60% ทดสอบแล้ว (146/242) · ข้าม 15</div>
+    <div class="progress"><div id="sumbar" class="progressbar" style="width: 61%;"></div></div>
+    <div class="hint" id="sumpct" style="margin-top:5px">61% ทดสอบแล้ว (147/242) · ข้าม 15</div>
   </div>
 
   <div class="toolbar">
@@ -5298,7 +5302,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">ดูรายการโปรเจกต์ของฉันที่กำลังเตรียมและกลับไปแก้ต่อได้</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-145"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-145"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-145"></td>
 </tr>
 <tr class="detail show"><td colspan="7"><div class="card">
@@ -5309,10 +5313,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Data</h4><ul><li>URL: https://uat-live.takra.ai/live/projects</li></ul></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>เห็นหัวข้อ "โปรเจกต์ของฉัน" พร้อมคำบรรยายว่าเป็นไลฟ์ที่กำลังเตรียมและเปิดแก้ไขต่อใน Studio ได้</li><li>แต่ละแถวแสดงจำนวนฉาก · สินค้า · สคริปต์ และสถานะพร้อม/ฉบับร่าง</li><li>กดแก้ไขต่อแล้วเข้าสู่ Studio ของร่างนั้น</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —">ผ่าน: เปิด /live/projects เห็นหัวข้อ "โปรเจกต์ของฉัน" พร้อมคำบรรยาย "ไลฟ์ที่กำลังเตรียม — เปิดแก้ไขต่อใน Studio ได้ทุกเมื่อ" ตรงตาม expected แต่ละแถวแสดงจำนวนฉาก/สินค้า/สคริปต์ และสถานะ (เช่น "ยังไม่กำหนดเวลา") ครบถ้วน กด "แก้ไขต่อ" ที่รายการจริง (ไม่ใช่รายการที่มาจากการทำซ้ำ) แล้วเข้าสู่ Studio ของร่างนั้นถูกต้อง พบฉาก อวาตาร์ (มีคำเตือนอวาตาร์เดิมถูกลบแล้ว - เป็นเคสแยกไม่เกี่ยวกับ TC นี้) และสคริปต์ที่เคยตั้งไว้ครบ ตรงตาม expected ทุกข้อ</textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-145" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-145" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-145" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-145" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-145" data-st="block">BLOCKED</span>
