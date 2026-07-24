@@ -657,7 +657,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     "st": "pass"
   },
   "tc-161": {
-    "actual": "ผ่านบางส่วน: ปุ่มเพิ่มฉากที่แผงซ้ายแสดงตัวนับปัจจุบัน/สูงสุดถูกต้อง (ทดสอบเพิ่มจาก 1/5 เป็น 2/5 สำเร็จ) หมายเหตุ: ยังไม่ได้ทดสอบกรณีเพิ่มจนครบ 5/5 แล้วเพิ่มอีก, การทำสำเนาฉาก และการลบจนเหลือฉากเดียวโดยตรงเนื่องขาดเวลา ควรทดสอบซ้ำเพิ่มเติม",
+    "actual": "เพิ่มฉากจาก 1/5 จนถึง 5/5 ได้ปกติ, ปุ่มแสดงตัวเลขถูกต้อง. แต่กด \"เพิ่มฉาก\" ตอนครบ 5/5 แล้ว ไม่มี toast/ข้อความแจ้งขีดจำกัดใดๆเลย (เทียบกับ \"ทำสำเนา\" ตอนครบ 5/5 ซึ่งมี toast \"ทำสำเนาไม่ได้ - 1 ไลฟ์มีได้สูงสุด 5 ฉาก\" ชัดเจน) - FAIL ตาม expected #2. ทำสำเนาฉากทำงานถูกต้องพร้อมยืนยัน. ลบฉากจนเหลือฉากเดียว: เมนู \"ลบฉาก\" ไม่ถูกปิด/ไม่มี disabled state และเมื่อกดแล้วไม่มีอะไรเกิดขึ้นเลย (ไม่มี dialog ยืนยัน ไม่มีข้อความอธิบายว่าลบไม่ได้เพราะเหลือฉากเดียว) - ไม่ตรงกับ expected #4 ที่ต้องการให้ปุ่มถูกปิดพร้อมคำอธิบาย. สรุป: FAIL 2 จุดตาม expected result",
     "st": "pass"
   },
   "tc-93": {
@@ -816,6 +816,9 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   },
   "tc-201": {
     "actual": "ข้ามการทดสอบในรอบนี้ (สถานะไม่เปลี่ยน) — ต้องการฉากปลายทางที่มีสคริปต์ตัวเดียวกันอยู่แล้วแต่ไม่เต็ม แต่หน้าต่าง \"ผูกสคริปต์เข้าฉาก\" กรองสคริปต์ที่ถูกผูกกับฉากอื่นในไลฟ์เดียวกันออกจากคลังไปแล้ว (ค้นหาไม่เจอ) ทำให้จำลอง scenario ตามสเต็ปไม่ได้ในรอบนี้ ต้องตรวจสอบเพิ่มเติมว่ากรณีนี้เกิดขึ้นได้จริงหรือไม่"
+  },
+  "tc-160": {
+    "st": "fail"
   }
 }
 </script>
@@ -841,14 +844,14 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <h3>📊 สรุปผล Manual Test</h3>
     <div class="sumchips">
       <span class="cnt pass">PASS <b id="sum-pass">96</b></span>
-      <span class="cnt fail">FAIL <b id="sum-fail">56</b></span>
+      <span class="cnt fail">FAIL <b id="sum-fail">57</b></span>
       <span class="cnt hold">HOLD <b id="sum-hold">1</b></span>
       <span class="cnt block">BLOCKED <b id="sum-block">0</b></span>
       <span class="cnt skip">SKIP <b id="sum-skip">15</b></span>
-      <span class="cnt pending">รอเทส <b id="sum-pending">89</b></span>
+      <span class="cnt pending">รอเทส <b id="sum-pending">88</b></span>
     </div>
-    <div class="progress"><div id="sumbar" class="progressbar" style="width: 63%;"></div></div>
-    <div class="hint" id="sumpct" style="margin-top:5px">63% ทดสอบแล้ว (153/242) · ข้าม 15</div>
+    <div class="progress"><div id="sumbar" class="progressbar" style="width: 64%;"></div></div>
+    <div class="hint" id="sumpct" style="margin-top:5px">64% ทดสอบแล้ว (154/242) · ข้าม 15</div>
   </div>
 
   <div class="toolbar">
@@ -870,7 +873,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="row"><label>Epic</label>
       <button class="fchip" data-f="feat" data-v="epic1">🚪 E1 (60)</button>
       <button class="fchip" data-f="feat" data-v="epic2">📦 E2 (74)</button>
-      <button class="fchip active" data-f="feat" data-v="epic3">🎬 E3 (75)</button>
+      <button class="fchip" data-f="feat" data-v="epic3">🎬 E3 (75)</button>
       <button class="fchip" data-f="feat" data-v="epic4">📡 E4 (24)</button>
       <button class="fchip" data-f="feat" data-v="epic5">💬 E5 (8)</button>
       <button class="fchip" data-f="feat" data-v="epic6">✨ E6 (16)</button>
@@ -5804,7 +5807,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">โหลดคลังอวาตาร์/เสียงใน Studio ไม่สำเร็จ แล้วมีข้อความบอกวิธีแก้</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p2">P2</span></td>
-  <td class="status" data-uid="tc-160"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-160"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-160"></td>
 </tr>
 <tr class="detail show"><td colspan="7"><div class="card">
@@ -5819,7 +5822,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-160" data-st="pass">PASS</span>
-    <span class="opt fail" data-uid="tc-160" data-st="fail">FAIL</span>
+    <span class="opt fail sel" data-uid="tc-160" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-160" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-160" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-160" data-st="skip">SKIP</span>
@@ -5847,7 +5850,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Data</h4><ul><li>ขีดจำกัดตาม PRD: 1-5 ฉากต่อไลฟ์ · ค่าเริ่มต้น 1 ฉาก</li></ul></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ปุ่มเพิ่มฉากแสดงจำนวนปัจจุบันเทียบจำนวนสูงสุด (เช่น 1/5)</li><li>เมื่อครบจำนวนสูงสุด เพิ่มไม่ได้และมีข้อความบอกขีดจำกัดต่อไลฟ์</li><li>ทำสำเนาฉากแล้วได้ฉากใหม่ต่อท้ายพร้อม layer ครบตามต้นฉบับ</li><li>เหลือฉากเดียวแล้วปุ่มลบถูกปิดพร้อมคำอธิบายว่าลบไม่ได้เพราะมีฉากเดียว</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —">ผ่านบางส่วน: ปุ่มเพิ่มฉากที่แผงซ้ายแสดงตัวนับปัจจุบัน/สูงสุดถูกต้อง (ทดสอบเพิ่มจาก 1/5 เป็น 2/5 สำเร็จ) หมายเหตุ: ยังไม่ได้ทดสอบกรณีเพิ่มจนครบ 5/5 แล้วเพิ่มอีก, การทำสำเนาฉาก และการลบจนเหลือฉากเดียวโดยตรงเนื่องขาดเวลา ควรทดสอบซ้ำเพิ่มเติม</textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —">เพิ่มฉากจาก 1/5 จนถึง 5/5 ได้ปกติ, ปุ่มแสดงตัวเลขถูกต้อง. แต่กด "เพิ่มฉาก" ตอนครบ 5/5 แล้ว ไม่มี toast/ข้อความแจ้งขีดจำกัดใดๆเลย (เทียบกับ "ทำสำเนา" ตอนครบ 5/5 ซึ่งมี toast "ทำสำเนาไม่ได้ - 1 ไลฟ์มีได้สูงสุด 5 ฉาก" ชัดเจน) - FAIL ตาม expected #2. ทำสำเนาฉากทำงานถูกต้องพร้อมยืนยัน. ลบฉากจนเหลือฉากเดียว: เมนู "ลบฉาก" ไม่ถูกปิด/ไม่มี disabled state และเมื่อกดแล้วไม่มีอะไรเกิดขึ้นเลย (ไม่มี dialog ยืนยัน ไม่มีข้อความอธิบายว่าลบไม่ได้เพราะเหลือฉากเดียว) - ไม่ตรงกับ expected #4 ที่ต้องการให้ปุ่มถูกปิดพร้อมคำอธิบาย. สรุป: FAIL 2 จุดตาม expected result</textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass sel" data-uid="tc-161" data-st="pass">PASS</span>
@@ -9332,4 +9335,9 @@ document.querySelectorAll('.feat-owner').forEach(function(sel){var e=sel.dataset
 </script>
 
 
-</body></html>
+<div id="claude-agent-glow-border" style="position: fixed; inset: 0px; pointer-events: none; z-index: 2147483646; opacity: 1; transition: opacity 0.3s ease-in-out;"><div id="claude-agent-glow-border-inner" style="position: absolute; inset: 0px; will-change: opacity; box-shadow: rgba(217, 119, 87, 0.7) 0px 0px 15px inset, rgba(217, 119, 87, 0.5) 0px 0px 25px inset, rgba(217, 119, 87, 0.2) 0px 0px 35px inset;"></div></div><div id="claude-agent-stop-container" style="position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%); justify-content: center; align-items: center; pointer-events: none; z-index: 2147483647;"><button id="claude-agent-stop-button" style="position: relative; transform: translateY(0px); padding: 12px 16px; background: rgb(250, 249, 245); color: rgb(20, 20, 19); border: 0.5px solid rgba(31, 30, 29, 0.4); border-radius: 12px; font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; box-shadow: rgba(217, 119, 87, 0.24) 0px 40px 80px, rgba(217, 119, 87, 0.24) 0px 4px 14px; transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); opacity: 1; user-select: none; pointer-events: auto; white-space: nowrap; margin: 0px auto;">
+      <svg width="16" height="16" viewBox="0 0 256 256" fill="currentColor" style="margin-right: 12px; vertical-align: middle;">
+        <path d="M128,20A108,108,0,1,0,236,128,108.12,108.12,0,0,0,128,20Zm0,192a84,84,0,1,1,84-84A84.09,84.09,0,0,1,128,212Zm40-112v56a12,12,0,0,1-12,12H100a12,12,0,0,1-12-12V100a12,12,0,0,1,12-12h56A12,12,0,0,1,168,100Z"></path>
+      </svg>
+      <span style="vertical-align: middle;">Stop Claude</span>
+    </button></div><div id="claude-phantom-cursor" aria-hidden="true" style="position: fixed; top: 0px; left: 0px; pointer-events: none; z-index: 2147483646; transform: translate3d(122px, 251px, 0px); transition: transform 180ms cubic-bezier(0.2, 0, 0, 1); will-change: transform;"><svg id="claude-phantom-cursor-plain" width="20" height="26" viewBox="0 0 20 26" style="position: absolute; top: 0px; left: 0px; overflow: visible;"><path d="M0 0 L0 18 L4.5 14 L7.5 21.5 L11 20 L8 13 L14 13 Z" stroke="white" stroke-width="3" stroke-linejoin="round" fill="white"></path><path d="M0 0 L0 18 L4.5 14 L7.5 21.5 L11 20 L8 13 L14 13 Z" fill="#111"></path></svg><svg id="claude-phantom-cursor-styled" width="20" height="26" viewBox="0 0 20 26" style="position: absolute; top: 0px; left: 0px; overflow: visible; filter: drop-shadow(rgba(217, 119, 87, 0.9) 0px 0px 4px) drop-shadow(rgba(217, 119, 87, 0.45) 0px 0px 10px);"><path d="M0 0 L0 18 L4.5 14 L7.5 21.5 L11 20 L8 13 L14 13 Z" stroke="#D97757" stroke-width="3" stroke-linejoin="round" fill="#D97757"></path><path d="M0 0 L0 18 L4.5 14 L7.5 21.5 L11 20 L8 13 L14 13 Z" fill="#FAF9F5"></path></svg></div></body></html>
