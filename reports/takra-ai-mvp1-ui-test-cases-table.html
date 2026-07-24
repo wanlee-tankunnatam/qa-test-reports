@@ -795,6 +795,27 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   "tc-209": {
     "actual": "ทดสอบใน BP Coffee: เปิดหน้าตรวจก่อนไลฟ์หลายครั้ง พบข้อความ \"โหลดผลตรวจก่อนไลฟ์ไม่สำเร็จ — บันทึกร่างแล้วลองอีกครั้ง\" ค้างแสดงอยู่บนสุดของ modal แม้รายการตรวจทุกข้อจะโหลดและแสดงผล \"ผ่าน\" ครบถ้วนแล้ว และปุ่ม \"ไลฟ์เลย\" ยังกดได้ตามปกติ ข้อความ error ไม่สอดคล้องกับสถานะจริง (ควรหายไปเมื่อโหลดสำเร็จ) เป็นบั๊ก UI ที่อาจทำให้ผู้ใช้สับสน/ไม่มั่นใจ",
     "st": "fail"
+  },
+  "tc-188": {
+    "actual": "ข้ามการทดสอบในรอบนี้ (สถานะไม่เปลี่ยน) — precondition ต้องใช้บัญชี Live Operator ที่ไม่มีสิทธิ์อนุมัติ เป็นเคสเกี่ยวกับ roles จะทดสอบภายหลังหลังจากทดสอบ role Owner ครบแล้ว"
+  },
+  "tc-190": {
+    "actual": "ข้ามการทดสอบในรอบนี้ (สถานะไม่เปลี่ยน) — ต้องสลับ login ระหว่างผู้มีสิทธิ์อนุมัติกับผู้เขียนสคริปต์ เป็นเคสเกี่ยวกับ roles จะทดสอบภายหลัง"
+  },
+  "tc-191": {
+    "actual": "ข้ามการทดสอบในรอบนี้ (สถานะไม่เปลี่ยน) — ต้องมีผู้ใช้ 2 คนที่มีสิทธิ์อนุมัติ login พร้อมกันเพื่อจำลอง race condition ยังไม่มีบัญชีทดสอบที่สองในรอบนี้"
+  },
+  "tc-192": {
+    "actual": "ข้ามการทดสอบในรอบนี้ (สถานะไม่เปลี่ยน) — precondition ต้องใช้บัญชี Live Operator ที่ไม่มีสิทธิ์ Script Approve เป็นเคสเกี่ยวกับ roles จะทดสอบภายหลัง"
+  },
+  "tc-197": {
+    "actual": "ข้ามการทดสอบในรอบนี้ (สถานะไม่เปลี่ยน) — ต้องใช้ไลฟ์ที่สคริปต์ทั้งหมดอนุมัติแล้วและตรวจก่อนไลฟ์ผ่านครบ ร่วมกับสิทธิ์เข้าหน้า /risk-words เพื่อเพิ่มคำเสี่ยงใหม่ ข้อมูลทดสอบที่มีอยู่ (Cleanser Restock Live) มีปัญหาอวาตาร์ถูกลบทำให้เปิดหน้าตรวจก่อนไลฟ์ไม่ได้ ยังไม่ได้เตรียมชุดข้อมูลที่เหมาะสมในรอบนี้"
+  },
+  "tc-198": {
+    "actual": "ข้ามการทดสอบในรอบนี้ (สถานะไม่เปลี่ยน) — ทดลองลากสคริปต์เพื่อเรียงลำดับใหม่ด้วยเครื่องมือทดสอบอัตโนมัติ (drag-and-drop) หลายครั้งแล้วลำดับไม่เปลี่ยนแปลง คาดว่าเครื่องมือจำลองการลากไม่รองรับ interaction ของ component นี้ ต้องทดสอบด้วยมือจริงเพื่อยืนยันผลอีกครั้ง"
+  },
+  "tc-201": {
+    "actual": "ข้ามการทดสอบในรอบนี้ (สถานะไม่เปลี่ยน) — ต้องการฉากปลายทางที่มีสคริปต์ตัวเดียวกันอยู่แล้วแต่ไม่เต็ม แต่หน้าต่าง \"ผูกสคริปต์เข้าฉาก\" กรองสคริปต์ที่ถูกผูกกับฉากอื่นในไลฟ์เดียวกันออกจากคลังไปแล้ว (ค้นหาไม่เจอ) ทำให้จำลอง scenario ตามสเต็ปไม่ได้ในรอบนี้ ต้องตรวจสอบเพิ่มเติมว่ากรณีนี้เกิดขึ้นได้จริงหรือไม่"
   }
 }
 </script>
@@ -6656,7 +6677,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>ที่รายการสคริปต์ในฉาก กด "ส่งรีวิว"</li><li>อ่านข้อความแจ้งผล</li><li>ดูสถานะที่ติดอยู่กับสคริปต์นั้น</li><li>ลองกดแก้ไขสคริปต์ที่กำลังรออนุมัติ</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>เห็นข้อความยืนยันว่าส่งขออนุมัติแล้วและเข้าคิวรอ owner อนุมัติ</li><li>สคริปต์ติดสถานะรออนุมัติพร้อมข้อความว่ารอ Owner หรือผู้ได้รับสิทธิ์อนุมัติ</li><li>สคริปต์ที่รออนุมัติแก้ไขไม่ได้จนกว่าจะอนุมัติ (มีคำอธิบายกำกับ)</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —">ข้ามการทดสอบในรอบนี้ (สถานะไม่เปลี่ยน) — precondition ต้องใช้บัญชี Live Operator ที่ไม่มีสิทธิ์อนุมัติ เป็นเคสเกี่ยวกับ roles จะทดสอบภายหลังหลังจากทดสอบ role Owner ครบแล้ว</textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-188" data-st="pass">PASS</span>
@@ -6716,7 +6737,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>กดปุ่ม "ตีกลับ" ที่รายการสคริปต์</li><li>ดูสถานะที่เปลี่ยนไป</li><li>ล็อกอินด้วยผู้เขียนแล้วเปิด Studio เดิม</li><li>ลองแก้ไขสคริปต์นั้น</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>สถานะกลับเป็นฉบับร่างและไม่อยู่ในคิวรออนุมัติแล้ว</li><li>ผู้เขียนกลับมาแก้ไขสคริปต์ได้</li><li>ส่งรีวิวใหม่ได้อีกครั้งหลังแก้</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —">ข้ามการทดสอบในรอบนี้ (สถานะไม่เปลี่ยน) — ต้องสลับ login ระหว่างผู้มีสิทธิ์อนุมัติกับผู้เขียนสคริปต์ เป็นเคสเกี่ยวกับ roles จะทดสอบภายหลัง</textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-190" data-st="pass">PASS</span>
@@ -6746,7 +6767,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>ผู้ใช้ A และ B เปิด Studio ของไลฟ์เดียวกันไว้</li><li>ผู้ใช้ A กดอนุมัติสคริปต์ตัวหนึ่ง</li><li>ผู้ใช้ B กดอนุมัติสคริปต์ตัวเดียวกันจากหน้าที่เปิดค้าง</li><li>อ่านข้อความที่ผู้ใช้ B เห็นแล้วกดรีเฟรช</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ผู้ใช้ B เห็นข้อความทำนอง "มีคนเพิ่งอนุมัติสคริปต์นี้ — โปรดรีเฟรช" พร้อมปุ่มรีเฟรช</li><li>หลังรีเฟรช สถานะแสดงตรงกับความจริง</li><li>ไม่มีการอนุมัติซ้ำซ้อนหรือสถานะขัดกัน</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —">ข้ามการทดสอบในรอบนี้ (สถานะไม่เปลี่ยน) — ต้องมีผู้ใช้ 2 คนที่มีสิทธิ์อนุมัติ login พร้อมกันเพื่อจำลอง race condition ยังไม่มีบัญชีทดสอบที่สองในรอบนี้</textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-191" data-st="pass">PASS</span>
@@ -6776,7 +6797,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิด Studio แล้วดูรายการสคริปต์ในฉาก</li><li>มองหาปุ่มอนุมัติ/ตีกลับ</li><li>อ่านข้อความที่แสดงแทน</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ไม่มีปุ่มอนุมัติ/ตีกลับให้กด</li><li>มีข้อความบอกว่ารอ Owner หรือผู้ได้รับสิทธิ์อนุมัติ</li><li>สถานะของสคริปต์ไม่เปลี่ยนแปลง</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —">ข้ามการทดสอบในรอบนี้ (สถานะไม่เปลี่ยน) — precondition ต้องใช้บัญชี Live Operator ที่ไม่มีสิทธิ์ Script Approve เป็นเคสเกี่ยวกับ roles จะทดสอบภายหลัง</textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-192" data-st="pass">PASS</span>
@@ -6929,7 +6950,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Data</h4><ul><li>คำที่ปรากฏในสคริปต์ที่อนุมัติแล้ว 1 คำ</li></ul></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>การตรวจก่อนไลฟ์สแกนซ้ำกับคลังคำเสี่ยงปัจจุบัน ไม่ใช้ผลเดิมที่ตรวจไว้ตอนอนุมัติ</li><li>ข้อ "ตรวจคำเสี่ยง" เปลี่ยนเป็นไม่ผ่าน พร้อมระบุคำที่พบ</li><li>การเริ่มไลฟ์ถูกกั้นจนกว่าจะแก้</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —">ข้ามการทดสอบในรอบนี้ (สถานะไม่เปลี่ยน) — ต้องใช้ไลฟ์ที่สคริปต์ทั้งหมดอนุมัติแล้วและตรวจก่อนไลฟ์ผ่านครบ ร่วมกับสิทธิ์เข้าหน้า /risk-words เพื่อเพิ่มคำเสี่ยงใหม่ ข้อมูลทดสอบที่มีอยู่ (Cleanser Restock Live) มีปัญหาอวาตาร์ถูกลบทำให้เปิดหน้าตรวจก่อนไลฟ์ไม่ได้ ยังไม่ได้เตรียมชุดข้อมูลที่เหมาะสมในรอบนี้</textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-197" data-st="pass">PASS</span>
@@ -6960,7 +6981,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>จดลำดับสคริปต์ปัจจุบันไว้</li><li>ลากสคริปต์ตัวสุดท้ายขึ้นมาไว้บนสุด</li><li>ดูลำดับใหม่ในรายการ</li><li>รีเฟรชหน้าแล้วดูลำดับอีกครั้ง</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ลากเรียงลำดับได้ด้วยการกดค้างที่จุดจับ</li><li>ลำดับเปลี่ยนตามตำแหน่งที่วาง</li><li>หลังรีเฟรช ลำดับใหม่ยังคงอยู่</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —">ข้ามการทดสอบในรอบนี้ (สถานะไม่เปลี่ยน) — ทดลองลากสคริปต์เพื่อเรียงลำดับใหม่ด้วยเครื่องมือทดสอบอัตโนมัติ (drag-and-drop) หลายครั้งแล้วลำดับไม่เปลี่ยนแปลง คาดว่าเครื่องมือจำลองการลากไม่รองรับ interaction ของ component นี้ ต้องทดสอบด้วยมือจริงเพื่อยืนยันผลอีกครั้ง</textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-198" data-st="pass">PASS</span>
@@ -7051,7 +7072,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเมนูย้ายสคริปต์นั้น</li><li>ดูป้ายกำกับของฉากที่มีสคริปต์ตัวเดียวกันอยู่แล้ว</li><li>ลองเลือกฉากนั้น</li><li>อ่านข้อความที่แสดง</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ฉากที่มีสคริปต์ตัวเดียวกันติดป้าย "มีแล้ว"</li><li>ถ้าเลือก ระบบแจ้งว่าสคริปต์ตัวเดียวกันใส่ซ้ำในฉากไม่ได้</li><li>ไม่มีรายการซ้ำเกิดขึ้นในฉากปลายทาง</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —">ข้ามการทดสอบในรอบนี้ (สถานะไม่เปลี่ยน) — ต้องการฉากปลายทางที่มีสคริปต์ตัวเดียวกันอยู่แล้วแต่ไม่เต็ม แต่หน้าต่าง "ผูกสคริปต์เข้าฉาก" กรองสคริปต์ที่ถูกผูกกับฉากอื่นในไลฟ์เดียวกันออกจากคลังไปแล้ว (ค้นหาไม่เจอ) ทำให้จำลอง scenario ตามสเต็ปไม่ได้ในรอบนี้ ต้องตรวจสอบเพิ่มเติมว่ากรณีนี้เกิดขึ้นได้จริงหรือไม่</textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-201" data-st="pass">PASS</span>
