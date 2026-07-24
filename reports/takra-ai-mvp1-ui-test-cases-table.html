@@ -866,6 +866,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   "tc-184": {
     "actual": "[QA - FAIL] พิมพ์เนื้อหาให้ยาว ~23 วินาที (เกินเป้าหมาย 20s แต่ไม่เกิน 30s): ระบบแจ้งเตือนใต้ช่องพิมพ์ว่า \"ยาวกว่าเป้าหมาย 20 วินาที\" และยังกด \"ส่ง approve\" ได้ (popup ปิดลง) ตรงตาม expected ข้อ 1. พิมพ์เพิ่มจนถึง ~35 วินาที (เกิน 30s): ระบบแจ้ง \"ยาวเกิน 30 วินาที — ตัดให้สั้นลงก่อนบันทึก\" ทั้งใต้ content และข้างปุ่ม \"ส่ง approve\" และเมื่อกด \"ส่ง approve\" popup ไม่ปิด (ถูกบล็อกไม่ให้บันทึกจริง) ตรงตาม expected ข้อ 2-3. อย่างไรก็ตาม เมื่อตัดข้อความให้สั้นลงเหลือ ~23s (ผ่านเงื่อนไขความยาวแล้ว) แล้วกด \"ส่ง approve\" อีกครั้ง popup ปิดลงแต่สคริปต์กลับไม่ถูกบันทึก/ผูกเข้าฉากจริง (จำนวนสคริปต์ในฉากไม่เพิ่มขึ้น) เป็นบั๊กเดียวกับ TC-SA3.1 ทำให้ expected ข้อสุดท้าย \"หลังตัดให้สั้นลงแล้วบันทึกสำเร็จ\" ไม่ผ่านจริง",
     "st": "fail"
+  },
+  "tc-185": {
+    "actual": "[QA - FAIL] ผูกสคริปต์จากคลังทีละฉาก (สูงสุด 3 ตัว/ฉาก) จนครบ 4 ฉาก x 3 = 12 สคริปต์รวมทั้งไลฟ์ (ตรงตามขีดจำกัด PRD ≤12). เพิ่มฉากที่ 5 แล้วลองผูกสคริปต์ตัวที่ 13 — ระบบ \"ไม่ให้\" ติ๊กเลือกได้จริง (checkbox ไม่ติ๊ก) ตรงตาม expected ข้อ 1-2 (ไม่ให้เกินขีดจำกัดรวม). นำสคริปต์ออก 1 ตัวจากฉากที่เต็ม (เหลือ 11 รวม) แล้วผูกสคริปต์ใหม่ในฉากที่ 5 ได้สำเร็จ (กลับมาเป็น 12) ตรงตาม expected ข้อ 3. แต่ \"ไม่พบข้อความแจ้งเตือน/toast ใดๆ\" อธิบายว่าติดขีดจำกัดสูงสุดเมื่อพยายามผูกตัวที่ 13 (ระบบแค่เงียบไม่ให้ติ๊ก ไม่มีข้อความบอกจำนวนสูงสุดตามที่ expected ข้อ 1 ระบุว่าต้อง \"แจ้งจำนวนสูงสุด\") จึงไม่ผ่านตาม expected ครบถ้วน",
+    "st": "fail"
   }
 }
 </script>
@@ -891,14 +895,14 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <h3>📊 สรุปผล Manual Test</h3>
     <div class="sumchips">
       <span class="cnt pass">PASS <b id="sum-pass">96</b></span>
-      <span class="cnt fail">FAIL <b id="sum-fail">64</b></span>
+      <span class="cnt fail">FAIL <b id="sum-fail">65</b></span>
       <span class="cnt hold">HOLD <b id="sum-hold">1</b></span>
       <span class="cnt block">BLOCKED <b id="sum-block">0</b></span>
       <span class="cnt skip">SKIP <b id="sum-skip">16</b></span>
-      <span class="cnt pending">รอเทส <b id="sum-pending">80</b></span>
+      <span class="cnt pending">รอเทส <b id="sum-pending">79</b></span>
     </div>
     <div class="progress"><div id="sumbar" class="progressbar" style="width: 67%;"></div></div>
-    <div class="hint" id="sumpct" style="margin-top:5px">67% ทดสอบแล้ว (161/241) · ข้าม 16</div>
+    <div class="hint" id="sumpct" style="margin-top:5px">67% ทดสอบแล้ว (162/241) · ข้าม 16</div>
   </div>
 
   <div class="toolbar">
@@ -6589,7 +6593,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow open" data-feat="epic3" data-level="ui" data-prio="P0" onclick="tg(this)">
+<tr class="trow" data-feat="epic3" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-SA3.2</td>
   <td class="ctitle">เนื้อหาที่ยาวเกินขีดจำกัดถูกกั้นตอนบันทึกและเตือนเมื่อเกินเป้าหมาย</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -6597,7 +6601,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-184"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-184"></td>
 </tr>
-<tr class="detail show"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">เนื้อหาที่ยาวเกินขีดจำกัดถูกกั้นตอนบันทึกและเตือนเมื่อเกินเป้าหมาย</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · script-authoring · Epic 3 · Story 3.7 · FR33d</div>
   <div class="sec"><h4>Precondition</h4><ul><li>อยู่ในหน้าต่างเขียนสคริปต์ของ Studio</li></ul></div>
@@ -6620,15 +6624,15 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow" data-feat="epic3" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow open" data-feat="epic3" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-SA3.3</td>
   <td class="ctitle">จำนวนสคริปต์รวมทั้งไลฟ์ถูกจำกัดตามที่กำหนด</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-185"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-185"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-185"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail show"><td colspan="7"><div class="card">
   <div class="h-title">จำนวนสคริปต์รวมทั้งไลฟ์ถูกจำกัดตามที่กำหนด</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · script-authoring · Epic 3 · Story 3.7 · FR33a</div>
   <div class="sec"><h4>Precondition</h4><ul><li>มีไลฟ์ที่ผูกสคริปต์ไว้ใกล้ครบขีดจำกัดรวม</li></ul></div>
@@ -6636,11 +6640,11 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Data</h4><ul><li>ขีดจำกัดตาม PRD: ≤ 12 สคริปต์ต่อไลฟ์</li></ul></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ระบบไม่ให้ผูกเกินขีดจำกัดรวมของทั้งไลฟ์ และแจ้งจำนวนสูงสุด</li><li>จำนวนสคริปต์ในไลฟ์ไม่เกินขีดจำกัด</li><li>หลังนำออก 1 ตัวแล้วผูกใหม่ได้สำเร็จ</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —">[QA - FAIL] ผูกสคริปต์จากคลังทีละฉาก (สูงสุด 3 ตัว/ฉาก) จนครบ 4 ฉาก x 3 = 12 สคริปต์รวมทั้งไลฟ์ (ตรงตามขีดจำกัด PRD ≤12). เพิ่มฉากที่ 5 แล้วลองผูกสคริปต์ตัวที่ 13 — ระบบ "ไม่ให้" ติ๊กเลือกได้จริง (checkbox ไม่ติ๊ก) ตรงตาม expected ข้อ 1-2 (ไม่ให้เกินขีดจำกัดรวม). นำสคริปต์ออก 1 ตัวจากฉากที่เต็ม (เหลือ 11 รวม) แล้วผูกสคริปต์ใหม่ในฉากที่ 5 ได้สำเร็จ (กลับมาเป็น 12) ตรงตาม expected ข้อ 3. แต่ "ไม่พบข้อความแจ้งเตือน/toast ใดๆ" อธิบายว่าติดขีดจำกัดสูงสุดเมื่อพยายามผูกตัวที่ 13 (ระบบแค่เงียบไม่ให้ติ๊ก ไม่มีข้อความบอกจำนวนสูงสุดตามที่ expected ข้อ 1 ระบุว่าต้อง "แจ้งจำนวนสูงสุด") จึงไม่ผ่านตาม expected ครบถ้วน</textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-185" data-st="pass">PASS</span>
-    <span class="opt fail" data-uid="tc-185" data-st="fail">FAIL</span>
+    <span class="opt fail sel" data-uid="tc-185" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-185" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-185" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-185" data-st="skip">SKIP</span>
