@@ -836,6 +836,9 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   "tc-167": {
     "actual": "BUG ร้ายแรง: เพิ่ม layer จนครบ 10 ชิ้นในฉากได้ปกติ (ระบบไม่บล็อกก่อนถึงขีดจำกัด) แต่เมื่อกดปุ่ม \"+ เพิ่มลงในฉาก\" เพื่อเพิ่ม layer ตัวที่ 11 (เกินขีดจำกัด) หน้าเว็บ/แท็บทั้งหน้าค้าง (freeze/hang) ทันที ไม่ตอบสนองต่อการคลิกใดๆอีกเลย ต้องรอนานหรือ reload หน้าใหม่เท่านั้น - เกิดซ้ำ 2 ครั้งติดกัน (reproducible) หลัง reload พบว่าฉากที่แก้ไขล่าสุดถูกย้อนกลับไปเป็นเวอร์ชันเก่ากว่า (งานที่ทำระหว่างนั้นหายไปบางส่วน) แทนที่จะแสดงข้อความแจ้งขีดจำกัดอย่างเรียบร้อยตาม expected result FAIL - ต้องแจ้งทีม dev ด่วน เป็นบั๊กที่กระทบการใช้งานจริงและอาจทำให้งานหาย",
     "st": "fail"
+  },
+  "tc-168": {
+    "actual": "เปิดเมนู \"...\" ของฉากแล้วกด \"ลบฉาก\" หน้าต่างยืนยันแสดงชื่อฉากที่จะลบ (\"ฉากที่ X\") ระบุจำนวน layer ที่จะถูกลบไปด้วย (\"รวมถึง layer N ตัวในฉาก\") และระบุชัดเจนว่า \"การกระทำนี้ย้อนกลับได้ด้วย Cmd/Ctrl + Z\" กดยืนยันลบแล้วฉากหายจากรายการทันที กด Ctrl+Z แล้วฉากและ layer ทั้งหมดกลับมาเหมือนเดิมครบถ้วน ตรงตาม expected result ทุกข้อ"
   }
 }
 </script>
@@ -6080,7 +6083,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเมนูตัวเลือกของฉากแล้วเลือกลบฉาก</li><li>อ่านข้อความในหน้าต่างยืนยัน แล้วยืนยัน</li><li>กดคีย์ลัดย้อนกลับ (Cmd/Ctrl + Z)</li><li>ตรวจว่าฉากและ layer กลับมาครบหรือไม่</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>หน้าต่างยืนยันระบุชื่อฉาก จำนวน layer ที่จะถูกลบ และบอกว่าย้อนกลับได้ด้วยคีย์ลัด</li><li>หลังยืนยัน ฉากหายจากรายการ</li><li>กดย้อนกลับแล้วฉากและ layer ทั้งหมดกลับมาเหมือนเดิม</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —">เปิดเมนู "..." ของฉากแล้วกด "ลบฉาก" หน้าต่างยืนยันแสดงชื่อฉากที่จะลบ ("ฉากที่ X") ระบุจำนวน layer ที่จะถูกลบไปด้วย ("รวมถึง layer N ตัวในฉาก") และระบุชัดเจนว่า "การกระทำนี้ย้อนกลับได้ด้วย Cmd/Ctrl + Z" กดยืนยันลบแล้วฉากหายจากรายการทันที กด Ctrl+Z แล้วฉากและ layer ทั้งหมดกลับมาเหมือนเดิมครบถ้วน ตรงตาม expected result ทุกข้อ</textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-168" data-st="pass">PASS</span>
@@ -9352,9 +9355,4 @@ document.querySelectorAll('.feat-owner').forEach(function(sel){var e=sel.dataset
 </script>
 
 
-<div id="claude-agent-glow-border" style="position: fixed; inset: 0px; pointer-events: none; z-index: 2147483646; opacity: 1; transition: opacity 0.3s ease-in-out;"><div id="claude-agent-glow-border-inner" style="position: absolute; inset: 0px; will-change: opacity; box-shadow: rgba(217, 119, 87, 0.7) 0px 0px 15px inset, rgba(217, 119, 87, 0.5) 0px 0px 25px inset, rgba(217, 119, 87, 0.2) 0px 0px 35px inset;"></div></div><div id="claude-agent-stop-container" style="position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%); justify-content: center; align-items: center; pointer-events: none; z-index: 2147483647;"><button id="claude-agent-stop-button" style="position: relative; transform: translateY(0px); padding: 12px 16px; background: rgb(250, 249, 245); color: rgb(20, 20, 19); border: 0.5px solid rgba(31, 30, 29, 0.4); border-radius: 12px; font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; box-shadow: rgba(217, 119, 87, 0.24) 0px 40px 80px, rgba(217, 119, 87, 0.24) 0px 4px 14px; transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); opacity: 1; user-select: none; pointer-events: auto; white-space: nowrap; margin: 0px auto;">
-      <svg width="16" height="16" viewBox="0 0 256 256" fill="currentColor" style="margin-right: 12px; vertical-align: middle;">
-        <path d="M128,20A108,108,0,1,0,236,128,108.12,108.12,0,0,0,128,20Zm0,192a84,84,0,1,1,84-84A84.09,84.09,0,0,1,128,212Zm40-112v56a12,12,0,0,1-12,12H100a12,12,0,0,1-12-12V100a12,12,0,0,1,12-12h56A12,12,0,0,1,168,100Z"></path>
-      </svg>
-      <span style="vertical-align: middle;">Stop Claude</span>
-    </button></div><div id="claude-phantom-cursor" aria-hidden="true" style="position: fixed; top: 0px; left: 0px; pointer-events: none; z-index: 2147483646; transform: translate3d(122px, 733px, 0px); transition: transform 180ms cubic-bezier(0.2, 0, 0, 1); will-change: transform;"><svg id="claude-phantom-cursor-plain" width="20" height="26" viewBox="0 0 20 26" style="position: absolute; top: 0px; left: 0px; overflow: visible;"><path d="M0 0 L0 18 L4.5 14 L7.5 21.5 L11 20 L8 13 L14 13 Z" stroke="white" stroke-width="3" stroke-linejoin="round" fill="white"></path><path d="M0 0 L0 18 L4.5 14 L7.5 21.5 L11 20 L8 13 L14 13 Z" fill="#111"></path></svg><svg id="claude-phantom-cursor-styled" width="20" height="26" viewBox="0 0 20 26" style="position: absolute; top: 0px; left: 0px; overflow: visible; filter: drop-shadow(rgba(217, 119, 87, 0.9) 0px 0px 4px) drop-shadow(rgba(217, 119, 87, 0.45) 0px 0px 10px);"><path d="M0 0 L0 18 L4.5 14 L7.5 21.5 L11 20 L8 13 L14 13 Z" stroke="#D97757" stroke-width="3" stroke-linejoin="round" fill="#D97757"></path><path d="M0 0 L0 18 L4.5 14 L7.5 21.5 L11 20 L8 13 L14 13 Z" fill="#FAF9F5"></path></svg></div></body></html>
+</body></html>
