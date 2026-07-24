@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MVP 1 — QA Definition of Done (Checklist) · TAKRA Live</title>
+<style>
+  :root{
+    --ink:#1a2233; --soft:#4a5568; --faint:#8592a6;
+    --line:#e5e9f0; --line2:#f0f3f8;
+    --accent:#4f46e5; --accent-bg:#eef2ff;
+    --p0:#dc2626; --p0-bg:#fef2f2;
+    --p1:#ea580c; --p1-bg:#fff7ed;
+    --p2:#ca8a04; --p2-bg:#fefce8;
+    --ok:#16a34a; --ok-bg:#f0fdf4;
+    --teal:#0d9488; --teal-bg:#f0fdfa;
+    --font:-apple-system,BlinkMacSystemFont,"Segoe UI","Sarabun","Noto Sans Thai","Helvetica Neue",Arial,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--font);color:var(--ink);background:#f4f6fb;line-height:1.65;-webkit-font-smoothing:antialiased;font-size:15.5px}
+  .wrap{max-width:880px;margin:0 auto;padding:0 22px 100px}
+
+  .band{background:linear-gradient(135deg,#1e293b,#0f172a);color:#f8fafc;margin:0 -22px 0;padding:42px 22px 34px;border-radius:0 0 22px 22px}
+  .band .inner{max-width:880px;margin:0 auto}
+  .band .ey{font-size:.76rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#a5b4fc;margin-bottom:12px}
+  .band h1{font-size:clamp(1.5rem,4vw,2rem);font-weight:800;line-height:1.15;letter-spacing:-.01em}
+  .band p{color:#cbd5e1;margin-top:10px;max-width:680px;font-size:.92rem}
+  .band .meta{margin-top:16px;display:flex;flex-wrap:wrap;gap:6px 22px;font-size:.84rem;color:#94a3b8}
+  .band .meta b{color:#e2e8f0}
+
+  /* verdict banner */
+  .verdict{margin:20px 0 8px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 20px;display:flex;flex-wrap:wrap;align-items:center;gap:14px 26px}
+  .verdict .big{font-size:1.05rem;font-weight:800;color:var(--p0)}
+  .verdict .kpi{display:flex;flex-direction:column;gap:1px}
+  .verdict .kpi .v{font-size:1.15rem;font-weight:800;font-variant-numeric:tabular-nums}
+  .verdict .kpi .k{font-size:.72rem;color:var(--faint);font-weight:600}
+
+  /* overall progress */
+  .ovr{margin:10px 0 22px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 18px}
+  .ovr .row{display:flex;justify-content:space-between;align-items:center;font-size:.86rem;font-weight:700;margin-bottom:8px}
+  .bar{height:9px;border-radius:99px;background:var(--line2);overflow:hidden}
+  .bar>i{display:block;height:100%;background:linear-gradient(90deg,var(--ok),var(--teal));width:0;transition:width .3s}
+
+  .legend{display:flex;flex-wrap:wrap;gap:8px 16px;margin:14px 0 4px;font-size:.8rem;color:var(--soft)}
+  .legend span{display:inline-flex;align-items:center;gap:5px}
+
+  h2{font-size:1.18rem;font-weight:800;letter-spacing:-.01em;margin:38px 0 6px;padding-top:16px;scroll-margin-top:16px;border-top:1px solid var(--line)}
+  h2 .n{display:inline-flex;align-items:center;justify-content:center;width:1.55em;height:1.55em;background:var(--accent);color:#fff;border-radius:8px;font-size:.72em;margin-right:9px;vertical-align:middle}
+  h2 small{display:block;font-size:.8rem;font-weight:500;color:var(--faint);margin:5px 0 0}
+
+  .card{border:1px solid var(--line);border-radius:14px;background:#fff;margin:16px 0;overflow:hidden}
+  .card>.hd{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;padding:13px 18px;background:var(--line2);border-bottom:1px solid var(--line)}
+  .card>.hd .t{font-weight:800;font-size:1rem}
+  .card>.hd .sp{margin-left:auto;display:flex;gap:6px;align-items:center}
+  .card>.bd{padding:8px 18px 14px}
+  .card .subttl{font-size:.76rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--faint);margin:12px 0 4px}
+  .card .meta-line{font-size:.82rem;color:var(--soft);margin:8px 0 2px;padding-top:8px;border-top:1px dashed var(--line)}
+
+  /* checklist item */
+  .ck{display:flex;align-items:flex-start;gap:10px;padding:7px 6px;border-radius:8px;cursor:pointer;font-size:.92rem}
+  .ck:hover{background:#fafbfe}
+  .ck input{margin-top:3px;width:16px;height:16px;accent-color:var(--ok);flex:0 0 auto;cursor:pointer}
+  .ck .tx{flex:1}
+  .ck.done .tx{color:var(--soft)}
+  .ck .pill{flex:0 0 auto;margin-top:1px}
+  .ck em{font-style:normal;background:var(--line2);padding:0 5px;border-radius:4px;font-size:.9em;color:var(--soft)}
+
+  .pill{display:inline-flex;align-items:center;gap:4px;font-size:.7rem;font-weight:800;padding:2px 9px;border-radius:999px;white-space:nowrap}
+  .p-p0{background:var(--p0-bg);color:var(--p0)}
+  .p-p1{background:var(--p1-bg);color:var(--p1)}
+  .p-p2{background:var(--p2-bg);color:var(--p2)}
+  .p-ok{background:var(--ok-bg);color:var(--ok)}
+  .p-teal{background:var(--teal-bg);color:var(--teal)}
+  .p-gray{background:var(--line2);color:var(--soft)}
+
+  table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.88rem}
+  th{text-align:left;font-weight:700;color:var(--soft);border-bottom:2px solid var(--line);padding:8px 11px;font-size:.8rem;background:var(--line2)}
+  td{padding:8px 11px;border-bottom:1px solid var(--line2);vertical-align:top}
+  tr:last-child td{border-bottom:none}
+  td.c,th.c{text-align:center}
+  tbody tr:hover{background:#fafbfe}
+
+  .gate{border:1px solid var(--line);border-left-width:5px;border-radius:12px;background:#fff;margin:14px 0;padding:14px 18px}
+  .gate.pend{border-left-color:var(--p0)} .gate.part{border-left-color:var(--p1)} .gate.ok{border-left-color:var(--ok)}
+  .gate h4{font-size:.98rem;font-weight:800;margin-bottom:2px;display:flex;align-items:center;gap:8px}
+  .gate .cond{font-size:.82rem;color:var(--soft);margin-top:6px}
+  .gate code{background:var(--line2);padding:1px 5px;border-radius:4px;font-size:.9em}
+
+  .toc{background:#fff;border:1px solid var(--line);border-radius:12px;padding:13px 18px;margin:6px 0 0;font-size:.88rem}
+  .toc b{display:block;font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);margin-bottom:6px}
+  .toc a{color:var(--ink);text-decoration:none;margin-right:15px;white-space:nowrap;display:inline-block;line-height:1.9}
+  .toc a:hover{color:var(--accent)}
+
+  .foot{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);color:var(--faint);font-size:.8rem}
+  .btns{display:flex;gap:8px;margin:18px 0 0;flex-wrap:wrap}
+  .btns button{font-family:inherit;font-size:.82rem;font-weight:700;border:1px solid var(--line);background:#fff;color:var(--soft);border-radius:8px;padding:7px 14px;cursor:pointer}
+  .btns button:hover{border-color:var(--accent);color:var(--accent)}
+
+  @media print{ body{background:#fff} .band{-webkit-print-color-adjust:exact;print-color-adjust:exact} .btns{display:none} .ck{cursor:default} }
+</style>
+</head>
+<body>
+
+<div class="band">
+  <div class="inner">
+    <div class="ey">TAKRA Live · Quality Assurance</div>
+    <h1>MVP 1 — QA Definition of Done · Checklist</h1>
+    <p>เช็คลิสต์ยืนยันว่า MVP-1 “เสร็จจริง” — 5 ประเภทเทสต้องครบ + 100% pass ก่อนขึ้น production · ติ๊กได้ + จำสถานะไว้ในเบราว์เซอร์ · ค่าเริ่มต้น = สถานะจริงตาม DoD (2026-07-20)</p>
+    <div class="meta">
+      <span>ที่มา: <b>MVP1-QA-DEFINITION-OF-DONE.md v1.16</b></span>
+      <span>Sign-off: <b>QA (Ice) · v1.3 approved</b></span>
+      <span>อัปเดต: <b>20–23 ก.ค. 2026</b></span>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="verdict">
+    <div class="big">🔴 GO / NO-GO: NOT READY (prod)</div>
+    <div class="kpi"><span class="v" id="kOverall">—</span><span class="k">ติ๊กแล้ว (checklist)</span></div>
+    <div class="kpi"><span class="v">~77%</span><span class="k">DoD readiness (rollup)</span></div>
+    <div class="kpi"><span class="v">2</span><span class="k">bug เปิด (486 · 524)</span></div>
+    <div class="kpi"><span class="v">🟡 UAT</span><span class="k">ปล่อยได้เฉพาะ pilot-internal</span></div>
+  </div>
+
+  <div class="ovr">
+    <div class="row"><span>ความคืบหน้า checklist ทั้งหมด</span><span id="ovrTxt">0 / 0</span></div>
+    <div class="bar"><i id="ovrBar"></i></div>
+  </div>
+
+  <div class="toc">
+    <b>หัวข้อ</b>
+    <a href="#a">A. 5 ประเภทเทส (DoD)</a><a href="#b">B. สถานะราย Epic</a><a href="#c">C. Quality Gates</a><a href="#d">D. เช็คลิสต์ทีม</a>
+  </div>
+
+  <div class="legend">
+    <strong style="color:var(--ink)">สัญลักษณ์สถานะ:</strong>
+    <span><span class="pill p-ok">✅ done</span> เสร็จ+รันเขียว</span>
+    <span><span class="pill p-p2">🟡 partial</span> มีบางส่วน</span>
+    <span><span class="pill p-p0">🔴 blocked</span> ยังไม่ทำ/ติดขวาง</span>
+    <span><span class="pill p-gray">⚪ doable</span> ทำได้ ยังไม่ลงมือ</span>
+    <span><span class="pill p-gray">N/A</span> ไม่เกี่ยว</span>
+  </div>
+
+  <!-- ============ SECTION A ============ -->
+  <h2 id="a"><span class="n">A</span>เกณฑ์ 5 ประเภทเทส (Definition of Done)<small>ทุก feature ต้องผ่านครบทั้ง 5 + 100% pass ถึงนับว่า “เสร็จ”</small></h2>
+
+  <!-- A1 Integration -->
+  <div class="card">
+    <div class="hd"><span class="t">1 · Integration Test Case</span><span class="sp"><span class="pill p-gray">Owner: QA design + Dev script</span><span class="pill p-p2">🟡 ~93%</span></span></div>
+    <div class="bd">
+      <div class="subttl">Acceptance Criteria</div>
+      <label class="ck done"><input type="checkbox" data-k="a1-1" checked><span class="tx">QA ออกแบบ test case ตรงตาม story AC <em>(~198 designed)</em></span><span class="pill p-ok">✅</span></label>
+      <label class="ck"><input type="checkbox" data-k="a1-2"><span class="tx">Dev เขียน test script <em>*.int-spec.ts</em> ตามสเปก QA <em>(E2–E6 มี · E1 0/6 · E7 0)</em></span><span class="pill p-p2">🟡</span></label>
+      <label class="ck done"><input type="checkbox" data-k="a1-3" checked><span class="tx">Script ทดสอบหลาย component + DB จริง (RLS isolation)</span><span class="pill p-ok">✅</span></label>
+      <label class="ck"><input type="checkbox" data-k="a1-4"><span class="tx">Test เขียว 🟢 100% <em>(E5 18/20 · SSE 2 แดง · E1/E7 ยังไม่รัน)</em></span><span class="pill p-p2">🟡</span></label>
+      <label class="ck done"><input type="checkbox" data-k="a1-5" checked><span class="tx">Multi-tenant negative test มี (ไม่มี data leak ข้าม workspace)</span><span class="pill p-ok">✅</span></label>
+      <label class="ck done"><input type="checkbox" data-k="a1-6" checked><span class="tx">Edge cases + error handling ครอบ</span><span class="pill p-ok">✅</span></label>
+      <label class="ck"><input type="checkbox" data-k="a1-7"><span class="tx">CI Tier 1 ผ่าน (&lt; 5 นาที)</span><span class="pill p-p2">🟡</span></label>
+      <div class="meta-line"><strong>สถานะ:</strong> designed ~198 · script ✅ 217 (dev · 54 ไฟล์) · ~93% · <strong>ค้าง:</strong> E1 integration 0/6 (Hub contract) · E7 gates 0 · logging <em>TAKRA-422</em> · SSE <em>TAKRA-524</em></div>
+    </div>
+  </div>
+
+  <!-- A2 Contract Avatar -->
+  <div class="card">
+    <div class="hd"><span class="t">2 · Contract Test — Avatar Engine</span><span class="sp"><span class="pill p-gray">QA design + Dev script</span><span class="pill p-ok">✅ done (mock)</span></span></div>
+    <div class="bd">
+      <div class="subttl">Acceptance Criteria</div>
+      <label class="ck done"><input type="checkbox" data-k="a2-1" checked><span class="tx">QA ออกแบบ 5 founder-approved fixtures</span><span class="pill p-ok">✅</span></label>
+      <label class="ck done"><input type="checkbox" data-k="a2-2" checked><span class="tx">Fixtures = realistic Avatar Engine responses (mock + real format)</span><span class="pill p-ok">✅</span></label>
+      <label class="ck done"><input type="checkbox" data-k="a2-3" checked><span class="tx">Dev เขียน script parse ทุก fixture ถูกต้อง <em>(engine-contract-fixtures-4-2.int-spec.ts)</em></span><span class="pill p-ok">✅</span></label>
+      <label class="ck done"><input type="checkbox" data-k="a2-4" checked><span class="tx">Test เขียว 100% · No schema drift (Zod) · Event mapping ถูก · &lt; 5s (Tier 1)</span><span class="pill p-ok">✅</span></label>
+      <label class="ck"><input type="checkbox" data-k="a2-5"><span class="tx">Real Avatar Engine contract (แทน mock)</span><span class="pill p-p2">⏳ vendor</span></label>
+      <div class="subttl">5 Fixtures</div>
+      <label class="ck done"><input type="checkbox" data-k="a2-f1" checked><span class="tx">Handover Required · Preload Timeout (504) · Partial Failure · Capacity Exceeded (429) · Voice Mismatch</span><span class="pill p-ok">✅ 5/5</span></label>
+      <div class="meta-line"><strong>สถานะ:</strong> ✅ design + script (mock) · <strong>ค้าง:</strong> real contract จาก vendor (MVP-1 ใช้ mock ได้)</div>
+    </div>
+  </div>
+
+  <!-- A3 Contract Insight -->
+  <div class="card">
+    <div class="hd"><span class="t">3 · Contract Test — Insight API</span><span class="sp"><span class="pill p-gray">QA design + Dev script</span><span class="pill p-ok">✅ done</span></span></div>
+    <div class="bd">
+      <div class="subttl">Acceptance Criteria</div>
+      <label class="ck done"><input type="checkbox" data-k="a3-1" checked><span class="tx">QA ออกแบบ 14 test cases ตาม Insight API contract (P0 ×8 · P1 ×6)</span><span class="pill p-ok">✅</span></label>
+      <label class="ck done"><input type="checkbox" data-k="a3-2" checked><span class="tx">Dev เขียน script: polling · dedup exactly-once · isolation · auth <em>(~40 เทส)</em></span><span class="pill p-ok">✅</span></label>
+      <label class="ck done"><input type="checkbox" data-k="a3-3" checked><span class="tx">Test เขียว 100% · Multi-tenant isolation (WS_A ≠ WS_B)</span><span class="pill p-ok">✅</span></label>
+      <label class="ck done"><input type="checkbox" data-k="a3-4" checked><span class="tx">Edge: 1000 comments · timeout · 5xx retry · token refresh · CI Tier 1</span><span class="pill p-ok">✅</span></label>
+      <label class="ck"><input type="checkbox" data-k="a3-5"><span class="tx">Insight API จริง (ตอนนี้เทสกับ <em>openapi-insight.proposed.yaml</em>)</span><span class="pill p-p2">⏳</span></label>
+      <div class="meta-line"><strong>สถานะ:</strong> ✅ design + script เขียวใน Tier 1 (example-based contract แทน Prism · กัน drift เท่ากัน) · <strong>ค้าง:</strong> Insight API จริงยังไม่มา</div>
+    </div>
+  </div>
+
+  <!-- A4 E2E -->
+  <div class="card">
+    <div class="hd"><span class="t">4 · E2E Test (Playwright)</span><span class="sp"><span class="pill p-gray">Owner: QA design + script</span><span class="pill p-p2">🟡 ~75%</span></span></div>
+    <div class="bd">
+      <div class="subttl">Acceptance Criteria</div>
+      <label class="ck done"><input type="checkbox" data-k="a4-1" checked><span class="tx">QA ออกแบบ test cases 4 level: API · Integration · UI · Full-Loop <em>(~42 designed)</em></span><span class="pill p-ok">✅</span></label>
+      <label class="ck"><input type="checkbox" data-k="a4-2"><span class="tx">QA เขียน script <em>*.e2e-spec.ts</em> ครบ <em>(E1 5/5 · E2 22 · E3 6 · E5 0 · E6 0)</em></span><span class="pill p-p2">🟡 ~33 runnable</span></label>
+      <label class="ck"><input type="checkbox" data-k="a4-3"><span class="tx">Script: HTTP → response → browser render → DB · เขียว 100%</span><span class="pill p-p2">🟡</span></label>
+      <label class="ck done"><input type="checkbox" data-k="a4-4" checked><span class="tx">Coverage happy path + edge cases + error scenarios (E1/E2/E3 เขียวบน UAT)</span><span class="pill p-ok">✅</span></label>
+      <label class="ck"><input type="checkbox" data-k="a4-5"><span class="tx">CI Tier 2 ผ่าน (nightly E2E)</span><span class="pill p-p0">🔴</span></label>
+      <div class="subttl">Full-loop ราย Epic</div>
+      <label class="ck done"><input type="checkbox" data-k="a4-e1" checked><span class="tx">E1 Platform 5/5 · E2 Inventory 22 (25) · E3 Live Studio 6 — เขียวบน UAT</span><span class="pill p-ok">✅</span></label>
+      <label class="ck"><input type="checkbox" data-k="a4-e5"><span class="tx">E5 Comments 0/4 · E4 Avatar 0 — รอ live session + avatar on-air จริง (dev/vendor)</span><span class="pill p-p0">🔴 blocked</span></label>
+      <label class="ck"><input type="checkbox" data-k="a4-e6"><span class="tx">E6 AI Script 0/5 — authoring-time (ไม่พึ่ง avatar) เขียนได้ ยังไม่ลงมือ</span><span class="pill p-gray">⚪ doable</span></label>
+      <div class="meta-line"><strong>สถานะ:</strong> ~27 scripted · ~75% · <strong>ค้าง:</strong> E5/E6 remainder (~9 spec) · E4/E7 รอ infra + perf methodology</div>
+    </div>
+  </div>
+
+  <!-- A5 Sign-off -->
+  <div class="card">
+    <div class="hd"><span class="t">5 · Sign-off Ready (Pilot Gate)</span><span class="sp"><span class="pill p-gray">QA + PM + Founder</span><span class="pill p-p0">🔴 0% · 0/13</span></span></div>
+    <div class="bd">
+      <div class="subttl">13 งาน (ทั้งหมดยังไม่เริ่ม)</div>
+      <label class="ck"><input type="checkbox" data-k="a5-1"><span class="tx">TC-7.6-01 Provision pilot tenant · TC-7.6-02 DB seed + PDPA consent</span><span class="pill p-p0">🔴</span></label>
+      <label class="ck"><input type="checkbox" data-k="a5-2"><span class="tx">TC-7.6-03 Insight Program install <em>(รอ Insight contract)</em></span><span class="pill p-p0">🔴</span></label>
+      <label class="ck"><input type="checkbox" data-k="a5-3"><span class="tx">TC-7.6-04~08 Pre-Pilot Smoke (5 เทส)</span><span class="pill p-p0">🔴</span></label>
+      <label class="ck"><input type="checkbox" data-k="a5-4"><span class="tx">TC-7.5-01 DR Drill <em>(P0 BLOCKER)</em> · TC-7.4-09 Unbounded-Growth Alarm · TC-7.3-04 Scale-In Guard</span><span class="pill p-p0">🔴</span></label>
+      <label class="ck"><input type="checkbox" data-k="a5-5"><span class="tx">Hard Rule #1 — Founder org infra sign-off <em>(P0)</em></span><span class="pill p-p0">🔴</span></label>
+      <label class="ck"><input type="checkbox" data-k="a5-6"><span class="tx">Insight Contract signed / degraded-mode approved <em>(P1)</em></span><span class="pill p-p0">🔴</span></label>
+      <label class="ck"><input type="checkbox" data-k="a5-7"><span class="tx">Hardware — Phone-camera · Avatar voice · TikTok validation</span><span class="pill p-p0">🔴</span></label>
+      <div class="subttl">Validation Gate (หลัง pilot 30 วัน)</div>
+      <label class="ck"><input type="checkbox" data-k="a5-8"><span class="tx">TC-7.6-09 ban_rate = 0 · TC-7.6-10 risk_block ≥ 95% · TC-7.6-11 NPS ≥ 30</span><span class="pill p-p0">🔴</span></label>
+      <div class="meta-line"><strong>สถานะ:</strong> 🔴 Pending 0% — ทั้งหมดขึ้นกับ Epic 7 (ยังไม่เริ่ม) + metrics จากการรัน pilot จริง</div>
+    </div>
+  </div>
+
+  <!-- ============ SECTION B ============ -->
+  <h2 id="b"><span class="n">B</span>สถานะราย Epic (DoD verdict)<small>ผลตัดสิน DoD ต่อ epic · audit โค้ดจริง 2026-07-20</small></h2>
+  <table>
+    <thead><tr><th>Epic</th><th class="c">Verdict</th><th>สาระ / ตัวขวาง</th></tr></thead>
+    <tbody>
+      <tr><td><strong>E1</strong> · Platform Foundation</td><td class="c"><span class="pill p-p0">🔴 NO ~90%</span></td><td>E2E ✅ 5/5 (UAT) · Integration 🔴 0/6 (Hub contract) · 🐞 TAKRA-486 logout</td></tr>
+      <tr><td><strong>E2</strong> · Workspace Inventory</td><td class="c"><span class="pill p-p2">🟡 NEAR-DONE</span></td><td>core 163 int + 22 E2E ✅ 100% · เหลือ logging TAKRA-422 · verify TAKRA-420</td></tr>
+      <tr><td><strong>E3</strong> · Live Studio</td><td class="c"><span class="pill p-ok">🟢 NEAR-COMPLETE</span></td><td>int ✅ 11 · UI 25✅/1🔴 · fullloop 6✅ (UAT 2026-07-20) · 🐞 TC-3.4-07 (TAKRA-528)</td></tr>
+      <tr><td><strong>E4</strong> · Avatar Broadcasting</td><td class="c"><span class="pill p-p2">🟡 PARTIAL</span></td><td>int ✅ 16 · contract ⚠️ mock · fullloop 🔴 (รอ real avatar + live infra · vendor)</td></tr>
+      <tr><td><strong>E5</strong> · Comment / Auto-Reply / Risk</td><td class="c"><span class="pill p-p2">🟡 PARTIAL</span></td><td>int ✅ 20 (SSE 2 แดง · 🐞 TAKRA-524) · fullloop 🔴 0 (รอ live session)</td></tr>
+      <tr><td><strong>E6</strong> · AI Script Generation</td><td class="c"><span class="pill p-p2">🟡 PARTIAL</span></td><td>int ✅ 7 (MT/security/seam 14/14) · fullloop ⚪ 0 (ทำได้ ยังไม่เขียน · ไม่ block)</td></tr>
+      <tr><td><strong>E7</strong> · Production Readiness</td><td class="c"><span class="pill p-p0">🔴 NO ~40%</span></td><td>DR drill + Smoke + Validation gates — ทั้ง 6 story ยัง backlog</td></tr>
+    </tbody>
+  </table>
+
+  <!-- ============ SECTION C ============ -->
+  <h2 id="c"><span class="n">C</span>Quality Gates<small>ประตูคุณภาพ — ต้องผ่านทุกข้อในแต่ละด่าน · ค่าเริ่มต้น = สถานะ MVP-1 ปัจจุบัน</small></h2>
+
+  <div class="gate part">
+    <h4>🔹 Story Closure Gate <span class="pill p-p2">ใช้ราย story</span></h4>
+    <label class="ck"><input type="checkbox" data-k="c1-1"><span class="tx">AC ของ story ครบครอบ</span></label>
+    <label class="ck"><input type="checkbox" data-k="c1-2"><span class="tx">Integration Test Case: ออกแบบ + script ✅ 100% pass</span></label>
+    <label class="ck"><input type="checkbox" data-k="c1-3"><span class="tx">Contract Test (ถ้ามี) → 100% pass</span></label>
+    <label class="ck"><input type="checkbox" data-k="c1-4"><span class="tx">E2E Test: script ✅ 100% pass (ถ้า story มี UI)</span></label>
+    <label class="ck"><input type="checkbox" data-k="c1-5"><span class="tx">CI Tier 1 pass (&lt; 5 นาที)</span></label>
+    <label class="ck"><input type="checkbox" data-k="c1-6"><span class="tx">QA coverage audit ✅</span></label>
+  </div>
+
+  <div class="gate part">
+    <h4>🔹 Epic Closure Gate <span class="pill p-p2">ใช้ราย epic</span></h4>
+    <label class="ck"><input type="checkbox" data-k="c2-1"><span class="tx">ทุก story ใน epic = Done</span></label>
+    <label class="ck"><input type="checkbox" data-k="c2-2"><span class="tx">Coverage Report: AC/FR/NFR/Risk % ≥ threshold</span></label>
+    <label class="ck"><input type="checkbox" data-k="c2-3"><span class="tx">Gaps = 0 (หรือ documented deferred → MVP-2)</span></label>
+    <label class="ck"><input type="checkbox" data-k="c2-4"><span class="tx">CI Tier 1: 100% green</span></label>
+    <label class="ck"><input type="checkbox" data-k="c2-5"><span class="tx">CI Tier 2: ≥ 80% pass (nightly E2E)</span></label>
+  </div>
+
+  <div class="gate pend">
+    <h4>🔴 MVP-1 Release Gate <span class="pill p-p0">ก่อน launch prod — ยังไม่ผ่าน</span></h4>
+    <label class="ck"><input type="checkbox" data-k="c3-1"><span class="tx">ทุก Epic (E1–E7) coverage ✅ (หรือ documented deferred)</span></label>
+    <label class="ck"><input type="checkbox" data-k="c3-2"><span class="tx">CI Tier 1: 100% green ต่อเนื่อง 7 วัน</span></label>
+    <label class="ck"><input type="checkbox" data-k="c3-3"><span class="tx">CI Tier 2: nightly E2E ✅ (last run)</span></label>
+    <label class="ck"><input type="checkbox" data-k="c3-4"><span class="tx">Hard Rule #1: Founder infra sign-off ✅</span></label>
+    <label class="ck"><input type="checkbox" data-k="c3-5"><span class="tx">Insight Contract: signed / degraded-mode approved ✅</span></label>
+    <label class="ck"><input type="checkbox" data-k="c3-6"><span class="tx">DR Drill: executed successfully (TC-7.5-01)</span></label>
+    <label class="ck"><input type="checkbox" data-k="c3-7"><span class="tx">Pre-Pilot Smoke: TC-7.6-04~08 all pass</span></label>
+    <label class="ck"><input type="checkbox" data-k="c3-8"><span class="tx">Validation Gate: Ready (metrics captured live)</span></label>
+  </div>
+
+  <div class="gate pend">
+    <h4>🔴 Pilot Validation Gate <span class="pill p-p0">หลัง pilot 30 วัน</span></h4>
+    <div class="cond">
+      🟢 <strong>GO:</strong> <code>ban_rate = 0</code> AND <code>risk_block ≥ 95%</code> AND (<code>NPS ≥ 30</code> OR PM ok)<br>
+      🟡 <strong>GO_WITH_CAVEAT:</strong> ban_rate = 0 AND risk_block ≥ 95% AND NPS &lt; 30 (PM decide)<br>
+      🔴 <strong>NO_GO:</strong> ban_rate &gt; 0 OR risk_block &lt; 95% (rollback + retro)
+    </div>
+  </div>
+
+  <!-- ============ SECTION D ============ -->
+  <h2 id="d"><span class="n">D</span>เช็คลิสต์ทีม (ใช้ตอนปิดงาน)<small>Section 6 · For Team Use — ใช้ซ้ำทุกครั้งที่ปิด story / epic / release</small></h2>
+
+  <div class="card">
+    <div class="hd"><span class="t">✔️ ก่อนปิด Story</span></div>
+    <div class="bd">
+      <label class="ck"><input type="checkbox" data-k="d1-1"><span class="tx">Jira: Story status = READY TO TEST</span></label>
+      <label class="ck"><input type="checkbox" data-k="d1-2"><span class="tx">AC: acceptance criteria ใน Jira ติ๊กครบ</span></label>
+      <label class="ck"><input type="checkbox" data-k="d1-3"><span class="tx">QA Design: Integration / Contract / E2E case spec เสร็จ</span></label>
+      <label class="ck"><input type="checkbox" data-k="d1-4"><span class="tx">Dev Script: script เขียนแล้ว + ผ่าน local</span></label>
+      <label class="ck"><input type="checkbox" data-k="d1-5"><span class="tx">CI: Tier 1 ✅ 100% pass (&lt; 5 นาที)</span></label>
+      <label class="ck"><input type="checkbox" data-k="d1-6"><span class="tx">Coverage: story AC ถูกครอบด้วย test case (QA cross-check)</span></label>
+      <label class="ck"><input type="checkbox" data-k="d1-7"><span class="tx">QA Exec: QA script ✅ 100% pass (ถ้ามี E2E)</span></label>
+      <label class="ck"><input type="checkbox" data-k="d1-8"><span class="tx">Jira: ย้ายเป็น “Done” + QA sign-off comment</span></label>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="hd"><span class="t">✔️ ก่อนปิด Epic</span></div>
+    <div class="bd">
+      <label class="ck"><input type="checkbox" data-k="d2-1"><span class="tx">Stories: ทุก story = Done</span></label>
+      <label class="ck"><input type="checkbox" data-k="d2-2"><span class="tx">Coverage Report: run &amp; audit (% + grade)</span></label>
+      <label class="ck"><input type="checkbox" data-k="d2-3"><span class="tx">Gaps: 0 หรือ documented deferred → MVP-2</span></label>
+      <label class="ck"><input type="checkbox" data-k="d2-4"><span class="tx">CI: Tier 1 ✅ 100% · Tier 2 ✅ ≥ 80%</span></label>
+      <label class="ck"><input type="checkbox" data-k="d2-5"><span class="tx">Sign-Off: QA + PM ใน epic summary</span></label>
+      <label class="ck"><input type="checkbox" data-k="d2-6"><span class="tx">Release: epic พร้อมสำหรับ release gate ถัดไป</span></label>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="hd"><span class="t">✔️ ก่อน MVP-1 Release</span></div>
+    <div class="bd">
+      <label class="ck"><input type="checkbox" data-k="d3-1"><span class="tx">Epics: E1–E6 = Done · E7 (partial) หรือ deferred</span></label>
+      <label class="ck"><input type="checkbox" data-k="d3-2"><span class="tx">CI: Tier 1 ✅ 100% (7 วันต่อเนื่อง)</span></label>
+      <label class="ck"><input type="checkbox" data-k="d3-3"><span class="tx">Tier 2: nightly E2E ✅ (last run)</span></label>
+      <label class="ck"><input type="checkbox" data-k="d3-4"><span class="tx">Hard Rules: Founder sign-off + Insight contract</span></label>
+      <label class="ck"><input type="checkbox" data-k="d3-5"><span class="tx">DR: TC-7.5-01 executed successfully</span></label>
+      <label class="ck"><input type="checkbox" data-k="d3-6"><span class="tx">Smoke: TC-7.6-04~08 all pass</span></label>
+      <label class="ck"><input type="checkbox" data-k="d3-7"><span class="tx">Decision: 🟢 GO / 🔴 HOLD (Founder + QA + PM)</span></label>
+    </div>
+  </div>
+
+  <div class="btns">
+    <button onclick="resetToDefault()">↺ รีเซ็ตเป็นค่าเริ่มต้น (สถานะจริง)</button>
+    <button onclick="clearAll()">☐ ล้างทั้งหมด</button>
+    <button onclick="window.print()">🖨 พิมพ์ / PDF</button>
+  </div>
+
+  <div class="foot">
+    ที่มา: <strong>_bmad-output/test-artifacts/dod/MVP1-QA-DEFINITION-OF-DONE.md</strong> (v1.16 · 2026-07-20 · sign-off v1.3 โดย Ice) + MVP1-QA-SCOPE-AUDIT · README quality-gate · dod-reconcile-blocker-tcs · sign-off review 2026-07-17 · จัดทำโดย QA (Ice) · TAKRA Live MVP-1 · 23 ก.ค. 2026 · <em>ค่าติ๊กเริ่มต้นสะท้อนสถานะจริง ณ 2026-07-20 · การติ๊กจะถูกจำไว้ในเบราว์เซอร์นี้ (localStorage) · ไม่มีการปั้นเลข</em>
+  </div>
+
+</div>
+
+<script>
+(function(){
+  var KEY='takra-live-mvp1-dod-checklist';
+  var boxes=[].slice.call(document.querySelectorAll('input[type=checkbox][data-k]'));
+  function defaults(){var d={};boxes.forEach(function(b){d[b.dataset.k]=b.defaultChecked;});return d;}
+  function load(){try{var s=localStorage.getItem(KEY);if(s)return JSON.parse(s);}catch(e){}return null;}
+  function save(){var st={};boxes.forEach(function(b){st[b.dataset.k]=b.checked;});try{localStorage.setItem(KEY,JSON.stringify(st));}catch(e){}}
+  function paint(){boxes.forEach(function(b){var l=b.closest('.ck');if(l)l.classList.toggle('done',b.checked);});
+    var n=boxes.filter(function(b){return b.checked;}).length,t=boxes.length,p=t?Math.round(n/t*100):0;
+    document.getElementById('ovrTxt').textContent=n+' / '+t+' ('+p+'%)';
+    document.getElementById('ovrBar').style.width=p+'%';
+    document.getElementById('kOverall').textContent=p+'%';
+  }
+  var saved=load();
+  if(saved){boxes.forEach(function(b){if(b.dataset.k in saved)b.checked=!!saved[b.dataset.k];});}
+  paint();
+  boxes.forEach(function(b){b.addEventListener('change',function(){save();paint();});});
+  window.resetToDefault=function(){var d=defaults();boxes.forEach(function(b){b.checked=d[b.dataset.k];});save();paint();};
+  window.clearAll=function(){boxes.forEach(function(b){b.checked=false;});save();paint();};
+})();
+</script>
+</body>
+</html>

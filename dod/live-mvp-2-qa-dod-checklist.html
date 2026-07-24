@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MVP 2 — QA Definition of Done (Checklist) · TAKRA Live</title>
+<style>
+  :root{
+    --ink:#1a2233; --soft:#4a5568; --faint:#8592a6;
+    --line:#e5e9f0; --line2:#f0f3f8;
+    --accent:#4f46e5; --accent-bg:#eef2ff;
+    --p0:#dc2626; --p0-bg:#fef2f2;
+    --p1:#ea580c; --p1-bg:#fff7ed;
+    --p2:#ca8a04; --p2-bg:#fefce8;
+    --ok:#16a34a; --ok-bg:#f0fdf4;
+    --teal:#0d9488; --teal-bg:#f0fdfa;
+    --font:-apple-system,BlinkMacSystemFont,"Segoe UI","Sarabun","Noto Sans Thai","Helvetica Neue",Arial,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--font);color:var(--ink);background:#f4f6fb;line-height:1.65;-webkit-font-smoothing:antialiased;font-size:15.5px}
+  .wrap{max-width:880px;margin:0 auto;padding:0 22px 100px}
+
+  .band{background:linear-gradient(135deg,#1e293b,#0f172a);color:#f8fafc;margin:0 -22px 0;padding:42px 22px 34px;border-radius:0 0 22px 22px}
+  .band .inner{max-width:880px;margin:0 auto}
+  .band .ey{font-size:.76rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#a5b4fc;margin-bottom:12px}
+  .band h1{font-size:clamp(1.5rem,4vw,2rem);font-weight:800;line-height:1.15;letter-spacing:-.01em}
+  .band p{color:#cbd5e1;margin-top:10px;max-width:700px;font-size:.92rem}
+  .band .meta{margin-top:16px;display:flex;flex-wrap:wrap;gap:6px 22px;font-size:.84rem;color:#94a3b8}
+  .band .meta b{color:#e2e8f0}
+
+  .verdict{margin:20px 0 8px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 20px;display:flex;flex-wrap:wrap;align-items:center;gap:14px 26px}
+  .verdict .big{font-size:1.05rem;font-weight:800;color:var(--p0)}
+  .verdict .kpi{display:flex;flex-direction:column;gap:1px}
+  .verdict .kpi .v{font-size:1.15rem;font-weight:800;font-variant-numeric:tabular-nums}
+  .verdict .kpi .k{font-size:.72rem;color:var(--faint);font-weight:600}
+
+  .ovr{margin:10px 0 22px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 18px}
+  .ovr .row{display:flex;justify-content:space-between;align-items:center;font-size:.86rem;font-weight:700;margin-bottom:8px}
+  .bar{height:9px;border-radius:99px;background:var(--line2);overflow:hidden}
+  .bar>i{display:block;height:100%;background:linear-gradient(90deg,var(--ok),var(--teal));width:0;transition:width .3s}
+
+  .legend{display:flex;flex-wrap:wrap;gap:8px 16px;margin:14px 0 4px;font-size:.8rem;color:var(--soft)}
+  .legend span{display:inline-flex;align-items:center;gap:5px}
+
+  h2{font-size:1.18rem;font-weight:800;letter-spacing:-.01em;margin:38px 0 6px;padding-top:16px;scroll-margin-top:16px;border-top:1px solid var(--line)}
+  h2 .n{display:inline-flex;align-items:center;justify-content:center;width:1.55em;height:1.55em;background:var(--accent);color:#fff;border-radius:8px;font-size:.72em;margin-right:9px;vertical-align:middle}
+  h2 small{display:block;font-size:.8rem;font-weight:500;color:var(--faint);margin:5px 0 0}
+
+  .card{border:1px solid var(--line);border-radius:14px;background:#fff;margin:16px 0;overflow:hidden}
+  .card>.hd{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;padding:13px 18px;background:var(--line2);border-bottom:1px solid var(--line)}
+  .card>.hd .t{font-weight:800;font-size:1rem}
+  .card>.hd .sp{margin-left:auto;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+  .card>.bd{padding:8px 18px 14px}
+  .card .subttl{font-size:.76rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--faint);margin:12px 0 4px}
+  .card .meta-line{font-size:.82rem;color:var(--soft);margin:8px 0 2px;padding-top:8px;border-top:1px dashed var(--line)}
+
+  .ck{display:flex;align-items:flex-start;gap:10px;padding:7px 6px;border-radius:8px;cursor:pointer;font-size:.92rem}
+  .ck:hover{background:#fafbfe}
+  .ck input{margin-top:3px;width:16px;height:16px;accent-color:var(--ok);flex:0 0 auto;cursor:pointer}
+  .ck .tx{flex:1}
+  .ck.done .tx{color:var(--soft)}
+  .ck .pill{flex:0 0 auto;margin-top:1px}
+  .ck em{font-style:normal;background:var(--line2);padding:0 5px;border-radius:4px;font-size:.9em;color:var(--soft)}
+  .ck code{background:var(--line2);padding:0 5px;border-radius:4px;font-size:.86em}
+
+  .pill{display:inline-flex;align-items:center;gap:4px;font-size:.7rem;font-weight:800;padding:2px 9px;border-radius:999px;white-space:nowrap}
+  .p-p0{background:var(--p0-bg);color:var(--p0)}
+  .p-p1{background:var(--p1-bg);color:var(--p1)}
+  .p-p2{background:var(--p2-bg);color:var(--p2)}
+  .p-ok{background:var(--ok-bg);color:var(--ok)}
+  .p-teal{background:var(--teal-bg);color:var(--teal)}
+  .p-gray{background:var(--line2);color:var(--soft)}
+
+  table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.88rem}
+  th{text-align:left;font-weight:700;color:var(--soft);border-bottom:2px solid var(--line);padding:8px 11px;font-size:.8rem;background:var(--line2)}
+  td{padding:8px 11px;border-bottom:1px solid var(--line2);vertical-align:top}
+  tr:last-child td{border-bottom:none}
+  td.c,th.c{text-align:center}
+  tbody tr:hover{background:#fafbfe}
+
+  .gate{border:1px solid var(--line);border-left-width:5px;border-radius:12px;background:#fff;margin:14px 0;padding:14px 18px}
+  .gate.pend{border-left-color:var(--p0)} .gate.part{border-left-color:var(--p1)} .gate.ok{border-left-color:var(--ok)}
+  .gate h4{font-size:.98rem;font-weight:800;margin-bottom:2px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .gate .cond{font-size:.82rem;color:var(--soft);margin-top:6px}
+  .gate code{background:var(--line2);padding:1px 5px;border-radius:4px;font-size:.9em}
+
+  .toc{background:#fff;border:1px solid var(--line);border-radius:12px;padding:13px 18px;margin:6px 0 0;font-size:.88rem}
+  .toc b{display:block;font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);margin-bottom:6px}
+  .toc a{color:var(--ink);text-decoration:none;margin-right:15px;white-space:nowrap;display:inline-block;line-height:1.9}
+  .toc a:hover{color:var(--accent)}
+
+  .foot{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);color:var(--faint);font-size:.8rem}
+  .btns{display:flex;gap:8px;margin:18px 0 0;flex-wrap:wrap}
+  .btns button{font-family:inherit;font-size:.82rem;font-weight:700;border:1px solid var(--line);background:#fff;color:var(--soft);border-radius:8px;padding:7px 14px;cursor:pointer}
+  .btns button:hover{border-color:var(--accent);color:var(--accent)}
+
+  @media print{ body{background:#fff} .band{-webkit-print-color-adjust:exact;print-color-adjust:exact} .btns{display:none} .ck{cursor:default} }
+</style>
+</head>
+<body>
+
+<div class="band">
+  <div class="inner">
+    <div class="ey">TAKRA Live · Quality Assurance</div>
+    <h1>MVP 2 — QA Definition of Done · Checklist</h1>
+    <p>เกณฑ์ “เสร็จจริงพร้อม production” ของ MVP-2 (9 Epic · 8–16) — ยึดโครงจาก DoD ของ MVP-1 · MVP-2 <strong>ออกแบบเทสครบ ~100% แต่ยัง pre-execution (0 script รันเขียว)</strong> · ค่าติ๊กเริ่มต้น = สถานะจริง (2026-07-21)</p>
+    <div class="meta">
+      <span>อ้างอิงโครง: <b>MVP1-QA-DEFINITION-OF-DONE.md</b></span>
+      <span>ข้อมูล: <b>mvp2-coverage-matrix (07-21) + readiness brief</b></span>
+      <span>Owner: <b>QA (Ice)</b> · 23 ก.ค. 2026</span>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="verdict">
+    <div class="big">🔴 GO / NO-GO: NOT READY (prod + UAT)</div>
+    <div class="kpi"><span class="v" id="kOverall">—</span><span class="k">ติ๊กแล้ว (checklist)</span></div>
+    <div class="kpi"><span class="v">~100%</span><span class="k">Design coverage (~510 TC)</span></div>
+    <div class="kpi"><span class="v">0</span><span class="k">Executed (green)</span></div>
+    <div class="kpi"><span class="v">3</span><span class="k">External blocker (Engine×2 · Hub)</span></div>
+  </div>
+
+  <div class="ovr">
+    <div class="row"><span>ความคืบหน้า checklist ทั้งหมด</span><span id="ovrTxt">0 / 0</span></div>
+    <div class="bar"><i id="ovrBar"></i></div>
+  </div>
+
+  <div class="toc">
+    <b>หัวข้อ</b>
+    <a href="#a">A. 5 ประเภทเทส (DoD)</a><a href="#b">B. สถานะราย Epic</a><a href="#c">C. Entry Gate + Quality Gates</a><a href="#d">D. Mandatory (compliance)</a><a href="#e">E. เช็คลิสต์ทีม</a>
+  </div>
+
+  <div class="legend">
+    <strong style="color:var(--ink)">สัญลักษณ์:</strong>
+    <span><span class="pill p-ok">✅ done</span> เสร็จ+เขียว</span>
+    <span><span class="pill p-p2">🟡 partial/dep</span> มีบางส่วน/ติด dep</span>
+    <span><span class="pill p-p0">🔴 not-ready</span> ยังไม่ทำ/0 script</span>
+    <span><span class="pill p-p0">⛔ hard-blocked</span> ติด external/infra</span>
+    <span><span class="pill p-gray">⚪ N/A</span> ไม่มีโดยธรรมชาติ</span>
+  </div>
+
+  <!-- ============ SECTION A ============ -->
+  <h2 id="a"><span class="n">A</span>เกณฑ์ 5 ประเภทเทส (Definition of Done)<small>ทุก feature ต้องผ่านครบ + 100% pass · MVP-2 = design ครบ · script ยังไม่เขียน/ยังไม่เขียว</small></h2>
+
+  <!-- A1 Integration -->
+  <div class="card">
+    <div class="hd"><span class="t">1 · Integration Test Case</span><span class="sp"><span class="pill p-gray">QA design + Dev script</span><span class="pill p-p0">🔴 design ✅ · script 0</span></span></div>
+    <div class="bd">
+      <div class="subttl">Acceptance Criteria</div>
+      <label class="ck done"><input type="checkbox" data-k="a1-1" checked><span class="tx">QA ออกแบบ test case ตรงตาม story AC <em>(int ~287 + api ~69 designed)</em></span><span class="pill p-ok">✅</span></label>
+      <label class="ck"><input type="checkbox" data-k="a1-2"><span class="tx">Dev เขียน test script <code>*.int-spec.ts</code> ตามสเปก QA <em>(0 script — dev ยังไม่เริ่ม · ทุก story To Do)</em></span><span class="pill p-p0">🔴</span></label>
+      <label class="ck"><input type="checkbox" data-k="a1-3"><span class="tx">Script ทดสอบหลาย component + DB จริง (Postgres RLS isolation)</span><span class="pill p-p0">🔴</span></label>
+      <label class="ck"><input type="checkbox" data-k="a1-4"><span class="tx">Multi-tenant negative test (NFR-005) — ทุก story ที่แตะ workspace-scoped data</span><span class="pill p-p0">🔴</span></label>
+      <label class="ck"><input type="checkbox" data-k="a1-5"><span class="tx">Test เขียว 🟢 100% · CI Tier 1 ผ่าน (&lt; 5 นาที)</span><span class="pill p-p0">🔴</span></label>
+      <div class="meta-line"><strong>สถานะ:</strong> design ✅ ~356 (int+api) · script <strong>0</strong> · <strong>ตัวขวาง:</strong> dev ยังไม่ปิด story (build order D1 Epic 8 ก่อน) + Epic 8 foundation ยังไม่ deliver</div>
+    </div>
+  </div>
+
+  <!-- A2 Contract -->
+  <div class="card">
+    <div class="hd"><span class="t">2 · Contract Test (external · red-first)</span><span class="sp"><span class="pill p-gray">QA design + Dev script</span><span class="pill p-p0">⛔ เขียนไม่ได้ (ไม่มี frozen artifact)</span></span></div>
+    <div class="bd">
+      <div class="subttl">DoD gate P6 — “ไม่มี frozen artifact = ไม่เริ่ม dev”</div>
+      <label class="ck done"><input type="checkbox" data-k="a2-1" checked><span class="tx">QA ออกแบบ contract case (8 TC) + วางแผน red-first ครบ</span><span class="pill p-ok">✅ design</span></label>
+      <label class="ck"><input type="checkbox" data-k="a2-2"><span class="tx"><strong>Insight CAPAPP-02</strong> (Epic 9 viewer) — viewer DOM feasibility ยัง validate ไม่ได้</span><span class="pill p-p2">🟡 open</span></label>
+      <label class="ck"><input type="checkbox" data-k="a2-3"><span class="tx"><strong>Hub usage ingest</strong> (Epic 12) — API spec ยัง open (Hub = deep-link only)</span><span class="pill p-p0">⛔ P1</span></label>
+      <label class="ck"><input type="checkbox" data-k="a2-4"><span class="tx"><strong>Engine tool-calling</strong> (Epic 13 · D7) — contract vendor ยัง frozen ไม่ได้</span><span class="pill p-p0">⛔ P1</span></label>
+      <label class="ck"><input type="checkbox" data-k="a2-5"><span class="tx"><strong>Engine RTMP egress</strong> (Epic 14 · D8) — contract + live infra <em>(biggest risk)</em></span><span class="pill p-p0">⛔ P0</span></label>
+      <div class="meta-line"><strong>สถานะ:</strong> ออกแบบ red-first แล้ว แต่ <strong>เขียน contract test จริงไม่ได้</strong> จนกว่า vendor/Hub ส่ง frozen artifact · degrade-path (flag <code>mvp2.*</code> default-off) = mandatory</div>
+    </div>
+  </div>
+
+  <!-- A3 E2E -->
+  <div class="card">
+    <div class="hd"><span class="t">3 · E2E Test (UI + Full-loop · Playwright)</span><span class="sp"><span class="pill p-gray">Owner: QA design + script</span><span class="pill p-p0">🔴 0 green</span></span></div>
+    <div class="bd">
+      <div class="subttl">Acceptance Criteria</div>
+      <label class="ck done"><input type="checkbox" data-k="a3-1" checked><span class="tx">QA ออกแบบ UI ~112 + full-loop ~38 case ครบทุก epic (13 = backend-only ⚪ N/A)</span><span class="pill p-ok">✅</span></label>
+      <label class="ck"><input type="checkbox" data-k="a3-2"><span class="tx">QA เขียน script <code>*.e2e-spec.ts</code> ครบ <em>(~51 เขียนแล้ว · แต่ 47/49 = <code>test.skip</code>)</em></span><span class="pill p-p2">🟡 spec เขียน · skip</span></label>
+      <label class="ck"><input type="checkbox" data-k="a3-3"><span class="tx">Script รันได้บน stack จริง — แก้ <code>app.takra.localhost</code> (HTTP 000) + 2FA passkey (headless block)</span><span class="pill p-p0">🔴</span></label>
+      <label class="ck"><input type="checkbox" data-k="a3-4"><span class="tx">Test เขียว 🟢 100% (happy + edge + error) · CI Tier 2 nightly</span><span class="pill p-p0">🔴</span></label>
+      <div class="subttl">Full-loop — doable now vs blocked</div>
+      <label class="ck"><input type="checkbox" data-k="a3-5"><span class="tx">🟢 doable ~9 (Epic 11 impersonation/ops · Epic 15 live-targets-revive · in-house)</span><span class="pill p-p2">⚪ ยังไม่เขียน</span></label>
+      <label class="ck"><input type="checkbox" data-k="a3-6"><span class="tx">🟡 dep/caveat ~27 (Epic 10/8 dep · Hub deep-link · profile read-only)</span><span class="pill p-p2">🟡</span></label>
+      <label class="ck"><input type="checkbox" data-k="a3-7"><span class="tx">⛔ hard-blocked 2 (RTMP egress push · recap projection)</span><span class="pill p-p0">⛔</span></label>
+      <div class="meta-line"><strong>สถานะ:</strong> executed <strong>0 green</strong> · <strong>ตัวขวาง:</strong> stack down + 2FA + dep chain (Epic 8) + external contract</div>
+    </div>
+  </div>
+
+  <!-- A4 Sign-off -->
+  <div class="card">
+    <div class="hd"><span class="t">4 · Sign-off / Release Ready</span><span class="sp"><span class="pill p-gray">QA + PM + Founder</span><span class="pill p-p0">🔴 0%</span></span></div>
+    <div class="bd">
+      <div class="subttl">เกณฑ์ก่อนปล่อย (ยังไม่เริ่ม)</div>
+      <label class="ck"><input type="checkbox" data-k="a4-1"><span class="tx">Pre-release smoke + DR drill (สืบทอดจาก MVP-1 release gate)</span><span class="pill p-p0">🔴</span></label>
+      <label class="ck"><input type="checkbox" data-k="a4-2"><span class="tx">Founder infra sign-off + external contract signed (Engine/Hub)</span><span class="pill p-p0">🔴</span></label>
+      <label class="ck"><input type="checkbox" data-k="a4-3"><span class="tx"><strong>MVP-1 Regression suite ผ่าน</strong> — ยืนยันของเดิม (7 Epic · 62 stories) ไม่ regress <em>(non-negotiable)</em></span><span class="pill p-p0">🔴</span></label>
+      <label class="ck"><input type="checkbox" data-k="a4-4"><span class="tx">Validation gate metrics (ban_rate 0 · risk_block ≥95%) — เก็บตอนรัน pilot จริง</span><span class="pill p-p0">🔴</span></label>
+      <div class="meta-line"><strong>สถานะ:</strong> 🔴 Pending — ขึ้นกับ Section C ทั้งหมด (execution ยังไม่เริ่ม)</div>
+    </div>
+  </div>
+
+  <!-- A5 cross-cutting summary -->
+  <div class="card">
+    <div class="hd"><span class="t">5 · Cross-cutting Mandatory (DoD gate)</span><span class="sp"><span class="pill p-p0">🔴 ออกแบบแล้ว · ยังไม่รัน</span></span></div>
+    <div class="bd">
+      <label class="ck"><input type="checkbox" data-k="a5-1"><span class="tx">Multi-tenant negative test (NFR-005) — ทุก story ที่แตะ workspace data · เสี่ยงเพิ่มจาก impersonation</span><span class="pill p-p0">🔴</span></label>
+      <label class="ck"><input type="checkbox" data-k="a5-2"><span class="tx">Contract test red-first — external ผูกเยอะ (Insight/Hub/Engine×2)</span><span class="pill p-p0">🔴</span></label>
+      <label class="ck"><input type="checkbox" data-k="a5-3"><span class="tx">Degrade-path test = default — flag <code>mvp2.*</code> default-off · external ไม่มา → ไม่แตก</span><span class="pill p-p0">🔴</span></label>
+      <div class="meta-line">รายละเอียด compliance (impersonation no-leak · PDPA consent) ดู <strong>Section D</strong></div>
+    </div>
+  </div>
+
+  <!-- ============ SECTION B ============ -->
+  <h2 id="b"><span class="n">B</span>สถานะราย Epic (DoD gate)<small>coverage-matrix 2026-07-21 · ทุก story = To Do (ยกเว้น Epic 16 4/5 READY TO TEST) · design ครบ · run 0</small></h2>
+  <table>
+    <thead><tr><th>Epic</th><th class="c">design TC</th><th class="c">Gate</th><th>ตัวขวางหลัก</th></tr></thead>
+    <tbody>
+      <tr><td><strong>8</strong> · AIEventLog / avatar core <span class="z">(T0 foundation)</span></td><td class="c">~73</td><td class="c"><span class="pill p-p0">🔴 NOT-READY</span></td><td>0 script · เป็น dep chain ให้ 10/11/15</td></tr>
+      <tr><td><strong>9</strong> · Live Console / comment / recap</td><td class="c">~83</td><td class="c"><span class="pill p-p0">🔴 NOT-READY</span></td><td>viewer DOM (Insight CAPAPP-02) open · FR53</td></tr>
+      <tr><td><strong>10</strong> · Avatar/Voice self-service <span class="z">(T2 pilot)</span></td><td class="c">~93</td><td class="c"><span class="pill p-p0">🔴 NOT-READY</span></td><td>dep Epic 8 · PDPA consent gate ก่อน clone (P0)</td></tr>
+      <tr><td><strong>11</strong> · Ops &amp; Support platform</td><td class="c">~82</td><td class="c"><span class="pill p-p0">🔴 NOT-READY</span></td><td>0 script · impersonation no-cross-tenant-leak (SEC-04)</td></tr>
+      <tr><td><strong>12</strong> · Billing · Metering · Caps <span class="z">(T1 flag)</span></td><td class="c">~55</td><td class="c"><span class="pill p-p2">🟡 CONCERNS</span></td><td>⛔ Hub ingest API open (deep-link only)</td></tr>
+      <tr><td><strong>13</strong> · Engine tool-calling <span class="z">(T3 · backend)</span></td><td class="c">~29</td><td class="c"><span class="pill p-p2">🟡 BLOCKED</span></td><td>⛔ Engine tool-calling contract (vendor)</td></tr>
+      <tr><td><strong>14</strong> · Multi-platform RTMP <span class="z">(T3 heavy)</span></td><td class="c">~52</td><td class="c"><span class="pill p-p2">🟡 BLOCKED</span></td><td>⛔ Engine RTMP egress + live infra <strong>(biggest risk)</strong></td></tr>
+      <tr><td><strong>15</strong> · Studio riders <span class="z">(T0 in-house)</span></td><td class="c">~27</td><td class="c"><span class="pill p-p0">🔴 NOT-READY</span></td><td>0 script (no ext blocker · doable ต่อ live-schedule)</td></tr>
+      <tr><td><strong>16</strong> · Settings &amp; Usage unify <span class="z">(T0 in-house)</span></td><td class="c">~16</td><td class="c"><span class="pill p-p2">🟡 CONCERNS</span></td><td>spec เขียนแล้ว · 0 green (skip) · 16.3 notif blocked</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:.82rem;color:var(--soft);margin-top:4px">รวม ~510 TC design · <strong>P0 epics = 8, 9, 10, 11</strong> · build order: D1(8) → D2/D3(9) → D4/D5(10/11) → D6(12) → D7(13) → D8(14) · 15/16 in-house ขนานได้</p>
+
+  <!-- ============ SECTION C ============ -->
+  <h2 id="c"><span class="n">C</span>Entry Gate + Quality Gates<small>MVP-2 มี “ประตูก่อนเริ่ม execute” เพิ่มจาก gate มาตรฐาน (สืบทอดจาก MVP-1)</small></h2>
+
+  <div class="gate pend">
+    <h4>🔴 MVP-2 Entry Gate <span class="pill p-p0">ก่อนเริ่ม execute — ยังไม่ผ่าน</span></h4>
+    <label class="ck"><input type="checkbox" data-k="c0-1"><span class="tx">Engine tool-calling contract (D7) frozen — Epic 13</span></label>
+    <label class="ck"><input type="checkbox" data-k="c0-2"><span class="tx">Engine RTMP egress contract (D8) + live infra (LiveKit/RTMP) — Epic 14 <em>(biggest risk)</em></span></label>
+    <label class="ck"><input type="checkbox" data-k="c0-3"><span class="tx">Hub usage ingest / deep-link handler spec — Epic 12 / 16 usage-unify</span></label>
+    <label class="ck"><input type="checkbox" data-k="c0-4"><span class="tx">Insight CAPAPP-02 viewer DOM feasibility validated — Epic 9 (FR53)</span></label>
+    <label class="ck"><input type="checkbox" data-k="c0-5"><span class="tx">Epic 8 (AIEventLog + avatar/engine) delivered — ปลด dep chain 10/11/15</span></label>
+    <label class="ck"><input type="checkbox" data-k="c0-6"><span class="tx">Stack ขึ้น: <code>app.takra.localhost</code> reachable (แก้ HTTP 000)</span></label>
+    <label class="ck"><input type="checkbox" data-k="c0-7"><span class="tx">Headless auth แก้แล้ว (บัญชี QA no-2FA สำหรับ e2e)</span></label>
+    <label class="ck"><input type="checkbox" data-k="c0-8"><span class="tx">re-sync timeline ↔ Jira/PM + ยืนยันวัน dev start (timeline.md = forecast · อย่ายึด)</span></label>
+  </div>
+
+  <div class="gate part">
+    <h4>🔹 Story Closure Gate</h4>
+    <label class="ck"><input type="checkbox" data-k="c1-1"><span class="tx">AC ครบ · Integration case + script ✅ 100% pass</span></label>
+    <label class="ck"><input type="checkbox" data-k="c1-2"><span class="tx">Contract test (ถ้ามี external) ✅ · E2E script ✅ (ถ้ามี UI)</span></label>
+    <label class="ck"><input type="checkbox" data-k="c1-3"><span class="tx">CI Tier 1 pass (&lt; 5 นาที) · QA coverage audit ✅</span></label>
+  </div>
+
+  <div class="gate part">
+    <h4>🔹 Epic Closure Gate</h4>
+    <label class="ck"><input type="checkbox" data-k="c2-1"><span class="tx">ทุก story = Done · Coverage Report (AC/FR/NFR/Risk %) ≥ threshold</span></label>
+    <label class="ck"><input type="checkbox" data-k="c2-2"><span class="tx">Gaps = 0 (หรือ documented deferred → MVP-3) · CI Tier 1 100% · Tier 2 ≥ 80%</span></label>
+  </div>
+
+  <div class="gate pend">
+    <h4>🔴 MVP-2 Release Gate <span class="pill p-p0">ยังไม่ผ่าน</span></h4>
+    <label class="ck"><input type="checkbox" data-k="c3-1"><span class="tx">ทุก Epic (8–16) coverage ✅ (หรือ documented deferred)</span></label>
+    <label class="ck"><input type="checkbox" data-k="c3-2"><span class="tx">CI Tier 1 100% green 7 วัน · Tier 2 nightly E2E ✅</span></label>
+    <label class="ck"><input type="checkbox" data-k="c3-3"><span class="tx"><strong>MVP-1 Regression suite ผ่าน (7 Epic) — ไม่ regress</strong></span></label>
+    <label class="ck"><input type="checkbox" data-k="c3-4"><span class="tx">Founder infra sign-off + Engine/Hub contract signed / degraded-mode approved</span></label>
+    <label class="ck"><input type="checkbox" data-k="c3-5"><span class="tx">DR drill + Pre-pilot smoke ผ่าน · Decision 🟢 GO / 🔴 HOLD (Founder + QA + PM)</span></label>
+  </div>
+
+  <div class="gate pend">
+    <h4>🔴 Pilot Validation Gate <span class="pill p-p0">หลัง pilot</span></h4>
+    <div class="cond">
+      🟢 <strong>GO:</strong> <code>ban_rate = 0</code> AND <code>risk_block ≥ 95%</code> AND (<code>NPS ≥ 30</code> OR PM ok)<br>
+      🔴 <strong>NO_GO:</strong> ban_rate &gt; 0 OR risk_block &lt; 95% (rollback + retro)
+    </div>
+  </div>
+
+  <!-- ============ SECTION D ============ -->
+  <h2 id="d"><span class="n">D</span>Mandatory Compliance (non-negotiable)<small>เทส negative/compliance ที่ต้องผ่านก่อนปล่อย — ออกแบบ red-first แล้ว · ยังไม่รัน</small></h2>
+  <div class="card">
+    <div class="hd"><span class="t">🔒 บังคับผ่าน (ห้ามปล่อยผ่าน)</span></div>
+    <div class="bd">
+      <label class="ck"><input type="checkbox" data-k="d0-1"><span class="tx"><strong>Impersonation no-cross-tenant-leak</strong> (NFR-005 / SEC-04) — Epic 11 · non-negotiable</span><span class="pill p-p0">🔴</span></label>
+      <label class="ck"><input type="checkbox" data-k="d0-2"><span class="tx">Impersonation <strong>read-only enforced</strong> (ห้าม write) + ทุก session <strong>audit-logged</strong></span><span class="pill p-p0">🔴</span></label>
+      <label class="ck"><input type="checkbox" data-k="d0-3"><span class="tx"><strong>PDPA consent = blocking gate ก่อน clone</strong> (Epic 10 · compliance P0)</span><span class="pill p-p0">🔴</span></label>
+      <label class="ck"><input type="checkbox" data-k="d0-4"><span class="tx"><strong>Erasure verify ครบ 3 ที่</strong> (S3 + provider + DB) + audit → AIEventLog (Epic 10 · NFR-COMP-05 · revoke/delete ≤ 7 วัน)</span><span class="pill p-p0">🔴</span></label>
+      <label class="ck"><input type="checkbox" data-k="d0-5"><span class="tx">Avatar clone แตะได้เฉพาะ 3 field (face / RAG <strong>ห้ามแตะ</strong>) · Voice clone ผ่าน adapter (ไม่ direct ElevenLabs)</span><span class="pill p-p0">🔴</span></label>
+    </div>
+  </div>
+
+  <!-- ============ SECTION E ============ -->
+  <h2 id="e"><span class="n">E</span>เช็คลิสต์ทีม (ใช้ตอนปิดงาน)<small>สืบทอดจาก MVP-1 DoD §6 · ใช้ซ้ำทุกครั้งที่ปิด story / epic / release</small></h2>
+  <div class="card">
+    <div class="hd"><span class="t">✔️ ก่อนปิด Story</span></div>
+    <div class="bd">
+      <label class="ck"><input type="checkbox" data-k="e1-1"><span class="tx">Jira: Story = READY TO TEST · AC ติ๊กครบ</span></label>
+      <label class="ck"><input type="checkbox" data-k="e1-2"><span class="tx">QA Design: Integration/Contract/E2E case spec เสร็จ · Dev Script เขียน + ผ่าน local</span></label>
+      <label class="ck"><input type="checkbox" data-k="e1-3"><span class="tx">CI Tier 1 ✅ 100% · Coverage cross-check · QA e2e script ✅ (ถ้ามี UI)</span></label>
+      <label class="ck"><input type="checkbox" data-k="e1-4"><span class="tx">Jira → “Done” + QA sign-off comment</span></label>
+    </div>
+  </div>
+  <div class="card">
+    <div class="hd"><span class="t">✔️ ก่อนปิด Epic / MVP-2 Release</span></div>
+    <div class="bd">
+      <label class="ck"><input type="checkbox" data-k="e2-1"><span class="tx">ทุก story = Done · Coverage report run+audit · Gaps 0/deferred</span></label>
+      <label class="ck"><input type="checkbox" data-k="e2-2"><span class="tx">CI Tier 1 100% (7 วัน) · Tier 2 nightly ✅</span></label>
+      <label class="ck"><input type="checkbox" data-k="e2-3"><span class="tx">MVP-1 regression ✅ · Hard rules (Founder + external contract) ✅</span></label>
+      <label class="ck"><input type="checkbox" data-k="e2-4"><span class="tx">Mandatory compliance (Section D) ทั้งหมดเขียว · Decision 🟢 GO / 🔴 HOLD</span></label>
+    </div>
+  </div>
+
+  <div class="btns">
+    <button onclick="resetToDefault()">↺ รีเซ็ตเป็นค่าเริ่มต้น (สถานะจริง)</button>
+    <button onclick="clearAll()">☐ ล้างทั้งหมด</button>
+    <button onclick="window.print()">🖨 พิมพ์ / PDF</button>
+  </div>
+
+  <div class="foot">
+    ที่มา: อ้างอิงโครงจาก <strong>_bmad-output/test-artifacts/dod/MVP1-QA-DEFINITION-OF-DONE.md</strong> · เติมข้อมูล MVP-2 จาก <strong>mvp2-coverage-matrix.md</strong> (2026-07-21) · <strong>mvp2-test-planning-readiness.md</strong> · mvp-2/README + epics-mvp2.md (9 Epic · 40 stories · 151 AC · 22 FR) · Jira TAKRA-370–378 (epic = To Do · Epic 16 = 4/5 READY TO TEST · QA exec TAKRA-474) · live-mvp-2-qa-closeout-full.html · จัดทำโดย QA (Ice) · TAKRA Live MVP-2 · 23 ก.ค. 2026 · <em>MVP-2 ยังไม่มีไฟล์ DoD แยก → เอกสารนี้คือ DoD checklist ของ MVP-2 ที่ derive มาจากมาตรฐาน MVP-1 · ค่าติ๊กเริ่มต้นสะท้อนสถานะจริง (pre-execution) · จำไว้ใน localStorage · ไม่มีการปั้นเลข</em>
+  </div>
+
+</div>
+
+<script>
+(function(){
+  var KEY='takra-live-mvp2-dod-checklist';
+  var boxes=[].slice.call(document.querySelectorAll('input[type=checkbox][data-k]'));
+  function defaults(){var d={};boxes.forEach(function(b){d[b.dataset.k]=b.defaultChecked;});return d;}
+  function load(){try{var s=localStorage.getItem(KEY);if(s)return JSON.parse(s);}catch(e){}return null;}
+  function save(){var st={};boxes.forEach(function(b){st[b.dataset.k]=b.checked;});try{localStorage.setItem(KEY,JSON.stringify(st));}catch(e){}}
+  function paint(){boxes.forEach(function(b){var l=b.closest('.ck');if(l)l.classList.toggle('done',b.checked);});
+    var n=boxes.filter(function(b){return b.checked;}).length,t=boxes.length,p=t?Math.round(n/t*100):0;
+    document.getElementById('ovrTxt').textContent=n+' / '+t+' ('+p+'%)';
+    document.getElementById('ovrBar').style.width=p+'%';
+    document.getElementById('kOverall').textContent=p+'%';
+  }
+  var saved=load();
+  if(saved){boxes.forEach(function(b){if(b.dataset.k in saved)b.checked=!!saved[b.dataset.k];});}
+  paint();
+  boxes.forEach(function(b){b.addEventListener('change',function(){save();paint();});});
+  window.resetToDefault=function(){var d=defaults();boxes.forEach(function(b){b.checked=d[b.dataset.k];});save();paint();};
+  window.clearAll=function(){boxes.forEach(function(b){b.checked=false;});save();paint();};
+})();
+</script>
+</body>
+</html>
