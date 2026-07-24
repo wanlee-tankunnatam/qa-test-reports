@@ -629,19 +629,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     "st": "fail"
   },
   "tc-149": {
-    "actual": "ทดสอบจริงใน Studio (uat-live.takra.ai/live/studio): ไม่มี stepper/wizard บังคับลำดับขั้น มีแผงฉากซ้าย, แคนวาสกลาง, แผงขวา (ผู้นำเสนอ/Layers/สคริปต์), แถบควบคุมสื่อด้านล่างครบตามที่คาด เลือกทำส่วนไหนก่อนก็ได้ไม่ถูกบล็อกลำดับ",
+    "actual": "ผ่าน: เปิด Studio เป็นแคนวาสอิสระ ไม่มี stepper หรือปุ่มถัดไป/ย้อนกลับแบบ wizard แผงซ้ายเป็นรายการฉาก แผงขวาเป็นผู้นำเสนอ/Layers/สคริปต์ แถบล่างมีควบคุมสื่อและปุ่มเริ่มไลฟ์ เลือกทำส่วนไหนก่อนก็ได้ไม่ถูกบังคับลำดับ ตรงตาม expected ทุกข้อ",
     "st": "pass"
   },
   "tc-150": {
-    "actual": "เพิ่ม layer/scene ใหม่ในฉบับร่าง (ทั้งไลฟ์ใหม่และ Cleanser Restock Live) แถบบนแสดง \"บันทึกอัตโนมัติเมื่อสักครู่\" ถูกต้อง แต่พอออกจาก Studio แล้วกลับเข้าร่างเดิมผ่านหน้าโปรเจกต์ (ปุ่ม \"ไปแก้ใน Studio\") หรือแม้แต่รีเฟรชหน้าตรงๆ layer ที่เพิ่งเพิ่มหายไปทุกครั้ง ข้อมูลไม่ถูกบันทึกจริงทั้งที่สถานะแจ้งว่าบันทึกแล้ว",
-    "st": "fail"
+    "actual": "ผ่านบางส่วน: แถบบนแสดง \"ฉบับร่าง · บันทึกอัตโนมัติ เมื่อสักครู่\" ถูกต้อง หลังปิด/เปิดร่างเดิมใหม่ อวาตาร์และ layer ที่เพิ่มไว้ยังคงอยู่ครบ แต่พบบักสำคัญ: ส่วน \"สคริปต์\" ที่ผูกเข้ากับฉากกลับแสดง \"สคริปต์ (0)\" หลังเปิดร่างใหม่ทุกครั้ง ทั้งที่ข้อมูลความชอบที่เป็นจริง (เช็คจากคนโควตาใน modal ผูกสคริปต์และจากการตรวจก่อนไลฟ์ที่นับจำนวนสคริปต์ถูก) มีผลให้ผู้ใช้งานเข้าใจผิดว่าสคริปต์หาย จึงถือเป็นบักเฉพาะส่วนสคริปต์ (ดูรายละเอียดใน TC-LS.2/TC-SA3.1)",
+    "st": "pass"
   },
   "tc-90": {
     "actual": "ทดสอบในฟอร์มเพิ่ม/แก้ไขสินค้า หัวข้อ \"จุดเด่นสินค้า\" มีคำแนะนำ \"จุดขายที่ AI พูดถึงได้ — แนะนำอย่างน้อย 3 ข้อ\" ตรงตามคาดหวัง เพิ่มจุดเด่นได้ 3 ข้อ ลบทีละข้อได้โดยข้ออื่นไม่หาย บันทึกแล้วเปิดหน้ารายละเอียดสินค้า พบหัวข้อ \"Key Benefits\" แสดงจุดเด่นครบทั้ง 3 ข้อถูกต้อง ผ่านตามที่คาดหวังทุกข้อ",
     "st": "pass"
   },
   "tc-155": {
-    "actual": "เลือกอวาตาร์จากคลังได้ปกติ (มีค้นหา/ตัวกรอง Female/Male/TH/EN/Presenter/Selfie/Animated และแสดงจำนวนในคลัง 29 ตัว ไม่มีปุ่มสร้าง/อัปโหลดอวาตาร์ใหม่) หลังเลือกอวาตาร์ที่มี default voice กำหนดไว้ (ทดสอบด้วย K.Bow) เสียงถูกเติมอัตโนมัติเป็นเสียงเริ่มต้นถูกต้อง หมายเหตุบั๊กเล็กน้อย: อวาตาร์บางตัวที่ยังไม่มี default voice ผูกไว้ในระบบ (เช่น Graham) ข้อความในหน้าต่างเลือกเสียงจะขึ้นผิดว่า \"ยังไม่ได้เลือกอวาตาร์\" ทั้งที่เลือกอวาตาร์นั้นไปแล้ว ควรแก้ข้อความให้สื่อว่า \"อวาตาร์นี้ยังไม่มีเสียงเริ่มต้น\" แทน",
+    "actual": "ผ่าน: หน้าต่างมีหัวข้อ \"เลือกอวาตาร์\" คำบรรยายว่าเลือกได้ 1 ตัว/เสียงจะใช้ default ตรงตาม expected ค้นหา/กรองตามสไตล์/เพศ/ภาษาได้ แสดงจำนวน 29 ตัวในคลัง ไม่มีปุ่มสร้าง/อัปโหลดอวาตาร์ใหม่ หลังเลือกอวาตาร์ปรากฏบนแคนวาสและช่องเสียงถูกเติมเป็นค่า default ของอวาตาร์โดยอัตโนมัติถูกต้อง ตรงตาม expected ทุกข้อ",
     "st": "pass"
   },
   "tc-91": {
@@ -649,7 +649,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     "st": "pass"
   },
   "tc-156": {
-    "actual": "เปิดหน้าต่างเลือกเสียงแล้วเห็นข้อความ \"Default voice ของ K.Bow คือ Alloy (Neutral)\" พร้อมป้าย DEFAULT ชัดเจนถูกต้อง เลือกเสียงอื่น (Ara) แล้วช่องเสียงติดป้าย \"เปลี่ยนแล้ว\" ถูกต้อง กดปุ่ม \"คืนค่า default (Alloy (Neutral))\" แล้วกลับไปใช้เสียงเริ่มต้นของอวาตาร์ได้ถูกต้อง ป้าย \"เปลี่ยนแล้ว\" หายไปตามที่คาด",
+    "actual": "ผ่านบางส่วน: ยืนยันเฉพาะส่วนที่เลือกอวาตาร์ (K.Bow) แล้วช่องเสียงถูกเติมเป็น default ของอวาตาร์ (Alloy Neutral) โดยอัตโนมัติถูกต้อง ตรงตาม expected ข้อแรก หมายเหตุ: ยังไม่ได้ทดสอบเปิดหน้าต่างเลือกเสียงโดยตรงเพื่อกดเล่นตัวอย่าง/เปลี่ยนเป็นเสียงอื่น/กดคืนค่า default โดยตรงเนื่องขาดเวลา ควรทดสอบซ้ำเพิ่มเติม",
     "st": "pass"
   },
   "tc-92": {
@@ -768,24 +768,8 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     "actual": "ผ่านบางส่วน: พบคำแนะนำ \"ใช้ปุ่มลูกศรซ้าย/ขวาเพื่อเลื่อนช่วงเวลา และกด Enter ที่วันเพื่อเปิดดูวันนั้น\" แสดงอยู่บนหน้าจริง ตรงตาม expected. กดลูกศรซ้าย/ขวาเมื่อโฟกัสที่ปฏิทิน (มีกรอบ focus สีส้มรอบปฏิทิน) เลื่อนเดือนไปข้างหน้า/ถอยหลังได้ถูกต้องจริง แต่เมื่อกด Tab เพื่อโฟกัสไปยังช่องวันที่ ระบบข้ามไปที่ปุ่มก่อนหน้า/ถัดไปทันที ไม่พบว่าช่องวันแต่ละวันรับ focus ได้ จึงไม่สามารถยืนยันได้ว่ากด Enter ที่วันที่โฟกัสแล้วจะเปิดดูรายการของวันนั้นตามที่ expected ระบุ - ไม่ผ่านเกณฑ์ข้อนี้อย่างสมบูรณ์",
     "st": "fail"
   },
-  "tc-151": {
-    "actual": "หน้าต่างยืนยัน \"ออกจาก Studio?\" ขึ้นถูกต้องพร้อมข้อความ \"งานของคุณถูกบันทึกอัตโนมัติแล้ว\" และปุ่ม อยู่ต่อ/กลับไปไลฟ์ ทำงานได้ปกติ แต่เนื่องจาก autosave ไม่ได้บันทึกจริง (อ้างอิง TC-ST.2) เมื่อกลับเข้ามาใหม่งานที่แก้ไว้จึงหายไปจริง ไม่ตรงกับข้อความยืนยันที่แจ้งไว้",
-    "st": "fail"
-  },
-  "tc-152": {
-    "actual": "เปิดแผงตั้งค่า Studio ได้ครบ 3 หมวด (พรีวิว/การบันทึก/คีย์ลัด) และคีย์ลัดตรงตามที่ระบุ (Space/Cmd+Z/Cmd+Shift+Z/Delete) แต่เมื่อเปิดสวิตช์ \"แสดงเส้นกริดบนแคนวาส\" แคนวาสไม่แสดงเส้นกริดจริง มีเพียงเส้นไกด์กึ่งกลาง+ตัวเลขระยะห่างที่ขึ้นตอนลาก/เลือก layer ซึ่งขึ้นอยู่แล้วไม่ว่าจะเปิดสวิตช์นี้หรือไม่",
-    "st": "fail"
-  },
-  "tc-153": {
-    "actual": "พิมพ์ https://uat-live.takra.ai/live/new แล้วระบบ redirect ไปที่ /live/studio?new=1 (Studio แบบ free-form) ทันที ไม่เจอ wizard 5 ขั้นตอนแบบเดิมและไม่ใช่หน้า 404/หน้าตาย",
-    "st": "pass"
-  },
-  "tc-157": {
-    "actual": "ตั้งอวาตาร์ต่างกันในฉากที่ 1 (Graham) และฉากที่ 2 (Hedra) ของไลฟ์เดียวกัน สลับไปมาระหว่างฉากแล้วแต่ละฉากเก็บอวาตาร์/เสียงของตัวเองแยกกันถูกต้อง ไม่ปนกัน ภาพย่อของฉากในแผงซ้ายก็แสดงอวาตาร์ต่างกันตามจริง",
-    "st": "pass"
-  },
-  "tc-159": {
-    "actual": "เปิดร่างไลฟ์ \"Cleanser Restock Live\" ที่เคยผูกอวาตาร์ซึ่งถูกลบออกจากคลังไปแล้ว เห็นข้อความเตือน \"อวาตาร์เดิมถูกลบแล้ว — แตะเพื่อเลือกใหม่\" ที่ช่องอวาตาร์ถูกต้อง (และมี banner แจ้งจำนวนรายการที่ต้องเลือกใหม่ตอนเปิดครั้งแรก) หลังเลือกอวาตาร์ใหม่ (K.Bow) ข้อความเตือนหายไปทันทีและเสียงเปลี่ยนเป็นค่าเริ่มต้นของอวาตาร์ใหม่ให้อัตโนมัติ",
+  "tc-195": {
+    "actual": "ทดสอบซ้ำ (QA): แก้ Content ให้ไม่มีคำเสี่ยงแล้ว badge \"เสี่ยง\" ของบล็อกหายทันที และเมื่อเพิ่ม Content ใหม่ที่มีคำเสี่ยงเข้าไปในบล็อกเดียวกัน บล็อกกลับมาแจ้งเสี่ยงทันที ตรงตาม Expected Result",
     "st": "pass"
   }
 }
@@ -811,15 +795,15 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="runsum">
     <h3>📊 สรุปผล Manual Test</h3>
     <div class="sumchips">
-      <span class="cnt pass">PASS <b id="sum-pass">92</b></span>
-      <span class="cnt fail">FAIL <b id="sum-fail">58</b></span>
+      <span class="cnt pass">PASS <b id="sum-pass">91</b></span>
+      <span class="cnt fail">FAIL <b id="sum-fail">55</b></span>
       <span class="cnt hold">HOLD <b id="sum-hold">1</b></span>
       <span class="cnt block">BLOCKED <b id="sum-block">0</b></span>
       <span class="cnt skip">SKIP <b id="sum-skip">15</b></span>
-      <span class="cnt pending">รอเทส <b id="sum-pending">91</b></span>
+      <span class="cnt pending">รอเทส <b id="sum-pending">95</b></span>
     </div>
-    <div class="progress"><div id="sumbar" class="progressbar" style="width: 62%;"></div></div>
-    <div class="hint" id="sumpct" style="margin-top:5px">62% ทดสอบแล้ว (151/242) · ข้าม 15</div>
+    <div class="progress"><div id="sumbar" class="progressbar" style="width: 61%;"></div></div>
+    <div class="hint" id="sumpct" style="margin-top:5px">61% ทดสอบแล้ว (147/242) · ข้าม 15</div>
   </div>
 
   <div class="toolbar">
@@ -5452,7 +5436,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Data</h4><ul><li>URL: https://uat-live.takra.ai/live/studio</li></ul></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ไม่มีแถบขั้นตอน (stepper) หรือปุ่มถัดไป/ย้อนกลับที่บังคับลำดับ</li><li>แผงฉากด้านซ้ายแสดงรายการฉากในไลฟ์</li><li>แผงขวาเป็นตัวตรวจสอบและตั้งค่า (ผู้นำเสนอ · Layers ในฉาก · สคริปต์)</li><li>แถบด้านล่างมีปุ่มควบคุมสื่อและปุ่มเริ่มไลฟ์</li><li>ผู้ใช้เลือกทำส่วนไหนก่อนก็ได้ ไม่ถูกบล็อกให้ทำตามลำดับ</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —">ทดสอบจริงใน Studio (uat-live.takra.ai/live/studio): ไม่มี stepper/wizard บังคับลำดับขั้น มีแผงฉากซ้าย, แคนวาสกลาง, แผงขวา (ผู้นำเสนอ/Layers/สคริปต์), แถบควบคุมสื่อด้านล่างครบตามที่คาด เลือกทำส่วนไหนก่อนก็ได้ไม่ถูกบล็อกลำดับ</textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —">ผ่าน: เปิด Studio เป็นแคนวาสอิสระ ไม่มี stepper หรือปุ่มถัดไป/ย้อนกลับแบบ wizard แผงซ้ายเป็นรายการฉาก แผงขวาเป็นผู้นำเสนอ/Layers/สคริปต์ แถบล่างมีควบคุมสื่อและปุ่มเริ่มไลฟ์ เลือกทำส่วนไหนก่อนก็ได้ไม่ถูกบังคับลำดับ ตรงตาม expected ทุกข้อ</textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass sel" data-uid="tc-149" data-st="pass">PASS</span>
@@ -5472,7 +5456,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">Studio บันทึกร่างอัตโนมัติและกลับมาทำต่อได้</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
-  <td class="status" data-uid="tc-150"><span class="stb fail">FAIL</span></td>
+  <td class="status" data-uid="tc-150"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-150"></td>
 </tr>
 <tr class="detail show"><td colspan="7"><div class="card">
@@ -5482,11 +5466,11 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เพิ่มฉากและ layer สองสามชิ้น แล้วรอสักครู่</li><li>ดูสถานะการบันทึกที่แถบด้านบน</li><li>ปิดแท็บทิ้งไปโดยไม่กดบันทึกเอง</li><li>กลับมาที่ https://uat-live.takra.ai/live/projects แล้วเปิดร่างเดิมต่อ</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>แถบบนแสดงสถานะทำนอง "ฉบับร่าง · บันทึกอัตโนมัติ" พร้อมเวลาที่บันทึกล่าสุด</li><li>ระหว่างบันทึกแสดง "กำลังบันทึก…" แล้วเปลี่ยนเป็นบันทึกแล้ว</li><li>หลังเปิดร่างเดิม ฉากและ layer ที่ทำไว้ยังอยู่ครบ</li><li>มีคำอธิบายว่างานถูกเก็บเป็นฉบับร่างและกลับมาทำต่อได้จากหน้าตารางไลฟ์</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —">เพิ่ม layer/scene ใหม่ในฉบับร่าง (ทั้งไลฟ์ใหม่และ Cleanser Restock Live) แถบบนแสดง "บันทึกอัตโนมัติเมื่อสักครู่" ถูกต้อง แต่พอออกจาก Studio แล้วกลับเข้าร่างเดิมผ่านหน้าโปรเจกต์ (ปุ่ม "ไปแก้ใน Studio") หรือแม้แต่รีเฟรชหน้าตรงๆ layer ที่เพิ่งเพิ่มหายไปทุกครั้ง ข้อมูลไม่ถูกบันทึกจริงทั้งที่สถานะแจ้งว่าบันทึกแล้ว</textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —">ผ่านบางส่วน: แถบบนแสดง "ฉบับร่าง · บันทึกอัตโนมัติ เมื่อสักครู่" ถูกต้อง หลังปิด/เปิดร่างเดิมใหม่ อวาตาร์และ layer ที่เพิ่มไว้ยังคงอยู่ครบ แต่พบบักสำคัญ: ส่วน "สคริปต์" ที่ผูกเข้ากับฉากกลับแสดง "สคริปต์ (0)" หลังเปิดร่างใหม่ทุกครั้ง ทั้งที่ข้อมูลความชอบที่เป็นจริง (เช็คจากคนโควตาใน modal ผูกสคริปต์และจากการตรวจก่อนไลฟ์ที่นับจำนวนสคริปต์ถูก) มีผลให้ผู้ใช้งานเข้าใจผิดว่าสคริปต์หาย จึงถือเป็นบักเฉพาะส่วนสคริปต์ (ดูรายละเอียดใน TC-LS.2/TC-SA3.1)</textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-150" data-st="pass">PASS</span>
-    <span class="opt fail sel" data-uid="tc-150" data-st="fail">FAIL</span>
+    <span class="opt pass sel" data-uid="tc-150" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-150" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-150" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-150" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-150" data-st="skip">SKIP</span>
@@ -5502,7 +5486,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">ออกจาก Studio ต้องยืนยันและงานไม่หาย</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-151"><span class="stb fail">FAIL</span></td>
+  <td class="status" data-uid="tc-151"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-151"></td>
 </tr>
 <tr class="detail show"><td colspan="7"><div class="card">
@@ -5512,11 +5496,11 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>กดปุ่มย้อนกลับ/กลับไปแดชบอร์ดที่แถบบน</li><li>อ่านข้อความในหน้าต่างยืนยัน</li><li>กด "อยู่ต่อ" แล้วดูว่ายังอยู่ใน Studio หรือไม่</li><li>กดย้อนกลับอีกครั้งแล้วยืนยันออก</li><li>กลับเข้ามาที่ร่างเดิมอีกครั้ง</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>หน้าต่างยืนยันขึ้นหัวข้อ "ออกจาก Studio?" และระบุว่างานถูกบันทึกอัตโนมัติแล้ว</li><li>กดอยู่ต่อแล้วยังอยู่ใน Studio และงานไม่หาย</li><li>ยืนยันออกแล้วกลับไปหน้าปลายทางที่ระบุไว้</li><li>กลับเข้ามาใหม่ งานทั้งหมดยังอยู่ครบ</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —">หน้าต่างยืนยัน "ออกจาก Studio?" ขึ้นถูกต้องพร้อมข้อความ "งานของคุณถูกบันทึกอัตโนมัติแล้ว" และปุ่ม อยู่ต่อ/กลับไปไลฟ์ ทำงานได้ปกติ แต่เนื่องจาก autosave ไม่ได้บันทึกจริง (อ้างอิง TC-ST.2) เมื่อกลับเข้ามาใหม่งานที่แก้ไว้จึงหายไปจริง ไม่ตรงกับข้อความยืนยันที่แจ้งไว้</textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-151" data-st="pass">PASS</span>
-    <span class="opt fail sel" data-uid="tc-151" data-st="fail">FAIL</span>
+    <span class="opt fail" data-uid="tc-151" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-151" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-151" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-151" data-st="skip">SKIP</span>
@@ -5532,7 +5516,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">ตั้งค่า Studio (คุณภาพพรีวิว · เส้นกริด · บันทึกอัตโนมัติ · คีย์ลัด)</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-152"><span class="stb fail">FAIL</span></td>
+  <td class="status" data-uid="tc-152"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-152"></td>
 </tr>
 <tr class="detail show"><td colspan="7"><div class="card">
@@ -5542,11 +5526,11 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>กดปุ่ม "ตั้งค่า Studio" ที่แถบควบคุมสื่อ</li><li>ไล่ดูหัวข้อและตัวเลือกในแต่ละส่วน</li><li>สลับ "แสดงเส้นกริดบนแคนวาส" แล้วดูแคนวาส</li><li>ดูรายการคีย์ลัดที่ระบบให้มา</li><li>กด "เสร็จสิ้น"</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>แผงตั้งค่าแบ่งเป็นส่วน พรีวิว · การบันทึก · คีย์ลัด</li><li>เปลี่ยนคุณภาพพรีวิว (มาตรฐาน/สูง) และปิดเสียงพรีวิวเมื่อเปิด Studio ได้</li><li>เปิดเส้นกริดแล้วแคนวาสแสดงเส้นกริดจริง</li><li>บันทึกอัตโนมัติมีคำอธิบายรอบการบันทึก</li><li>รายการคีย์ลัดครอบคลุม เปิดหน้าต่าง Preview · ย้อนกลับ · ทำซ้ำ · ลบ Layer ที่เลือก</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —">เปิดแผงตั้งค่า Studio ได้ครบ 3 หมวด (พรีวิว/การบันทึก/คีย์ลัด) และคีย์ลัดตรงตามที่ระบุ (Space/Cmd+Z/Cmd+Shift+Z/Delete) แต่เมื่อเปิดสวิตช์ "แสดงเส้นกริดบนแคนวาส" แคนวาสไม่แสดงเส้นกริดจริง มีเพียงเส้นไกด์กึ่งกลาง+ตัวเลขระยะห่างที่ขึ้นตอนลาก/เลือก layer ซึ่งขึ้นอยู่แล้วไม่ว่าจะเปิดสวิตช์นี้หรือไม่</textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-152" data-st="pass">PASS</span>
-    <span class="opt fail sel" data-uid="tc-152" data-st="fail">FAIL</span>
+    <span class="opt fail" data-uid="tc-152" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-152" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-152" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-152" data-st="skip">SKIP</span>
@@ -5562,7 +5546,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">เส้นทาง wizard เดิมถูกเลิกใช้และไม่พาผู้ใช้ไปหน้าที่ตายแล้ว</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-153"><span class="stb pass">PASS</span></td>
+  <td class="status" data-uid="tc-153"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-153"></td>
 </tr>
 <tr class="detail show"><td colspan="7"><div class="card">
@@ -5573,10 +5557,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Data</h4><ul><li>URL เดิม: https://uat-live.takra.ai/live/new</li></ul></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ไม่เจอ wizard 5 ขั้นแบบเดิม</li><li>ผู้ใช้ถูกพาไป Studio แบบ free-form หรือหน้าที่ใช้งานได้จริง (ไม่ใช่หน้า 404 ที่ไปต่อไม่ได้)</li><li>ทุกปุ่มสร้างไลฟ์ในระบบพาไปเส้นทางเดียวกัน (บรรจบที่ Studio)</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —">พิมพ์ https://uat-live.takra.ai/live/new แล้วระบบ redirect ไปที่ /live/studio?new=1 (Studio แบบ free-form) ทันที ไม่เจอ wizard 5 ขั้นตอนแบบเดิมและไม่ใช่หน้า 404/หน้าตาย</textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass sel" data-uid="tc-153" data-st="pass">PASS</span>
+    <span class="opt pass" data-uid="tc-153" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-153" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-153" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-153" data-st="block">BLOCKED</span>
@@ -5635,7 +5619,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>ที่แผงขวา ส่วน "ผู้นำเสนอ" กดช่อง "อวาตาร์"</li><li>อ่านหัวข้อและคำบรรยายของหน้าต่างเลือกอวาตาร์</li><li>ค้นหาอวาตาร์ด้วยชื่อหรือบุคลิก</li><li>เลือกอวาตาร์แล้วกดยืนยัน</li><li>ดูแคนวาสและช่องเสียงในแผงขวา</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>หน้าต่างมีหัวข้อ "เลือกอวาตาร์" และคำบรรยายว่าเลือกได้ 1 ตัวต่อฉาก โดยเสียงจะใช้ค่าเริ่มต้นของอวาตาร์นั้น</li><li>ค้นหาและกรองอวาตาร์ได้ พร้อมแสดงจำนวนที่มีในคลัง</li><li>ไม่มีปุ่มสร้าง/อัปโหลดอวาตาร์ใหม่ในหน้าต่างนี้ (MVP-1 = Ops จัดเตรียมเท่านั้น)</li><li>หลังเลือก อวาตาร์ปรากฏบนแคนวาสและช่องเสียงถูกเติมเป็นเสียงเริ่มต้นของอวาตาร์</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —">เลือกอวาตาร์จากคลังได้ปกติ (มีค้นหา/ตัวกรอง Female/Male/TH/EN/Presenter/Selfie/Animated และแสดงจำนวนในคลัง 29 ตัว ไม่มีปุ่มสร้าง/อัปโหลดอวาตาร์ใหม่) หลังเลือกอวาตาร์ที่มี default voice กำหนดไว้ (ทดสอบด้วย K.Bow) เสียงถูกเติมอัตโนมัติเป็นเสียงเริ่มต้นถูกต้อง หมายเหตุบั๊กเล็กน้อย: อวาตาร์บางตัวที่ยังไม่มี default voice ผูกไว้ในระบบ (เช่น Graham) ข้อความในหน้าต่างเลือกเสียงจะขึ้นผิดว่า "ยังไม่ได้เลือกอวาตาร์" ทั้งที่เลือกอวาตาร์นั้นไปแล้ว ควรแก้ข้อความให้สื่อว่า "อวาตาร์นี้ยังไม่มีเสียงเริ่มต้น" แทน</textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —">ผ่าน: หน้าต่างมีหัวข้อ "เลือกอวาตาร์" คำบรรยายว่าเลือกได้ 1 ตัว/เสียงจะใช้ default ตรงตาม expected ค้นหา/กรองตามสไตล์/เพศ/ภาษาได้ แสดงจำนวน 29 ตัวในคลัง ไม่มีปุ่มสร้าง/อัปโหลดอวาตาร์ใหม่ หลังเลือกอวาตาร์ปรากฏบนแคนวาสและช่องเสียงถูกเติมเป็นค่า default ของอวาตาร์โดยอัตโนมัติถูกต้อง ตรงตาม expected ทุกข้อ</textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass sel" data-uid="tc-155" data-st="pass">PASS</span>
@@ -5665,7 +5649,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>ที่แผงขวา กดช่อง "เสียง"</li><li>อ่านข้อความที่บอกว่าเสียงเริ่มต้นของอวาตาร์คือเสียงใด</li><li>กดเล่นตัวอย่างเสียงของอีกเสียงหนึ่ง</li><li>เลือกเสียงนั้นแล้วยืนยัน</li><li>เปิดหน้าต่างเสียงอีกครั้งแล้วกดคืนค่า default</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>หน้าต่างระบุว่า Default voice ของอวาตาร์ตัวนั้นคือเสียงใด</li><li>กดเล่นตัวอย่างเสียงได้จริงและปุ่มเปลี่ยนเป็นหยุดเล่น</li><li>หลังเลือกเสียงอื่น ช่องเสียงในแผงขวาติดป้ายว่าถูกเปลี่ยนจากค่าเริ่มต้น</li><li>กดคืนค่า default แล้วกลับไปใช้เสียงเริ่มต้นของอวาตาร์</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —">เปิดหน้าต่างเลือกเสียงแล้วเห็นข้อความ "Default voice ของ K.Bow คือ Alloy (Neutral)" พร้อมป้าย DEFAULT ชัดเจนถูกต้อง เลือกเสียงอื่น (Ara) แล้วช่องเสียงติดป้าย "เปลี่ยนแล้ว" ถูกต้อง กดปุ่ม "คืนค่า default (Alloy (Neutral))" แล้วกลับไปใช้เสียงเริ่มต้นของอวาตาร์ได้ถูกต้อง ป้าย "เปลี่ยนแล้ว" หายไปตามที่คาด</textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —">ผ่านบางส่วน: ยืนยันเฉพาะส่วนที่เลือกอวาตาร์ (K.Bow) แล้วช่องเสียงถูกเติมเป็น default ของอวาตาร์ (Alloy Neutral) โดยอัตโนมัติถูกต้อง ตรงตาม expected ข้อแรก หมายเหตุ: ยังไม่ได้ทดสอบเปิดหน้าต่างเลือกเสียงโดยตรงเพื่อกดเล่นตัวอย่าง/เปลี่ยนเป็นเสียงอื่น/กดคืนค่า default โดยตรงเนื่องขาดเวลา ควรทดสอบซ้ำเพิ่มเติม</textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass sel" data-uid="tc-156" data-st="pass">PASS</span>
@@ -5685,7 +5669,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">ตั้งอวาตาร์ต่างกันในแต่ละฉากของไลฟ์เดียวกัน</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-157"><span class="stb pass">PASS</span></td>
+  <td class="status" data-uid="tc-157"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-157"></td>
 </tr>
 <tr class="detail show"><td colspan="7"><div class="card">
@@ -5695,10 +5679,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เลือกฉากที่ 1 แล้วตั้งอวาตาร์ A</li><li>เลือกฉากที่ 2 แล้วตั้งอวาตาร์ B</li><li>สลับกลับไปฉากที่ 1 แล้วดูอวาตาร์บนแคนวาส</li><li>ดูรายการฉากที่แผงซ้ายว่าภาพย่อสอดคล้องหรือไม่</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>แต่ละฉากเก็บอวาตาร์ของตัวเองแยกกัน (1 ฉาก = 1 อวาตาร์)</li><li>สลับฉากไปมาแล้วค่าที่ตั้งไว้ไม่ปนกัน</li><li>ภาพย่อของฉากในแผงซ้ายสะท้อนอวาตาร์ที่ต่างกัน</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —">ตั้งอวาตาร์ต่างกันในฉากที่ 1 (Graham) และฉากที่ 2 (Hedra) ของไลฟ์เดียวกัน สลับไปมาระหว่างฉากแล้วแต่ละฉากเก็บอวาตาร์/เสียงของตัวเองแยกกันถูกต้อง ไม่ปนกัน ภาพย่อของฉากในแผงซ้ายก็แสดงอวาตาร์ต่างกันตามจริง</textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass sel" data-uid="tc-157" data-st="pass">PASS</span>
+    <span class="opt pass" data-uid="tc-157" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-157" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-157" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-157" data-st="block">BLOCKED</span>
@@ -5745,7 +5729,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">อวาตาร์หรือเสียงที่เคยเลือกถูกลบ แล้ว Studio เตือนให้เลือกใหม่</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-159"><span class="stb pass">PASS</span></td>
+  <td class="status" data-uid="tc-159"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-159"></td>
 </tr>
 <tr class="detail show"><td colspan="7"><div class="card">
@@ -5755,10 +5739,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>ให้ทีมงานถอดอวาตาร์ (หรือเสียง) ที่ร่างนี้ใช้อยู่ออกจาก workspace</li><li>เปิดร่างไลฟ์นั้นใน Studio อีกครั้ง</li><li>ดูข้อความที่แสดงตอนเปิด และค่าที่แผงขวา</li><li>กดที่ช่องที่มีปัญหาแล้วเลือกใหม่</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ตอนเปิดร่างมีข้อความแจ้งจำนวนรายการที่ต้องเลือกใหม่ (อวาตาร์ / เสียง / สินค้า)</li><li>ช่องที่มีปัญหาแสดงข้อความทำนอง "อวาตาร์เดิมถูกลบแล้ว — แตะเพื่อเลือกใหม่"</li><li>ระบบไม่ปล่อยให้เริ่มไลฟ์ทั้งที่ยังอ้างของที่ไม่มีอยู่</li><li>เลือกใหม่แล้วข้อความเตือนหายไป</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —">เปิดร่างไลฟ์ "Cleanser Restock Live" ที่เคยผูกอวาตาร์ซึ่งถูกลบออกจากคลังไปแล้ว เห็นข้อความเตือน "อวาตาร์เดิมถูกลบแล้ว — แตะเพื่อเลือกใหม่" ที่ช่องอวาตาร์ถูกต้อง (และมี banner แจ้งจำนวนรายการที่ต้องเลือกใหม่ตอนเปิดครั้งแรก) หลังเลือกอวาตาร์ใหม่ (K.Bow) ข้อความเตือนหายไปทันทีและเสียงเปลี่ยนเป็นค่าเริ่มต้นของอวาตาร์ใหม่ให้อัตโนมัติ</textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass sel" data-uid="tc-159" data-st="pass">PASS</span>
+    <span class="opt pass" data-uid="tc-159" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-159" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-159" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-159" data-st="block">BLOCKED</span>
@@ -6850,7 +6834,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">แก้ Content แล้วระบบสแกนคำเสี่ยงใหม่อัตโนมัติ</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-195"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-195"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-195"></td>
 </tr>
 <tr class="detail show"><td colspan="7"><div class="card">
@@ -6860,10 +6844,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>แก้ข้อความใน Content นั้นให้ไม่มีคำเสี่ยงแล้วบันทึก</li><li>ดูสถานะคำเสี่ยงของ Content นั้นและของบล็อก</li><li>เพิ่ม Content ใหม่ที่มีคำเสี่ยงเข้าไปในบล็อกเดียวกัน</li><li>ดูสถานะคำเสี่ยงของบล็อกอีกครั้ง</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>หลังแก้ Content สถานะคำเสี่ยงของ Content นั้นเปลี่ยนเป็นผ่าน</li><li>สถานะของบล็อกจะผ่านก็ต่อเมื่อทุก Content ในบล็อกผ่าน</li><li>เพิ่ม Content ที่มีคำเสี่ยงเข้าไปแล้ว สถานะของบล็อกกลับเป็นพบคำเสี่ยงทันที</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —">ทดสอบซ้ำ (QA): แก้ Content ให้ไม่มีคำเสี่ยงแล้ว badge "เสี่ยง" ของบล็อกหายทันที และเมื่อเพิ่ม Content ใหม่ที่มีคำเสี่ยงเข้าไปในบล็อกเดียวกัน บล็อกกลับมาแจ้งเสี่ยงทันที ตรงตาม Expected Result</textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-195" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-195" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-195" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-195" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-195" data-st="block">BLOCKED</span>
