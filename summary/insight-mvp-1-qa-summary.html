@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MVP 1 (M1) — QA Summary · TAKRA Insight</title>
+<style>
+  :root{
+    --ink:#1a2233; --soft:#4a5568; --faint:#8592a6;
+    --line:#e5e9f0; --line2:#f0f3f8;
+    --accent:#4f46e5; --accent-bg:#eef2ff;
+    --p0:#dc2626; --p0-bg:#fef2f2;
+    --p1:#ea580c; --p1-bg:#fff7ed;
+    --p2:#ca8a04; --p2-bg:#fefce8;
+    --ok:#16a34a; --ok-bg:#f0fdf4;
+    --teal:#0d9488; --teal-bg:#f0fdfa;
+    --font:-apple-system,BlinkMacSystemFont,"Segoe UI","Sarabun","Noto Sans Thai","Helvetica Neue",Arial,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--font);color:var(--ink);background:#f4f6fb;line-height:1.7;-webkit-font-smoothing:antialiased;font-size:16px}
+  .wrap{max-width:860px;margin:0 auto;padding:0 22px 100px}
+
+  .band{background:linear-gradient(135deg,#1e293b,#0f172a);color:#f8fafc;margin:0 -22px 0;padding:44px 22px 40px;border-radius:0 0 22px 22px}
+  .band .inner{max-width:860px;margin:0 auto}
+  .band .ey{font-size:.78rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#a5b4fc;margin-bottom:12px}
+  .band h1{font-size:clamp(1.6rem,4vw,2.1rem);font-weight:800;line-height:1.15;letter-spacing:-.01em}
+  .band .meta{margin-top:18px;display:flex;flex-wrap:wrap;gap:6px 24px;font-size:.86rem;color:#94a3b8}
+  .band .meta b{color:#e2e8f0}
+  .flag{display:block;margin-top:18px;background:rgba(234,88,12,.16);border:1px solid rgba(251,146,60,.45);color:#fdba74;font-weight:600;font-size:.9rem;padding:10px 16px;border-radius:10px;line-height:1.6}
+
+  h2{font-size:1.28rem;font-weight:800;letter-spacing:-.01em;margin:44px 0 4px;padding-top:16px;scroll-margin-top:20px;border-top:1px solid var(--line)}
+  h2:first-of-type{border-top:none}
+  h2 .n{display:inline-flex;align-items:center;justify-content:center;width:1.6em;height:1.6em;background:var(--accent);color:#fff;border-radius:8px;font-size:.78em;margin-right:10px;vertical-align:middle}
+  h2 .obj{display:block;font-size:.82rem;font-weight:500;color:var(--faint);margin:6px 0 14px}
+  p{margin:10px 0}
+  strong{font-weight:700}
+
+  ul,ol{margin:12px 0;padding-left:22px}
+  li{margin:6px 0}
+
+  table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.92rem}
+  th{text-align:left;font-weight:700;color:var(--soft);border-bottom:2px solid var(--line);padding:9px 12px;font-size:.82rem;background:var(--line2)}
+  td{padding:9px 12px;border-bottom:1px solid var(--line2);vertical-align:top}
+  tr:last-child td{border-bottom:none}
+  td.c,th.c{text-align:center}
+  td.r,th.r{text-align:right}
+  tbody tr:hover{background:#fafbfe}
+  table.tot tr:last-child td{border-top:2px solid var(--line);font-weight:700;background:var(--line2)}
+
+  .note{color:var(--soft);font-size:.86rem;margin:6px 0 0;padding-left:2px}
+
+  .pill{display:inline-flex;align-items:center;gap:5px;font-size:.74rem;font-weight:800;padding:2px 10px;border-radius:999px;white-space:nowrap}
+  .p-p0{background:var(--p0-bg);color:var(--p0)}
+  .p-p1{background:var(--p1-bg);color:var(--p1)}
+  .p-p2{background:var(--p2-bg);color:var(--p2)}
+  .p-ok{background:var(--ok-bg);color:var(--ok)}
+  .p-teal{background:var(--teal-bg);color:var(--teal)}
+  .p-gray{background:var(--line2);color:var(--soft)}
+  .z{color:var(--faint)}
+  .zero{color:var(--p0);font-weight:800}
+
+  .rec{border:1px solid var(--line);border-left-width:6px;border-radius:12px;padding:18px 22px;margin:16px 0;background:#fff}
+  .rec.y{border-left-color:var(--p1);background:var(--p1-bg)}
+  .rec.r{border-left-color:var(--p0);background:var(--p0-bg)}
+  .rec.g{border-left-color:var(--ok);background:var(--ok-bg)}
+  .rec .st{font-size:1.15rem;font-weight:800;color:var(--p1)}
+  .rec.r .st{color:var(--p0)}
+  .rec.g .st{color:var(--ok)}
+  .rec p{margin:8px 0 0}
+  .rec ul,.rec ol{margin:12px 0 0;padding-left:20px}
+  .rec li{margin:6px 0}
+
+  .toc{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 20px;margin:22px 0;font-size:.9rem}
+  .toc b{display:block;font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);margin-bottom:8px}
+  .toc a{color:var(--ink);text-decoration:none;margin-right:16px;white-space:nowrap;display:inline-block;line-height:1.9}
+  .toc a:hover{color:var(--accent)}
+
+  .gloss{columns:2;column-gap:34px;margin:14px 0}
+  .gloss dt{font-weight:700;margin-top:12px;break-after:avoid}
+  .gloss dd{margin:2px 0 0;color:var(--soft);font-size:.9rem}
+  @media(max-width:640px){.gloss{columns:1}}
+
+  .foot{margin-top:50px;padding-top:18px;border-top:1px solid var(--line);color:var(--faint);font-size:.82rem}
+
+  @media print{
+    body{background:#fff;font-size:11pt}
+    .band{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    th,td,.pill,.flag,.rec{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    h2{page-break-after:avoid} table,.rec{page-break-inside:avoid}
+  }
+</style>
+</head>
+<body>
+
+<div class="band">
+  <div class="inner">
+    <div class="ey">TAKRA Insight · QA Summary</div>
+    <h1>MVP 1 (M1) — สรุปผลการทดสอบ (QA Summary)</h1>
+    <div class="meta">
+      <span>ผู้จัดทำ: <b>QA (Ice)</b></span>
+      <span>Stage: <b>M1 บน UAT → เตรียมด่าน prod</b></span>
+      <span>อัปเดต: <b>23 ก.ค. 2026</b></span>
+    </div>
+    <div class="flag">⚠️ อ่านก่อน: M1 <b>สร้างเสร็จ + รันบน UAT เปิดฟีเจอร์ครบ</b> แต่ <b>QA ยังไม่ได้ execute เลย (runnable = 0)</b> — ตัวเลข Test Result / Regression ด้านล่างจึงสะท้อน “ออกแบบครบ ยังไม่ได้รัน” ไม่ใช่ว่าไม่มีปัญหา · prod ยังเป็น 0.5 (ปิด feature flag)</div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="toc">
+    <b>หัวข้อ</b>
+    <a href="#s1">1. Scope</a><a href="#s2">2. Test Coverage</a><a href="#s3">3. Test Result</a><a href="#s4">4. Bug Summary</a><a href="#s5">5. Known Issues</a><a href="#s6">6. Regression</a><a href="#s7">7. QA Recommendation</a><a href="#gloss">＊ คำย่อ</a>
+  </div>
+
+  <!-- 1 -->
+  <h2 id="s1"><span class="n">1</span>Scope<span class="obj">ขอบเขตของ MVP ที่ QA รับผิดชอบ — Epic · User Stories · ฟีเจอร์</span></h2>
+  <p>M1 = 0.5 + คลาวด์ (cloud backend) + intent ภาษาไทย + consent เต็ม + compliance backend + multi-seat/tier · แบ่งเป็น <strong>8 Epic</strong> · QA ออกแบบ test design ครอบ <strong>6 Epic</strong> (E4/E5 คุมด้วย 0.5 regression + live-manual)</p>
+  <table class="tot">
+    <thead><tr><th>Epic</th><th>ฟีเจอร์หลักใน MVP</th><th class="c">Stories<br><span class="z" style="font-weight:400">done / total</span></th><th class="c">QA test design</th></tr></thead>
+    <tbody>
+      <tr><td><strong>E1</strong> · Cloud Data-Plane</td><td>ingest (idempotent+resume) · RLS multi-tenant · contracts F1–F5 · OTel</td><td class="c">8 / 9</td><td class="c"><span class="pill p-ok">21 TC · authored</span></td></tr>
+      <tr><td><strong>E2</strong> · Consent &amp; Privacy</td><td>onboarding · dual PDPA consent + revoke · zero-biometric</td><td class="c">8 / 8</td><td class="c"><span class="pill p-ok">21 TC · authored</span></td></tr>
+      <tr><td><strong>E3</strong> · Compliance &amp; Erasure</td><td>audit log · k-anonymity · crypto-shred · provenance · PDPA report · ToS · breach · ML rollback</td><td class="c">8 / 8</td><td class="c"><span class="pill p-ok">45 TC · authored</span></td></tr>
+      <tr><td><strong>E4</strong> · Live Capture &amp; Resilience</td><td>capture · kill-switch · AES-256 buffer · uploader</td><td class="c">6 / 6</td><td class="c z">0.5 regress + live-manual</td></tr>
+      <tr><td><strong>E5</strong> · Real-Time HUD</td><td>intent NLP (WangchanBERTa) · Ekman-7 · invisible HUD · health score · KPIs · alerts</td><td class="c">9 / 10</td><td class="c z">0.5 regress + live-manual</td></tr>
+      <tr><td><strong>E6</strong> · Post-Live &amp; Longitudinal</td><td>post-live summary · baseline/drift · cross-session · catchphrase</td><td class="c">3 / 4</td><td class="c"><span class="pill p-ok">14 TC · authored</span></td></tr>
+      <tr><td><strong>E7</strong> · Workspace/Multi-Seat/Tier</td><td>RBAC · invite host · tier · payment</td><td class="c">1 / 6</td><td class="c"><span class="pill p-ok">8 TC · authored</span></td></tr>
+      <tr><td><strong>E8</strong> · Watchlist &amp; Third-Party</td><td>watchlist CRUD · per-channel history · third-party <span class="pill p-p0">blocked</span></td><td class="c">2 / 3</td><td class="c"><span class="pill p-ok">16 TC · authored</span></td></tr>
+      <tr><td>รวม</td><td>8 Epic</td><td class="c">45 / 54</td><td class="c">125 TC · 6 Epic</td></tr>
+    </tbody>
+  </table>
+  <p class="note"><strong>authored</strong> = case files เสร็จ ครบ <strong>6/6 epic</strong> (<strong>125 TC</strong> · 🔄 re-loop 2026-07-23 · runnable 0) · <strong>mapped</strong> = AC→TC จับคู่ · ⚠️ <strong>E6 บางส่วน</strong>: baseline/cross-session สร้างจริง · summary = 0.5-slice reuse · catchphrase 3 = skeleton BLOCKED · กฎหมาย/ระบบทีม/จับตาช่อง = ของใหม่ที่ M1 เพิ่มจาก 0.5</p>
+
+  <!-- 2 -->
+  <h2 id="s2"><span class="n">2</span>Test Coverage<span class="obj">ทดสอบครอบคลุมตาม Scope หรือไม่ — แยก “ออกแบบ (design)” กับ “รันจริง (execution)”</span></h2>
+  <table class="tot">
+    <thead><tr><th>รายการ</th><th class="c">จำนวน / ค่า</th></tr></thead>
+    <tbody>
+      <tr><td>Epics (M1)</td><td class="c">8 <span class="z">(QA design ครอบ 6)</span></td></tr>
+      <tr><td>User Stories</td><td class="c">54 <span class="z">(done 45 / backlog 9)</span></td></tr>
+      <tr><td>Acceptance Criteria (ในขอบเขต)</td><td class="c">ครบทุก AC <span class="z">· mapped 100%</span></td></tr>
+      <tr><td>Test Cases — designed / mapped</td><td class="c">125</td></tr>
+      <tr><td>Test Cases — authored (case files เสร็จ)</td><td class="c">125 <span class="z">(6/6 epic · 🔄 23 ก.ค.)</span></td></tr>
+      <tr><td>Test Cases — executed (runnable)</td><td class="c"><span class="zero">0</span></td></tr>
+      <tr><td><strong>Coverage — ออกแบบ (design)</strong></td><td class="c"><span class="pill p-ok">100%</span></td></tr>
+      <tr><td><strong>Coverage — รันจริง (execution)</strong></td><td class="c"><span class="pill p-p0">0%</span></td></tr>
+    </tbody>
+  </table>
+  <p class="note"><strong>Design 100%</strong> = ออกแบบเคสครบทุก AC ในขอบเขต · <strong>Execution 0%</strong> = ยังไม่เขียน test script (Jest/Supertest) ผูกกับเคส + ยังไม่มี env (DB + auth stack) ให้รัน → ยังยืนยันเองไม่ได้ว่ากลไก compliance ทำงานถูกจริง</p>
+
+  <p style="margin-top:22px"><strong>รายละเอียดต่อ Epic</strong> — ตัวเลข = <em>case (ออกแบบเคส) / script (เขียนโค้ดเทส + รันจริง)</em>:</p>
+  <table>
+    <thead><tr><th>Epic · ฟีเจอร์</th><th class="c">สถานะ QA</th><th class="c">Integration test<br><span class="z" style="font-weight:400">case / script</span></th><th class="c">E2E test<br><span class="z" style="font-weight:400">case / script</span></th></tr></thead>
+    <tbody>
+      <tr><td>E1 · ingest · RLS · contracts · OTel</td><td class="c"><span class="pill p-ok">authored</span></td><td class="c">20 / <span class="zero">0</span></td><td class="c">1 / <span class="zero">0</span></td></tr>
+      <tr><td>E2 · consent + revoke · zero-biometric</td><td class="c"><span class="pill p-ok">authored</span></td><td class="c">12 / <span class="zero">0</span></td><td class="c">9 / <span class="zero">0</span></td></tr>
+      <tr><td>E3 · audit · k-anon · crypto-shred · provenance …</td><td class="c"><span class="pill p-ok">authored</span></td><td class="c">45 / <span class="zero">0</span></td><td class="c">0 / <span class="z">0</span></td></tr>
+      <tr><td>E6 · summary · baseline · cross-session</td><td class="c"><span class="pill p-ok">authored</span></td><td class="c">13 / <span class="zero">0</span></td><td class="c">1 / <span class="zero">0</span></td></tr>
+      <tr><td>E7 · RBAC (multi-tenant)</td><td class="c"><span class="pill p-ok">authored</span></td><td class="c">8 / <span class="zero">0</span></td><td class="c">0 / <span class="z">0</span></td></tr>
+      <tr><td>E8 · watchlist · channel history</td><td class="c"><span class="pill p-ok">authored</span></td><td class="c">12 / <span class="zero">0</span></td><td class="c">4 / <span class="zero">0</span></td></tr>
+    </tbody>
+  </table>
+  <p class="note"><strong>script = 0 ทุกช่อง</strong> → ออกแบบ/จับคู่ครบ ยังไม่เขียนโค้ดเทส+รันจริง · bucket: <strong>Integration</strong> = integration + api + contract/CI · <strong>E2E</strong> = ui + fullloop-e2e · <strong>E3/E7 = backend-only</strong> (compliance/RBAC · E2E = 0 โดยตั้งใจ) · <strong>E1</strong> E2E = crash-replay 1 เคส · รวม <strong>110 int + 15 e2e = 125</strong> · E4/E5 คุมด้วย 0.5 regression + live-manual (ไม่ author ใหม่ที่ M1)</p>
+
+  <!-- 3 -->
+  <h2 id="s3"><span class="n">3</span>Test Result<span class="obj">สรุปผลการรันจริง — M1 ยังไม่มีรอบ execute เลย</span></h2>
+  <table class="tot">
+    <thead><tr><th>Status</th><th class="c">จำนวน</th><th>หมายเหตุ</th></tr></thead>
+    <tbody>
+      <tr><td><span class="pill p-ok">Passed</span></td><td class="c">0</td><td>ยังไม่มี execution</td></tr>
+      <tr><td><span class="pill p-gray">Failed</span></td><td class="c">0</td><td>ยังไม่มี execution</td></tr>
+      <tr><td><span class="pill p-p2">Blocked</span></td><td class="c">3 กลุ่ม</td><td>third-party (legal · OQ36) · audit immutable (รอ WORM/KMS) · emotion tests (รอ golden fixtures)</td></tr>
+      <tr><td><span class="pill p-p1">Not Executed (ยังไม่รัน)</span></td><td class="c">125</td><td>ทั้งหมด — execution ยังไม่เริ่ม</td></tr>
+      <tr><td>รวม (ออกแบบไว้)</td><td class="c">125</td><td>—</td></tr>
+    </tbody>
+  </table>
+  <p class="note">มี dev-side test (module + backend e2e) ที่ผ่านระดับ dev แต่ soft-skip เมื่อไม่มี stack และยังไม่ QA-traced → <strong>ไม่นับเป็น Passed ของ QA</strong></p>
+
+  <!-- 4 -->
+  <h2 id="s4"><span class="n">4</span>Bug Summary<span class="obj">จำนวน issue ตามระดับความรุนแรง (จาก code review + runtime inspection ก่อน execute)</span></h2>
+  <table class="tot">
+    <thead><tr><th>Severity</th><th class="c">Open</th><th class="c">Closed</th><th>รายการ (M1 findings)</th></tr></thead>
+    <tbody>
+      <tr><td><span class="pill p-p0">Critical</span></td><td class="c"><span class="zero">1</span></td><td class="c z">0</td><td>third-party emotion ไม่มี guard → PDPA §26 exposure (de facto shipped)</td></tr>
+      <tr><td><span class="pill p-p1">High</span></td><td class="c">3</td><td class="c z">0</td><td>audit ยังไม่ immutable (Noop/dev-key · infra) · auth logout-bounce race (live) · local backend CORS=* บน :8765</td></tr>
+      <tr><td><span class="pill p-p2">Medium</span></td><td class="c">4</td><td class="c z">0</td><td>audit-after-commit อาจหายเงียบ · breach trigger ยังไม่ wire · heartbeat-stale ตัดไลฟ์ผิด · replay สร้าง false price-cluster</td></tr>
+      <tr><td><span class="pill p-gray">Low</span></td><td class="c">1</td><td class="c z">0</td><td>ML dep <em>&gt;=</em> skew → CI แดงได้จาก upstream release</td></tr>
+      <tr><td>รวม</td><td class="c">9</td><td class="c">0</td><td>ยังไม่ปิด (พึ่งพบ · ก่อน execute)</td></tr>
+    </tbody>
+  </table>
+  <p class="note">แยกจากนี้: bug จากรอบทดสอบ MVP 0.5 (~120 ticket) ส่วนใหญ่ Closed แล้ว · ที่ยังเปิดเป็นงานฝั่ง desktop (Windows monitor auto-stop, model download, tz, provenance) — คนละรอบกับ M1</p>
+
+  <!-- 5 -->
+  <h2 id="s5"><span class="n">5</span>Known Issues<span class="obj">ปัญหาที่ทีมรับทราบและยอมรับ (Accepted Risk) — ไม่บล็อก UAT</span></h2>
+  <p>รายการนี้ “ยอมรับได้” สำหรับ UAT/internal — <em>ต่าง</em>จาก 2 จุดแดงที่ต้องปิดก่อน prod (อยู่ใน §7)</p>
+  <ul>
+    <li><strong>post-live summary ยัง mock บางส่วน</strong> — AI verdict / transcript / products ซ่อนหลัง flag รอ STT (= M1.5)</li>
+    <li><strong>catchphrase (6.4) ยังไม่มีโค้ด</strong> — ต้องมี STT + longitudinal ก่อน (deferred M1.5)</li>
+    <li><strong>derived-emotion ยังไม่ส่งขึ้นคลาวด์ที่ M1</strong> — ส่งแค่ comment + engagement (ยกไป M1.5 ตามแผน)</li>
+    <li><strong>multi-seat / tier / payment ยังไม่สร้าง</strong> — งานฝั่ง Takra Hub + ยังไม่มี payment gateway</li>
+    <li><strong>UAT infra = k3s + ArgoCD ไม่ใช่ AWS ตามสเปก</strong> — รันได้จริง แต่ควรอัปเดต architecture.md ให้ตรง</li>
+    <li><strong>audit-after-commit ยอมรับความเสี่ยง single-host ที่ M1</strong> — ยังไม่มี retry/outbox reconcile</li>
+  </ul>
+
+  <!-- 6 -->
+  <h2 id="s6"><span class="n">6</span>Regression Result<span class="obj">ฟีเจอร์เดิมยังทำงานได้หลังเปลี่ยนแปลงหรือไม่</span></h2>
+  <p>Regression รอบ M1 ฝั่ง QA ยังไม่ได้รัน (execution = 0) · ตารางแยก QA-owned กับ dev-side ให้ชัด</p>
+  <table>
+    <thead><tr><th>รายการ</th><th class="c">ผล</th><th>หมายเหตุ</th></tr></thead>
+    <tbody>
+      <tr><td>M1 QA regression cycle</td><td class="c"><span class="pill p-gray">⚪ ยังไม่รัน</span></td><td>execution ยังไม่เริ่ม</td></tr>
+      <tr><td>Core flow (0.5 → M1 carryover)</td><td class="c"><span class="pill p-p2">🟡 pending</span></td><td>เคยผ่านที่ 0.5 · ยังไม่ re-run บน M1 build</td></tr>
+      <tr><td>Dev-side automation (module + backend e2e)</td><td class="c"><span class="pill p-ok">🟢 pass (dev)</span></td><td>ผ่านระดับ dev · soft-skip เมื่อไม่มี stack · ยังไม่ QA-traced</td></tr>
+      <tr><td>QA-owned e2e automation</td><td class="c"><span class="pill p-gray">⚪ 0 / 0</span></td><td>ยังไม่เขียน/รัน (Playwright Electron)</td></tr>
+    </tbody>
+  </table>
+  <p class="note">“pass (dev)” = dev เขียน+รันเอง (เช่น zero-biometric, host-baseline, channel-history) ผ่านจริง แต่ยังไม่ผูกเป็น QA regression ที่ QA รับรอง</p>
+
+  <!-- 7 -->
+  <h2 id="s7"><span class="n">7</span>QA Recommendation<span class="obj">ข้อเสนอแนะจาก QA สำหรับการ Release — M1 มี 2 ด่าน (UAT / prod)</span></h2>
+  <table>
+    <thead><tr><th>Status</th><th>ความหมาย</th><th class="c">M1</th></tr></thead>
+    <tbody>
+      <tr><td><span class="pill p-ok">🟢 Ready for Release</span></td><td>พร้อม release</td><td class="c z">—</td></tr>
+      <tr><td><span class="pill p-p2">🟡 Release with Known Issues</span></td><td>ปล่อยได้ แต่มีข้อจำกัดที่รับทราบ</td><td class="c"><strong>UAT / design partner</strong></td></tr>
+      <tr><td><span class="pill p-p0">🔴 Not Ready</span></td><td>ยังไม่พร้อม release</td><td class="c"><strong>prod สาธารณะ</strong></td></tr>
+    </tbody>
+  </table>
+
+  <div class="rec r">
+    <div class="st">🔴 prod สาธารณะ: Not Ready</div>
+    <p>เปิดสวิตช์ M1 บน prod <strong>ยังไม่ได้</strong> เพราะ:</p>
+    <ul>
+      <li><strong>Execution Coverage = 0%</strong> (runnable 0/125) — หัวใจ compliance ยังไม่ถูกยืนยันด้วยการรัน</li>
+      <li><strong>2 blocker เปิดอยู่:</strong> Critical — third-party ไม่มี guard (PDPA §26) · High — audit ยังไม่ immutable จริง (รอ WORM/KMS)</li>
+      <li><strong>legal ยังไม่เซ็นผ่าน:</strong> OQ36 (third-party) · training corpus · residency · retention (90 วัน / 2 ปี)</li>
+    </ul>
+  </div>
+  <div class="rec y">
+    <div class="st">🟡 UAT / internal: Release with Known Issues</div>
+    <p>ใช้ทดสอบเชิงลึกกับ design partner บน UAT <strong>ได้เลย</strong> — โครงสร้าง M1 รันจริงบน cluster เปิดฟีเจอร์ครบ + แก้ 2 จุด P0 ของ 0.5 แล้ว (zero-biometric + invisible HUD) · Known Issues ใน §5 ยอมรับได้ในบริบทนี้</p>
+  </div>
+  <div class="rec g">
+    <div class="st">✅ เส้นทางสู่ 🟢 Ready for prod</div>
+    <ol>
+      <li>dev เขียน test script → รันชุด compliance 53 เคสให้เขียว (execution &gt; 0)</li>
+      <li>ปิด 2 blocker (ใส่ guard third-party + ลง WORM/KMS จริง)</li>
+      <li>legal เซ็นผ่าน + เคาะ retention</li>
+      <li>ออก release gate ต่อรอบ deploy</li>
+    </ol>
+  </div>
+
+  <!-- appendix -->
+  <h2 id="gloss"><span class="n">＊</span>คำย่อ / ทับศัพท์<span class="obj">อ้างอิงเร็ว</span></h2>
+  <dl class="gloss">
+    <dt>UAT / prod</dt><dd>UAT = เครื่องทดสอบกลาง · prod = ตัวจริงที่ผู้ใช้โหลด (ยังเป็น 0.5)</dd>
+    <dt>feature flag</dt><dd>สวิตช์เปิด-ปิดฟีเจอร์ — M1 ปิดบน prod</dd>
+    <dt>cloud backend / data-plane</dt><dd>ส่วนคลาวด์ที่รับ-เก็บข้อมูลหลัก แทน local</dd>
+    <dt>multi-tenant / RLS</dt><dd>กันข้อมูลข้ามร้านที่ระดับฐานข้อมูล</dd>
+    <dt>PDPA / consent</dt><dd>กฎหมายคุ้มครองข้อมูล · ความยินยอม</dd>
+    <dt>audit log / immutable / WORM</dt><dd>บันทึกเหตุการณ์ที่แก้ย้อนหลังไม่ได้ + ที่เก็บล็อกถาวร</dd>
+    <dt>k-anonymity (N≥20)</dt><dd>ไม่โชว์สถิติถ้ากลุ่ม &lt; 20 คน</dd>
+    <dt>crypto-shred</dt><dd>ลบข้อมูลถาวรด้วยการทำลายกุญแจ</dd>
+    <dt>KMS</dt><dd>ระบบกุญแจเข้ารหัสตัวจริง (UAT ยังใช้ dev key)</dd>
+    <dt>zero-biometric</dt><dd>ประมวลผลอารมณ์แล้วทิ้ง ไม่เก็บ face vector</dd>
+    <dt>intent / WangchanBERTa</dt><dd>ตัวอ่านเจตนาคอมเมนต์ไทย · รัน on-device</dd>
+    <dt>HUD</dt><dd>แผงคำแนะนำสด · M1 ทำให้ล่องหน (content-protected)</dd>
+    <dt>RBAC / multi-seat / tier</dt><dd>สิทธิ์ในทีม · หลายที่นั่ง · แพ็กเกจ</dd>
+    <dt>guard</dt><dd>ตัวกั้น/เงื่อนไขบล็อก</dd>
+    <dt>mapped / authored / runnable</dt><dd>จับคู่ AC→TC · เขียนเคสละเอียด · รัน script ได้จริง</dd>
+    <dt>OQ (Open Question)</dt><dd>คำถามค้างรอตัดสิน (ส่วนใหญ่ฝั่ง legal)</dd>
+    <dt>P0–P3</dt><dd>ระดับความเร่งด่วน P0 ร้ายแรงสุด → P3 ทีหลัง</dd>
+  </dl>
+
+  <div class="foot">
+    ที่มาข้อมูล: สรุปสถานะ M1 ฉบับ 20 ก.ค. 2026 (sprint-status + โค้ด + Jira + git · ยืนยันกับ cluster) และเอกสาร QA ภายใน (test-strategy · MVP1 QA DoD · coverage-report ราย Epic E1/E2/E3/E6/E7/E8 · เคส compliance · deferred-work) · จัดทำโดย QA (Ice) · MVP 1 (M1) บน UAT · อัปเดต 23 ก.ค. 2026
+  </div>
+
+</div>
+</body>
+</html>

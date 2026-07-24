@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MVP 1 — QA Closeout · TAKRA Rerun</title>
+<style>
+  :root{
+    --ink:#1a2233; --soft:#4a5568; --faint:#8592a6;
+    --line:#e5e9f0; --line2:#f0f3f8;
+    --accent:#4f46e5; --accent-bg:#eef2ff;
+    --p0:#dc2626; --p0-bg:#fef2f2;
+    --p1:#ea580c; --p1-bg:#fff7ed;
+    --p2:#ca8a04; --p2-bg:#fefce8;
+    --ok:#16a34a; --ok-bg:#f0fdf4;
+    --teal:#0d9488; --teal-bg:#f0fdfa;
+    --font:-apple-system,BlinkMacSystemFont,"Segoe UI","Sarabun","Noto Sans Thai","Helvetica Neue",Arial,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--font);color:var(--ink);background:#f4f6fb;line-height:1.7;-webkit-font-smoothing:antialiased;font-size:16px}
+  .wrap{max-width:860px;margin:0 auto;padding:0 22px 100px}
+
+  .band{background:linear-gradient(135deg,#1e293b,#0f172a);color:#f8fafc;margin:0 -22px 0;padding:44px 22px 40px;border-radius:0 0 22px 22px}
+  .band .inner{max-width:860px;margin:0 auto}
+  .band .ey{font-size:.78rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#a5b4fc;margin-bottom:12px}
+  .band h1{font-size:clamp(1.6rem,4vw,2.1rem);font-weight:800;line-height:1.15;letter-spacing:-.01em}
+  .band .meta{margin-top:18px;display:flex;flex-wrap:wrap;gap:6px 24px;font-size:.86rem;color:#94a3b8}
+  .band .meta b{color:#e2e8f0}
+  .flag{display:block;margin-top:18px;background:rgba(234,88,12,.16);border:1px solid rgba(251,146,60,.45);color:#fdba74;font-weight:600;font-size:.9rem;padding:10px 16px;border-radius:10px;line-height:1.6}
+
+  h2{font-size:1.28rem;font-weight:800;letter-spacing:-.01em;margin:44px 0 4px;padding-top:16px;scroll-margin-top:20px;border-top:1px solid var(--line)}
+  h2:first-of-type{border-top:none}
+  h2 .n{display:inline-flex;align-items:center;justify-content:center;width:1.6em;height:1.6em;background:var(--accent);color:#fff;border-radius:8px;font-size:.78em;margin-right:10px;vertical-align:middle}
+  h2 .obj{display:block;font-size:.82rem;font-weight:500;color:var(--faint);margin:6px 0 14px}
+  p{margin:10px 0}
+  strong{font-weight:700}
+
+  table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.92rem}
+  th{text-align:left;font-weight:700;color:var(--soft);border-bottom:2px solid var(--line);padding:9px 12px;font-size:.82rem;background:var(--line2)}
+  td{padding:9px 12px;border-bottom:1px solid var(--line2);vertical-align:top}
+  tr:last-child td{border-bottom:none}
+  td.c,th.c{text-align:center}
+  td.r,th.r{text-align:right}
+  tbody tr:hover{background:#fafbfe}
+  table.tot tr:last-child td{border-top:2px solid var(--line);font-weight:700;background:var(--line2)}
+
+  .note{color:var(--soft);font-size:.86rem;margin:6px 0 0;padding-left:2px}
+  ul.note{list-style:disc;padding-left:20px;margin:10px 0 0}
+  ul.note li{margin:3px 0}
+
+  .pill{display:inline-flex;align-items:center;gap:5px;font-size:.74rem;font-weight:800;padding:2px 10px;border-radius:999px;white-space:nowrap}
+  .p-p0{background:var(--p0-bg);color:var(--p0)}
+  .p-p1{background:var(--p1-bg);color:var(--p1)}
+  .p-p2{background:var(--p2-bg);color:var(--p2)}
+  .p-ok{background:var(--ok-bg);color:var(--ok)}
+  .p-gray{background:var(--line2);color:var(--soft)}
+  .z{color:var(--faint)}
+  .zero{color:var(--p0);font-weight:800}
+  .good{color:var(--ok);font-weight:800}
+
+  .rec{border:1px solid var(--line);border-left-width:6px;border-radius:12px;padding:18px 22px;margin:16px 0;background:#fff}
+  .rec.y{border-left-color:var(--p1);background:var(--p1-bg)}
+  .rec .st{font-size:1.15rem;font-weight:800;color:var(--p1)}
+  .rec ul{margin:12px 0 0;padding-left:20px}
+  .rec li{margin:6px 0}
+
+  .toc{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 20px;margin:22px 0;font-size:.9rem}
+  .toc b{display:block;font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);margin-bottom:8px}
+  .toc a{color:var(--ink);text-decoration:none;margin-right:16px;white-space:nowrap;display:inline-block;line-height:1.9}
+  .toc a:hover{color:var(--accent)}
+
+  .foot{margin-top:50px;padding-top:18px;border-top:1px solid var(--line);color:var(--faint);font-size:.82rem}
+
+  @media print{
+    body{background:#fff;font-size:11pt}
+    .band{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    th,td,.pill,.flag,.rec{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    h2{page-break-after:avoid} table{page-break-inside:avoid}
+  }
+</style>
+</head>
+<body>
+
+<div class="band">
+  <div class="inner">
+    <div class="ey">TAKRA Rerun · QA Closeout</div>
+    <h1>MVP 1 — สรุปผลการทดสอบ (QA Closeout)</h1>
+    <div class="meta">
+      <span>ผู้จัดทำ: <b>QA (Ice)</b></span>
+      <span>ขอบเขต: <b>MVP-1 · bundled desktop app (ADR-004)</b></span>
+      <span>วันที่: <b>23 ก.ค. 2026</b></span>
+    </div>
+    <div class="flag">⚠️ สถานะจริง: MVP-1 (re-air desktop · Epic 1–8) <b>ส่งมอบครบ · real-fire gate ผ่าน (ขึ้นไลฟ์ TikTok จริง)</b> · QA <b>ออกแบบเทสครบ 1,101 TC (6 core Epic) · design ~100%</b> · แต่ coverage report เป็น <b>snapshot 22 มิ.ย.</b> — เกรด E5 (B+) / E6 (RED) <b>stale ตาม timeline dev</b> (dev ปิดครบ 3 ก.ค. · QA ยังไม่ re-audit) · Epic 7/8 (desktop) done แต่ <b>ยังไม่มี QA artifact</b> · <b>public GA = 🔴 NOT READY · pilot desktop = 🟡</b> · live-commerce = MVP-2 (แยกรายงาน)</div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="toc">
+    <b>หัวข้อ</b>
+    <a href="#s1">1. Scope</a><a href="#s2">2. Test Coverage</a><a href="#s3">3. Test Result</a><a href="#s4">4. Bug Summary</a><a href="#s5">5. Known Issues</a><a href="#s6">6. Regression</a><a href="#s7">7. QA Recommendation</a>
+  </div>
+
+  <!-- 1 -->
+  <h2 id="s1"><span class="n">1</span>Scope<span class="obj">ขอบเขตของ MVP-1 ที่ QA รับผิดชอบ — Epic · ฟีเจอร์ · Stories</span></h2>
+  <table>
+    <thead><tr><th>Epic</th><th>ฟีเจอร์ใน MVP-1</th><th class="c">Stories</th></tr></thead>
+    <tbody>
+      <tr><td><strong>1</strong> · Foundation, Sign-In &amp; Plan Gating</td><td>login/logout SSO (Zitadel OIDC + PKCE) · Hub entitlement (active/expiry/grace) · quota middleware · app shell</td><td class="c">8</td></tr>
+      <tr><td><strong>2</strong> · TikTok Account &amp; Egress</td><td>add via paste-curl (vaulted) · list (cookie ไม่หลุด) · verify/edit/delete · utls + per-account proxy · live settings + category</td><td class="c">10</td></tr>
+      <tr><td><strong>3</strong> · Video Library</td><td>upload .mp4 · list + workspace quota · select/delete · presigned preview</td><td class="c">4</td></tr>
+      <tr><td><strong>4</strong> · Re-Air &amp; Control Room ⭐</td><td>create room (recompute x-ss-stub) · ffmpeg push (capped restart) · keep-alive · clean stop · session SSE · concurrent cap + live n/N</td><td class="c">8 <span class="z">(+1 descoped)</span></td></tr>
+      <tr><td><strong>5</strong> · AUTO Mode &amp; Telegram</td><td>auto-stop · auto-restart + countdown loop · playlist rotation · Telegram setup/notify/account-label (vaulted)</td><td class="c">6</td></tr>
+      <tr><td><strong>6</strong> · System, Ops &amp; Audit</td><td>audit-lite viewer · system status (ffmpeg/disk/stream) · version + update badge · observability · a11y (WCAG 2.2 AA)</td><td class="c">5</td></tr>
+      <tr><td><strong>7</strong> · Desktop App <span class="z">(ADR-004)</span></td><td>Electron shell + bundled Go backend · native PKCE login · secure OS-keystore token + logout · <span class="zero">⚠️ ไม่มี QA artifact</span></td><td class="c">3</td></tr>
+      <tr><td><strong>8</strong> · Desktop Conversion <span class="z">(ADR-004 · REWORK)</span></td><td>SQLite · single-tenant (strip workspace_id) · vault→OS keystore · Hub version policy · video local-fs · localhost sidecar · sign/notarize/autoupdate · <span class="zero">⚠️ ไม่มี QA artifact</span></td><td class="c">7</td></tr>
+    </tbody>
+  </table>
+  <p class="note">รวม: <strong>8 Epic · 51 stories done · 1 descoped</strong> (core re-air 1–6 = 41 done + 1 descoped · desktop 7–8 = 10 done) · <strong>real-fire gate (E4) ผ่าน 23 มิ.ย.</strong> — รันลูปเต็ม create→push→ping→stop ผ่านแอปบน cloud server จริง แล้วขึ้นไลฟ์ TikTok จริง · <strong>live-commerce &amp; engagement (Epic 9) = MVP-2 → แยกรายงานต่างหาก</strong> (ไม่รวมฉบับนี้) · QA-designed test เฉพาะ 6 core Epic — desktop 7–8 ยังไม่มี test-artifacts</p>
+
+  <!-- 2 -->
+  <h2 id="s2"><span class="n">2</span>Test Coverage<span class="obj">ทดสอบครอบคลุมตาม Scope หรือไม่ — แยก “ออกแบบ” กับ “รันจริง”</span></h2>
+  <table class="tot">
+    <thead><tr><th>รายการ</th><th class="c">จำนวน / %</th></tr></thead>
+    <tbody>
+      <tr><td>User Stories (core re-air · QA-designed)</td><td class="c">41 <span class="z">(+1 descoped)</span></td></tr>
+      <tr><td>Test Cases — ออกแบบ (design · 6 core Epic)</td><td class="c">1,101</td></tr>
+      <tr><td><span class="z">— ราย level:</span> 🔌 API / 🔗 Integration / 🌐 UI / 🔄 Full-loop</td><td class="c">398 / 333 / 345 / 25</td></tr>
+      <tr><td><strong>Coverage — ออกแบบ (design · AC→TC mapped)</strong></td><td class="c"><span class="pill p-ok">~100%</span></td></tr>
+      <tr><td><strong>Coverage — รันจริง (executed · QA formal)</strong></td><td class="c"><span class="pill p-p1">⚠️ snapshot 22 มิ.ย.</span></td></tr>
+    </tbody>
+  </table>
+  <p class="note"><strong>Design ~100%</strong> = ออกแบบเคสครบทุก AC/FR/NFR/Risk ใน 6 core Epic · <strong>Executed = snapshot</strong> = ตัวเลขรันจริงที่ QA รับรองเป็นทางการ ลงวันที่ 22 มิ.ย. (ยังไม่ refresh หลัง dev ปิด E5/E6 · ดู §3)</p>
+
+  <p style="margin-top:22px"><strong>รายละเอียดต่อ Epic</strong> — ตัวเลข = <em>case (ออกแบบเคส) / script (เขียนโค้ดเทส + รันจริง)</em>:</p>
+  <table>
+    <thead><tr><th>Epic · ฟีเจอร์</th><th class="c">คุณภาพ</th><th class="c">Integration test<br><span class="z" style="font-weight:400">case / script</span></th><th class="c">E2E test<br><span class="z" style="font-weight:400">case / script</span></th></tr></thead>
+    <tbody>
+      <tr><td>1 · Foundation / Sign-In / Plan Gating</td><td class="c"><span class="pill p-ok">ดีมาก</span></td><td class="c">36 / ~27</td><td class="c">5 / <span class="zero">0</span></td></tr>
+      <tr><td>2 · TikTok Account &amp; Egress</td><td class="c"><span class="pill p-ok">ดีมาก</span></td><td class="c">97 / 97</td><td class="c">6 / <span class="zero">0</span></td></tr>
+      <tr><td>3 · Video Library</td><td class="c"><span class="pill p-ok">ดีมาก</span></td><td class="c">37 / 37</td><td class="c">7 / <span class="zero">0</span></td></tr>
+      <tr><td>4 · Re-Air / Control Room</td><td class="c"><span class="pill p-ok">ดีมาก</span></td><td class="c">81 / 81</td><td class="c">7 / <span class="zero">0</span></td></tr>
+      <tr><td>5 · AUTO Mode &amp; Telegram <span class="z">(stale)</span></td><td class="c"><span class="pill p-p2">ดี</span></td><td class="c">57 / 43</td><td class="c">0 / <span class="zero">0</span></td></tr>
+      <tr><td>6 · System / Ops / Audit <span class="z">(stale)</span></td><td class="c"><span class="pill p-p2">พื้นฐาน</span></td><td class="c">25 / <span class="zero">0</span></td><td class="c">0 / <span class="zero">0</span></td></tr>
+    </tbody>
+  </table>
+  <ul class="note">
+    <li><strong>case = ออกแบบ (design ~100% ทุก Epic) · script = โค้ดเทสรันจริงเขียว</strong> · ตารางนี้โฟกัส Integration + E2E ตามฟอร์แมต — ยอด api/ui ดูใน §2 (398 / 345)</li>
+    <li><strong>Integration script = dev automation (Go testcontainers -race) เขียวใน CI:</strong> E2/E3/E4 ครบ · E1 hermetic เขียว (~9 TC store-backed = red-first <code>.skip</code> รอ dependency) · E5 = snapshot 43/57 (FE/telegram shipped หลัง audit) · <span class="zero">E6 = 0 ตอน audit</span> (6.1–6.5 shipped หลัง 25 มิ.ย. · <strong>QA ยังไม่ re-audit</strong> → E5/E6 ยัง stale)</li>
+    <li><strong>E2E (fullloop) script = 0 ทุก Epic</strong> → QA ยังไม่เปิดรอบ Playwright fullloop เป็นทางการ (E5/E6 ไม่มี fullloop ออกแบบด้วย) · <strong>real-fire (E4) ผ่านเป็น manual gate แยก</strong> (ขึ้นไลฟ์ TikTok จริง · ดู §1/§3)</li>
+    <li><strong>Epic 7/8 (desktop) ไม่อยู่ในตารางนี้</strong> — ยังไม่มี test-artifacts ของ QA เลย (โดยเฉพาะ E8 rework: SQLite/single-tenant/OS-keystore/local-fs)</li>
+  </ul>
+
+  <!-- 3 -->
+  <h2 id="s3"><span class="n">3</span>Test Result<span class="obj">ผลการรันจริง — แยกชั้นที่รันแล้วเขียว กับที่ยังไม่รัน/ไม่มี artifact</span></h2>
+  <table class="tot">
+    <thead><tr><th>Status</th><th>รายการ (ชั้นทดสอบ)</th></tr></thead>
+    <tbody>
+      <tr><td><span class="pill p-ok">🟢 Passed</span></td><td>dev automation (Go unit/api httptest + integration -race + FE Vitest) เขียวทุก PR · <strong>real-fire gate ผ่าน (ขึ้นไลฟ์ TikTok จริง)</strong> · E1–E4 hermetic P0 (auth/isolation/quota/custody) · a11y e2e (WCAG 2.2 AA)</td></tr>
+      <tr><td><span class="pill p-gray">Failed</span></td><td>0 — ไม่มี bug ticket เปิดค้าง (finding จาก code-review ถูกแก้ก่อน merge)</td></tr>
+      <tr><td><span class="pill p-p2">Blocked / Owed</span></td><td>owed manual smokes 4 ตัว (V12 real-curl · V11 real-proxy · V16 real-browser · V4 real-MinIO preview) · version badge fail-closed จน semver release-tag process พร้อม</td></tr>
+      <tr><td><span class="pill p-p1">Not run (QA formal)</span></td><td>E5/E6 coverage re-audit (dev เขียวใน CI แต่ QA ยังไม่ audit ใหม่) · <strong>E5/E6 fullloop-e2e = 0</strong> · QA-owned regression cycle · <span class="zero">E7/E8 desktop ทั้งหมด (ไม่มี QA artifact)</span></td></tr>
+    </tbody>
+  </table>
+  <p class="note"><strong>Passed</strong> = ชั้น automation + real-fire + hermetic P0 ที่รันแล้วเขียว (dev-owned · ยังไม่ผูกเป็น QA-owned regression ที่ QA รับรอง) · <strong>Not run</strong> = ชั้นที่ QA ต้องเปิดรอบเอง (re-audit + fullloop + desktop) ยังไม่ได้เริ่ม — ยังไม่มีผลรันชั้นลึกที่ QA รับรองเต็ม</p>
+
+  <!-- 4 -->
+  <h2 id="s4"><span class="n">4</span>Bug Summary<span class="obj">จำนวน Bug ที่เปิดอยู่ ตามระดับความรุนแรง</span></h2>
+  <table>
+    <thead><tr><th>Severity</th><th class="c">Open</th><th class="c">Closed</th></tr></thead>
+    <tbody>
+      <tr><td><span class="pill p-p0">Critical</span></td><td class="c">0</td><td class="c z">—</td></tr>
+      <tr><td><span class="pill p-p1">High</span></td><td class="c">0</td><td class="c z">—</td></tr>
+      <tr><td><span class="pill p-p2">Medium</span></td><td class="c">0</td><td class="c z">—</td></tr>
+      <tr><td><span class="pill p-gray">Low</span></td><td class="c">0</td><td class="c z">—</td></tr>
+    </tbody>
+  </table>
+  <ul class="note">
+    <li><strong>Open 0 ทุกระดับ <em>ไม่ใช่</em>เพราะไม่มีปัญหา</strong> — แต่เพราะทุก story ผ่าน 3-layer code-review + finding ถูกแก้ก่อน merge · และ QA ยังไม่เปิดรอบ execution เต็มเกินกว่า dev automation + audit 22 มิ.ย.</li>
+    <li>จุดที่ยังไม่มีตาดู = E5/E6 FE ที่ shipped หลัง audit (ยังไม่ QA re-verify) + <strong>E7/E8 desktop ที่ไม่มี QA artifact</strong> → latent issue เป็นไปได้</li>
+    <li>version &amp; update badge (6.3) fail-closed = ข้อจำกัดที่ตั้งใจ (รอ semver release process) <strong>ไม่นับเป็น bug</strong> — อยู่ใน Known Issues (§5)</li>
+  </ul>
+
+  <!-- 5 -->
+  <h2 id="s5"><span class="n">5</span>Known Issues<span class="obj">ปัญหา/ข้อจำกัดที่ทีมรับทราบ — แยก “ต้องปิด” กับ “ยอมรับได้”</span></h2>
+  <table>
+    <thead><tr><th>ปัญหา</th><th class="c">ระดับ</th><th>สถานะ / รอใคร</th></tr></thead>
+    <tbody>
+      <tr><td>Coverage re-audit E5/E6 (เกรด B+/RED เป็น snapshot · dev ปิดครบแล้ว)</td><td class="c"><span class="pill p-p1">P1</span></td><td>รอ <strong>QA</strong> ออก coverage report รอบใหม่ + อัปเดต executed-%</td></tr>
+      <tr><td>QA artifact ของ Epic 7 / 8 (desktop pivot) ยังไม่มีเลย</td><td class="c"><span class="pill p-p1">P1</span></td><td>รอ <strong>QA</strong> เขียน test-plan → coverage → gaps → regression (เน้น E8 rework)</td></tr>
+      <tr><td>Full-loop E2E owed — E5/E6 = 0 fullloop</td><td class="c"><span class="pill p-p2">P2</span></td><td>รอ <strong>QA</strong> เขียน round-trip smoke (auto-restart · playlist · audit · system-status)</td></tr>
+      <tr><td>Owed manual smokes (V12 curl · V11 proxy · V16 browser · V4 MinIO preview)</td><td class="c"><span class="pill p-p2">P2</span></td><td>รอ <strong>dev + QA</strong> เคลียร์เป็นชุดก่อน pilot จริง (non-blocking)</td></tr>
+      <tr><td>Version badge (6.3) fail-closed จน semver release-tag process พร้อม</td><td class="c"><span class="pill p-p2">P2</span></td><td>รอ <strong>Ops/release</strong> ตั้ง release process (semver tag)</td></tr>
+      <tr><td>Retrospectives (epic 2–6 optional · ยังไม่รัน)</td><td class="c"><span class="pill p-gray">nice</span></td><td>แนะนำรัน epic-4 + epic-6 ก่อนเฟสถัดไป</td></tr>
+      <tr><td>ADR-004 — ไม่มี server-side continuity (quit แอป/sleep = ไลฟ์หยุด)</td><td class="c"><span class="pill p-gray">accepted</span></td><td><span style="color:var(--ok)">✅ by design</span> (desktop keep-alive รันตอนแอปเปิด)</td></tr>
+      <tr><td>Cloud-era isolation TC บางส่วน superseded (single-tenant SQLite · E8)</td><td class="c"><span class="pill p-gray">accepted</span></td><td><span style="color:var(--ok)">✅</span> cross-workspace บางเคส N/A บน desktop · custody ยังบังคับใช้เต็ม</td></tr>
+    </tbody>
+  </table>
+  <p class="note"><strong>ยกไป MVP-2 / future:</strong> live-commerce &amp; engagement (แยกรายงาน) · desktop streaming/encode (OBS) · ban-rate SLO + refund automation · 6-axis anti-correlation · entropy injection · PDPA §26 Merkle audit / dual-consent · kill-switch fleet (OpAMP) · F1–F5 event bus · billing tiers (Hub จัดการแทน)</p>
+
+  <!-- 6 -->
+  <h2 id="s6"><span class="n">6</span>Regression Result<span class="obj">ฟีเจอร์เดิมยังทำงานได้หลังเปลี่ยนแปลงหรือไม่</span></h2>
+  <table>
+    <thead><tr><th>รายการ</th><th>ผล</th></tr></thead>
+    <tbody>
+      <tr><td>Dev-side automation (Go -race + integration + FE Vitest)</td><td><span class="pill p-ok">🟢 green ทุก PR</span> — build/-race/integration/vet/gofmt + tsc/eslint/vitest (safety net หลักตอนนี้)</td></tr>
+      <tr><td>Real-fire loop (create→push→ping→stop)</td><td><span class="pill p-p2">🟡 1 pass (manual)</span> — ผ่าน 1 ครั้งบน TikTok จริง · ยังไม่ automate/รันซ้ำ</td></tr>
+      <tr><td>QA-owned regression cycle (cross-epic)</td><td><span class="pill p-gray">⚪ ยังไม่รัน</span> — ยังไม่เปิดรอบ regression เต็มที่ QA รับรอง</td></tr>
+      <tr><td>Full-loop E2E regression</td><td><span class="pill p-p1">🟡 partial</span> — 25 TC ออกแบบ · E1–E4 บางส่วน · E5/E6 = 0</td></tr>
+      <tr><td>Post-pivot regression (cloud → desktop · E8 rework)</td><td><span class="pill p-p0">🔴 ยังไม่รัน</span> — persistence/secrets/tenancy/storage localize ยังไม่ QA regress</td></tr>
+    </tbody>
+  </table>
+  <p class="note"><strong>dev automation ยืนยันว่าของเดิมไม่พัง</strong> (CI เขียวทุก PR) · แต่ <strong>QA-owned regression เต็มรอบ + post-pivot (cloud→desktop) regression ยังไม่รัน</strong> → ยังยืนยันภาพรวมทั้งระบบไม่ได้ 100% (โดยเฉพาะหลัง Epic 8 localize) เป็นงานสำคัญค้างก่อน launch</p>
+
+  <!-- 7 -->
+  <h2 id="s7"><span class="n">7</span>QA Recommendation<span class="obj">ข้อเสนอแนะจาก QA สำหรับการ Release</span></h2>
+  <div class="rec y">
+    <div class="st">🟡 Release with Known Issues — pilot / internal / design-partner (bundled desktop · core re-air)</div>
+    <ul>
+      <li>✅ core re-air loop (Epic 1–6) ใช้งานจริงได้ — <strong>real-fire gate ผ่าน · ขึ้นไลฟ์ TikTok จริง</strong></li>
+      <li>✅ ออกแบบเทสครบ ~100% ของ AC ใน 6 core Epic (1,101 TC) · dev automation เขียวทุก PR · a11y WCAG 2.2 AA เขียว</li>
+      <li>⚠️ <strong>QA execution ยังไม่ปิดรอบ</strong> — E5/E6 coverage เป็น snapshot เก่า (ไม่ re-audit) · fullloop E5/E6 = 0 · QA-owned regression + post-pivot regression ยังไม่รัน</li>
+      <li>🔴 <strong>Epic 7/8 (desktop) ยังไม่มี QA artifact เลย</strong> → ห้ามเคลม public GA จนกว่าจะมี test-plan/coverage/regression</li>
+      <li>ℹ️ live-commerce (Epic 9) = MVP-2 → แยกรายงาน · pilot นี้ยังไม่เปิด live-commerce + ไม่เคลม server-side continuity (ADR-004)</li>
+    </ul>
+  </div>
+  <p style="margin-top:6px"><strong>เงื่อนไขก่อนขึ้นเป็น 🟢 Ready for Release (public GA):</strong></p>
+  <ol style="margin-top:4px">
+    <li>QA re-audit E5/E6 — ปลด <code>.skip</code> · ออก coverage report รอบใหม่ · อัปเดต executed-%</li>
+    <li>QA เขียน test-plan → coverage → gaps → regression ของ <strong>Epic 7/8</strong> (เน้น E8 rework: SQLite/single-tenant/OS-keystore/local-fs)</li>
+    <li>QA เพิ่ม fullloop-e2e ที่ค้าง (E5/E6 round-trip) + เปิด QA-owned regression cycle เต็ม รวม post-pivot (cloud→desktop)</li>
+    <li>เคลียร์ owed manual smokes (V12/V11/V16/V4) + ตั้ง semver release-tag process (ปลด version badge 6.3)</li>
+    <li>รัน retrospective epic-4 + epic-6 ก่อนเข้าเฟสถัดไป</li>
+  </ol>
+  <table style="margin-top:18px">
+    <thead><tr><th>Status</th><th>ความหมาย</th></tr></thead>
+    <tbody>
+      <tr><td><span class="pill p-ok">🟢 Ready for Release</span></td><td>พร้อม Release สาธารณะ (public GA)</td></tr>
+      <tr><td><span class="pill p-p1">🟡 Release with Known Issues</span></td><td>ปล่อยได้แต่มีข้อจำกัดที่รับทราบ <strong>← สถานะปัจจุบัน (pilot / internal / design-partner · bundled desktop)</strong></td></tr>
+      <tr><td><span class="pill p-p0">🔴 Not Ready</span></td><td>ยังไม่พร้อม Release <strong>← public GA (desktop 7/8 ไม่มี QA · QA execution ไม่ปิดรอบ)</strong></td></tr>
+    </tbody>
+  </table>
+
+  <div class="foot">
+    ที่มาข้อมูล: เอกสาร QA/planning ภายใน TAKRA Rerun — coverage-report ราย Epic 1–6 (22 มิ.ย. 69 · 1,101 TC) · README test-artifacts (gate table) · QA-cheat-sheet · mvp1-roadmap.md (25 มิ.ย.) · sprint-status.yaml (last_updated 3 ก.ค. 69 · dev source of truth · Jira TAK-*) · sprint-change-proposal 2 ก.ค. (correct-course · ADR-004 pivot → desktop E7/E8 · live-commerce E9 = MVP-2 แยกรายงาน) · จัดทำโดย QA (Ice) · TAKRA Rerun MVP-1 · 23 ก.ค. 2026 · <strong>หมายเหตุความแม่นยำ:</strong> เกรด/executed-% ของ coverage report เป็น snapshot 22 มิ.ย. (E5/E6 dev ปิดหลังจากนั้น → ยังไม่ refresh) · ยอด TC ~ = นับจาก row จริงในแต่ละ coverage report (บางเทสครอบหลาย level นับซ้ำได้) · ไม่มีการปั้นเลข — จุดที่ยังไม่มีข้อมูลระบุตรง ๆ ว่า “ยังไม่รัน / ไม่มี artifact”
+  </div>
+
+</div>
+</body>
+</html>

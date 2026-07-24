@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MVP 2 — QA Closeout · TAKRA Rerun (Live-Commerce)</title>
+<style>
+  :root{
+    --ink:#1a2233; --soft:#4a5568; --faint:#8592a6;
+    --line:#e5e9f0; --line2:#f0f3f8;
+    --accent:#4f46e5; --accent-bg:#eef2ff;
+    --p0:#dc2626; --p0-bg:#fef2f2;
+    --p1:#ea580c; --p1-bg:#fff7ed;
+    --p2:#ca8a04; --p2-bg:#fefce8;
+    --ok:#16a34a; --ok-bg:#f0fdf4;
+    --teal:#0d9488; --teal-bg:#f0fdfa;
+    --font:-apple-system,BlinkMacSystemFont,"Segoe UI","Sarabun","Noto Sans Thai","Helvetica Neue",Arial,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--font);color:var(--ink);background:#f4f6fb;line-height:1.7;-webkit-font-smoothing:antialiased;font-size:16px}
+  .wrap{max-width:860px;margin:0 auto;padding:0 22px 100px}
+
+  .band{background:linear-gradient(135deg,#1e293b,#0f172a);color:#f8fafc;margin:0 -22px 0;padding:44px 22px 40px;border-radius:0 0 22px 22px}
+  .band .inner{max-width:860px;margin:0 auto}
+  .band .ey{font-size:.78rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#a5b4fc;margin-bottom:12px}
+  .band h1{font-size:clamp(1.6rem,4vw,2.1rem);font-weight:800;line-height:1.15;letter-spacing:-.01em}
+  .band .meta{margin-top:18px;display:flex;flex-wrap:wrap;gap:6px 24px;font-size:.86rem;color:#94a3b8}
+  .band .meta b{color:#e2e8f0}
+  .flag{display:block;margin-top:18px;background:rgba(220,38,38,.16);border:1px solid rgba(248,113,113,.45);color:#fca5a5;font-weight:600;font-size:.9rem;padding:10px 16px;border-radius:10px;line-height:1.6}
+
+  h2{font-size:1.28rem;font-weight:800;letter-spacing:-.01em;margin:44px 0 4px;padding-top:16px;scroll-margin-top:20px;border-top:1px solid var(--line)}
+  h2:first-of-type{border-top:none}
+  h2 .n{display:inline-flex;align-items:center;justify-content:center;width:1.6em;height:1.6em;background:var(--accent);color:#fff;border-radius:8px;font-size:.78em;margin-right:10px;vertical-align:middle}
+  h2 .obj{display:block;font-size:.82rem;font-weight:500;color:var(--faint);margin:6px 0 14px}
+  p{margin:10px 0}
+  strong{font-weight:700}
+
+  table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.92rem}
+  th{text-align:left;font-weight:700;color:var(--soft);border-bottom:2px solid var(--line);padding:9px 12px;font-size:.82rem;background:var(--line2)}
+  td{padding:9px 12px;border-bottom:1px solid var(--line2);vertical-align:top}
+  tr:last-child td{border-bottom:none}
+  td.c,th.c{text-align:center}
+  td.r,th.r{text-align:right}
+  tbody tr:hover{background:#fafbfe}
+  table.tot tr:last-child td{border-top:2px solid var(--line);font-weight:700;background:var(--line2)}
+
+  .note{color:var(--soft);font-size:.86rem;margin:6px 0 0;padding-left:2px}
+  ul.note{list-style:disc;padding-left:20px;margin:10px 0 0}
+  ul.note li{margin:3px 0}
+
+  .pill{display:inline-flex;align-items:center;gap:5px;font-size:.74rem;font-weight:800;padding:2px 10px;border-radius:999px;white-space:nowrap}
+  .p-p0{background:var(--p0-bg);color:var(--p0)}
+  .p-p1{background:var(--p1-bg);color:var(--p1)}
+  .p-p2{background:var(--p2-bg);color:var(--p2)}
+  .p-ok{background:var(--ok-bg);color:var(--ok)}
+  .p-gray{background:var(--line2);color:var(--soft)}
+  .z{color:var(--faint)}
+  .zero{color:var(--p0);font-weight:800}
+  .good{color:var(--ok);font-weight:800}
+
+  .rec{border:1px solid var(--line);border-left-width:6px;border-radius:12px;padding:18px 22px;margin:16px 0;background:#fff}
+  .rec.y{border-left-color:var(--p1);background:var(--p1-bg)}
+  .rec.y .st{color:var(--p1)}
+  .rec.r{border-left-color:var(--p0);background:var(--p0-bg)}
+  .rec.r .st{color:var(--p0)}
+  .rec .st{font-size:1.15rem;font-weight:800}
+  .rec ul{margin:12px 0 0;padding-left:20px}
+  .rec li{margin:6px 0}
+
+  .toc{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 20px;margin:22px 0;font-size:.9rem}
+  .toc b{display:block;font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);margin-bottom:8px}
+  .toc a{color:var(--ink);text-decoration:none;margin-right:16px;white-space:nowrap;display:inline-block;line-height:1.9}
+  .toc a:hover{color:var(--accent)}
+
+  .foot{margin-top:50px;padding-top:18px;border-top:1px solid var(--line);color:var(--faint);font-size:.82rem}
+
+  @media print{
+    body{background:#fff;font-size:11pt}
+    .band{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    th,td,.pill,.flag,.rec{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    h2{page-break-after:avoid} table{page-break-inside:avoid}
+  }
+</style>
+</head>
+<body>
+
+<div class="band">
+  <div class="inner">
+    <div class="ey">TAKRA Rerun · QA Closeout</div>
+    <h1>MVP 2 — สรุปผลการทดสอบ (QA Closeout)</h1>
+    <div class="meta">
+      <span>ผู้จัดทำ: <b>QA (Ice)</b></span>
+      <span>ขอบเขต: <b>MVP-2 · Live-Commerce &amp; Engagement (Epic 9)</b></span>
+      <span>วันที่: <b>23 ก.ค. 2026</b></span>
+    </div>
+    <div class="flag">⚠️ สถานะจริง: MVP-2 (live-commerce · Epic 9) = <b>9 story code-complete บน develop</b> (POC port · reverse-documented as-built) · แต่ <b>QA ยังไม่เริ่มเลย — ไม่มี test-artifacts (design coverage 0%)</b> · ฟีเจอร์แกน oracle (chat / GMV / pin / reply) ยัง <b>live-verify ค้าง</b> (ยืนยันบน TikTok live จริงไม่ได้) · verified แล้วบางส่วน: 9.3 audio-drop (real ffmpeg) · 9.9 analog clock (real live) · <b>ทุก release = 🔴 NOT READY · internal POC demo เท่านั้น</b></div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="toc">
+    <b>หัวข้อ</b>
+    <a href="#s1">1. Scope</a><a href="#s2">2. Test Coverage</a><a href="#s3">3. Test Result</a><a href="#s4">4. Bug Summary</a><a href="#s5">5. Known Issues</a><a href="#s6">6. Regression</a><a href="#s7">7. QA Recommendation</a>
+  </div>
+
+  <!-- 1 -->
+  <h2 id="s1"><span class="n">1</span>Scope<span class="obj">ขอบเขตของ MVP-2 (live-commerce) ที่ QA รับผิดชอบ — Epic 9 · 9 Stories</span></h2>
+  <p>MVP-2 = <strong>Live-Commerce &amp; Engagement</strong> — ฟีเจอร์ขายของสด (chat / GMV / ปักสินค้า / overlay) ที่ต่อยอดจาก re-air ของ MVP-1 · ในโค้ดถูกดึงเข้ามาเป็น <strong>Epic 9 (POC port · Jira TAK-156)</strong> ตาม correct-course (ADR-004) · <strong>enabling infra = desktop browser-oracle</strong> (hidden logged-in <em>BrowserWindow</em> ต่อบัญชี → in-page signing สำหรับ pin/chat/GMV/reply)</p>
+  <table>
+    <thead><tr><th>Story</th><th>ฟีเจอร์หลัก</th><th class="c">ที่มา</th></tr></thead>
+    <tbody>
+      <tr><td><strong>9.1</strong> · Popup TikTok login / cookie-capture</td><td>เพิ่มบัญชีด้วย in-app popup login (แทน paste-curl) · cookie ไม่แตะ DOM · seed เข้า oracle partition</td><td class="c">ex-MVP1.5 (U)</td></tr>
+      <tr><td><strong>9.2</strong> · Proxy egress modes (api|full)</td><td>เลือกต่อบัญชีว่า proxy คุมแค่ API หรือคุม RTMP push ด้วย (proxychains4)</td><td class="c">ต่อยอด FR-E</td></tr>
+      <tr><td><strong>9.3</strong> · Audio-drop detection</td><td>pre-flight ffprobe (NO_AUDIO/AUDIO_SHORT) + runtime silencedetect → auto-stop</td><td class="c">ใหม่ FR-D7</td></tr>
+      <tr><td><strong>9.4</strong> · Live chat capture (oracle)</td><td>ดัก webcast chat/viewers ผ่าน oracle → SSE → LiveChatPanel (dedup msgId)</td><td class="c">ex-MVP2 (Q)</td></tr>
+      <tr><td><strong>9.5</strong> · Manual chat reply</td><td>พิมพ์ตอบคอมเมนต์สด · manual-only (ไม่มี auto/template · D10) · in-page send</td><td class="c">ex-MVP2 (Q)</td></tr>
+      <tr><td><strong>9.6</strong> · Live GMV panel</td><td>ยอดขายสด (GMV/units/top 5) จาก shop cookie → poll insights ~45s → SSE</td><td class="c">ex-MVP2 (Q)</td></tr>
+      <tr><td><strong>9.7</strong> · Basket / product auto-pin</td><td>เตรียม product set → ปักตะกร้าอัตโนมัติตอน go-live (idempotent)</td><td class="c">ex-MVP2 (O)</td></tr>
+      <tr><td><strong>9.8</strong> · Live-products pin/unpin (manual)</td><td>ปัก/เลิกปักสินค้ารายตัวระหว่างไลฟ์ (exclusive · optimistic + reconcile)</td><td class="c">ex-MVP3 (O4/O5)</td></tr>
+      <tr><td><strong>9.9</strong> · Overlay compositor</td><td>overlay นาฬิกา/ข้อความ/รูป · no-overlay = <em>-c copy</em> (invariant intact) · re-encode เมื่อมี overlay</td><td class="c">ex-MVP2 (P)</td></tr>
+    </tbody>
+  </table>
+  <p class="note"><strong>Epic 9 · 9 stories · code-complete บน develop 29 มิ.ย.</strong> — Jira: 9.1–9.7 + 9.9 = <em>Ready To Test</em> (review · live-verify owed) · 9.8 = <em>Done</em> (server+web · oracle pin owed) · <strong>reverse-documented from shipped code</strong> (as-built · ไม่ใช่ fresh design — POC เดิมไม่เคยรัน live) · <strong>MVP-1 (re-air desktop · Epic 1–8) = แยกรายงาน</strong> (rerun-mvp-1) · หมายเหตุ: “MVP-2” ที่นี่ = live-commerce (ex-MVP2 O/P/Q/R) — คนละเรื่องกับ prd-mvp2 “hardening / anti-correlation” (future track)</p>
+
+  <!-- 2 -->
+  <h2 id="s2"><span class="n">2</span>Test Coverage<span class="obj">ทดสอบครอบคลุมตาม Scope หรือไม่ — MVP-2 นี้ QA ยังไม่เริ่ม</span></h2>
+  <table class="tot">
+    <thead><tr><th>รายการ</th><th class="c">จำนวน / %</th></tr></thead>
+    <tbody>
+      <tr><td>User Stories (Epic 9)</td><td class="c">9</td></tr>
+      <tr><td>QA Test Cases — ออกแบบ (design)</td><td class="c"><span class="zero">0</span></td></tr>
+      <tr><td>QA test-artifacts (test-plan / coverage / gaps)</td><td class="c"><span class="zero">ไม่มี</span></td></tr>
+      <tr><td><strong>QA Coverage — ออกแบบ (design)</strong></td><td class="c"><span class="pill p-p0">🔴 0%</span></td></tr>
+      <tr><td><strong>QA Coverage — รันจริง (executed)</strong></td><td class="c"><span class="pill p-p0">🔴 0%</span></td></tr>
+      <tr><td>Dev co-located tests (มีบางส่วน · dev-owned)</td><td class="c"><span class="pill p-p2">partial</span></td></tr>
+    </tbody>
+  </table>
+  <p class="note"><strong>QA coverage = 0</strong> ทั้ง design และ executed — โฟลเดอร์ <em>test-artifacts/</em> มีแค่ epic-1…epic-6 · <strong>ไม่มี epic-9</strong> เลย · สิ่งที่มีคือ <strong>dev co-located test</strong> (Go <em>_test.go</em> / <em>oracle.test.js</em>) ที่ dev เขียนคู่โค้ด — ยังไม่ถูก QA-trace เป็น QA layer และไม่มี coverage report/เกรด/gate</p>
+
+  <p style="margin-top:22px"><strong>รายละเอียดต่อ Story</strong> — dev test ที่มี + สถานะ live-verify:</p>
+  <table>
+    <thead><tr><th>Story · ฟีเจอร์</th><th class="c">Jira</th><th class="c">Dev test<br><span class="z" style="font-weight:400">co-located</span></th><th class="c">Live-verify</th></tr></thead>
+    <tbody>
+      <tr><td>9.1 · popup login / cookie-capture</td><td class="c"><span class="pill p-p2">review</span></td><td class="c"><span class="z">–</span></td><td class="c"><span class="pill p-p1">⏳ pending</span></td></tr>
+      <tr><td>9.2 · proxy egress modes (api|full)</td><td class="c"><span class="pill p-p2">review</span></td><td class="c"><span class="good">✅</span></td><td class="c"><span class="pill p-p1">⏳ pending</span> <span class="z">(macOS caveat)</span></td></tr>
+      <tr><td>9.3 · audio-drop detection</td><td class="c"><span class="pill p-p2">review</span></td><td class="c"><span class="good">✅</span></td><td class="c"><span class="pill p-ok">✅ real ffmpeg</span></td></tr>
+      <tr><td>9.4 · live chat capture (oracle)</td><td class="c"><span class="pill p-p2">review</span></td><td class="c"><span class="good">✅</span></td><td class="c"><span class="pill p-p1">⏳ pending</span></td></tr>
+      <tr><td>9.5 · manual chat reply</td><td class="c"><span class="pill p-p2">review</span></td><td class="c"><span class="z">–</span></td><td class="c"><span class="pill p-p1">⏳ pending</span></td></tr>
+      <tr><td>9.6 · live GMV panel</td><td class="c"><span class="pill p-p2">review</span></td><td class="c"><span class="z">–</span></td><td class="c"><span class="pill p-p1">⏳ pending</span></td></tr>
+      <tr><td>9.7 · basket / auto-pin</td><td class="c"><span class="pill p-p2">review</span></td><td class="c"><span class="good">✅</span></td><td class="c"><span class="pill p-p2">🟡 POC ✅ · rerun ⏳</span></td></tr>
+      <tr><td>9.8 · live-products pin/unpin</td><td class="c"><span class="pill p-ok">done*</span></td><td class="c"><span class="good">✅</span></td><td class="c"><span class="pill p-p1">⏳ oracle-pin owed</span></td></tr>
+      <tr><td>9.9 · overlay compositor</td><td class="c"><span class="pill p-p2">review</span></td><td class="c"><span class="z">–</span></td><td class="c"><span class="pill p-p2">🟡 clock ✅ · full push ⏳</span></td></tr>
+    </tbody>
+  </table>
+  <ul class="note">
+    <li><strong>Dev test ✅</strong> = มี <em>_test.go</em>/<em>oracle.test.js</em> ที่ dev เขียน (9.2 proxychains · 9.3 silence · 9.4 ingest/oracle · 9.7 basket/pinjobs · 9.8 pinjobs) — dev-owned · QA ยังไม่ตรวจ/ออกแบบเพิ่ม</li>
+    <li><strong>Live-verify ✅ แล้ว:</strong> 9.3 audio-drop (real ffmpeg — NO_AUDIO/AUDIO_SHORT/silence) · 9.9 analog clock (เข็มเดินบน live จริง) · 9.7 verified working ใน POC ต้นทาง (ยังไม่ยืนยันซ้ำใน rerun)</li>
+    <li><strong>Live-verify ⏳ ค้าง (oracle-dependent):</strong> 9.1 login · 9.4 chat · 9.5 reply · 9.6 GMV · 9.7 (rerun) · 9.8 oracle-pin · 9.9 overlay full-push — ยืนยัน end-to-end บน TikTok live จริงไม่ได้จนกว่าจะรันกับไลฟ์จริง (POC ไม่เคยรัน live)</li>
+    <li>9.8 = <strong>done*</strong> เฉพาะ server+web · desktop-oracle <em>live_product/pin</em> call ยังเป็น live-verify item ที่ค้าง</li>
+  </ul>
+
+  <!-- 3 -->
+  <h2 id="s3"><span class="n">3</span>Test Result<span class="obj">ผลการรันจริง — แยกที่ verified แล้ว กับที่ยัง live-verify ค้าง / QA ยังไม่รัน</span></h2>
+  <table class="tot">
+    <thead><tr><th>Status</th><th>รายการ</th></tr></thead>
+    <tbody>
+      <tr><td><span class="pill p-ok">🟢 Passed</span></td><td>9.3 audio-drop (real ffmpeg) · 9.9 analog clock (real live) · dev co-located unit tests (proxychains / silence / ingest / basket / pinjobs) เขียว <span class="z">(dev-owned)</span></td></tr>
+      <tr><td><span class="pill p-gray">Failed</span></td><td>0 — ไม่มี bug ticket เปิดค้างที่ track ไว้ (finding จาก code-review ถูกแก้ก่อน merge)</td></tr>
+      <tr><td><span class="pill p-p1">🟡 Live-verify pending</span></td><td>9.1 login · 9.4 chat · 9.5 reply · 9.6 GMV · 9.7 basket (rerun) · 9.8 oracle-pin · 9.9 overlay full-push — <strong>oracle-dependent · ยืนยันบน TikTok live จริงไม่ได้</strong></td></tr>
+      <tr><td><span class="pill p-p0">⚪ Not run (QA)</span></td><td><span class="zero">QA test design + coverage + fullloop = 0</span> · QA security review (browser-oracle) = 0 · QA-owned regression = 0 — <strong>QA ยังไม่เริ่มเลย</strong></td></tr>
+    </tbody>
+  </table>
+  <p class="note"><strong>Passed</strong> = ชั้นที่ verified แล้วจริง (2 story บน real ffmpeg/real live) + dev unit tests บางตัว (dev-owned · ยังไม่ QA-trace) · <strong>Live-verify pending</strong> = แกนหลักของ live-commerce (oracle: chat/GMV/pin/reply) ที่ยังพิสูจน์ปลายทางไม่ได้ · <strong>Not run</strong> = งาน QA ทั้งก้อน (ออกแบบเคส/coverage/security/regression) ยังไม่เริ่ม</p>
+
+  <!-- 4 -->
+  <h2 id="s4"><span class="n">4</span>Bug Summary<span class="obj">จำนวน Bug ที่เปิดอยู่ ตามระดับความรุนแรง</span></h2>
+  <table>
+    <thead><tr><th>Severity</th><th class="c">Open</th><th class="c">Closed</th></tr></thead>
+    <tbody>
+      <tr><td><span class="pill p-p0">Critical</span></td><td class="c">0</td><td class="c z">—</td></tr>
+      <tr><td><span class="pill p-p1">High</span></td><td class="c">0</td><td class="c z">—</td></tr>
+      <tr><td><span class="pill p-p2">Medium</span></td><td class="c">0</td><td class="c z">—</td></tr>
+      <tr><td><span class="pill p-gray">Low</span></td><td class="c">0</td><td class="c z">—</td></tr>
+    </tbody>
+  </table>
+  <ul class="note">
+    <li><strong>Open 0 <em>ไม่ใช่</em>เพราะไม่มีปัญหา</strong> — แต่เพราะ <strong>QA ยังไม่เริ่มทดสอบเลย</strong> + ฟีเจอร์แกนยัง live-verify ค้าง (ยังไม่มีตาดูจริง) · เป็นการนับที่มีความหมายต่ำสุดในบรรดา 3 รายงาน</li>
+    <li><strong>latent risk ที่มองเห็น (ยังไม่นับเป็น bug จนกว่าจะ verify):</strong> protobuf decode ผูก <em>tiktok-live-connector</em> pin 2.1.1-beta1 → เสี่ยง break เมื่อ TikTok เปลี่ยน (9.4) · macOS proxy <em>full</em> = push ตรง ไม่ผ่าน proxy (9.2) · in-page signing (webmssdk) เปราะต่อการเปลี่ยนฝั่ง TikTok (9.5/9.7/9.8)</li>
+    <li><strong>security surface ที่ต้องรีวิว:</strong> oracle window <em>contextIsolation:false · sandbox:false</em> · <em>DESKTOP_INGEST_KEY</em> (loopback bearer) · shop cookie ใน vault — ยังไม่มี QA security review</li>
+  </ul>
+
+  <!-- 5 -->
+  <h2 id="s5"><span class="n">5</span>Known Issues<span class="obj">ปัญหา/ข้อจำกัดที่ทีมรับทราบ — แยก “ต้องปิด” กับ “ยอมรับได้”</span></h2>
+  <table>
+    <thead><tr><th>ปัญหา</th><th class="c">ระดับ</th><th>สถานะ / รอใคร</th></tr></thead>
+    <tbody>
+      <tr><td>QA artifact ของ Epic 9 = 0 (ไม่มี test-plan/coverage/gaps เลย)</td><td class="c"><span class="pill p-p0">P0</span></td><td>รอ <strong>QA</strong> เริ่มออกแบบเคสทั้ง 9 story (เน้น oracle + security)</td></tr>
+      <tr><td>Live-verify ค้าง — oracle-dependent (9.1/9.4/9.5/9.6/9.7/9.8)</td><td class="c"><span class="pill p-p0">P0</span></td><td>รอ <strong>dev + QA</strong> รันกับ TikTok live จริง + logged-in shop → flip review→done</td></tr>
+      <tr><td>Browser-oracle security ยังไม่รีวิว (contextIsolation:false · sandbox:false · ingest-key)</td><td class="c"><span class="pill p-p1">P1</span></td><td>รอ <strong>QA</strong> security review + threat model (in-page eval, cookie custody)</td></tr>
+      <tr><td>Reverse-documented as-built (AC ถอดจากโค้ด POC · ไม่ใช่ fresh design)</td><td class="c"><span class="pill p-p1">P1</span></td><td>รอ <strong>QA</strong> ทวน FR/edge case ที่ POC อาจไม่ครอบ (spec drift risk)</td></tr>
+      <tr><td>Regression กระทบ MVP-1 core (proxy mode / ingest endpoints / overlay re-encode)</td><td class="c"><span class="pill p-p1">P1</span></td><td>รอ <strong>QA</strong> regress ว่า Epic 9 (merged develop) ไม่ทำ MVP-1 พัง</td></tr>
+      <tr><td>9.8 oracle <em>live_product/pin</em> call owed · 9.9 overlay full live-push (Wave A–C)</td><td class="c"><span class="pill p-p2">P2</span></td><td>รอ <strong>dev</strong> ปิดส่วน desktop-oracle ที่เหลือ</td></tr>
+      <tr><td>proxychains <em>full</em> = linux/wsl เท่านั้น (macOS push ตรง — no silent full path)</td><td class="c"><span class="pill p-gray">accepted</span></td><td><span style="color:var(--ok)">✅ by design</span> (ตรงกับ POC · มี caveat ชัด)</td></tr>
+      <tr><td>Deferred: 3D clock · digital 7-seg font · live-drag overlay (FR-P4) · auto-reply (D10 manual-only)</td><td class="c"><span class="pill p-gray">deferred</span></td><td>ยกไป follow-up / future</td></tr>
+    </tbody>
+  </table>
+  <p class="note"><strong>invariant ที่รักษาไว้ (ดี):</strong> no-overlay = <em>-c copy</em> เป๊ะ (overlay re-encode เฉพาะเมื่อ configure) · audio silencedetect เป็น co-process (main push ยัง <em>-c copy</em>) → core re-air ของ MVP-1 ไม่ถูกทำลายโดยดีไซน์ · แต่ยังต้อง QA regress ยืนยัน</p>
+
+  <!-- 6 -->
+  <h2 id="s6"><span class="n">6</span>Regression Result<span class="obj">ฟีเจอร์เดิม (MVP-1) ยังทำงานได้หลัง Epic 9 merge หรือไม่</span></h2>
+  <table>
+    <thead><tr><th>รายการ</th><th>ผล</th></tr></thead>
+    <tbody>
+      <tr><td>Dev co-located tests (Epic 9 · Go -race)</td><td><span class="pill p-p2">🟡 partial green</span> — proxychains / silence / ingest / basket / pinjobs เขียว (dev-owned · ไม่ครบทุก story)</td></tr>
+      <tr><td>Re-air invariant (no-overlay = <em>-c copy</em> · main push ยัง copy)</td><td><span class="pill p-ok">🟢 preserved by design</span> — re-encode เฉพาะเมื่อมี overlay · silencedetect เป็น co-process แยก</td></tr>
+      <tr><td>QA-owned regression (MVP-1 core หลัง Epic 9 merge)</td><td><span class="pill p-p0">🔴 ยังไม่รัน</span> — proxy-mode migration · /ingest/* endpoints · overlay branch ยังไม่ QA regress</td></tr>
+      <tr><td>QA-owned regression (Epic 9 เอง)</td><td><span class="pill p-p0">🔴 ยังไม่รัน</span> — ไม่มี regression suite ของ live-commerce</td></tr>
+    </tbody>
+  </table>
+  <p class="note"><strong>ความเสี่ยง regression หลัก:</strong> Epic 9 แตะ path ของ MVP-1 (migration ใหม่ 00002–00006 · media/rtmp.go re-encode branch · sessions runtime co-goroutine · ingest endpoints ใหม่) → <strong>ต้อง QA regress MVP-1 core ว่าไม่พัง</strong> ก่อนอะไรทั้งหมด · dev automation ของ Epic 9 เขียวบางส่วนแต่ยังไม่ครบ + ไม่มี QA trace</p>
+
+  <!-- 7 -->
+  <h2 id="s7"><span class="n">7</span>QA Recommendation<span class="obj">ข้อเสนอแนะจาก QA สำหรับการ Release</span></h2>
+  <div class="rec r">
+    <div class="st">🔴 Not Ready — ทุก release (ใช้ได้แค่ internal POC demo)</div>
+    <ul>
+      <li>🔴 <strong>QA ยังไม่เริ่ม</strong> — ไม่มี test-artifacts (test-plan/coverage/gaps) ของ Epic 9 เลย · design + executed coverage = 0%</li>
+      <li>🔴 <strong>ฟีเจอร์แกน oracle ยัง live-verify ค้าง</strong> (9.1 login · 9.4 chat · 9.5 reply · 9.6 GMV · 9.7 pin · 9.8 oracle-pin) — ยืนยัน end-to-end บน TikTok live จริงไม่ได้</li>
+      <li>⚠️ <strong>reverse-documented as-built</strong> (ถอด AC จากโค้ด POC · POC ไม่เคยรัน live) → spec/edge case อาจไม่ครบ</li>
+      <li>⚠️ <strong>browser-oracle security</strong> (contextIsolation:false · sandbox:false · in-page eval · ingest-key) ยังไม่มี QA security review</li>
+      <li>✅ ส่วนที่พร้อมสุด: 9.3 audio-drop (real ffmpeg) · 9.9 analog clock (real live) · 9.7 basket (POC upstream) · demoable-without-live paths (curl → SSE → panel)</li>
+    </ul>
+  </div>
+  <p style="margin-top:6px"><strong>เงื่อนไขก่อนขึ้นเป็น 🟡 Release with Known Issues → 🟢 Ready:</strong></p>
+  <ol style="margin-top:4px">
+    <li>QA เขียน test-plan → coverage → gaps ของ Epic 9 (9 story · เน้น oracle + isolation + credential custody)</li>
+    <li>dev + QA ทำ <strong>live-verify gate</strong> บน TikTok live จริง + logged-in shop (9.1/9.4/9.5/9.6/9.7/9.8) → flip review→done</li>
+    <li>QA <strong>security review</strong> ของ browser-oracle (contextIsolation/sandbox/in-page eval/ingest-key/shop-cookie vault)</li>
+    <li><strong>regress MVP-1 core (Epic 1–8)</strong> ว่า Epic 9 ไม่ทำพัง — proxy-mode migration · /ingest/* endpoints · overlay re-encode branch (ยืนยัน no-overlay = <em>-c copy</em>)</li>
+    <li>ปิด 9.8 oracle <em>live_product/pin</em> + 9.9 overlay full live-push (Wave A–C) + ทวน spec ที่ reverse-document</li>
+  </ol>
+  <table style="margin-top:18px">
+    <thead><tr><th>Status</th><th>ความหมาย</th></tr></thead>
+    <tbody>
+      <tr><td><span class="pill p-ok">🟢 Ready for Release</span></td><td>พร้อม Release สาธารณะ</td></tr>
+      <tr><td><span class="pill p-p1">🟡 Release with Known Issues</span></td><td>ปล่อยได้แต่มีข้อจำกัดที่รับทราบ</td></tr>
+      <tr><td><span class="pill p-p0">🔴 Not Ready</span></td><td>ยังไม่พร้อม Release <strong>← สถานะปัจจุบัน (internal POC demo เท่านั้น · QA = 0% · live-verify ค้าง)</strong></td></tr>
+    </tbody>
+  </table>
+
+  <div class="foot">
+    ที่มาข้อมูล: เอกสาร QA/planning ภายใน TAKRA Rerun — epics.md §Epic 9 (reverse-documented as-built · 9 stories TAK-156/157–163/151/152) · docs/poc-port-scope.md (per-feature cards + commit refs) · prd.md §4 (FR-O/P/Q/R · FR-D7 · FR-U) · sprint-change-proposal 2 ก.ค. 69 (correct-course · Epic 9 pull-in) · sprint-status.yaml (last_updated 3 ก.ค. 69 · Jira TAK-*) · test-artifacts/ (มีแค่ epic-1…6 · ไม่มี epic-9) · จัดทำโดย QA (Ice) · TAKRA Rerun MVP-2 (live-commerce) · 23 ก.ค. 2026 · <strong>หมายเหตุความแม่นยำ:</strong> Epic 9 = code-complete บน develop แต่ QA ยังไม่เริ่ม → coverage 0% เป็นสถานะจริง ไม่ใช่การปั้นเลข · live-verify status อ้างตาม epics.md ต่อ story (⏳ pending / ✅ verified) · dev-test ✅ = มี <em>_test</em> ในโค้ด (dev-owned) · MVP-1 (re-air) = แยกรายงาน (rerun-mvp-1) · “MVP-2” นี้ = live-commerce (ex-MVP2 O/P/Q/R) ไม่ใช่ prd-mvp2 hardening track
+  </div>
+
+</div>
+</body>
+</html>

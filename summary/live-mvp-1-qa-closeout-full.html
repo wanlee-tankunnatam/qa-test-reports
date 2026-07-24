@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MVP 1 — QA Summary · TAKRA Live</title>
+<style>
+  :root{
+    --ink:#1a2233; --soft:#4a5568; --faint:#8592a6;
+    --line:#e5e9f0; --line2:#f0f3f8;
+    --accent:#4f46e5; --accent-bg:#eef2ff;
+    --p0:#dc2626; --p0-bg:#fef2f2;
+    --p1:#ea580c; --p1-bg:#fff7ed;
+    --p2:#ca8a04; --p2-bg:#fefce8;
+    --ok:#16a34a; --ok-bg:#f0fdf4;
+    --teal:#0d9488; --teal-bg:#f0fdfa;
+    --font:-apple-system,BlinkMacSystemFont,"Segoe UI","Sarabun","Noto Sans Thai","Helvetica Neue",Arial,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--font);color:var(--ink);background:#f4f6fb;line-height:1.7;-webkit-font-smoothing:antialiased;font-size:16px}
+  .wrap{max-width:860px;margin:0 auto;padding:0 22px 100px}
+
+  .band{background:linear-gradient(135deg,#1e293b,#0f172a);color:#f8fafc;margin:0 -22px 0;padding:44px 22px 40px;border-radius:0 0 22px 22px}
+  .band .inner{max-width:860px;margin:0 auto}
+  .band .ey{font-size:.78rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#a5b4fc;margin-bottom:12px}
+  .band h1{font-size:clamp(1.6rem,4vw,2.1rem);font-weight:800;line-height:1.15;letter-spacing:-.01em}
+  .band .meta{margin-top:18px;display:flex;flex-wrap:wrap;gap:6px 24px;font-size:.86rem;color:#94a3b8}
+  .band .meta b{color:#e2e8f0}
+  .flag{display:block;margin-top:18px;background:rgba(234,88,12,.16);border:1px solid rgba(251,146,60,.45);color:#fdba74;font-weight:600;font-size:.9rem;padding:10px 16px;border-radius:10px;line-height:1.6}
+
+  h2{font-size:1.28rem;font-weight:800;letter-spacing:-.01em;margin:44px 0 4px;padding-top:16px;scroll-margin-top:20px;border-top:1px solid var(--line)}
+  h2:first-of-type{border-top:none}
+  h2 .n{display:inline-flex;align-items:center;justify-content:center;width:1.6em;height:1.6em;background:var(--accent);color:#fff;border-radius:8px;font-size:.78em;margin-right:10px;vertical-align:middle}
+  h2 .obj{display:block;font-size:.82rem;font-weight:500;color:var(--faint);margin:6px 0 14px}
+  p{margin:10px 0}
+  strong{font-weight:700}
+
+  table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.92rem}
+  th{text-align:left;font-weight:700;color:var(--soft);border-bottom:2px solid var(--line);padding:9px 12px;font-size:.82rem;background:var(--line2)}
+  td{padding:9px 12px;border-bottom:1px solid var(--line2);vertical-align:top}
+  tr:last-child td{border-bottom:none}
+  td.c,th.c{text-align:center}
+  td.r,th.r{text-align:right}
+  tbody tr:hover{background:#fafbfe}
+  table.tot tr:last-child td{border-top:2px solid var(--line);font-weight:700;background:var(--line2)}
+
+  .note{color:var(--soft);font-size:.86rem;margin:6px 0 0;padding-left:2px}
+
+  .pill{display:inline-flex;align-items:center;gap:5px;font-size:.74rem;font-weight:800;padding:2px 10px;border-radius:999px;white-space:nowrap}
+  .p-p0{background:var(--p0-bg);color:var(--p0)}
+  .p-p1{background:var(--p1-bg);color:var(--p1)}
+  .p-p2{background:var(--p2-bg);color:var(--p2)}
+  .p-ok{background:var(--ok-bg);color:var(--ok)}
+  .p-gray{background:var(--line2);color:var(--soft)}
+  .z{color:var(--faint)}
+  .zero{color:var(--p0);font-weight:800}
+
+  .rec{border:1px solid var(--line);border-left-width:6px;border-radius:12px;padding:18px 22px;margin:16px 0;background:#fff}
+  .rec.y{border-left-color:var(--p1);background:var(--p1-bg)}
+  .rec .st{font-size:1.15rem;font-weight:800;color:var(--p1)}
+  .rec ul{margin:12px 0 0;padding-left:20px}
+  .rec li{margin:6px 0}
+
+  .toc{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 20px;margin:22px 0;font-size:.9rem}
+  .toc b{display:block;font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);margin-bottom:8px}
+  .toc a{color:var(--ink);text-decoration:none;margin-right:16px;white-space:nowrap;display:inline-block;line-height:1.9}
+  .toc a:hover{color:var(--accent)}
+
+  .foot{margin-top:50px;padding-top:18px;border-top:1px solid var(--line);color:var(--faint);font-size:.82rem}
+
+  @media print{
+    body{background:#fff;font-size:11pt}
+    .band{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    th,td,.pill,.flag,.rec{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    h2{page-break-after:avoid} table{page-break-inside:avoid}
+  }
+</style>
+</head>
+<body>
+
+<div class="band">
+  <div class="inner">
+    <div class="ey">TAKRA Live · QA Summary</div>
+    <h1>MVP 1 — สรุปผลการทดสอบ (QA Summary)</h1>
+    <div class="meta">
+      <span>ผู้จัดทำ: <b>QA (Ice)</b></span>
+      <span>ขอบเขต: <b>MVP-1 บน UAT · uat-live.takra.ai</b></span>
+      <span>วันที่: <b>23 ก.ค. 2026</b></span>
+    </div>
+    <div class="flag">⚠️ สถานะจริง: <b>ออกแบบเทสครบ 1,365 TC (7 Epic) + dev-side automation เขียวใน CI แต่ฝั่ง QA ยังไม่เปิดรอบรันเต็ม</b> — รายงานนี้แยก “ออกแบบ (design)” กับ “รันจริง (executed)” ชัดเจน · UI manual รันไป 0/303 · sign-off gate 0/13 · Epic 7 (production readiness) ยังไม่เริ่ม → <b>prod สาธารณะ = 🔴 NOT READY</b> · เลข executed น้อยเพราะ<b>ยังไม่ได้ลงมือรัน</b> ไม่ใช่เพราะไม่มีปัญหา</div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="toc">
+    <b>หัวข้อ</b>
+    <a href="#s1">1. Scope</a><a href="#s2">2. Test Coverage</a><a href="#s3">3. Test Result</a><a href="#s4">4. Bug Summary</a><a href="#s5">5. Known Issues</a><a href="#s6">6. Regression</a><a href="#s7">7. QA Recommendation</a>
+  </div>
+
+  <!-- 1 -->
+  <h2 id="s1"><span class="n">1</span>Scope<span class="obj">ขอบเขตของ MVP-1 ที่ QA รับผิดชอบ — Epic · ฟีเจอร์ · User Stories</span></h2>
+  <table>
+    <thead><tr><th>Epic</th><th>ฟีเจอร์ใน MVP-1</th><th class="c">User Stories</th></tr></thead>
+    <tbody>
+      <tr><td><strong>E1</strong> · Platform Foundation &amp; Onboarding</td><td>ล็อกอิน SSO (Zitadel) · workspace · roles (Owner/Operator) · quota · onboarding · PDPA-DSAR</td><td class="c">12</td></tr>
+      <tr><td><strong>E2</strong> · Workspace Inventory</td><td>Product Catalog · Avatar/Voice (read-only · Ops-provisioned) · Risk Word Library · Script Library</td><td class="c">10</td></tr>
+      <tr><td><strong>E3</strong> · Live Studio (Manual)</td><td>schedule · state-machine · scene builder · script authoring · pre-flight · my-lives</td><td class="c">12</td></tr>
+      <tr><td><strong>E4</strong> · Avatar Broadcasting (Phone-as-Camera)</td><td>broadcast URL · WebRTC render · orchestrator · seamless handover · health · crash-recovery</td><td class="c">9</td></tr>
+      <tr><td><strong>E5</strong> · Comment Engagement, Auto-Reply &amp; Risk</td><td>Insight poll · intent · risk fail-closed · reply burst · Live Console · Post-Live Recap</td><td class="c">13</td></tr>
+      <tr><td><strong>E6</strong> · AI Script Generation <span class="z">(cuttable)</span></td><td>LLM provider seam · tone/audience controls · anti-repetition · rotation/cool-down</td><td class="c">6</td></tr>
+      <tr><td><strong>E7</strong> · Production Readiness &amp; Pilot Launch <span class="z">(thin)</span></td><td>CI Tier 2/3 · prod deploy · observability · DR drill · pilot smoke + validation gate</td><td class="c">6</td></tr>
+    </tbody>
+  </table>
+  <p class="note">รวม: <strong>7 Epic · ~68 User Stories · 58 FR + 43 NFR</strong> <span class="z">(นับ story หลัก · ไม่รวม FE/BE split)</span> · <strong>Journey 1 (auto-reply) + Journey 2 (compliance block)</strong> = core value → ใช้งานได้จริงหลังจบ E5 · นอกขอบเขต → ยกไป MVP-2/3: viewer telemetry (FR53) · revenue/order targets · CSV export · per-content approval · scene transition/animation · avatar/voice self-service · script dialects</p>
+
+  <!-- 2 -->
+  <h2 id="s2"><span class="n">2</span>Test Coverage<span class="obj">ทดสอบครอบคลุมตาม Scope หรือไม่ — แยก “ออกแบบ” กับ “รันจริง”</span></h2>
+  <table class="tot">
+    <thead><tr><th>รายการ</th><th class="c">จำนวน / %</th></tr></thead>
+    <tbody>
+      <tr><td>User Stories</td><td class="c">~68</td></tr>
+      <tr><td>Requirements (FR + NFR)</td><td class="c">58 + 43</td></tr>
+      <tr><td>Test Cases — ออกแบบ (design)</td><td class="c">1,365 <span class="z">(api 250 · int 649 · ui 303 · e2e 163)</span></td></tr>
+      <tr><td>Test Cases — รันจริง (executed)</td><td class="c">ดู §3 <span class="z">(dev automation เขียว · QA UI manual 0/303)</span></td></tr>
+      <tr><td><strong>Coverage — ออกแบบ (design)</strong></td><td class="c"><span class="pill p-ok">~100%</span></td></tr>
+      <tr><td><strong>Coverage — รันจริง (executed)</strong></td><td class="c"><span class="pill p-p1">~77%</span></td></tr>
+    </tbody>
+  </table>
+  <p class="note"><strong>Design ~100%</strong> = ออกแบบเคสครบทุก AC ในขอบเขต (AC→TC mapped) · <strong>Executed ~77%</strong> = DoD execution rollup (scripted + pass) · แต่ชั้น <strong>UI manual = 0%</strong> และ <strong>sign-off gate = 0%</strong> (ยังไม่เริ่ม · ดู §3)</p>
+
+  <p style="margin-top:22px"><strong>รายละเอียดต่อ Epic</strong> — ตัวเลข = <em>case (ออกแบบเคส) / script (เขียนโค้ดเทส + รันจริง)</em>:</p>
+  <table>
+    <thead><tr><th>Epic · ฟีเจอร์</th><th class="c">คุณภาพ</th><th class="c">Integration test<br><span class="z" style="font-weight:400">case / script</span></th><th class="c">E2E test<br><span class="z" style="font-weight:400">case / script</span></th></tr></thead>
+    <tbody>
+      <tr><td>E1 · Platform Foundation &amp; Onboarding</td><td class="c"><span class="pill p-p2">ดี</span></td><td class="c">95 / <span class="zero">0</span></td><td class="c">26 / 5</td></tr>
+      <tr><td>E2 · Workspace Inventory</td><td class="c"><span class="pill p-ok">ดีมาก</span></td><td class="c">146 / 146</td><td class="c">22 / 9</td></tr>
+      <tr><td>E3 · Live Studio</td><td class="c"><span class="pill p-ok">ดีมาก</span></td><td class="c">137 / 11</td><td class="c">20 / <span class="zero">0</span></td></tr>
+      <tr><td>E4 · Avatar Broadcasting</td><td class="c"><span class="pill p-p2">พื้นฐาน</span></td><td class="c">114 / 16</td><td class="c">32 / <span class="zero">0</span></td></tr>
+      <tr><td>E5 · Comment / Auto-Reply / Risk</td><td class="c"><span class="pill p-ok">ดีมาก</span></td><td class="c">112 / 20</td><td class="c">13 / 2</td></tr>
+      <tr><td>E6 · AI Script Generation</td><td class="c"><span class="pill p-ok">ดีมาก</span></td><td class="c">29 / 7</td><td class="c">6 / 4</td></tr>
+      <tr><td>E7 · Production Readiness</td><td class="c"><span class="pill p-p2">ดี</span></td><td class="c">16 / <span class="zero">0</span></td><td class="c">44 / <span class="zero">0</span></td></tr>
+    </tbody>
+  </table>
+  <p class="note"><strong>case</strong> = catalog design (TAKRA-219) · <strong>script</strong> = รันเขียวแล้ว (integration = dev เขียน+รันใน CI · e2e/fullloop = QA Playwright verified) · <strong>E1 int 0</strong> = รอ Hub contract (0/6) · <strong>E2</strong> core เขียว (logging subset ⏳ TAKRA-422) · <strong>E5 int</strong> มี 2 test แดง (TAKRA-524) · <strong>e2e script ต่ำ</strong> เพราะหน้า <em>/live</em> FE dev-blocked + fullloop ยังไม่ครบ · <strong>QA self-review:</strong> งานทดสอบซื่อสัตย์ ไม่พบการปั้นเลข</p>
+
+  <!-- 3 -->
+  <h2 id="s3"><span class="n">3</span>Test Result<span class="obj">สรุปผลการรันจริง (DoD execution rollup)</span></h2>
+  <table class="tot">
+    <thead><tr><th>Status</th><th class="c">จำนวน</th></tr></thead>
+    <tbody>
+      <tr><td><span class="pill p-ok">Passed</span> <span class="z">(scripted &amp; green)</span></td><td class="c">~203</td></tr>
+      <tr><td><span class="pill p-gray">Failed</span></td><td class="c">6</td></tr>
+      <tr><td><span class="pill p-p2">Blocked (รอ dependency)</span></td><td class="c">~19</td></tr>
+      <tr><td><span class="pill p-p1">Not scripted (ยังไม่เขียน/รัน)</span></td><td class="c">~38</td></tr>
+      <tr><td>รวม (QA-tracked · DoD)</td><td class="c">~266</td></tr>
+    </tbody>
+  </table>
+  <p class="note"><strong>Passed ~203</strong> = ~77% ของ ~266 (contract 19/19 + dev integration/e2e green) · <strong>Failed 6</strong> = TC-LO.2/3/4 + TC-L.5 logout (🐞 TAKRA-486) + SSE 2 test (🐞 TAKRA-524) · <strong>Blocked ~19</strong> = E1 integration 6 (Hub contract) + sign-off gate 13 (E7) · <strong>Not scripted ~38</strong> = fullloop E3/E4 + ที่เหลือ · <strong>แยกต่างหาก:</strong> UI manual <strong>0/303</strong> (0% ทดสอบแล้ว) · dev-side automation เขียวใน CI Tier 1 (api int 442 · web jest 545 · api unit 939 · types 274 · dev-owned ยังไม่ QA-traced) · design catalog เต็ม = 1,365 (§2)</p>
+
+  <!-- 4 -->
+  <h2 id="s4"><span class="n">4</span>Bug Summary<span class="obj">จำนวน Bug ที่เปิดอยู่ ตามระดับความรุนแรง (2026-07-17)</span></h2>
+  <table>
+    <thead><tr><th>Severity</th><th class="c">Open</th><th class="c">Closed</th></tr></thead>
+    <tbody>
+      <tr><td><span class="pill p-p0">Critical</span></td><td class="c">0</td><td class="c z">—</td></tr>
+      <tr><td><span class="pill p-p1">High</span></td><td class="c">1</td><td class="c z">—</td></tr>
+      <tr><td><span class="pill p-p2">Medium</span></td><td class="c">1</td><td class="c z">—</td></tr>
+      <tr><td><span class="pill p-gray">Low</span></td><td class="c">0</td><td class="c z">—</td></tr>
+    </tbody>
+  </table>
+  <p class="note"><strong>High = TAKRA-486</strong> (Zitadel UAT ไม่ whitelist <em>post_logout_redirect_uri</em> → global logout พังบน UAT · NFR-SEC-06 · release-affecting E1 auth · Owner Ops) · <strong>Medium = TAKRA-524</strong> (SSE resume spec ขาด jest fake-timers → 2 unit test แดง · block TC-5.9 P0 signal + CI Tier 1 · Owner dev) · ทั้ง 2 = root-cause ฝั่ง infra/config <em>ไม่ใช่</em> logic แกน · ตั๋วอื่น (TAKRA-119/420/422) = gap/waiting-on ไม่นับเป็น bug · Open 0 ระดับ Critical <em>ไม่ใช่</em>เพราะไม่มีปัญหา แต่เพราะ QA ยังไม่เปิดรอบรันเต็ม</p>
+
+  <!-- 5 -->
+  <h2 id="s5"><span class="n">5</span>Known Issues<span class="obj">ปัญหา/ข้อจำกัดที่ทีมรับทราบ (พร้อมตัวขวางและตัวที่ยอมรับได้)</span></h2>
+  <table>
+    <thead><tr><th>ปัญหา</th><th class="c">ระดับ</th><th>สถานะ / รอใคร</th></tr></thead>
+    <tbody>
+      <tr><td>TAKRA-486 — Zitadel UAT logout พัง (login/logout 4 TC แดง)</td><td class="c"><span class="pill p-p1">P1</span></td><td>ค้าง — รอ <strong>Ops</strong> whitelist redirect_uri</td></tr>
+      <tr><td>TAKRA-524 — SSE resume 2 test แดง (test-infra)</td><td class="c"><span class="pill p-p2">P2</span></td><td>ค้าง — รอ <strong>dev</strong> แก้ jest env → E5 int 100%</td></tr>
+      <tr><td>หน้า <em>/live</em> (studio · schedule · preflight · my-lives) dev-blocked</td><td class="c"><span class="pill p-p1">P1</span></td><td>ค้าง — รอ <strong>Dev (FE)</strong> → ปลด 7 UI specs + fullloop E3/E5</td></tr>
+      <tr><td>E4 Avatar Engine real contract = mock (red-first)</td><td class="c"><span class="pill p-p2">P2</span></td><td>ค้าง — รอ <strong>vendor</strong> ส่ง contract จริง</td></tr>
+      <tr><td>Deferred → MVP-2: viewer telemetry (FR53) · targets · CSV export · per-content approval</td><td class="c"><span class="pill p-gray">accepted</span></td><td><span style="color:var(--ok)">✅ ยอมรับได้</span> (ตามแผน phasing)</td></tr>
+      <tr><td>Load / performance test = post-launch · E7 validation gate = manual + runbook</td><td class="c"><span class="pill p-gray">accepted</span></td><td><span style="color:var(--ok)">✅ ยอมรับได้</span> (นอก MVP-1)</td></tr>
+    </tbody>
+  </table>
+  <p class="note">2 จุด P1 (logout + <em>/live</em> dev-blocked) เป็น <strong>ตัวขวาง</strong> การรัน executed ให้ครบ → กระทบ Recommendation (§7) · ทุกจุดมีเทสดักไว้แล้ว (บางส่วนยังรอ dependency)</p>
+
+  <!-- 6 -->
+  <h2 id="s6"><span class="n">6</span>Regression Result<span class="obj">ฟีเจอร์เดิมยังทำงานได้หลังเปลี่ยนแปลงหรือไม่</span></h2>
+  <table>
+    <thead><tr><th>รายการ</th><th>ผล</th></tr></thead>
+    <tbody>
+      <tr><td>Dev-side automation (CI Tier 1)</td><td><span class="pill p-ok">🟢 green</span> — api unit 939 · api int 442 · web jest 545 · types 274 (รันทุก PR)</td></tr>
+      <tr><td>Regression / Smoke tag (evidence 2026-06-30)</td><td><span class="pill p-ok">🟢 pass</span> — @regression 99 passed / 0 failed · @smoke 6 passed (นับจริงจาก test-runner)</td></tr>
+      <tr><td>QA-owned e2e regression (UAT)</td><td><span class="pill p-p2">🟡 partial</span> — 9 UI specs เขียว (2026-07-17) · login/logout แดง (486) · ยังไม่ครบรอบ</td></tr>
+      <tr><td>Formal MVP-1 QA regression cycle</td><td><span class="pill p-gray">⚪ ยังไม่รัน</span> — ยังไม่เปิดรอบเต็มที่ QA รับรอง</td></tr>
+      <tr><td>CI Tier 2 (nightly E2E) · Tier 3 (load)</td><td><span class="pill p-p0">🔴 backlog</span> — Story 7-1 / 7-2 ยังไม่สร้าง</td></tr>
+    </tbody>
+  </table>
+  <p class="note">ระดับ dev automation <strong>ยืนยันแล้วว่าของเดิมไม่พัง</strong> (CI เขียว + @regression 99 pass) · แต่ <strong>QA-owned regression เต็มรอบ + nightly E2E ยังไม่รัน</strong> → ยังยืนยันภาพรวมทั้งระบบไม่ได้ 100% — เป็นงานสำคัญค้างก่อนปล่อยจริง</p>
+
+  <!-- 7 -->
+  <h2 id="s7"><span class="n">7</span>QA Recommendation<span class="obj">ข้อเสนอแนะจาก QA สำหรับการ Release</span></h2>
+  <div class="rec y">
+    <div class="st">🟡 Release with Known Issues — เฉพาะ UAT / Pilot-Internal</div>
+    <ul>
+      <li>✅ core Live loop (Journey 1 auto-reply + Journey 2 compliance-block) ทำงานจริง · E1/E5 done · E4/E6 near-done</li>
+      <li>✅ ออกแบบเทสครบ ~100% (1,365 TC) · dev-side automation เขียวใน CI · contract tests 100%</li>
+      <li>⚠️ <strong>execution ฝั่ง QA ยังไม่ครบ</strong> — executed ~77% · UI manual 0/303 · sign-off gate 0/13</li>
+      <li>🔴 <strong>Epic 7 (Production Readiness) = backlog ทั้งหมด</strong> → ไม่มี prod deploy / observability / DR / pilot smoke</li>
+      <li>🐞 <strong>2 bug เปิดอยู่</strong> (TAKRA-486 logout · TAKRA-524 SSE) + regression เต็มรอบยังไม่รัน</li>
+    </ul>
+  </div>
+  <p style="margin-top:6px"><strong>เงื่อนไขก่อนขึ้นเป็น 🟢 Ready for Release (prod สาธารณะ):</strong></p>
+  <ol style="margin-top:4px">
+    <li>ปิด 2 bug: TAKRA-486 (Ops) + TAKRA-524 (dev)</li>
+    <li>Dev เขียน E1 integration 6 script + ปลด <em>/live</em> FE → รัน fullloop E3/E4/E5/E6 (~9 specs) ให้เขียว</li>
+    <li>QA รัน UI manual 303 เคส + เปิดรอบ regression เต็ม (nightly E2E)</li>
+    <li>ทำ Epic 7: prod deploy + observability + DR drill + pre-pilot smoke (sign-off TC-7.6 ×13)</li>
+    <li>Insight contract signed + founder infra sign-off → ผ่าน Pilot Validation Gate (ban_rate 0 · risk_block ≥95% · NPS ≥30)</li>
+  </ol>
+  <table style="margin-top:18px">
+    <thead><tr><th>Status</th><th>ความหมาย</th></tr></thead>
+    <tbody>
+      <tr><td><span class="pill p-ok">🟢 Ready for Release</span></td><td>พร้อม Release สาธารณะ</td></tr>
+      <tr><td><span class="pill p-p1">🟡 Release with Known Issues</span></td><td>ปล่อยได้แต่มีข้อจำกัดที่รับทราบ <strong>← สถานะปัจจุบัน (เฉพาะ UAT / pilot-internal)</strong></td></tr>
+      <tr><td><span class="pill p-p0">🔴 Not Ready</span></td><td>ยังไม่พร้อม Release <strong>← prod สาธารณะ</strong></td></tr>
+    </tbody>
+  </table>
+
+  <div class="foot">
+    ที่มาข้อมูล: เอกสาร QA ภายใน TAKRA Live MVP-1 — DoD v1.2/v1.3 (2026-07-17) · MVP1-QA-SCOPE-AUDIT · README quality-gate · dod-reconcile-blocker-tcs (2026-07-16) · sign-off review (2026-07-17) · TAKRA-219 design catalog (1,365 TC) · UI manual test-cases table (303/274) · regression tag evidence (2026-06-30) · sprint-status.yaml · epics.md (58 FR + 43 NFR) · จัดทำโดย QA (Ice) · TAKRA Live MVP-1 บน UAT · 23 ก.ค. 2026 · หมายเหตุความแม่นยำ: ตัวเลข ~ = ประมาณจาก DoD rollup (บางเทสครอบหลาย level นับซ้ำได้) · catalog เต็ม = 1,365 (นับจาก row จริง 4 กลุ่ม reconcile ตรงกัน) · execution = สถานะจริง ไม่มีการปั้นเลข
+  </div>
+
+</div>
+</body>
+</html>
