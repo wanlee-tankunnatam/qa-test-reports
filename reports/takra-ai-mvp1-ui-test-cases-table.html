@@ -854,6 +854,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   "tc-180": {
     "actual": "[QA] ลากอวาตาร์ไปตำแหน่งใหม่ แล้วกดปุ่ม \"ย้อนกลับ\" (มี tooltip \"ย้อนกลับ (Ctrl+Z)\") — กลับไปตำแหน่งเดิมถูกต้อง. กด \"ทำซ้ำ\" (tooltip \"ทำซ้ำ (Ctrl+Shift+Z)\") — กลับไปตำแหน่งใหม่ที่ลากไว้ถูกต้อง. ลบ layer หนึ่งชิ้นแล้วกดย้อนกลับ — layer นั้นกลับมาครบพร้อมค่าตำแหน่งเดิม ปุ่มมีคำอธิบายคีย์ลัดกำกับชัดเจนทั้งสองปุ่ม ตรงตาม expected ครบทุกข้อ",
     "st": "pass"
+  },
+  "tc-181": {
+    "actual": "[QA - FAIL] ในหน้าตั้งค่า Studio ระบุคีย์ลัด \"เปิดหน้าต่าง Preview\" = Space แต่เมื่อกด Space จริง ระบบกลับสลับเป็นโหมด \"เล่น/จำลองไลฟ์\" ภายในหน้าต่างเดียวกัน (แผงขวาเปลี่ยนเป็นแชทสด/ผู้ชม) ไม่ได้เปิดหน้าต่างใหม่แยกต่างหากตามที่อธิบายไว้ (ตรวจสอบด้วย tabs list ไม่มีแท็บ/หน้าต่างใหม่เกิดขึ้น). อย่างไรก็ตาม พบว่ามี route แยกจริงที่ /live/studio/preview ซึ่งแสดงผลแบบเต็มจอไม่มีแผง Studio ปนอยู่ (ตรงกับ expected ข้อ 2) แต่ไม่มีปุ่ม/ทางเข้าใน UI ที่จะเปิด route นี้เป็นหน้าต่างแยกจากใน Studio จริง สรุป: ฟีเจอร์ \"เปิดหน้าต่าง Preview แยก\" ยังใช้งานไม่ได้ตามที่ระบุคีย์ลัดไว้ ถือว่าไม่ผ่าน",
+    "st": "fail"
   }
 }
 </script>
@@ -879,14 +883,14 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <h3>📊 สรุปผล Manual Test</h3>
     <div class="sumchips">
       <span class="cnt pass">PASS <b id="sum-pass">96</b></span>
-      <span class="cnt fail">FAIL <b id="sum-fail">61</b></span>
+      <span class="cnt fail">FAIL <b id="sum-fail">62</b></span>
       <span class="cnt hold">HOLD <b id="sum-hold">1</b></span>
       <span class="cnt block">BLOCKED <b id="sum-block">0</b></span>
       <span class="cnt skip">SKIP <b id="sum-skip">16</b></span>
-      <span class="cnt pending">รอเทส <b id="sum-pending">83</b></span>
+      <span class="cnt pending">รอเทส <b id="sum-pending">82</b></span>
     </div>
     <div class="progress"><div id="sumbar" class="progressbar" style="width: 66%;"></div></div>
-    <div class="hint" id="sumpct" style="margin-top:5px">66% ทดสอบแล้ว (158/241) · ข้าม 16</div>
+    <div class="hint" id="sumpct" style="margin-top:5px">66% ทดสอบแล้ว (159/241) · ข้าม 16</div>
   </div>
 
   <div class="toolbar">
@@ -6454,7 +6458,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow open" data-feat="epic3" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow" data-feat="epic3" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-PV.2</td>
   <td class="ctitle">ย้อนกลับและทำซ้ำการแก้ไขใน Studio ได้</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -6462,7 +6466,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-180"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-180"></td>
 </tr>
-<tr class="detail show"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">ย้อนกลับและทำซ้ำการแก้ไขใน Studio ได้</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · studio-preview · Epic 3 · Story 3.12</div>
   <div class="sec"><h4>Precondition</h4><ul><li>อยู่ใน Studio ที่มี layer อยู่แล้ว</li></ul></div>
@@ -6484,15 +6488,15 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow" data-feat="epic3" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow open" data-feat="epic3" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-PV.3</td>
   <td class="ctitle">เปิดหน้าต่าง Preview แยกสำหรับจอที่สองได้</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-181"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-181"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-181"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail show"><td colspan="7"><div class="card">
   <div class="h-title">เปิดหน้าต่าง Preview แยกสำหรับจอที่สองได้</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · studio-preview · Epic 3 · Story 3.12 · FR28</div>
   <div class="sec"><h4>Precondition</h4><ul><li>อยู่ใน Studio ที่จัดฉากไว้แล้ว</li></ul></div>
@@ -6500,11 +6504,11 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Data</h4><ul><li>URL: https://uat-live.takra.ai/live/studio/preview (หรือ https://uat-live.takra.ai/live/popout)</li></ul></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>หน้าต่าง Preview เปิดขึ้นแยกและแสดงองค์ประกอบของฉากแบบเต็มจอ</li><li>ไม่มีแผงเครื่องมือของ Studio ปนอยู่ในหน้าต่าง Preview</li><li>แก้ไขใน Studio แล้วหน้าต่าง Preview อัปเดตตาม</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —">[QA - FAIL] ในหน้าตั้งค่า Studio ระบุคีย์ลัด "เปิดหน้าต่าง Preview" = Space แต่เมื่อกด Space จริง ระบบกลับสลับเป็นโหมด "เล่น/จำลองไลฟ์" ภายในหน้าต่างเดียวกัน (แผงขวาเปลี่ยนเป็นแชทสด/ผู้ชม) ไม่ได้เปิดหน้าต่างใหม่แยกต่างหากตามที่อธิบายไว้ (ตรวจสอบด้วย tabs list ไม่มีแท็บ/หน้าต่างใหม่เกิดขึ้น). อย่างไรก็ตาม พบว่ามี route แยกจริงที่ /live/studio/preview ซึ่งแสดงผลแบบเต็มจอไม่มีแผง Studio ปนอยู่ (ตรงกับ expected ข้อ 2) แต่ไม่มีปุ่ม/ทางเข้าใน UI ที่จะเปิด route นี้เป็นหน้าต่างแยกจากใน Studio จริง สรุป: ฟีเจอร์ "เปิดหน้าต่าง Preview แยก" ยังใช้งานไม่ได้ตามที่ระบุคีย์ลัดไว้ ถือว่าไม่ผ่าน</textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-181" data-st="pass">PASS</span>
-    <span class="opt fail" data-uid="tc-181" data-st="fail">FAIL</span>
+    <span class="opt fail sel" data-uid="tc-181" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-181" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-181" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-181" data-st="skip">SKIP</span>
