@@ -499,7 +499,7 @@
 })();
 </script>
 
-<!-- ===== Live status % — reads each report's own #sumpct (% ทดสอบแล้ว) + FAIL count ===== -->
+<!-- ===== Live status % — computed from each report's store-data JSON (always fresh) ===== -->
 <script>
 (function(){
   var tables = [].slice.call(document.querySelectorAll('main table.tbl'));
@@ -533,16 +533,35 @@
   });
   if(!jobs.length) return;
 
-  // 2) Pull the numbers a report already computed for itself. Reports auto-save their
-  //    whole HTML to GitHub, so #sumpct / #sum-fail carry the last-published result.
+  // 2) Compute the % from the report's own store-data JSON — that block is the one thing
+  //    the ☁️ save always rewrites, so it is always fresh. (The static #sumpct / #sum-*
+  //    text is NOT re-serialized on save, so it goes stale — don't read it.)
+  //    Formula matches each report's recount(): done = pass+fail+hold+block,
+  //    testable = total − skip, pct = round(done / testable).
   function parse(text){
-    var m = text.match(/id="sumpct"[^>]*>([^<]*)</);
+    var m = text.match(/<script id="store-data"[^>]*>([\s\S]*?)<\/script>/);
     if(!m) return null;
-    var label = m[1].replace(/\s+/g,' ').trim();           // e.g. "36% ทดสอบแล้ว (25/69)"
-    var pm = label.match(/(\d+)\s*%/);
-    if(!pm) return null;
-    var fm = text.match(/id="sum-fail"[^>]*>\s*(\d+)\s*</);
-    return { pct: parseInt(pm[1],10), fail: fm ? parseInt(fm[1],10) : 0, label: label };
+    var store; try { store = JSON.parse(m[1] || '{}'); } catch(e){ return null; }
+    // total = count of unique row uids (one per TC). Use this, not "<tr class=\"trow\">":
+    // an expanded/saved row becomes class="trow open", which a quote-terminated match
+    // misses (undercount). Only these uids are real rows — so statuses keyed by a
+    // stale/foreign uid (carried in store-data from another report) are ignored, which
+    // also prevents done > total.
+    var rowIds = {}, total = 0, rx = /data-uid="(tc-\d+)"/g, mm;
+    while((mm = rx.exec(text))){ if(!rowIds[mm[1]]){ rowIds[mm[1]] = 1; total++; } }
+    if(!total) return null;
+    var c = { pass:0, fail:0, hold:0, block:0, skip:0 };
+    Object.keys(store).forEach(function(k){
+      if(!rowIds[k]) return;
+      var st = store[k] && store[k].st;
+      if(st && c.hasOwnProperty(st)) c[st]++;
+    });
+    var done = c.pass + c.fail + c.hold + c.block;
+    var testable = Math.max(0, total - c.skip);
+    var pct = testable > 0 ? Math.round(done / testable * 100) : 0;
+    var label = pct + '% ทดสอบแล้ว (' + done + '/' + testable + ')'
+              + (c.skip ? ' · ข้าม ' + c.skip : '');
+    return { pct: pct, fail: c.fail, label: label };
   }
 
   function render(td, d){
@@ -556,8 +575,9 @@
     td.innerHTML = html;
   }
 
-  // 3) Fetch each report once. #sumpct always sits in the first ~65KB, so a small Range
-  //    slice keeps even the multi-MB tables cheap (server may ignore Range → still works).
+  // 3) Fetch each report once (full file — we need to count <tr class="trow"> for the
+  //    total, and they are spread through the table). Cached per-URL so shared files
+  //    are fetched only once.
   // Fetch same-origin: derive a path relative to the hub (works on the deployed
   // site and when the repo is served locally) instead of the absolute github.io URL.
   function relUrl(href){
@@ -568,7 +588,7 @@
   jobs.forEach(function(job){
     var url = relUrl(job.href);
     if(!cache[url]){
-      cache[url] = fetch(url, { headers:{ Range:'bytes=0-98303' }, cache:'no-store' })
+      cache[url] = fetch(url, { cache:'no-store' })
         .then(function(r){ return r.text(); })
         .then(parse)
         .catch(function(){ return null; });
