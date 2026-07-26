@@ -1160,19 +1160,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="featrow" data-featkey="zero-biometric"><td colspan="7">📁 zero-biometric <span class="rp"><span class="lv lvl-ui">🌐 2</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="zero-biometric"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
 <tr class="trow" data-feat="epic5" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-M1-BIO.1</td>
-  <td class="ctitle">ทุกหน้าจอต้องไม่แสดงภาพใบหน้าหรือให้ดาวน์โหลดข้อมูลใบหน้าย้อนหลัง</td>
+  <td class="ctitle">ทั้งแอปต้องไม่มีรูปหน้า/ภาพใบหน้าให้ดูหรือดาวน์โหลด</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
   <td class="status" data-uid="tc-526"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-526"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">ทุกหน้าจอต้องไม่แสดงภาพใบหน้าหรือให้ดาวน์โหลดข้อมูลใบหน้าย้อนหลัง</div>
+  <div class="h-title">ทั้งแอปต้องไม่มีรูปหน้า/ภาพใบหน้าให้ดูหรือดาวน์โหลด</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · zero-biometric · Epic 5</div>
   <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">mvp-1 E2 zero-biometric (Story 2.5 · FR6/FR13) · TC-M1-ZEROBIO-* · 🔄 REMEDIATED 2026-07-22 (employees.npz purged) · #32 Anonymization-First</div></div>
-  <div class="sec"><h4>Precondition</h4><ul><li>ให้ความยินยอมและใช้งานแอปจนมีเซสชันย้อนหลัง</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ไล่ดูหน้าความยินยอม หน้าตั้งค่าความเป็นส่วนตัว หน้าสรุปหลังไลฟ์ และหน้ารายละเอียดเซสชัน</li><li>มองหาภาพใบหน้าดิบ ภาพนิ่ง หรือปุ่มดาวน์โหลดข้อมูลใบหน้า</li><li>มองหาคำที่สื่อว่าระบบเก็บชุดตัวเลขใบหน้า (feature vector) ไว้</li><li>อ่านข้อความ attestation เรื่องข้อมูลชีวมาตร</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ขอบเขต: consent · settings · post-live · longitudinal</li></ul></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เข้าสู่ระบบแล้ว และเคยวิเคราะห์ไลฟ์มาแล้วอย่างน้อย 1 ครั้ง (มีเซสชันย้อนหลัง)</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปแล้วเข้าสู่ระบบ</li><li>เปิดดูทีละหน้า: "ภาพรวม" → "ความยินยอมของคุณ" → "เซสชันทั้งหมด" → "รายละเอียดเซสชัน"</li><li>ในแต่ละหน้า มองหารูปหน้า/ภาพถ่ายใบหน้าของคนไลฟ์ หรือปุ่มโหลดรูปหน้า</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ไล่ดูหน้า: ภาพรวม · ความยินยอมของคุณ · เซสชันทั้งหมด · รายละเอียดเซสชัน</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ไม่มีหน้าจอใดแสดงภาพใบหน้าย้อนหลังหรือให้ดาวน์โหลด</li><li>ไม่มีข้อความสื่อว่าเก็บ feature vector ใบหน้าไว้</li><li>มี attestation ว่าประมวลผลใบหน้าชั่วคราวและเก็บเฉพาะตัวเลขอารมณ์</li><li>ข้อความทุกหน้าสอดคล้องกับ FR6/FR13 (zero-biometric remediated)</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ไม่มีหน้าไหนโชว์รูปหน้า/ภาพถ่ายใบหน้าเลย</li><li>ไม่มีปุ่มให้โหลดรูปหน้า</li><li>เห็นแต่ "ตัวเลขอารมณ์" (เช่น รอยยิ้ม พลังงาน การสบตา) ไม่ใช่รูปหน้า</li><li>ถ้าเจอรูปหน้าที่หน้าไหน = ผิด ให้ถ่ายจอเก็บไว้แจ้งทีม</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1189,19 +1189,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 </div></td></tr>
 <tr class="trow" data-feat="epic5" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-M1-BIO.2</td>
-  <td class="ctitle">ข้อความ “เก็บตัวเลข ไม่ใช่ใบหน้า” ปรากฏชัดในจุดที่ผู้ใช้ตัดสินใจ</td>
+  <td class="ctitle">หน้าขอความยินยอมต้องบอกชัดว่า "เก็บตัวเลข ไม่ใช่รูปหน้า"</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
   <td class="status" data-uid="tc-527"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-527"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">ข้อความ “เก็บตัวเลข ไม่ใช่ใบหน้า” ปรากฏชัดในจุดที่ผู้ใช้ตัดสินใจ</div>
+  <div class="h-title">หน้าขอความยินยอมต้องบอกชัดว่า "เก็บตัวเลข ไม่ใช่รูปหน้า"</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · zero-biometric · Epic 5</div>
   <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">prd-th.md FR6 (attestation) · user-guide §2 (เก็บตัวเลข ไม่ใช่ใบหน้า) · flow-summary #32</div></div>
-  <div class="sec"><h4>Precondition</h4><ul><li>เข้าถึงหน้าความยินยอมและหน้าตั้งค่าความเป็นส่วนตัว</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>อ่านข้อความบนหน้าความยินยอมเกี่ยวกับการประมวลผลใบหน้า</li><li>อ่านข้อความบนหน้าตั้งค่าความเป็นส่วนตัว</li><li>ตรวจว่ามีการย้ำว่าประมวลผลบนเครื่อง ไม่ส่งภาพออก</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ข้อความหลัก: เก็บตัวเลข ไม่ใช่ใบหน้า · ประมวลผลบนเครื่อง · ลบได้ใน 7 วัน</li></ul></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>อยู่ที่หน้าขอความยินยอม (ตอนเปิดแอปครั้งแรก) หรือ ตั้งค่า → "ความยินยอมของคุณ"</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เปิดหน้าขอความยินยอม (หรือไป ตั้งค่า → "ความยินยอมของคุณ")</li><li>อ่านข้อความส่วนที่พูดถึงการอ่านอารมณ์จากสีหน้า</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ข้อความที่ควรเจอ: เก็บตัวเลข ไม่ใช่รูปหน้า · ประมวลผลบนเครื่อง · ลบได้ใน 7 วัน</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ข้อความ “เก็บตัวเลข ไม่ใช่ใบหน้า” ปรากฏชัดตรงจุดตัดสินใจ</li><li>ย้ำว่าการประมวลผลอยู่บนเครื่อง ไม่ส่งภาพออก</li><li>ข้อความเรื่องสิทธิ์ลบข้อมูลภายใน 7 วันปรากฏ</li><li>ภาษาเข้าใจง่ายสำหรับผู้ใช้ทั่วไป</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>มีข้อความบอกชัดว่าเก็บเป็น "ตัวเลขอารมณ์" ไม่ใช่รูปหน้า</li><li>บอกว่าประมวลผลบนเครื่องผู้ใช้ ไม่ส่งรูปออกไปไหน</li><li>บอกว่ากดลบเมื่อไหร่ ลบให้ภายใน 7 วัน</li><li>อ่านแล้วเข้าใจง่าย ไม่ใช่ศัพท์เทคนิค</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1219,19 +1219,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="featrow" data-featkey="erasure"><td colspan="7">📁 erasure <span class="rp"><span class="lv lvl-ui">🌐 1 <span style="color:var(--muted)">+2🆕</span></span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="erasure"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
 <tr class="trow" data-feat="epic5" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-M1-BIO.3</td>
-  <td class="ctitle">ขอลบข้อมูลของตัวเอง = เพิกถอนความยินยอมการเก็บข้อมูลใน "ความยินยอมของคุณ" (FR4→FR5)</td>
+  <td class="ctitle">วิธีลบข้อมูลตัวเอง = เข้า "ความยินยอมของคุณ" แล้วกด "ถอน" ที่หัวข้อเก็บข้อมูล</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
   <td class="status" data-uid="tc-528"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-528"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">ขอลบข้อมูลของตัวเอง = เพิกถอนความยินยอมการเก็บข้อมูลใน "ความยินยอมของคุณ" (FR4→FR5)</div>
+  <div class="h-title">วิธีลบข้อมูลตัวเอง = เข้า "ความยินยอมของคุณ" แล้วกด "ถอน" ที่หัวข้อเก็บข้อมูล</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · erasure · Epic 5</div>
   <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">mvp-1 E3 crypto-shred (Story 3.3 · FR5) · user-guide §support (Compliance / ขอลบข้อมูล) · prd-th.md FR5 · ⚠️ แก้ 2026-07-26: ไม่มีเมนู "Compliance/ขอลบข้อมูล" แยกในแอป — การลบทำผ่านการเพิกถอนความยินยอมการเก็บข้อมูลในหน้า "ความยินยอมของคุณ" (/settings/consent · ConsentSettings) → DELETE → FR5 erasure</div></div>
-  <div class="sec"><h4>Precondition</h4><ul><li>ล็อกอินและให้ความยินยอม "การเก็บข้อมูล" ไว้ + มีข้อมูลย้อนหลัง</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เข้าเมนูตั้งค่า → "ความยินยอมของคุณ"</li><li>หาความยินยอม "การเก็บข้อมูล/เก็บข้อมูลอารมณ์" แล้วกดเพิกถอน</li><li>อ่านข้อความยืนยัน + ผลกระทบ (ลบข้อมูลย้อนหลัง)</li><li>ยืนยันการเพิกถอน</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>บัญชีที่มีข้อมูลย้อนหลัง</li></ul></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เข้าสู่ระบบแล้ว · เคยกดยินยอม "เก็บข้อมูลอารมณ์" ไว้ · มีเซสชันย้อนหลัง</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบ</li><li>ไปที่ ตั้งค่า → "ความยินยอมของคุณ"</li><li>ที่หัวข้อ "เก็บข้อมูลอารมณ์" กดปุ่ม "ถอน"</li><li>อ่านกล่องยืนยันที่เด้งขึ้น แล้วกด "ถอนความยินยอม"</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>บัญชีที่ยินยอมเก็บข้อมูลไว้ + มีข้อมูลย้อนหลัง</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>การลบข้อมูลทำผ่านการเพิกถอนความยินยอมการเก็บข้อมูลในหน้า "ความยินยอมของคุณ" (ไม่มีเมนู "Compliance/ขอลบข้อมูล" แยก)</li><li>เพิกถอนแล้วทริกเกอร์ erasure ตาม FR5 (DELETE consent → ลบข้อมูลย้อนหลัง)</li><li>มีข้อความระบุกรอบเวลาการลบ (ภายใน 7 วัน · NFR3.5)</li><li>ความยินยอม "อ่านสีหน้า" ไม่ถูกปิดตาม (แยกอิสระ)</li><li>หมายเหตุ: การลบจริงฝั่ง backend (crypto-shred) ยืนยันแยกกับทีม dev</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ลบข้อมูลได้ที่นี่ (ในแอปไม่มีเมนูแยกชื่อ "ขอลบข้อมูล" — ใช้การถอนความยินยอมแทน)</li><li>พอกดถอน มีข้อความบอกว่า "ข้อมูลอารมณ์ที่เคยเก็บไว้จะถูกลบ และจะไม่เก็บเพิ่มอีก"</li><li>บอกว่าจะลบให้ภายใน 7 วัน</li><li>ความยินยอม "อ่านอารมณ์จากสีหน้า" ยังเปิดอยู่ ไม่ถูกปิดตาม</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1248,19 +1248,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 </div></td></tr>
 <tr class="trow" data-feat="epic5" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-M1-BIO.4</td>
-  <td class="ctitle">หลังส่งคำขอลบ ข้อมูลย้อนหลังต้องสื่อสถานะกำลังลบ ไม่แสดงต่อเหมือนไม่มีอะไรเกิด <span class="edge-badge">🆕 edge</span></td>
+  <td class="ctitle">พอถอนความยินยอมเก็บข้อมูลแล้ว รายการต้องขึ้น "ถอนแล้ว" + แจ้งลบใน 7 วัน <span class="edge-badge">🆕 edge</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
   <td class="status" data-uid="tc-529"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-529"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">หลังส่งคำขอลบ ข้อมูลย้อนหลังต้องสื่อสถานะกำลังลบ ไม่แสดงต่อเหมือนไม่มีอะไรเกิด</div>
+  <div class="h-title">พอถอนความยินยอมเก็บข้อมูลแล้ว รายการต้องขึ้น "ถอนแล้ว" + แจ้งลบใน 7 วัน</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · erasure · Epic 5</div>
   <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">mvp-1 E3 crypto-shred (FR5) · prd-th.md FR4/FR5 · NFR3.5</div></div>
-  <div class="sec"><h4>Precondition</h4><ul><li>ส่งคำขอลบข้อมูลแล้วจาก TC-M1-BIO.3</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>หลังส่งคำขอลบ กลับไปหน้าเซสชันย้อนหลังและหน้ารายละเอียดเซสชัน</li><li>ดูว่าข้อมูลย้อนหลังยังแสดงเหมือนเดิมหรือสื่อสถานะกำลังลบ</li><li>ตรวจว่ามีการอ้างกรอบเวลาการลบ</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>สถานะ: คำขอลบอยู่ระหว่างดำเนินการ</li></ul></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เพิ่งกด "ถอน" ที่หัวข้อ "เก็บข้อมูลอารมณ์" ในหน้า "ความยินยอมของคุณ" ไปแล้ว</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>หลังกดถอนเสร็จ ดูที่รายการ "เก็บข้อมูลอารมณ์" เดิมในหน้า "ความยินยอมของคุณ"</li><li>อ่านสถานะและข้อความที่ขึ้นใต้รายการนั้น</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>หน้า "ความยินยอมของคุณ" หลังกดถอน</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>หน้าย้อนหลังสื่อสถานะว่าข้อมูลกำลังถูกลบ/หยุดใช้ ไม่แสดงกราฟต่อเงียบ ๆ</li><li>มีการอ้างกรอบเวลาการลบภายใน 7 วัน</li><li>ผู้ใช้ยังใช้ฟีเจอร์ที่ไม่พึ่งข้อมูลย้อนหลังได้</li><li>ถ้าขอความยินยอมกลับ ระบบอธิบายว่าจะเริ่มเก็บใหม่ ไม่ใช่กู้ของเดิมอัตโนมัติ</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>รายการ "เก็บข้อมูลอารมณ์" เปลี่ยนเป็นสถานะ "ถอนแล้ว" (ยังอยู่ในรายการเป็นประวัติ ไม่หายไปเงียบ ๆ)</li><li>มีข้อความ "ถอนความยินยอมแล้ว · ข้อมูลที่เกี่ยวข้องจะถูกลบภายใน 7 วัน"</li><li>ผู้ใช้เข้าใจได้ว่าข้อมูลกำลังจะถูกลบ ไม่ใช่เงียบหาย</li><li>การลบจริงในระบบหลังบ้าน ให้ทีม dev ยืนยันแยก</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1277,19 +1277,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 </div></td></tr>
 <tr class="trow" data-feat="epic5" data-level="ui" data-prio="P2" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-M1-BIO.5</td>
-  <td class="ctitle">ยกเลิก/ปิดกล่องยืนยันคำขอลบกลางคัน ต้องไม่ลบข้อมูลโดยไม่ได้ตั้งใจ <span class="edge-badge">🆕 edge</span></td>
+  <td class="ctitle">กด "ยกเลิก" ตอนกล่องยืนยันถอน ต้องไม่ลบข้อมูล <span class="edge-badge">🆕 edge</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p2">P2</span></td>
   <td class="status" data-uid="tc-530"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-530"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">ยกเลิก/ปิดกล่องยืนยันคำขอลบกลางคัน ต้องไม่ลบข้อมูลโดยไม่ได้ตั้งใจ</div>
+  <div class="h-title">กด "ยกเลิก" ตอนกล่องยืนยันถอน ต้องไม่ลบข้อมูล</div>
   <div class="h-prio">Priority: <b>P2</b> · UI · erasure · Epic 5</div>
   <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">mvp-1 E3 crypto-shred (FR5) · prd-th.md FR4 · NFR6.1</div></div>
-  <div class="sec"><h4>Precondition</h4><ul><li>อยู่ที่ขั้นตอนขอลบข้อมูลและกล่องยืนยันเปิดอยู่</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เริ่มคำขอลบจนกล่องยืนยันเปิด</li><li>กดยกเลิกหรือปิดกล่องโดยไม่ยืนยัน</li><li>กลับไปดูข้อมูลย้อนหลัง</li><li>ตรวจว่าข้อมูลยังอยู่ครบ</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>จังหวะ: ปิดกล่องยืนยันก่อนยืนยัน</li></ul></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>อยู่ที่หน้า "ความยินยอมของคุณ" และยังยินยอม "เก็บข้อมูลอารมณ์" อยู่</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ที่หัวข้อ "เก็บข้อมูลอารมณ์" กดปุ่ม "ถอน" ให้กล่องยืนยันเด้งขึ้น</li><li>กด "ยกเลิก" หรือปิดกล่อง โดยไม่กด "ถอนความยินยอม"</li><li>ดูสถานะของรายการนั้นอีกครั้ง</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>จังหวะ: กดถอนจนกล่องยืนยันเด้ง แล้วกดยกเลิก</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ยกเลิกแล้วไม่มีคำขอลบเกิดขึ้น</li><li>ข้อมูลย้อนหลังยังอยู่ครบ</li><li>ไม่มีสถานะกำลังลบค้างทั้งที่ยกเลิกไปแล้ว</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ไม่มีการถอน/ลบเกิดขึ้น</li><li>รายการ "เก็บข้อมูลอารมณ์" ยังเป็นสถานะปกติ (ยังยินยอมอยู่) ไม่ขึ้น "ถอนแล้ว"</li><li>ข้อมูลย้อนหลังยังอยู่ครบ</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
