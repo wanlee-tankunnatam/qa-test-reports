@@ -1880,19 +1880,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="featrow" data-featkey="workspace-seat"><td colspan="7">📁 workspace-seat <span class="rp"><span class="lv lvl-ui">🌐 2</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="workspace-seat"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
 <tr class="trow" data-feat="epic9" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-M1-WS.1</td>
-  <td class="ctitle">เจ้าของ (Owner) เชิญ Host เข้าเวิร์กสเปซเป็น sub-seat ได้</td>
+  <td class="ctitle">🚧 [ยังไม่ build ใน desktop] เชิญ Host เข้าทีม (multi-seat) — ยืนยันว่ายังไม่มีในแอป</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
   <td class="status" data-uid="tc-552"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-552"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">เจ้าของ (Owner) เชิญ Host เข้าเวิร์กสเปซเป็น sub-seat ได้</div>
+  <div class="h-title">🚧 [ยังไม่ build ใน desktop] เชิญ Host เข้าทีม (multi-seat) — ยืนยันว่ายังไม่มีในแอป</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · workspace-seat · Epic 9</div>
-  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">mvp-1 E7 RBAC (Story 7.3 · FR56–58) · user-guide §multi-seat · HostInvite.jsx · flow-summary §2.3 (6 roles)</div></div>
-  <div class="sec"><h4>Precondition</h4><ul><li>ล็อกอินด้วยบัญชีสิทธิ์ Owner ของเวิร์กสเปซ</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เข้าหน้าจัดการสมาชิก/คำเชิญ</li><li>ส่งคำเชิญ Host ด้วยอีเมล/ช่องทางที่ระบบมีให้</li><li>ตรวจว่าคำเชิญถูกสร้างและแสดงสถานะรอตอบรับ</li><li>ตรวจว่าระบุบทบาทของผู้ถูกเชิญเป็น Host</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>บัญชี Owner · อีเมล Host ทดสอบ</li></ul></div>
+  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">mvp-1 E7 RBAC (Story 7.3 · FR56–58) · user-guide §multi-seat · HostInvite.jsx · flow-summary §2.3 (6 roles) · ⚠️ scope-boundary: ฟีเจอร์นี้ยังไม่มีในแอป desktop จริง (planned M1/SaaS) — ตรวจจากโค้ด apps/desktop 2026-07-26 (ไม่มี route/เมนู/หน้าจอนี้)</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>ล็อกอินด้วยบัญชีสิทธิ์ Owner ของเวิร์กสเปซ</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบแอป desktop</li><li>ไล่ดูเมนูทั้งหมดในแถบซ้าย (แดชบอร์ด · แชนเนล · เซสชัน · หลีกเลี่ยงคำพูด)</li><li>เปิดเมนูโปรไฟล์ (มุมล่าง/บนของแอป) และหน้าตั้งค่าทั้งหมด</li><li>มองหาเมนู/ปุ่ม "เชิญสมาชิก / เชิญ Host / จัดการทีม (seat)"</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>บัญชี Owner · อีเมล Host ทดสอบ</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>Owner ส่งคำเชิญ Host ได้จากหน้าจัดการสมาชิก</li><li>คำเชิญแสดงสถานะรอตอบรับและระบุบทบาท Host</li><li>ข้อความ/ฟอร์มเป็นภาษาไทยเข้าใจง่าย</li><li>ไม่สามารถเชิญเกินจำนวน seat ของแพ็กเกจโดยไม่มีการเตือน</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>แอป desktop เป็นแบบผู้ใช้คนเดียว — ไม่มีเมนู/ปุ่มเชิญ Host หรือจัดการ seat</li><li>ยืนยัน scope: multi-seat/invite เป็นฟีเจอร์ SaaS (planned M1) ยังไม่ build ใน desktop (มีต้นแบบเฉพาะฝั่ง web ที่ /host-invite)</li><li>ถ้าพบเมนูเชิญ/จัดการทีมใน desktop = เกิน scope ปัจจุบัน ให้บันทึกเป็นข้อสังเกตพร้อมภาพหน้าจอ</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1909,19 +1909,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 </div></td></tr>
 <tr class="trow" data-feat="epic9" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-M1-WS.2</td>
-  <td class="ctitle">Host ตอบรับคำเชิญ → ให้ความยินยอมของตัวเอง → เห็น HUD ของตัวเองระหว่างไลฟ์</td>
+  <td class="ctitle">🚧 [ยังไม่ build ใน desktop] รับคำเชิญเข้าทีมในฐานะ Host (multi-seat) — ยืนยันว่ายังไม่มี flow นี้</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
   <td class="status" data-uid="tc-553"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-553"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">Host ตอบรับคำเชิญ → ให้ความยินยอมของตัวเอง → เห็น HUD ของตัวเองระหว่างไลฟ์</div>
+  <div class="h-title">🚧 [ยังไม่ build ใน desktop] รับคำเชิญเข้าทีมในฐานะ Host (multi-seat) — ยืนยันว่ายังไม่มี flow นี้</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · workspace-seat · Epic 9</div>
-  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">mvp-1 E7 RBAC · E2 desktop-consent · user-guide §multi-seat (Host เห็น HUD ของตัวเอง) · prd-th.md FR4</div></div>
-  <div class="sec"><h4>Precondition</h4><ul><li>มีคำเชิญ Host ที่รอตอบรับ</li><li>มีบัญชี Host ทดสอบ</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ล็อกอินด้วยบัญชี Host แล้วตอบรับคำเชิญ</li><li>สังเกตว่าถูกพาไปหน้าความยินยอมของตัวเองก่อน</li><li>ให้ความยินยอมแล้วเริ่มเซสชันไลฟ์</li><li>ตรวจว่า Host เห็น HUD (smile/energy) ของตัวเอง</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>บัญชี Host ที่ถูกเชิญ</li></ul></div>
+  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">mvp-1 E7 RBAC · E2 desktop-consent · user-guide §multi-seat (Host เห็น HUD ของตัวเอง) · prd-th.md FR4 · ⚠️ scope-boundary: ฟีเจอร์นี้ยังไม่มีในแอป desktop จริง (planned M1/SaaS) — ตรวจจากโค้ด apps/desktop 2026-07-26 (ไม่มี route/เมนู/หน้าจอนี้)</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>มีคำเชิญ Host ที่รอตอบรับ</li><li>มีบัญชี Host ทดสอบ</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบแอป desktop</li><li>มองหา flow "รับคำเชิญเข้าทีม / เข้าร่วมเวิร์กสเปซในฐานะ Host"</li><li>ไล่เมนูโปรไฟล์ + ตั้งค่า ว่ามีการระบุ/สลับบทบาท Host หรือ Owner หรือไม่</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>บัญชี Host ที่ถูกเชิญ</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>Host ตอบรับคำเชิญและเข้าเวิร์กสเปซได้</li><li>Host ต้องให้ความยินยอมของตัวเองก่อนใช้งาน (แยกจาก Owner)</li><li>ระหว่างไลฟ์ Host เห็น HUD ของตัวเอง</li><li>สิทธิ์ของ Host จำกัดตามบทบาท ไม่เห็นส่วนของ Owner</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ไม่มี flow ตอบรับคำเชิญ/เข้าร่วมทีมในฐานะ Host ในแอป desktop (เป็นผู้ใช้คนเดียว)</li><li>ส่วน "ยินยอม PDPA + เห็น HUD ของตัวเอง" มีจริงในแอป แต่ทดสอบแยกในเคส consent (E4) และ HUD (E3) แล้ว — เคสนี้เน้นเฉพาะส่วน multi-seat ที่ยังไม่มี</li><li>ถ้าพบ flow รับคำเชิญเข้าทีมใน desktop = เกิน scope ให้บันทึกเป็นข้อสังเกต</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1939,19 +1939,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="featrow" data-featkey="workspace-rbac"><td colspan="7">📁 workspace-rbac <span class="rp"><span class="lv lvl-ui">🌐 2 <span style="color:var(--muted)">+2🆕</span></span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="workspace-rbac"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
 <tr class="trow" data-feat="epic9" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-M1-WS.3</td>
-  <td class="ctitle">ผู้ใช้สิทธิ์ Host เข้าถึงหน้าที่เป็นของ Owner ไม่ได้ (RBAC)</td>
+  <td class="ctitle">🚧 [ยังไม่ build ใน desktop] RBAC กันสิทธิ์ Owner/Host — ยืนยันว่า desktop เป็นผู้ใช้เดียว ไม่มี role</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
   <td class="status" data-uid="tc-554"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-554"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">ผู้ใช้สิทธิ์ Host เข้าถึงหน้าที่เป็นของ Owner ไม่ได้ (RBAC)</div>
+  <div class="h-title">🚧 [ยังไม่ build ใน desktop] RBAC กันสิทธิ์ Owner/Host — ยืนยันว่า desktop เป็นผู้ใช้เดียว ไม่มี role</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · workspace-rbac · Epic 9</div>
-  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">mvp-1 E7 RBAC (NFR3.10) · DoD M1 §1.1 (multi-tenant isolation non-negotiable) · flow-summary §2.3</div></div>
-  <div class="sec"><h4>Precondition</h4><ul><li>มีบัญชี Host และทราบเส้นทางหน้าที่เป็นของ Owner (เช่น จัดการสมาชิก/บิล)</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ล็อกอินด้วยบัญชี Host</li><li>ไล่ดูเมนูที่ Host เห็น</li><li>พยายามเข้าเส้นทางหน้าของ Owner โดยตรง</li><li>สังเกตผลที่ระบบตอบกลับ</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>บัญชี: Host · เส้นทางหน้า Owner</li></ul></div>
+  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">mvp-1 E7 RBAC (NFR3.10) · DoD M1 §1.1 (multi-tenant isolation non-negotiable) · flow-summary §2.3 · ⚠️ scope-boundary: ฟีเจอร์นี้ยังไม่มีในแอป desktop จริง (planned M1/SaaS) — ตรวจจากโค้ด apps/desktop 2026-07-26 (ไม่มี route/เมนู/หน้าจอนี้)</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>มีบัญชี Host และทราบเส้นทางหน้าที่เป็นของ Owner (เช่น จัดการสมาชิก/บิล)</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบแอป desktop</li><li>ไล่เข้าทุกเมนู/หน้าในแอป</li><li>ตรวจว่ามีหน้าใดที่ล็อกตามบทบาท (เช่น Owner-only) หรือมีการแสดง/สลับบทบาท (Owner/Host/CS) ที่ใดหรือไม่</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>บัญชี: Host · เส้นทางหน้า Owner</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>เมนูของ Owner ไม่ปรากฏสำหรับ Host</li><li>เข้าเส้นทางตรง ๆ แล้วถูกปฏิเสธหรือพากลับหน้าที่มีสิทธิ์</li><li>ข้อความปฏิเสธสุภาพ ไม่เปิดเผยข้อมูลภายใน</li><li>ไม่มีข้อมูลของ Owner รั่วออกมา</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>desktop ไม่มีระบบบทบาท (role) — ทุกหน้าเข้าได้ในฐานะผู้ใช้คนเดียว ไม่มีหน้า Owner-only ที่ต้องกันสิทธิ์</li><li>ยืนยัน scope: RBAC (E7 · NFR3.10) เป็น SaaS/planned ยังไม่ build ใน desktop</li><li>ถ้าพบการกันสิทธิ์ตามบทบาทใน desktop = เกิน scope ให้บันทึกเป็นข้อสังเกต</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1968,19 +1968,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 </div></td></tr>
 <tr class="trow" data-feat="epic9" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-M1-WS.4</td>
-  <td class="ctitle">Owner เห็น Operator View (สตรีม comment intent + คำแนะนำ pin) ไม่ใช่ overlay บนหน้า Host</td>
+  <td class="ctitle">🚧 [ยังไม่ build ใน desktop] Operator View (Owner ดู comment intent + pin) — ยืนยันว่ายังไม่มีในแอป</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
   <td class="status" data-uid="tc-555"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-555"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">Owner เห็น Operator View (สตรีม comment intent + คำแนะนำ pin) ไม่ใช่ overlay บนหน้า Host</div>
+  <div class="h-title">🚧 [ยังไม่ build ใน desktop] Operator View (Owner ดู comment intent + pin) — ยืนยันว่ายังไม่มีในแอป</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · workspace-rbac · Epic 9</div>
-  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">user-guide §multi-seat (Owner ดู Operator View) · flow-summary §2.3 (Operator View CS) · prd-th.md FR20</div></div>
-  <div class="sec"><h4>Precondition</h4><ul><li>ล็อกอินด้วยบัญชี Owner และมี Host กำลังไลฟ์อยู่ในเวิร์กสเปซ</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เข้าส่วน Operator View ของ Owner</li><li>ตรวจว่าแสดงสตรีมความสนใจของคอมเมนต์และคำแนะนำที่ pin ได้</li><li>ตรวจว่าเป็นมุมมองของ Owner ไม่ใช่ overlay ที่ทับหน้า Host</li><li>ทดลอง pin คำแนะนำหนึ่งอัน</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>Owner + Host ที่กำลังไลฟ์</li></ul></div>
+  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">user-guide §multi-seat (Owner ดู Operator View) · flow-summary §2.3 (Operator View CS) · prd-th.md FR20 · ⚠️ scope-boundary: ฟีเจอร์นี้ยังไม่มีในแอป desktop จริง (planned M1/SaaS) — ตรวจจากโค้ด apps/desktop 2026-07-26 (ไม่มี route/เมนู/หน้าจอนี้)</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>ล็อกอินด้วยบัญชี Owner และมี Host กำลังไลฟ์อยู่ในเวิร์กสเปซ</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบแอป desktop</li><li>ไล่ดูเมนูทั้งหมด (แดชบอร์ด · แชนเนล · เซสชัน · หลีกเลี่ยงคำพูด · โปรไฟล์ · ตั้งค่า)</li><li>มองหาเมนู/หน้า "Operator View / มุมมองผู้ควบคุม" ที่ให้ Owner ดูสตรีม comment intent ของ Host</li><li>ระหว่างมีเซสชันไลฟ์ ตรวจว่ามีมุมมองแยกสำหรับ Owner (ไม่ใช่ HUD ของตัวเอง) หรือไม่</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>Owner + Host ที่กำลังไลฟ์</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>Operator View แสดงสตรีม comment intent และคำแนะนำให้ Owner</li><li>เป็นมุมมองแยกของ Owner ไม่ใช่ overlay บนหน้าจอ Host</li><li>pin คำแนะนำได้</li><li>ไม่มีข้อมูลชีวมาตร/ภาพใบหน้าของ Host ปรากฏ</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ไม่มีเมนู/หน้า "Operator View" ในแอป desktop (ยืนยันจากโค้ด: ไม่มี route/หน้า/เมนู/ข้อความนี้เลย)</li><li>ยืนยัน scope: Operator View เป็นฟีเจอร์ SaaS/planned (flow-summary §2.3) ยังไม่ build</li><li>ถ้าพบ Operator View ในแอป desktop = เกิน scope ให้บันทึกเป็นข้อสังเกตพร้อมภาพหน้าจอ</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1997,19 +1997,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 </div></td></tr>
 <tr class="trow" data-feat="epic9" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-M1-WS.6</td>
-  <td class="ctitle">สลับเวิร์กสเปซ แล้วข้อมูลต้องไม่ปนข้ามกัน (multi-tenant isolation) <span class="edge-badge">🆕 edge</span></td>
+  <td class="ctitle">🚧 [ยังไม่ build ใน desktop] สลับเวิร์กสเปซ (multi-tenant) — ยืนยันว่า desktop เป็น workspace เดียว <span class="edge-badge">🆕 edge</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
   <td class="status" data-uid="tc-556"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-556"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">สลับเวิร์กสเปซ แล้วข้อมูลต้องไม่ปนข้ามกัน (multi-tenant isolation)</div>
+  <div class="h-title">🚧 [ยังไม่ build ใน desktop] สลับเวิร์กสเปซ (multi-tenant) — ยืนยันว่า desktop เป็น workspace เดียว</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · workspace-rbac · Epic 9</div>
-  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">DoD M1 §1.1 (multi-tenant isolation = non-negotiable · E7 RBAC + E1 RLS) · prd-th.md NFR4.2</div></div>
-  <div class="sec"><h4>Precondition</h4><ul><li>บัญชีทดสอบเป็นสมาชิกอย่างน้อย 2 เวิร์กสเปซที่มีข้อมูลคนละชุด</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เข้าเวิร์กสเปซที่ 1 จดข้อมูลที่เห็น (เซสชัน/โฮสต์/ช่อง)</li><li>สลับไปเวิร์กสเปซที่ 2</li><li>จดข้อมูลของเวิร์กสเปซที่ 2</li><li>เทียบว่าข้อมูลปนกันหรือไม่</li><li>สลับกลับมาที่ 1 แล้วตรวจอีกครั้ง</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>เวิร์กสเปซ 2 แห่งที่มีข้อมูลคนละชุด</li></ul></div>
+  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">DoD M1 §1.1 (multi-tenant isolation = non-negotiable · E7 RBAC + E1 RLS) · prd-th.md NFR4.2 · ⚠️ scope-boundary: ฟีเจอร์นี้ยังไม่มีในแอป desktop จริง (planned M1/SaaS) — ตรวจจากโค้ด apps/desktop 2026-07-26 (ไม่มี route/เมนู/หน้าจอนี้)</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>บัญชีทดสอบเป็นสมาชิกอย่างน้อย 2 เวิร์กสเปซที่มีข้อมูลคนละชุด</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบแอป desktop</li><li>เปิดเมนูโปรไฟล์และส่วนหัวแอป มองหาตัวสลับเวิร์กสเปซ (workspace switcher)</li><li>ตรวจว่ามีรายการเวิร์กสเปซหลายอันให้เลือกหรือไม่ (หมายเหตุ: "สลับไลฟ์" ในแอป = สลับเซสชันไลฟ์ ไม่ใช่สลับ workspace)</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>เวิร์กสเปซ 2 แห่งที่มีข้อมูลคนละชุด</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>แต่ละเวิร์กสเปซแสดงเฉพาะข้อมูลของตัวเอง ไม่มีข้อมูลข้ามมา</li><li>ชื่อเวิร์กสเปซปัจจุบันแสดงชัด</li><li>สลับไปมาแล้วข้อมูลอัปเดตถูกต้องทุกครั้ง</li><li>ไม่มีข้อมูลของอีกเวิร์กสเปซค้างบนหน้าจอ</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>desktop ผูกกับผู้ใช้/เวิร์กสเปซเดียว — ไม่มีตัวสลับเวิร์กสเปซในแอป</li><li>การแยกข้อมูลข้าม tenant (RLS/multi-tenant · NFR4.2) เป็นเรื่อง backend (E1 RLS) ทดสอบระดับ integration ไม่ใช่ UI ใน desktop</li><li>ถ้าพบตัวสลับ workspace ใน desktop = เกิน scope ให้บันทึกเป็นข้อสังเกต</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -2026,19 +2026,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 </div></td></tr>
 <tr class="trow" data-feat="epic9" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-M1-WS.7</td>
-  <td class="ctitle">ถอด/ลดสิทธิ์สมาชิกกลางคัน แล้วสิทธิ์ที่หน้าจอต้องปรับตามทันที <span class="edge-badge">🆕 edge</span></td>
+  <td class="ctitle">🚧 [ยังไม่ build ใน desktop] เปลี่ยน/ลดสิทธิ์สมาชิกกลางคัน — ยืนยันว่า desktop ไม่มีระบบ role <span class="edge-badge">🆕 edge</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
   <td class="status" data-uid="tc-557"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-557"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">ถอด/ลดสิทธิ์สมาชิกกลางคัน แล้วสิทธิ์ที่หน้าจอต้องปรับตามทันที</div>
+  <div class="h-title">🚧 [ยังไม่ build ใน desktop] เปลี่ยน/ลดสิทธิ์สมาชิกกลางคัน — ยืนยันว่า desktop ไม่มีระบบ role</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · workspace-rbac · Epic 9</div>
-  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">mvp-1 E7 RBAC (NFR3.10) · prd-th.md FR56–58</div></div>
-  <div class="sec"><h4>Precondition</h4><ul><li>มีสมาชิกที่มีสิทธิ์ระดับหนึ่งกำลังใช้งานอยู่</li><li>Owner ปรับสิทธิ์ได้</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ให้ Owner ลด/ถอดสิทธิ์ของสมาชิกคนหนึ่ง</li><li>ที่ฝั่งสมาชิก ลองเข้าหน้าที่เคยเข้าได้</li><li>สังเกตผลที่ระบบตอบกลับ</li><li>ตรวจว่าเมนู/สิทธิ์อัปเดตตาม</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>การเปลี่ยนสิทธิ์: ลด/ถอดกลางคัน</li></ul></div>
+  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">mvp-1 E7 RBAC (NFR3.10) · prd-th.md FR56–58 · ⚠️ scope-boundary: ฟีเจอร์นี้ยังไม่มีในแอป desktop จริง (planned M1/SaaS) — ตรวจจากโค้ด apps/desktop 2026-07-26 (ไม่มี route/เมนู/หน้าจอนี้)</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>มีสมาชิกที่มีสิทธิ์ระดับหนึ่งกำลังใช้งานอยู่</li><li>Owner ปรับสิทธิ์ได้</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบแอป desktop</li><li>มองหาหน้าจัดการสมาชิก/บทบาท (เพิ่ม/ลด/ถอนสิทธิ์)</li><li>ตรวจว่ามีการเปลี่ยนสิทธิ์ที่กระทบ UI ระหว่างใช้งานหรือไม่</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>การเปลี่ยนสิทธิ์: ลด/ถอดกลางคัน</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>เมื่อสิทธิ์ถูกลด สมาชิกเข้าหน้าที่เกินสิทธิ์ไม่ได้อีก</li><li>เมนูที่ไม่มีสิทธิ์หายไปหรือถูกปิด</li><li>การปฏิเสธสุภาพ ไม่มีข้อมูลรั่ว</li><li>ไม่ต้องปิด–เปิดแอปเพื่อให้สิทธิ์ใหม่มีผล (หรือมีข้อความบอกให้รีเฟรช)</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ไม่มีหน้าจัดการสมาชิก/บทบาทในแอป desktop → การเปลี่ยน role กลางคันจึงไม่มีให้ทดสอบใน UI นี้</li><li>ยืนยัน scope: RBAC/role management (E7) เป็น SaaS/planned ยังไม่ build ใน desktop</li><li>ถ้าพบการจัดการบทบาท/สมาชิกใน desktop = เกิน scope ให้บันทึกเป็นข้อสังเกต</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -2056,19 +2056,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="featrow" data-featkey="workspace-tier"><td colspan="7">📁 workspace-tier <span class="rp"><span class="lv lvl-ui">🌐 1</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="workspace-tier"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
 <tr class="trow" data-feat="epic9" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-M1-WS.5</td>
-  <td class="ctitle">หน้าตั้งค่าแสดงแพ็กเกจ (Starter/Pro/Enterprise) และโควตา AI credits</td>
+  <td class="ctitle">🚧 [ยังไม่ build ใน desktop] หน้า tier / โควตา AI credits — ยืนยันว่ายังไม่มี (billing = M2/Hub)</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
   <td class="status" data-uid="tc-558"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-558"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">หน้าตั้งค่าแสดงแพ็กเกจ (Starter/Pro/Enterprise) และโควตา AI credits</div>
+  <div class="h-title">🚧 [ยังไม่ build ใน desktop] หน้า tier / โควตา AI credits — ยืนยันว่ายังไม่มี (billing = M2/Hub)</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · workspace-tier · Epic 9</div>
-  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">mvp-1 E7 tier · prd-th.md FR60 · flow-summary §2.6 (tier + credits) · user-guide §billing</div></div>
-  <div class="sec"><h4>Precondition</h4><ul><li>ล็อกอินด้วยบัญชีที่ผูกกับแพ็กเกจหนึ่ง</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เข้าหน้าตั้งค่า/บัญชีของเวิร์กสเปซ</li><li>หาส่วนที่แสดงแพ็กเกจปัจจุบัน</li><li>ตรวจว่าระบุชื่อแพ็กเกจและโควตา AI credits</li><li>ตรวจว่ามีทางอัปเกรดแพ็กเกจ</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>แพ็กเกจ: Starter 5,900 / Pro 12,900 / Enterprise 29,900 (credits 5K/15K/50K)</li></ul></div>
+  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">mvp-1 E7 tier · prd-th.md FR60 · flow-summary §2.6 (tier + credits) · user-guide §billing · ⚠️ scope-boundary: ฟีเจอร์นี้ยังไม่มีในแอป desktop จริง (planned M1/SaaS) — ตรวจจากโค้ด apps/desktop 2026-07-26 (ไม่มี route/เมนู/หน้าจอนี้)</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>ล็อกอินด้วยบัญชีที่ผูกกับแพ็กเกจหนึ่ง</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบแอป desktop</li><li>เปิดเมนูตั้งค่าทั้งหมด (ในแอปมีแค่ "ความเป็นส่วนตัว/consent" และ "โอเพนซอร์ส/licenses")</li><li>มองหาหน้าที่แสดงแพ็กเกจ (Starter/Pro/Enterprise) + โควตา/ยอดคงเหลือ AI credits</li><li>เปิดเมนูโปรไฟล์ ดูว่ามีข้อมูลแพ็กเกจ/เครดิตคงเหลือหรือไม่</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>แพ็กเกจ: Starter 5,900 / Pro 12,900 / Enterprise 29,900 (credits 5K/15K/50K)</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>แสดงชื่อแพ็กเกจปัจจุบันและโควตา AI credits</li><li>ตัวเลขสอดคล้องกับแพ็กเกจที่ผูกไว้ (ยืนยันกับ BA ถ้าไม่ตรงเอกสาร)</li><li>มีทางอัปเกรด/จัดการแพ็กเกจ</li><li>ข้อมูลราคาเป็นภาษาไทย/หน่วยบาทชัดเจน</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ตั้งค่าใน desktop มีแค่ ความเป็นส่วนตัว + โอเพนซอร์ส — ไม่มีหน้า tier / โควตา / ยอดคงเหลือ AI credits</li><li>ชื่อแพ็กเกจจะเห็นเฉพาะตอนหมดอายุ (หน้า Expired) เท่านั้น · billing/credit UI = M2 (Takra Hub) ยังไม่ build ใน desktop</li><li>ถ้าพบหน้า tier/credit balance ใน desktop = เกิน scope ให้บันทึกเป็นข้อสังเกต</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
