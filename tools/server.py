@@ -67,8 +67,8 @@ def resolve_repo_root(cli_value=None):
             break
         cur = parent
 
-    # fallback: sibling ../realfact
-    return os.path.abspath(os.path.join(SCRIPT_DIR, "..", "realfact"))
+    # fallback: sibling ../realfact (SCRIPT_DIR = <repo>/tools จึงต้องขึ้น 2 ชั้น)
+    return os.path.abspath(os.path.join(SCRIPT_DIR, "..", "..", "realfact"))
 
 ID_SAFE_RE = re.compile(r"^[A-Za-z0-9_.-]+$")
 

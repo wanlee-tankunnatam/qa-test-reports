@@ -1,80 +1,11 @@
-# QA Test Reports — RealFact
+# TAKRA QA — Reports Hub
 
-Dashboard ส่วนกลางสำหรับทีม QA ดู/จัดการผลการทดสอบของทุก project
-(Kiosk Avatar, Chat AI, Backoffice) — เป็น local HTTP server + UI หน้าเดียว (vanilla JS, ไม่มี build step)
+รายงานผลการทดสอบ QA ของโปรเจค TAKRA เผยแพร่เป็นเว็บผ่าน GitHub Pages
 
-> **สำคัญ:** repo นี้คือ **ตัวเครื่องมือ (tool) อย่างเดียว** — *ไม่มี* ผลการทดสอบจริงอยู่ข้างใน
-> ตัว tool จะไป "อ่าน" ผลทดสอบจาก checkout ของ main repo (`realfact`) บนเครื่องคุณ
-> ฉะนั้นทุกคนต้องมี main repo อยู่บนเครื่อง และชี้ tool ไปที่ path ของมัน
+**🔗 https://wanlee-tankunnatam.github.io/qa-test-reports/**
 
----
-
-## ความต้องการเบื้องต้น
-
-1. **Python 3.8+** (ใช้ stdlib ล้วน ไม่ต้อง `pip install` อะไรเลย)
-2. **main repo (`realfact`) clone ไว้บนเครื่อง** — เพราะ data (`tests/kiosk-avatar/results/…`) อยู่ที่นั่น
-
----
-
-## เริ่มใช้งาน (Quick Start)
-
-```bash
-# 1. clone repo เครื่องมือนี้
-git clone <REPO_URL> qa-test-reports
-cd qa-test-reports
-
-# 2. รัน server โดยชี้ไปที่ main repo (realfact) บนเครื่องคุณ
-python3 server.py --repo-root /path/to/realfact
-
-# 3. เปิด browser
-#    http://localhost:8088/
-#    http://localhost:8088/kiosk-avatar/collections
-```
-
-### บอก path ของ main repo ได้ 4 วิธี (เรียงตามลำดับความสำคัญ)
-
-| ลำดับ | วิธี | ตัวอย่าง |
-|------|------|---------|
-| 1 | `--repo-root` flag | `python3 server.py --repo-root ~/Documents/rf/realfact` |
-| 2 | env var | `REALFACT_REPO_ROOT=~/Documents/rf/realfact python3 server.py` |
-| 3 | auto-detect | รันจากข้างใน main repo — tool จะเดินขึ้นหา `tests/kiosk-avatar` เอง |
-| 4 | fallback | ถ้าวาง `qa-test-reports` ข้างๆ `realfact` (sibling) จะ default ไป `../realfact` อัตโนมัติ |
-
-> 💡 **แนะนำ layout แบบ sibling** เพื่อความสะดวก — จะรัน `python3 server.py` เปล่าๆ ได้เลย:
-> ```
-> rf/
-> ├── realfact/          ← main repo (มี test data)
-> └── qa-test-reports/   ← repo นี้
-> ```
-
-ถ้าชี้ path ผิด server จะเตือน (`WARNING: ... ไม่มี tests/kiosk-avatar`) หรือ exit พร้อมข้อความบอกวิธีแก้
-
----
-
-## ออปชันการรัน
-
-```bash
-python3 server.py [--port 8088] [--host 127.0.0.1] [--repo-root PATH]
-```
-
-| Flag | Default | ความหมาย |
-|------|---------|----------|
-| `--port` | `8088` | port ของ server |
-| `--host` | `127.0.0.1` | host (ใช้ `0.0.0.0` ถ้าจะให้คนอื่นในวงเข้าถึง) |
-| `--repo-root` | auto | path ของ main repo (realfact) |
-
----
-
-## URL Map
-
-| URL | สิ่งที่เห็น |
-|-----|------------|
-| `http://localhost:8088/` | หน้า index — เลือก project |
-| `http://localhost:8088/{project}/runs` | รายการ run ทั้งหมด |
-| `http://localhost:8088/{project}/collections` | รายการ Collection |
-| `http://localhost:8088/{project}/collections/{col_id}` | รายละเอียด Collection (results + status) |
-
-Project ที่รองรับ (จาก [projects.json](projects.json)): `kiosk-avatar`, `chat-ai`, `backoffice`
+หน้า hub (`index.html`) รวมรายงานทุกโปรเจคไว้ที่เดียว — ค้นหาได้ กรองตามประเภท/ช่วงวันที่ได้
+และมีคอลัมน์ **Status** ที่ดึง % ความคืบหน้าจากตัวรายงานแต่ละไฟล์มาแสดงแบบสด
 
 ---
 
@@ -82,34 +13,134 @@ Project ที่รองรับ (จาก [projects.json](projects.json)): 
 
 ```
 qa-test-reports/
-├── README.md            ← (ไฟล์นี้) การติดตั้ง + quick start
-├── TOOL-REFERENCE.md    ← เอกสารอ้างอิงเชิงลึก: REST API, schema, project-specific UI
-├── server.py            ← Python HTTP server (stdlib ล้วน)
-├── projects.json        ← นิยาม projects ที่ tool รู้จัก (แก้ที่นี่เพื่อเพิ่ม/แก้ path)
-├── scripts/             ← helper scripts (CLI runners — optional)
-└── ui/
-    └── index.html       ← Single-page UI (vanilla JS)
+├── index.html                      ← หน้า hub (entry point ของ GitHub Pages — ห้ามย้าย)
+├── README.md                       ← ไฟล์นี้
+│
+├── projects/                       ← รายงานจริงทั้งหมด
+│   └── <project>/
+│       ├── <YYYY>/<MM>/            ← ปี / เดือน ที่ออกรายงาน
+│       │   ├── reports/            ← ตาราง test cases (มีปุ่ม ☁️ เซฟผลขึ้น GitHub)
+│       │   └── summary/            ← สรุปผลการทดสอบ (static)
+│       ├── dod/mvp<N>/             ← Definition of Done checklist — แยกตาม MVP ไม่แบ่งเดือน
+│       └── archive/                ← รายงานรุ่นเก่าที่เลิกใช้แล้ว (ไม่แบ่งเดือน ไม่ลิงก์จาก hub)
+│
+├── notes/                          ← เอกสารประกอบ .md (hub ลิงก์ผ่าน github.com/blob/master)
+│
+├── reports/ · summary/ · dod/      ← ⚠️ ไม่ใช่เนื้อหา — ไฟล์ redirect ของ URL เก่าเท่านั้น
+│                                      (เช่นเดียวกับ projects/<project>/{reports,summary,dod}/*.html
+│                                       ที่อยู่นอก <YYYY>/<MM>)
+│
+└── tools/                          ← เครื่องมือที่รันในเครื่อง (ไม่ได้ deploy)
+    ├── make-redirects.py           ← สร้าง redirect ของ URL เก่า
+    └── README.md                   ← QA dashboard (แยกขาด ไม่เกี่ยวกับเว็บนี้)
+```
+
+โปรเจคปัจจุบัน: `takra-ai` · `takra-insight` · `takra-rerun`
+
+### แกนของแต่ละประเภทไม่เหมือนกัน
+
+| ประเภท | จัดตาม | เพราะ |
+|---|---|---|
+| `reports/` · `summary/` | **ปี/เดือนที่ออกรายงาน** | ออกใหม่ได้เรื่อย ๆ ตามรอบทดสอบ |
+| `dod/` | **MVP** (`dod/mvp1/`, `dod/mvp2/`) | DoD ผูกกับ milestone ไม่ใช่เดือน — 1 MVP มีชุดเดียว ใช้ยาว |
+| `archive/` | ไม่จัด | ของเลิกใช้ ไม่ลิงก์จาก hub |
+
+**ปี/เดือน = เดือนที่ "ออก" รายงาน ไม่ใช่เดือนที่แก้ล่าสุด** — พอวางไฟล์ลงเดือนไหนแล้ว **ห้ามย้ายอีก**
+แม้จะมากดเซฟผลทดสอบเพิ่มในเดือนถัดไป เพราะ path ของไฟล์ถูกฝังอยู่ในตัวไฟล์เอง
+(`GH_PATH` — ดูข้างล่าง) ถ้าย้ายตามวันแก้ล่าสุด ปุ่มเซฟจะเขียนกลับไป path เก่าและเกิดไฟล์ผีขึ้นมา
+
+---
+
+## กฎตั้งชื่อไฟล์
+
+```
+<project>-mvp<N>-<kind>[-<platform>].html
+```
+
+| ส่วน | ค่าที่ใช้ได้ |
+|---|---|
+| `project` | ชื่อโฟลเดอร์โปรเจคเป๊ะ ๆ — `takra-ai` / `takra-insight` / `takra-rerun` |
+| `N` | `0.5` `1` `2` … หรือช่วง `0.5-1` `1-2` สำหรับรายงานที่คร่อม MVP |
+| `kind` | `ui-test-cases-table` · `e2e-test-cases-table` · `full-test-cases-table` · `qa-summary` · `qa-dod-checklist` |
+| `platform` | `mac` / `windows` — ใส่เฉพาะรายงานที่แยกตาม OS |
+
+ตัวอย่าง:
+- `projects/takra-ai/2026/07/reports/takra-ai-mvp2-ui-test-cases-table.html`
+- `projects/takra-ai/dod/mvp2/takra-ai-mvp2-qa-dod-checklist.html`
+
+> ⚠️ ไฟล์ตาราง test case **ต้องลงท้ายด้วย `-test-cases-table.html`** เสมอ
+> `index.html` ใช้ regex `/-test-cases-table[\w-]*\.html($|[?#])/` คัดว่าแถวไหนต้องไปดึง % มาแสดง
+> ตั้งชื่อผิดกฎ = คอลัมน์ Status ของแถวนั้นจะขึ้น `—` เงียบ ๆ โดยไม่มี error
+
+---
+
+## เพิ่มรายงานใหม่ — checklist
+
+1. **วางไฟล์** ตามกฎตั้งชื่อข้างบน — โฟลเดอร์ที่ยังไม่มีสร้างใหม่ได้เลย
+   - test case / summary → `projects/<project>/<YYYY>/<MM>/{reports,summary}/`
+   - DoD checklist → `projects/<project>/dod/mvp<N>/` (ไม่ต้องมีปี/เดือน)
+2. **ตั้ง `GH_PATH`** ในไฟล์ให้ตรงกับ path จริง — เฉพาะรายงานที่มีปุ่ม ☁️ เซฟ
+   ```js
+   var GH_PATH = 'projects/takra-ai/2026/07/reports/takra-ai-mvp2-ui-test-cases-table.html';
+   ```
+   ค่านี้คือ path ที่ปุ่มเซฟจะเขียนกลับผ่าน GitHub API ถ้าไม่ตรง = เซฟไปผิดที่
+3. **ตั้ง back-link** ให้ตรงโปรเจค — `?project=` รับได้แค่ `rerun` · `ai` · `insight` · `notes`
+   ```html
+   <a href="https://wanlee-tankunnatam.github.io/qa-test-reports/?project=ai">
+   ```
+   ใส่ค่าอื่น (เช่น `live`) hub จะ fallback ไป `rerun` เงียบ ๆ
+4. **เพิ่มแถวใน `index.html`** ในกลุ่มโปรเจคที่ถูก — URL ต้องใส่ **2 ที่**: `data-href` บน `<tr>` และ `href` บน `<a>`
+   อย่าลืมอัปเดตตัวเลข `<span class="count">N reports</span>` ของกลุ่มนั้นด้วย
+5. **ตรวจก่อน push** — ดูหัวข้อถัดไป
+
+---
+
+## ตรวจความถูกต้องก่อน push
+
+```bash
+# ทุกลิงก์ใน hub ต้องชี้ไปไฟล์ที่มีอยู่จริง
+grep -o 'href="[^"]*qa-test-reports/projects/[^"]*\.html"' index.html \
+  | sed 's|.*qa-test-reports/||; s|"$||' | sort -u \
+  | while read p; do [ -f "$p" ] || echo "MISSING $p"; done
+
+# GH_PATH ของทุกไฟล์ต้องเท่ากับตำแหน่งจริงของตัวเอง
+grep -r "var GH_PATH" projects/ | sed "s/:.*'\(.*\)';/ -> \1/" \
+  | awk -F' -> ' '{split($1,a,":"); if(a[1]!=$2) print "MISMATCH", a[1], "!=", $2}'
+
+# back-link ต้องมีแค่ ai / insight / rerun
+grep -rho "qa-test-reports/?project=[a-z]*" projects/ | sort | uniq -c
+
+# ลองเปิดจริง
+python3 -m http.server 8000    # แล้วเปิด http://localhost:8000/
 ```
 
 ---
 
-## การทำงานร่วมกันเป็นทีม
+## หมายเหตุการ deploy
 
-- **Tool (repo นี้):** version-controlled ผ่าน git ตามปกติ — แก้ feature/UI แล้วเปิด PR
-- **Data (ใน main repo):** ผลการทดสอบและ collections JSON อยู่ใน `realfact/tests/.../results/`
-  ซึ่งปัจจุบัน *ไม่ได้ track ใน git* — ถ้าทีมต้องการแชร์ collections ให้กันได้ ต้องตกลงวิธี sync แยกต่างหาก
-  (เช่น track โฟลเดอร์ `results/collections/` ใน main repo, แชร์ผ่าน shared drive ฯลฯ)
+- Pages เสิร์ฟจาก branch **`master`** โฟลเดอร์ราก — **push ขึ้น master = deploy ทันที**
+  ปุ่ม ☁️ ในตัวรายงานก็เขียนเข้า `master` โดยตรงเช่นกัน (กดเซฟ = deploy)
+- ไม่มี `.nojekyll` → **ห้ามตั้งชื่อโฟลเดอร์/ไฟล์ขึ้นต้นด้วย `_`** เพราะ Jekyll จะไม่ publish ให้
+- ปุ่ม ☁️ ต้องใช้ GitHub PAT ที่เก็บใน `localStorage['gh_pat']` ของเบราว์เซอร์แต่ละคน
 
-> เป้าหมายของการแยก repo นี้: ให้ทีม QA **อัปเดต/ปรับปรุงตัว dashboard ร่วมกันได้** โดยไม่ต้องแตะ main repo
+### ลิงก์เก่ายังใช้ได้ — แต่ให้ใช้ลิงก์ใหม่เป็นหลัก
+
+URL เก่าทุกอัน (44 path · ทั้งชุดที่ราก และชุด `projects/<project>/{reports,summary,dod}/`)
+มีไฟล์ redirect วางไว้ที่ path เดิม เด้งไปตำแหน่งใหม่ให้อัตโนมัติ — ลิงก์ที่เคยแชร์ใน Jira/แชตจึงไม่พัง
+GitHub Pages ไม่มี server-side redirect ไฟล์พวกนี้จึงต้องอยู่ที่ path เดิมเป๊ะ ๆ ห้ามย้าย/รวมโฟลเดอร์
+
+**เวลาย้ายหรือเปลี่ยนชื่อไฟล์รอบใหม่** ให้เติม path เก่า→ใหม่ใน `MOVES` ของ
+[`tools/make-redirects.py`](tools/make-redirects.py) แล้วรัน
+
+```bash
+python3 tools/make-redirects.py --check   # ดูว่า mapping ครบไหม
+python3 tools/make-redirects.py           # เขียนไฟล์ redirect
+```
 
 ---
 
-## JIRA (optional)
+## ของค้างที่ยังต้องตัดสินใจ
 
-ถ้า main repo มีไฟล์ `.claude/jira_config.md` (รูปแบบ `JIRA_BASE_URL=`, `JIRA_EMAIL=`,
-`JIRA_API_TOKEN=`, `JIRA_PROJECT_KEY=`) tool จะเปิดฟีเจอร์ดึง JIRA issues ให้อัตโนมัติ
-ถ้าไม่มีก็ทำงานได้ปกติ (JIRA: disabled)
-
----
-
-ดูรายละเอียด REST API, collection schema, และ behavior เฉพาะแต่ละ project ได้ที่ **[TOOL-REFERENCE.md](TOOL-REFERENCE.md)**
+`projects/takra-insight/2026/07/reports/takra-insight-mvp1-ui-test-cases-table.html`
+มีเนื้อหาเหมือนไฟล์ MVP-2 ทุกไบต์ (ต่างแค่บรรทัด `GH_PATH`) และ `<title>` ข้างในเขียนว่า "MVP-2"
+แปลว่า **ยังไม่มีรายงาน Insight MVP-1 จริง** แต่หน้า hub มีแถวนี้อยู่ — ต้องเลือกว่าจะทำรายงาน MVP-1 ของจริง หรือถอดแถวออก

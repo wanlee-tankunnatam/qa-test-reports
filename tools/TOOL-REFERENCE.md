@@ -9,8 +9,8 @@
 
 ```bash
 # tool นี้อ่าน data จาก main repo (realfact) — ต้องบอก path ของมัน
-python3 server.py --repo-root /path/to/realfact
-# หรือ:  REALFACT_REPO_ROOT=/path/to/realfact python3 server.py
+python3 tools/server.py --repo-root /path/to/realfact
+# หรือ:  REALFACT_REPO_ROOT=/path/to/realfact python3 tools/server.py
 # เปิด http://localhost:8088/
 ```
 
@@ -34,8 +34,9 @@ python3 server.py --repo-root /path/to/realfact
 ## โครงสร้างไฟล์
 
 ```
-tools/test-reports/
-├── README.md                ← (ไฟล์นี้)
+qa-test-reports/tools/
+├── README.md                ← ติดตั้ง + quick start
+├── TOOL-REFERENCE.md        ← (ไฟล์นี้)
 ├── server.py                ← Python HTTP server (port 8088)
 ├── projects.json            ← นิยาม projects ที่ tool รู้จัก
 ├── scripts/                 ← helper scripts (CLI runners)
@@ -209,9 +210,9 @@ Query string `paths` คั่นด้วย newline (URL-encoded `%0A`) หร
 ### Restart server หลังแก้ server.py
 
 ```bash
-ps aux | grep "test-reports/server.py" | grep -v grep
+ps aux | grep "tools/server.py" | grep -v grep
 kill <pid>
-python3 /Users/wanleeta55/Documents/rf/realfact/tools/test-reports/server.py
+python3 tools/server.py --repo-root /path/to/realfact
 ```
 
 Python HTTP server ไม่มี hot-reload — ถ้าแก้ server.py แล้วไม่ restart endpoint ใหม่จะไม่ทำงาน (request เก่ายังตอบ 200 แต่ field ใหม่หาย)
