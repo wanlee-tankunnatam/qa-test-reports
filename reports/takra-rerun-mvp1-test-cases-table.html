@@ -599,12 +599,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
       <li>มี account ที่ login ผ่าน TikTok popup แล้ว (TC-LG.1 ผ่านก่อน)</li>
       <li>account นั้นมี TikTok Shop พร้อม product sets</li>
     </ul></div>
-    <div class="sec"><h4>Test Steps</h4><ol>
-      <li>ไปที่ Account Detail ของ account นั้น</li>
-      <li>คลิกแท็บ "ตะกร้า"</li>
-      <li>กดปุ่ม "ดึงชุดสินค้าจาก TikTok"</li>
-      <li>รอ popup เปิด-ปิด (oracle importSets)</li>
-    </ol></div>
+    <div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบด้วยบัญชีทดสอบ</li><li>ไปที่ หน้าหลัก (บัญชีไลฟ์) แล้วเปิดบัญชีไลฟ์ที่ต้องการ</li><li>เปิดแท็บ "ตะกร้าสินค้า"</li><li>กด "ดึงชุดสินค้าจาก TikTok"</li><li>รอสักครู่ แล้วสังเกตว่าชุดสินค้าถูกดึงเข้ามาในรายการ</li></ol></div>
     <div class="sec"><h4>Test Data</h4><ul><li>Account ที่มี TikTok Shop และ product sets ≥ 1 ชุด</li></ul></div>
     <div class="grid">
       <div class="sec"><h4>Expected Result</h4><ul>
@@ -640,10 +635,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
       <li>เปิดผ่าน browser ปกติ (ไม่ใช่ Electron) เช่น Chrome/Safari</li>
       <li>มี account ในระบบ</li>
     </ul></div>
-    <div class="sec"><h4>Test Steps</h4><ol>
-      <li>เปิด http://localhost:3040 ใน browser</li>
-      <li>ไปที่ Account Detail &gt; แท็บ "ตะกร้า"</li>
-    </ol></div>
+    <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปบนเว็บเบราว์เซอร์ (ไม่ใช่แอปเดสก์ท็อป)</li><li>เข้าสู่ระบบ แล้วเปิดบัญชีไลฟ์ → แท็บ "ตะกร้าสินค้า"</li><li>มองหาปุ่ม "ดึงชุดสินค้าจาก TikTok"</li></ol></div>
     <div class="grid">
       <div class="sec"><h4>Expected Result</h4><ul>
         <li>แสดงข้อความ "เปิดบนแอป desktop เพื่อดึงชุดสินค้า"</li>
@@ -675,11 +667,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
     <div class="sec"><h4>Precondition</h4><ul>
       <li>TC-BK.1 ผ่านแล้ว (มี product sets อยู่)</li>
     </ul></div>
-    <div class="sec"><h4>Test Steps</h4><ol>
-      <li>tick checkbox สินค้า 2 ชิ้น</li>
-      <li>ปิดและเปิดหน้า Account Detail ใหม่</li>
-      <li>กลับมาดูแท็บ "ตะกร้า"</li>
-    </ol></div>
+    <div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบ เปิดบัญชีไลฟ์ → แท็บ "ตะกร้าสินค้า"</li><li>ติ๊กเลือกสินค้า 2 ชิ้น</li><li>ปิดหน้าบัญชีไลฟ์ แล้วเปิดกลับเข้ามาที่แท็บ "ตะกร้าสินค้า" อีกครั้ง</li></ol></div>
     <div class="grid">
       <div class="sec"><h4>Expected Result</h4><ul>
         <li>checkbox ยังติ๊กอยู่ (persist server-side)</li>
@@ -713,12 +701,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
       <li>session ตั้งค่าครบ (video, live settings)</li>
       <li>oracle.js pollPins interval 4s</li>
     </ul></div>
-    <div class="sec"><h4>Test Steps</h4><ol>
-      <li>กด Start session</li>
-      <li>รอ session state เป็น "live"</li>
-      <li>รอ ~10s ให้ oracle pollPins ทำงาน</li>
-      <li>เปิด TikTok Live Center → ดู live product list</li>
-    </ol></div>
+    <div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบ เปิดบัญชีไลฟ์ที่เลือกสินค้าไว้แล้ว</li><li>กด "เริ่มไลฟ์" แล้วยืนยัน</li><li>รอจนสถานะขึ้นเป็น "กำลังไลฟ์" แล้วรอสักครู่</li><li>เปิด TikTok Live Center ดูรายการสินค้าที่ถูกปักในไลฟ์</li></ol></div>
     <div class="grid">
       <div class="sec"><h4>Expected Result</h4><ul>
         <li>สินค้าที่ tick ไว้ปรากฏใน live product list บน TikTok</li>
@@ -747,10 +730,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
   <td colspan="7"><div class="card">
     <div class="h-title">ดึงสินค้าขณะ pending → ปุ่มแสดง "กำลังดึง…" และ disabled</div>
     <div class="h-prio">Priority: <b>P1</b> · E2E · #1 basket</div>
-    <div class="sec"><h4>Test Steps</h4><ol>
-      <li>กดปุ่ม "ดึงชุดสินค้าจาก TikTok"</li>
-      <li>สังเกตปุ่มทันทีขณะรอ importSets</li>
-    </ol></div>
+    <div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบ เปิดบัญชีไลฟ์ → แท็บ "ตะกร้าสินค้า"</li><li>กด "ดึงชุดสินค้าจาก TikTok"</li><li>สังเกตปุ่มทันทีระหว่างที่กำลังดึง</li></ol></div>
     <div class="grid">
       <div class="sec"><h4>Expected Result</h4><ul>
         <li>ปุ่มเปลี่ยนเป็น "กำลังดึงจาก TikTok…"</li>
@@ -785,11 +765,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
       <li>desktop app เปิด, account logged in</li>
       <li>TikTok Shop ของ account นี้ไม่มี product sets เลย</li>
     </ul></div>
-    <div class="sec"><h4>Test Steps</h4><ol>
-      <li>กด "ดึงชุดสินค้าจาก TikTok"</li>
-      <li>รอ importSets เสร็จ</li>
-      <li>ดู BasketPanel</li>
-    </ol></div>
+    <div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบ เปิดบัญชีไลฟ์ของร้านที่ไม่มีชุดสินค้า → แท็บ "ตะกร้าสินค้า"</li><li>กด "ดึงชุดสินค้าจาก TikTok"</li><li>รอจนดึงเสร็จ แล้วสังเกตแท็บ "ตะกร้าสินค้า"</li></ol></div>
     <div class="grid">
       <div class="sec"><h4>Expected Result</h4><ul>
         <li>ไม่มีรายการ sets แสดง</li>
@@ -826,10 +802,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
       <li>เปิด Account Detail &gt; แท็บ "โอเวอร์เลย์"</li>
       <li>ยังไม่มี layer ใดๆ (empty state)</li>
     </ul></div>
-    <div class="sec"><h4>Test Steps</h4><ol>
-      <li>กดปุ่ม "+ นาฬิกา"</li>
-      <li>ดูรายการ layers</li>
-    </ol></div>
+    <div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบ เปิดบัญชีไลฟ์ → แท็บ "โอเวอร์เลย์"</li><li>กด "+ นาฬิกา"</li><li>ดูรายการเลเยอร์</li></ol></div>
     <div class="grid">
       <div class="sec"><h4>Expected Result</h4><ul>
         <li>layer นาฬิกาปรากฏในรายการ (data-testid="overlay-layer")</li>
@@ -859,13 +832,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
   <td colspan="7"><div class="card">
     <div class="h-title">เพิ่ม layer ข้อความ → กรอกข้อความ → บันทึก → reload ยังอยู่</div>
     <div class="h-prio">Priority: <b>P0</b> · UI · #2 overlay</div>
-    <div class="sec"><h4>Test Steps</h4><ol>
-      <li>กดปุ่ม "+ ข้อความ"</li>
-      <li>กรอก "สวัสดีนะ 🙏" ในช่อง text</li>
-      <li>กดปุ่ม "บันทึก"</li>
-      <li>reload หน้า Account Detail</li>
-      <li>เปิดแท็บ "โอเวอร์เลย์" อีกครั้ง</li>
-    </ol></div>
+    <div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบ เปิดบัญชีไลฟ์ → แท็บ "โอเวอร์เลย์"</li><li>กด "+ ข้อความ"</li><li>พิมพ์ "สวัสดีนะ 🙏" ในช่องข้อความ</li><li>กด "บันทึก"</li><li>รีเฟรชหน้า แล้วเปิดแท็บ "โอเวอร์เลย์" อีกครั้ง</li></ol></div>
     <div class="grid">
       <div class="sec"><h4>Expected Result</h4><ul>
         <li>บันทึกสำเร็จ (ไม่มี error)</li>
@@ -900,12 +867,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
       <li>session ตั้งค่าครบ, ffmpeg bundled</li>
       <li>probe clip ได้ WxH จริง (ไม่ใช่ hardcode 1080x1920)</li>
     </ul></div>
-    <div class="sec"><h4>Test Steps</h4><ol>
-      <li>Start session</li>
-      <li>รอ state เป็น "live"</li>
-      <li>เปิด TikTok Live / preview stream</li>
-      <li>สังเกต overlay บน video</li>
-    </ol></div>
+    <div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบ เปิดบัญชีไลฟ์ → แท็บ "โอเวอร์เลย์" (มีเลเยอร์บันทึกไว้แล้ว)</li><li>กด "เริ่มไลฟ์" แล้วยืนยัน</li><li>รอจนสถานะ "กำลังไลฟ์"</li><li>เปิด TikTok live แล้วสังเกต overlay บนวิดีโอ</li></ol></div>
     <div class="grid">
       <div class="sec"><h4>Expected Result</h4><ul>
         <li>นาฬิกา (เวลาปัจจุบัน hh:mm:ss) แสดงบน stream</li>
@@ -936,11 +898,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
   <td colspan="7"><div class="card">
     <div class="h-title">โหลดหน้า overlay ที่มี layers เดิม → โหลด layers กลับครบ</div>
     <div class="h-prio">Priority: <b>P1</b> · UI · #2 overlay</div>
-    <div class="sec"><h4>Test Steps</h4><ol>
-      <li>บันทึก clock layer + text layer ไว้ก่อน</li>
-      <li>navigate ออกจาก Account Detail</li>
-      <li>กลับเข้า Account Detail &gt; แท็บ "โอเวอร์เลย์"</li>
-    </ol></div>
+    <div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบ เปิดบัญชีไลฟ์ → แท็บ "โอเวอร์เลย์" บันทึกเลเยอร์นาฬิกา + ข้อความไว้</li><li>ออกจากหน้าบัญชีไลฟ์</li><li>กลับเข้าบัญชีไลฟ์ → แท็บ "โอเวอร์เลย์"</li></ol></div>
     <div class="grid">
       <div class="sec"><h4>Expected Result</h4><ul>
         <li>GET /api/v1/accounts/{id}/overlay ดึง layers กลับมา</li>
@@ -970,11 +928,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
   <td colspan="7"><div class="card">
     <div class="h-title">ลบ layer ทั้งหมด → บันทึก → ไลฟ์ไม่มี overlay</div>
     <div class="h-prio">Priority: <b>P1</b> · E2E · #2 overlay</div>
-    <div class="sec"><h4>Test Steps</h4><ol>
-      <li>ลบทุก layer ใน OverlayPanel</li>
-      <li>กด "บันทึก"</li>
-      <li>Start session → ดู stream</li>
-    </ol></div>
+    <div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบ เปิดบัญชีไลฟ์ → แท็บ "โอเวอร์เลย์"</li><li>ลบทุกเลเยอร์</li><li>กด "บันทึก"</li><li>กด "เริ่มไลฟ์" แล้วดู stream</li></ol></div>
     <div class="grid">
       <div class="sec"><h4>Expected Result</h4><ul>
         <li>PUT overlay ส่ง layers: [] สำเร็จ</li>
@@ -1008,11 +962,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
       <li>มี layer นาฬิกา หรือ text อยู่ใน OverlayPanel</li>
       <li>preview แสดง WYSIWYG canvas</li>
     </ul></div>
-    <div class="sec"><h4>Test Steps</h4><ol>
-      <li>คลิกค้างที่ layer แล้ว drag ไปตำแหน่งใหม่</li>
-      <li>resize layer โดยดึงมุม</li>
-      <li>กด "บันทึก" → reload</li>
-    </ol></div>
+    <div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบ เปิดบัญชีไลฟ์ → แท็บ "โอเวอร์เลย์"</li><li>คลิกค้างที่เลเยอร์แล้วลากไปตำแหน่งใหม่</li><li>ปรับขนาดเลเยอร์โดยดึงที่มุม</li><li>กด "บันทึก" แล้วรีเฟรช</li></ol></div>
     <div class="grid">
       <div class="sec"><h4>Expected Result</h4><ul>
         <li>layer ย้ายตำแหน่งได้ใน preview</li>
@@ -1046,11 +996,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
     <div class="h-title">ตั้งค่า proxy HTTP → test connection → แสดง IP exit สำเร็จ</div>
     <div class="h-prio">Priority: <b>P0</b> · UI · #3 proxy</div>
     <div class="sec"><h4>Precondition</h4><ul><li>มี proxy server ที่ใช้งานได้ (HTTP หรือ SOCKS5)</li></ul></div>
-    <div class="sec"><h4>Test Steps</h4><ol>
-      <li>ไปที่ Account Detail &gt; แท็บ "Proxy"</li>
-      <li>กรอก host, port, username, password</li>
-      <li>กดปุ่ม "ทดสอบการเชื่อมต่อ"</li>
-    </ol></div>
+    <div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบ เปิดบัญชีไลฟ์ → แท็บ "พร็อกซี"</li><li>กรอก host, port, username, password</li><li>กด "ทดสอบการเชื่อมต่อ"</li></ol></div>
     <div class="grid">
       <div class="sec"><h4>Expected Result</h4><ul>
         <li>แสดง IP ปลายทาง (exit IP) ที่ต่างจาก IP ของเครื่อง</li>
@@ -1080,10 +1026,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
   <td colspan="7"><div class="card">
     <div class="h-title">proxy credentials ผิด → test แสดง error</div>
     <div class="h-prio">Priority: <b>P1</b> · UI · #3 proxy</div>
-    <div class="sec"><h4>Test Steps</h4><ol>
-      <li>กรอก host/port ถูก แต่ password ผิด</li>
-      <li>กด "ทดสอบการเชื่อมต่อ"</li>
-    </ol></div>
+    <div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบ เปิดบัญชีไลฟ์ → แท็บ "พร็อกซี"</li><li>กรอก host/port ถูก แต่ password ผิด</li><li>กด "ทดสอบการเชื่อมต่อ"</li></ol></div>
     <div class="grid">
       <div class="sec"><h4>Expected Result</h4><ul>
         <li>แสดง error message (เช่น "ไม่สามารถเชื่อมต่อ" หรือ 407)</li>
@@ -1114,11 +1057,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
     <div class="h-title">Start session ผ่าน proxy → stream ขึ้นปกติ IP ออกผ่าน proxy</div>
     <div class="h-prio">Priority: <b>P0</b> · E2E · #3 proxy</div>
     <div class="sec"><h4>Precondition</h4><ul><li>TC-PX.1 ผ่าน (proxy configured + tested)</li></ul></div>
-    <div class="sec"><h4>Test Steps</h4><ol>
-      <li>Start session บน account ที่ตั้ง proxy ไว้</li>
-      <li>ดู stage log ระหว่างสร้าง session</li>
-      <li>รอ state เป็น "live"</li>
-    </ol></div>
+    <div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบ เปิดบัญชีไลฟ์ที่ตั้งพร็อกซีไว้</li><li>กด "เริ่มไลฟ์" แล้วยืนยัน</li><li>ดูขั้นตอนระหว่างสร้างไลฟ์ แล้วรอจนสถานะ "กำลังไลฟ์"</li></ol></div>
     <div class="grid">
       <div class="sec"><h4>Expected Result</h4><ul>
         <li>session state เป็น "live" สำเร็จ</li>
@@ -1152,11 +1091,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
     <div class="sec"><h4>Precondition</h4><ul>
       <li>มี SOCKS5 proxy server ที่ใช้งานได้</li>
     </ul></div>
-    <div class="sec"><h4>Test Steps</h4><ol>
-      <li>เลือก type = "SOCKS5" ใน Proxy Settings</li>
-      <li>กรอก host, port, username, password</li>
-      <li>กด "ทดสอบการเชื่อมต่อ"</li>
-    </ol></div>
+    <div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบ เปิดบัญชีไลฟ์ → แท็บ "พร็อกซี"</li><li>เลือกชนิดเป็น "SOCKS5"</li><li>กรอก host, port, username, password</li><li>กด "ทดสอบการเชื่อมต่อ"</li></ol></div>
     <div class="grid">
       <div class="sec"><h4>Expected Result</h4><ul>
         <li>แสดง exit IP สำเร็จ (ต่างจาก IP เครื่อง)</li>
@@ -1195,12 +1130,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
       <li>hidden oracle window เปิดอยู่ (pollRooms ทำงาน)</li>
       <li>มีคนส่ง comment บน TikTok live</li>
     </ul></div>
-    <div class="sec"><h4>Test Steps</h4><ol>
-      <li>Start session → รอ live</li>
-      <li>เปิด Session Detail → ดู chat panel</li>
-      <li>ให้คนอื่น (หรือ test account) comment บน TikTok live</li>
-      <li>รอ ~5s</li>
-    </ol></div>
+    <div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบ เปิดบัญชีไลฟ์ กด "เริ่มไลฟ์" จนสถานะ "กำลังไลฟ์"</li><li>เปิดหน้ารายละเอียดไลฟ์ แล้วดูแผงแชท</li><li>ให้ผู้ช่วยคอมเมนต์บน TikTok live</li><li>รอสักครู่ แล้วดูแผงแชท</li></ol></div>
     <div class="grid">
       <div class="sec"><h4>Expected Result</h4><ul>
         <li>comment ปรากฏใน chat panel ภายใน ~5s</li>
@@ -1230,10 +1160,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
   <td colspan="7"><div class="card">
     <div class="h-title">chat panel แสดง viewer count realtime (format th-TH)</div>
     <div class="h-prio">Priority: <b>P1</b> · E2E · #4 chat</div>
-    <div class="sec"><h4>Test Steps</h4><ol>
-      <li>ไลฟ์กำลังรัน, มี viewer</li>
-      <li>ดู header ของ chat panel</li>
-    </ol></div>
+    <div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบ ขณะไลฟ์กำลังรันและมีผู้ชม</li><li>ดูส่วนหัวของแผงแชท (จำนวนผู้ชม)</li></ol></div>
     <div class="grid">
       <div class="sec"><h4>Expected Result</h4><ul>
         <li>data-testid="live-chat-viewers" แสดงอยู่</li>
@@ -1263,11 +1190,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
   <td colspan="7"><div class="card">
     <div class="h-title">ก่อนมี comment → แสดง "ยังไม่มีคอมเมนต์"</div>
     <div class="h-prio">Priority: <b>P1</b> · UI · #4 chat</div>
-    <div class="sec"><h4>Test Steps</h4><ol>
-      <li>Start session</li>
-      <li>เปิด Session Detail ทันที (ยังไม่มีคน comment)</li>
-      <li>ดู chat panel</li>
-    </ol></div>
+    <div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบ เปิดบัญชีไลฟ์ กด "เริ่มไลฟ์"</li><li>เปิดหน้ารายละเอียดไลฟ์ทันที (ยังไม่มีใครคอมเมนต์)</li><li>ดูแผงแชท</li></ol></div>
     <div class="grid">
       <div class="sec"><h4>Expected Result</h4><ul>
         <li>แสดงข้อความ "ยังไม่มีคอมเมนต์"</li>
@@ -1296,11 +1219,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
   <td colspan="7"><div class="card">
     <div class="h-title">chat panel auto-scroll ลงล่างเมื่อ comment ใหม่มา</div>
     <div class="h-prio">Priority: <b>P2</b> · UI · #4 chat</div>
-    <div class="sec"><h4>Test Steps</h4><ol>
-      <li>รอให้มี comment หลายข้อ จน scroll ได้</li>
-      <li>อย่า scroll ขึ้นบน (อยู่ล่างสุด)</li>
-      <li>รอ comment ใหม่</li>
-    </ol></div>
+    <div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบ อยู่ในไลฟ์ที่มีคอมเมนต์เยอะจนเลื่อนได้</li><li>ปล่อยแผงแชทให้อยู่ล่างสุด (อย่าเลื่อนขึ้น)</li><li>รอคอมเมนต์ใหม่เข้ามา</li></ol></div>
     <div class="grid">
       <div class="sec"><h4>Expected Result</h4><ul>
         <li>panel scroll ลงแสดง comment ใหม่อัตโนมัติ</li>
@@ -1334,11 +1253,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
       <li>ลบหรือ rename package tiktok-live-connector ออกชั่วคราว</li>
       <li>หรือทดสอบบน environment ที่ไม่มี dep นี้</li>
     </ul></div>
-    <div class="sec"><h4>Test Steps</h4><ol>
-      <li>Start Electron app โดยไม่มี tiktok-live-connector</li>
-      <li>Start session → live</li>
-      <li>ดู console log + chat panel</li>
-    </ol></div>
+    <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อปในเครื่องที่ยังไม่ได้ติดตั้งส่วนเสริมอ่านคอมเมนต์ (tiktok-live-connector)</li><li>เข้าสู่ระบบ กด "เริ่มไลฟ์" จนสถานะ "กำลังไลฟ์"</li><li>ดูแผงแชทและข้อความเตือนของแอป</li></ol></div>
     <div class="grid">
       <div class="sec"><h4>Expected Result</h4><ul>
         <li>log แสดง "[oracle] tiktok-live-connector not installed — live chat decode disabled"</li>
@@ -1377,11 +1292,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
       <li>session กำลัง live</li>
       <li>มีการขายเกิดขึ้นในไลฟ์</li>
     </ul></div>
-    <div class="sec"><h4>Test Steps</h4><ol>
-      <li>Start session → ไลฟ์</li>
-      <li>oracle pollCookies (ทุก 30s) push shop cookie</li>
-      <li>เปิด Session Detail → ดู GMV panel</li>
-    </ol></div>
+    <div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบ เปิดบัญชีไลฟ์ กด "เริ่มไลฟ์" จนสถานะ "กำลังไลฟ์"</li><li>รอสักครู่ให้ระบบดึงข้อมูลร้าน</li><li>เปิดหน้ารายละเอียดไลฟ์ แล้วดูแผง "ยอดขายสด"</li></ol></div>
     <div class="grid">
       <div class="sec"><h4>Expected Result</h4><ul>
         <li>data-testid="gmv-panel" แสดงอยู่</li>
@@ -1411,10 +1322,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
   <td colspan="7"><div class="card">
     <div class="h-title">GMV panel แสดง top products พร้อมยอดรายสินค้า</div>
     <div class="h-prio">Priority: <b>P1</b> · UI · #5 GMV</div>
-    <div class="sec"><h4>Test Steps</h4><ol>
-      <li>มียอดขายจากหลาย products</li>
-      <li>ดู GMV panel ส่วน top products</li>
-    </ol></div>
+    <div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบ อยู่ในไลฟ์ที่มียอดขายจากหลายสินค้า</li><li>ดูแผง "ยอดขายสด" ส่วนสินค้าขายดี</li></ol></div>
     <div class="grid">
       <div class="sec"><h4>Expected Result</h4><ul>
         <li>รายการ top products เรียงตาม GMV สูงสุด</li>
@@ -1443,12 +1351,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
   <td colspan="7"><div class="card">
     <div class="h-title">GMV อัพเดทอัตโนมัติ ~30s หลังมียอดขายใหม่</div>
     <div class="h-prio">Priority: <b>P1</b> · E2E · #5 GMV</div>
-    <div class="sec"><h4>Test Steps</h4><ol>
-      <li>จด GMV ปัจจุบัน</li>
-      <li>มีการขายเพิ่ม (buy product ใน TikTok live)</li>
-      <li>รอ ~30-60s</li>
-      <li>ดู GMV panel อีกครั้ง</li>
-    </ol></div>
+    <div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบ จดยอดใน "ยอดขายสด" ปัจจุบัน</li><li>ให้มีการซื้อสินค้าเพิ่มในไลฟ์</li><li>รอ ~30–60 วินาที</li><li>ดูแผง "ยอดขายสด" อีกครั้ง</li></ol></div>
     <div class="grid">
       <div class="sec"><h4>Expected Result</h4><ul>
         <li>ยอด GMV เพิ่มขึ้นตามยอดขายใหม่</li>
@@ -1483,10 +1386,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
       <li>ไม่มี uid_tt cookie บน shop.tiktok.com</li>
       <li>session กำลัง live</li>
     </ul></div>
-    <div class="sec"><h4>Test Steps</h4><ol>
-      <li>Start session → live</li>
-      <li>เปิด Session Detail → ดู GMV panel</li>
-    </ol></div>
+    <div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบ เปิดบัญชีไลฟ์ที่ยังไม่ได้ล็อกอินร้านค้า กด "เริ่มไลฟ์"</li><li>เปิดหน้ารายละเอียดไลฟ์ แล้วดูแผง "ยอดขายสด"</li></ol></div>
     <div class="grid">
       <div class="sec"><h4>Expected Result</h4><ul>
         <li>GMV panel แสดง empty state หรือ placeholder message</li>
@@ -1524,12 +1424,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
       <li>oracle.js pollReplies รัน (interval 3s)</li>
       <li>oracle มี roomId + streamer_desktop base URL แล้ว</li>
     </ul></div>
-    <div class="sec"><h4>Test Steps</h4><ol>
-      <li>ใน Session Detail → reply box → พิมพ์ "ขอบคุณนะคะ 🙏"</li>
-      <li>กดปุ่ม "ส่ง" หรือ Enter</li>
-      <li>รอ ~3-5s</li>
-      <li>ดู TikTok live chat</li>
-    </ol></div>
+    <div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบ อยู่ในหน้ารายละเอียดไลฟ์ (สถานะ "กำลังไลฟ์")</li><li>ที่ช่อง "ตอบแชท" พิมพ์ "ขอบคุณนะคะ 🙏"</li><li>กด "ส่ง" (หรือ Enter)</li><li>รอสักครู่ แล้วดู TikTok live</li></ol></div>
     <div class="grid">
       <div class="sec"><h4>Expected Result</h4><ul>
         <li>ข้อความ "ขอบคุณนะคะ 🙏" ปรากฏใน TikTok live chat จริง</li>
@@ -1563,11 +1458,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
       <li>oracle window ปิด หรือ TikTok API ตอบ error</li>
       <li>backend ส่ง reply-result กลับมาว่า ok: false</li>
     </ul></div>
-    <div class="sec"><h4>Test Steps</h4><ol>
-      <li>ส่ง reply ขณะ oracle ไม่พร้อม</li>
-      <li>รอ result กลับมา</li>
-      <li>ดูข้อความใน chat panel</li>
-    </ol></div>
+    <div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบ ส่งข้อความในช่อง "ตอบแชท" ตอนระบบยังไม่พร้อม</li><li>รอผลกลับมา</li><li>ดูข้อความในแผงแชท</li></ol></div>
     <div class="grid">
       <div class="sec"><h4>Expected Result</h4><ul>
         <li>ข้อความแสดงพร้อม "(ส่งไม่สำเร็จ)" tag</li>
@@ -1597,11 +1488,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
   <td colspan="7"><div class="card">
     <div class="h-title">ข้อความว่าง → ปุ่ม "ส่ง" disabled</div>
     <div class="h-prio">Priority: <b>P1</b> · UI · #6 reply</div>
-    <div class="sec"><h4>Test Steps</h4><ol>
-      <li>เปิด Session Detail (session กำลัง live)</li>
-      <li>ดูปุ่ม "ส่ง" โดยไม่พิมพ์อะไร</li>
-      <li>ลอง Enter ใน reply box</li>
-    </ol></div>
+    <div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบ เปิดหน้ารายละเอียดไลฟ์ (สถานะ "กำลังไลฟ์")</li><li>ดูปุ่ม "ส่ง" โดยยังไม่พิมพ์อะไร</li><li>ลองกด Enter ในช่อง "ตอบแชท"</li></ol></div>
     <div class="grid">
       <div class="sec"><h4>Expected Result</h4><ul>
         <li>ปุ่ม "ส่ง" disabled (คลิกไม่ได้)</li>
@@ -1631,11 +1518,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
   <td colspan="7"><div class="card">
     <div class="h-title">reply สำเร็จ → แสดงใน chat panel ด้วย self styling (ต่างจาก viewer)</div>
     <div class="h-prio">Priority: <b>P0</b> · E2E · #6 reply</div>
-    <div class="sec"><h4>Test Steps</h4><ol>
-      <li>ส่ง reply สำเร็จ (TC-RP.1 ผ่านก่อน)</li>
-      <li>ดูรูปแบบของข้อความใน chat panel</li>
-      <li>เปรียบเทียบกับ comment ของ viewer ทั่วไป</li>
-    </ol></div>
+    <div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบ ส่งข้อความในช่อง "ตอบแชท" สำเร็จ</li><li>ดูรูปแบบข้อความของเราในแผงแชท</li><li>เทียบกับคอมเมนต์ของผู้ชมทั่วไป</li></ol></div>
     <div class="grid">
       <div class="sec"><h4>Expected Result</h4><ul>
         <li>ข้อความของเรา (self: true) แสดง styling ที่ต่างจาก viewer</li>
@@ -1669,10 +1552,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
     <div class="sec"><h4>Precondition</h4><ul>
       <li>session state เป็น "stopped" หรือ "idle"</li>
     </ul></div>
-    <div class="sec"><h4>Test Steps</h4><ol>
-      <li>เปิด Session Detail ของ session ที่ไม่ live</li>
-      <li>ดูบริเวณ chat panel</li>
-    </ol></div>
+    <div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบ เปิดหน้ารายละเอียดไลฟ์ของไลฟ์ที่ไม่ได้ออกอากาศ</li><li>ดูบริเวณแผงแชทว่ามีช่อง "ตอบแชท" ไหม</li></ol></div>
     <div class="grid">
       <div class="sec"><h4>Expected Result</h4><ul>
         <li>ไม่มี reply input box (aria-label="ตอบแชท")</li>
@@ -1709,12 +1589,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
       <li>เปิดบน Electron desktop app</li>
       <li>มี TikTok account credentials พร้อม login</li>
     </ul></div>
-    <div class="sec"><h4>Test Steps</h4><ol>
-      <li>กดปุ่ม "เพิ่มบัญชี"</li>
-      <li>เลือก "Login ด้วย TikTok" (ipcMain handle tiktok:addViaLogin)</li>
-      <li>popup เปิด → login ด้วย credentials จริง</li>
-      <li>รอ popup ปิดอัตโนมัติ (capture webcast request)</li>
-    </ol></div>
+    <div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบแอปเดสก์ท็อป</li><li>กด "เพิ่มบัญชี"</li><li>เลือก "เข้าสู่ระบบด้วย TikTok" → หน้าต่าง TikTok เปิด แล้วล็อกอินด้วยบัญชีจริง</li><li>รอหน้าต่างปิดเอง</li></ol></div>
     <div class="grid">
       <div class="sec"><h4>Expected Result</h4><ul>
         <li>popup ปิด, account ปรากฏในรายการ</li>
@@ -1745,11 +1620,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
   <td colspan="7"><div class="card">
     <div class="h-title">ยกเลิก popup ก่อน login เสร็จ → ไม่สร้าง account</div>
     <div class="h-prio">Priority: <b>P0</b> · E2E · #7 login</div>
-    <div class="sec"><h4>Test Steps</h4><ol>
-      <li>กด "Login ด้วย TikTok" → popup เปิด</li>
-      <li>ปิด popup กลาง (ก่อน login ครบ)</li>
-      <li>ดูรายการ accounts</li>
-    </ol></div>
+    <div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบ กด "เพิ่มบัญชี" → "เข้าสู่ระบบด้วย TikTok" → หน้าต่างเปิด</li><li>ปิดหน้าต่างกลางคัน (ก่อนล็อกอินเสร็จ)</li><li>ดูรายการบัญชีไลฟ์</li></ol></div>
     <div class="grid">
       <div class="sec"><h4>Expected Result</h4><ul>
         <li>ไม่มี account ใหม่ในรายการ</li>
@@ -1779,11 +1650,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
   <td colspan="7"><div class="card">
     <div class="h-title">Login สำเร็จ → wizard ย้ายไป step 2 (verify success) อัตโนมัติ</div>
     <div class="h-prio">Priority: <b>P1</b> · E2E · #7 login</div>
-    <div class="sec"><h4>Test Steps</h4><ol>
-      <li>เริ่ม AddAccountWizard → เลือก Login popup</li>
-      <li>Login ใน popup สำเร็จ → popup ปิด</li>
-      <li>ดู wizard state</li>
-    </ol></div>
+    <div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบ เริ่มเพิ่มบัญชี → เลือก "เข้าสู่ระบบด้วย TikTok"</li><li>ล็อกอินในหน้าต่างจนสำเร็จ (หน้าต่างปิด)</li><li>ดูขั้นตอนของ wizard</li></ol></div>
     <div class="grid">
       <div class="sec"><h4>Expected Result</h4><ul>
         <li>wizard ข้ามไป step 2 โดยอัตโนมัติ</li>
@@ -1813,11 +1680,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
   <td colspan="7"><div class="card">
     <div class="h-title">เปิดบน web browser → ไม่มีปุ่ม "Login ด้วย TikTok"</div>
     <div class="h-prio">Priority: <b>P1</b> · UI · #7 login (desktop-only guard)</div>
-    <div class="sec"><h4>Test Steps</h4><ol>
-      <li>เปิด http://localhost:3040 ใน browser ปกติ</li>
-      <li>กด "เพิ่มบัญชี"</li>
-      <li>ดูตัวเลือกใน AddAccountWizard</li>
-    </ol></div>
+    <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปบนเว็บเบราว์เซอร์ (ไม่ใช่แอปเดสก์ท็อป)</li><li>กด "เพิ่มบัญชี"</li><li>ดูตัวเลือกในหน้าเพิ่มบัญชี</li></ol></div>
     <div class="grid">
       <div class="sec"><h4>Expected Result</h4><ul>
         <li>ไม่มีปุ่ม "Login ด้วย TikTok"</li>
@@ -1852,11 +1715,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
       <li>desktop app เปิด</li>
       <li>สถานการณ์: login สำเร็จแต่ไม่ได้เข้า Live Center (TikTok ไม่ fire webcast request)</li>
     </ul></div>
-    <div class="sec"><h4>Test Steps</h4><ol>
-      <li>กด "Login ด้วย TikTok" → popup เปิด</li>
-      <li>login สำเร็จแต่ไม่เข้า Live Center</li>
-      <li>รอ popup นาน (เกิน timeout ที่ตั้งไว้)</li>
-    </ol></div>
+    <div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบ กด "เพิ่มบัญชี" → "เข้าสู่ระบบด้วย TikTok" → หน้าต่างเปิด</li><li>ล็อกอินสำเร็จแต่ไม่เข้า Live Center</li><li>รอหน้าต่างนานเกินเวลาที่กำหนด</li></ol></div>
     <div class="grid">
       <div class="sec"><h4>Expected Result</h4><ul>
         <li>popup ปิดอัตโนมัติหลัง timeout</li>
@@ -1895,13 +1754,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
       <li>TC-LG.1 ผ่านแล้ว (มีบัญชีอย่างน้อย 1 บัญชีในระบบ)</li>
       <li>Login เข้า Takra แล้ว</li>
     </ul></div>
-    <div class="sec"><h4>Test Steps</h4><ol>
-      <li>เปิดแอป → หน้าหลัก <code>/</code></li>
-      <li>สังเกต section "บัญชีไลฟ์" บน Control Room</li>
-      <li>ดู account card ของบัญชีที่ verified (status = พร้อม)</li>
-      <li>ดู account card ของบัญชีที่ยังไม่ verify (ถ้ามี)</li>
-      <li>ดู account card ของบัญชีที่ expired (ถ้ามี)</li>
-    </ol></div>
+    <div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบ ไปที่ หน้าหลัก (Control Room)</li><li>ดูส่วน "บัญชีไลฟ์"</li><li>ดูการ์ดบัญชีที่พร้อม (สถานะ "พร้อม")</li><li>ดูการ์ดบัญชีที่ยังไม่พร้อม/หมดอายุ (ถ้ามี)</li></ol></div>
     <div class="grid">
       <div class="sec"><h4>Expected Result</h4><ul>
         <li>Grid 3 คอลัมน์ (desktop) / 2 คอลัมน์ (tablet)</li>
@@ -1937,10 +1790,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
     <div class="sec"><h4>Precondition</h4><ul>
       <li>ระบบที่ยังไม่มีบัญชี TikTok (fresh install หรือลบบัญชีทั้งหมดออกแล้ว)</li>
     </ul></div>
-    <div class="sec"><h4>Test Steps</h4><ol>
-      <li>เปิดแอป → หน้าหลัก <code>/</code></li>
-      <li>ดู section บัญชีไลฟ์</li>
-    </ol></div>
+    <div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบ ไปที่ หน้าหลัก (Control Room)</li><li>ดูส่วน "บัญชีไลฟ์" ของบัญชีที่ยังไม่มีบัญชี TikTok</li></ol></div>
     <div class="grid">
       <div class="sec"><h4>Expected Result</h4><ul>
         <li>แสดงข้อความ "ยังไม่มีบัญชี TikTok"</li>
@@ -1975,16 +1825,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
       <li>เปิดบน Electron desktop app</li>
       <li>มี TikTok account credentials พร้อม login</li>
     </ul></div>
-    <div class="sec"><h4>Test Steps</h4><ol>
-      <li>กดปุ่ม "＋ เพิ่มบัญชี" ใน TopBar (สีส้ม)</li>
-      <li>ตรวจว่า navigate ไปหน้า <code>/accounts/new</code> — header "เพิ่มบัญชีไลฟ์", step indicator 6 ขั้น</li>
-      <li>Step 1 (เข้าสู่ระบบ): กรอกชื่อบัญชี optional → กด "เข้าสู่ระบบด้วย TikTok" → popup TikTok เปิด → login → popup ปิด → auto ข้ามไป step 2</li>
-      <li>Step 2 (เลือกวิดีโอ): กด "ถัดไป" หรือ "ข้าม"</li>
-      <li>Step 3 (ตะกร้าสินค้า): กด "ข้าม"</li>
-      <li>Step 4 (โอเวอร์เลย์): กด "ข้าม"</li>
-      <li>Step 5 (พร็อกซี): กด "ข้าม"</li>
-      <li>Step 6 (AUTO): กด "เสร็จสิ้น"</li>
-    </ol></div>
+    <div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบ กด "＋ เพิ่มบัญชี" (ปุ่มสีส้มด้านบน)</li><li>ดูว่าเข้าหน้า "เพิ่มบัญชีไลฟ์" ที่มี 6 ขั้นตอน</li><li>ขั้นที่ 1 (เข้าสู่ระบบ): กรอกชื่อบัญชี (ไม่บังคับ) → กด "เข้าสู่ระบบด้วย TikTok" → ล็อกอินในหน้าต่าง → ข้ามไปขั้น 2 อัตโนมัติ</li><li>ขั้นที่ 2 (เลือกวิดีโอ): กด "ถัดไป" หรือ "ข้าม"</li><li>ขั้นที่ 3 (ตะกร้าสินค้า): กด "ข้าม"</li><li>ขั้นที่ 4 (โอเวอร์เลย์): กด "ข้าม"</li><li>ขั้นที่ 5 (พร็อกซี): กด "ข้าม"</li><li>ขั้นที่ 6 (AUTO): กด "เสร็จสิ้น"</li></ol></div>
     <div class="grid">
       <div class="sec"><h4>Expected Result</h4><ul>
         <li>toast "เพิ่มบัญชีสำเร็จ ✓" พร้อมชื่อบัญชี</li>
@@ -2019,12 +1860,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
       <li>เปิดบน Electron desktop app</li>
       <li>อยู่ที่หน้า <code>/accounts/new</code> step 1</li>
     </ul></div>
-    <div class="sec"><h4>Test Steps</h4><ol>
-      <li>กรอกชื่อบัญชีในช่อง optional name (เช่น "ร้านหลัก")</li>
-      <li>กด "เข้าสู่ระบบด้วย TikTok" (branding สีดำ ไม่ใช่สีส้ม)</li>
-      <li>popup TikTok เปิด → login ด้วย credentials จริง → popup ปิด</li>
-      <li>ดู wizard state</li>
-    </ol></div>
+    <div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบ เริ่มเพิ่มบัญชี → ขั้นที่ 1</li><li>กรอกชื่อบัญชี เช่น "ร้านหลัก"</li><li>กด "เข้าสู่ระบบด้วย TikTok" (ปุ่มสีดำ) → ล็อกอินในหน้าต่างจนสำเร็จ</li><li>ดูว่า wizard ข้ามไปขั้น 2 (เลือกวิดีโอ) เองหรือไม่</li></ol></div>
     <div class="grid">
       <div class="sec"><h4>Expected Result</h4><ul>
         <li>wizard ข้ามไป <b>step 2 (เลือกวิดีโอ)</b> อัตโนมัติ — ไม่ต้องกด ถัดไป</li>
@@ -2055,11 +1891,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
   <td colspan="7"><div class="card">
     <div class="h-title">เปิดบน web browser → wizard step 1 แสดง "ต้องเปิดบนแอป Takra (เดสก์ท็อป)"</div>
     <div class="h-prio">Priority: <b>P1</b> · UI · บัญชีไลฟ์ (desktop-only guard)</div>
-    <div class="sec"><h4>Test Steps</h4><ol>
-      <li>เปิด http://localhost:3040 ใน browser ปกติ (ไม่ใช่ Electron)</li>
-      <li>กด "＋ เพิ่มบัญชี" ใน TopBar → navigate ไปหน้า <code>/accounts/new</code></li>
-      <li>ดู step 1 ของ wizard</li>
-    </ol></div>
+    <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปบนเว็บเบราว์เซอร์ (ไม่ใช่แอปเดสก์ท็อป)</li><li>กด "＋ เพิ่มบัญชี" → เข้าหน้าเพิ่มบัญชีไลฟ์</li><li>ดูขั้นที่ 1</li></ol></div>
     <div class="grid">
       <div class="sec"><h4>Expected Result</h4><ul>
         <li>แสดงข้อความ "ต้องเปิดบนแอป Takra (เดสก์ท็อป) เพื่อเพิ่มบัญชี"</li>
@@ -2092,14 +1924,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
     <div class="sec"><h4>Precondition</h4><ul>
       <li>TC-AC.3 ผ่านแล้ว (มีบัญชีในระบบ)</li>
     </ul></div>
-    <div class="sec"><h4>Test Steps</h4><ol>
-      <li>บน Control Room กดไอคอน settings (⚙) บน account card</li>
-      <li>ตรวจ URL — ต้องเป็น <code>/accounts/{id}</code></li>
-      <li>ดู header: avatar, ชื่อ, @handle, status badge</li>
-      <li>ดู toolbar: ปุ่ม action ต่างๆ</li>
-      <li>ดู tabs ทั้งหมด</li>
-      <li>กดปุ่ม "← บัญชีไลฟ์"</li>
-    </ol></div>
+    <div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบ ที่หน้าหลัก กดไอคอนตั้งค่า (⚙) บนการ์ดบัญชีไลฟ์</li><li>ดูว่าเข้าหน้ารายละเอียดบัญชีไลฟ์</li><li>ดูส่วนหัว: รูป, ชื่อ, @บัญชี, ป้ายสถานะ</li><li>ดูแถบเครื่องมือ (ปุ่ม action ต่าง ๆ)</li><li>ดูแท็บทั้งหมด (ตั้งค่าไลฟ์ · วิดีโอ · ตะกร้าสินค้า · โอเวอร์เลย์ · พร็อกซี · AUTO)</li><li>กดปุ่ม "← บัญชีไลฟ์"</li></ol></div>
     <div class="grid">
       <div class="sec"><h4>Expected Result</h4><ul>
         <li>Header: avatar + ชื่อบัญชี + @handle + status badge + auto badge</li>
@@ -2134,13 +1959,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
       <li>TC-AC.3 ผ่านแล้ว</li>
       <li>อยู่ที่หน้า account detail</li>
     </ul></div>
-    <div class="sec"><h4>Test Steps</h4><ol>
-      <li>กดปุ่ม "✎ แก้ไข"</li>
-      <li>EditAccountDialog เปิด — ตรวจ title "แก้ไขบัญชี"</li>
-      <li>เปลี่ยนชื่อในช่อง "ชื่อบัญชี" (ปล่อย curl ว่างไว้)</li>
-      <li>ตรวจว่าปุ่ม "บันทึก" ถูก enable (ชื่อเปลี่ยน + curl ว่าง = valid)</li>
-      <li>กด "บันทึก"</li>
-    </ol></div>
+    <div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบ เปิดบัญชีไลฟ์ กดปุ่ม "✎ แก้ไข"</li><li>ดูกล่อง "แก้ไขบัญชี"</li><li>เปลี่ยนชื่อในช่อง "ชื่อบัญชี" (เว้น curl ว่างไว้)</li><li>ดูว่าปุ่ม "บันทึก" กดได้</li><li>กด "บันทึก"</li></ol></div>
     <div class="grid">
       <div class="sec"><h4>Expected Result</h4><ul>
         <li>dialog ปิด</li>
@@ -2175,14 +1994,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
       <li>มีบัญชีที่ status = "Session หมดอายุ" — card มี border แดงบาง</li>
       <li>มี curl ใหม่ที่ valid พร้อมวาง</li>
     </ul></div>
-    <div class="sec"><h4>Test Steps</h4><ol>
-      <li>บน Control Room ดู card ที่มี badge "Session หมดอายุ" สีแดง</li>
-      <li>กดปุ่ม "วาง curl ใหม่" บน card (หรือเข้า detail → กด "✎ แก้ไข")</li>
-      <li>EditAccountDialog เปิด — ตรวจ description "วาง curl ใหม่เพื่อกู้คืน session ที่หมดอายุ"</li>
-      <li>วาง curl ใหม่ในช่อง curl (ปุ่ม "บันทึก" จะ enable เมื่อ curl ผ่าน validate)</li>
-      <li>กด "บันทึก"</li>
-      <li>กด "✓ ตรวจ session" เพื่อยืนยัน</li>
-    </ol></div>
+    <div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบ ที่หน้าหลัก ดูการ์ดที่มีป้าย "Session หมดอายุ" (สีแดง)</li><li>กด "วาง curl ใหม่" บนการ์ด (หรือเข้ารายละเอียด → "✎ แก้ไข")</li><li>ดูกล่องแก้ไขบัญชี (คำอธิบายเรื่องกู้ session)</li><li>วาง curl ใหม่ในช่อง curl</li><li>กด "บันทึก"</li><li>กด "✓ ตรวจ session"</li></ol></div>
     <div class="grid">
       <div class="sec"><h4>Expected Result</h4><ul>
         <li>dialog ปิด</li>
@@ -2216,12 +2028,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
     <div class="sec"><h4>Precondition</h4><ul>
       <li>TC-AC.3 ผ่านแล้ว (มีบัญชีที่ไม่ได้ live อยู่)</li>
     </ul></div>
-    <div class="sec"><h4>Test Steps</h4><ol>
-      <li>ไปหน้า account detail</li>
-      <li>กดปุ่ม "🗑 ลบ"</li>
-      <li>DeleteAccountDialog เปิด — ตรวจ title "ลบบัญชี" และ description แสดงชื่อบัญชี + คำเตือน "ไม่สามารถย้อนกลับได้"</li>
-      <li>กด "ลบ" (destructive variant สีแดง)</li>
-    </ol></div>
+    <div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบ เปิดหน้ารายละเอียดบัญชีไลฟ์</li><li>กดปุ่ม "🗑 ลบ"</li><li>ดูกล่อง "ลบบัญชี" (แสดงชื่อบัญชี + คำเตือน "ไม่สามารถย้อนกลับได้")</li><li>กด "ลบ" (ปุ่มสีแดง)</li></ol></div>
     <div class="grid">
       <div class="sec"><h4>Expected Result</h4><ul>
         <li>toast "ลบบัญชีสำเร็จ"</li>
@@ -2255,12 +2062,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
     <div class="sec"><h4>Precondition</h4><ul>
       <li>มีบัญชีที่กำลัง live อยู่ (session active)</li>
     </ul></div>
-    <div class="sec"><h4>Test Steps</h4><ol>
-      <li>ไปหน้า account detail ของบัญชีที่กำลัง live</li>
-      <li>สังเกตสถานะปุ่ม "🗑 ลบ"</li>
-      <li>กดปุ่ม "🗑 ลบ" (ถ้า enable)</li>
-      <li>ดู dialog response</li>
-    </ol></div>
+    <div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบ เปิดหน้ารายละเอียดบัญชีไลฟ์ที่กำลังไลฟ์</li><li>ดูสถานะปุ่ม "🗑 ลบ"</li><li>กดปุ่ม "🗑 ลบ" (ถ้ากดได้)</li><li>ดูผลที่แอปตอบกลับ</li></ol></div>
     <div class="grid">
       <div class="sec"><h4>Expected Result</h4><ul>
         <li>ปุ่ม "🗑 ลบ" ถูก <b>disable</b> ขณะ session active (ไม่สามารถกดได้)</li>
@@ -2298,12 +2100,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
       <li>⛔ <b>BLOCKED</b>: ยังไม่มี implementation (audio drop detection ไม่อยู่ใน codebase)</li>
       <li>ต้องเพิ่ม: ffprobe/ffmpeg silencedetect filter หรือ monitor loop ตรวจสอบ audio level</li>
     </ul></div>
-    <div class="sec"><h4>Test Steps</h4><ol>
-      <li>(รอ implement ก่อน)</li>
-      <li>ใช้ video clip ที่มีเสียงหลุด (silent) เกิน 3 นาที</li>
-      <li>Start session</li>
-      <li>รอ 3+ นาที</li>
-    </ol></div>
+    <div class="sec"><h4>Test Steps</h4><ol><li>(รอฟีเจอร์นี้ทำก่อน — ยังทดสอบไม่ได้)</li><li>เตรียมวิดีโอที่เสียงหลุด (เงียบ) เกิน 3 นาที</li><li>เข้าสู่ระบบ กด "เริ่มไลฟ์" ด้วยวิดีโอนั้น</li><li>รอเกิน 3 นาที แล้วดูว่ามีการแจ้งเตือนไหม</li></ol></div>
     <div class="grid">
       <div class="sec"><h4>Expected Result</h4><ul>
         <li>ระบบตรวจจับ audio silence เกิน 3 นาที</li>
@@ -2341,10 +2138,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
       <li>เปิด Electron app หรือ browser ใหม่ (ไม่มี session cookie)</li>
       <li>ยังไม่เคย login</li>
     </ul></div>
-    <div class="sec"><h4>Test Steps</h4><ol>
-      <li>เปิด app / เปิด http://localhost:3040</li>
-      <li>สังเกต URL / หน้าที่แสดง</li>
-    </ol></div>
+    <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป (ยังไม่ได้เข้าสู่ระบบ)</li><li>ดู URL / หน้าที่แสดง</li></ol></div>
     <div class="grid">
       <div class="sec"><h4>Expected Result</h4><ul>
         <li>redirect ไปหน้า Login (LoginScreen) อัตโนมัติ</li>
@@ -2378,12 +2172,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
       <li>Zitadel service รันอยู่ (local docker หรือ cloud)</li>
       <li>มี user account ใน Zitadel พร้อม workspace</li>
     </ul></div>
-    <div class="sec"><h4>Test Steps</h4><ol>
-      <li>กดปุ่ม "เข้าสู่ระบบ" บนหน้า Login</li>
-      <li>กรอก email + password บนหน้า Zitadel</li>
-      <li>กด Login → รอ redirect กลับ /auth/callback</li>
-      <li>ดูหน้าที่แสดง</li>
-    </ol></div>
+    <div class="sec"><h4>Test Steps</h4><ol><li>กดปุ่ม "เข้าสู่ระบบ" บนหน้าเข้าสู่ระบบ</li><li>กรอกอีเมล + รหัสผ่านบนหน้า Zitadel</li><li>กดเข้าสู่ระบบ แล้วรอกลับเข้าแอป</li><li>ดูหน้าที่แสดง</li></ol></div>
     <div class="grid">
       <div class="sec"><h4>Expected Result</h4><ul>
         <li>redirect กลับ app ที่ /auth/callback → เข้า dashboard</li>
@@ -2417,12 +2206,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
     <div class="sec"><h4>Precondition</h4><ul>
       <li>Login เข้า app แล้ว (TC-AUTH.2 ผ่าน)</li>
     </ul></div>
-    <div class="sec"><h4>Test Steps</h4><ol>
-      <li>คลิก Logout (จาก navbar หรือ user menu)</li>
-      <li>ยืนยัน (ถ้ามี confirm dialog)</li>
-      <li>สังเกต URL + หน้าที่แสดง</li>
-      <li>ลอง navigate ไป /accounts โดยตรง</li>
-    </ol></div>
+    <div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบแล้ว กดออกจากระบบ (จากเมนูผู้ใช้)</li><li>ยืนยัน (ถ้ามีกล่องถาม)</li><li>ดู URL + หน้าที่แสดง</li><li>ลองเข้าหน้าบัญชีไลฟ์ (/accounts) โดยตรง</li></ol></div>
     <div class="grid">
       <div class="sec"><h4>Expected Result</h4><ul>
         <li>session cookie ถูก clear</li>
@@ -2456,10 +2240,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
     <div class="sec"><h4>Precondition</h4><ul>
       <li>ไม่มี session cookie (ยังไม่ login หรือ logout แล้ว)</li>
     </ul></div>
-    <div class="sec"><h4>Test Steps</h4><ol>
-      <li>พิมพ์ URL http://localhost:3040/accounts ตรงๆ ใน address bar</li>
-      <li>กด Enter</li>
-    </ol></div>
+    <div class="sec"><h4>Test Steps</h4><ol><li>ยังไม่เข้าสู่ระบบ</li><li>พิมพ์ URL ของหน้าบัญชีไลฟ์ (/accounts) ตรง ๆ แล้วกด Enter</li></ol></div>
     <div class="grid">
       <div class="sec"><h4>Expected Result</h4><ul>
         <li>redirect ไปหน้า Login ทันที</li>
@@ -2493,12 +2274,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
       <li>Login แล้ว</li>
       <li>ลบ session cookie ด้วยมือ (DevTools → Application → Cookies → ลบ) หรือรอให้หมดอายุจริง</li>
     </ul></div>
-    <div class="sec"><h4>Test Steps</h4><ol>
-      <li>Login เข้า app</li>
-      <li>ลบ session cookie จาก DevTools</li>
-      <li>Refresh หน้า (F5 / Cmd+R)</li>
-      <li>สังเกตพฤติกรรม</li>
-    </ol></div>
+    <div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบ</li><li>จำลอง session หมดอายุ (ลบ session — ขอทีม dev ช่วย)</li><li>รีเฟรชหน้า (F5)</li><li>ดูพฤติกรรมของแอป</li></ol></div>
     <div class="grid">
       <div class="sec"><h4>Expected Result</h4><ul>
         <li>redirect ไปหน้า Login</li>
@@ -2530,11 +2306,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
 <tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">อัปโหลดวีดีโอ → แสดงในรายการพร้อมชื่อและขนาด</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · เมนูวีดีโอ</div>
-  <div class="sec"><h4>Test Steps</h4><ol>
-    <li>เปิดเมนู "วีดีโอ"</li>
-    <li>กดปุ่ม "อัปโหลด" หรือ drag-and-drop ไฟล์ .mp4</li>
-    <li>รอ upload เสร็จ</li>
-  </ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบ ไปที่เมนู "วิดีโอ"</li><li>กด "อัปโหลดวิดีโอ" หรือ ลากไฟล์ .mp4 มาวาง</li><li>รออัปโหลดเสร็จ</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul>
       <li>ไฟล์ปรากฏในรายการพร้อมชื่อ + ขนาดไฟล์</li>
@@ -2561,11 +2333,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
 <tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">คลิก preview วีดีโอ → VideoPreviewDialog เปิดและเล่นได้</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · เมนูวีดีโอ</div>
-  <div class="sec"><h4>Test Steps</h4><ol>
-    <li>มีวีดีโอในรายการอยู่แล้ว</li>
-    <li>คลิกปุ่ม preview / thumbnail ของวีดีโอ</li>
-    <li>ดู dialog ที่เปิดขึ้น</li>
-  </ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบ ไปที่เมนู "วิดีโอ" (มีวิดีโออยู่แล้ว)</li><li>กด "ดูวิดีโอ" (หรือรูปย่อของวิดีโอ)</li><li>ดูหน้าต่างที่เปิดขึ้น</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul>
       <li>VideoPreviewDialog เปิด</li>
@@ -2592,10 +2360,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
 <tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">ลบวีดีโอ → ยืนยัน → หายจากรายการ + quota ลด</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · เมนูวีดีโอ</div>
-  <div class="sec"><h4>Test Steps</h4><ol>
-    <li>คลิกปุ่มลบบนวีดีโอที่ต้องการ</li>
-    <li>ยืนยันใน DeleteVideoDialog</li>
-  </ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบ ไปที่เมนู "วิดีโอ"</li><li>กด "ลบวิดีโอ" บนวิดีโอที่ต้องการ</li><li>ยืนยันในกล่องลบวิดีโอ</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul>
       <li>วีดีโอหายจากรายการ</li>
@@ -2622,9 +2387,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
 <tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">อัปโหลดไฟล์ที่ไม่ใช่ video → validation error แสดง</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · เมนูวีดีโอ</div>
-  <div class="sec"><h4>Test Steps</h4><ol>
-    <li>ลอง drag-and-drop ไฟล์ .pdf หรือ .jpg</li>
-  </ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบ ไปที่เมนู "วิดีโอ"</li><li>ลากไฟล์ .pdf หรือ .jpg มาวาง</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul>
       <li>แสดง error "ไฟล์ไม่ถูกต้อง รองรับเฉพาะ video"</li>
@@ -2651,10 +2414,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
 <tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">Quota เต็ม → อัปโหลดเพิ่มไม่ได้ + แสดง quota banner</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · เมนูวีดีโอ</div>
-  <div class="sec"><h4>Test Steps</h4><ol>
-    <li>อัปโหลดจนเต็ม quota ของ workspace</li>
-    <li>ลองอัปโหลดไฟล์เพิ่มอีก</li>
-  </ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบ ไปที่เมนู "วิดีโอ" อัปโหลดจนเต็มโควตา</li><li>ลองอัปโหลดไฟล์เพิ่มอีก</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul>
       <li>quota bar เต็ม (แดง)</li>
@@ -2684,10 +2444,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
   <div class="sec"><h4>Precondition</h4><ul>
     <li>session กำลัง live และใช้วีดีโอนั้นอยู่</li>
   </ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol>
-    <li>Start session ที่เลือกวีดีโอ A</li>
-    <li>ไปเมนูวีดีโอ → ลองลบวีดีโอ A</li>
-  </ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบ เริ่มไลฟ์ด้วยวิดีโอ A</li><li>ไปที่เมนู "วิดีโอ" แล้วลองลบวิดีโอ A</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul>
       <li>แสดง warning "วีดีโอนี้กำลังถูกใช้งาน" หรือ disable ปุ่มลบ</li>
@@ -2717,11 +2474,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
 <tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">ตั้งชื่อไลฟ์ → บันทึก → persist หลัง reload</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · เมนูไลฟ์</div>
-  <div class="sec"><h4>Test Steps</h4><ol>
-    <li>เปิด Live Settings (แท็บ Live) ของ account</li>
-    <li>กรอกชื่อไลฟ์ เช่น "ไลฟ์ทดสอบ 001"</li>
-    <li>กด "บันทึก" → reload หน้า</li>
-  </ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบ เปิดบัญชีไลฟ์ → แท็บ "ตั้งค่าไลฟ์"</li><li>กรอกชื่อไลฟ์ เช่น "ไลฟ์ทดสอบ 001"</li><li>กด "บันทึก" แล้วรีเฟรชหน้า</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul>
       <li>ชื่อยังคงอยู่หลัง reload</li>
@@ -2747,11 +2500,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
 <tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">เลือก category → บันทึก → persist และใช้ตอน Start</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · เมนูไลฟ์</div>
-  <div class="sec"><h4>Test Steps</h4><ol>
-    <li>เปิด Live Settings → แท็บ Live</li>
-    <li>เลือก category จาก dropdown (เช่น "Entertainment")</li>
-    <li>บันทึก → reload</li>
-  </ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบ เปิดบัญชีไลฟ์ → แท็บ "ตั้งค่าไลฟ์"</li><li>เลือกหมวดหมู่จากรายการ (เช่น "Entertainment")</li><li>กด "บันทึก" แล้วรีเฟรช</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul>
       <li>category ยังถูกเลือกอยู่หลัง reload</li>
@@ -2777,12 +2526,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
 <tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">เปิด auto-restart + ตั้ง countdown → บันทึก → persist</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · เมนูไลฟ์ (แท็บ AUTO)</div>
-  <div class="sec"><h4>Test Steps</h4><ol>
-    <li>เปิด Live Settings → แท็บ AUTO</li>
-    <li>toggle auto-restart เป็น ON</li>
-    <li>ตั้ง countdown เช่น 5 วินาที</li>
-    <li>บันทึก → reload</li>
-  </ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบ เปิดบัญชีไลฟ์ → แท็บ "AUTO"</li><li>เปิด "ตั้งค่าเริ่มใหม่อัตโนมัติ"</li><li>ตั้งเวลานับถอยหลัง เช่น 5 วินาที</li><li>กด "บันทึก" แล้วรีเฟรช</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul>
       <li>auto-restart ยังเป็น ON หลัง reload</li>
@@ -2810,11 +2554,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
   <div class="h-title">เลือกวีดีโอใน Live Settings → บันทึก → Start session ใช้วีดีโอนั้น</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · เมนูไลฟ์ (แท็บ Video)</div>
   <div class="sec"><h4>Precondition</h4><ul><li>มีวีดีโออยู่ใน library แล้ว (TC-VD.1 ผ่าน)</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol>
-    <li>เปิด Live Settings → แท็บ Video</li>
-    <li>เลือกวีดีโอจากรายการ</li>
-    <li>บันทึก → Start session</li>
-  </ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบ เปิดบัญชีไลฟ์ → แท็บ "วิดีโอ"</li><li>เลือกวิดีโอจากรายการ</li><li>กด "บันทึก" แล้วกด "เริ่มไลฟ์"</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul>
       <li>วีดีโอที่เลือก highlight อยู่หลัง reload</li>
@@ -2844,11 +2584,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
     <li>TC-LS.3 ผ่าน (auto-restart ON, countdown 5s)</li>
     <li>session กำลัง live</li>
   </ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol>
-    <li>หยุด session (หรือรอให้ error)</li>
-    <li>ดู UI countdown</li>
-    <li>รอครบ countdown</li>
-  </ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบ (เปิด "ตั้งค่าเริ่มใหม่อัตโนมัติ" ไว้แล้ว) กด "หยุด" (หรือรอให้ error)</li><li>ดูการนับถอยหลังบนหน้าจอ</li><li>รอจนครบเวลานับ</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul>
       <li>countdown นับถอยหลังใน UI</li>
@@ -2880,11 +2616,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
   <div class="h-title">กรอก Telegram bot token + chat ID → test → สำเร็จ</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · Settings → Telegram</div>
   <div class="sec"><h4>Precondition</h4><ul><li>มี Telegram bot token และ chat ID จริง</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol>
-    <li>เปิด Settings → แท็บ Telegram</li>
-    <li>กรอก bot token และ chat ID</li>
-    <li>กด "ทดสอบ"</li>
-  </ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบ ไปที่ ตั้งค่า → แท็บ "บอท Telegram"</li><li>กรอก bot token และ chat ID</li><li>กด "ทดสอบ"</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul>
       <li>ส่ง test message ไป Telegram สำเร็จ</li>
@@ -2911,10 +2643,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
 <tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">Telegram token ผิด → test แสดง error ชัดเจน</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · Settings → Telegram</div>
-  <div class="sec"><h4>Test Steps</h4><ol>
-    <li>กรอก bot token ผิด (random string)</li>
-    <li>กด "ทดสอบ"</li>
-  </ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบ ไปที่ ตั้งค่า → "บอท Telegram"</li><li>กรอก bot token ผิด (สุ่มตัวอักษร)</li><li>กด "ทดสอบ"</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul>
       <li>แสดง error "token ไม่ถูกต้อง" หรือ Telegram API error</li>
@@ -2941,12 +2670,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
   <div class="h-title">session เริ่ม/หยุด → Telegram ส่ง notification จริง</div>
   <div class="h-prio">Priority: <b>P1</b> · E2E · Settings → Telegram</div>
   <div class="sec"><h4>Precondition</h4><ul><li>TC-ST.1 ผ่าน (Telegram configured)</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol>
-    <li>Start session → รอ state "live"</li>
-    <li>ดู Telegram</li>
-    <li>Stop session</li>
-    <li>ดู Telegram อีกครั้ง</li>
-  </ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบ กด "เริ่มไลฟ์" จนสถานะ "กำลังไลฟ์"</li><li>ดู Telegram</li><li>กด "หยุด"</li><li>ดู Telegram อีกครั้ง</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul>
       <li>รับ notification "session เริ่มแล้ว" ตอน Start</li>
@@ -2973,10 +2697,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
 <tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">Audit log viewer แสดง entries ล่าสุดพร้อม timestamp</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · Settings → Audit</div>
-  <div class="sec"><h4>Test Steps</h4><ol>
-    <li>ทำ action ที่ trigger audit เช่น Start/Stop session, เพิ่ม account</li>
-    <li>เปิด Settings → Audit</li>
-  </ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบ ทำสิ่งที่ระบบบันทึกเหตุการณ์ เช่น เริ่ม/หยุดไลฟ์ หรือเพิ่มบัญชี</li><li>ไปที่ ตั้งค่า → แท็บ "บันทึกการทำงาน"</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul>
       <li>รายการ audit entries แสดงล่าสุดก่อน</li>
@@ -3003,9 +2724,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
 <tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">System Status แสดง version + health ของ backend</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · Settings → System Status</div>
-  <div class="sec"><h4>Test Steps</h4><ol>
-    <li>เปิด Settings → System Status</li>
-  </ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบ ไปที่ ตั้งค่า → แท็บ "ระบบ" (สถานะระบบ)</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul>
       <li>แสดง version ของ app (commit hash / tag)</li>
@@ -3032,11 +2751,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
 <tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">Audit Settings — ตั้งค่า retention → entries เก่ากว่ากำหนดถูกลบ</div>
   <div class="h-prio">Priority: <b>P2</b> · E2E · Settings → Audit</div>
-  <div class="sec"><h4>Test Steps</h4><ol>
-    <li>เปิด Settings → Audit → AuditSettingsTab</li>
-    <li>ตั้ง retention เช่น 7 วัน</li>
-    <li>บันทึก → ดู audit entries</li>
-  </ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบ ไปที่ ตั้งค่า → "บันทึกการทำงาน" → ตั้งค่า</li><li>ตั้งระยะเก็บ เช่น 7 วัน</li><li>กด "บันทึก" แล้วดูรายการบันทึก</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul>
       <li>ตั้งค่า persist</li>
@@ -3070,16 +2785,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
     <li>มี TikTok account 2 บัญชี login ไว้ใน Takra (TC-LG.1 ผ่าน 2 ครั้ง)</li>
     <li>แต่ละ account มี product set และ video พร้อม</li>
   </ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol>
-    <li>Start session ของ Account A → รอ state "live"</li>
-    <li>Start session ของ Account B → รอ state "live"</li>
-    <li>ดู chat panel ของแต่ละ account แยกกัน</li>
-    <li>ให้คนอื่น comment ใน live ของ A → ดูว่า comment ขึ้นแค่ใน panel ของ A เท่านั้น</li>
-    <li>ให้คนอื่น comment ใน live ของ B → ดูว่า comment ขึ้นแค่ใน panel ของ B เท่านั้น</li>
-    <li>ดู GMV panel ของแต่ละ account — ยอดแยกกัน ไม่รวมกัน</li>
-    <li>Stop session A → session B ยังคง live อยู่</li>
-    <li>Stop session B</li>
-  </ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบ เปิดบัญชี A กด "เริ่มไลฟ์" จนสถานะ "กำลังไลฟ์"</li><li>เปิดบัญชี B กด "เริ่มไลฟ์" จนสถานะ "กำลังไลฟ์"</li><li>ดูแผงแชทของแต่ละบัญชีแยกกัน</li><li>ให้คนคอมเมนต์ในไลฟ์ A → ดูว่าขึ้นแค่แผงแชทของ A</li><li>ให้คนคอมเมนต์ในไลฟ์ B → ดูว่าขึ้นแค่แผงแชทของ B</li><li>ดูแผง "ยอดขายสด" ของแต่ละบัญชี — ยอดแยกกัน</li><li>กด "หยุด" บัญชี A → บัญชี B ยัง "กำลังไลฟ์"</li><li>กด "หยุด" บัญชี B</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul>
       <li>oracle สร้าง hidden window แยกต่อ session — ไม่ปนกัน</li>
@@ -3111,14 +2817,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
     <li>Session กำลัง live (state "live") อยู่</li>
     <li>chat, GMV, auto-pin ทำงานอยู่ปกติ</li>
   </ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol>
-    <li>ตัด internet (ปิด Wi-Fi หรือ unplug LAN) ขณะ session live อยู่</li>
-    <li>รอ 30 วินาที → สังเกต state ใน Takra UI</li>
-    <li>เปิด internet กลับ</li>
-    <li>รอ ~15s → ดู state และ chat panel</li>
-    <li>ให้คนอื่น comment ใน live → เช็คว่า chat กลับมาแสดงได้</li>
-    <li>เช็ค stream บน TikTok ว่ากลับมาหรือเปล่า</li>
-  </ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบ ขณะไลฟ์อยู่ ตัดอินเทอร์เน็ต (ปิด Wi-Fi/ถอดสาย)</li><li>รอ 30 วินาที แล้วดูสถานะในแอป</li><li>เปิดอินเทอร์เน็ตกลับ</li><li>รอ ~15 วินาที แล้วดูสถานะและแผงแชท</li><li>ให้คนคอมเมนต์ในไลฟ์ → เช็กว่าแชทกลับมา</li><li>เช็ก stream บน TikTok ว่ากลับมาไหม</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul>
       <li>ขณะ offline: UI แสดง state "disconnected" หรือ warning ชัดเจน — ไม่ crash</li>
@@ -3154,12 +2853,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
     <li>Session กำลัง live อยู่</li>
     <li>สามารถจำลอง cookie expiry ได้ (ลบ cookie ใน oracle partition ด้วย DevTools หรือรอจนหมดอายุจริง)</li>
   </ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol>
-    <li>ขณะ live อยู่ → เปิด Electron DevTools (oracle window) → ลบ cookie ของ tiktok.com ใน partition ของ oracle</li>
-    <li>รอ pollCookies รอบถัดไป (~30s) → ดู backend log หรือ UI</li>
-    <li>รอ pollReplies รอบถัดไป (~3s) → ลอง reply → ดูผล</li>
-    <li>ดูว่า app แจ้งเตือน operator หรือพยายาม re-login เอง</li>
-  </ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบ ขณะไลฟ์อยู่ จำลอง cookie TikTok หมดอายุ (ขอทีม dev ช่วย)</li><li>รอสักครู่ แล้วดูสถานะ/ข้อความในแอป</li><li>ลองตอบแชท แล้วดูผล</li><li>ดูว่าแอปแจ้งเตือน หรือพยายามเชื่อมต่อใหม่เอง</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul>
       <li>app ตรวจพบ 401/403 จาก TikTok → แจ้งเตือน operator "session หมดอายุ กรุณา login ใหม่"</li>
@@ -3196,12 +2890,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
     <li>มีสินค้าที่ tick ไว้ใน Basket</li>
     <li>จำลอง pin failure ได้โดย: ทำให้สินค้า unavailable บน TikTok Shop ก่อน Start หรือ mock API ให้ return error</li>
   </ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol>
-    <li>เลือกสินค้าที่รู้ว่าจะ pin ล้มเหลว (out of stock หรือ delisted) ใน Basket</li>
-    <li>Start session → รอ auto-pin รอบแรก (~4–10s)</li>
-    <li>ดู UI ใน Basket panel หรือ session log</li>
-    <li>รอ pollPins รอบถัดไป (~4s) → ดูว่า retry หรือไม่</li>
-  </ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบ เลือกสินค้าที่จะปักไม่สำเร็จ (ของหมด/ถูกถอด) ในแท็บ "ตะกร้าสินค้า"</li><li>กด "เริ่มไลฟ์" แล้วรอรอบปักสินค้าแรก</li><li>ดูข้อความในแท็บ "ตะกร้าสินค้า" หรือบันทึกของไลฟ์</li><li>รอรอบถัดไป ดูว่าปักซ้ำวนหรือไม่</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul>
       <li>pin job แสดงสถานะ failed ใน UI (ไม่ใช่ pending ค้างตลอด)</li>
@@ -3421,13 +3110,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
     <li>Session live อยู่ + มีสินค้า pin ไว้อย่างน้อย 2 รายการ</li>
     <li>บัญชีลูกค้าทดสอบพร้อม</li>
   </ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol>
-    <li>ลูกค้าเปิด TikTok live → กดไอคอน Shopping Cart</li>
-    <li>กด "หยิบใส่ตะกร้า" สินค้า A (qty 1)</li>
-    <li>กด "หยิบใส่ตะกร้า" สินค้า B (qty 2)</li>
-    <li>กด "ซื้อเลย" → checkout ออเดอร์รวม A + B → ยืนยันชำระ</li>
-    <li>กลับมาที่ Takra → ดู GMV panel หลัง ~30s</li>
-  </ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>ฝั่งลูกค้า: เปิด TikTok live → กดไอคอนตะกร้า</li><li>กด "หยิบใส่ตะกร้า" สินค้า A (จำนวน 1)</li><li>กด "หยิบใส่ตะกร้า" สินค้า B (จำนวน 2)</li><li>กด "ซื้อเลย" → ชำระเงินออเดอร์รวม A + B</li><li>กลับมาที่แอป ดูแผง "ยอดขายสด" หลัง ~30 วินาที</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul>
       <li>GMV แสดงยอดรวม = ราคา A + (ราคา B × 2)</li>
@@ -3458,11 +3141,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
     <li>Session live อยู่ + สินค้า pin ไว้</li>
     <li>มีบัญชีลูกค้าทดสอบ 2–3 บัญชี (คนละ device หรือ คนละ browser)</li>
   </ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol>
-    <li>ลูกค้า A, B, C เปิด live พร้อมกัน</li>
-    <li>ลูกค้า A ซื้อสินค้า X → ลูกค้า B ซื้อสินค้า X → ลูกค้า C ซื้อสินค้า Y (ทำพร้อมกันโดยประมาณ)</li>
-    <li>รอ ~30s → ดู GMV panel ใน Takra</li>
-  </ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>ฝั่งลูกค้า A, B, C เปิดไลฟ์พร้อมกัน</li><li>A ซื้อสินค้า X · B ซื้อสินค้า X · C ซื้อสินค้า Y (พร้อม ๆ กัน)</li><li>รอ ~30 วินาที แล้วดูแผง "ยอดขายสด" ในแอป</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul>
       <li>GMV รวม = ราคา X×2 + ราคา Y</li>
@@ -3490,11 +3169,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
 <tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">ลูกค้า Add to Cart แต่ไม่ checkout (abandoned) → GMV ไม่นับ order นั้น</div>
   <div class="h-prio">Priority: <b>P2</b> · E2E · Abandoned Cart</div>
-  <div class="sec"><h4>Test Steps</h4><ol>
-    <li>ลูกค้าเปิด live → กด "หยิบใส่ตะกร้า" สินค้า A</li>
-    <li>ไม่กด checkout — ปิด cart หรือออกจาก live</li>
-    <li>รอ ~30s → ดู GMV panel ใน Takra</li>
-  </ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>ฝั่งลูกค้า เปิดไลฟ์ → กด "หยิบใส่ตะกร้า" สินค้า A</li><li>ไม่กดชำระเงิน — ปิดตะกร้า/ออกจากไลฟ์</li><li>รอ ~30 วินาที แล้วดูแผง "ยอดขายสด" ในแอป</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul>
       <li>GMV ไม่เพิ่ม (ยังเป็น 0 หรือยอดเดิม)</li>
@@ -3526,13 +3201,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
   <div class="sec"><h4>Precondition</h4><ul>
     <li>Session live + สินค้า pin ไว้ + TC-PUR.1 ผ่านแล้ว</li>
   </ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol>
-    <li>ลูกค้าซื้อสินค้าสำเร็จ → comment "ซื้อแล้วนะคะ" ใน live</li>
-    <li>Takra chat panel แสดง comment "ซื้อแล้วนะคะ" ของลูกค้า</li>
-    <li>Operator คลิก reply box ใน Takra → พิมพ์ "ขอบคุณมากนะครับ รอสินค้าได้เลย" → กด ส่ง</li>
-    <li>ดู TikTok live chat ภายนอก</li>
-    <li>ดู GMV panel ใน Takra ว่าอัพเดทแล้ว</li>
-  </ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>ฝั่งลูกค้าซื้อสำเร็จ → คอมเมนต์ "ซื้อแล้วนะคะ" ในไลฟ์</li><li>ดูว่าแผงแชทในแอปแสดงคอมเมนต์ "ซื้อแล้วนะคะ"</li><li>ที่ช่อง "ตอบแชท" พิมพ์ "ขอบคุณมากนะครับ รอสินค้าได้เลย" → กด "ส่ง"</li><li>ดู TikTok live chat ภายนอก</li><li>ดูแผง "ยอดขายสด" ว่าอัปเดตแล้ว</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul>
       <li>Reply "ขอบคุณมากนะครับ…" ปรากฏใน TikTok live chat ภายใน ~3s</li>
@@ -3563,12 +3232,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
   <div class="sec"><h4>Precondition</h4><ul>
     <li>Session live + มี coupon ที่ออกจาก TikTok Shop (เช่น ส่วนลด 20%)</li>
   </ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol>
-    <li>ลูกค้าเพิ่มสินค้า X (ราคา ฿100) เข้า cart</li>
-    <li>ใส่ coupon code ส่วนลด 20% → ราคาหลังหัก ฿80</li>
-    <li>Checkout ยืนยัน order ฿80</li>
-    <li>รอ ~30s → ดู GMV panel ใน Takra</li>
-  </ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>ฝั่งลูกค้าเพิ่มสินค้า X (฿100) เข้าตะกร้า</li><li>ใส่โค้ดส่วนลด 20% → เหลือ ฿80</li><li>ชำระเงินยืนยันออเดอร์ ฿80</li><li>รอ ~30 วินาที แล้วดูแผง "ยอดขายสด" ในแอป</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul>
       <li>GMV เพิ่ม ฿80 (ราคาหลังหัก) — ไม่ใช่ ฿100 ราคาเต็ม</li>
