@@ -1129,19 +1129,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="featrow" data-featkey="intent-hud"><td colspan="7">📁 intent-hud <span class="rp"><span class="lv lvl-ui">🌐 3 <span style="color:var(--muted)">+1🆕</span></span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="intent-hud"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
 <tr class="trow" data-feat="epic6" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-M1-NLP.1</td>
-  <td class="ctitle">หน้ามอนิเตอร์ไลฟ์สด — ยืนยันว่า "การจับเจตนาคอมเมนต์" ยังปิดอยู่ (SHOW_BLOCKED)</td>
+  <td class="ctitle">เปิดไลฟ์แล้ว ยังไม่มีการแยกประเภทคอมเมนต์ (ถามราคา/ชม/คำถาม) — ทีมยังปิดไว้</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
   <td class="status" data-uid="tc-531"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-531"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">หน้ามอนิเตอร์ไลฟ์สด — ยืนยันว่า "การจับเจตนาคอมเมนต์" ยังปิดอยู่ (SHOW_BLOCKED)</div>
+  <div class="h-title">เปิดไลฟ์แล้ว ยังไม่มีการแยกประเภทคอมเมนต์ (ถามราคา/ชม/คำถาม) — ทีมยังปิดไว้</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · intent-hud · Epic 6</div>
-  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">mvp-1 flow-summary S2 (Comment Intent Classifier · FR20) · prd-th.md FR20 (intent + risk = M1) · user-guide §3.2 (Comment Intent) · ⚠️ สถานะโค้ด 2026-07-26: comment-intent/risk/avoid-words ถูกพักด้วย flag SHOW_BLOCKED=false (Section C · ทีมสั่ง on-hold) → ยังไม่แสดงในแอป · เคสนี้ = ยืนยันว่ายังปิดอยู่ (จะกลับมาเมื่อทีมไฟเขียว)</div></div>
-  <div class="sec"><h4>Precondition</h4><ul><li>เข้าสู่ระบบและเริ่ม/เข้าเซสชันไลฟ์ (หน้ามอนิเตอร์ไลฟ์สด · /session/recording)</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบ แล้วเริ่ม/เข้าเซสชันไลฟ์ (หน้ามอนิเตอร์ไลฟ์สด)</li><li>ดูแผงด้านขวา (Live Health + คอมเมนต์สด)</li><li>มองหาส่วนแยกเจตนาคอมเมนต์ (ถามราคา/โต้แย้ง/ชม/คำถาม)</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ไลฟ์ที่มีคอมเมนต์ไหลเข้า</li></ul></div>
+  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">หมายเหตุ: ฟีเจอร์อ่าน “เจตนาคอมเมนต์” และ “คำเสี่ยง” จากคอมเมนต์ ทีมยังปิดไว้ (ยังไม่เปิดใช้ในแอป) — เคสกลุ่มนี้ไว้ยืนยันว่ายังปิดอยู่</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เข้าสู่ระบบ แล้วเริ่ม/เข้าดูไลฟ์ (หน้ามอนิเตอร์ไลฟ์สด)</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบ แล้วเริ่ม/เข้าดูไลฟ์</li><li>ดูแผงด้านขวา (คะแนนไลฟ์ + คอมเมนต์สด)</li><li>มองหาส่วนที่แยกคอมเมนต์เป็นประเภท เช่น ถามราคา / ชม / ถามข้อมูล</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ไลฟ์ที่มีคอมเมนต์เข้ามา</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ยังไม่มีส่วนแยกเจตนาคอมเมนต์ (comment intent) บนหน้ามอนิเตอร์ — ถูกพักด้วย SHOW_BLOCKED (Section C)</li><li>คะแนน Live Health คำนวณจากสัญญาณอื่นแทน (re-weight เพราะไม่มี intent)</li><li>คอมเมนต์สด (ดิบ) ยังแสดงได้ตามปกติ</li><li>ถ้าพบส่วนเจตนาคอมเมนต์ทำงานจริง = ทีมเปิด flag แล้ว ให้อัปเดตเคสกลับเป็นเทสฟีเจอร์เต็ม</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ยังไม่มีส่วนแยกประเภทคอมเมนต์ (ทีมยังปิดฟีเจอร์นี้ไว้)</li><li>เห็นแต่คอมเมนต์สดแบบดิบ กับคะแนนไลฟ์</li><li>ถ้าเจอว่ามีการแยกประเภทคอมเมนต์แล้ว = ทีมเปิดฟีเจอร์แล้ว ให้แจ้งทีม</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1158,19 +1158,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 </div></td></tr>
 <tr class="trow" data-feat="epic6" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-M1-NLP.2</td>
-  <td class="ctitle">ยืนยันว่าการตีธงคำเสี่ยง + หน้า "คำที่ควรเลี่ยง" ยังปิดอยู่ (SHOW_BLOCKED)</td>
+  <td class="ctitle">ยังไม่มีการเตือนคำเสี่ยง และเมนู “คำที่ควรเลี่ยง” ยังปิดอยู่</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
   <td class="status" data-uid="tc-532"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-532"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">ยืนยันว่าการตีธงคำเสี่ยง + หน้า "คำที่ควรเลี่ยง" ยังปิดอยู่ (SHOW_BLOCKED)</div>
+  <div class="h-title">ยังไม่มีการเตือนคำเสี่ยง และเมนู “คำที่ควรเลี่ยง” ยังปิดอยู่</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · intent-hud · Epic 6</div>
-  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">prd-th.md FR20 (risk class = M1) · user-guide §3.2 · channel-watchlist-workflow (Thai Intent FR20) · ⚠️ สถานะโค้ด 2026-07-26: comment-intent/risk/avoid-words ถูกพักด้วย flag SHOW_BLOCKED=false (Section C · ทีมสั่ง on-hold) → ยังไม่แสดงในแอป · เคสนี้ = ยืนยันว่ายังปิดอยู่ (จะกลับมาเมื่อทีมไฟเขียว)</div></div>
-  <div class="sec"><h4>Precondition</h4><ul><li>เข้าสู่ระบบแล้ว</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ในหน้ามอนิเตอร์ไลฟ์สด มองหาส่วนตีธง "คำเสี่ยงในคำพูด/คอมเมนต์"</li><li>ดูแถบเมนูซ้ายว่ามีรายการ "คำที่ควรเลี่ยง" หรือไม่</li><li>ลองเปิดเส้นทาง /avoid-words ตรง ๆ</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>— (ไล่ UI ตามขั้นตอน)</li></ul></div>
+  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">หมายเหตุ: ฟีเจอร์อ่าน “เจตนาคอมเมนต์” และ “คำเสี่ยง” จากคอมเมนต์ ทีมยังปิดไว้ (ยังไม่เปิดใช้ในแอป) — เคสกลุ่มนี้ไว้ยืนยันว่ายังปิดอยู่</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เข้าสู่ระบบแล้ว</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ในหน้ามอนิเตอร์ไลฟ์สด มองหาการเตือน “คำเสี่ยง”</li><li>ดูเมนูซ้ายว่ามีคำว่า “คำที่ควรเลี่ยง” ไหม</li><li>ลองพิมพ์ /avoid-words ต่อท้าย URL แล้วกด Enter</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ไล่ดูตามขั้นตอน</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ไม่มีการตีธงคำเสี่ยงบนหน้ามอนิเตอร์ (Section C on-hold)</li><li>เมนู "คำที่ควรเลี่ยง" ไม่แสดงในแถบซ้าย</li><li>เปิด /avoid-words แล้วถูก redirect กลับหน้า "ภาพรวม" (dashboard)</li><li>ยืนยันว่าฟีเจอร์คำเสี่ยง/avoid-words ยังปิดด้วย SHOW_BLOCKED</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ไม่มีการเตือนคำเสี่ยงในไลฟ์</li><li>เมนู “คำที่ควรเลี่ยง” ไม่โผล่ในแถบซ้าย</li><li>พอเปิด /avoid-words แอปเด้งกลับหน้า “ภาพรวม”</li><li>แปลว่าฟีเจอร์นี้ยังปิดอยู่ · ถ้าเจอว่าใช้ได้แล้ว ให้แจ้งทีม</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1187,19 +1187,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 </div></td></tr>
 <tr class="trow" data-feat="epic6" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-M1-NLP.3</td>
-  <td class="ctitle">ยืนยันว่าสถานะ "ความมั่นใจต่ำ" ของการจัดหมวดคอมเมนต์ยังไม่ทำงาน (ผูกกับ intent ที่ปิดอยู่)</td>
+  <td class="ctitle">ยังไม่มีป้าย “ไม่แน่ใจ” ของการเดาประเภทคอมเมนต์ (เพราะการแยกคอมเมนต์ยังปิด)</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
   <td class="status" data-uid="tc-533"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-533"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">ยืนยันว่าสถานะ "ความมั่นใจต่ำ" ของการจัดหมวดคอมเมนต์ยังไม่ทำงาน (ผูกกับ intent ที่ปิดอยู่)</div>
+  <div class="h-title">ยังไม่มีป้าย “ไม่แน่ใจ” ของการเดาประเภทคอมเมนต์ (เพราะการแยกคอมเมนต์ยังปิด)</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · intent-hud · Epic 6</div>
-  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">prd-th.md FR21 (low-confidence UX state แทนการเดา) · flow-summary S2 · NFR1.3 · ⚠️ สถานะโค้ด 2026-07-26: comment-intent/risk/avoid-words ถูกพักด้วย flag SHOW_BLOCKED=false (Section C · ทีมสั่ง on-hold) → ยังไม่แสดงในแอป · เคสนี้ = ยืนยันว่ายังปิดอยู่ (จะกลับมาเมื่อทีมไฟเขียว)</div></div>
-  <div class="sec"><h4>Precondition</h4><ul><li>เข้าสู่ระบบและอยู่ในเซสชันไลฟ์</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ในหน้ามอนิเตอร์ไลฟ์สด ดูส่วนที่เกี่ยวกับการจัดหมวดคอมเมนต์</li><li>ตรวจว่ามีสถานะ/ป้าย "ความมั่นใจต่ำ" ของการจัดหมวดหรือไม่</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ไลฟ์ที่มีคอมเมนต์กำกวม</li></ul></div>
+  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">หมายเหตุ: ฟีเจอร์อ่าน “เจตนาคอมเมนต์” และ “คำเสี่ยง” จากคอมเมนต์ ทีมยังปิดไว้ (ยังไม่เปิดใช้ในแอป) — เคสกลุ่มนี้ไว้ยืนยันว่ายังปิดอยู่</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เข้าสู่ระบบและอยู่ในไลฟ์</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ในหน้ามอนิเตอร์ไลฟ์สด มองหาป้าย/สถานะ “ไม่แน่ใจ” ของการแยกคอมเมนต์</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ไลฟ์ที่มีคอมเมนต์</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ไม่มีสถานะความมั่นใจต่ำ เพราะตัวจัดหมวด intent ปิดอยู่ (SHOW_BLOCKED · lib/lowConfidence ผูกกับ intent)</li><li>จะกลับมาทดสอบได้เมื่อ intent เปิด (ทีมไฟเขียว)</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ไม่มีป้ายแบบนั้น เพราะการแยกประเภทคอมเมนต์ยังปิดอยู่</li><li>จะมีก็ต่อเมื่อทีมเปิดฟีเจอร์แยกคอมเมนต์</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1216,19 +1216,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 </div></td></tr>
 <tr class="trow" data-feat="epic6" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-M1-NLP.5</td>
-  <td class="ctitle">code-switching ไทย-อังกฤษ — ยังทดสอบไม่ได้จนกว่า intent จะเปิด (SHOW_BLOCKED) <span class="edge-badge">🆕 edge</span></td>
+  <td class="ctitle">คอมเมนต์ไทยปนอังกฤษ — ยังทดสอบไม่ได้ (ต้องรอทีมเปิดการแยกคอมเมนต์ก่อน) <span class="edge-badge">🆕 edge</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
   <td class="status" data-uid="tc-534"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-534"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">code-switching ไทย-อังกฤษ — ยังทดสอบไม่ได้จนกว่า intent จะเปิด (SHOW_BLOCKED)</div>
+  <div class="h-title">คอมเมนต์ไทยปนอังกฤษ — ยังทดสอบไม่ได้ (ต้องรอทีมเปิดการแยกคอมเมนต์ก่อน)</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · intent-hud · Epic 6</div>
-  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">prd-th.md NFR6.3 (code-switching) · flow-summary S2 · OQ4 (WangchanBERTa) · ⚠️ สถานะโค้ด 2026-07-26: comment-intent/risk/avoid-words ถูกพักด้วย flag SHOW_BLOCKED=false (Section C · ทีมสั่ง on-hold) → ยังไม่แสดงในแอป · เคสนี้ = ยืนยันว่ายังปิดอยู่ (จะกลับมาเมื่อทีมไฟเขียว)</div></div>
-  <div class="sec"><h4>Precondition</h4><ul><li>เข้าสู่ระบบและอยู่ในเซสชันไลฟ์</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ตรวจก่อนว่า intent เปิดหรือยัง (ตาม TC-M1-NLP.1)</li><li>ถ้ายังปิด → บันทึกว่ายังทดสอบ code-switching ไม่ได้</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>คอมเมนต์ปนภาษา (เตรียมไว้เทสเมื่อ intent เปิด): "price เท่าไหร่คะ" · "ส่ง free ไหม"</li></ul></div>
+  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">หมายเหตุ: ฟีเจอร์อ่าน “เจตนาคอมเมนต์” และ “คำเสี่ยง” จากคอมเมนต์ ทีมยังปิดไว้ (ยังไม่เปิดใช้ในแอป) — เคสกลุ่มนี้ไว้ยืนยันว่ายังปิดอยู่</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เข้าสู่ระบบและอยู่ในไลฟ์</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เช็กก่อนว่าการแยกประเภทคอมเมนต์เปิดหรือยัง (ดูเคสแรกของกลุ่มนี้)</li><li>ถ้ายังปิด → บันทึกว่ายังทดสอบไม่ได้</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>คอมเมนต์ปนภาษา (ไว้ลองตอนเปิดฟีเจอร์): “price เท่าไหร่คะ” · “ส่ง free ไหม”</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>intent ยังปิดด้วย SHOW_BLOCKED → เคส code-switching ยังทดสอบไม่ได้ตอนนี้ (pending greenlight)</li><li>เมื่อทีมเปิด intent แล้ว ค่อยทดสอบคอมเมนต์ปนภาษาว่าจัดหมวดถูกเทียบคู่ภาษาไทย</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ตอนนี้ยังทดสอบไม่ได้ เพราะการแยกคอมเมนต์ยังปิดอยู่</li><li>พอทีมเปิดแล้ว ค่อยลองพิมพ์คอมเมนต์ปนภาษา ดูว่าแยกประเภทถูกไหม</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1246,19 +1246,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="featrow" data-featkey="intent-postlive"><td colspan="7">📁 intent-postlive <span class="rp"><span class="lv lvl-ui">🌐 1 <span style="color:var(--muted)">+1🆕</span></span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="intent-postlive"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
 <tr class="trow" data-feat="epic6" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-M1-NLP.4</td>
-  <td class="ctitle">ยืนยันว่าหน้า "รายละเอียดเซสชัน" ยังไม่แสดง เจตนาคอมเมนต์/FAQ/สรุปโดย AI/บทพูด (SHOW_BLOCKED)</td>
+  <td class="ctitle">หน้า “รายละเอียดเซสชัน” ยังไม่โชว์ สรุปคอมเมนต์/คำถามยอดฮิต/สรุปโดย AI/บทพูด</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
   <td class="status" data-uid="tc-535"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-535"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">ยืนยันว่าหน้า "รายละเอียดเซสชัน" ยังไม่แสดง เจตนาคอมเมนต์/FAQ/สรุปโดย AI/บทพูด (SHOW_BLOCKED)</div>
+  <div class="h-title">หน้า “รายละเอียดเซสชัน” ยังไม่โชว์ สรุปคอมเมนต์/คำถามยอดฮิต/สรุปโดย AI/บทพูด</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · intent-postlive · Epic 6</div>
-  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">prd-th.md FR20 · FR114 (comment-intent breakdown) · DoD 0.5 (LHM_INTENT off = M1) · mvp-1 E6 · ⚠️ สถานะโค้ด 2026-07-26: comment-intent/risk/avoid-words ถูกพักด้วย flag SHOW_BLOCKED=false (Section C · ทีมสั่ง on-hold) → ยังไม่แสดงในแอป · เคสนี้ = ยืนยันว่ายังปิดอยู่ (จะกลับมาเมื่อทีมไฟเขียว)</div></div>
-  <div class="sec"><h4>Precondition</h4><ul><li>มีเซสชันย้อนหลังอย่างน้อย 1 รายการ</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เข้าเมนู "เซสชันทั้งหมด" → คลิกเซสชันหนึ่ง → หน้า "รายละเอียดเซสชัน"</li><li>มองหาส่วน แยกเจตนาคอมเมนต์ · คำถามยอดฮิต (FAQ) · สรุปโดย AI · แท็บบทพูด</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>เซสชันย้อนหลังที่มีคอมเมนต์</li></ul></div>
+  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">หมายเหตุ: ฟีเจอร์อ่าน “เจตนาคอมเมนต์” และ “คำเสี่ยง” จากคอมเมนต์ ทีมยังปิดไว้ (ยังไม่เปิดใช้ในแอป) — เคสกลุ่มนี้ไว้ยืนยันว่ายังปิดอยู่</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>มีเซสชันย้อนหลังอย่างน้อย 1 รายการ</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เข้าเมนู “เซสชันทั้งหมด” → กดเซสชันหนึ่ง → หน้า “รายละเอียดเซสชัน”</li><li>มองหา: สรุปประเภทคอมเมนต์ · คำถามที่คนถามบ่อย · สรุปโดย AI · แท็บบทพูด</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>เซสชันย้อนหลังที่มีคอมเมนต์</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ส่วนเหล่านี้ยังไม่แสดง (Section C on-hold · SHOW_BLOCKED)</li><li>ส่วน engagement / อารมณ์ / ค่าฐาน / รูปแบบข้ามเซสชัน ยังแสดงตามปกติ</li><li>ถ้าพบส่วนเจตนาคอมเมนต์/สรุป AI ทำงานจริง = flag เปิดแล้ว ให้อัปเดตเคส</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ส่วนพวกนี้ยังไม่โชว์ (ทีมยังปิดไว้)</li><li>ส่วนตัวเลขผู้ชม/อารมณ์/ค่าฐาน/รูปแบบข้ามเซสชัน ยังเห็นปกติ</li><li>ถ้าเจอว่าส่วนพวกนี้กลับมาโชว์แล้ว = ทีมเปิดฟีเจอร์ ให้แจ้งทีม</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1275,19 +1275,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 </div></td></tr>
 <tr class="trow" data-feat="epic6" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-M1-NLP.6</td>
-  <td class="ctitle">ยืนยันว่ายังไม่มีการวิเคราะห์อารมณ์คอมเมนต์ (sentiment) ในแอป <span class="edge-badge">🆕 edge</span></td>
+  <td class="ctitle">ยังไม่มีการวัดอารมณ์คอมเมนต์ (บวก/กลาง/ลบ) ในแอป <span class="edge-badge">🆕 edge</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
   <td class="status" data-uid="tc-536"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-536"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">ยืนยันว่ายังไม่มีการวิเคราะห์อารมณ์คอมเมนต์ (sentiment) ในแอป</div>
+  <div class="h-title">ยังไม่มีการวัดอารมณ์คอมเมนต์ (บวก/กลาง/ลบ) ในแอป</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · intent-postlive · Epic 6</div>
-  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">prd-th.md FR20 (“sentiment [M2]” — M1 ได้แค่ intent + risk) · user-guide (sentiment = M1.5) · flow-summary · ⚠️ สถานะโค้ด 2026-07-26: comment-intent/risk/avoid-words ถูกพักด้วย flag SHOW_BLOCKED=false (Section C · ทีมสั่ง on-hold) → ยังไม่แสดงในแอป · เคสนี้ = ยืนยันว่ายังปิดอยู่ (จะกลับมาเมื่อทีมไฟเขียว)</div></div>
-  <div class="sec"><h4>Precondition</h4><ul><li>เข้าสู่ระบบแล้ว</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ในหน้ามอนิเตอร์ไลฟ์สด และหน้า "รายละเอียดเซสชัน" มองหาส่วน sentiment ของคอมเมนต์ (บวก/กลาง/ลบ)</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>— (ไล่ UI ตามขั้นตอน)</li></ul></div>
+  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">หมายเหตุ: ฟีเจอร์อ่าน “เจตนาคอมเมนต์” และ “คำเสี่ยง” จากคอมเมนต์ ทีมยังปิดไว้ (ยังไม่เปิดใช้ในแอป) — เคสกลุ่มนี้ไว้ยืนยันว่ายังปิดอยู่</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เข้าสู่ระบบแล้ว</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ในหน้ามอนิเตอร์ไลฟ์สด และหน้า “รายละเอียดเซสชัน” มองหาส่วนวัดอารมณ์คอมเมนต์ (บวก/กลาง/ลบ)</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ไล่ดูตามขั้นตอน</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ไม่มีส่วน sentiment ของคอมเมนต์ (ทั้งเพราะ SHOW_BLOCKED และ sentiment เป็น M2 ตาม PRD)</li><li>ถ้าพบส่วน sentiment ที่มีข้อมูลจริง = เกิน scope ให้บันทึก</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ไม่มีส่วนนี้ในแอป</li><li>ถ้าเจอ ให้แจ้งทีม (เกินขอบเขตตอนนี้)</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1308,19 +1308,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="featrow" data-featkey="cloud-sync"><td colspan="7">📁 cloud-sync <span class="rp"><span class="lv lvl-ui">🌐 3 <span style="color:var(--muted)">+2🆕</span></span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="cloud-sync"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
 <tr class="trow" data-feat="epic7" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-M1-SYNC.1</td>
-  <td class="ctitle">ตัดเน็ตระหว่างไลฟ์ — ยืนยันว่าแอปยังทำงาน (local-only) ไม่มีแบนเนอร์ซิงก์คลาวด์</td>
+  <td class="ctitle">ตัดเน็ตกลางไลฟ์ แล้วแอปยังทำงานต่อได้ (เพราะเก็บข้อมูลในเครื่อง)</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
   <td class="status" data-uid="tc-537"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-537"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">ตัดเน็ตระหว่างไลฟ์ — ยืนยันว่าแอปยังทำงาน (local-only) ไม่มีแบนเนอร์ซิงก์คลาวด์</div>
+  <div class="h-title">ตัดเน็ตกลางไลฟ์ แล้วแอปยังทำงานต่อได้ (เพราะเก็บข้อมูลในเครื่อง)</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · cloud-sync · Epic 7</div>
-  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">mvp-1 E1 ingest/resume (FR16) · prd-th.md NFR2.3 · m1-checklist (0.5 local → M1 cloud data-plane) · ⚠️ สถานะโค้ด 2026-07-26: desktop เป็น local-only — ยังไม่มี cloud sync/offline buffer/upload (FR16/17 ยังไม่ build) · ที่มีจริง = DegradedBanner (FR15) + resume เซสชัน local</div></div>
-  <div class="sec"><h4>Precondition</h4><ul><li>อยู่ในเซสชันไลฟ์ · ตัด/ต่อเน็ตของเครื่องได้</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เริ่มเซสชันไลฟ์ให้ข้อมูลไหลปกติ</li><li>ตัดอินเทอร์เน็ตของเครื่อง</li><li>ดูว่าแอปยังจับคอมเมนต์/อ่านอารมณ์ได้ไหม</li><li>มองหาแบนเนอร์ "ออฟไลน์ / กำลังเก็บไว้ซิงก์ขึ้นคลาวด์"</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>สถานะเครือข่าย: ออฟไลน์ระหว่างเซสชัน</li></ul></div>
+  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">หมายเหตุ: แอปนี้เก็บข้อมูลไว้ในเครื่องอย่างเดียว ยังไม่ต่อคลาวด์ — เคสกลุ่ม “ซิงก์คลาวด์” ไว้ยืนยันว่ายังไม่มี · ที่มีจริง = แถบเตือนตอนโดนจำกัด + การถาม “ดำเนินการต่อ”</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>กำลังดูไลฟ์อยู่ · ตัด/ต่อเน็ตของเครื่องได้</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เริ่มดูไลฟ์ให้ข้อมูลเข้าปกติ</li><li>ปิดอินเทอร์เน็ตของเครื่อง</li><li>ดูว่าแอปยังจับคอมเมนต์/อ่านอารมณ์ได้ไหม</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ตัดเน็ตระหว่างดูไลฟ์</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>แอปยังทำงานต่อได้ (ประมวลผลบนเครื่อง + เก็บ local SQLite)</li><li>ไม่มีแบนเนอร์ cloud-sync เพราะ desktop เป็น local-only (ยังไม่มี cloud layer · FR16/17 ยังไม่ build)</li><li>หมายเหตุ: DegradedBanner จะขึ้นเมื่อโดน rate-limit จากแพลตฟอร์ม (คนละเรื่องกับคลาวด์)</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>แอปยังทำงานต่อได้ (เก็บลงเครื่อง)</li><li>ไม่มีข้อความ “กำลังซิงก์ขึ้นคลาวด์” เพราะแอปยังไม่ต่อคลาวด์</li><li>แถบเตือนอาจขึ้นตอนโดนแพลตฟอร์มจำกัด — คนละเรื่องกับคลาวด์</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1337,19 +1337,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 </div></td></tr>
 <tr class="trow" data-feat="epic7" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-M1-SYNC.2</td>
-  <td class="ctitle">สถานะ "กำลังซิงก์คลาวด์" หลังต่อเน็ต — ยืนยันว่ายังไม่มี (local-only)</td>
+  <td class="ctitle">ต่อเน็ตกลับ — ยังไม่มีข้อความ “กำลังซิงก์ขึ้นคลาวด์” (แอปเก็บในเครื่อง)</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
   <td class="status" data-uid="tc-538"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-538"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">สถานะ "กำลังซิงก์คลาวด์" หลังต่อเน็ต — ยืนยันว่ายังไม่มี (local-only)</div>
+  <div class="h-title">ต่อเน็ตกลับ — ยังไม่มีข้อความ “กำลังซิงก์ขึ้นคลาวด์” (แอปเก็บในเครื่อง)</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · cloud-sync · Epic 7</div>
-  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">mvp-1 E1 ingest-resume (Story 1.7 · FR17) · prd-th.md NFR2.6 (reconcile) · TC-M1 resume · ⚠️ สถานะโค้ด 2026-07-26: desktop เป็น local-only — ยังไม่มี cloud sync/offline buffer/upload (FR16/17 ยังไม่ build) · ที่มีจริง = DegradedBanner (FR15) + resume เซสชัน local</div></div>
-  <div class="sec"><h4>Precondition</h4><ul><li>เพิ่งกลับมาออนไลน์หลังตัดเน็ตระหว่างไลฟ์</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ต่ออินเทอร์เน็ตกลับ</li><li>มองหาสถานะ "กำลังอัปโหลด/ซิงก์ขึ้นคลาวด์"</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ข้อมูลช่วงออฟไลน์ที่อยู่ในเครื่อง</li></ul></div>
+  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">หมายเหตุ: แอปนี้เก็บข้อมูลไว้ในเครื่องอย่างเดียว ยังไม่ต่อคลาวด์ — เคสกลุ่ม “ซิงก์คลาวด์” ไว้ยืนยันว่ายังไม่มี · ที่มีจริง = แถบเตือนตอนโดนจำกัด + การถาม “ดำเนินการต่อ”</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เพิ่งต่อเน็ตกลับหลังตัดเน็ตกลางไลฟ์</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ต่ออินเทอร์เน็ตกลับ</li><li>มองหาข้อความ “กำลังอัปโหลด/ซิงก์ขึ้นคลาวด์”</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ข้อมูลช่วงตัดเน็ตที่อยู่ในเครื่อง</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ไม่มีสถานะซิงก์คลาวด์ (ข้อมูลอยู่ในเครื่อง local)</li><li>เป็น scope-boundary: cloud upload/resume (FR17) ยังไม่ build ใน desktop</li><li>ถ้าพบสถานะซิงก์คลาวด์ = โค้ดต่อ cloud แล้ว ให้อัปเดตเคส</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ไม่มีข้อความซิงก์คลาวด์ เพราะแอปยังไม่ต่อคลาวด์</li><li>ถ้าเจอ = แอปเริ่มต่อคลาวด์แล้ว ให้แจ้งทีม</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1366,19 +1366,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 </div></td></tr>
 <tr class="trow" data-feat="epic7" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-M1-SYNC.3</td>
-  <td class="ctitle">ปิดแอปกลางไลฟ์แล้วเปิดใหม่ → การ์ด "ดำเนินการต่อ" เสนอเซสชันเดิม (มีจริง · local)</td>
+  <td class="ctitle">ปิดแอปกลางไลฟ์แล้วเปิดใหม่ → แอปถามว่าจะ “ดำเนินการต่อ” เซสชันเดิมไหม</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
   <td class="status" data-uid="tc-539"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-539"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">ปิดแอปกลางไลฟ์แล้วเปิดใหม่ → การ์ด "ดำเนินการต่อ" เสนอเซสชันเดิม (มีจริง · local)</div>
+  <div class="h-title">ปิดแอปกลางไลฟ์แล้วเปิดใหม่ → แอปถามว่าจะ “ดำเนินการต่อ” เซสชันเดิมไหม</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · cloud-sync · Epic 7</div>
-  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">mvp-1 E1 ingest-resume (FR17) · prototype §4 (ดำเนินการต่อ) · SessionPre · ⚠️ สถานะโค้ด 2026-07-26: desktop เป็น local-only — ยังไม่มี cloud sync/offline buffer/upload (FR16/17 ยังไม่ build) · ที่มีจริง = DegradedBanner (FR15) + resume เซสชัน local</div></div>
-  <div class="sec"><h4>Precondition</h4><ul><li>กำลังบันทึกเซสชันไลฟ์และมีข้อมูลสะสมแล้ว ≥ 5 นาที</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ปิดแอปทันทีระหว่างเซสชันทำงาน</li><li>เปิดแอปใหม่และล็อกอิน → ไปหน้าจับคู่ไลฟ์ (/session/new)</li><li>ดูการ์ด "เซสชันก่อนหน้า"</li><li>กด "ดำเนินการต่อ"</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>เซสชันค้างที่มีข้อมูลสะสม (local)</li></ul></div>
+  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">หมายเหตุ: แอปนี้เก็บข้อมูลไว้ในเครื่องอย่างเดียว ยังไม่ต่อคลาวด์ — เคสกลุ่ม “ซิงก์คลาวด์” ไว้ยืนยันว่ายังไม่มี · ที่มีจริง = แถบเตือนตอนโดนจำกัด + การถาม “ดำเนินการต่อ”</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>กำลังดูไลฟ์และมีข้อมูลสะสมสักพักแล้ว</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>กำลังดูไลฟ์และมีข้อมูลสะสมสักพัก</li><li>ปิดแอปไปเลย</li><li>เปิดแอปใหม่ เข้าสู่ระบบ → ไปหน้าเริ่มดูไลฟ์</li><li>ดูการ์ด “เซสชันก่อนหน้า” แล้วกด “ดำเนินการต่อ”</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>เซสชันที่ค้างอยู่</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>หน้าจับคู่ไลฟ์แสดงการ์ดเซสชันก่อนหน้าพร้อมปุ่ม "ดำเนินการต่อ" (ฟีเจอร์นี้มีจริง · เก็บ local)</li><li>กดแล้วกลับเข้าเซสชันเดิม ไม่สร้างเซสชันใหม่ซ้อน · ตัวเลขสะสมต่อจากเดิม</li><li>ทำงานได้แม้ไม่มี cloud (local-only)</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>มีการ์ดเซสชันก่อนหน้า พร้อมปุ่ม “ดำเนินการต่อ” (มีจริง)</li><li>กดแล้วกลับเข้าเซสชันเดิม ข้อมูลเก่ายังอยู่ ไม่เริ่มนับใหม่</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1395,19 +1395,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 </div></td></tr>
 <tr class="trow" data-feat="epic7" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-M1-SYNC.4</td>
-  <td class="ctitle">แอปทำงานได้โดยไม่ต้องต่อ backend คลาวด์ — ยืนยัน local-only by design <span class="edge-badge">🆕 edge</span></td>
+  <td class="ctitle">แอปทำงานได้โดยไม่ต้องต่อคลาวด์ (ออกแบบให้เก็บในเครื่อง) <span class="edge-badge">🆕 edge</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
   <td class="status" data-uid="tc-540"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-540"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">แอปทำงานได้โดยไม่ต้องต่อ backend คลาวด์ — ยืนยัน local-only by design</div>
+  <div class="h-title">แอปทำงานได้โดยไม่ต้องต่อคลาวด์ (ออกแบบให้เก็บในเครื่อง)</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · cloud-sync · Epic 7</div>
-  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">prd-th.md NFR2.3 (desktop ทำงานได้เมื่อ cloud ล่ม) · FR16 · mvp-1 E1 · ⚠️ สถานะโค้ด 2026-07-26: desktop เป็น local-only — ยังไม่มี cloud sync/offline buffer/upload (FR16/17 ยังไม่ build) · ที่มีจริง = DegradedBanner (FR15) + resume เซสชัน local</div></div>
-  <div class="sec"><h4>Precondition</h4><ul><li>เครื่องมี Python engine (:8765) ทำงาน · ไม่ต้องต่อ cloud</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ใช้งานแอปครบ flow: จับคู่ไลฟ์ → จับคอมเมนต์ → อ่านอารมณ์ → Live Health → เปิดรายละเอียดเซสชัน</li><li>สังเกตว่ามีขั้นไหนต้องรอ/พึ่ง cloud หรือไม่</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ใช้งานโดยไม่มี cloud backend</li></ul></div>
+  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">หมายเหตุ: แอปนี้เก็บข้อมูลไว้ในเครื่องอย่างเดียว ยังไม่ต่อคลาวด์ — เคสกลุ่ม “ซิงก์คลาวด์” ไว้ยืนยันว่ายังไม่มี · ที่มีจริง = แถบเตือนตอนโดนจำกัด + การถาม “ดำเนินการต่อ”</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>ใช้แอปตามปกติโดยไม่ต้องต่อคลาวด์</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ใช้แอปครบตั้งแต่จับคู่ไลฟ์ → ดูคอมเมนต์/อารมณ์/คะแนน → เปิดหน้า “รายละเอียดเซสชัน”</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ใช้งานครบทั้ง flow</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ทุกฟีเจอร์หลักทำงานได้บนเครื่อง (ผ่าน engine :8765 + SQLite) โดยไม่พึ่ง cloud — ตามดีไซน์ MVP 0.5 local-only</li><li>ไม่มี error/สถานะค้างที่บอกว่า "เชื่อมต่อคลาวด์ไม่ได้"</li><li>เป็น scope-boundary: cloud data-plane (FR16/17) ยังไม่ build</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ทุกอย่างทำงานได้ในเครื่อง</li><li>ไม่มี error บอกว่า “ต่อคลาวด์ไม่ได้”</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1424,19 +1424,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 </div></td></tr>
 <tr class="trow" data-feat="epic7" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-M1-SYNC.5</td>
-  <td class="ctitle">ซิงก์ซ้ำ/กันนับซ้ำ (idempotent) — ยืนยันว่ายังไม่มีปุ่มซิงก์คลาวด์ (local-only) <span class="edge-badge">🆕 edge</span></td>
+  <td class="ctitle">ยังไม่มีปุ่ม “ซิงก์/อัปโหลดขึ้นคลาวด์” ในแอป (แอปเก็บในเครื่อง) <span class="edge-badge">🆕 edge</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
   <td class="status" data-uid="tc-541"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-541"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">ซิงก์ซ้ำ/กันนับซ้ำ (idempotent) — ยืนยันว่ายังไม่มีปุ่มซิงก์คลาวด์ (local-only)</div>
+  <div class="h-title">ยังไม่มีปุ่ม “ซิงก์/อัปโหลดขึ้นคลาวด์” ในแอป (แอปเก็บในเครื่อง)</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · cloud-sync · Epic 7</div>
-  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">mvp-1 E1 ingest-resume (FR17 idempotent) · prd-th.md NFR2.6 · ⚠️ สถานะโค้ด 2026-07-26: desktop เป็น local-only — ยังไม่มี cloud sync/offline buffer/upload (FR16/17 ยังไม่ build) · ที่มีจริง = DegradedBanner (FR15) + resume เซสชัน local</div></div>
-  <div class="sec"><h4>Precondition</h4><ul><li>มีเซสชันที่เพิ่งจบ</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ในหน้ารายละเอียดเซสชัน/รายการเซสชัน มองหาปุ่ม "ซิงก์/อัปโหลดขึ้นคลาวด์"</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>เซสชันที่บันทึกแล้ว</li></ul></div>
+  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">หมายเหตุ: แอปนี้เก็บข้อมูลไว้ในเครื่องอย่างเดียว ยังไม่ต่อคลาวด์ — เคสกลุ่ม “ซิงก์คลาวด์” ไว้ยืนยันว่ายังไม่มี · ที่มีจริง = แถบเตือนตอนโดนจำกัด + การถาม “ดำเนินการต่อ”</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>มีเซสชันที่บันทึกไว้แล้ว</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เปิดหน้า “เซสชันทั้งหมด” และหน้า “รายละเอียดเซสชัน”</li><li>มองหาปุ่มที่เขียนว่า “ซิงก์” หรือ “อัปโหลดขึ้นคลาวด์”</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>เซสชันที่บันทึกแล้ว</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ไม่มีปุ่มซิงก์คลาวด์ → เคส idempotent re-sync เป็น scope-boundary (FR17 ยังไม่ build)</li><li>การกันข้อมูลซ้ำระดับในเครื่องเป็นเรื่อง backend (ทดสอบระดับ integration) ไม่ใช่ UI นี้</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ไม่มีปุ่มซิงก์/อัปโหลดขึ้นคลาวด์ เพราะแอปนี้เก็บข้อมูลไว้ในเครื่องอย่างเดียว</li><li>ถ้าเจอปุ่มแบบนี้ = แอปเริ่มต่อคลาวด์แล้ว ให้แจ้งทีม</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1454,19 +1454,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="featrow" data-featkey="resilience"><td colspan="7">📁 resilience <span class="rp"><span class="lv lvl-ui">🌐 1 <span style="color:var(--muted)">+1🆕</span></span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="resilience"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
 <tr class="trow" data-feat="epic7" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-M1-SYNC.6</td>
-  <td class="ctitle">โดน rate-limit → DegradedBanner (โหมด degraded) ขึ้น + ไลฟ์ไม่กระทบ (FR15 · มีจริง)</td>
+  <td class="ctitle">พอโดนแพลตฟอร์มจำกัด (rate-limit) แอปขึ้นแถบเตือน + ไลฟ์ไม่สะดุด</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
   <td class="status" data-uid="tc-542"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-542"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">โดน rate-limit → DegradedBanner (โหมด degraded) ขึ้น + ไลฟ์ไม่กระทบ (FR15 · มีจริง)</div>
+  <div class="h-title">พอโดนแพลตฟอร์มจำกัด (rate-limit) แอปขึ้นแถบเตือน + ไลฟ์ไม่สะดุด</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · resilience · Epic 7</div>
-  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">user-guide §3.3 (kill-switch + degraded banner) · prd-th.md FR14/FR15 · ⚠️ m1-checklist: FR14/15 = ➕ (อาจยังไม่ ship — ยืนยันกับ dev) · ⚠️ สถานะโค้ด 2026-07-26: desktop เป็น local-only — ยังไม่มี cloud sync/offline buffer/upload (FR16/17 ยังไม่ build) · ที่มีจริง = DegradedBanner (FR15) + resume เซสชัน local</div></div>
-  <div class="sec"><h4>Precondition</h4><ul><li>อยู่ในเซสชันไลฟ์ · ทีม dev จำลอง rate-limit ได้</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ดูหน้ามอนิเตอร์ไลฟ์สดให้ทำงานปกติก่อน</li><li>ให้ทีม dev จำลอง rate-limit จากแพลตฟอร์ม</li><li>สังเกตว่ามีแบนเนอร์โหมด degraded ขึ้นไหม + อ่านข้อความ</li><li>ตรวจว่าไลฟ์/คอมเมนต์ยังทำงานต่อ</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>เหตุการณ์: platform rate-limit</li></ul></div>
+  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">หมายเหตุ: แอปนี้เก็บข้อมูลไว้ในเครื่องอย่างเดียว ยังไม่ต่อคลาวด์ — เคสกลุ่ม “ซิงก์คลาวด์” ไว้ยืนยันว่ายังไม่มี · ที่มีจริง = แถบเตือนตอนโดนจำกัด + การถาม “ดำเนินการต่อ”</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>กำลังดูไลฟ์ · ทีม dev ช่วยจำลองสถานการณ์โดนจำกัดได้</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>กำลังดูไลฟ์ปกติ</li><li>ให้ทีม dev จำลองสถานการณ์โดนแพลตฟอร์มจำกัด</li><li>ดูว่ามีแถบเตือนขึ้นไหม แล้วอ่านข้อความ</li><li>ดูว่าไลฟ์/คอมเมนต์ยังทำงานต่อไหม</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>จำลองสถานการณ์โดนแพลตฟอร์มจำกัด</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>DegradedBanner (FR15) ขึ้นเมื่อโดน rate-limit/ขัดจังหวะ — บอกว่าสัญญาณใดถูกหยุด</li><li>ไลฟ์และคอมเมนต์ยังดำเนินต่อ ไม่ล่ม</li><li>หมายเหตุ: การหยุดจับอัตโนมัติ (kill-switch · FR14) ยืนยันกับทีม dev ว่า trip จริงหรือยัง</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>มีแถบเตือน (สีเหลือง) บอกว่าสัญญาณบางอย่างถูกหยุดชั่วคราว</li><li>ไลฟ์และคอมเมนต์ยังทำงานต่อ ไม่ดับ</li><li>การหยุดจับอัตโนมัติ ให้ทีม dev ช่วยยืนยัน</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1483,19 +1483,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 </div></td></tr>
 <tr class="trow" data-feat="epic7" data-level="ui" data-prio="P2" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-M1-SYNC.7</td>
-  <td class="ctitle">เตือนพื้นที่เก็บ (AES buffer) ใกล้เต็ม — ยืนยันว่ายังไม่มี (FR16 ยังไม่ build) <span class="edge-badge">🆕 edge</span></td>
+  <td class="ctitle">ยังไม่มีการเตือน “พื้นที่เก็บใกล้เต็ม” (ฟีเจอร์นี้ยังไม่ทำ) <span class="edge-badge">🆕 edge</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p2">P2</span></td>
   <td class="status" data-uid="tc-543"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-543"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">เตือนพื้นที่เก็บ (AES buffer) ใกล้เต็ม — ยืนยันว่ายังไม่มี (FR16 ยังไม่ build)</div>
+  <div class="h-title">ยังไม่มีการเตือน “พื้นที่เก็บใกล้เต็ม” (ฟีเจอร์นี้ยังไม่ทำ)</div>
   <div class="h-prio">Priority: <b>P2</b> · UI · resilience · Epic 7</div>
-  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">prd-th.md FR16 (buffer 1 session + overflow 24 ชม.) · mvp-1 E1 · ⚠️ สถานะโค้ด 2026-07-26: desktop เป็น local-only — ยังไม่มี cloud sync/offline buffer/upload (FR16/17 ยังไม่ build) · ที่มีจริง = DegradedBanner (FR15) + resume เซสชัน local</div></div>
-  <div class="sec"><h4>Precondition</h4><ul><li>อยู่ในเซสชันไลฟ์ · ออฟไลน์นาน</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ออฟไลน์ระหว่างไลฟ์ต่อเนื่องนาน ๆ</li><li>มองหาการเตือน "พื้นที่เก็บใกล้เต็ม / buffer ใกล้เต็ม"</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>สถานะ: ออฟไลน์ต่อเนื่องนาน</li></ul></div>
+  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">หมายเหตุ: แอปนี้เก็บข้อมูลไว้ในเครื่องอย่างเดียว ยังไม่ต่อคลาวด์ — เคสกลุ่ม “ซิงก์คลาวด์” ไว้ยืนยันว่ายังไม่มี · ที่มีจริง = แถบเตือนตอนโดนจำกัด + การถาม “ดำเนินการต่อ”</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>กำลังดูไลฟ์ตอนตัดเน็ตนาน ๆ</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ดูไลฟ์ตอนตัดเน็ตนาน ๆ</li><li>มองหาการเตือน “พื้นที่เก็บใกล้เต็ม”</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ตัดเน็ตต่อเนื่องนาน</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ไม่มีการเตือน buffer เพราะ desktop ยังไม่มี AES offline-buffer ตาม FR16 (local SQLite ธรรมดา)</li><li>เป็น scope-boundary (FR16 ยังไม่ build) — ทดสอบจริงเมื่อ cloud data-plane มา</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ไม่มีการเตือนแบบนี้ เพราะฟีเจอร์พักเก็บข้อมูลแบบนั้นยังไม่ทำในแอป</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1753,19 +1753,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="featrow" data-featkey="workspace-seat"><td colspan="7">📁 workspace-seat <span class="rp"><span class="lv lvl-ui">🌐 2</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="workspace-seat"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
 <tr class="trow" data-feat="epic9" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-M1-WS.1</td>
-  <td class="ctitle">🚧 [ยังไม่ build ใน desktop] เชิญ Host เข้าทีม (multi-seat) — ยืนยันว่ายังไม่มีในแอป</td>
+  <td class="ctitle">ยังไม่มีการเชิญคนเข้าทีม (แอปใช้คนเดียว)</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
   <td class="status" data-uid="tc-552"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-552"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">🚧 [ยังไม่ build ใน desktop] เชิญ Host เข้าทีม (multi-seat) — ยืนยันว่ายังไม่มีในแอป</div>
+  <div class="h-title">ยังไม่มีการเชิญคนเข้าทีม (แอปใช้คนเดียว)</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · workspace-seat · Epic 9</div>
-  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">mvp-1 E7 RBAC (Story 7.3 · FR56–58) · user-guide §multi-seat · HostInvite.jsx · flow-summary §2.3 (6 roles) · ⚠️ scope-boundary: ฟีเจอร์นี้ยังไม่มีในแอป desktop จริง (planned M1/SaaS) — ตรวจจากโค้ด apps/desktop 2026-07-26 (ไม่มี route/เมนู/หน้าจอนี้)</div></div>
-  <div class="sec"><h4>Precondition</h4><ul><li>ล็อกอินด้วยบัญชีสิทธิ์ Owner ของเวิร์กสเปซ</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบแอป desktop</li><li>ไล่ดูเมนูทั้งหมดในแถบซ้าย (แดชบอร์ด · แชนเนล · เซสชัน · หลีกเลี่ยงคำพูด)</li><li>เปิดเมนูโปรไฟล์ (มุมล่าง/บนของแอป) และหน้าตั้งค่าทั้งหมด</li><li>มองหาเมนู/ปุ่ม "เชิญสมาชิก / เชิญ Host / จัดการทีม (seat)"</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>บัญชี Owner · อีเมล Host ทดสอบ</li></ul></div>
+  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">หมายเหตุ: แอปนี้เป็นแอปสำหรับใช้คนเดียว ยังไม่มีฟีเจอร์ทีม/หลายคน (เจ้าของ-โฮสต์-แพ็กเกจ-สลับทีม) — เคสกลุ่มนี้ไว้ยืนยันว่ายังไม่มี</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เข้าสู่ระบบแล้ว</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบ</li><li>ดูเมนูทั้งหมด + เมนูโปรไฟล์ + ตั้งค่า</li><li>มองหาปุ่ม/เมนู “เชิญคนเข้าทีม / เพิ่มสมาชิก”</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ไล่ดูเมนู + ตั้งค่า</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>แอป desktop เป็นแบบผู้ใช้คนเดียว — ไม่มีเมนู/ปุ่มเชิญ Host หรือจัดการ seat</li><li>ยืนยัน scope: multi-seat/invite เป็นฟีเจอร์ SaaS (planned M1) ยังไม่ build ใน desktop (มีต้นแบบเฉพาะฝั่ง web ที่ /host-invite)</li><li>ถ้าพบเมนูเชิญ/จัดการทีมใน desktop = เกิน scope ปัจจุบัน ให้บันทึกเป็นข้อสังเกตพร้อมภาพหน้าจอ</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ไม่มีปุ่มเชิญคน/เพิ่มสมาชิก (แอปนี้ใช้คนเดียว)</li><li>ถ้าเจอ ให้แจ้งทีม</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1782,19 +1782,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 </div></td></tr>
 <tr class="trow" data-feat="epic9" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-M1-WS.2</td>
-  <td class="ctitle">🚧 [ยังไม่ build ใน desktop] รับคำเชิญเข้าทีมในฐานะ Host (multi-seat) — ยืนยันว่ายังไม่มี flow นี้</td>
+  <td class="ctitle">ยังไม่มีการเข้าร่วมทีมในฐานะโฮสต์ (แอปใช้คนเดียว)</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
   <td class="status" data-uid="tc-553"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-553"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">🚧 [ยังไม่ build ใน desktop] รับคำเชิญเข้าทีมในฐานะ Host (multi-seat) — ยืนยันว่ายังไม่มี flow นี้</div>
+  <div class="h-title">ยังไม่มีการเข้าร่วมทีมในฐานะโฮสต์ (แอปใช้คนเดียว)</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · workspace-seat · Epic 9</div>
-  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">mvp-1 E7 RBAC · E2 desktop-consent · user-guide §multi-seat (Host เห็น HUD ของตัวเอง) · prd-th.md FR4 · ⚠️ scope-boundary: ฟีเจอร์นี้ยังไม่มีในแอป desktop จริง (planned M1/SaaS) — ตรวจจากโค้ด apps/desktop 2026-07-26 (ไม่มี route/เมนู/หน้าจอนี้)</div></div>
-  <div class="sec"><h4>Precondition</h4><ul><li>มีคำเชิญ Host ที่รอตอบรับ</li><li>มีบัญชี Host ทดสอบ</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบแอป desktop</li><li>มองหา flow "รับคำเชิญเข้าทีม / เข้าร่วมเวิร์กสเปซในฐานะ Host"</li><li>ไล่เมนูโปรไฟล์ + ตั้งค่า ว่ามีการระบุ/สลับบทบาท Host หรือ Owner หรือไม่</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>บัญชี Host ที่ถูกเชิญ</li></ul></div>
+  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">หมายเหตุ: แอปนี้เป็นแอปสำหรับใช้คนเดียว ยังไม่มีฟีเจอร์ทีม/หลายคน (เจ้าของ-โฮสต์-แพ็กเกจ-สลับทีม) — เคสกลุ่มนี้ไว้ยืนยันว่ายังไม่มี</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เข้าสู่ระบบแล้ว</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบ</li><li>หาช่องทาง “เข้าร่วมทีม / รับคำเชิญเข้าทีม”</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ไล่ดูเมนู + ตั้งค่า</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ไม่มี flow ตอบรับคำเชิญ/เข้าร่วมทีมในฐานะ Host ในแอป desktop (เป็นผู้ใช้คนเดียว)</li><li>ส่วน "ยินยอม PDPA + เห็น HUD ของตัวเอง" มีจริงในแอป แต่ทดสอบแยกในเคส consent (E4) และ HUD (E3) แล้ว — เคสนี้เน้นเฉพาะส่วน multi-seat ที่ยังไม่มี</li><li>ถ้าพบ flow รับคำเชิญเข้าทีมใน desktop = เกิน scope ให้บันทึกเป็นข้อสังเกต</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ไม่มีช่องทางเข้าร่วมทีม (แอปนี้ใช้คนเดียว)</li><li>ส่วนการยินยอมและการเห็น HUD ของตัวเอง มีจริง (ทดสอบในกลุ่มอื่นแล้ว)</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1812,19 +1812,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="featrow" data-featkey="workspace-rbac"><td colspan="7">📁 workspace-rbac <span class="rp"><span class="lv lvl-ui">🌐 2 <span style="color:var(--muted)">+2🆕</span></span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="workspace-rbac"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
 <tr class="trow" data-feat="epic9" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-M1-WS.3</td>
-  <td class="ctitle">🚧 [ยังไม่ build ใน desktop] RBAC กันสิทธิ์ Owner/Host — ยืนยันว่า desktop เป็นผู้ใช้เดียว ไม่มี role</td>
+  <td class="ctitle">ยังไม่มีการจำกัดสิทธิ์ตามบทบาท (แอปใช้คนเดียว เข้าได้ทุกหน้า)</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
   <td class="status" data-uid="tc-554"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-554"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">🚧 [ยังไม่ build ใน desktop] RBAC กันสิทธิ์ Owner/Host — ยืนยันว่า desktop เป็นผู้ใช้เดียว ไม่มี role</div>
+  <div class="h-title">ยังไม่มีการจำกัดสิทธิ์ตามบทบาท (แอปใช้คนเดียว เข้าได้ทุกหน้า)</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · workspace-rbac · Epic 9</div>
-  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">mvp-1 E7 RBAC (NFR3.10) · DoD M1 §1.1 (multi-tenant isolation non-negotiable) · flow-summary §2.3 · ⚠️ scope-boundary: ฟีเจอร์นี้ยังไม่มีในแอป desktop จริง (planned M1/SaaS) — ตรวจจากโค้ด apps/desktop 2026-07-26 (ไม่มี route/เมนู/หน้าจอนี้)</div></div>
-  <div class="sec"><h4>Precondition</h4><ul><li>มีบัญชี Host และทราบเส้นทางหน้าที่เป็นของ Owner (เช่น จัดการสมาชิก/บิล)</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบแอป desktop</li><li>ไล่เข้าทุกเมนู/หน้าในแอป</li><li>ตรวจว่ามีหน้าใดที่ล็อกตามบทบาท (เช่น Owner-only) หรือมีการแสดง/สลับบทบาท (Owner/Host/CS) ที่ใดหรือไม่</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>บัญชี: Host · เส้นทางหน้า Owner</li></ul></div>
+  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">หมายเหตุ: แอปนี้เป็นแอปสำหรับใช้คนเดียว ยังไม่มีฟีเจอร์ทีม/หลายคน (เจ้าของ-โฮสต์-แพ็กเกจ-สลับทีม) — เคสกลุ่มนี้ไว้ยืนยันว่ายังไม่มี</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เข้าสู่ระบบแล้ว</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบ</li><li>ลองเข้าทุกหน้าในแอป</li><li>ดูว่ามีหน้าที่ล็อกเฉพาะบางบทบาท (เช่น เฉพาะเจ้าของ) ไหม</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ไล่เข้าทุกหน้า</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>desktop ไม่มีระบบบทบาท (role) — ทุกหน้าเข้าได้ในฐานะผู้ใช้คนเดียว ไม่มีหน้า Owner-only ที่ต้องกันสิทธิ์</li><li>ยืนยัน scope: RBAC (E7 · NFR3.10) เป็น SaaS/planned ยังไม่ build ใน desktop</li><li>ถ้าพบการกันสิทธิ์ตามบทบาทใน desktop = เกิน scope ให้บันทึกเป็นข้อสังเกต</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ไม่มีระบบบทบาท — ทุกหน้าเข้าได้ในฐานะผู้ใช้คนเดียว</li><li>ถ้าเจอหน้าที่ล็อกตามบทบาท ให้แจ้งทีม</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1841,19 +1841,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 </div></td></tr>
 <tr class="trow" data-feat="epic9" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-M1-WS.4</td>
-  <td class="ctitle">🚧 [ยังไม่ build ใน desktop] Operator View (Owner ดู comment intent + pin) — ยืนยันว่ายังไม่มีในแอป</td>
+  <td class="ctitle">ยังไม่มีหน้าให้เจ้าของดูไลฟ์ของโฮสต์คนอื่น</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
   <td class="status" data-uid="tc-555"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-555"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">🚧 [ยังไม่ build ใน desktop] Operator View (Owner ดู comment intent + pin) — ยืนยันว่ายังไม่มีในแอป</div>
+  <div class="h-title">ยังไม่มีหน้าให้เจ้าของดูไลฟ์ของโฮสต์คนอื่น</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · workspace-rbac · Epic 9</div>
-  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">user-guide §multi-seat (Owner ดู Operator View) · flow-summary §2.3 (Operator View CS) · prd-th.md FR20 · ⚠️ scope-boundary: ฟีเจอร์นี้ยังไม่มีในแอป desktop จริง (planned M1/SaaS) — ตรวจจากโค้ด apps/desktop 2026-07-26 (ไม่มี route/เมนู/หน้าจอนี้)</div></div>
-  <div class="sec"><h4>Precondition</h4><ul><li>ล็อกอินด้วยบัญชี Owner และมี Host กำลังไลฟ์อยู่ในเวิร์กสเปซ</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบแอป desktop</li><li>ไล่ดูเมนูทั้งหมด (แดชบอร์ด · แชนเนล · เซสชัน · หลีกเลี่ยงคำพูด · โปรไฟล์ · ตั้งค่า)</li><li>มองหาเมนู/หน้า "Operator View / มุมมองผู้ควบคุม" ที่ให้ Owner ดูสตรีม comment intent ของ Host</li><li>ระหว่างมีเซสชันไลฟ์ ตรวจว่ามีมุมมองแยกสำหรับ Owner (ไม่ใช่ HUD ของตัวเอง) หรือไม่</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>Owner + Host ที่กำลังไลฟ์</li></ul></div>
+  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">หมายเหตุ: แอปนี้เป็นแอปสำหรับใช้คนเดียว ยังไม่มีฟีเจอร์ทีม/หลายคน (เจ้าของ-โฮสต์-แพ็กเกจ-สลับทีม) — เคสกลุ่มนี้ไว้ยืนยันว่ายังไม่มี</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เข้าสู่ระบบแล้ว</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบ</li><li>ดูเมนูทั้งหมด</li><li>มองหาหน้าที่ให้ “เจ้าของดูคอมเมนต์/คำแนะนำของโฮสต์คนอื่น”</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ไล่ดูเมนูทั้งหมด</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ไม่มีเมนู/หน้า "Operator View" ในแอป desktop (ยืนยันจากโค้ด: ไม่มี route/หน้า/เมนู/ข้อความนี้เลย)</li><li>ยืนยัน scope: Operator View เป็นฟีเจอร์ SaaS/planned (flow-summary §2.3) ยังไม่ build</li><li>ถ้าพบ Operator View ในแอป desktop = เกิน scope ให้บันทึกเป็นข้อสังเกตพร้อมภาพหน้าจอ</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ไม่มีหน้าแบบนั้น (แอปนี้ดูไลฟ์ของตัวเองเท่านั้น)</li><li>ถ้าเจอ ให้แจ้งทีม</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1870,19 +1870,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 </div></td></tr>
 <tr class="trow" data-feat="epic9" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-M1-WS.6</td>
-  <td class="ctitle">🚧 [ยังไม่ build ใน desktop] สลับเวิร์กสเปซ (multi-tenant) — ยืนยันว่า desktop เป็น workspace เดียว <span class="edge-badge">🆕 edge</span></td>
+  <td class="ctitle">ยังไม่มีการสลับทีม/พื้นที่ทำงาน (แอปผูกกับที่เดียว) <span class="edge-badge">🆕 edge</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
   <td class="status" data-uid="tc-556"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-556"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">🚧 [ยังไม่ build ใน desktop] สลับเวิร์กสเปซ (multi-tenant) — ยืนยันว่า desktop เป็น workspace เดียว</div>
+  <div class="h-title">ยังไม่มีการสลับทีม/พื้นที่ทำงาน (แอปผูกกับที่เดียว)</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · workspace-rbac · Epic 9</div>
-  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">DoD M1 §1.1 (multi-tenant isolation = non-negotiable · E7 RBAC + E1 RLS) · prd-th.md NFR4.2 · ⚠️ scope-boundary: ฟีเจอร์นี้ยังไม่มีในแอป desktop จริง (planned M1/SaaS) — ตรวจจากโค้ด apps/desktop 2026-07-26 (ไม่มี route/เมนู/หน้าจอนี้)</div></div>
-  <div class="sec"><h4>Precondition</h4><ul><li>บัญชีทดสอบเป็นสมาชิกอย่างน้อย 2 เวิร์กสเปซที่มีข้อมูลคนละชุด</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบแอป desktop</li><li>เปิดเมนูโปรไฟล์และส่วนหัวแอป มองหาตัวสลับเวิร์กสเปซ (workspace switcher)</li><li>ตรวจว่ามีรายการเวิร์กสเปซหลายอันให้เลือกหรือไม่ (หมายเหตุ: "สลับไลฟ์" ในแอป = สลับเซสชันไลฟ์ ไม่ใช่สลับ workspace)</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>เวิร์กสเปซ 2 แห่งที่มีข้อมูลคนละชุด</li></ul></div>
+  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">หมายเหตุ: แอปนี้เป็นแอปสำหรับใช้คนเดียว ยังไม่มีฟีเจอร์ทีม/หลายคน (เจ้าของ-โฮสต์-แพ็กเกจ-สลับทีม) — เคสกลุ่มนี้ไว้ยืนยันว่ายังไม่มี</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เข้าสู่ระบบแล้ว</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบ</li><li>เปิดเมนูโปรไฟล์และดูหัวแอป</li><li>มองหาตัวสลับทีม/พื้นที่ทำงาน (หมายเหตุ: “สลับไลฟ์” = สลับไลฟ์ ไม่ใช่สลับทีม)</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ไล่ดูเมนูโปรไฟล์/หัวแอป</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>desktop ผูกกับผู้ใช้/เวิร์กสเปซเดียว — ไม่มีตัวสลับเวิร์กสเปซในแอป</li><li>การแยกข้อมูลข้าม tenant (RLS/multi-tenant · NFR4.2) เป็นเรื่อง backend (E1 RLS) ทดสอบระดับ integration ไม่ใช่ UI ใน desktop</li><li>ถ้าพบตัวสลับ workspace ใน desktop = เกิน scope ให้บันทึกเป็นข้อสังเกต</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ไม่มีตัวสลับทีม/พื้นที่ทำงานในแอป</li><li>ถ้าเจอ ให้แจ้งทีม</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1899,19 +1899,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 </div></td></tr>
 <tr class="trow" data-feat="epic9" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-M1-WS.7</td>
-  <td class="ctitle">🚧 [ยังไม่ build ใน desktop] เปลี่ยน/ลดสิทธิ์สมาชิกกลางคัน — ยืนยันว่า desktop ไม่มีระบบ role <span class="edge-badge">🆕 edge</span></td>
+  <td class="ctitle">ยังไม่มีการปรับสิทธิ์สมาชิก (แอปไม่มีระบบทีม/บทบาท) <span class="edge-badge">🆕 edge</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
   <td class="status" data-uid="tc-557"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-557"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">🚧 [ยังไม่ build ใน desktop] เปลี่ยน/ลดสิทธิ์สมาชิกกลางคัน — ยืนยันว่า desktop ไม่มีระบบ role</div>
+  <div class="h-title">ยังไม่มีการปรับสิทธิ์สมาชิก (แอปไม่มีระบบทีม/บทบาท)</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · workspace-rbac · Epic 9</div>
-  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">mvp-1 E7 RBAC (NFR3.10) · prd-th.md FR56–58 · ⚠️ scope-boundary: ฟีเจอร์นี้ยังไม่มีในแอป desktop จริง (planned M1/SaaS) — ตรวจจากโค้ด apps/desktop 2026-07-26 (ไม่มี route/เมนู/หน้าจอนี้)</div></div>
-  <div class="sec"><h4>Precondition</h4><ul><li>มีสมาชิกที่มีสิทธิ์ระดับหนึ่งกำลังใช้งานอยู่</li><li>Owner ปรับสิทธิ์ได้</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบแอป desktop</li><li>มองหาหน้าจัดการสมาชิก/บทบาท (เพิ่ม/ลด/ถอนสิทธิ์)</li><li>ตรวจว่ามีการเปลี่ยนสิทธิ์ที่กระทบ UI ระหว่างใช้งานหรือไม่</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>การเปลี่ยนสิทธิ์: ลด/ถอดกลางคัน</li></ul></div>
+  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">หมายเหตุ: แอปนี้เป็นแอปสำหรับใช้คนเดียว ยังไม่มีฟีเจอร์ทีม/หลายคน (เจ้าของ-โฮสต์-แพ็กเกจ-สลับทีม) — เคสกลุ่มนี้ไว้ยืนยันว่ายังไม่มี</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เข้าสู่ระบบแล้ว</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบ</li><li>หาหน้าจัดการสมาชิก/บทบาท (เพิ่ม/ลด/ถอนสิทธิ์)</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ไล่ดูเมนู + ตั้งค่า</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ไม่มีหน้าจัดการสมาชิก/บทบาทในแอป desktop → การเปลี่ยน role กลางคันจึงไม่มีให้ทดสอบใน UI นี้</li><li>ยืนยัน scope: RBAC/role management (E7) เป็น SaaS/planned ยังไม่ build ใน desktop</li><li>ถ้าพบการจัดการบทบาท/สมาชิกใน desktop = เกิน scope ให้บันทึกเป็นข้อสังเกต</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ไม่มีหน้าจัดการสมาชิก/บทบาทในแอป</li><li>ถ้าเจอ ให้แจ้งทีม</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1929,19 +1929,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="featrow" data-featkey="workspace-tier"><td colspan="7">📁 workspace-tier <span class="rp"><span class="lv lvl-ui">🌐 1</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="workspace-tier"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
 <tr class="trow" data-feat="epic9" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-M1-WS.5</td>
-  <td class="ctitle">🚧 [ยังไม่ build ใน desktop] หน้า tier / โควตา AI credits — ยืนยันว่ายังไม่มี (billing = M2/Hub)</td>
+  <td class="ctitle">ยังไม่มีหน้าแพ็กเกจ/เครดิต AI ในแอป</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
   <td class="status" data-uid="tc-558"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-558"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">🚧 [ยังไม่ build ใน desktop] หน้า tier / โควตา AI credits — ยืนยันว่ายังไม่มี (billing = M2/Hub)</div>
+  <div class="h-title">ยังไม่มีหน้าแพ็กเกจ/เครดิต AI ในแอป</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · workspace-tier · Epic 9</div>
-  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">mvp-1 E7 tier · prd-th.md FR60 · flow-summary §2.6 (tier + credits) · user-guide §billing · ⚠️ scope-boundary: ฟีเจอร์นี้ยังไม่มีในแอป desktop จริง (planned M1/SaaS) — ตรวจจากโค้ด apps/desktop 2026-07-26 (ไม่มี route/เมนู/หน้าจอนี้)</div></div>
-  <div class="sec"><h4>Precondition</h4><ul><li>ล็อกอินด้วยบัญชีที่ผูกกับแพ็กเกจหนึ่ง</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบแอป desktop</li><li>เปิดเมนูตั้งค่าทั้งหมด (ในแอปมีแค่ "ความเป็นส่วนตัว/consent" และ "โอเพนซอร์ส/licenses")</li><li>มองหาหน้าที่แสดงแพ็กเกจ (Starter/Pro/Enterprise) + โควตา/ยอดคงเหลือ AI credits</li><li>เปิดเมนูโปรไฟล์ ดูว่ามีข้อมูลแพ็กเกจ/เครดิตคงเหลือหรือไม่</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>แพ็กเกจ: Starter 5,900 / Pro 12,900 / Enterprise 29,900 (credits 5K/15K/50K)</li></ul></div>
+  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">หมายเหตุ: แอปนี้เป็นแอปสำหรับใช้คนเดียว ยังไม่มีฟีเจอร์ทีม/หลายคน (เจ้าของ-โฮสต์-แพ็กเกจ-สลับทีม) — เคสกลุ่มนี้ไว้ยืนยันว่ายังไม่มี</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เข้าสู่ระบบแล้ว</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบ</li><li>เปิดตั้งค่าทั้งหมด (ในแอปมีแค่ “ความยินยอมของคุณ” กับ “ประกาศลิขสิทธิ์โมเดลโอเพนซอร์ส”)</li><li>มองหาหน้าแพ็กเกจ (Starter/Pro/Enterprise) หรือ ยอดเครดิต AI</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>เปิดตั้งค่าทั้งหมด</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ตั้งค่าใน desktop มีแค่ ความเป็นส่วนตัว + โอเพนซอร์ส — ไม่มีหน้า tier / โควตา / ยอดคงเหลือ AI credits</li><li>ชื่อแพ็กเกจจะเห็นเฉพาะตอนหมดอายุ (หน้า Expired) เท่านั้น · billing/credit UI = M2 (Takra Hub) ยังไม่ build ใน desktop</li><li>ถ้าพบหน้า tier/credit balance ใน desktop = เกิน scope ให้บันทึกเป็นข้อสังเกต</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ไม่มีหน้าแพ็กเกจ/เครดิตในแอป (จะเห็นชื่อแพ็กเกจแค่ตอนแพ็กเกจหมดอายุ)</li><li>เรื่องจ่ายเงิน/เครดิต อยู่ที่ระบบ Takra Hub ไม่ใช่ในแอปนี้</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
