@@ -433,19 +433,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="featrow" data-featkey="entitlement-guard"><td colspan="7">📁 entitlement-guard <span class="rp"><span class="lv lvl-ui">🌐 2</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="entitlement-guard"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
 <tr class="trow" data-feat="epic1" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-0.5-ENT-AC4-UI-POS-01</td>
-  <td class="ctitle">entitled=false → redirect /expired + หน้าหมดอายุ (ข้อความไทย)</td>
+  <td class="ctitle">บัญชีที่แพ็กเกจหมดอายุ พอล็อกอินต้องถูกพาไปหน้า "แพ็กเกจหมดอายุ"</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
   <td class="status" data-uid="tc-501"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-501"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">entitled=false → redirect /expired + หน้าหมดอายุ (ข้อความไทย)</div>
+  <div class="h-title">บัญชีที่แพ็กเกจหมดอายุ พอล็อกอินต้องถูกพาไปหน้า "แพ็กเกจหมดอายุ"</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · entitlement-guard · Epic 1</div>
-  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">MVP 0.5 report (reports/takra-inside-mvp-0.5-ui-test-cases-table.html) · entitlement-guard · AC4 · Jira TI-115, TI-123</div></div>
-  <div class="sec"><h4>Precondition</h4><ul><li>mock auth: ล็อกอินแล้ว แต่ entitled=false</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>นำทางไปหน้าที่มี RequireAuth (เช่น /setup)</li><li>ตรวจ URL ปลายทาง + element</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>Level: UI · AC4 · feature: entitlement-guard</li></ul></div>
+  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">อ้างอิง: รายงานทดสอบ MVP 0.5 เดิม (แพ็กเกจหมดอายุ)</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>มีบัญชีทดสอบที่แพ็กเกจหมดอายุ (ขอจากทีม dev)</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ล็อกอินด้วยบัญชีที่แพ็กเกจหมดอายุ</li><li>ดูว่าแอปพาไปหน้าไหน</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>บัญชีที่แพ็กเกจหมดอายุ</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>redirect ไป /expired (ไม่ค้างหน้าที่ guard ป้องกัน)</li><li>ไอคอน CalendarX + หัวข้อไทย แพ็กเกจของคุณหมดอายุแล้ว</li><li>ไม่หลุดเข้าเนื้อหาที่ต้องมีสิทธิ์</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>แอปพาไปหน้า "แพ็กเกจหมดอายุ" ไม่หลุดเข้าหน้าใช้งาน</li><li>มีไอคอนปฏิทินกากบาท + หัวข้อ "แพ็กเกจของคุณหมดอายุแล้ว"</li><li>เข้าหน้าที่ต้องมีสิทธิ์ไม่ได้</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -462,19 +462,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 </div></td></tr>
 <tr class="trow" data-feat="epic1" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-0.5-ENT-AC4-UI-POS-02</td>
-  <td class="ctitle">หน้า Expired แสดง plan name + วันหมดอายุ + ปุ่มต่ออายุ/เช็กใหม่</td>
+  <td class="ctitle">หน้าแพ็กเกจหมดอายุ แสดงชื่อแพ็กเกจ + วันหมดอายุ + ปุ่มต่ออายุ/เช็กใหม่</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
   <td class="status" data-uid="tc-502"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-502"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">หน้า Expired แสดง plan name + วันหมดอายุ + ปุ่มต่ออายุ/เช็กใหม่</div>
+  <div class="h-title">หน้าแพ็กเกจหมดอายุ แสดงชื่อแพ็กเกจ + วันหมดอายุ + ปุ่มต่ออายุ/เช็กใหม่</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · entitlement-guard · Epic 1</div>
-  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">MVP 0.5 report (reports/takra-inside-mvp-0.5-ui-test-cases-table.html) · entitlement-guard · AC4 · Jira TI-117, TI-121</div></div>
-  <div class="sec"><h4>Precondition</h4><ul><li>อยู่หน้า /expired · mock plan data (planName + expiresAt)</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>อ่าน info card บนหน้า Expired</li><li>ตรวจปุ่ม 2 ปุ่ม</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>Level: UI · AC4 · feature: entitlement-guard</li></ul></div>
+  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">อ้างอิง: รายงานทดสอบ MVP 0.5 เดิม (แพ็กเกจหมดอายุ)</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>อยู่ที่หน้า "แพ็กเกจหมดอายุ"</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>อ่านการ์ดข้อมูลบนหน้า</li><li>ดูปุ่มบนหน้า</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>บัญชีที่แพ็กเกจหมดอายุ</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>แสดง planName + วันหมดอายุ</li><li>ปุ่ม ต่ออายุแพ็กเกจ + ฉันต่ออายุแล้ว · เช็กอีกครั้ง กดได้ทั้งคู่</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>แสดงชื่อแพ็กเกจ และวันหมดอายุ</li><li>มีปุ่ม "ต่ออายุแพ็กเกจ" และปุ่ม "ฉันต่ออายุแล้ว · เช็กอีกครั้ง" กดได้ทั้งคู่</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -492,19 +492,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="featrow" data-featkey="login-sso"><td colspan="7">📁 login-sso <span class="rp"><span class="lv lvl-ui">🌐 2</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="login-sso"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
 <tr class="trow" data-feat="epic1" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-0.5-LOGIN-AC3-POS-01</td>
-  <td class="ctitle">entitlement ไม่ผ่าน → ข้อความปฏิเสธภาษาไทยอ่านง่าย + ไม่ให้สิทธิ์เข้า</td>
+  <td class="ctitle">ล็อกอินแล้วไม่มีสิทธิ์ — ขึ้นข้อความปฏิเสธภาษาไทย ไม่ให้เข้าใช้งาน</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
   <td class="status" data-uid="tc-503"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-503"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">entitlement ไม่ผ่าน → ข้อความปฏิเสธภาษาไทยอ่านง่าย + ไม่ให้สิทธิ์เข้า</div>
+  <div class="h-title">ล็อกอินแล้วไม่มีสิทธิ์ — ขึ้นข้อความปฏิเสธภาษาไทย ไม่ให้เข้าใช้งาน</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · login-sso · Epic 1</div>
-  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">MVP 0.5 report (reports/takra-inside-mvp-0.5-ui-test-cases-table.html) · login-sso · AC3</div></div>
-  <div class="sec"><h4>Precondition</h4><ul><li>build แล้ว · entitlement check คืน deny สำหรับ u-denied · Zitadel local + Hub mock พร้อม</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>Sign in เป็น u-denied เข้าสู่ denial state</li><li>ตรวจข้อความที่ render</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>Level: UI · AC3 · feature: login-sso</li></ul></div>
+  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">อ้างอิง: รายงานทดสอบ MVP 0.5 เดิม (เข้าสู่ระบบ)</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>มีบัญชีทดสอบที่ไม่มีสิทธิ์ใช้งาน (ขอจากทีม dev)</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ล็อกอินด้วยบัญชีที่ไม่มีสิทธิ์</li><li>อ่านข้อความที่ขึ้น</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>บัญชีที่ไม่มีสิทธิ์</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ข้อความ ภาษาไทยอ่านง่าย/ชัดเจน (แจ้งไม่มีสิทธิ์) — ไม่มี error code/English stack/ศัพท์ dev</li><li>ไม่มีปุ่ม/เส้นทางใดให้สิทธิ์เข้า workspace จากหน้านี้</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ขึ้นข้อความปฏิเสธเป็นภาษาไทยอ่านเข้าใจ (บอกว่าไม่มีสิทธิ์) — ไม่มีรหัส error/ภาษาอังกฤษ/ศัพท์เทคนิค</li><li>ไม่มีปุ่มหรือทางใดให้เข้าใช้งานจากหน้านี้</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -521,19 +521,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 </div></td></tr>
 <tr class="trow" data-feat="epic1" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-0.5-LOGIN-AC1-UI-POS-01</td>
-  <td class="ctitle">หน้า Login แสดงปุ่ม "เข้าสู่ระบบด้วยบัญชี TAKRA" + โลโก้ + tagline</td>
+  <td class="ctitle">เปิดแอปครั้งแรก เจอหน้าเข้าสู่ระบบ พร้อมปุ่ม "เข้าสู่ระบบด้วยบัญชี TAKRA"</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
   <td class="status" data-uid="tc-504"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-504"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">หน้า Login แสดงปุ่ม "เข้าสู่ระบบด้วยบัญชี TAKRA" + โลโก้ + tagline</div>
+  <div class="h-title">เปิดแอปครั้งแรก เจอหน้าเข้าสู่ระบบ พร้อมปุ่ม "เข้าสู่ระบบด้วยบัญชี TAKRA"</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · login-sso · Epic 1</div>
-  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">MVP 0.5 report (reports/takra-inside-mvp-0.5-ui-test-cases-table.html) · login-sso · AC1 · Jira TI-147</div></div>
-  <div class="sec"><h4>Precondition</h4><ul><li>เปิดหน้า Login (ยังไม่ล็อกอิน, loading=false)</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>render หน้า Login · ตรวจ element หลัก</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>Level: UI · AC1 · feature: login-sso</li></ul></div>
+  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">อ้างอิง: รายงานทดสอบ MVP 0.5 เดิม (หน้าเข้าสู่ระบบ)</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอปโดยยังไม่ได้เข้าสู่ระบบ</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป</li><li>ดูหน้าแรกที่ขึ้นมา</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>บัญชี TAKRA สำหรับทดสอบ</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ปุ่ม เข้าสู่ระบบด้วยบัญชี TAKRA + ไอคอน LogIn</li><li>โลโก้ mascot + wordmark + tagline เข้าใจทุก Live ตัดสินใจอย่างมั่นใจ</li><li>มีลิงก์ Terms / Privacy</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>มีปุ่ม "เข้าสู่ระบบด้วยบัญชี TAKRA"</li><li>มีโลโก้แอป + สโลแกน "เข้าใจทุก Live ตัดสินใจอย่างมั่นใจ"</li><li>มีลิงก์ ข้อกำหนดการใช้งาน / นโยบายความเป็นส่วนตัว</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -554,19 +554,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="featrow" data-featkey="comment-capture"><td colspan="7">📁 comment-capture <span class="rp"><span class="lv lvl-ui">🌐 2</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="comment-capture"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
 <tr class="trow" data-feat="epic2" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-0.5-CAP-AC1-UI-POS-01</td>
-  <td class="ctitle">comment เข้า → แสดงใน list พร้อม count + label "Live Comments"</td>
+  <td class="ctitle">คอมเมนต์เข้ามา ต้องขึ้นในรายการคอมเมนต์สด พร้อมตัวนับและป้าย "Live Comments"</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
   <td class="status" data-uid="tc-505"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-505"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">comment เข้า → แสดงใน list พร้อม count + label "Live Comments"</div>
+  <div class="h-title">คอมเมนต์เข้ามา ต้องขึ้นในรายการคอมเมนต์สด พร้อมตัวนับและป้าย "Live Comments"</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · comment-capture · Epic 2</div>
-  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">MVP 0.5 report (reports/takra-inside-mvp-0.5-ui-test-cases-table.html) · comment-capture · AC1</div></div>
-  <div class="sec"><h4>Precondition</h4><ul><li>หน้า SessionRecording เปิดอยู่</li><li>feed comment ผ่าน window.liveHost.onComment (mock)</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ส่ง comment ทดสอบ 3 รายการ (ต่าง user)</li><li>ตรวจ list + header</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>Level: UI · AC1 · feature: comment-capture</li></ul></div>
+  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">อ้างอิง: รายงานทดสอบ MVP 0.5 เดิม (คอมเมนต์สด)</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>กำลังดูไลฟ์อยู่ (หน้ามอนิเตอร์ไลฟ์สด) และมีคนคอมเมนต์เข้ามา</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ให้ผู้ช่วยพิมพ์คอมเมนต์ทดสอบ 3 ข้อความ (คนละคน)</li><li>ดูรายการคอมเมนต์สด และหัวรายการ</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>คอมเมนต์ทดสอบ 3 ข้อความ จาก 3 คน</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>comment ทั้ง 3 ปรากฏใน list (ข้อความตรงกับที่ส่ง)</li><li>มี label Live Comments + จุด pulse แดง + count = 3 มุมขวา</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>คอมเมนต์ทั้ง 3 ขึ้นในรายการ ข้อความตรงกับที่พิมพ์</li><li>มีป้าย "Live Comments" + จุดแดงกะพริบ + ตัวเลขนับ = 3 ที่มุมขวา</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -583,19 +583,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 </div></td></tr>
 <tr class="trow" data-feat="epic2" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-0.5-CAP-AC1-UI-POS-02</td>
-  <td class="ctitle">user ใหม่ → avatar+ชื่อ; user เดิมติดกัน → ซ่อน avatar แสดงแค่ข้อความ</td>
+  <td class="ctitle">คนเดิมคอมเมนต์ติดกัน จะซ่อนรูป/ชื่อ แสดงแค่ข้อความ (คนใหม่ขึ้นรูป+ชื่อ)</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
   <td class="status" data-uid="tc-506"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-506"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">user ใหม่ → avatar+ชื่อ; user เดิมติดกัน → ซ่อน avatar แสดงแค่ข้อความ</div>
+  <div class="h-title">คนเดิมคอมเมนต์ติดกัน จะซ่อนรูป/ชื่อ แสดงแค่ข้อความ (คนใหม่ขึ้นรูป+ชื่อ)</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · comment-capture · Epic 2</div>
-  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">MVP 0.5 report (reports/takra-inside-mvp-0.5-ui-test-cases-table.html) · comment-capture · AC1 · Jira TI-129</div></div>
-  <div class="sec"><h4>Precondition</h4><ul><li>หน้า SessionRecording · mock comment feed</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ส่ง comment จาก "alice" 2 รายการติดกัน แล้ว "bob" 1 รายการ</li><li>ตรวจการแสดง avatar/ชื่อ แต่ละแถว</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>Level: UI · AC1 · feature: comment-capture</li></ul></div>
+  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">อ้างอิง: รายงานทดสอบ MVP 0.5 เดิม (คอมเมนต์สด)</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>กำลังดูไลฟ์อยู่ และมีคนคอมเมนต์เข้ามา</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ให้ "alice" พิมพ์ 2 ข้อความติดกัน แล้ว "bob" พิมพ์ 1 ข้อความ</li><li>ดูว่าแต่ละแถวขึ้นรูป/ชื่ออย่างไร</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>alice พิมพ์ 2 ข้อความติดกัน แล้ว bob 1 ข้อความ</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>comment แรกของ alice → avatar + ชื่อ + ข้อความ</li><li>comment ที่ 2 ของ alice (ติดกัน) → ซ่อน avatar/ชื่อ แสดงแค่ข้อความ</li><li>comment ของ bob → avatar+ชื่อใหม่</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ข้อความแรกของ alice → มีรูปโปรไฟล์ + ชื่อ + ข้อความ</li><li>ข้อความที่ 2 ของ alice (ติดกัน) → ซ่อนรูป/ชื่อ แสดงแค่ข้อความ</li><li>ข้อความของ bob → ขึ้นรูป + ชื่อใหม่</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -613,19 +613,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="featrow" data-featkey="live-pairing"><td colspan="7">📁 live-pairing <span class="rp"><span class="lv lvl-ui">🌐 2</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="live-pairing"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
 <tr class="trow" data-feat="epic2" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-0.5-PAIR-AC1-UI-POS-01</td>
-  <td class="ctitle">BrowserPanel แสดง toolbar (back/fwd/reload) + URL bar + ปุ่ม TikTok/FB</td>
+  <td class="ctitle">หน้าจับคู่ไลฟ์มีเบราว์เซอร์ในตัว: ปุ่มย้อน/ถัด/รีโหลด + ช่อง URL + ปุ่มลัด TikTok/FB</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
   <td class="status" data-uid="tc-507"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-507"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">BrowserPanel แสดง toolbar (back/fwd/reload) + URL bar + ปุ่ม TikTok/FB</div>
+  <div class="h-title">หน้าจับคู่ไลฟ์มีเบราว์เซอร์ในตัว: ปุ่มย้อน/ถัด/รีโหลด + ช่อง URL + ปุ่มลัด TikTok/FB</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · live-pairing · Epic 2</div>
-  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">MVP 0.5 report (reports/takra-inside-mvp-0.5-ui-test-cases-table.html) · live-pairing · AC1</div></div>
-  <div class="sec"><h4>Precondition</h4><ul><li>เปิดหน้าที่มี BrowserPanel (เช่น SessionPre) ใน Electron mode</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>render BrowserPanel · ตรวจ toolbar elements</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>Level: UI · AC1 · feature: live-pairing</li></ul></div>
+  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">อ้างอิง: รายงานทดสอบ MVP 0.5 เดิม (จับคู่ไลฟ์)</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เข้าสู่ระบบแล้ว ไปที่หน้าเริ่มดูไลฟ์ใหม่</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เปิดหน้าเริ่มดูไลฟ์ (จับคู่ไลฟ์)</li><li>ดูแถบเครื่องมือของเบราว์เซอร์ในตัว</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>หน้าจับคู่ไลฟ์</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>มีปุ่ม Back / Forward / Reload (กดได้)</li><li>มี URL bar + ปุ่ม "Go" + lock icon</li><li>มีปุ่ม quick-launch TikTok + Facebook</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>มีปุ่ม ย้อนกลับ / ถัดไป / รีโหลด กดได้</li><li>มีช่องใส่ URL + ปุ่ม "ไป" + ไอคอนกุญแจ</li><li>มีปุ่มลัดเปิด TikTok และ Facebook</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -642,19 +642,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 </div></td></tr>
 <tr class="trow" data-feat="epic2" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-0.5-PAIR-AC1-UI-POS-02</td>
-  <td class="ctitle">โหลดครั้งแรก → นำทางไป TikTok live home (initialUrl)</td>
+  <td class="ctitle">เปิดหน้าจับคู่ไลฟ์ครั้งแรก เบราว์เซอร์ในตัวพาไปหน้าไลฟ์ TikTok อัตโนมัติ</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
   <td class="status" data-uid="tc-508"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-508"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">โหลดครั้งแรก → นำทางไป TikTok live home (initialUrl)</div>
+  <div class="h-title">เปิดหน้าจับคู่ไลฟ์ครั้งแรก เบราว์เซอร์ในตัวพาไปหน้าไลฟ์ TikTok อัตโนมัติ</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · live-pairing · Epic 2</div>
-  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">MVP 0.5 report (reports/takra-inside-mvp-0.5-ui-test-cases-table.html) · live-pairing · AC1</div></div>
-  <div class="sec"><h4>Precondition</h4><ul><li>BrowserPanel mount ครั้งแรก (ยังไม่ pair)</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>mount panel · อ่าน URL ที่ viewport นำทางไป</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>Level: UI · AC1 · feature: live-pairing</li></ul></div>
+  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">อ้างอิง: รายงานทดสอบ MVP 0.5 เดิม (จับคู่ไลฟ์)</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เข้าสู่ระบบแล้ว</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เปิดหน้าเริ่มดูไลฟ์ใหม่</li><li>ดูว่าเบราว์เซอร์ในตัวเปิดหน้าไหนให้อัตโนมัติ</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>หน้าจับคู่ไลฟ์</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>นำทางไป https://www.tiktok.com/live (initialUrl) อัตโนมัติ</li><li>URL bar สะท้อน URL ปัจจุบัน</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>เบราว์เซอร์ในตัวเปิดหน้าไลฟ์ TikTok (tiktok.com/live) ให้อัตโนมัติ</li><li>ช่อง URL แสดงที่อยู่หน้าปัจจุบัน</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -675,19 +675,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="featrow" data-featkey="emotion-read"><td colspan="7">📁 emotion-read <span class="rp"><span class="lv lvl-ui">🌐 5</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="emotion-read"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
 <tr class="trow" data-feat="epic3" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-0.5-EMO-LIVE-01</td>
-  <td class="ctitle">สีหน้าจริงของ host ตรงกับอารมณ์ที่ HUD แสดงสด</td>
+  <td class="ctitle">สีหน้าจริงของคนไลฟ์ ต้องตรงกับอารมณ์ที่แผงบนจอแสดงแบบสด</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
   <td class="status" data-uid="tc-509"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-509"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">สีหน้าจริงของ host ตรงกับอารมณ์ที่ HUD แสดงสด</div>
+  <div class="h-title">สีหน้าจริงของคนไลฟ์ ต้องตรงกับอารมณ์ที่แผงบนจอแสดงแบบสด</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · emotion-read · Epic 3</div>
-  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">MVP 0.5 report (reports/takra-inside-mvp-0.5-ui-test-cases-table.html) · emotion-read · AC2 · Jira TI-153, TI-154</div></div>
-  <div class="sec"><h4>Precondition</h4><ul><li>Desktop app + Python backend (:8765) บนเครื่อง target จริง · host enroll + pair ไลฟ์จริง</li><li>PDPA: ได้ capture consent (FR2) ก่อน · มีอุปกรณ์ที่ 2 ดูฝั่งผู้ชม</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เริ่มไลฟ์จริง ให้ host มองกล้อง</li><li>host ยิ้มกว้างค้าง 5 วิ → อ่านค่า HUD</li><li>หน้าเฉยๆ 5 วิ → อ่านค่า</li><li>หน้ากังวล/ขมวดคิ้ว 5 วิ → อ่านค่า</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>Level: Live-manual · AC2 · feature: emotion-read</li></ul></div>
+  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">อ้างอิง: รายงานทดสอบ MVP 0.5 เดิม (อ่านอารมณ์จากสีหน้า)</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>กำลังไลฟ์จริง เปิดการอ่านอารมณ์ และหน้าอยู่ในกล้อง</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เริ่มไลฟ์จริง ให้คนไลฟ์มองกล้อง</li><li>ยิ้มกว้างค้าง 5 วิ แล้วดูแผงอารมณ์</li><li>ทำหน้าเฉย ๆ 5 วิ แล้วดู</li><li>ทำหน้ากังวล/ขมวดคิ้ว 5 วิ แล้วดู</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ยิ้ม / หน้าเฉย / หน้ากังวล อย่างละ 5 วินาที</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ยิ้ม → โทน happy · เฉย → neutral · กังวล → sad/frown</li><li>เกณฑ์ผ่าน = ทิศทางถูก (เปลี่ยนตามหน้าจริง) ไม่บังคับ % เป๊ะ</li><li>เก็บวิดีโอ/แคปเป็นหลักฐาน → golden fixture</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ยิ้ม → อารมณ์ไปทางมีความสุข · เฉย → เฉย ๆ · กังวล → ไปทางเศร้า/กังวล</li><li>ผ่านถ้าอารมณ์เปลี่ยนตามหน้าจริง (ดูทิศทาง ไม่ต้องเป๊ะเปอร์เซ็นต์)</li><li>เก็บคลิป/ภาพหน้าจอไว้เป็นหลักฐาน</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -704,19 +704,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 </div></td></tr>
 <tr class="trow" data-feat="epic3" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-0.5-EMO-LIVE-02</td>
-  <td class="ctitle">พลังงาน (energy) ขยับตามจริง: พูดเยอะ→สูง / นิ่ง→ต่ำ</td>
+  <td class="ctitle">พลังงานขยับตามจริง — พูดเยอะ/ขยับเยอะ = สูง, นั่งนิ่ง = ต่ำ</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
   <td class="status" data-uid="tc-510"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-510"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">พลังงาน (energy) ขยับตามจริง: พูดเยอะ→สูง / นิ่ง→ต่ำ</div>
+  <div class="h-title">พลังงานขยับตามจริง — พูดเยอะ/ขยับเยอะ = สูง, นั่งนิ่ง = ต่ำ</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · emotion-read · Epic 3</div>
-  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">MVP 0.5 report (reports/takra-inside-mvp-0.5-ui-test-cases-table.html) · emotion-read · AC2</div></div>
-  <div class="sec"><h4>Precondition</h4><ul><li>app + backend จริง · host enroll + pair ไลฟ์ · PDPA consent · อุปกรณ์ที่ 2</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>host พูดต่อเนื่อง + ขยับมือ/หัว + แสดงออกเยอะ 10 วิ → จด energy</li><li>นั่งนิ่งเงียบ มองกล้อง 10 วิ → จด energy</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>Level: Live-manual · AC2 · feature: emotion-read</li></ul></div>
+  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">อ้างอิง: รายงานทดสอบ MVP 0.5 เดิม (พลังงาน)</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>กำลังไลฟ์จริง หน้าอยู่ในกล้อง</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>พูดต่อเนื่อง ขยับมือ/หัว แสดงออกเยอะ 10 วิ แล้วจดค่าพลังงาน</li><li>นั่งนิ่งเงียบ มองกล้อง 10 วิ แล้วจดค่าพลังงาน</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>แสดงออกเยอะ 10 วิ เทียบกับ นั่งนิ่ง 10 วิ</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>energy ขั้น 1 สูงกว่า ขั้น 2 ชัดเจน (เทียบทิศทาง ไม่ใช่เลขสัมบูรณ์)</li><li>energy ต้อง gated ด้วย looking — ไม่มองกล้อง energy ไม่ควรพุ่งจาก noise</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ค่าพลังงานตอนแสดงออกเยอะ สูงกว่าตอนนิ่งอย่างเห็นได้ชัด (ดูทิศทาง)</li><li>ถ้าไม่มองกล้อง พลังงานไม่ควรพุ่งขึ้นมั่ว ๆ</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -733,19 +733,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 </div></td></tr>
 <tr class="trow" data-feat="epic3" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-0.5-EMO-LIVE-03</td>
-  <td class="ctitle">HUD อัปเดต real-time ไม่หน่วง/ไม่ค้างตอนไลฟ์ (5 นาที)</td>
+  <td class="ctitle">แผงบนจออัปเดตแบบสด ไม่หน่วง ไม่ค้าง ตลอดไลฟ์ 5 นาที</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
   <td class="status" data-uid="tc-511"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-511"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">HUD อัปเดต real-time ไม่หน่วง/ไม่ค้างตอนไลฟ์ (5 นาที)</div>
+  <div class="h-title">แผงบนจออัปเดตแบบสด ไม่หน่วง ไม่ค้าง ตลอดไลฟ์ 5 นาที</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · emotion-read · Epic 3</div>
-  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">MVP 0.5 report (reports/takra-inside-mvp-0.5-ui-test-cases-table.html) · emotion-read · AC2 · Jira TI-153</div></div>
-  <div class="sec"><h4>Precondition</h4><ul><li>app + backend จริง · host enroll + pair ไลฟ์ · PDPA consent · อุปกรณ์ที่ 2</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ไลฟ์จริงต่อเนื่อง ≥5 นาที (capture+stream+ML พร้อมกัน)</li><li>host เปลี่ยนสีหน้าเร็วๆ (ยิ้ม→เฉย→ยิ้ม) ดู HUD ตามทันไหม</li><li>สังเกตค้าง/กระตุก/ดีเลย์สะสมเมื่อนานขึ้น</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>Level: Live-manual · AC2 · feature: emotion-read</li></ul></div>
+  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">อ้างอิง: รายงานทดสอบ MVP 0.5 เดิม (ความไว/สด)</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>ไลฟ์จริงต่อเนื่องได้อย่างน้อย 5 นาที</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ไลฟ์จริงต่อเนื่องอย่างน้อย 5 นาที</li><li>เปลี่ยนสีหน้าเร็ว ๆ (ยิ้ม→เฉย→ยิ้ม) ดูว่าแผงตามทันไหม</li><li>สังเกตอาการค้าง/กระตุก/ช้าลงเรื่อย ๆ</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ไลฟ์จริง ≥ 5 นาที</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>HUD เปลี่ยนตามสีหน้าภายในราว 1 วิ ("สด") ไม่หน่วงสะสม</li><li>ไม่ค้าง/freeze/ดีเลย์โตขึ้นตลอด 5 นาที</li><li>ถ้าหน่วงชัด → เครื่อง target ต่ำกว่า min spec (feed กลับ decision #3)</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>แผงเปลี่ยนตามสีหน้าภายในราว 1 วินาที (รู้สึกว่า "สด")</li><li>ไม่ค้าง ไม่กระตุก ไม่ช้าลงเรื่อย ๆ ตลอด 5 นาที</li><li>ถ้าหน่วงชัด อาจเป็นเพราะเครื่องสเปกต่ำเกินไป → แจ้งทีม</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -762,19 +762,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 </div></td></tr>
 <tr class="trow" data-feat="epic3" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-0.5-EMO-LIVE-05</td>
-  <td class="ctitle">หน้าหาย/หันหนี/แสงมืด → HUD บอก degrade ไม่เดามั่ว</td>
+  <td class="ctitle">หน้าหาย/หันหนี/แสงมืด — แผงต้องบอกว่าอ่านหน้าไม่ได้ ไม่เดามั่ว</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
   <td class="status" data-uid="tc-512"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-512"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">หน้าหาย/หันหนี/แสงมืด → HUD บอก degrade ไม่เดามั่ว</div>
+  <div class="h-title">หน้าหาย/หันหนี/แสงมืด — แผงต้องบอกว่าอ่านหน้าไม่ได้ ไม่เดามั่ว</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · emotion-read · Epic 3</div>
-  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">MVP 0.5 report (reports/takra-inside-mvp-0.5-ui-test-cases-table.html) · emotion-read · AC3</div></div>
-  <div class="sec"><h4>Precondition</h4><ul><li>app + backend จริง · host enroll + pair ไลฟ์ · PDPA consent · อุปกรณ์ที่ 2</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>host หันหน้าหนีกล้อง 5 วิ</li><li>เอามือบังหน้า 5 วิ</li><li>หรี่ไฟ/ปิดไฟให้หน้ามืด 5 วิ</li><li>กลับมามองกล้องแสงปกติ</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>Level: Live-manual · AC3 · feature: emotion-read</li></ul></div>
+  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">อ้างอิง: รายงานทดสอบ MVP 0.5 เดิม (หน้าหาย/แสงมืด)</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>กำลังไลฟ์จริง เปิดการอ่านอารมณ์</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>หันหน้าหนีกล้อง 5 วิ</li><li>เอามือบังหน้า 5 วิ</li><li>หรี่/ปิดไฟให้หน้ามืด 5 วิ</li><li>กลับมามองกล้อง แสงปกติ</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>หันหน้าหนี / บังหน้า / หรี่ไฟ อย่างละ 5 วิ</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>หน้าหาย/มืด → HUD ไม่เดามั่ว (ไม่ค้าง ไม่สุ่ม) บอก "อ่านหน้าไม่ได้" / degrade comment-only</li><li>signal #1 ลดน้ำหนัก แต่ไม่ crash session ไปต่อได้</li><li>กลับมามองกล้อง → อ่านอารมณ์กลับมาปกติ</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ตอนหน้าหาย/มืด แผงบอกว่า "อ่านหน้าไม่ได้" หรือสลับเป็นโหมดคอมเมนต์อย่างเดียว — ไม่ค้าง ไม่เดามั่ว</li><li>ไลฟ์ไปต่อได้ ไม่ค้าง/แครช</li><li>กลับมามองกล้อง → อ่านอารมณ์กลับมาปกติ</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -791,19 +791,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 </div></td></tr>
 <tr class="trow" data-feat="epic3" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-0.5-EMO-LIVE-06</td>
-  <td class="ctitle">host enroll → จับเป็น host; คนแปลกหน้า → ไม่ใช่ host</td>
+  <td class="ctitle">ระบบจับได้ว่าใครคือเจ้าของไลฟ์ (คนที่ลงทะเบียนหน้าไว้) คนแปลกหน้าไม่นับ</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
   <td class="status" data-uid="tc-513"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-513"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">host enroll → จับเป็น host; คนแปลกหน้า → ไม่ใช่ host</div>
+  <div class="h-title">ระบบจับได้ว่าใครคือเจ้าของไลฟ์ (คนที่ลงทะเบียนหน้าไว้) คนแปลกหน้าไม่นับ</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · emotion-read · Epic 3</div>
-  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">MVP 0.5 report (reports/takra-inside-mvp-0.5-ui-test-cases-table.html) · emotion-read · AC2</div></div>
-  <div class="sec"><h4>Precondition</h4><ul><li>app + backend จริง · host enroll + pair ไลฟ์ · PDPA consent · อุปกรณ์ที่ 2</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>host (enroll ไว้) เริ่มไลฟ์คนเดียว → ดู HUD ระบุเป็น host</li><li>ให้คนที่ไม่ได้ enroll เข้ามาในเฟรมแทน → ดูระบบระบุเป็นใคร</li><li>host กลับเข้าเฟรม → ดูกลับมาเป็น host</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>Level: Live-manual · AC2 · feature: emotion-read</li></ul></div>
+  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">อ้างอิง: รายงานทดสอบ MVP 0.5 เดิม (ระบุตัวเจ้าของไลฟ์)</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เจ้าของไลฟ์ลงทะเบียนใบหน้าไว้แล้ว</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เจ้าของไลฟ์เริ่มไลฟ์คนเดียว ดูว่าระบบระบุเป็นเจ้าของ</li><li>ให้คนที่ไม่ได้ลงทะเบียนเข้ามาในกล้องแทน ดูว่าระบบระบุเป็นใคร</li><li>เจ้าของกลับเข้ากล้อง ดูว่ากลับมาถูกไหม</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>เจ้าของไลฟ์ (ลงทะเบียนแล้ว) + คนแปลกหน้า</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>host → ระบุเป็น host (score เกิน threshold 0.6)</li><li>คนแปลกหน้า → ไม่ถูกระบุเป็น host (unknown)</li><li>host กลับมา → ระบุถูกอีกครั้ง ไม่สลับ identity มั่ว</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>เจ้าของไลฟ์ → ระบุเป็นเจ้าของถูกต้อง</li><li>คนแปลกหน้า → ไม่ถูกนับเป็นเจ้าของ</li><li>เจ้าของกลับมา → ระบุถูกอีกครั้ง ไม่สลับตัวมั่ว</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -821,19 +821,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="featrow" data-featkey="health-score"><td colspan="7">📁 health-score <span class="rp"><span class="lv lvl-ui">🌐 1</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="health-score"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
 <tr class="trow" data-feat="epic3" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-0.5-HS-AC2-POS-01</td>
-  <td class="ctitle">Drill-down แสดง contribution ของแต่ละ signal (ตรวจสอบได้ · Σ ≈ คะแนน)</td>
+  <td class="ctitle">กดดูรายละเอียดคะแนนไลฟ์ เห็นว่าแต่ละอย่างช่วยกี่คะแนน (รวมแล้วได้เท่าคะแนนรวม)</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
   <td class="status" data-uid="tc-514"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-514"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">Drill-down แสดง contribution ของแต่ละ signal (ตรวจสอบได้ · Σ ≈ คะแนน)</div>
+  <div class="h-title">กดดูรายละเอียดคะแนนไลฟ์ เห็นว่าแต่ละอย่างช่วยกี่คะแนน (รวมแล้วได้เท่าคะแนนรวม)</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · health-score · Epic 3</div>
-  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">MVP 0.5 report (reports/takra-inside-mvp-0.5-ui-test-cases-table.html) · health-score · AC2</div></div>
-  <div class="sec"><h4>Precondition</h4><ul><li>live session ด้วย fixture signals-all-present (face+comments+viewers ครบ) · Health Score แสดงอยู่</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>รอ Live Health Score แสดงค่า 0–100 = S</li><li>เปิด drill-down ของคะแนน</li><li>อ่านแต่ละแถว: label, weight, normalized value, contribution</li><li>รวมค่า contribution ทั้งหมด</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>Level: UI · AC2 · feature: health-score</li></ul></div>
+  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">อ้างอิง: รายงานทดสอบ MVP 0.5 เดิม (คะแนนไลฟ์)</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>กำลังดูไลฟ์และมีคะแนนไลฟ์ (0–100) แสดงอยู่</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>รอให้คะแนนไลฟ์ขึ้นค่า</li><li>กดดูรายละเอียดของคะแนน</li><li>อ่านแต่ละบรรทัด: ชื่อสัญญาณ + ค่า + ช่วยกี่คะแนน</li><li>ลองบวกคะแนนย่อยทั้งหมด</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ไลฟ์ที่มีคะแนนแสดง</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>แสดง contribution ทุก signal ที่ป้อนเข้ามา (#1 emotion/energy, #3 comment-rate, #4 viewers)</li><li>เปิดเผย weight × normalized → contribution ตรวจสอบได้</li><li>Σ(contributions) ≈ S ภายใน ±1 · ไม่มีแถว signal ที่ไม่ได้ป้อน</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>เห็นว่าแต่ละอย่างช่วยคะแนนเท่าไร (อารมณ์/พลังงาน · คอมเมนต์ต่อนาที · จำนวนผู้ชม)</li><li>บวกคะแนนย่อยแล้วได้ใกล้เคียงคะแนนรวม (ตรวจสอบย้อนได้)</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -851,19 +851,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="featrow" data-featkey="kpi-panel"><td colspan="7">📁 kpi-panel <span class="rp"><span class="lv lvl-ui">🌐 2</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="kpi-panel"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
 <tr class="trow" data-feat="epic3" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-0.5-KPI-AC1-POS-01</td>
-  <td class="ctitle">Panel แสดง Quality KPI ครบ 5 ตัว พร้อมค่า live จริง</td>
+  <td class="ctitle">แผงตัวเลขไลฟ์แสดงครบ 5 ตัว พร้อมค่าจริงที่ขยับตามเวลา</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
   <td class="status" data-uid="tc-515"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-515"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">Panel แสดง Quality KPI ครบ 5 ตัว พร้อมค่า live จริง</div>
+  <div class="h-title">แผงตัวเลขไลฟ์แสดงครบ 5 ตัว พร้อมค่าจริงที่ขยับตามเวลา</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · kpi-panel · Epic 3</div>
-  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">MVP 0.5 report (reports/takra-inside-mvp-0.5-ui-test-cases-table.html) · kpi-panel · AC1</div></div>
-  <div class="sec"><h4>Precondition</h4><ul><li>fixture signals-all-present · panel Live KPIs แสดง · CTA-frequency (FR115) ยังไม่ถูกป้อนที่ 0.5</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ไล่ slot KPI ตาม label</li><li>ยืนยันมี slot: Health Score, emotion/energy, CTA-frequency, comment-rate, viewers</li><li>อ่านค่า signal ที่ถูกป้อน (4 ตัว)</li><li>รันผ่าน ≥2 tick แล้วอ่านซ้ำ</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>Level: UI · AC1 · feature: kpi-panel</li></ul></div>
+  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">อ้างอิง: รายงานทดสอบ MVP 0.5 เดิม (แผงตัวเลขไลฟ์)</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>กำลังดูไลฟ์อยู่</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ไล่ดูช่องตัวเลขในแผง</li><li>ดูว่ามีครบ: คะแนนไลฟ์ · อารมณ์/พลังงาน · คำชวนซื้อต่อนาที · คอมเมนต์ต่อนาที · จำนวนผู้ชม</li><li>ดูสัก 2 ช่วงแล้วเทียบว่าค่าขยับ</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ไลฟ์ที่มีข้อมูลไหลปกติ</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>มี slot Quality KPI ครบ ทั้ง 5 + label</li><li>4 ตัวที่ป้อนแสดง ค่าจริง ไม่ใช่ --/ว่าง</li><li>ค่า เปลี่ยนข้าม tick (ไม่ใช่ snapshot นิ่ง) · ไม่มี KPI นอก Quality</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>มีช่องตัวเลขครบ 5 พร้อมป้ายชื่อ</li><li>ค่าที่มีข้อมูลแสดงเลขจริง ไม่ใช่ขีด/ว่าง</li><li>ค่าขยับตามเวลา ไม่นิ่ง</li><li>ไม่มีตัวเลขยอดขายโผล่มา</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -880,19 +880,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 </div></td></tr>
 <tr class="trow" data-feat="epic3" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-0.5-KPI-AC2-POS-01</td>
-  <td class="ctitle">มีเฉพาะ Quality config — ไม่มี Sales KPI ถูก render</td>
+  <td class="ctitle">แผงตัวเลขมีแต่กลุ่มคุณภาพไลฟ์ — ต้องไม่มีตัวเลขยอดขาย</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
   <td class="status" data-uid="tc-516"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-516"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">มีเฉพาะ Quality config — ไม่มี Sales KPI ถูก render</div>
+  <div class="h-title">แผงตัวเลขมีแต่กลุ่มคุณภาพไลฟ์ — ต้องไม่มีตัวเลขยอดขาย</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · kpi-panel · Epic 3</div>
-  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">MVP 0.5 report (reports/takra-inside-mvp-0.5-ui-test-cases-table.html) · kpi-panel · AC2</div></div>
-  <div class="sec"><h4>Precondition</h4><ul><li>fixture signals-all-present · panel config 0.5 ค่าเริ่มต้น</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ไล่ label/row/header KPI ทุกตัว (สแกน DOM ทั้ง container)</li><li>เทียบกับ Quality allow-list (5 ตัว)</li><li>ค้นคำ Sales: Conversion/AOV/GMV/Revenue/Sales/Order</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>Level: UI · AC2 · feature: kpi-panel</li></ul></div>
+  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">อ้างอิง: รายงานทดสอบ MVP 0.5 เดิม (แผงตัวเลขไลฟ์)</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>กำลังดูไลฟ์และเปิดแผงตัวเลข</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ไล่อ่านชื่อทุกช่องในแผง</li><li>มองหาคำเกี่ยวกับยอดขาย เช่น ยอดขาย / Conversion / AOV / GMV / รายได้ / ออเดอร์</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ไล่อ่านทุกช่องในแผง</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ชุด KPI = Quality sub-group พอดี (ไม่มี row เกิน)</li><li>ไม่มี label Sales ที่ใด — ไม่ใช่ display:none-แต่มี, ไม่ใช่ placeholder 0</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>มีแต่กลุ่มคุณภาพไลฟ์ (5 ตัว) พอดี ไม่มีเกิน</li><li>ไม่มีตัวเลขยอดขายที่ไหนเลย (ไม่ใช่ซ่อนไว้ ไม่ใช่โชว์ 0)</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -913,19 +913,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="featrow" data-featkey="consent-capture"><td colspan="7">📁 consent-capture <span class="rp"><span class="lv lvl-ui">🌐 3 <span style="color:var(--muted)">+2🆕</span></span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="consent-capture"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
 <tr class="trow" data-feat="epic4" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-M1-CON.1</td>
-  <td class="ctitle">หน้าความยินยอมของ M1 แสดง consent 2 รายการ (capture + เก็บ 90 วัน) แยกอิสระ</td>
+  <td class="ctitle">หน้าขอความยินยอมมี 2 อย่างแยกกัน: อ่านอารมณ์จากสีหน้า + เก็บข้อมูล 90 วัน</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
   <td class="status" data-uid="tc-517"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-517"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">หน้าความยินยอมของ M1 แสดง consent 2 รายการ (capture + เก็บ 90 วัน) แยกอิสระ</div>
+  <div class="h-title">หน้าขอความยินยอมมี 2 อย่างแยกกัน: อ่านอารมณ์จากสีหน้า + เก็บข้อมูล 90 วัน</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · consent-capture · Epic 4</div>
-  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">mvp-1 E2 consent-capture (Story 2.2 · FR2) · prd-th.md FR2 (M1 = dual-consent 90 วัน) · user-guide §2 · prototype §2 (MVP-1 ทำงานจริง)</div></div>
-  <div class="sec"><h4>Precondition</h4><ul><li>ติดตั้ง M1 build และล็อกอินด้วยบัญชีที่ยังไม่เคยให้ความยินยอม</li><li>ตั้งภาษาไทย</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>หลังล็อกอิน ปล่อยให้เข้าหน้าความยินยอม</li><li>นับจำนวนรายการความยินยอมและอ่านคำอธิบาย</li><li>กดสวิตช์รายการ capture เปิด–ปิด แล้วดูว่ารายการเก็บข้อมูลเปลี่ยนตามหรือไม่</li><li>ตรวจว่าระยะเวลาการเก็บระบุ 90 วัน (ค่า M1)</li><li>มองหาทางเลือกใช้งานแบบคอมเมนต์อย่างเดียว</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>consent: capture (อ่านสีหน้า) + retention 90 วัน</li></ul></div>
+  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">อ้างอิง: ฟีเจอร์ขอความยินยอม PDPA</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เข้าสู่ระบบด้วยบัญชีที่ยังไม่เคยกดยินยอม</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>หลังล็อกอิน รอเข้าหน้าขอความยินยอม</li><li>นับว่ามีกี่รายการ อ่านคำอธิบาย</li><li>กดเปิด–ปิดสวิตช์ "อ่านอารมณ์จากสีหน้า" ดูว่าสวิตช์ "เก็บข้อมูล" เปลี่ยนตามไหม</li><li>ดูว่าเก็บข้อมูลกี่วัน</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>บัญชีใหม่ที่ยังไม่ได้ยินยอม</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>มีความยินยอม 2 รายการแยกกันชัด: การ capture และการเก็บข้อมูล 90 วัน</li><li>แต่ละรายการมีสวิตช์อิสระ กดอันหนึ่งอีกอันไม่ถูกบังคับตาม</li><li>คำอธิบายเป็นภาษาไทยเข้าใจง่าย บอกว่าเก็บตัวเลขไม่ใช่รูปหน้า</li><li>ระยะเวลาแสดง 90 วัน (2 ปี เป็น M2 — ต้องไม่มีที่ M1)</li><li>มีทางเลือกคอมเมนต์อย่างเดียวเมื่อไม่ยินยอม</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>มี 2 รายการแยกกันชัด: อ่านอารมณ์จากสีหน้า และ เก็บข้อมูลอารมณ์ 90 วัน</li><li>แต่ละอันมีสวิตช์ของตัวเอง กดอันหนึ่งอีกอันไม่เปลี่ยนตาม</li><li>คำอธิบายภาษาไทยเข้าใจง่าย บอกว่าเก็บเป็นตัวเลข ไม่ใช่รูปหน้า</li><li>ระยะเวลาเก็บ = 90 วัน</li><li>มีทางเลือกใช้แบบคอมเมนต์อย่างเดียวถ้าไม่ยินยอม</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -942,19 +942,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 </div></td></tr>
 <tr class="trow" data-feat="epic4" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-M1-CON.2</td>
-  <td class="ctitle">ปฏิเสธการอ่านสีหน้า แล้วระบบเข้าโหมดคอมเมนต์อย่างเดียว ใช้งานต่อได้</td>
+  <td class="ctitle">ไม่ยอมให้อ่านสีหน้า แล้วใช้แบบคอมเมนต์อย่างเดียวได้</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
   <td class="status" data-uid="tc-518"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-518"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">ปฏิเสธการอ่านสีหน้า แล้วระบบเข้าโหมดคอมเมนต์อย่างเดียว ใช้งานต่อได้</div>
+  <div class="h-title">ไม่ยอมให้อ่านสีหน้า แล้วใช้แบบคอมเมนต์อย่างเดียวได้</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · consent-capture · Epic 4</div>
-  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">mvp-1 E2 consent-capture (FR2) · prd-th.md FR22 fallback · user-guide §2 (comment-only) · flow-summary J3</div></div>
-  <div class="sec"><h4>Precondition</h4><ul><li>อยู่ที่หน้าความยินยอม M1</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ปิดสวิตช์อ่านอารมณ์จากสีหน้า</li><li>กดใช้งานต่อแบบคอมเมนต์อย่างเดียว</li><li>เริ่มเซสชันไลฟ์ 1 ครั้ง</li><li>สังเกตว่าหน้าจอระหว่างไลฟ์อยู่โหมดใด</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>capture consent = ปิด</li></ul></div>
+  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">อ้างอิง: ฟีเจอร์ขอความยินยอม PDPA</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>อยู่ที่หน้าขอความยินยอม</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ปิดสวิตช์ "อ่านอารมณ์จากสีหน้า"</li><li>กดใช้งานต่อแบบคอมเมนต์อย่างเดียว</li><li>เริ่มดูไลฟ์ 1 ครั้ง</li><li>ดูว่าจอระหว่างไลฟ์เป็นแบบไหน</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ปิดสวิตช์อ่านสีหน้า</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ระบบไม่บังคับให้ยินยอม เข้าโหมดคอมเมนต์อย่างเดียวได้</li><li>ระหว่างไลฟ์ไม่มีการประมวลผลใบหน้า ไม่มีกราฟอารมณ์/คำแนะนำเรื่องสีหน้า</li><li>ส่วนคอมเมนต์และ engagement ยังทำงาน</li><li>มีทางกลับไปเปิดการอ่านอารมณ์ที่ตั้งค่า</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ไม่ถูกบังคับให้ยินยอม เข้าโหมดคอมเมนต์อย่างเดียวได้</li><li>ระหว่างไลฟ์ไม่มีการอ่านใบหน้า ไม่มีกราฟอารมณ์/คำแนะนำเรื่องสีหน้า</li><li>คอมเมนต์และตัวเลขผู้ชมยังทำงาน</li><li>มีทางกลับไปเปิดการอ่านอารมณ์ทีหลังได้</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -971,19 +971,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 </div></td></tr>
 <tr class="trow" data-feat="epic4" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-M1-CON.3</td>
-  <td class="ctitle">ให้ความยินยอมแล้ว สถานะถูกบันทึกและแสดงย้อนกลับได้ในหน้าตั้งค่าความเป็นส่วนตัว</td>
+  <td class="ctitle">กดยินยอมแล้ว ค่าถูกจำไว้ และดูย้อนได้ในหน้า "ความยินยอมของคุณ"</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
   <td class="status" data-uid="tc-519"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-519"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">ให้ความยินยอมแล้ว สถานะถูกบันทึกและแสดงย้อนกลับได้ในหน้าตั้งค่าความเป็นส่วนตัว</div>
+  <div class="h-title">กดยินยอมแล้ว ค่าถูกจำไว้ และดูย้อนได้ในหน้า "ความยินยอมของคุณ"</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · consent-capture · Epic 4</div>
-  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">mvp-1 E2 consent-capture (FR2) · prd-th.md FR4 (ตรวจสอบ consent ที่ใช้อยู่) · ConsentSettings</div></div>
-  <div class="sec"><h4>Precondition</h4><ul><li>อยู่ที่หน้าความยินยอม M1</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เปิดสวิตช์ทั้ง 2 รายการ แล้วกดยินยอมและเริ่มใช้งาน</li><li>เข้าหน้าตั้งค่า › ความเป็นส่วนตัว</li><li>ตรวจสถานะและวันที่ให้ความยินยอมของทั้ง 2 รายการ</li><li>ปิด–เปิดแอปแล้วตรวจอีกครั้ง</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>consent: capture=เปิด, retention=เปิด (90 วัน)</li></ul></div>
+  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">อ้างอิง: ฟีเจอร์ขอความยินยอม PDPA</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>อยู่ที่หน้าขอความยินยอม</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เปิดสวิตช์ทั้ง 2 อัน แล้วกดยินยอมและเริ่มใช้งาน</li><li>ไปที่ ตั้งค่า → "ความยินยอมของคุณ"</li><li>ดูสถานะและวันที่ยินยอมของทั้ง 2 อัน</li><li>ปิด–เปิดแอปแล้วดูอีกครั้ง</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>เปิดทั้ง 2 สวิตช์แล้วยินยอม</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>สถานะความยินยอมถูกบันทึก (M1 มี backend เก็บจริง ต่างจาก 0.5 ที่เป็น static)</li><li>หน้าตั้งค่าแสดงสถานะและวันที่ให้ความยินยอมของทั้ง 2 รายการ</li><li>ระยะเวลาการเก็บแสดง 90 วัน</li><li>ปิด–เปิดแอปแล้วสถานะยังคงอยู่</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>หน้า "ความยินยอมของคุณ" แสดงสถานะและวันที่ยินยอมของทั้ง 2 อัน</li><li>ระยะเวลาเก็บแสดง 90 วัน</li><li>ปิด–เปิดแอปแล้วค่ายังอยู่ ไม่หาย</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1000,19 +1000,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 </div></td></tr>
 <tr class="trow" data-feat="epic4" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-M1-CON.8</td>
-  <td class="ctitle">ข้ามหน้าความยินยอมไม่ได้ — ต้องยินยอมก่อนถึงเริ่มเซสชันได้ <span class="edge-badge">🆕 edge</span></td>
+  <td class="ctitle">ยังไม่กดยินยอม จะข้ามไปใช้งานไม่ได้ <span class="edge-badge">🆕 edge</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
   <td class="status" data-uid="tc-520"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-520"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">ข้ามหน้าความยินยอมไม่ได้ — ต้องยินยอมก่อนถึงเริ่มเซสชันได้</div>
+  <div class="h-title">ยังไม่กดยินยอม จะข้ามไปใช้งานไม่ได้</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · consent-capture · Epic 4</div>
-  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">mvp-1 E2 consent-capture (FR2 gate) · prd-th.md FR13 (capture ต้องมี consent ก่อน) · DoD M1 §2 (fail-closed)</div></div>
-  <div class="sec"><h4>Precondition</h4><ul><li>ล็อกอินสำเร็จและอยู่ที่หน้าความยินยอมโดยยังไม่กดยืนยัน</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ยังไม่กดยินยอม แล้วพยายามไปหน้าอื่น/เริ่มเซสชันโดยตรง</li><li>ปิดแอปแล้วเปิดใหม่ ล็อกอินอีกครั้ง</li><li>สังเกตว่าถูกพาไปหน้าความยินยอมอีกหรือไม่</li><li>ตรวจว่ามีเซสชันใดเริ่มได้ก่อนยินยอม</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>สถานะ: ยังไม่ยินยอม</li></ul></div>
+  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">อ้างอิง: ฟีเจอร์ขอความยินยอม PDPA</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>ล็อกอินแล้วอยู่ที่หน้าขอความยินยอม ยังไม่กดยืนยัน</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ยังไม่กดยินยอม แล้วลองไปหน้าอื่น/เริ่มดูไลฟ์เลย</li><li>ปิดแอปแล้วเปิดใหม่ ล็อกอินอีกครั้ง</li><li>ดูว่าถูกพากลับมาหน้าขอความยินยอมไหม</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ยังไม่ยินยอม</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ข้ามหน้าความยินยอมไม่ได้ ระบบดึงกลับมาเสมอ</li><li>ไม่มีเซสชันไลฟ์ใดเริ่มได้ก่อนยินยอม (fail-closed)</li><li>เปิดแอปใหม่แล้วยังต้องยินยอมก่อน</li><li>ไม่ถือว่ายินยอมโดยอัตโนมัติจากการค้างไว้</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ข้ามหน้าขอความยินยอมไม่ได้ แอปดึงกลับมาเสมอ</li><li>เริ่มดูไลฟ์ไม่ได้ก่อนกดยินยอม</li><li>เปิดแอปใหม่แล้วยังต้องยินยอมก่อน</li><li>การค้างไว้เฉย ๆ ไม่นับว่ายินยอม</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1029,19 +1029,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 </div></td></tr>
 <tr class="trow" data-feat="epic4" data-level="ui" data-prio="P2" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-M1-CON.9</td>
-  <td class="ctitle">ตรวจคุณภาพภาษาไทยของข้อความความยินยอม/เพิกถอนทั้งชุด (validate โดยคน) <span class="edge-badge">🆕 edge</span></td>
+  <td class="ctitle">อ่านข้อความในหน้าขอความยินยอมทุกจุด ต้องเป็นภาษาไทยที่เข้าใจง่าย <span class="edge-badge">🆕 edge</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p2">P2</span></td>
   <td class="status" data-uid="tc-521"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-521"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">ตรวจคุณภาพภาษาไทยของข้อความความยินยอม/เพิกถอนทั้งชุด (validate โดยคน)</div>
+  <div class="h-title">อ่านข้อความในหน้าขอความยินยอมทุกจุด ต้องเป็นภาษาไทยที่เข้าใจง่าย</div>
   <div class="h-prio">Priority: <b>P2</b> · UI · consent-capture · Epic 4</div>
-  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">prd-th.md NFR6.1/NFR6.2 (UI ไทย + consent เข้าใจง่าย validate โดยคน) · DoD M1</div></div>
-  <div class="sec"><h4>Precondition</h4><ul><li>เข้าถึงหน้าความยินยอม หน้าตั้งค่าความเป็นส่วนตัว และข้อความยืนยันการเพิกถอนได้</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ไล่อ่านข้อความทุกบรรทัดบนหน้าความยินยอม</li><li>ไล่อ่านข้อความบนหน้าตั้งค่าความเป็นส่วนตัวและข้อความยืนยันการเพิกถอน</li><li>จดข้อความที่กำกวม/สะดุด/เป็นสำนวนแปลเครื่อง</li><li>ตรวจคำอังกฤษที่ไม่ได้แปลในจุดที่ผู้ใช้ทั่วไปต้องอ่าน</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ขอบเขต: consent · ตั้งค่าความเป็นส่วนตัว · ข้อความยืนยันเพิกถอน</li></ul></div>
+  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">อ้างอิง: ฟีเจอร์ขอความยินยอม PDPA</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เข้าถึงหน้าขอความยินยอม + หน้า "ความยินยอมของคุณ" ได้</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ไล่อ่านข้อความทุกบรรทัดในหน้าขอความยินยอม</li><li>ไล่อ่านข้อความในหน้า "ความยินยอมของคุณ" และกล่องยืนยันตอนถอน</li><li>จดข้อความที่อ่านแล้วงง/สะดุด/เหมือนแปลจากภาษาอังกฤษ</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ไล่อ่านทุกข้อความในสองหน้านี้</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ข้อความทั้งหมดเป็นภาษาไทยที่เป็นธรรมชาติ อ่านรอบเดียวเข้าใจ</li><li>ไม่มีสำนวนแปลเครื่องหรือเรียงประโยคแบบอังกฤษ</li><li>คำอธิบายสิทธิ์ PDPA (ยินยอม/เพิกถอน/ลบ) ครบและไม่ขัดกันเองระหว่างหน้า</li><li>ข้อความที่พบปัญหาถูกบันทึกพร้อมภาพหน้าจอส่งทีม</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ทุกข้อความอ่านรอบเดียวเข้าใจ เป็นภาษาไทยธรรมชาติ</li><li>ไม่มีประโยคที่เหมือนแปลด้วยเครื่อง</li><li>คำอธิบายเรื่องยินยอม/ถอน/ลบข้อมูล ครบและไม่ขัดกันเอง</li><li>จุดที่งง จดไว้พร้อมภาพหน้าจอส่งทีม</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1059,19 +1059,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="featrow" data-featkey="consent-revoke"><td colspan="7">📁 consent-revoke <span class="rp"><span class="lv lvl-ui">🌐 2</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="consent-revoke"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
 <tr class="trow" data-feat="epic4" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-M1-CON.4</td>
-  <td class="ctitle">เพิกถอนความยินยอมการอ่านสีหน้า แล้วเซสชันถัดไปเป็นคอมเมนต์อย่างเดียว</td>
+  <td class="ctitle">ถอนการยินยอมอ่านสีหน้า แล้วไลฟ์ครั้งถัดไปเป็นคอมเมนต์อย่างเดียว</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
   <td class="status" data-uid="tc-522"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-522"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">เพิกถอนความยินยอมการอ่านสีหน้า แล้วเซสชันถัดไปเป็นคอมเมนต์อย่างเดียว</div>
+  <div class="h-title">ถอนการยินยอมอ่านสีหน้า แล้วไลฟ์ครั้งถัดไปเป็นคอมเมนต์อย่างเดียว</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · consent-revoke · Epic 4</div>
-  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">mvp-1 E2 consent-revoke (Story 2.4 · FR4) · TC-M1-REVOKE-* · ConsentSettings</div></div>
-  <div class="sec"><h4>Precondition</h4><ul><li>ให้ความยินยอมครบทั้ง 2 รายการแล้ว</li><li>ไม่มีเซสชันไลฟ์ที่กำลังทำงาน</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เข้าหน้าตั้งค่า › ความเป็นส่วนตัว</li><li>ปิดสวิตช์การอ่านอารมณ์จากสีหน้า แล้วอ่านข้อความยืนยันและกดยืนยัน</li><li>ตรวจว่าสถานะการเก็บข้อมูลเปลี่ยนตามหรือไม่</li><li>เริ่มเซสชันไลฟ์ใหม่ แล้วดูโหมด</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ก่อนทดสอบ: capture=เปิด, retention=เปิด</li></ul></div>
+  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">อ้างอิง: ฟีเจอร์ขอความยินยอม PDPA</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>ยินยอมทั้ง 2 อยู่แล้ว และไม่มีไลฟ์ที่กำลังทำงาน</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ไปที่ ตั้งค่า → "ความยินยอมของคุณ"</li><li>ที่หัวข้อ "อ่านอารมณ์จากสีหน้า" กด "ถอน" แล้วยืนยัน</li><li>ดูว่าหัวข้อ "เก็บข้อมูล" เปลี่ยนตามไหม</li><li>เริ่มดูไลฟ์ใหม่ แล้วดูโหมด</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ถอนการยินยอมอ่านสีหน้า</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>มีข้อความยืนยันก่อนเพิกถอน พร้อมบอกผลกระทบ</li><li>เพิกถอนเฉพาะรายการที่เลือก อีกรายการไม่ถูกปิดตาม (independent)</li><li>สถานะเปลี่ยนทันทีโดยไม่ต้องรีสตาร์ต</li><li>เซสชันถัดไปเป็นคอมเมนต์อย่างเดียว ไม่ประมวลผลใบหน้า (fail-closed)</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>มีกล่องยืนยันก่อนถอน พร้อมบอกผลที่จะเกิด</li><li>ถอนเฉพาะอันที่เลือก อีกอันไม่ถูกปิดตาม</li><li>สถานะเปลี่ยนทันที ไม่ต้องปิด–เปิดแอป</li><li>ไลฟ์ครั้งถัดไปเป็นคอมเมนต์อย่างเดียว ไม่อ่านใบหน้า</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1088,19 +1088,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 </div></td></tr>
 <tr class="trow" data-feat="epic4" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-M1-CON.5</td>
-  <td class="ctitle">เพิกถอนการเก็บข้อมูล แล้วระบบแจ้งการลบย้อนหลังภายใน 7 วัน</td>
+  <td class="ctitle">ถอนการยินยอมเก็บข้อมูล แล้วแอปแจ้งว่าจะลบข้อมูลเก่าภายใน 7 วัน</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
   <td class="status" data-uid="tc-523"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-523"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">เพิกถอนการเก็บข้อมูล แล้วระบบแจ้งการลบย้อนหลังภายใน 7 วัน</div>
+  <div class="h-title">ถอนการยินยอมเก็บข้อมูล แล้วแอปแจ้งว่าจะลบข้อมูลเก่าภายใน 7 วัน</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · consent-revoke · Epic 4</div>
-  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">mvp-1 E2 consent-revoke (FR4) + E3 crypto-shred (FR5) · prd-th.md NFR3.5 · user-guide §2 (ลบภายใน 7 วัน)</div></div>
-  <div class="sec"><h4>Precondition</h4><ul><li>ให้ความยินยอมการเก็บข้อมูลไว้ และมีเซสชันย้อนหลังอย่างน้อย 1 รายการ</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เข้าหน้าตั้งค่า › ความเป็นส่วนตัว</li><li>ปิดสวิตช์เก็บข้อมูลอารมณ์ แล้วอ่านข้อความยืนยัน</li><li>กดยืนยัน</li><li>ตรวจว่าการอ่านสีหน้ายังเปิดอยู่หรือไม่</li><li>ดูข้อความเรื่องกรอบเวลาการลบข้อมูล</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ก่อนทดสอบ: retention=เปิด</li></ul></div>
+  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">อ้างอิง: ฟีเจอร์ขอความยินยอม PDPA</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>ยินยอมเก็บข้อมูลไว้ และมีข้อมูลย้อนหลัง</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ไปที่ ตั้งค่า → "ความยินยอมของคุณ"</li><li>ที่หัวข้อ "เก็บข้อมูลอารมณ์" กด "ถอน" แล้วอ่านกล่องยืนยัน</li><li>กดยืนยัน</li><li>ดูว่าหัวข้อ "อ่านสีหน้า" ยังเปิดอยู่ไหม</li><li>อ่านข้อความเรื่องการลบข้อมูล</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ถอนการยินยอมเก็บข้อมูล</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ระบบแจ้งชัดว่าข้อมูลย้อนหลังจะถูกลบและไม่เก็บเพิ่ม</li><li>ระบุกรอบเวลาลบภายใน 7 วัน (NFR3.5)</li><li>การอ่านสีหน้ายังเปิดอยู่ ไม่ถูกปิดตาม</li><li>ไม่มี error ค้างหลังเพิกถอน</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>แอปบอกชัดว่าข้อมูลเก่าจะถูกลบ และจะไม่เก็บเพิ่ม</li><li>บอกว่าจะลบภายใน 7 วัน</li><li>หัวข้อ "อ่านสีหน้า" ยังเปิดอยู่ ไม่ถูกปิดตาม</li><li>ไม่มี error ค้างหลังถอน</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1118,19 +1118,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="featrow" data-featkey="consent-hesitation"><td colspan="7">📁 consent-hesitation <span class="rp"><span class="lv lvl-ui">🌐 1</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="consent-hesitation"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
 <tr class="trow" data-feat="epic4" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-M1-CON.6</td>
-  <td class="ctitle">ผู้ใช้ลังเลที่หน้าความยินยอม ระบบเด้ง nudge อธิบายเพิ่ม (anxious-user)</td>
+  <td class="ctitle">ลังเลอยู่ที่หน้าขอความยินยอมนาน ๆ แอปเด้งคำอธิบายเพิ่มให้</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
   <td class="status" data-uid="tc-524"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-524"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">ผู้ใช้ลังเลที่หน้าความยินยอม ระบบเด้ง nudge อธิบายเพิ่ม (anxious-user)</div>
+  <div class="h-title">ลังเลอยู่ที่หน้าขอความยินยอมนาน ๆ แอปเด้งคำอธิบายเพิ่มให้</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · consent-hesitation · Epic 4</div>
-  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">mvp-1 E2 consent-hesitation (Story 2.3 · FR3) · prd-th.md FR3 (จับ hesitation) · prototype §2 (MVP-1 hesitation nudge)</div></div>
-  <div class="sec"><h4>Precondition</h4><ul><li>อยู่ที่หน้าความยินยอม M1</li><li>เตรียมนาฬิกาจับเวลา</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เข้าหน้าความยินยอมแล้วค้างไว้โดยไม่ตัดสินใจนานพอสมควร (dwell)</li><li>สังเกตว่ามี nudge/คำอธิบายเพิ่มเด้งขึ้นหรือไม่</li><li>อ่านเนื้อหา nudge</li><li>ปิด nudge แล้วตรวจว่าค่าที่เลือกไว้ยังอยู่</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>พฤติกรรม: ลังเล/ค้างที่หน้าความยินยอม</li></ul></div>
+  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">อ้างอิง: ฟีเจอร์ขอความยินยอม PDPA</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>อยู่ที่หน้าขอความยินยอม</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เข้าหน้าขอความยินยอมแล้วค้างไว้นาน ๆ โดยยังไม่ตัดสินใจ</li><li>ดูว่ามีคำอธิบายเพิ่มเด้งขึ้นไหม</li><li>อ่านเนื้อหาที่เด้ง</li><li>ปิดมันแล้วดูว่าค่าที่เลือกไว้ยังอยู่</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ค้างอยู่ที่หน้านี้นาน ๆ โดยไม่กดอะไร</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>เมื่อผู้ใช้ลังเลนานพอ ระบบเด้ง nudge อธิบายเพิ่มเพื่อลดความกังวล</li><li>เนื้อหาเป็นภาษาไทยเข้าใจง่าย เน้นความปลอดภัยของข้อมูล</li><li>ปิด nudge แล้วค่าที่เลือกไว้ยังคงอยู่</li><li>nudge ไม่เด้งซ้ำถี่จนรบกวน</li><li>หมายเหตุ: anxious-user mode เต็มรูปแบบ (วิดีโอ 30 วิ · dwell ≥20 วิ) = M2</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>พอลังเลนานพอ แอปเด้งคำอธิบายเพิ่มเพื่อให้สบายใจ</li><li>เนื้อหาภาษาไทยเข้าใจง่าย เน้นความปลอดภัยของข้อมูล</li><li>ปิดแล้วค่าที่เลือกไว้ยังอยู่</li><li>ไม่เด้งซ้ำถี่จนน่ารำคาญ</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1148,19 +1148,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="featrow" data-featkey="consent-host"><td colspan="7">📁 consent-host <span class="rp"><span class="lv lvl-ui">🌐 1</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="consent-host"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
 <tr class="trow" data-feat="epic4" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-M1-CON.7</td>
-  <td class="ctitle">Host ที่ถูกเชิญต้องให้ความยินยอมของตัวเอง เจ้าของทีมกดแทนไม่ได้</td>
+  <td class="ctitle">คนที่ถูกเชิญเข้ามาไลฟ์ ต้องกดยินยอมเอง เจ้าของทีมกดแทนไม่ได้</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
   <td class="status" data-uid="tc-525"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-525"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">Host ที่ถูกเชิญต้องให้ความยินยอมของตัวเอง เจ้าของทีมกดแทนไม่ได้</div>
+  <div class="h-title">คนที่ถูกเชิญเข้ามาไลฟ์ ต้องกดยินยอมเอง เจ้าของทีมกดแทนไม่ได้</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · consent-host · Epic 4</div>
-  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">mvp-1 E2 desktop-consent (Story 2.7/2.8) · prd-th.md FR4 · user-guide §multi-seat (consent แยกกัน) · flow-summary §2.3</div></div>
-  <div class="sec"><h4>Precondition</h4><ul><li>เจ้าของ (Owner) เชิญ Host เข้าเวิร์กสเปซแล้ว</li><li>มีบัญชี Host ที่ยังไม่เคยให้ความยินยอม</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ล็อกอินด้วยบัญชี Owner แล้วดูว่ามีทางกดยินยอมแทน Host หรือไม่</li><li>ออกจากระบบ แล้วล็อกอินด้วยบัญชี Host</li><li>สังเกตหน้าจอแรกของ Host</li><li>ให้ Host เลือกยินยอม/ปฏิเสธด้วยตัวเอง</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>บัญชี Owner + บัญชี Host ในเวิร์กสเปซเดียวกัน</li></ul></div>
+  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">อ้างอิง: ฟีเจอร์ขอความยินยอม PDPA</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เจ้าของทีมเชิญอีกคนเข้ามาแล้ว และคนนั้นยังไม่เคยยินยอม</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ล็อกอินเป็นเจ้าของทีม แล้วดูว่ามีปุ่มกดยินยอมแทนคนอื่นไหม</li><li>ออกจากระบบ แล้วล็อกอินเป็นคนที่ถูกเชิญ</li><li>ดูหน้าจอแรกของคนที่ถูกเชิญ</li><li>ให้เขากดยินยอม/ไม่ยินยอมเอง</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>บัญชีเจ้าของ + บัญชีคนที่ถูกเชิญ</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>Owner ไม่มีทางกดยินยอมแทน Host</li><li>Host ครั้งแรกถูกพาไปหน้าความยินยอมของตัวเองก่อนใช้งาน</li><li>ข้อความสื่อว่าสิทธิ์เป็นของ Host คนเดียว</li><li>สถานะความยินยอมของ Host แยกจาก Owner</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>เจ้าของทีมไม่มีปุ่มกดยินยอมแทนคนอื่น</li><li>คนที่ถูกเชิญ ครั้งแรกถูกพาไปหน้าขอความยินยอมของตัวเองก่อน</li><li>มีข้อความบอกว่าสิทธิ์นี้เป็นของเจ้าตัวคนเดียว</li><li>สถานะยินยอมของแต่ละคนแยกกัน</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -2164,19 +2164,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="featrow" data-featkey="watchlist"><td colspan="7">📁 watchlist <span class="rp"><span class="lv lvl-ui">🌐 5 <span style="color:var(--muted)">+1🆕</span></span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="watchlist"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
 <tr class="trow" data-feat="epic10" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-M1-WL.1</td>
-  <td class="ctitle">หน้า Watchlist (/channels) แสดงช่องที่บันทึกไว้พร้อมข้อมูลประกอบ</td>
+  <td class="ctitle">หน้า "แชนเนลที่ติดตาม" แสดงช่องที่บันทึกไว้ พร้อมข้อมูลของแต่ละช่อง</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
   <td class="status" data-uid="tc-559"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-559"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">หน้า Watchlist (/channels) แสดงช่องที่บันทึกไว้พร้อมข้อมูลประกอบ</div>
+  <div class="h-title">หน้า "แชนเนลที่ติดตาม" แสดงช่องที่บันทึกไว้ พร้อมข้อมูลของแต่ละช่อง</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · watchlist · Epic 10</div>
-  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">mvp-1 E8 channel-watchlist (Story 8.1 · FR119) · channel-watchlist-workflow.md · FollowedChannels.jsx · prd-th.md FR119</div></div>
-  <div class="sec"><h4>Precondition</h4><ul><li>ล็อกอินและมีช่องในรายการติดตามอย่างน้อย 2 ช่อง</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เข้าหน้าช่องที่ติดตาม (/channels)</li><li>ไล่ดูรายการช่องที่บันทึกไว้</li><li>ตรวจว่าแต่ละช่องแสดงชื่อ · @handle · แพลตฟอร์ม · จำนวนผู้ติดตาม · สถานะไลฟ์ล่าสุด · จำนวนครั้งที่วิเคราะห์</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ช่องในรายการ ≥ 2</li></ul></div>
+  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">อ้างอิง: ฟีเจอร์ "แชนเนลที่ติดตาม"</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เข้าสู่ระบบ และมีช่องในรายการอย่างน้อย 2 ช่อง</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เข้าเมนู "แชนเนลที่ติดตาม"</li><li>ไล่ดูรายการช่อง</li><li>ดูว่าแต่ละช่องมี: ชื่อช่อง · บัญชี (@) · แพลตฟอร์ม · จำนวนผู้ติดตาม · สถานะไลฟ์ล่าสุด · จำนวนครั้งที่วิเคราะห์</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ช่องในรายการ ≥ 2 ช่อง</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>หน้า Watchlist แสดงช่องที่บันทึกไว้ครบ</li><li>แต่ละช่องแสดงข้อมูลตาม FR119: ชื่อ/@handle/แพลตฟอร์ม/ผู้ติดตาม/ไลฟ์ล่าสุด/จำนวนครั้งที่วิเคราะห์</li><li>ป้ายกำกับเป็นภาษาไทย</li><li>รายการเรียงและอ่านง่าย</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>หน้าแสดงช่องที่บันทึกไว้ครบ</li><li>แต่ละช่องมีข้อมูลครบตามด้านบน</li><li>ป้ายกำกับเป็นภาษาไทย อ่านง่าย</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -2193,19 +2193,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 </div></td></tr>
 <tr class="trow" data-feat="epic10" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-M1-WL.2</td>
-  <td class="ctitle">เพิ่มช่องใหม่เข้า Watchlist ได้</td>
+  <td class="ctitle">ใส่ URL ที่ไม่ใช่ TikTok แล้วกดติดตาม — แอปต้องไม่เพิ่มช่องมั่ว</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
   <td class="status" data-uid="tc-560"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-560"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">เพิ่มช่องใหม่เข้า Watchlist ได้</div>
+  <div class="h-title">ใส่ URL ที่ไม่ใช่ TikTok แล้วกดติดตาม — แอปต้องไม่เพิ่มช่องมั่ว</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · watchlist · Epic 10</div>
-  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">mvp-1 E8 channel-watchlist (FR119) · AddChannelModal.jsx · channel-watchlist-workflow.md</div></div>
-  <div class="sec"><h4>Precondition</h4><ul><li>อยู่ที่หน้า Watchlist</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบ</li><li>ไปที่ แชนเนลที่ติดตาม</li><li>ตรวจสอบว่าเคยติดตามช่อง https://www.tiktok.com/@lungboss.v1/live</li><li>ลบช่อง lungboss ออกจากรายการ</li><li>กด เพิ่มแชนเนล</li><li>ในช่องค้นหา ใส่ URL ที่ไม่ใช่ TikTok เช่น https://kitdi.atlassian.net/browse/TI-270</li><li>กด ติดตาม</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ช่องทดสอบ: @handle ที่มีอยู่จริง</li></ul></div>
+  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">อ้างอิง: ฟีเจอร์ "แชนเนลที่ติดตาม"</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เข้าสู่ระบบแล้ว</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบ</li><li>ไปที่ "แชนเนลที่ติดตาม"</li><li>ตรวจว่าเคยติดตามช่อง https://www.tiktok.com/@lungboss.v1/live</li><li>ลบช่อง lungboss ออกจากรายการ</li><li>กด "เพิ่มแชนเนล"</li><li>ในช่องค้นหา ใส่ URL ที่ไม่ใช่ TikTok เช่น https://kitdi.atlassian.net/browse/TI-270</li><li>กด "ติดตาม"</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>URL ที่ไม่ใช่ TikTok เช่น https://kitdi.atlassian.net/browse/TI-270</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>เพิ่มช่องเข้า Watchlist ได้สำเร็จ พร้อมข้อความยืนยัน</li><li>ช่องใหม่ปรากฏในรายการทันที</li><li>รีเฟรชแล้วช่องยังอยู่</li><li>ถ้ากรอกข้อมูลไม่ครบ/ผิดรูปแบบ ระบบเตือนและไม่บันทึก</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>URL ที่ไม่ใช่ลิงก์ TikTok/Facebook จะไม่ขึ้นช่องให้กดติดตาม (ไม่เพิ่มช่องมั่ว)</li><li>มีข้อความบอกให้ใส่ @ชื่อ หรือวางลิงก์ TikTok/Facebook แทน</li><li>รายการช่องที่ติดตามไม่มีอะไรเพิ่มจาก URL นั้น</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -2222,19 +2222,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 </div></td></tr>
 <tr class="trow" data-feat="epic10" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-M1-WL.3</td>
-  <td class="ctitle">ข้อมูลผู้ติดตาม/สถานะไลฟ์ของช่อง — ตรวจ 0.5 placeholder → M1 ควรดึงค่าจริง</td>
+  <td class="ctitle">จำนวนผู้ติดตาม/สถานะไลฟ์ของช่อง — ตรวจว่าเป็นค่าจริง</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
   <td class="status" data-uid="tc-561"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-561"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">ข้อมูลผู้ติดตาม/สถานะไลฟ์ของช่อง — ตรวจ 0.5 placeholder → M1 ควรดึงค่าจริง</div>
+  <div class="h-title">จำนวนผู้ติดตาม/สถานะไลฟ์ของช่อง — ตรวจว่าเป็นค่าจริง</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · watchlist · Epic 10</div>
-  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">user-flow 0.5 (/channels CRUD ✅ · follower/live-status = placeholder · TikTok gate fetchRoomInfo) · mvp-1 E8 (FR119)</div></div>
-  <div class="sec"><h4>Precondition</h4><ul><li>อยู่ที่หน้า Watchlist ที่มีช่องบันทึกไว้</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ดูค่าจำนวนผู้ติดตามและสถานะไลฟ์ล่าสุดของแต่ละช่อง</li><li>ตรวจว่าเป็นค่าจริงหรือ placeholder</li><li>เทียบกับข้อมูลจริงบนแพลตฟอร์ม (ถ้าดึงได้)</li><li>บันทึกผลว่าค่าถูกดึงจริงหรือยังเป็น placeholder</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ช่องที่มีสถานะไลฟ์จริง</li></ul></div>
+  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">อ้างอิง: ฟีเจอร์ "แชนเนลที่ติดตาม"</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>อยู่ที่ "แชนเนลที่ติดตาม" ที่มีช่องบันทึกไว้</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ดูจำนวนผู้ติดตามและสถานะไลฟ์ล่าสุดของแต่ละช่อง</li><li>เทียบกับข้อมูลจริงบนแพลตฟอร์ม (ถ้าดูได้)</li><li>จดว่าเป็นค่าจริงหรือยังเป็นค่าว่าง/ตัวอย่าง</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ช่องที่กำลังไลฟ์จริง</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>เป้าหมาย M1: จำนวนผู้ติดตามและสถานะไลฟ์ล่าสุดเป็นค่าจริง</li><li>⚠️ ที่ 0.5 ค่านี้เป็น placeholder (TikTok gate fetchRoomInfo) — ถ้า M1 ยังเป็น placeholder ให้บันทึกเป็น gap ตามที่ documented</li><li>สถานะไลฟ์ (กำลังไลฟ์/ไม่ไลฟ์) แสดงชัด</li><li>ผลจริงถูกบันทึกเพื่อยืนยันกับ dev/BA</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>จำนวนผู้ติดตามและสถานะไลฟ์ล่าสุดเป็นค่าจริง</li><li>สถานะไลฟ์ (กำลังไลฟ์/ไม่ไลฟ์) แสดงชัด</li><li>หมายเหตุ: บางช่องที่ TikTok จำกัด อาจขึ้น "—" แทนการเดา — ถ้าเป็นแบบนั้นทั้งหมด ให้แจ้งทีม</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -2251,19 +2251,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 </div></td></tr>
 <tr class="trow" data-feat="epic10" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-M1-WL.5</td>
-  <td class="ctitle">วิเคราะห์ไลฟ์ช่องบุคคลที่สาม (FR120) ต้องถูกบล็อก/ปิดพร้อมหมายเหตุ legal</td>
+  <td class="ctitle">กดวิเคราะห์ไลฟ์ของช่องคนอื่นไม่ได้ (ฟีเจอร์นี้ทีมยังปิด รอเรื่องกฎหมาย)</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
   <td class="status" data-uid="tc-562"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-562"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">วิเคราะห์ไลฟ์ช่องบุคคลที่สาม (FR120) ต้องถูกบล็อก/ปิดพร้อมหมายเหตุ legal</div>
+  <div class="h-title">กดวิเคราะห์ไลฟ์ของช่องคนอื่นไม่ได้ (ฟีเจอร์นี้ทีมยังปิด รอเรื่องกฎหมาย)</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · watchlist · Epic 10</div>
-  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">mvp-1 E8 third-party-live-analysis (Story 8.3 · FR120) 🔴 BLOCKED (OQ36) · channel-watchlist-workflow (สีแดง GATED) · prd-th.md FR120</div></div>
-  <div class="sec"><h4>Precondition</h4><ul><li>อยู่ที่หน้า Watchlist ที่มีช่องบุคคลที่สาม</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เลือกช่องบุคคลที่สาม (ไม่ใช่ช่องของตัวเอง)</li><li>มองหาปุ่ม/ทางเริ่มวิเคราะห์ไลฟ์ของช่องนั้น</li><li>ตรวจว่าปุ่มถูกปิด/ไม่มี หรือมีหมายเหตุ</li><li>ถ้ามีปุ่ม ลองกดแล้วดูผล</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ช่องบุคคลที่สาม (third-party)</li></ul></div>
+  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">อ้างอิง: ฟีเจอร์ "แชนเนลที่ติดตาม" (ช่องคนอื่น ทีมยังไม่เปิด — รอเรื่องกฎหมาย)</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>อยู่ที่ "แชนเนลที่ติดตาม" ที่มีช่องของคนอื่น (ไม่ใช่ช่องเรา)</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เลือกช่องของคนอื่น (ไม่ใช่ช่องเราเอง)</li><li>มองหาปุ่ม/ทางเริ่ม "วิเคราะห์ไลฟ์" ของช่องนั้น</li><li>ถ้ามีปุ่ม ลองกดดู</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ช่องของคนอื่น</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ไม่สามารถเริ่มวิเคราะห์ไลฟ์ช่องบุคคลที่สามได้ (FR120 = legal-blocked OQ36)</li><li>ปุ่มถูกปิด/ซ่อน หรือมีหมายเหตุอธิบายว่ารอการอนุมัติทางกฎหมาย</li><li>ไม่มีการเริ่ม pipeline วิเคราะห์ (โดยเฉพาะ emotion/FR22) กับช่องบุคคลที่สาม</li><li>สถานะนี้ตรงกับที่ documented ว่าเป็น BLOCKED — บันทึกเป็น expected BLOCKED</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>เริ่มวิเคราะห์ไลฟ์ของช่องคนอื่นไม่ได้ (ปุ่มปิด/ไม่มี/มีหมายเหตุว่ารอเรื่องกฎหมาย)</li><li>ไม่มีการเริ่มอ่านอารมณ์/วิเคราะห์กับช่องคนอื่น</li><li>ถ้าเริ่มได้ = ผิด ให้แจ้งทีมทันที</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -2280,19 +2280,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 </div></td></tr>
 <tr class="trow" data-feat="epic10" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-M1-WL.6</td>
-  <td class="ctitle">ลบช่องออกจาก Watchlist ได้ และรายการอัปเดตทันที</td>
+  <td class="ctitle">ลบช่องออกจากรายการได้ และรายการอัปเดตทันที</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
   <td class="status" data-uid="tc-563"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-563"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">ลบช่องออกจาก Watchlist ได้ และรายการอัปเดตทันที</div>
+  <div class="h-title">ลบช่องออกจากรายการได้ และรายการอัปเดตทันที</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · watchlist · Epic 10</div>
-  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">mvp-1 E8 channel-watchlist (FR119 · CRUD) · user-flow /channels</div></div>
-  <div class="sec"><h4>Precondition</h4><ul><li>มีช่องใน Watchlist อย่างน้อย 2 ช่อง</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เลือกช่องหนึ่งแล้วกดลบ/เอาออกจากรายการติดตาม</li><li>ยืนยันการลบถ้าระบบถาม</li><li>ตรวจว่าช่องหายจากรายการ</li><li>รีเฟรชหน้าแล้วตรวจอีกครั้ง</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ช่องที่จะลบ 1 ช่อง</li></ul></div>
+  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">อ้างอิง: ฟีเจอร์ "แชนเนลที่ติดตาม"</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>มีช่องในรายการอย่างน้อย 2 ช่อง</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เลือกช่องหนึ่งแล้วกดลบ/เลิกติดตาม</li><li>ยืนยันถ้าแอปถาม</li><li>ดูว่าช่องหายจากรายการ</li><li>รีเฟรชหน้าแล้วดูอีกครั้ง</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ช่องที่จะลบ 1 ช่อง</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ลบช่องออกจาก Watchlist ได้ พร้อมยืนยันก่อนลบ</li><li>ช่องหายจากรายการทันที</li><li>รีเฟรชแล้วช่องยังไม่กลับมา</li><li>ช่องอื่นในรายการไม่ถูกกระทบ</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ลบช่องได้ พร้อมถามยืนยันก่อนลบ</li><li>ช่องหายจากรายการทันที</li><li>รีเฟรชแล้วช่องไม่กลับมา</li><li>ช่องอื่นไม่ถูกกระทบ</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -2309,19 +2309,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 </div></td></tr>
 <tr class="trow" data-feat="epic10" data-level="ui" data-prio="P2" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-M1-WL.7</td>
-  <td class="ctitle">Watchlist ว่าง (ยังไม่มีช่อง) แสดง empty state ที่ชวนเพิ่มช่องแรก <span class="edge-badge">🆕 edge</span></td>
+  <td class="ctitle">ยังไม่มีช่องในรายการ ต้องขึ้นข้อความชวนเพิ่มช่องแรก (ไม่ใช่หน้าว่างเปล่า) <span class="edge-badge">🆕 edge</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p2">P2</span></td>
   <td class="status" data-uid="tc-564"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-564"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">Watchlist ว่าง (ยังไม่มีช่อง) แสดง empty state ที่ชวนเพิ่มช่องแรก</div>
+  <div class="h-title">ยังไม่มีช่องในรายการ ต้องขึ้นข้อความชวนเพิ่มช่องแรก (ไม่ใช่หน้าว่างเปล่า)</div>
   <div class="h-prio">Priority: <b>P2</b> · UI · watchlist · Epic 10</div>
-  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">mvp-1 E8 channel-watchlist (FR119) · NFR6.1</div></div>
-  <div class="sec"><h4>Precondition</h4><ul><li>บัญชี/เวิร์กสเปซใหม่ที่ยังไม่มีช่องใน Watchlist</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เข้าหน้า Watchlist ของบัญชีที่ยังไม่มีช่อง</li><li>อ่านข้อความและองค์ประกอบที่แสดง</li><li>ตรวจว่ามีปุ่ม/ทางลัดเพิ่มช่องแรก</li><li>กดเพิ่มช่องแล้วดูว่า empty state หายไป</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>Watchlist ว่าง</li></ul></div>
+  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">อ้างอิง: ฟีเจอร์ "แชนเนลที่ติดตาม"</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>บัญชี/พื้นที่ใหม่ที่ยังไม่มีช่องในรายการ</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เข้าหน้า "แชนเนลที่ติดตาม" ของบัญชีที่ยังไม่มีช่อง</li><li>อ่านข้อความและปุ่มที่ขึ้น</li><li>กดเพิ่มช่องแล้วดูว่าหน้าเปลี่ยนไหม</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>รายการช่องว่าง</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>แสดง empty state ที่อธิบายว่ายังไม่มีช่อง พร้อมชวนเพิ่มช่องแรก</li><li>ไม่ใช่หน้าว่างเปล่าที่ดูเหมือนระบบเสีย</li><li>มีปุ่ม/ทางลัดเพิ่มช่อง</li><li>หลังเพิ่มช่องแรก empty state หายไปและแสดงรายการ</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ขึ้นข้อความบอกว่ายังไม่มีช่อง พร้อมชวนเพิ่มช่องแรก</li><li>ไม่ใช่หน้าว่างเปล่าที่ดูเหมือนแอปเสีย</li><li>มีปุ่ม/ทางลัดเพิ่มช่อง</li><li>พอเพิ่มช่องแรก ข้อความนี้หายไปและขึ้นรายการ</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -2339,19 +2339,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="featrow" data-featkey="watchlist-history"><td colspan="7">📁 watchlist-history <span class="rp"><span class="lv lvl-ui">🌐 1</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="watchlist-history"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
 <tr class="trow" data-feat="epic10" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-M1-WL.4</td>
-  <td class="ctitle">เปิดประวัติการวิเคราะห์ต่อช่อง (per-channel analysis history)</td>
+  <td class="ctitle">เปิดดูประวัติการวิเคราะห์ของช่อง</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
   <td class="status" data-uid="tc-565"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-565"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">เปิดประวัติการวิเคราะห์ต่อช่อง (per-channel analysis history)</div>
+  <div class="h-title">เปิดดูประวัติการวิเคราะห์ของช่อง</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · watchlist-history · Epic 10</div>
-  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">mvp-1 E8 channel-history (Story 8.2 · FR121) · prd-th.md FR121</div></div>
-  <div class="sec"><h4>Precondition</h4><ul><li>มีช่องใน Watchlist ที่เคยวิเคราะห์มาแล้วหลายครั้ง</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เลือกช่องหนึ่งจาก Watchlist</li><li>เปิดประวัติการวิเคราะห์ของช่องนั้น</li><li>ไล่ดูรายการเซสชัน/ครั้งที่วิเคราะห์</li><li>คลิกรายการหนึ่งเพื่อดูรายละเอียด</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ช่องที่มีประวัติวิเคราะห์ ≥ 2 ครั้ง</li></ul></div>
+  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">อ้างอิง: ฟีเจอร์ "แชนเนลที่ติดตาม"</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>มีช่องที่เคยวิเคราะห์มาแล้วหลายครั้ง</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เลือกช่องหนึ่งจากรายการ</li><li>เปิดดูประวัติการวิเคราะห์ของช่องนั้น (หน้า "รายละเอียดแชนเนลที่ติดตาม")</li><li>ไล่ดูรายการครั้งที่เคยวิเคราะห์</li><li>กดรายการหนึ่งเพื่อดูรายละเอียด</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ช่องที่มีประวัติ ≥ 2 ครั้ง</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>หน้าประวัติแสดงรายการครั้งที่วิเคราะห์ช่องนั้นครบ</li><li>แต่ละรายการมีวันที่/ข้อมูลสรุปพอให้ระบุได้</li><li>คลิกแล้วดูรายละเอียดของครั้งนั้นได้</li><li>ประวัติผูกกับช่องที่เลือกเท่านั้น ไม่ปนช่องอื่น</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>หน้าแสดงรายการครั้งที่วิเคราะห์ช่องนั้นครบ</li><li>แต่ละรายการมีวันที่/ข้อมูลพอให้รู้ว่าครั้งไหน</li><li>กดแล้วเปิดดูรายละเอียดของครั้งนั้นได้</li><li>เป็นประวัติของช่องนั้นเท่านั้น ไม่ปนช่องอื่น</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
