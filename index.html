@@ -525,7 +525,7 @@
       td.className = 'c-status';
       var href = tr.getAttribute('data-href') || '';
       var isTestCase = tr.getAttribute('data-type') === 'test'
-                    && /-test-cases-table\.html($|[?#])/.test(href);
+                    && /-test-cases-table[\w-]*\.html($|[?#])/.test(href);  // also -mac / -windows variants
       if(isTestCase){
         td.innerHTML = '<span class="stt-load">…</span>';
         jobs.push({ td: td, href: href });
