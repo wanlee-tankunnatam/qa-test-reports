@@ -59,7 +59,7 @@ MOVES = {
 
     # ── takra-rerun ─────────────────────────────────────────────────────────
     'takra-rerun-mvp1-2-ui-test-cases-table.html':
-        'projects/takra-rerun/2026/07/reports/takra-rerun-mvp1-2-ui-test-cases-table.html',
+        'projects/takra-rerun/2026/07/reports/takra-rerun-mvp1-2-ui-test-cases-table-mac.html',
     'takra-rerun-mvp1-test-cases-table.html':
         'projects/takra-rerun/2026/07/reports/takra-rerun-mvp1-e2e-test-cases-table.html',
     'takra-rerun-mvp2-test-cases-table.html':

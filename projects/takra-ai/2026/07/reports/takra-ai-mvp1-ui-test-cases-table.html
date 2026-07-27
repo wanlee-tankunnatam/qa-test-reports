@@ -884,9 +884,9 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <h1>🤖 TAKRA AI — MVP-1 UI Manual Test Cases</h1>
   <div class="sub">เทส UI อย่างเดียว (Manual) · MVP-1 Epic 1-6 (เฉพาะ story ที่มีหน้าจอ) · Target: <b>https://uat-live.takra.ai/</b></div>
   <div class="meta">
-    <span class="pill">154 เคสหลัก + 103 edge🆕 = 257</span>
+    <span class="pill">154 เคสหลัก + 103 edge🆕 = 257 + E2E 4 = 261</span>
     <span class="pill">6 Epics</span>
-    <span class="pill">UI only</span>
+    <span class="pill">UI + E2E</span>
     <span class="pill">P0 79 · P1 145 · P2 33</span>
   </div>
 </header>
@@ -934,6 +934,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
       <button class="fchip" data-f="feat" data-v="epic4">📡 E4 (24)</button>
       <button class="fchip" data-f="feat" data-v="epic5">💬 E5 (8)</button>
       <button class="fchip" data-f="feat" data-v="epic6">✨ E6 (16)</button>
+      <button class="fchip" data-f="feat" data-v="epic7">🔄 E2E (4)</button>
       <button class="clearbtn" data-clear="feat">✕</button>
     </div>
     <div class="row"><label>Priority</label>
@@ -8876,12 +8877,156 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-257" placeholder="วางลิงก์ Jira หรือพิมพ์ TAK-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-257">+ เพิ่มลิงก์</button></div>
   </div>
 </div></td></tr>
+
+<!-- ═══════════════════════════════════════════════ Full E2E Flow ═══ -->
+<tr class="epicrow" data-epic="7"><td colspan="7">🔄 Full E2E Flow — วิ่งครบลูปตั้งแต่ต้นจนจบ <span class="rp">(4 เคส)</span></td></tr>
+<tr class="featrow" data-featkey="fullflow"><td colspan="7">📁 fullflow — เข้าระบบ → เตรียมคลัง → สร้างไลฟ์ใน Studio → เตรียมพร้อม → ออกอากาศ → จบ · และ variation <span class="rp"><span class="lv lvl-e2e">🔄 4</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="login"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+
+<tr class="trow" data-feat="epic7" data-level="e2e" data-prio="P0" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-E2E.1</td>
+  <td class="ctitle">ครบลูป: เข้าระบบ → เตรียมคลัง workspace → สร้างไลฟ์ใน Studio → เตรียมพร้อม → ออกอากาศ → จบไลฟ์</td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-258"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-258"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+    <div class="h-title">ครบลูป: เข้าระบบ → เตรียมคลัง workspace → สร้างไลฟ์ใน Studio → เตรียมพร้อม → ออกอากาศ → จบไลฟ์</div>
+    <div class="h-prio">Priority: <b>P0</b> · E2E · Full loop — เดินครบขั้นที่ 1→5 ในรอบเดียว (ทำหลังเคสรายขั้นผ่านแล้ว)</div>
+    <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">ร้อยจากขั้นที่ 1–5 ของรายงานนี้ · TC-L1.2 · TC-A2.1 · TC-LS.1 · TC-LS.2 · TC-TL.1 · TC-TL.2 · TC-LG.1</div></div>
+    <div class="sec"><h4>Precondition</h4><ul><li>มีบัญชีที่เข้า UAT ได้ (https://uat-live.takra.ai/) และยังไม่ได้ล็อกอินบนเบราว์เซอร์นี้</li><li>ทีม Ops เตรียมอวาตาร์และเสียงไว้ใน workspace แล้ว</li><li>มีสินค้าอย่างน้อย 1 รายการสำหรับใส่ในรอบไลฟ์ และมีมือถือสำหรับใช้เป็นกล้อง</li></ul></div>
+    <div class="sec"><h4>Test Steps — Phase A: เข้าระบบและรากฐาน workspace (ขั้นที่ 1)</h4><ol><li>เปิดหน้าเข้าสู่ระบบ → ต้องเห็นองค์ประกอบครบตามที่ออกแบบ (TC-L1.1)</li><li>เข้าสู่ระบบด้วย Google → ต้องเข้าถึงหน้าแรกของระบบได้ (TC-L1.2)</li><li>ตรวจว่า workspace ที่เข้ามาถูกต้อง และเมนูที่เห็นตรงกับสิทธิ์ของผู้ใช้</li></ol></div>
+    <div class="sec"><h4>Test Steps — Phase B: เตรียมคลังของ workspace (ขั้นที่ 2)</h4><ol start="4"><li>เปิด <b>คลังอวาตาร์</b> → ต้องเห็นอวาตาร์ที่ทีม Ops เตรียมไว้ครบ (TC-A2.1)</li><li>ลองกรองตามสไตล์และเพศ แล้วล้างตัวกรองกลับมาดูทั้งหมด (TC-A2.2)</li><li>เปิดคลังสินค้า → เพิ่ม/ตรวจสินค้าที่จะใช้ในรอบไลฟ์</li><li>เปิดรายการ <b>คำเสี่ยง</b> → ตรวจว่ามีคำที่ตั้งไว้ และเพิ่มคำทดสอบได้</li><li>เปิดคลังสคริปต์ → เตรียมสคริปต์ที่จะใช้ (หรือเว้นไว้ให้ AI ช่วยใน Phase F)</li></ol></div>
+    <div class="sec"><h4>Test Steps — Phase C: สร้างรอบไลฟ์ใน Studio (ขั้นที่ 3)</h4><ol start="9"><li>เปิด <b>ตารางไลฟ์</b> → ต้องเห็นปฏิทินและสลับมุมมองวัน/สัปดาห์/เดือนได้ (TC-LS.1)</li><li>สร้างรอบไลฟ์ใหม่ → เลือกอวาตาร์ เสียง สินค้า และสคริปต์ให้ครบ (TC-LS.2)</li><li>บันทึกรอบไลฟ์ → เปิดกลับมาดู ค่าที่ตั้งต้องอยู่ครบ</li></ol></div>
+    <div class="sec"><h4>Test Steps — Phase D: เตรียมพร้อมก่อนไลฟ์ (ขั้นที่ 4)</h4><ol start="12"><li>เปิดหน้าเครื่องมือเตรียมพร้อมก่อนไลฟ์ → ต้องเห็นครบ 3 ชั้น (TC-TL.1)</li><li>กดทดสอบเครือข่าย → ต้องเห็นผลความเร็ว ความเสถียร และคำตัดสินว่าพร้อม/ไม่พร้อม (TC-TL.2)</li><li>เชื่อมมือถือเป็นกล้องตามขั้นตอนที่หน้าจอบอก จนสถานะเป็นพร้อมออกอากาศ</li></ol></div>
+    <div class="sec"><h4>Test Steps — Phase E: ออกอากาศและคุมไลฟ์ (ขั้นที่ 4–5)</h4><ol start="15"><li>กดเริ่มออกอากาศ → สถานะต้องเปลี่ยนเป็นกำลังไลฟ์</li><li>ตรวจว่าอวาตาร์พูดตามสคริปต์ที่เลือกไว้ และเสียงตรงกับที่ตั้ง</li><li>เปิดหน้าตั้งค่าไลฟ์ → ต้องเห็นหมวดโปรไฟล์ · การแสดงผล · การตั้งค่าไลฟ์ · Workspace (TC-LG.1)</li><li>ตั้งค่าการแจ้งเตือนระหว่างคุมไลฟ์ (เสียง · เด้งหน้า · เริ่มแบบลิสต์) แล้วตรวจว่าแจ้งเตือนทำงานจริง (TC-LG.2)</li></ol></div>
+    <div class="sec"><h4>Test Steps — Phase F: ให้ AI ช่วยเขียนสคริปต์ต่อ (ขั้นที่ 6)</h4><ol start="19"><li>เปิดตัวแก้ไขสคริปต์ → ให้ AI ร่างสคริปต์จากสินค้าที่เลือก (TC-AI.1)</li><li>ใส่โจทย์เน้นพิเศษเพิ่ม → สคริปต์ที่ได้ต้องสะท้อนโจทย์นั้น (TC-AI.2)</li><li>แก้สคริปต์แล้วบันทึกกลับเข้ารอบไลฟ์ → ค่าที่แก้ต้องถูกใช้จริง</li></ol></div>
+    <div class="sec"><h4>Test Steps — Phase G: จบไลฟ์</h4><ol start="22"><li>กดหยุดออกอากาศ → สถานะกลับเป็นไม่ได้ไลฟ์</li><li>เปิดดูรอบไลฟ์ที่เพิ่งจบ → ข้อมูลของรอบต้องถูกบันทึกครบ</li></ol></div>
+    <div class="grid">
+      <div class="sec"><h4>Expected Result</h4><ul><li>ผู้ใช้เดินจากเข้าระบบครั้งแรกจนไลฟ์จบได้ในรอบเดียว ไม่ติดขั้นตอนไหน</li><li>ของที่เตรียมไว้ในคลัง (อวาตาร์ · เสียง · สินค้า · สคริปต์) ถูกนำไปใช้ในรอบไลฟ์จริงครบ</li><li>เครื่องมือเตรียมพร้อมบอกสถานะเครือข่ายและกล้องได้ถูกต้องก่อนเริ่มไลฟ์</li><li>การแจ้งเตือน operator ทำงานตามที่ตั้งไว้ระหว่างไลฟ์</li></ul></div>
+      <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    </div>
+    <div class="sec"><h4>Status</h4><div class="statusrow">
+      <span class="opt pass" data-uid="tc-258" data-st="pass">PASS</span>
+      <span class="opt fail" data-uid="tc-258" data-st="fail">FAIL</span>
+      <span class="opt hold" data-uid="tc-258" data-st="hold">HOLD</span>
+      <span class="opt block" data-uid="tc-258" data-st="block">BLOCKED</span>
+      <span class="opt skip" data-uid="tc-258" data-st="skip">SKIP</span>
+    </div></div>
+    <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+      <div class="jira-list" data-uid="tc-258"></div>
+      <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-258" placeholder="วางลิงก์ Jira หรือพิมพ์ TAK-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-258">+ เพิ่มลิงก์</button></div>
+    </div>
+</div></td></tr>
+
+<tr class="trow" data-feat="epic7" data-level="e2e" data-prio="P0" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-E2E.2</td>
+  <td class="ctitle">ครบลูปแบบชนคำเสี่ยง: สคริปต์มีคำเสี่ยง → ระบบบล็อก → operator แก้แล้วไลฟ์ต่อได้</td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-259"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-259"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+    <div class="h-title">ครบลูปแบบชนคำเสี่ยง: สคริปต์มีคำเสี่ยง → ระบบบล็อก → operator แก้แล้วไลฟ์ต่อได้</div>
+    <div class="h-prio">Priority: <b>P0</b> · E2E · Variation ของ TC-E2E.1 — สะดุดที่ขั้นที่ 5 (Risk-block fallback)</div>
+    <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">ขั้นที่ 2 (คำเสี่ยง) + ขั้นที่ 5 (Epic 5 · FR44-45) ต่อจาก TC-E2E.1</div></div>
+    <div class="sec"><h4>Precondition</h4><ul><li>ทำ TC-E2E.1 ถึง Phase C แล้ว (มีรอบไลฟ์ที่ตั้งค่าครบ)</li><li>มีคำเสี่ยงอยู่ในรายการคำเสี่ยงของ workspace</li></ul></div>
+    <div class="sec"><h4>Test Steps — Phase A: ใส่คำเสี่ยงลงสคริปต์</h4><ol><li>แก้สคริปต์ของรอบไลฟ์ให้มีคำที่อยู่ในรายการคำเสี่ยง แล้วบันทึก</li><li>สังเกตว่าระบบเตือนตั้งแต่ตอนบันทึกหรือไม่ และข้อความเตือนบอกคำไหนชัดเจนหรือเปล่า</li></ol></div>
+    <div class="sec"><h4>Test Steps — Phase B: เริ่มไลฟ์แล้วให้ชนคำเสี่ยง</h4><ol start="3"><li>เริ่มออกอากาศ → รอจนถึงช่วงที่สคริปต์มีคำเสี่ยง</li><li>ระบบต้องบล็อกไม่ให้พูดคำนั้นออกอากาศ และแจ้ง operator ตามที่ออกแบบ</li><li>ตรวจว่าไลฟ์ไม่หลุดหรือค้างจากการถูกบล็อก</li></ol></div>
+    <div class="sec"><h4>Test Steps — Phase C: operator แก้แล้วไปต่อ</h4><ol start="6"><li>operator แก้สคริปต์ตรงจุดที่ถูกบล็อก แล้วสั่งให้ทำงานต่อ</li><li>อวาตาร์ต้องพูดต่อจากจุดที่แก้ได้ โดยไม่ต้องเริ่มไลฟ์ใหม่</li></ol></div>
+    <div class="sec"><h4>Test Steps — Phase D: จบไลฟ์และตรวจย้อนหลัง</h4><ol start="8"><li>หยุดออกอากาศ</li><li>เปิดดูรอบไลฟ์ที่จบ → ต้องเห็นบันทึกว่ามีการบล็อกคำเสี่ยงเกิดขึ้นกี่ครั้งและตรงไหน</li></ol></div>
+    <div class="grid">
+      <div class="sec"><h4>Expected Result</h4><ul><li>คำเสี่ยงถูกกันไม่ให้ออกอากาศได้จริง</li><li>operator ได้รับแจ้งพร้อมข้อมูลพอที่จะแก้ได้ทันที</li><li>แก้แล้วไลฟ์เดินต่อได้โดยไม่ต้องเริ่มใหม่</li></ul></div>
+      <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    </div>
+    <div class="sec"><h4>Status</h4><div class="statusrow">
+      <span class="opt pass" data-uid="tc-259" data-st="pass">PASS</span>
+      <span class="opt fail" data-uid="tc-259" data-st="fail">FAIL</span>
+      <span class="opt hold" data-uid="tc-259" data-st="hold">HOLD</span>
+      <span class="opt block" data-uid="tc-259" data-st="block">BLOCKED</span>
+      <span class="opt skip" data-uid="tc-259" data-st="skip">SKIP</span>
+    </div></div>
+    <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+      <div class="jira-list" data-uid="tc-259"></div>
+      <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-259" placeholder="วางลิงก์ Jira หรือพิมพ์ TAK-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-259">+ เพิ่มลิงก์</button></div>
+    </div>
+</div></td></tr>
+
+<tr class="trow" data-feat="epic7" data-level="e2e" data-prio="P1" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-E2E.3</td>
+  <td class="ctitle">ครบลูปแบบเครือข่ายไม่ผ่านเกณฑ์: ทดสอบเน็ตแล้วไม่พร้อม → แก้ → ผ่านแล้วไลฟ์ได้</td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-260"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-260"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+    <div class="h-title">ครบลูปแบบเครือข่ายไม่ผ่านเกณฑ์: ทดสอบเน็ตแล้วไม่พร้อม → แก้ → ผ่านแล้วไลฟ์ได้</div>
+    <div class="h-prio">Priority: <b>P1</b> · E2E · Variation ของ TC-E2E.1 — สะดุดที่ขั้นที่ 4 (เตรียมพร้อมก่อนไลฟ์)</div>
+    <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">ขั้นที่ 4 (Epic 4 · FR34-39) · TC-TL.1 · TC-TL.2 ต่อจาก TC-E2E.1</div></div>
+    <div class="sec"><h4>Precondition</h4><ul><li>มีรอบไลฟ์ที่ตั้งค่าครบจาก TC-E2E.1</li><li>ทำให้เครือข่ายช้าหรือไม่เสถียรได้ (จำกัดแบนด์วิดท์ / ใช้เน็ตมือถือสัญญาณอ่อน)</li></ul></div>
+    <div class="sec"><h4>Test Steps — Phase A: ทำให้เน็ตไม่ผ่านเกณฑ์</h4><ol><li>จำกัดความเร็วเน็ตให้ต่ำกว่าเกณฑ์ที่ระบบกำหนด</li><li>เปิดหน้าเครื่องมือเตรียมพร้อม → กดทดสอบเครือข่าย (TC-TL.2)</li><li>ผลต้องบอกว่ายังไม่พร้อม พร้อมเหตุผลที่อ่านเข้าใจ ไม่ใช่แค่ตัวเลขดิบ</li></ol></div>
+    <div class="sec"><h4>Test Steps — Phase B: ลองเริ่มไลฟ์ทั้งที่ยังไม่พร้อม</h4><ol start="4"><li>กดเริ่มออกอากาศ → ระบบต้องเตือนหรือกันไว้ ไม่ปล่อยให้ไลฟ์เงียบ ๆ ทั้งที่เน็ตไม่พอ</li></ol></div>
+    <div class="sec"><h4>Test Steps — Phase C: แก้แล้วทดสอบใหม่</h4><ol start="5"><li>คืนความเร็วเน็ตให้ปกติ → กดทดสอบเครือข่ายอีกครั้ง → ต้องขึ้นว่าพร้อม</li><li>เชื่อมมือถือเป็นกล้องจนสถานะพร้อม → เริ่มออกอากาศได้ตามปกติ</li></ol></div>
+    <div class="sec"><h4>Test Steps — Phase D: จบไลฟ์</h4><ol start="7"><li>ไลฟ์สั้น ๆ แล้วหยุด → ตรวจว่าไม่มีผลค้างจากการทดสอบรอบแรกที่ไม่ผ่าน</li></ol></div>
+    <div class="grid">
+      <div class="sec"><h4>Expected Result</h4><ul><li>เครื่องมือเตรียมพร้อมตัดสินว่าพร้อม/ไม่พร้อมได้ตรงกับสภาพเน็ตจริง</li><li>ระบบไม่ปล่อยให้เริ่มไลฟ์ทั้งที่เงื่อนไขไม่ผ่านโดยไม่เตือน</li><li>แก้แล้วทดสอบใหม่ได้ทันที ไม่ต้องสร้างรอบไลฟ์ใหม่</li></ul></div>
+      <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    </div>
+    <div class="sec"><h4>Status</h4><div class="statusrow">
+      <span class="opt pass" data-uid="tc-260" data-st="pass">PASS</span>
+      <span class="opt fail" data-uid="tc-260" data-st="fail">FAIL</span>
+      <span class="opt hold" data-uid="tc-260" data-st="hold">HOLD</span>
+      <span class="opt block" data-uid="tc-260" data-st="block">BLOCKED</span>
+      <span class="opt skip" data-uid="tc-260" data-st="skip">SKIP</span>
+    </div></div>
+    <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+      <div class="jira-list" data-uid="tc-260"></div>
+      <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-260" placeholder="วางลิงก์ Jira หรือพิมพ์ TAK-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-260">+ เพิ่มลิงก์</button></div>
+    </div>
+</div></td></tr>
+
+<tr class="trow" data-feat="epic7" data-level="e2e" data-prio="P1" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-E2E.4</td>
+  <td class="ctitle">ครบลูปแบบ AI ช่วยทั้งเส้น: ให้ AI ร่างสคริปต์ → แก้ → ใช้ไลฟ์จริง → ตรวจผลหลังจบ</td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-261"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-261"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+    <div class="h-title">ครบลูปแบบ AI ช่วยทั้งเส้น: ให้ AI ร่างสคริปต์ → แก้ → ใช้ไลฟ์จริง → ตรวจผลหลังจบ</div>
+    <div class="h-prio">Priority: <b>P1</b> · E2E · Variation ของ TC-E2E.1 — เน้นขั้นที่ 6 (AI ช่วยเขียน Script) ตั้งแต่ต้นจนออกอากาศ</div>
+    <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">ขั้นที่ 6 (Epic 6 · FR29-31) เชื่อมกับขั้นที่ 2–4 · TC-AI.1 · TC-AI.2 · TC-LS.2</div></div>
+    <div class="sec"><h4>Precondition</h4><ul><li>เข้าระบบแล้วและมีสินค้าในคลังอย่างน้อย 1 รายการ</li><li>ยังไม่มีสคริปต์เตรียมไว้ (จะให้ AI ร่างทั้งหมด)</li></ul></div>
+    <div class="sec"><h4>Test Steps — Phase A: ให้ AI ร่างสคริปต์จากศูนย์</h4><ol><li>เปิดตัวแก้ไขสคริปต์ → เลือกสินค้าที่จะขาย → สั่งให้ AI ร่างสคริปต์ (TC-AI.1)</li><li>ตรวจว่าสคริปต์ที่ได้พูดถึงสินค้าที่เลือกจริง ไม่ใช่ข้อความทั่วไป</li></ol></div>
+    <div class="sec"><h4>Test Steps — Phase B: ใส่โจทย์เพิ่มแล้วให้ร่างใหม่</h4><ol start="3"><li>ใส่โจทย์เน้นพิเศษ เช่น เน้นโปรโมชันหรือกลุ่มลูกค้า → สั่งร่างอีกครั้ง (TC-AI.2)</li><li>สคริปต์ใหม่ต้องสะท้อนโจทย์ที่ใส่</li></ol></div>
+    <div class="sec"><h4>Test Steps — Phase C: แก้แล้วผูกเข้ารอบไลฟ์</h4><ol start="5"><li>แก้สคริปต์ด้วยมือบางจุด แล้วบันทึก</li><li>สร้างรอบไลฟ์ใหม่ → เลือกอวาตาร์ เสียง สินค้า และสคริปต์ที่ AI ร่างไว้ (TC-LS.2)</li></ol></div>
+    <div class="sec"><h4>Test Steps — Phase D: ออกอากาศจริงแล้วตรวจ</h4><ol start="7"><li>ผ่านขั้นเตรียมพร้อม → เริ่มออกอากาศ</li><li>อวาตาร์ต้องพูดตามสคริปต์ที่แก้ล่าสุด ไม่ใช่ฉบับร่างแรก</li><li>หยุดออกอากาศ → เปิดดูรอบไลฟ์ → ต้องเห็นว่าใช้สคริปต์ฉบับไหน</li></ol></div>
+    <div class="grid">
+      <div class="sec"><h4>Expected Result</h4><ul><li>AI ร่างสคริปต์จากสินค้าจริงในคลังได้ และรับโจทย์เพิ่มเติมได้</li><li>สคริปต์ที่แก้ล่าสุดคือฉบับที่ถูกใช้ออกอากาศ</li><li>ตามย้อนกลับได้ว่ารอบไลฟ์นั้นใช้สคริปต์ฉบับใด</li></ul></div>
+      <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    </div>
+    <div class="sec"><h4>Status</h4><div class="statusrow">
+      <span class="opt pass" data-uid="tc-261" data-st="pass">PASS</span>
+      <span class="opt fail" data-uid="tc-261" data-st="fail">FAIL</span>
+      <span class="opt hold" data-uid="tc-261" data-st="hold">HOLD</span>
+      <span class="opt block" data-uid="tc-261" data-st="block">BLOCKED</span>
+      <span class="opt skip" data-uid="tc-261" data-st="skip">SKIP</span>
+    </div></div>
+    <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+      <div class="jira-list" data-uid="tc-261"></div>
+      <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-261" placeholder="วางลิงก์ Jira หรือพิมพ์ TAK-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-261">+ เพิ่มลิงก์</button></div>
+    </div>
+</div></td></tr>
+
 </tbody>
   </table>
   </div>
 
 </div>
-<footer>TAKRA AI — MVP-1 UI Manual Test Cases · 257 TCs · UI only · UAT https://uat-live.takra.ai/</footer>
+<footer>TAKRA AI — MVP-1 UI Manual Test Cases · 261 TCs · UI only · UAT https://uat-live.takra.ai/</footer>
 
 <script>
 // ── Load store from embedded JSON ──
