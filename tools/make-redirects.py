@@ -70,22 +70,29 @@ MOVES = {
         'projects/takra-rerun/2026/07/summary/takra-rerun-mvp2-qa-summary.html',
 }
 
-# commit ที่เก็บโครงสร้างเก่าไว้ — ใช้ดึงรายชื่อ path เดิมทั้งหมด จะได้ไม่ตกหล่น
-OLD_REF = 'eca44fe'
+# commit ที่เคย deploy ขึ้นเว็บ — ดึงรายชื่อ path จากทุกอันเพื่อไม่ให้ตกหล่น
+# เติม commit ใหม่ต่อท้ายทุกครั้งที่ push โครงสร้างที่เปลี่ยน path
+OLD_REFS = [
+    'eca44fe',   # reorg รอบแรก: ราก + projects/<proj>/<type>/
+    '6caf13f',   # reorg รอบสอง: projects/<proj>/<ปี>/<เดือน>/<type>/ + dod/mvp<N>/
+]
 
 
 def old_paths() -> list:
-    out = subprocess.run(['git', 'ls-tree', '-r', '--name-only', OLD_REF],
-                         cwd=ROOT, capture_output=True, text=True, check=True)
-    keep = []
-    for p in out.stdout.splitlines():
-        parts = p.split('/')
-        if not p.endswith('.html'):
-            continue
-        if parts[0] in ('reports', 'summary', 'dod') and len(parts) == 2:
-            keep.append(p)                                  # ราก (ก่อน reorg รอบแรก)
-        elif len(parts) == 4 and parts[0] == 'projects' and parts[2] in ('reports', 'summary', 'dod'):
-            keep.append(p)                                  # projects/<proj>/<type>/ (รอบที่ live อยู่)
+    keep = set()
+    for ref in OLD_REFS:
+        out = subprocess.run(['git', 'ls-tree', '-r', '--name-only', ref],
+                             cwd=ROOT, capture_output=True, text=True, check=True)
+        for p in out.stdout.splitlines():
+            if not p.endswith('.html'):
+                continue
+            parts = p.split('/')
+            if parts[0] in ('reports', 'summary', 'dod') and len(parts) == 2:
+                keep.add(p)                                 # ราก (ก่อน reorg รอบแรก)
+            elif parts[0] == 'projects' and parts[-2] in ('reports', 'summary', 'dod'):
+                keep.add(p)                                 # projects/<proj>/…/<type>/
+            elif parts[0] == 'projects' and 'dod' in parts:
+                keep.add(p)                                 # projects/<proj>/dod/mvp<N>/
     return sorted(keep)
 
 
@@ -105,33 +112,39 @@ def main() -> int:
     ap.add_argument('--check', action='store_true')
     args = ap.parse_args()
 
-    paths, missing_map, missing_target, wrote = old_paths(), [], [], 0
+    def is_redirect(p: pathlib.Path) -> bool:
+        return p.is_file() and 'http-equiv="refresh"' in p.read_text(encoding='utf-8')[:400]
+
+    paths, unmapped, bad_target, wrote, still = old_paths(), [], [], 0, 0
     for old in paths:
-        name = old.rsplit('/', 1)[-1]
-        target = MOVES.get(name)
+        src = ROOT / old
+        # ไฟล์ยังอยู่ที่เดิมจริง ๆ = ไม่ได้ย้าย ไม่ต้องทำอะไร
+        if src.is_file() and not is_redirect(src):
+            still += 1
+            continue
+
+        target = MOVES.get(old.rsplit('/', 1)[-1])
         if not target:
-            missing_map.append(old)
+            unmapped.append(old)
             continue
         if not (ROOT / target).is_file():
-            missing_target.append(f'{old} -> {target}')
-            continue
-        if (ROOT / old).is_file() and 'refresh' not in (ROOT / old).read_text(encoding='utf-8')[:400]:
-            print(f"  ✗ ข้าม {old} — มีไฟล์จริงอยู่ ไม่ใช่ redirect")
+            bad_target.append(f'{old} -> {target}')
             continue
         if args.check:
+            wrote += 1
             continue
-        dst = ROOT / old
-        dst.parent.mkdir(parents=True, exist_ok=True)
-        dst.write_text(stub(target), encoding='utf-8')
+        src.parent.mkdir(parents=True, exist_ok=True)
+        src.write_text(stub(target), encoding='utf-8')
         wrote += 1
 
-    print(f"  path เก่าทั้งหมด {len(paths)}  ·  เขียน redirect {wrote}")
-    for label, items in (('ไม่มีใน MOVES', missing_map), ('ปลายทางไม่มีจริง', missing_target)):
+    print(f"  path ที่เคย deploy {len(paths)}  ·  ยังอยู่ที่เดิม {still}  ·  "
+          f"{'ต้องทำ' if args.check else 'เขียน'} redirect {wrote}")
+    for label, items in (('ย้ายไปแล้วแต่ไม่มีใน MOVES', unmapped), ('ปลายทางไม่มีจริง', bad_target)):
         if items:
-            print(f"  ✗ {label} {len(items)} รายการ:")
+            print(f"  ✗ {label} {len(items)} รายการ — เติม MOVES ก่อน:")
             for i in items:
                 print(f"      {i}")
-    return 1 if (missing_map or missing_target) else 0
+    return 1 if (unmapped or bad_target) else 0
 
 
 if __name__ == '__main__':
