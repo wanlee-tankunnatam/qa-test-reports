@@ -125,7 +125,20 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 .feat-owner.owner-ice{border-color:#2563eb;color:#2563eb;font-weight:700}
 .feat-owner.owner-moss{border-color:#7c3aed;color:#7c3aed;font-weight:700}
 </style>
-</head>
+<style id="claude-agent-animation-styles">
+      @keyframes claude-pulse {
+        0%, 100% { opacity: 0.6; }
+        50% { opacity: 1; }
+      }
+      #claude-agent-glow-border-inner {
+        animation: claude-pulse 2s ease-in-out infinite;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        #claude-agent-glow-border-inner {
+          animation: none;
+        }
+      }
+    </style></head>
 <body>
 <a id="hub-back-btn" href="https://wanlee-tankunnatam.github.io/qa-test-reports/?project=rerun" title="กลับไปหน้ารวมรายงาน (Hub)" style="position:fixed;top:12px;right:14px;z-index:99999;display:inline-flex;align-items:center;gap:7px;padding:10px 18px;border-radius:999px;background:#ffffff;color:#1e3a8a;font-size:14px;font-weight:800;text-decoration:none;box-shadow:0 4px 16px rgba(0,0,0,.35);border:2px solid #1e3a8a;font-family:'Segoe UI','Sarabun',system-ui,sans-serif">🏠 รายงานทั้งหมด</a>
 
@@ -251,6 +264,9 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   },
   "tc-3145": {
     "st": "skip"
+  },
+  "tc-3154": {
+    "st": "skip"
   }
 }
 </script>
@@ -277,11 +293,11 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
       <span class="cnt fail">FAIL <b id="sum-fail">0</b></span>
       <span class="cnt hold">HOLD <b id="sum-hold">0</b></span>
       <span class="cnt block">BLOCKED <b id="sum-block">0</b></span>
-      <span class="cnt skip">SKIP <b id="sum-skip">22</b></span>
-      <span class="cnt pending">รอเทส <b id="sum-pending">250</b></span>
+      <span class="cnt skip">SKIP <b id="sum-skip">23</b></span>
+      <span class="cnt pending">รอเทส <b id="sum-pending">249</b></span>
     </div>
     <div class="progress"><div id="sumbar" class="progressbar" style="width: 6%;"></div></div>
-    <div class="hint" id="sumpct" style="margin-top:5px">6% ทดสอบแล้ว (17/267) · ข้าม 22</div>
+    <div class="hint" id="sumpct" style="margin-top:5px">6% ทดสอบแล้ว (17/266) · ข้าม 23</div>
   </div>
 
   <div class="toolbar">
@@ -5590,7 +5606,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <!-- Epic 11 -->
 <tr class="epicrow" data-epic="11"><td colspan="7">👯 ขั้นที่ 11 · เปิดห้องที่สอง — Spawn (Epic 17 · FR-AA) <span class="rp">(15 เคสหลัก <span style="color:var(--muted);font-weight:400">+ 1 edge🆕</span>)</span></td></tr>
 <tr class="featrow" data-featkey="spawn-session"><td colspan="7">📁 spawn-session <span class="rp"><span class="lv lvl-ui">🌐 9 <span style="color:var(--muted)">+0🆕</span></span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="spawn-session"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
-<tr class="trow open" data-feat="epic11" data-level="ui" data-prio="P0" onclick="tg(this)">
+<tr class="trow" data-feat="epic11" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-AA1.1</td>
   <td class="ctitle">กดเปิดห้องใหม่จากไลฟ์ที่ตั้งไว้แล้ว ค่าทั้งหมดถูกก๊อปมาให้</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -5598,7 +5614,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-3145"><span class="stb skip">SKIP</span></td>
   <td class="jira-cell" data-uid="tc-3145"></td>
 </tr>
-<tr class="detail show"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">กดเปิดห้องใหม่จากไลฟ์ที่ตั้งไว้แล้ว ค่าทั้งหมดถูกก๊อปมาให้</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · spawn-session · ขั้นที่ 11 · Epic 17</div>
   <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>มีบัญชีที่ตั้งค่าครบแล้ว (เพลย์ลิสต์ · โอเวอร์เลย์ · ตารางปัก · พร็อกซี)</li><li>มีบัญชีอีกตัวที่ยังไม่ได้ไลฟ์</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบด้วยบัญชีทดสอบ</li><li>ไปที่ หน้าหลัก (บัญชีไลฟ์) แล้วเปิดบัญชีไลฟ์หรือหน้าบัญชีที่ตั้งค่าครบแล้ว</li><li>กดปุ่มเปิดห้องใหม่</li><li>ดูค่าที่ระบบเติมมาให้ในหน้าจอที่เปิดขึ้น</li><li>เทียบกับค่าของห้องต้นทางว่าถูกคัดลอกมาครบหรือไม่</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ห้องต้นทาง: บัญชี A (เพลย์ลิสต์ครีม · โอเวอร์เลย์แบรนด์ · ตารางปัก 2 แถว)</li></ul></div>
@@ -5618,7 +5634,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-3145" placeholder="วางลิงก์ Jira หรือพิมพ์ TAK-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-3145">+ เพิ่มลิงก์</button></div>
   </div>
 </div></td></tr>
-<tr class="trow open" data-feat="epic11" data-level="ui" data-prio="P0" onclick="tg(this)">
+<tr class="trow" data-feat="epic11" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-AA1.2</td>
   <td class="ctitle">เปลี่ยนบัญชีปลายทางก่อนกดเริ่ม</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -5626,7 +5642,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-3146"><span class="stb skip">SKIP</span></td>
   <td class="jira-cell" data-uid="tc-3146"></td>
 </tr>
-<tr class="detail show"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">เปลี่ยนบัญชีปลายทางก่อนกดเริ่ม</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · spawn-session · ขั้นที่ 11 · Epic 17</div>
   <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>อยู่ที่หน้าจอเปิดห้องใหม่</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>กดปุ่มเปิดห้องใหม่จากหน้าไลฟ์ที่ตั้งค่าไว้แล้ว</li><li>กดที่ช่องเลือกบัญชีปลายทาง แล้วดูรายการบัญชีที่เลือกได้</li><li>เลือกบัญชีที่ยังไม่ได้ไลฟ์</li><li>กด "เริ่ม"</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>บัญชีปลายทาง: บัญชี B (ยังไม่ได้ไลฟ์)</li></ul></div>
@@ -5646,7 +5662,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-3146" placeholder="วางลิงก์ Jira หรือพิมพ์ TAK-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-3146">+ เพิ่มลิงก์</button></div>
   </div>
 </div></td></tr>
-<tr class="trow open" data-feat="epic11" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow" data-feat="epic11" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-AA1.3</td>
   <td class="ctitle">เปลี่ยนเพลย์ลิสต์ให้ห้องใหม่ เพื่อไลฟ์คนละหมวด</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -5654,7 +5670,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-3147"><span class="stb skip">SKIP</span></td>
   <td class="jira-cell" data-uid="tc-3147"></td>
 </tr>
-<tr class="detail show"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">เปลี่ยนเพลย์ลิสต์ให้ห้องใหม่ เพื่อไลฟ์คนละหมวด</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · spawn-session · ขั้นที่ 11 · Epic 17</div>
   <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>มีเพลย์ลิสต์อย่างน้อย 2 อัน</li><li>อยู่ที่หน้าจอเปิดห้องใหม่</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>กดปุ่มเปิดห้องใหม่จากหน้าไลฟ์ที่ตั้งค่าไว้แล้ว</li><li>เปลี่ยนช่องเพลย์ลิสต์ของห้องใหม่เป็นอีกหมวดหนึ่ง</li><li>เลือกบัญชีปลายทางที่ยังไม่ได้ไลฟ์ แล้วกด "เริ่ม"</li><li>ดูว่าห้องใหม่ออกอากาศคลิปจากเพลย์ลิสต์ไหน</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ห้องต้นทาง: เพลย์ลิสต์ครีม · ห้องใหม่: เพลย์ลิสต์อาหารเสริม</li></ul></div>
@@ -5674,7 +5690,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-3147" placeholder="วางลิงก์ Jira หรือพิมพ์ TAK-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-3147">+ เพิ่มลิงก์</button></div>
   </div>
 </div></td></tr>
-<tr class="trow open" data-feat="epic11" data-level="ui" data-prio="P0" onclick="tg(this)">
+<tr class="trow" data-feat="epic11" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-AA1.4</td>
   <td class="ctitle">ห้องใหม่ใช้พร็อกซีของบัญชีตัวเอง ไม่ใช่ของห้องต้นทาง</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -5682,7 +5698,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-3148"><span class="stb skip">SKIP</span></td>
   <td class="jira-cell" data-uid="tc-3148"></td>
 </tr>
-<tr class="detail show"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">ห้องใหม่ใช้พร็อกซีของบัญชีตัวเอง ไม่ใช่ของห้องต้นทาง</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · spawn-session · ขั้นที่ 11 · Epic 17</div>
   <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>บัญชี A และ B ตั้งพร็อกซีคนละตัว</li><li>ห้องต้นทางคือบัญชี A ที่กำลังไลฟ์</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>กดปุ่มเปิดห้องใหม่ แล้วเลือกบัญชี B เป็นปลายทาง</li><li>ก่อนกด "เริ่ม" ดูว่าช่องพร็อกซีแสดงตัวไหน</li><li>กด "เริ่ม" แล้วดูพร็อกซีที่ห้องใหม่ใช้จริงว่าเป็นของบัญชี B หรือของห้องต้นทาง</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>บัญชี A → proxy-01 · บัญชี B → proxy-02</li></ul></div>
@@ -5702,7 +5718,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-3148" placeholder="วางลิงก์ Jira หรือพิมพ์ TAK-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-3148">+ เพิ่มลิงก์</button></div>
   </div>
 </div></td></tr>
-<tr class="trow open" data-feat="epic11" data-level="ui" data-prio="P0" onclick="tg(this)">
+<tr class="trow" data-feat="epic11" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-AA1.5</td>
   <td class="ctitle">ห้องต้นทางยังไลฟ์ต่อได้ตามปกติหลังเปิดห้องใหม่</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -5710,7 +5726,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-3149"><span class="stb skip">SKIP</span></td>
   <td class="jira-cell" data-uid="tc-3149"></td>
 </tr>
-<tr class="detail show"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">ห้องต้นทางยังไลฟ์ต่อได้ตามปกติหลังเปิดห้องใหม่</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · spawn-session · ขั้นที่ 11 · Epic 17</div>
   <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>ห้องต้นทางกำลังไลฟ์อยู่</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>จดตัวเลขคนดูและสถานะของห้องต้นทางไว้ก่อน</li><li>กดปุ่มเปิดห้องใหม่ แล้วทำจนเปิดห้องสำเร็จ</li><li>กลับไปดูห้องต้นทางอีกครั้งว่ายังไลฟ์ปกติและตัวเลขคนดูเป็นอย่างไร</li><li>ทดลองปักสินค้าที่ห้องต้นทาง 1 ครั้ง แล้วดูว่าทำได้ปกติหรือไม่</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ห้องต้นทาง: บัญชี A · ห้องใหม่: บัญชี B</li></ul></div>
@@ -5730,7 +5746,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-3149" placeholder="วางลิงก์ Jira หรือพิมพ์ TAK-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-3149">+ เพิ่มลิงก์</button></div>
   </div>
 </div></td></tr>
-<tr class="trow open" data-feat="epic11" data-level="ui" data-prio="P2" onclick="tg(this)">
+<tr class="trow" data-feat="epic11" data-level="ui" data-prio="P2" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-AA1.6</td>
   <td class="ctitle">เปิดห้องใหม่ได้ภายใน 2 คลิก</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -5738,7 +5754,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-3150"><span class="stb skip">SKIP</span></td>
   <td class="jira-cell" data-uid="tc-3150"></td>
 </tr>
-<tr class="detail show"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">เปิดห้องใหม่ได้ภายใน 2 คลิก</div>
   <div class="h-prio">Priority: <b>P2</b> · UI · spawn-session · ขั้นที่ 11 · Epic 17</div>
   <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>มีเทมเพลตหรือห้องต้นทางที่ตั้งค่าครบแล้ว</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เริ่มนับจำนวนคลิกตั้งแต่อยู่ที่หน้าไลฟ์</li><li>กดปุ่มเปิดห้องใหม่ แล้วเลือกบัญชีปลายทาง</li><li>กด "เริ่ม" แล้วนับจำนวนคลิกที่ใช้ทั้งหมดว่าไม่เกิน 2 คลิก</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>นับคลิกตั้งแต่หน้าไลฟ์จนห้องใหม่เริ่ม</li></ul></div>
@@ -5758,7 +5774,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-3150" placeholder="วางลิงก์ Jira หรือพิมพ์ TAK-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-3150">+ เพิ่มลิงก์</button></div>
   </div>
 </div></td></tr>
-<tr class="trow open" data-feat="epic11" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow" data-feat="epic11" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-AA2.1</td>
   <td class="ctitle">บันทึกค่าไลฟ์ปัจจุบันเป็นเทมเพลตไว้ใช้ซ้ำ</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -5766,7 +5782,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-3151"><span class="stb skip">SKIP</span></td>
   <td class="jira-cell" data-uid="tc-3151"></td>
 </tr>
-<tr class="detail show"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">บันทึกค่าไลฟ์ปัจจุบันเป็นเทมเพลตไว้ใช้ซ้ำ</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · spawn-session · ขั้นที่ 11 · Epic 17</div>
   <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>มีบัญชีที่ตั้งค่าไลฟ์ครบแล้ว</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบด้วยบัญชีทดสอบ</li><li>ไปที่ หน้าหลัก (บัญชีไลฟ์) แล้วเปิดบัญชีไลฟ์ที่ตั้งค่าไว้แล้ว</li><li>กดปุ่มบันทึกเป็นเทมเพลต</li><li>ตั้งชื่อเทมเพลต แล้วกดบันทึก</li><li>เปิดรายการเทมเพลตขึ้นมาดูว่ามีเทมเพลตที่เพิ่งบันทึกหรือไม่</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ชื่อเทมเพลต: เซ็ตครีมรอบเช้า</li></ul></div>
@@ -5786,7 +5802,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-3151" placeholder="วางลิงก์ Jira หรือพิมพ์ TAK-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-3151">+ เพิ่มลิงก์</button></div>
   </div>
 </div></td></tr>
-<tr class="trow open" data-feat="epic11" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow" data-feat="epic11" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-AA2.2</td>
   <td class="ctitle">เปิดห้องจากเทมเพลตที่บันทึกไว้</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -5794,7 +5810,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-3152"><span class="stb skip">SKIP</span></td>
   <td class="jira-cell" data-uid="tc-3152"></td>
 </tr>
-<tr class="detail show"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">เปิดห้องจากเทมเพลตที่บันทึกไว้</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · spawn-session · ขั้นที่ 11 · Epic 17</div>
   <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>มีเทมเพลตที่บันทึกไว้แล้ว</li><li>มีบัญชีที่ยังไม่ได้ไลฟ์</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>กดปุ่มเปิดห้องใหม่ แล้วเลือกจากเทมเพลตที่บันทึกไว้</li><li>ดูค่าที่ระบบเติมมาให้</li><li>เลือกบัญชีปลายทาง แล้วกด "เริ่ม"</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>เทมเพลต: เซ็ตครีมรอบเช้า</li></ul></div>
@@ -5814,7 +5830,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-3152" placeholder="วางลิงก์ Jira หรือพิมพ์ TAK-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-3152">+ เพิ่มลิงก์</button></div>
   </div>
 </div></td></tr>
-<tr class="trow open" data-feat="epic11" data-level="ui" data-prio="P0" onclick="tg(this)">
+<tr class="trow" data-feat="epic11" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-AA2.3</td>
   <td class="ctitle">เทมเพลตต้องไม่พ่วงสถานะไลฟ์เก่ามาด้วย</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -5822,7 +5838,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-3153"><span class="stb skip">SKIP</span></td>
   <td class="jira-cell" data-uid="tc-3153"></td>
 </tr>
-<tr class="detail show"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">เทมเพลตต้องไม่พ่วงสถานะไลฟ์เก่ามาด้วย</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · spawn-session · ขั้นที่ 11 · Epic 17</div>
   <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>บันทึกเทมเพลตจากบัญชีที่กำลังไลฟ์อยู่</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เปิดเทมเพลตนั้นขึ้นมาดูรายละเอียด</li><li>ดูว่ามีข้อมูลของห้องไลฟ์เดิมติดมาหรือไม่ เช่น เลขห้องหรือสถานะกำลังไลฟ์</li><li>เปิดห้องใหม่จากเทมเพลตนี้ แล้วดูว่าห้องใหม่เป็นห้องของตัวเองหรือไม่</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>เทมเพลตที่บันทึกจากห้องที่กำลังไลฟ์</li></ul></div>
@@ -5848,7 +5864,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">เปิดห้องเกินเพดานแพ็กเกจ ต้องถูกปฏิเสธพร้อมเหตุผล</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
-  <td class="status" data-uid="tc-3154"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-3154"><span class="stb skip">SKIP</span></td>
   <td class="jira-cell" data-uid="tc-3154"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -5864,7 +5880,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <span class="opt fail" data-uid="tc-3154" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-3154" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-3154" data-st="block">BLOCKED</span>
-    <span class="opt skip" data-uid="tc-3154" data-st="skip">SKIP</span>
+    <span class="opt skip sel" data-uid="tc-3154" data-st="skip">SKIP</span>
   </div></div>
   <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
     <div class="jira-list" data-uid="tc-3154"></div>
@@ -9270,4 +9286,9 @@ document.querySelectorAll('.feat-owner').forEach(function(sel){var e=sel.dataset
 </script>
 
 
-</body></html>
+<div id="claude-agent-glow-border" style="position: fixed; inset: 0px; pointer-events: none; z-index: 2147483646; opacity: 1; transition: opacity 0.3s ease-in-out;"><div id="claude-agent-glow-border-inner" style="position: absolute; inset: 0px; will-change: opacity; box-shadow: rgba(217, 119, 87, 0.7) 0px 0px 15px inset, rgba(217, 119, 87, 0.5) 0px 0px 25px inset, rgba(217, 119, 87, 0.2) 0px 0px 35px inset;"></div></div><div id="claude-agent-stop-container" style="position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%); display: flex; justify-content: center; align-items: center; pointer-events: none; z-index: 2147483647;"><button id="claude-agent-stop-button" style="position: relative; transform: translateY(0px); padding: 12px 16px; background: rgb(250, 249, 245); color: rgb(20, 20, 19); border: 0.5px solid rgba(31, 30, 29, 0.4); border-radius: 12px; font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; box-shadow: rgba(217, 119, 87, 0.24) 0px 40px 80px, rgba(217, 119, 87, 0.24) 0px 4px 14px; transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); opacity: 1; user-select: none; pointer-events: auto; white-space: nowrap; margin: 0px auto;">
+      <svg width="16" height="16" viewBox="0 0 256 256" fill="currentColor" style="margin-right: 12px; vertical-align: middle;">
+        <path d="M128,20A108,108,0,1,0,236,128,108.12,108.12,0,0,0,128,20Zm0,192a84,84,0,1,1,84-84A84.09,84.09,0,0,1,128,212Zm40-112v56a12,12,0,0,1-12,12H100a12,12,0,0,1-12-12V100a12,12,0,0,1,12-12h56A12,12,0,0,1,168,100Z"></path>
+      </svg>
+      <span style="vertical-align: middle;">Stop Claude</span>
+    </button></div><div id="claude-phantom-cursor" aria-hidden="true" style="position: fixed; top: 0px; left: 0px; pointer-events: none; z-index: 2147483646; transform: translate3d(455px, 363px, 0px); transition: transform 180ms cubic-bezier(0.2, 0, 0, 1); will-change: transform;"><svg id="claude-phantom-cursor-plain" width="20" height="26" viewBox="0 0 20 26" style="position: absolute; top: 0px; left: 0px; overflow: visible;"><path d="M0 0 L0 18 L4.5 14 L7.5 21.5 L11 20 L8 13 L14 13 Z" stroke="white" stroke-width="3" stroke-linejoin="round" fill="white"></path><path d="M0 0 L0 18 L4.5 14 L7.5 21.5 L11 20 L8 13 L14 13 Z" fill="#111"></path></svg><svg id="claude-phantom-cursor-styled" width="20" height="26" viewBox="0 0 20 26" style="position: absolute; top: 0px; left: 0px; overflow: visible; filter: drop-shadow(rgba(217, 119, 87, 0.9) 0px 0px 4px) drop-shadow(rgba(217, 119, 87, 0.45) 0px 0px 10px);"><path d="M0 0 L0 18 L4.5 14 L7.5 21.5 L11 20 L8 13 L14 13 Z" stroke="#D97757" stroke-width="3" stroke-linejoin="round" fill="#D97757"></path><path d="M0 0 L0 18 L4.5 14 L7.5 21.5 L11 20 L8 13 L14 13 Z" fill="#FAF9F5"></path></svg></div></body></html>
