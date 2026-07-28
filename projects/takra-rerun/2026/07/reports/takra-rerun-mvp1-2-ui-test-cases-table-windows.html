@@ -792,6 +792,9 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   },
   "tc-3013": {
     "st": "pass"
+  },
+  "tc-3224": {
+    "st": "fail"
   }
 }
 </script>
@@ -815,14 +818,14 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <h3>📊 สรุปผล Manual Test</h3>
     <div class="sumchips">
       <span class="cnt pass">PASS <b id="sum-pass">80</b></span>
-      <span class="cnt fail">FAIL <b id="sum-fail">29</b></span>
+      <span class="cnt fail">FAIL <b id="sum-fail">30</b></span>
       <span class="cnt hold">HOLD <b id="sum-hold">6</b></span>
       <span class="cnt block">BLOCKED <b id="sum-block">7</b></span>
       <span class="cnt skip">SKIP <b id="sum-skip">66</b></span>
-      <span class="cnt pending">รอเทส <b id="sum-pending">101</b></span>
+      <span class="cnt pending">รอเทส <b id="sum-pending">100</b></span>
     </div>
     <div class="progress"><div id="sumbar" class="progressbar" style="width: 55%;"></div></div>
-    <div class="hint" id="sumpct" style="margin-top:5px">55% ทดสอบแล้ว (122/223) · ข้าม 66</div>
+    <div class="hint" id="sumpct" style="margin-top:5px">55% ทดสอบแล้ว (123/223) · ข้าม 66</div>
   </div>
 
   <div class="toolbar">
@@ -830,7 +833,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <button class="btn" onclick="toggleAll(false)">▾ ยุบทั้งหมด</button>
     <span class="hint">💡 คลิกแถว → ดู Steps / Expected (UI only)</span>
     <span style="margin-left:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-      <span id="save-status" class="hint" style="white-space: nowrap; color: var(--hold);">● ยังไม่ได้บันทึก</span>
+      <span id="save-status" class="hint" style="white-space: nowrap; color: var(--muted);">✓ ตรงกับ GitHub</span>
       <label class="hint" style="display:flex;gap:4px;align-items:center;white-space:nowrap;cursor:pointer" title="บันทึกขึ้น GitHub อัตโนมัติหลังหยุดแก้ ~5 วินาที"><input type="checkbox" id="chk-autosave" checked=""> auto-save</label>
       <button class="btn" id="btn-token" title="ใส่/เปลี่ยน GitHub token (ถ้าเซฟไม่ขึ้น/token เสีย กดอันนี้)">🔑 Token</button>
       <button class="btn" id="btn-refresh" title="ดึงผลล่าสุดจาก GitHub มา merge (ไม่ต้อง reload)">🔄 ดึงล่าสุด</button>
@@ -2416,15 +2419,15 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-3014" placeholder="วางลิงก์ Jira หรือพิมพ์ TAK-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-3014">+ เพิ่มลิงก์</button></div>
   </div>
 </div></td></tr>
-<tr class="trow open" data-feat="epic2" data-level="ui" data-prio="P2" onclick="tg(this)">
+<tr class="trow open hide" data-feat="epic2" data-level="ui" data-prio="P2" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-Z1.10</td>
   <td class="ctitle">ตั้งชื่อเพลย์ลิสต์ยาวเกินไป ระบบต้องกันไว้ <span class="edge-badge">🆕 edge</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p2">P2</span></td>
-  <td class="status" data-uid="tc-3224"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-3224"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-3224"></td>
 </tr>
-<tr class="detail show"><td colspan="7"><div class="card">
+<tr class="detail show hide"><td colspan="7"><div class="card">
   <div class="h-title">ตั้งชื่อเพลย์ลิสต์ยาวเกินไป ระบบต้องกันไว้</div>
   <div class="h-prio">Priority: <b>P2</b> · UI · playlist-crud · ขั้นที่ 2 · Epic 12</div>
   <div class="sec"><h4>⚠️ ข้อควรรู้ก่อนเทส</h4><div class="hint" style="font-size:12px">แยกออกมาจาก TC-Z1.7 เพราะให้ผลคนละแบบ · <b>ข้อสังเกต</b> จากการอ่านซอร์ส takra-rerun (branch develop ลงวันที่ 2026-07-23 — <b>อาจไม่ใช่บิลด์ล่าสุด</b>) ยังไม่พบการจำกัดความยาวชื่อ: หน้าจอไม่มี maxLength · service เช็คแค่ว่าเว้นวรรคล้วนหรือไม่ · ฐานข้อมูลเก็บเป็น TEXT → ให้ยึดผลที่เห็นจากแอปจริงเป็นหลัก ถ้าระบบยอมสร้างชื่อยาวเกิน ให้บันทึก FAIL แล้วเปิดบั๊ก</div></div>
@@ -2435,7 +2438,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-3224" data-st="pass">PASS</span>
-    <span class="opt fail" data-uid="tc-3224" data-st="fail">FAIL</span>
+    <span class="opt fail sel" data-uid="tc-3224" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-3224" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-3224" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-3224" data-st="skip">SKIP</span>
