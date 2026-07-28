@@ -1161,7 +1161,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="h-title">บัญชีที่มีแพ็กเกจใช้งานเข้าใช้ฟีเจอร์ได้ตามปกติ</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · plan-gating · MVP-1 Epic 1 · Story E1 · Hub entitlement</div>
   <div class="sec"><h4>Precondition</h4><ul><li>ล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจ active</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Rerun (Windows)</li><li>เข้าสู่ระบบด้วยบัญชีทดสอบที่มีแพ็กเกจใช้งานอยู่</li><li>เข้าเมนู "บัญชีไลฟ์" → "คลังวิดีโอ" → "ห้องคุมไลฟ์" ทีละเมนู</li><li>สังเกตว่ามีหน้าใดถูกกั้นด้วยหน้าแจ้งสิทธิ์/ให้อัปเกรดหรือไม่</li></ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Rerun (Windows)</li><li>เข้าสู่ระบบด้วยบัญชีทดสอบที่มีแพ็กเกจใช้งานอยู่</li><li>เข้าเมนู "บัญชีไลฟ์"</li><li>"คลังวิดีโอ"</li><li>"ห้องคุมไลฟ์" ทีละเมนู</li><li>สังเกตว่ามีหน้าใดถูกกั้นด้วยหน้าแจ้งสิทธิ์/ให้อัปเกรดหรือไม่</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ทุกฟีเจอร์หลักเข้าใช้งานได้ ไม่มีหน้าแจ้ง "ยังไม่มีสิทธิ์ใช้งาน" ขึ้นมาคั่น</li><li>ไม่มีอาการเนื้อหากระพริบแล้วถูกกั้น</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
@@ -7574,7 +7574,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="h-prio">Priority: <b>P2</b> · UI · cloud-files · ขั้นที่ 14 · Epic 15</div>
   <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>เตรียมไฟล์ .pdf และไฟล์ .mov ไว้</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Rerun (Windows)</li><li>ล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>ไปที่เมนู "คลังวิดีโอ"</li><li>จดตัวเลขในกล่อง <b>พื้นที่จัดเก็บ</b> และจำนวนไฟล์ในคลังไว้ก่อน</li><li>กด <b>อัปโหลดวิดีโอ</b> แล้วอ่านข้อความในกล่องว่าระบบบอกว่ารองรับไฟล์แบบไหน</li><li>เลือกไฟล์ report.pdf แล้วอ่านข้อความที่ขึ้น</li><li>เลือกไฟล์ clip.mov แล้วอ่านข้อความที่ขึ้น</li><li>เลือกไฟล์ที่ชื่อมีตัวพิมพ์ใหญ่และเว้นวรรค เช่น My Clip 01.MP4 แล้วดูว่าระบบทำอย่างไรกับชื่อไฟล์</li><li>ปิดกล่อง แล้วดูรายการไฟล์และกล่อง <b>พื้นที่จัดเก็บ</b> อีกครั้ง</li><li>ตรวจสอบผลลัพธ์</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ไฟล์: report.pdf · clip.mov</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>กล่องอัปโหลดบอกไว้ชัดว่า "ลากไฟล์ .mp4 มาวางที่นี่ หรือคลิกเพื่อเลือกไฟล์" และมีบรรทัดบอกขนาดสูงสุดต่อไฟล์</li><li>report.pdf ถูกปฏิเสธพร้อมข้อความ <b>รองรับเฉพาะไฟล์ .mp4 เท่านั้น</b></li><li>clip.mov <b>ถูกปฏิเสธเช่นกัน</b> ด้วยข้อความเดียวกัน — ระบบรองรับเฉพาะ .mp4 ไม่รวม .mov</li><li>My Clip 01.MP4 <b>ผ่าน</b> และระบบปรับชื่อให้เองเป็นตัวพิมพ์เล็กไม่มีเว้นวรรค (คาดว่าเป็น my_clip_01.mp4) โดยข้อความแจ้งผลบอกว่า "บันทึกเป็น &lt;ชื่อใหม่&gt;"</li><li>ไม่มีไฟล์ .pdf หรือ .mov หลุดเข้าไปในคลังวิดีโอ</li><li>ตัวเลข "ใช้ไป" ในกล่องพื้นที่จัดเก็บไม่ขยับจากไฟล์ที่ถูกปฏิเสธ</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>กล่องอัปโหลดบอกไว้ชัดว่า "ลากไฟล์ .mp4 มาวางที่นี่ หรือคลิกเพื่อเลือกไฟล์" และมีบรรทัดบอกขนาดสูงสุดต่อไฟล์</li><li>report.pdf ถูกปฏิเสธพร้อมข้อความ <b>รองรับเฉพาะไฟล์ .mp4 เท่านั้น</b></li><li>clip.mov <b>ถูกปฏิเสธเช่นกัน</b> ด้วยข้อความเดียวกัน — ระบบรองรับเฉพาะ .mp4 ไม่รวม .mov</li><li>My Clip 01.MP4 <b>ผ่าน</b> และระบบปรับชื่อให้เองเป็นตัวพิมพ์เล็กไม่มีเว้นวรรค (คาดว่าเป็น my_clip_01.mp4) โดยข้อความแจ้งผลบอกว่า "บันทึกเป็น <ชื่อใหม่>"</li><li>ไม่มีไฟล์ .pdf หรือ .mov หลุดเข้าไปในคลังวิดีโอ</li><li>ตัวเลข "ใช้ไป" ในกล่องพื้นที่จัดเก็บไม่ขยับจากไฟล์ที่ถูกปฏิเสธ</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -9389,15 +9389,15 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     </div>
 </div></td></tr>
 
-<tr class="trow hide" data-feat="epic17" data-level="e2e" data-prio="P1" onclick="tg(this)">
+<tr class="trow" data-feat="epic17" data-level="e2e" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-E2E.3</td>
   <td class="ctitle">ครบลูปแบบสะดุด: เน็ตหลุดกลางไลฟ์ → ต่อกลับเอง → ตรวจว่าของที่ตั้งไว้ยังถูก</td>
   <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-3222"><span class="stb hold">HOLD</span></td>
+  <td class="status" data-uid="tc-3222"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-3222"></td>
 </tr>
-<tr class="detail hide"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
     <div class="h-title">ครบลูปแบบสะดุด: เน็ตหลุดกลางไลฟ์ → ต่อกลับเอง → ตรวจว่าของที่ตั้งไว้ยังถูก</div>
     <div class="h-prio">Priority: <b>P1</b> · E2E · Variation — สะดุดที่ขั้นที่ 12 (สัญญาณหลุด) ระหว่างลูป TC-E2E.2 · เทียบเท่า TC-E2E.2 ของรายงาน MVP-2</div>
     <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">ขั้นที่ 12 (Epic 18 · FR-X) ต่อยอดจากลูป TC-E2E.2 — เช็คพอยต์อ้าง TC-X.1 · TC-X.2 · TC-PIN.2 · TC-Z4.1</div></div>
@@ -9415,7 +9415,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="sec"><h4>Status</h4><div class="statusrow">
       <span class="opt pass" data-uid="tc-3222" data-st="pass">PASS</span>
       <span class="opt fail" data-uid="tc-3222" data-st="fail">FAIL</span>
-      <span class="opt hold sel" data-uid="tc-3222" data-st="hold">HOLD</span>
+      <span class="opt hold" data-uid="tc-3222" data-st="hold">HOLD</span>
       <span class="opt block" data-uid="tc-3222" data-st="block">BLOCKED</span>
       <span class="opt skip" data-uid="tc-3222" data-st="skip">SKIP</span>
     </div></div>

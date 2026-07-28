@@ -43,6 +43,7 @@ NAV = {
     'auto-chat-reply':       _tab('AUTO'),
     'qa-keyword-reply':      _tab('ถามตอบ'),
     'proxy':                 _tab('พร็อกซี'),
+    'basket':                _tab('ตะกร้าสินค้า'),
     'cloud-files':           ['ไปที่เมนู "คลังวิดีโอ"'],
     'error-card':            ['ไปที่เมนู "บัญชีไลฟ์"'],
     'session-analytics':     ['ไปที่เมนู "สรุปไลฟ์ย้อนหลัง"'],
@@ -69,9 +70,17 @@ CHECK_LEAD = re.compile(r'^(ดู|อ่าน|ตรวจ|สังเกต|
 
 def _split_nav(step):
     st = step.strip()
-    if not NAV_START.match(st):
-        return [st]
-    return [x.strip() for x in NAV_SPLIT.split(st) if x.strip()]
+    parts = [p.strip() for p in st.split(' → ') if p.strip()] if ' → ' in st else [st]
+    out = []
+    for p in parts:
+        # ชิ้นที่เป็นชื่อแท็บล้วน (เศษจากการตัด →) เติมกริยาให้เป็น step เต็ม
+        if re.match(r'^แท็บ "[^"]+"$', p):
+            p = 'เปิด' + p
+        if NAV_START.match(p):
+            out.extend(x.strip() for x in NAV_SPLIT.split(p) if x.strip())
+        else:
+            out.append(p)
+    return out
 
 
 # แก้ชื่อเมนู/หน้าที่เคสเก่าอ้างแต่ไม่มีจริงใน UI (ตรวจกับ nav-config + AccountDetailPage แล้ว)
@@ -95,7 +104,7 @@ PURE_LOGIN = re.compile(
     r'^(เข้าสู่ระบบด้วยบัญชีทดสอบ|เข้าสู่ระบบบนแอปเดสก์ท็อป|เข้าแอปหลังล็อกอิน|เข้าสู่ระบบ)$')
 # prefix login นำหน้า step นำทาง → ตัดเหลือส่วนนำทาง
 LOGIN_PREFIX = re.compile(
-    r'^เข้าสู่ระบบ(ด้วยบัญชีทดสอบ|ด้วยบัญชี UAT)? แล้ว')
+    r'^เข้าสู่ระบบ(ด้วยบัญชีทดสอบ|ด้วยบัญชี UAT)?,? (แล้ว)?')
 # สัญญาณว่า step เป็นการนำทาง/มีบริบทหน้าแล้ว
 HAS_NAV = re.compile(r'เมนู|แท็บ|หน้า|เปิดบัญชี|คลิกเข้าไป|ไปที่|เปิดการตั้งค่า|ที่การ์ด')
 MULTI = re.compile(r'เครื่องที่ 2|อีกเครื่อง|ทั้งสองเครื่อง|ทั้ง 2 เครื่อง|เครื่อง A|เครื่อง B')
@@ -117,11 +126,13 @@ CID_FEAT = [
     ('TC-Z3', 'playlist-bind'), ('TC-Z8', 'playlist-crud'), ('TC-Z4', 'playlist-rotation'),
     ('TC-BB', 'overlay-brand'), ('TC-MC', 'pin-match-confirm'),
     ('TC-R1', 'proxy'), ('TC-R2', 'proxy'),
-    ('TC-FF', 'single-active-lock'), ('TC-AU', 'authority-availability'),
+    ('TC-AUTH', 'sign-in'), ('TC-FF', 'single-active-lock'), ('TC-AU', 'authority-availability'),
     ('TC-PIN', 'pin-auto-live'), ('TC-AA', 'playlist-rotation'), ('TC-X', 'playlist-rotation'),
     ('TC-Q4', 'auto-chat-reply'), ('TC-Q6', 'qa-keyword-reply'),
     ('TC-JJ', 'error-card'), ('TC-DD', 'version-update'),
     ('TC-SA', 'session-analytics'), ('TC-WS2', 'session-analytics'), ('TC-M4', 'cloud-files'),
+    ('TC-VD', 'cloud-files'), ('TC-OV', 'overlay-brand'), ('TC-PX', 'proxy'),
+    ('TC-BK', 'basket'), ('TC-AC', 'account-crud'),
     ('M1-A', 'sign-in'), ('M1-B', 'account-crud'), ('M1-C', 'cloud-files'),
     ('M1-D', 'create-room'), ('M1-G', 'desktop-local'),
     # M1-E/M1-F คร่อมสองหมวด (auto/telegram · audit/version) — ใช้ featrow เดิมซึ่งถูกอยู่แล้ว
@@ -148,8 +159,10 @@ def normalize_case(featkey, cid, steps, pres, os_label):
         return None, None, 'โครงพิเศษ — ข้าม'
     if any(MULTI.search(x) for x in steps):
         return None, None, 'หลายเครื่อง — ข้าม (รีวิวมือ)'
+    if steps and steps[0].strip().startswith('เปิดแอปบนเว็บเบราว์เซอร์'):
+        return None, None, 'เคสแพลตฟอร์มเว็บ — ข้าม'
 
-    s1 = f'เปิด TAKRA Rerun ({os_label})'
+    s1 = f'เปิด TAKRA Rerun ({os_label})' if os_label else 'เปิด TAKRA Rerun'
     body = list(steps)
     # ถอนชุดเปิดที่เวอร์ชันก่อนฉีดไว้ (รันซ้ำได้)
     while body and (body[0].strip() in OLD_INJECTED
@@ -157,9 +170,16 @@ def normalize_case(featkey, cid, steps, pres, os_label):
         body.pop(0)
     if featkey in SIGNIN_FEATS:
         opening = [s1]
+        # รอบก่อนอาจเขียน step เปิดพร้อมวงเล็บไว้แล้ว (เช่น "เปิด TAKRA Rerun (ยังไม่ได้เข้าสู่ระบบ)")
+        if body and body[0].strip().startswith(s1 + ' ('):
+            opening = [body.pop(0).strip()]
         # การล็อกอินคือตัวเทส — ตัดเฉพาะ step เปิดแอปที่ซ้ำ
-        if body and re.match(r'^เปิดแอป(เดสก์ท็อป)?( Takra Rerun)?(จากไอคอน)?$', body[0].strip()):
+        m0 = body and re.match(r'^เปิดแอป(?:เดสก์ท็อป)?(?: Takra Rerun)?(?: ?จากไอคอน)?\s*(\(.+\))?$',
+                               body[0].strip())
+        if m0:
             body.pop(0)
+            if m0.group(1):
+                opening[0] = s1 + ' ' + m0.group(1)
         body = [_fix(x) for x in body]
     else:
         opening = [s1, LOGIN_STEP]
