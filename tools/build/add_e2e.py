@@ -40,12 +40,35 @@ def case_html(c: dict, uid: int, epic_no: int, st: dict) -> str:
     u = f'tc-{uid}'
     pc = PRIO_CLS[c['prio']]
 
+    # phase = (หัวข้อ, [step...]) หรือ (หัวข้อ, [step...], "ข้อความเช็คพอยต์")
+    # step เป็น action ล้วน — assertion ไปอยู่ที่เช็คพอยต์ท้ายเฟส เพื่อให้บันทึกได้ว่าผ่านถึงไหน
     steps, n = [], 1
-    for head, items in c['phases']:
+    for phase in c['phases']:
+        head, items = phase[0], phase[1]
+        chk = phase[2] if len(phase) > 2 else None
         lis = ''.join(f'<li>{s}</li>' for s in items)
         start = f' start="{n}"' if n > 1 else ''
-        steps.append(f'    <div class="sec"><h4>Test Steps — {head}</h4><ol{start}>{lis}</ol></div>')
+        chk_html = (
+            f'<div class="hint" style="margin-top:4px;padding:6px 8px;'
+            f'border-left:3px solid #16a34a;background:rgba(22,163,74,.07)">'
+            f'✅ <b>เช็คพอยต์:</b> {chk}</div>' if chk else '')
+        steps.append(
+            f'    <div class="sec"><h4>Test Steps — {head}</h4><ol{start}>{lis}</ol>{chk_html}</div>')
         n += len(items)
+
+    # ฟิลด์เสริม (มีเฉพาะเคสที่ให้มา — เคสเก่ายังใช้ได้โดยไม่ต้องแก้)
+    runsheet = (
+        f'    <div class="sec"><h4>⏱ Run sheet</h4>'
+        f'<div class="hint" style="font-size:12px">{c["runsheet"]}</div></div>\n'
+        if c.get('runsheet') else '')
+    data = (
+        '    <div class="sec"><h4>Test Data</h4><ul>'
+        + ''.join(f'<li>{d}</li>' for d in c['data']) + '</ul></div>\n'
+        if c.get('data') else '')
+    failrule = (
+        '    <div class="sec"><h4>🧭 กติกาเมื่อพังกลางทาง</h4><ul>'
+        + ''.join(f'<li>{r}</li>' for r in c['failrule']) + '</ul></div>\n'
+        if c.get('failrule') else '')
 
     pre = ''.join(f'<li>{p}</li>' for p in c['pre'])
     exp = ''.join(f'<li>{e}</li>' for e in c['expected'])
@@ -72,9 +95,9 @@ def case_html(c: dict, uid: int, epic_no: int, st: dict) -> str:
     <div class="h-title">{c['title']}</div>
     <div class="h-prio">Priority: <b>{c['prio']}</b> · E2E · {c['scope']}</div>
     <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">{c['ref']}</div></div>
-    <div class="sec"><h4>Precondition</h4><ul>{pre}</ul></div>
-{chr(10).join(steps)}
-    <div class="grid">
+{runsheet}    <div class="sec"><h4>Precondition</h4><ul>{pre}</ul></div>
+{data}{chr(10).join(steps)}
+{failrule}    <div class="grid">
       <div class="sec"><h4>Expected Result</h4><ul>{exp}</ul></div>
       <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
     </div>

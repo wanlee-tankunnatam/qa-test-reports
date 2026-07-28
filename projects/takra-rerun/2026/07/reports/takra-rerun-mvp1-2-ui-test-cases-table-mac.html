@@ -7866,32 +7866,35 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="epicrow hide" data-epic="17"><td colspan="7">🔄 Full E2E Flow — วิ่งครบลูปตั้งแต่ต้นจนจบ (MVP-1 → MVP-2) <span class="rp">(4 เคส)</span></td></tr>
 <tr class="featrow hide" data-featkey="fullflow"><td colspan="7">📁 fullflow — เข้าระบบ → ผูกบัญชี → คลังวิดีโอ → รีแอร์ → เพลย์ลิสต์/โอเวอร์เลย์/ตารางปัก → ไลฟ์ → จบ · และ variation <span class="rp"><span class="lv lvl-e2e">🔄 4</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="sign-in"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
 
-<tr class="trow hide" data-feat="epic17" data-level="e2e" data-prio="P0" onclick="tg(this)">
+<tr class="trow" data-feat="epic17" data-level="e2e" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-E2E.1</td>
-  <td class="ctitle">ครบลูปตั้งแต่ศูนย์: เข้าระบบ → ผูกบัญชี TikTok → อัปโหลดคลิป → รีแอร์ → ห้องคุมไลฟ์ → จบไลฟ์</td>
+  <td class="ctitle">ครบลูป MVP-1 ตั้งแต่ศูนย์: เข้าระบบ → ผูกบัญชี TikTok → คลังวิดีโอ → รีแอร์ → AUTO/Telegram → จบไลฟ์ → Audit → ปิด-เปิดแอป</td>
   <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
   <td><span class="prio p0">P0</span></td>
-  <td class="status" data-uid="tc-3220"><span class="stb pass">PASS</span></td>
+  <td class="status" data-uid="tc-3220"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-3220"></td>
 </tr>
-<tr class="detail hide"><td colspan="7"><div class="card">
-    <div class="h-title">ครบลูปตั้งแต่ศูนย์: เข้าระบบ → ผูกบัญชี TikTok → อัปโหลดคลิป → รีแอร์ → ห้องคุมไลฟ์ → จบไลฟ์</div>
-    <div class="h-prio">Priority: <b>P0</b> · E2E · Full loop ฝั่ง MVP-1 (E1–E7) ต่อเนื่องจนจบ</div>
-    <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">ร้อยจาก MVP-1 · E1 เข้าระบบ → E2 บัญชี TikTok → E3 คลังวิดีโอ → E4 รีแอร์/ห้องคุมไลฟ์ → E6 Audit → E7 แอปเดสก์ท็อป</div></div>
-    <div class="sec"><h4>Precondition</h4><ul><li>ติดตั้งแอปเดสก์ท็อป Takra Rerun เวอร์ชันล่าสุด และยังไม่เคยเข้าสู่ระบบบนเครื่องนี้</li><li>มีบัญชีผู้ใช้ที่มีแพ็กเกจใช้งานได้ และมีบัญชี TikTok สำหรับทดสอบ</li><li>มีไฟล์วิดีโอทดสอบอย่างน้อย 1 คลิป</li></ul></div>
-    <div class="sec"><h4>Test Steps — Phase A: เข้าระบบและสิทธิ์ใช้งาน (E1)</h4><ol><li>เปิดแอปเดสก์ท็อป → เข้าสู่ระบบ → ต้องเข้าถึงหน้าหลักของ workspace ได้</li><li>ตรวจว่าเมนูและฟีเจอร์ที่เห็นตรงกับสิทธิ์ของแพ็กเกจที่ถืออยู่</li></ol></div>
-    <div class="sec"><h4>Test Steps — Phase B: ผูกบัญชี TikTok และการส่งออก (E2)</h4><ol start="3"><li>ไปเมนูบัญชี → เพิ่มบัญชี TikTok → ทำตามขั้นตอนเข้าสู่ระบบจนสำเร็จ</li><li>บัญชีต้องขึ้นในรายการพร้อมรูปและชื่อ</li><li>ตรวจการตั้งค่าการส่งออก (egress) ของบัญชีนั้นว่าตั้งได้และบันทึกได้</li></ol></div>
-    <div class="sec"><h4>Test Steps — Phase C: คลังวิดีโอ (E3)</h4><ol start="6"><li>ไปเมนูคลังวิดีโอ → อัปโหลดคลิปทดสอบจนขึ้นในคลัง</li><li>เปิดดูคลิป → เล่นได้ และข้อมูลไฟล์แสดงถูกต้อง</li></ol></div>
-    <div class="sec"><h4>Test Steps — Phase D: รีแอร์และห้องคุมไลฟ์ (E4)</h4><ol start="8"><li>สร้างรอบรีแอร์จากคลิปที่อัปโหลด แล้วผูกกับบัญชี TikTok</li><li>กดเริ่มไลฟ์ → เข้าห้องคุมไลฟ์ → สถานะต้องเป็นกำลังไลฟ์</li><li>ตรวจในห้องคุมไลฟ์ว่าเห็นภาพที่กำลังออกอากาศและตัวเลขสถานะครบ</li><li>เปิดดูจากฝั่งผู้ชม → ต้องเห็นคลิปกำลังเล่นจริง</li></ol></div>
-    <div class="sec"><h4>Test Steps — Phase E: โหมด AUTO และแจ้งเตือน (E5)</h4><ol start="12"><li>เปิดโหมด AUTO → ตรวจว่าระบบทำงานตามที่ตั้งไว้</li><li>ผูก Telegram สำหรับแจ้งเตือน → ทำให้เกิดเหตุการณ์ที่ต้องแจ้ง → ต้องได้รับข้อความ</li></ol></div>
-    <div class="sec"><h4>Test Steps — Phase F: จบไลฟ์และตรวจ Audit (E6)</h4><ol start="14"><li>กดหยุดไลฟ์ → สถานะกลับเป็นไม่ได้ไลฟ์</li><li>เปิดหน้าประวัติ/Audit → ต้องเห็นบันทึกครบตั้งแต่เข้าสู่ระบบ ผูกบัญชี อัปโหลด เริ่มไลฟ์ จนหยุดไลฟ์</li></ol></div>
-    <div class="sec"><h4>Test Steps — Phase G: ปิด-เปิดแอปใหม่ (E7)</h4><ol start="16"><li>ปิดแอปเดสก์ท็อปแล้วเปิดใหม่</li><li>ต้องยังเข้าสู่ระบบอยู่ และเห็นบัญชี คลังวิดีโอ และประวัติครบเหมือนเดิม</li></ol></div>
+<tr class="detail"><td colspan="7"><div class="card">
+    <div class="h-title">ครบลูป MVP-1 ตั้งแต่ศูนย์: เข้าระบบ → ผูกบัญชี TikTok → คลังวิดีโอ → รีแอร์ → AUTO/Telegram → จบไลฟ์ → Audit → ปิด-เปิดแอป</div>
+    <div class="h-prio">Priority: <b>P0</b> · E2E · Full loop ฝั่ง MVP-1 (E1–E7) ต่อเนื่องจนจบ — เป็นจุดตั้งต้นของ TC-E2E.2–.4</div>
+    <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">ร้อยจากหมวด MVP-1 E1–E7 ของรายงานนี้ — เช็คพอยต์แต่ละเฟสอ้างเคสรายขั้นชุด M1-A…M1-G กำกับไว้</div></div>
+    <div class="sec"><h4>⏱ Run sheet</h4><div class="hint" style="font-size:12px">~60–90 นาที · 1 เครื่อง · บัญชี TikTok 1 บัญชี · รันต่อเนื่องห้ามปิดแอปกลางทาง (มีปิด-เปิดเฉพาะ Phase G ตามบท) · จบแล้วเก็บ workspace ไว้ — TC-E2E.2 ใช้ต่อ</div></div>
+    <div class="sec"><h4>Precondition</h4><ul><li>ติดตั้งแอปเดสก์ท็อป Takra Rerun เวอร์ชันล่าสุด และเครื่องนี้ยังไม่เคยเข้าสู่ระบบ</li><li>เคสรายขั้นชุด M1-A…M1-G ผ่านแล้ว — ลูปนี้มีไว้จับปัญหาข้ามขั้น ไม่ใช่ไล่เทสรายปุ่มซ้ำ</li></ul></div>
+    <div class="sec"><h4>Test Data</h4><ul><li>บัญชีผู้ใช้ UAT ที่มีแพ็กเกจใช้งานได้ + บัญชี TikTok สำหรับทดสอบ 1 บัญชี</li><li>คลิปทดสอบ: demo-main-60s.mp4 (ยังไม่เคยอัปโหลด)</li><li>บอท Telegram (โทเคน) + แชทปลายทางสำหรับรับแจ้งเตือน</li></ul></div>
+    <div class="sec"><h4>Test Steps — Phase A: เข้าระบบและสิทธิ์ใช้งาน (E1)</h4><ol><li>เปิดแอป กด <b>เข้าสู่ระบบด้วย Takra SSO</b> แล้วล็อกอินด้วยบัญชี UAT</li><li>จดชื่อ workspace และแพ็กเกจที่แสดง</li></ol><div class="hint" style="margin-top:4px;padding:6px 8px;border-left:3px solid #16a34a;background:rgba(22,163,74,.07)">✅ <b>เช็คพอยต์:</b> เข้าถึงหน้า <b>บัญชีไลฟ์</b> ได้ · แถบซ้ายมีเมนูครบ (บัญชีไลฟ์ · คลังวิดีโอ · สรุปไลฟ์ย้อนหลัง) · ฟีเจอร์ที่เห็นตรงกับสิทธิ์แพ็กเกจ (ชุด M1-A)</div></div>
+    <div class="sec"><h4>Test Steps — Phase B: ผูกบัญชี TikTok (E2)</h4><ol start="3"><li>กด <b>เพิ่มบัญชีไลฟ์</b> — ระบบเปิดตัวช่วยตั้งค่าบัญชีทีละขั้น</li><li>กด <b>เข้าสู่ระบบด้วย TikTok</b> ทำตามหน้าต่างล็อกอินจนระบบแจ้งว่าเชื่อมต่อบัญชีแล้ว</li><li>เดินตัวช่วยที่เหลือ (เลือกวิดีโอ · โอเวอร์เลย์ · ตะกร้าสินค้า · พร็อกซี) โดยตั้งเฉพาะที่จำเป็น จนขึ้น เพิ่มบัญชีสำเร็จ ✓</li><li>เปิดการตั้งค่าการส่งออก (egress) ของบัญชี แล้วบันทึกค่า</li></ol><div class="hint" style="margin-top:4px;padding:6px 8px;border-left:3px solid #16a34a;background:rgba(22,163,74,.07)">✅ <b>เช็คพอยต์:</b> บัญชีขึ้นเป็นการ์ดพร้อมรูปและชื่อจริง · ค่า egress ที่บันทึกยังอยู่เมื่อเปิดกลับมาดู (ชุด M1-B)</div></div>
+    <div class="sec"><h4>Test Steps — Phase C: คลังวิดีโอ (E3)</h4><ol start="7"><li>เปิดเมนู <b>คลังวิดีโอ</b> กด <b>อัปโหลดวิดีโอ</b> เลือกไฟล์ demo-main-60s.mp4 รอจนเสร็จ</li><li>กดเปิดดูตัวอย่างคลิปที่เพิ่งอัปโหลด</li></ol><div class="hint" style="margin-top:4px;padding:6px 8px;border-left:3px solid #16a34a;background:rgba(22,163,74,.07)">✅ <b>เช็คพอยต์:</b> การ์ดไฟล์ขึ้นในคลัง ขนาด/วันที่ถูกต้อง · ดูตัวอย่างเล่นได้จริง (ชุด M1-C)</div></div>
+    <div class="sec"><h4>Test Steps — Phase D: รีแอร์ + ห้องคุมไลฟ์ (E4)</h4><ol start="9"><li>เปิดบัญชีที่ผูกไว้ ที่แท็บ <b>วิดีโอ</b> เลือกคลิป demo-main-60s.mp4</li><li>กด <b>เริ่มไลฟ์</b> แล้วยืนยัน รอจนการ์ดขึ้น <b>ออกอากาศอยู่</b></li><li>เปิดหน้าเซสชันของไลฟ์นี้ ดูภาพและตัวเลขสถานะ</li><li>เปิดห้องไลฟ์ TikTok จากมือถือหรือเบราว์เซอร์อีกจอ</li></ol><div class="hint" style="margin-top:4px;padding:6px 8px;border-left:3px solid #16a34a;background:rgba(22,163,74,.07)">✅ <b>เช็คพอยต์:</b> ภาพออกจริงทั้งฝั่งแอปและฝั่งผู้ชม · ตัวเลขสถานะขยับ · ปุ่ม <b>หยุดไลฟ์</b> ปรากฏ (ชุด M1-D)</div></div>
+    <div class="sec"><h4>Test Steps — Phase E: โหมด AUTO + Telegram (E5)</h4><ol start="13"><li>ที่แท็บ <b>AUTO</b> ของบัญชี เปิดใช้โหมด AUTO</li><li>เปิด <b>ตั้งค่า Telegram</b> วางโทเคนบอท กด ตรวจสอบโทเคน แล้วเลือกแชทปลายทางจนระบบแจ้งว่าการแจ้งเตือนไลฟ์พร้อมใช้งานแล้ว</li><li>ทำให้เกิดเหตุการณ์ที่ต้องแจ้งเตือน (เช่น หยุดแล้วเริ่มไลฟ์ใหม่ หรือรอรอบแจ้งเตือนตามที่ทีมกำหนด)</li></ol><div class="hint" style="margin-top:4px;padding:6px 8px;border-left:3px solid #16a34a;background:rgba(22,163,74,.07)">✅ <b>เช็คพอยต์:</b> สถานะขึ้น <b>AUTO เปิดอยู่ · กำลังไลฟ์</b> · ข้อความแจ้งเตือนเข้าแชท Telegram จริง (ชุด M1-E)</div></div>
+    <div class="sec"><h4>Test Steps — Phase F: จบไลฟ์ + ตรวจ Audit (E6)</h4><ol start="16"><li>กด <b>หยุดไลฟ์</b> ที่หน้าเซสชัน</li><li>เปิดหน้า <b>บันทึกการทำงาน</b> แล้วไล่ดูรายการเหตุการณ์จากบนลงล่าง</li></ol><div class="hint" style="margin-top:4px;padding:6px 8px;border-left:3px solid #16a34a;background:rgba(22,163,74,.07)">✅ <b>เช็คพอยต์:</b> สถานะกลับเป็นไม่ได้ไลฟ์ · บันทึกการทำงานมีเหตุการณ์ครบและเรียงตามที่ทำจริง (ผูกบัญชี → อัปโหลด → เริ่มไลฟ์ → หยุดไลฟ์) พร้อมคอลัมน์ผู้ดำเนินการถูกต้อง (ชุด M1-F)</div></div>
+    <div class="sec"><h4>Test Steps — Phase G: ปิด-เปิดแอปใหม่ (E7)</h4><ol start="18"><li>ปิดแอปเดสก์ท็อปจนสุด (ไม่ใช่ย่อ) แล้วเปิดใหม่</li><li>ไล่ตรวจ: สถานะล็อกอิน · การ์ดบัญชี · คลังวิดีโอ · บันทึกการทำงาน</li></ol><div class="hint" style="margin-top:4px;padding:6px 8px;border-left:3px solid #16a34a;background:rgba(22,163,74,.07)">✅ <b>เช็คพอยต์:</b> ยังเข้าสู่ระบบอยู่ · บัญชี คลิป และบันทึกครบเหมือนก่อนปิด ไม่มีการตั้งค่าใดหาย (ชุด M1-G)</div></div>
+    <div class="sec"><h4>🧭 กติกาเมื่อพังกลางทาง</h4><ul><li>เฟสไหนไม่ผ่านเช็คพอยต์ ให้บันทึกใน Actual ว่า <b>FAIL@เฟสนั้น</b> พร้อมชุดเคสรายขั้นที่เกี่ยว (เช่น FAIL@D · M1-D) แล้วเปิดบั๊กที่เคสรายขั้น</li><li>ถ้าเฟสถัดไปยังเดินต่อได้ ให้เดินให้จบลูปแล้วบันทึกทุกจุดที่พัง — อย่าหยุดกลางทางถ้าไม่จำเป็น</li><li>ถ้าถูกบล็อกจนไปต่อไม่ได้ ให้จบเคสเป็น FAIL และระบุเฟสที่ค้างไว้ใน Actual</li></ul></div>
     <div class="grid">
-      <div class="sec"><h4>Expected Result</h4><ul><li>ผู้ใช้ใหม่เดินจากติดตั้งแอปจนไลฟ์จบได้ในรอบเดียว โดยไม่ติดขั้นตอนไหน</li><li>ทุกอย่างที่ทำถูกบันทึกใน Audit ตามลำดับจริง</li><li>ปิด-เปิดแอปแล้วสถานะและข้อมูลยังอยู่ครบ</li></ul></div>
+      <div class="sec"><h4>Expected Result</h4><ul><li>ผู้ใช้ใหม่เดินจากติดตั้งแอปจนจบไลฟ์ได้ในรอบเดียว โดยไม่มีขั้นไหนต้องใช้วิธีลัดหรือให้ทีมช่วยแก้กลางทาง</li><li>ของที่สร้างในเฟสก่อนถูกใช้ต่อในเฟสหลังโดยไม่ต้องตั้งซ้ำ — บัญชีจาก B ใช้ไลฟ์ใน D · คลิปจาก C ใช้ใน D</li><li>บันทึกการทำงานสะท้อนทุกเหตุการณ์เรียงตามเวลาจริง</li><li>ปิด-เปิดแอปแล้วสถานะและข้อมูลอยู่ครบทุกส่วน</li></ul></div>
       <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
     </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
-      <span class="opt pass sel" data-uid="tc-3220" data-st="pass">PASS</span>
+      <span class="opt pass" data-uid="tc-3220" data-st="pass">PASS</span>
       <span class="opt fail" data-uid="tc-3220" data-st="fail">FAIL</span>
       <span class="opt hold" data-uid="tc-3220" data-st="hold">HOLD</span>
       <span class="opt block" data-uid="tc-3220" data-st="block">BLOCKED</span>
@@ -7903,26 +7906,32 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     </div>
 </div></td></tr>
 
-<tr class="trow hide" data-feat="epic17" data-level="e2e" data-prio="P0" onclick="tg(this)">
+<tr class="trow" data-feat="epic17" data-level="e2e" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-E2E.2</td>
-  <td class="ctitle">ครบลูป MVP-2 ต่อจาก MVP-1: เพลย์ลิสต์ → โอเวอร์เลย์ → ตารางปัก → ไลฟ์ → ปักอัตโนมัติ → หมุนคลิป</td>
+  <td class="ctitle">ครบลูป MVP-2 ต่อจาก MVP-1: เพลย์ลิสต์ → โอเวอร์เลย์ → ตารางปัก → ผูกกับไลฟ์ → ปักอัตโนมัติ → หมุนคลิป</td>
   <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
   <td><span class="prio p0">P0</span></td>
   <td class="status" data-uid="tc-3221"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-3221"></td>
 </tr>
-<tr class="detail hide"><td colspan="7"><div class="card">
-    <div class="h-title">ครบลูป MVP-2 ต่อจาก MVP-1: เพลย์ลิสต์ → โอเวอร์เลย์ → ตารางปัก → ไลฟ์ → ปักอัตโนมัติ → หมุนคลิป</div>
-    <div class="h-prio">Priority: <b>P0</b> · E2E · Full loop ฝั่ง MVP-2 (ขั้นที่ 1–10) บน workspace เดียวกับ TC-E2E.1</div>
-    <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">ขั้นที่ 1–10 ของ MVP-2 · TC-M4.3 · TC-Z1.1 · TC-Z2.1 · TC-BB1.1 · TC-BB2.1 · TC-O5b.2 · TC-Z3.1 · TC-PIN.1 · TC-Z4.1</div></div>
-    <div class="sec"><h4>Precondition</h4><ul><li>ทำ TC-E2E.1 ผ่านแล้ว (มีบัญชี TikTok และคลิปอยู่ในระบบ)</li><li>มีคลิปในคลังอย่างน้อย 2 คลิป และสินค้าในร้านอย่างน้อย 2 รายการ</li></ul></div>
-    <div class="sec"><h4>Test Steps — Phase A: เตรียมคลิปและเพลย์ลิสต์ (ขั้นที่ 1–2)</h4><ol><li>อัปโหลดคลิปเพิ่มพร้อมแจ้งที่มา → คลิปขึ้นในคลัง (TC-M4.3)</li><li>สร้างเพลย์ลิสต์ใหม่พร้อมหมวดสินค้า แล้วใส่คลิปทั้ง 2 เข้าไป (TC-Z1.1 · TC-Z2.1)</li></ol></div>
-    <div class="sec"><h4>Test Steps — Phase B: โอเวอร์เลย์และตารางปัก (ขั้นที่ 3–4)</h4><ol start="3"><li>ตั้งโอเวอร์เลย์แบรนด์ของบัญชี แล้วบันทึก (TC-BB1.1)</li><li>ตั้งโอเวอร์เลย์เฉพาะคลิปให้คลิปแรก แล้วบันทึก (TC-BB2.1)</li><li>ตั้งตารางปักตะกร้า: 0:00 สินค้าชิ้นที่ 1 · ช่วงถัดไปสินค้าชิ้นที่ 2 แล้วบันทึก (TC-O5b.2)</li></ol></div>
-    <div class="sec"><h4>Test Steps — Phase C: ผูกเพลย์ลิสต์แล้วเริ่มไลฟ์ (ขั้นที่ 5 · 8)</h4><ol start="6"><li>ไปแท็บไลฟ์ของบัญชี → เลือกเพลย์ลิสต์ที่สร้างไว้ (TC-Z3.1)</li><li>กดเริ่มไลฟ์ → สถานะเป็นกำลังไลฟ์ และไม่มีข้อความปฏิเสธ</li></ol></div>
-    <div class="sec"><h4>Test Steps — Phase D: ระหว่างไลฟ์ (ขั้นที่ 9–10)</h4><ol start="8"><li>ที่ 0:00 สินค้าชิ้นที่ 1 ต้องถูกปักทันที (TC-PIN.1)</li><li>ถึงช่วงถัดไป สินค้าต้องสลับเองตามตาราง (TC-PIN.2)</li><li>คลิปจบแล้วต้องเล่นคลิปถัดไปตามลำดับ พร้อมสลับโอเวอร์เลย์ตามคลิป (TC-Z4.1)</li></ol></div>
-    <div class="sec"><h4>Test Steps — Phase E: จบไลฟ์</h4><ol start="11"><li>กดหยุดไลฟ์ → หยุดสะอาด และประวัติบันทึกรอบนี้ครบ</li></ol></div>
+<tr class="detail"><td colspan="7"><div class="card">
+    <div class="h-title">ครบลูป MVP-2 ต่อจาก MVP-1: เพลย์ลิสต์ → โอเวอร์เลย์ → ตารางปัก → ผูกกับไลฟ์ → ปักอัตโนมัติ → หมุนคลิป</div>
+    <div class="h-prio">Priority: <b>P0</b> · E2E · Full loop ฝั่ง MVP-2 (ขั้นที่ 2–5 · 8–10 · 13) บน workspace เดียวกับ TC-E2E.1</div>
+    <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">ร้อยจากขั้นที่ 2–5 · 8–10 · 13 ของรายงานนี้ — เช็คพอยต์อ้าง TC-Z1.1 · TC-Z2.1 · TC-BB1.1 · TC-BB2.1 · TC-O5b.2 · TC-Z3.1 · TC-FF4.1 · TC-PIN.1 · TC-PIN.2 · TC-Z4.1 · TC-Z4.5 · TC-Z4.7 · TC-Q4.1</div></div>
+    <div class="sec"><h4>⏱ Run sheet</h4><div class="hint" style="font-size:12px">~60 นาที · เครื่องและบัญชีเดิมจาก TC-E2E.1 · รันต่อเนื่อง · จบแล้ว<b>คงไลฟ์ไว้</b>ถ้าจะรัน TC-E2E.3/.4 ต่อ</div></div>
+    <div class="sec"><h4>Precondition</h4><ul><li>ทำ TC-E2E.1 ผ่านแล้ว — มีบัญชี TikTok และคลิป demo-main อยู่ในระบบ</li><li>เคสรายขั้นของขั้นที่ 2–5 และ 8–10 ผ่านแล้ว</li></ul></div>
+    <div class="sec"><h4>Test Data</h4><ul><li>คลิปเพิ่มอีก 1 ไฟล์: demo-second-45s.mp4 (รวมของเดิมเป็น 2 คลิป)</li><li>สินค้าในร้าน TikTok อย่างน้อย 2 รายการ: สินค้า A1 · สินค้า B1</li></ul></div>
+    <div class="sec"><h4>Test Steps — Phase A: เพิ่มคลิป + สร้างเพลย์ลิสต์ (ขั้นที่ 2)</h4><ol><li>อัปโหลด demo-second-45s.mp4 เข้าคลังวิดีโอ</li><li>สลับไปแท็บ <b>เพลย์ลิสต์</b> สร้างเพลย์ลิสต์ใหม่ ตั้งชื่อหมวด เลือกหมวดหมู่ไลฟ์ TikTok</li><li>กด <b>จัดการคลิป</b> ใส่คลิปทั้ง 2 แล้วจัดลำดับ demo-main ก่อน — ปิดแล้วเปิดหน้าต่างซ้ำเพื่อดูลำดับ</li></ol><div class="hint" style="margin-top:4px;padding:6px 8px;border-left:3px solid #16a34a;background:rgba(22,163,74,.07)">✅ <b>เช็คพอยต์:</b> เพลย์ลิสต์มี 2 คลิปตามลำดับที่จัด และลำดับคงอยู่หลังปิด/เปิด (TC-Z1.1 · TC-Z2.1 · TC-Z2.2)</div></div>
+    <div class="sec"><h4>Test Steps — Phase B: โอเวอร์เลย์ 2 ชั้น (ขั้นที่ 3)</h4><ol start="4"><li>ตั้ง <b>โอเวอร์เลย์แบรนด์</b> ของบัญชี: <b>+ นาฬิกา</b> แล้วบันทึก</li><li>ตั้ง <b>โอเวอร์เลย์เฉพาะคลิป</b> demo-main: <b>+ ข้อความ</b> โปรโมชัน แล้วบันทึก</li></ol><div class="hint" style="margin-top:4px;padding:6px 8px;border-left:3px solid #16a34a;background:rgba(22,163,74,.07)">✅ <b>เช็คพอยต์:</b> บันทึกได้ทั้งสองชั้น เปิดกลับมาค่าครบ (TC-BB1.1 · TC-BB2.1 · TC-BB2.2)</div></div>
+    <div class="sec"><h4>Test Steps — Phase C: ตารางปักตะกร้า (ขั้นที่ 4)</h4><ol start="6"><li>แท็บ <b>ตะกร้าสินค้า</b> กด <b>ดึงชุดสินค้าจาก TikTok</b> จนขึ้น ดึงชุดสินค้าสำเร็จ ✓</li><li>ตารางปัก demo-main: 0:00 = สินค้า A1 · 0:30 = สินค้า B1 → บันทึก</li><li>ตารางปัก demo-second: 0:00 = สินค้า B1 → บันทึก</li></ol><div class="hint" style="margin-top:4px;padding:6px 8px;border-left:3px solid #16a34a;background:rgba(22,163,74,.07)">✅ <b>เช็คพอยต์:</b> ตารางปักทั้ง 2 คลิปบันทึกสำเร็จ (TC-O5b.1 · TC-O5b.2)</div></div>
+    <div class="sec"><h4>Test Steps — Phase D: ผูกเพลย์ลิสต์เข้ากับไลฟ์ (ขั้นที่ 5)</h4><ol start="9"><li>ที่แท็บ <b>ไลฟ์</b> ของบัญชี เลือก <b>เพลย์ลิสต์ที่ออกอากาศ</b> เป็นเพลย์ลิสต์ที่สร้าง แล้ว <b>บันทึก</b></li></ol><div class="hint" style="margin-top:4px;padding:6px 8px;border-left:3px solid #16a34a;background:rgba(22,163,74,.07)">✅ <b>เช็คพอยต์:</b> การ์ดบัญชีขึ้นป้าย <b>ใช้เพลย์ลิสต์แล้ว</b> และค่ายังอยู่หลังเปิดกลับมา (TC-Z3.1 · TC-Z3.2)</div></div>
+    <div class="sec"><h4>Test Steps — Phase E: เริ่มไลฟ์ (ขั้นที่ 8)</h4><ol start="10"><li>กด <b>เริ่มไลฟ์</b> แล้วยืนยัน รอจนขึ้น <b>ออกอากาศอยู่</b></li><li>เปิดห้องไลฟ์ TikTok ฝั่งผู้ชม</li></ol><div class="hint" style="margin-top:4px;padding:6px 8px;border-left:3px solid #16a34a;background:rgba(22,163,74,.07)">✅ <b>เช็คพอยต์:</b> ภาพออกพร้อมนาฬิกา (แบรนด์) และข้อความโปรโมชัน (เฉพาะคลิป) ซ้อนถูกตำแหน่ง · ไม่มีข้อความปฏิเสธเรื่องเพดาน/ล็อก (TC-FF4.1 · TC-BB2.3)</div></div>
+    <div class="sec"><h4>Test Steps — Phase F: ปักอัตโนมัติ + หมุนคลิป (ขั้นที่ 9–10)</h4><ol start="12"><li>ดูตะกร้าที่ 0:00 แล้วดูซ้ำที่ 0:30 ของคลิปแรก</li><li>รอจน demo-main จบ แล้วดูคลิปถัดไป โอเวอร์เลย์ และตะกร้า</li><li>ปล่อยให้วนครบรอบกลับมาคลิปแรก</li></ol><div class="hint" style="margin-top:4px;padding:6px 8px;border-left:3px solid #16a34a;background:rgba(22,163,74,.07)">✅ <b>เช็คพอยต์:</b> 0:00 ปัก A1 · 0:30 สลับ B1 เอง · เปลี่ยนคลิปแล้วข้อความเฉพาะคลิปหาย (เหลือนาฬิกาแบรนด์) และตะกร้าเปลี่ยนเป็นของ demo-second ไม่มีของเดิมค้าง · วนกลับไม่หยุดค้าง (TC-PIN.1 · TC-PIN.2 · TC-Z4.1 · TC-Z4.5 · TC-Z4.7)</div></div>
+    <div class="sec"><h4>Test Steps — Phase G: ตอบแชทอัตโนมัติ (ขั้นที่ 13)</h4><ol start="15"><li>เปิดส่วนตอบแชทอัตโนมัติ ดูค่าเริ่มต้น แล้วเปิดโหมดร่างคำตอบ</li><li>ให้ผู้ช่วยพิมพ์คำถามเรื่องสินค้าในแชทห้องไลฟ์</li></ol><div class="hint" style="margin-top:4px;padding:6px 8px;border-left:3px solid #16a34a;background:rgba(22,163,74,.07)">✅ <b>เช็คพอยต์:</b> ค่าเริ่มต้นปิดอยู่ · เปิดโหมดร่างแล้วมีร่างคำตอบจากคำถามจริง (TC-Q4.1 · TC-Q4.2)</div></div>
+    <div class="sec"><h4>Test Steps — Phase H: จบไลฟ์</h4><ol start="17"><li>ถ้าจะรัน TC-E2E.3/.4 ต่อ ให้คงไลฟ์ไว้แล้วข้ามเฟสนี้ไปก่อน</li><li>กด <b>หยุดไลฟ์</b> แล้วเปิดเมนู <b>สรุปไลฟ์ย้อนหลัง</b> ดูรอบที่เพิ่งจบ</li></ol><div class="hint" style="margin-top:4px;padding:6px 8px;border-left:3px solid #16a34a;background:rgba(22,163,74,.07)">✅ <b>เช็คพอยต์:</b> จบสะอาด ไม่มีหน้าต่างค้าง · รอบไลฟ์ขึ้นในสรุปย้อนหลัง (ชุด TC-SA)</div></div>
+    <div class="sec"><h4>🧭 กติกาเมื่อพังกลางทาง</h4><ul><li>เฟสไหนไม่ผ่านเช็คพอยต์ บันทึก <b>FAIL@เฟส</b> + TC รายขั้นที่เกี่ยว แล้วเดินต่อถ้าไม่ถูกบล็อก</li><li>ถ้าถูกบล็อกจนไปต่อไม่ได้ จบเคสเป็น FAIL และระบุเฟสที่ค้าง</li></ul></div>
     <div class="grid">
-      <div class="sec"><h4>Expected Result</h4><ul><li>ฟีเจอร์ MVP-2 ทำงานต่อยอดบนของเดิมจาก MVP-1 ได้โดยไม่ต้องตั้งค่าซ้ำ</li><li>ตารางปักและการหมุนคลิปทำงานอัตโนมัติตามเวลาที่ตั้งไว้</li><li>โอเวอร์เลย์แบรนด์กับเฉพาะคลิปซ้อนกันถูกต้องตลอดไลฟ์</li></ul></div>
+      <div class="sec"><h4>Expected Result</h4><ul><li>ฟีเจอร์ MVP-2 ต่อยอดบนของเดิมจาก MVP-1 ได้โดยไม่ต้องตั้งค่าอะไรซ้ำ</li><li>งานอัตโนมัติทั้งหมด (ปักตะกร้า · หมุนคลิป · สลับโอเวอร์เลย์) ตรงตารางเวลาโดยไม่มีการกดช่วย</li><li>ตอนเปลี่ยนคลิป ไม่มีโอเวอร์เลย์หรือสินค้าปักของคลิปก่อนหน้าค้างอยู่</li><li>จบไลฟ์แล้วรอบไปโผล่ในสรุปไลฟ์ย้อนหลังพร้อมตัวเลขครบ</li></ul></div>
       <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
     </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -7938,7 +7947,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     </div>
 </div></td></tr>
 
-<tr class="trow hide" data-feat="epic17" data-level="e2e" data-prio="P1" onclick="tg(this)">
+<tr class="trow" data-feat="epic17" data-level="e2e" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-E2E.3</td>
   <td class="ctitle">ครบลูปแบบสะดุด: เน็ตหลุดกลางไลฟ์ → ต่อกลับเอง → ตรวจว่าของที่ตั้งไว้ยังถูก</td>
   <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
@@ -7946,14 +7955,17 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-3222"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-3222"></td>
 </tr>
-<tr class="detail hide"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
     <div class="h-title">ครบลูปแบบสะดุด: เน็ตหลุดกลางไลฟ์ → ต่อกลับเอง → ตรวจว่าของที่ตั้งไว้ยังถูก</div>
-    <div class="h-prio">Priority: <b>P1</b> · E2E · Variation — สะดุดที่ขั้นที่ 12 (สัญญาณหลุด) ระหว่างลูป TC-E2E.2</div>
-    <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">ขั้นที่ 12 (Epic 18 · FR-X) · TC-X.1 · TC-X.2 ต่อจาก TC-E2E.2</div></div>
-    <div class="sec"><h4>Precondition</h4><ul><li>กำลังอยู่ระหว่างไลฟ์จาก TC-E2E.2 (มีตารางปักและเพลย์ลิสต์หลายคลิป)</li><li>ควบคุมเน็ตของเครื่องที่ไลฟ์ได้</li></ul></div>
-    <div class="sec"><h4>Test Steps — Phase A: ตัดเน็ต</h4><ol><li>ตัดเน็ตประมาณ 20–30 วินาทีระหว่างไลฟ์</li><li>หน้าจอต้องบอกสถานะว่ากำลังต่อใหม่ (TC-X.2)</li></ol></div>
-    <div class="sec"><h4>Test Steps — Phase B: ต่อกลับ</h4><ol start="3"><li>ต่อเน็ตกลับ → ระบบต้องต่อกลับห้องเดิมเองโดยไม่ต้องกดเริ่มใหม่ (TC-X.1)</li></ol></div>
-    <div class="sec"><h4>Test Steps — Phase C: ตรวจความถูกต้องหลังต่อกลับ</h4><ol start="4"><li>ตะกร้าไลฟ์ต้องปักสินค้าตรงกับช่วงเวลาปัจจุบัน ไม่ย้อนกลับไปชิ้นแรก</li><li>โอเวอร์เลย์ยังอยู่ครบและตำแหน่งไม่เพี้ยน</li><li>ลำดับการหมุนคลิปเดินต่อจากเดิม ไม่เริ่มนับใหม่</li><li>ประวัติ/Audit ต้องบันทึกเหตุการณ์หลุดและต่อกลับไว้</li></ol></div>
+    <div class="h-prio">Priority: <b>P1</b> · E2E · Variation — สะดุดที่ขั้นที่ 12 (สัญญาณหลุด) ระหว่างลูป TC-E2E.2 · เทียบเท่า TC-E2E.2 ของรายงาน MVP-2</div>
+    <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">ขั้นที่ 12 (Epic 18 · FR-X) ต่อยอดจากลูป TC-E2E.2 — เช็คพอยต์อ้าง TC-X.1 · TC-X.2 · TC-PIN.2 · TC-Z4.1</div></div>
+    <div class="sec"><h4>⏱ Run sheet</h4><div class="hint" style="font-size:12px">~20 นาที · ใช้ไลฟ์ที่เปิดค้างจาก TC-E2E.2 Phase F · ต้องคุมเน็ตของเครื่องได้</div></div>
+    <div class="sec"><h4>Precondition</h4><ul><li>ไลฟ์จาก TC-E2E.2 ยังออกอากาศอยู่ พร้อมตารางปักและเพลย์ลิสต์หลายคลิป</li><li>ควบคุมเน็ตของเครื่องที่ไลฟ์ได้</li></ul></div>
+    <div class="sec"><h4>Test Data</h4><ul><li>ช่วงตัดเน็ต: ~20 วินาที · ทำตอนที่ตารางปักมีช่วงเวลาถัดไปรออยู่</li></ul></div>
+    <div class="sec"><h4>Test Steps — Phase A: จดสภาพก่อนตัด</h4><ol><li>จดลิงก์ห้องไลฟ์ ตัวเลขคนดู คลิปที่เล่นอยู่ และสินค้าที่ปักอยู่</li></ol><div class="hint" style="margin-top:4px;padding:6px 8px;border-left:3px solid #16a34a;background:rgba(22,163,74,.07)">✅ <b>เช็คพอยต์:</b> มีข้อมูลตั้งต้นครบพอจะเทียบหลังต่อกลับ</div></div>
+    <div class="sec"><h4>Test Steps — Phase B: ตัดเน็ตแล้วดูอาการ (ขั้นที่ 12)</h4><ol start="2"><li>ปิด Wi-Fi ประมาณ 20 วินาที แล้วดูสถานะที่หน้าเซสชัน</li><li>เปิด Wi-Fi กลับมา เฝ้าดูโดยไม่กดอะไร</li></ol><div class="hint" style="margin-top:4px;padding:6px 8px;border-left:3px solid #16a34a;background:rgba(22,163,74,.07)">✅ <b>เช็คพอยต์:</b> ระหว่างหลุดแอปบอกสถานะชัด (การเชื่อมต่อขาดหาย กำลังเชื่อมต่อใหม่ พร้อมนับครั้ง) · ต่อกลับเข้า<b>ห้องเดิม</b>เอง (TC-X.1 · TC-X.2)</div></div>
+    <div class="sec"><h4>Test Steps — Phase C: ตรวจว่าของที่ตั้งไว้ไม่เพี้ยน</h4><ol start="4"><li>เทียบลิงก์ห้อง ตะกร้า และคลิปที่เล่น กับที่จดไว้</li><li>รอให้หมุนคลิปอีก 1 ครั้งแล้วดูโอเวอร์เลย์กับตะกร้า</li></ol><div class="hint" style="margin-top:4px;padding:6px 8px;border-left:3px solid #16a34a;background:rgba(22,163,74,.07)">✅ <b>เช็คพอยต์:</b> ห้องเดิมไม่มีห้องซ้อน · ตารางปักเดินตามเวลาจริงไม่รีเซ็ต · ลำดับคลิป/โอเวอร์เลย์ถูกต้อง (TC-PIN.2 · TC-Z4.1)</div></div>
+    <div class="sec"><h4>🧭 กติกาเมื่อพังกลางทาง</h4><ul><li>ต่อกลับเองไม่ได้ภายใน ~2 นาที: บันทึกเวลาและสถานะก่อน แล้วค่อยลองกู้ด้วยมือ — แยกบันทึกสองผลให้ชัด</li><li>เกิดห้องซ้อน/ค้าง: เก็บภาพหน้าจอทั้งฝั่งแอปและ TikTok ก่อนปิด</li></ul></div>
     <div class="grid">
       <div class="sec"><h4>Expected Result</h4><ul><li>ต่อกลับอัตโนมัติเข้าห้องเดิมสำเร็จ และผู้ใช้รู้สถานะตลอดช่วงที่ต่อใหม่</li><li>ค่าที่ตั้งไว้ (ตารางปัก · โอเวอร์เลย์ · ลำดับคลิป) ไม่ถูกรีเซ็ต</li><li>ไม่เกิดไลฟ์ซ้อนหรือห้องค้าง</li></ul></div>
       <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
@@ -7971,7 +7983,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     </div>
 </div></td></tr>
 
-<tr class="trow hide" data-feat="epic17" data-level="e2e" data-prio="P1" onclick="tg(this)">
+<tr class="trow" data-feat="epic17" data-level="e2e" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-E2E.4</td>
   <td class="ctitle">ครบลูปสองห้องพร้อมกัน: Spawn ห้องที่สอง → ชนล็อกข้ามเครื่อง → ปิดทีละห้อง</td>
   <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
@@ -7979,14 +7991,17 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-3223"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-3223"></td>
 </tr>
-<tr class="detail hide"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
     <div class="h-title">ครบลูปสองห้องพร้อมกัน: Spawn ห้องที่สอง → ชนล็อกข้ามเครื่อง → ปิดทีละห้อง</div>
-    <div class="h-prio">Priority: <b>P1</b> · E2E · Variation — ขั้นที่ 11 (Spawn) และขั้นที่ 8 (ล็อกข้ามเครื่อง/เพดานแพ็กเกจ)</div>
-    <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">ขั้นที่ 11 (Epic 17 · FR-AA) + ขั้นที่ 8 (Epic 14 · FR-FF) · TC-AA1.1 · TC-AA1.2 · TC-FF4.1 · TC-FF4.2</div></div>
-    <div class="sec"><h4>Precondition</h4><ul><li>มีไลฟ์ที่กำลังรันจาก TC-E2E.2</li><li>มีบัญชี TikTok ที่ว่างอยู่อีกอย่างน้อย 1 บัญชี และมีอีกเครื่องที่เข้า workspace เดียวกันได้</li></ul></div>
-    <div class="sec"><h4>Test Steps — Phase A: เปิดห้องที่สอง</h4><ol><li>กดเปิดห้องใหม่จากไลฟ์ที่ตั้งไว้ → ค่าต้องถูกก๊อปมาครบ (TC-AA1.1)</li><li>เปลี่ยนบัญชีปลายทางเป็นบัญชีที่ว่างอยู่ แล้วกดเริ่ม (TC-AA1.2)</li><li>ทั้งสองห้องต้องไลฟ์พร้อมกันได้ ถ้ายังไม่ชนเพดานแพ็กเกจ</li></ol></div>
-    <div class="sec"><h4>Test Steps — Phase B: ชนล็อกข้ามเครื่อง</h4><ol start="4"><li>ที่เครื่องที่สอง เข้า workspace เดียวกัน แล้วกดเริ่มไลฟ์ด้วยบัญชีที่กำลังไลฟ์อยู่</li><li>ต้องถูกปฏิเสธพร้อมข้อความที่อ่านรู้เรื่อง (TC-FF4.1 · TC-FF4.2)</li><li>ไลฟ์เดิมทั้งสองห้องต้องไม่สะดุด</li></ol></div>
-    <div class="sec"><h4>Test Steps — Phase C: ปิดทีละห้อง</h4><ol start="7"><li>หยุดห้องที่สอง → ห้องแรกต้องยังไลฟ์ต่อปกติ</li><li>หยุดห้องแรก → ทุกอย่างหยุดสะอาด ไม่มีห้องค้าง</li><li>ตรวจประวัติ → ต้องมีบันทึกของทั้งสองห้องแยกกันชัดเจน</li></ol></div>
+    <div class="h-prio">Priority: <b>P1</b> · E2E · Variation — ขั้นที่ 11 (Spawn) และขั้นที่ 8 (ล็อกข้ามเครื่อง/เพดานแพ็กเกจ) · เทียบเท่า TC-E2E.3 ของรายงาน MVP-2</div>
+    <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">ขั้นที่ 11 (Epic 17 · FR-AA) + ขั้นที่ 8 (Epic 14 · FR-FF) — เช็คพอยต์อ้าง TC-AA1.1 · TC-AA1.2 · TC-FF1.1 · TC-FF2.1</div></div>
+    <div class="sec"><h4>⏱ Run sheet</h4><div class="hint" style="font-size:12px">~30 นาที · ใช้ไลฟ์ที่เปิดค้างจาก TC-E2E.2 · ต้องมีเครื่องที่ 2 ที่เข้า workspace เดียวกันได้</div></div>
+    <div class="sec"><h4>Precondition</h4><ul><li>ไลฟ์จาก TC-E2E.2 ยังออกอากาศอยู่</li><li>เครื่องที่ 2 ติดตั้งแอปและเข้าสู่ระบบ workspace เดียวกันได้</li></ul></div>
+    <div class="sec"><h4>Test Data</h4><ul><li>บัญชี TikTok ที่ว่างอยู่อีกอย่างน้อย 1 บัญชี</li><li>เพดานจำนวนไลฟ์พร้อมกันของแพ็กเกจ — ขอตัวเลขจากทีมก่อนเริ่ม</li></ul></div>
+    <div class="sec"><h4>Test Steps — Phase A: เปิดห้องที่สองด้วย Spawn (ขั้นที่ 11)</h4><ol><li>ที่เครื่องที่ 1 เปิดบัญชีที่กำลังไลฟ์ แล้วกดปุ่มเปิดห้องใหม่</li><li>ไล่ดูค่าที่ระบบเติมมาให้ แล้วเปลี่ยนบัญชีปลายทางเป็นบัญชีว่าง</li><li>กดเริ่มไลฟ์ห้องที่สอง</li></ol><div class="hint" style="margin-top:4px;padding:6px 8px;border-left:3px solid #16a34a;background:rgba(22,163,74,.07)">✅ <b>เช็คพอยต์:</b> ค่าถูกก๊อปจากไลฟ์ต้นทางครบ · เปลี่ยนบัญชีปลายทางได้ · สองห้องออกอากาศพร้อมกันโดยห้องแรกไม่สะดุด (TC-AA1.1 · TC-AA1.2)</div></div>
+    <div class="sec"><h4>Test Steps — Phase B: ชนล็อกข้ามเครื่อง (ขั้นที่ 8)</h4><ol start="4"><li>ที่เครื่องที่ 2 ลองกด <b>เริ่มไลฟ์</b> ด้วยบัญชีเดียวกับห้องที่กำลังไลฟ์อยู่ แล้วอ่านข้อความ</li></ol><div class="hint" style="margin-top:4px;padding:6px 8px;border-left:3px solid #16a34a;background:rgba(22,163,74,.07)">✅ <b>เช็คพอยต์:</b> ถูกปฏิเสธ — ไลฟ์ซ้อนข้ามเครื่องไม่ได้ ข้อความบอกสาเหตุอ่านรู้เรื่อง ไม่ใช่รหัสดิบ (TC-FF1.1 · TC-FF2.1)</div></div>
+    <div class="sec"><h4>Test Steps — Phase C: ปิดทีละห้อง</h4><ol start="5"><li>กด <b>หยุดไลฟ์</b> ห้องที่สอง แล้วดูห้องแรก</li><li>กลับไปทำ TC-E2E.2 Phase H (จบห้องแรก + ตรวจสรุปย้อนหลัง)</li></ol><div class="hint" style="margin-top:4px;padding:6px 8px;border-left:3px solid #16a34a;background:rgba(22,163,74,.07)">✅ <b>เช็คพอยต์:</b> ปิดห้องที่สองแล้วห้องแรกยังไลฟ์ต่อปกติ · แต่ละห้องมีรอบของตัวเองในสรุปย้อนหลัง</div></div>
+    <div class="sec"><h4>🧭 กติกาเมื่อพังกลางทาง</h4><ul><li>ถ้าไลฟ์ซ้อนได้จริง (การปฏิเสธไม่เกิด) ถือเป็นบั๊กร้ายแรง — เก็บหลักฐานทั้งสองเครื่องทันทีแล้วรีบปิดห้องซ้อน</li><li>เฟสไหนพังให้บันทึก FAIL@เฟส พร้อม TC รายขั้น แล้วเดินเฟสที่เหลือต่อถ้าไม่ถูกบล็อก</li></ul></div>
     <div class="grid">
       <div class="sec"><h4>Expected Result</h4><ul><li>เปิดห้องที่สองด้วย Spawn ได้ และค่าที่ก๊อปมาถูกต้อง</li><li>บัญชีเดียวกันไลฟ์ซ้อนข้ามเครื่องไม่ได้ และข้อความปฏิเสธเข้าใจง่าย</li><li>ปิดทีละห้องได้อิสระ ไม่กระทบห้องอื่น</li></ul></div>
       <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
