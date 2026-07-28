@@ -34,7 +34,7 @@ NAV = {
     'overlay-per-clip':      _tab('โอเวอร์เลย์'),
     'pin-timeline':          _tab('ตารางปัก'),
     'pin-countdown':         _tab('ตารางปัก'),
-    'playlist-bind':         _tab('ไลฟ์'),
+    'playlist-bind':         _tab('วิดีโอ'),   # ช่อง เพลย์ลิสต์ที่ออกอากาศ อยู่บนแท็บ วิดีโอ (VideoTab)
     'pin-match-confirm':     ['ไปที่เมนู "บัญชีไลฟ์"'],
     'single-active-lock':    ['ไปที่เมนู "บัญชีไลฟ์"'],
     'authority-availability': ['ไปที่เมนู "บัญชีไลฟ์"'],
@@ -64,6 +64,7 @@ LOGIN_STEP = 'ล็อกอินด้วยบัญชี UAT ที่ม�
 NAV_START = re.compile(r'^(ไปที่|เปิดเมนู|เปิดแท็บ|สลับไป|เปิดหน้า|กดเมนู)')
 NAV_SPLIT = re.compile(r'(?<=") (?:แล้ว)?(?=(?:กด|เปิด|สลับไป|เลือก|ไปที่|เข้า|ดู|อ่าน|จด))')
 CHECK_LEAD = re.compile(r'^(ดู|อ่าน|ตรวจ|สังเกต|เทียบ|เฝ้าดู|นับ|ฟัง)')
+# หมายเหตุ: โหมดปัจจุบันแตะเฉพาะ Test Steps — Precondition ไม่แก้แล้ว (คำสั่งทีม 2026-07-28)
 
 
 def _split_nav(step):
@@ -97,7 +98,7 @@ LOGIN_PREFIX = re.compile(
     r'^เข้าสู่ระบบ(ด้วยบัญชีทดสอบ|ด้วยบัญชี UAT)? แล้ว')
 # สัญญาณว่า step เป็นการนำทาง/มีบริบทหน้าแล้ว
 HAS_NAV = re.compile(r'เมนู|แท็บ|หน้า|เปิดบัญชี|คลิกเข้าไป|ไปที่|เปิดการตั้งค่า|ที่การ์ด')
-MULTI = re.compile(r'เครื่องที่ 2|อีกเครื่อง|ทั้งสองเครื่อง|ทั้ง 2 เครื่อง')
+MULTI = re.compile(r'เครื่องที่ 2|อีกเครื่อง|ทั้งสองเครื่อง|ทั้ง 2 เครื่อง|เครื่อง A|เครื่อง B')
 # Precondition ที่เป็น state เปิดแอป/ล็อกอิน (ไม่ใช่ของที่ต้องเตรียม)
 PRE_BOILER = re.compile(
     r'^(เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่'
@@ -183,17 +184,10 @@ def normalize_case(featkey, cid, steps, pres, os_label):
     body = [y for x in body for y in _split_nav(x)]
     # ปิดท้ายด้วยการตรวจผล ถ้า step สุดท้ายยังเป็น action
     if body and not CHECK_LEAD.match(body[-1].strip()):
-        body.append('ตรวจสอบผลลัพธ์ตาม Expected Result')
+        body.append('ตรวจสอบผลลัพธ์')
 
-    new_pres = []
-    for p in pres:
-        if PRE_BOILER.match(p.strip()):
-            continue
-        new_pres.append(p)
-    if not new_pres:
-        new_pres = [PRE_UAT]
-
-    return opening + body, new_pres, None
+    # ขอบเขตปัจจุบัน: แตะเฉพาะ Test Steps — Precondition คืนของเดิมเสมอ
+    return opening + body, list(pres), None
 
 
 def run(path, os_label, check):
