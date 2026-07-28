@@ -282,11 +282,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   "tc-3025": {
     "st": "pass"
   },
-  "tc-3026": {
-    "jira": [
-      "https://kitdi.atlassian.net/browse/TAK-401"
-    ]
-  },
+  "tc-3026": {},
   "tc-3027": {
     "st": "pass"
   },
@@ -989,7 +985,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <button class="btn" onclick="toggleAll(false)">▾ ยุบทั้งหมด</button>
     <span class="hint">💡 คลิกแถว → ดู Steps / Expected (UI only)</span>
     <span style="margin-left:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-      <span id="save-status" class="hint" style="white-space: nowrap; color: var(--hold);">● ยังไม่ได้บันทึก</span>
+      <span id="save-status" class="hint" style="white-space: nowrap; color: var(--muted);">✓ ตรงกับ GitHub</span>
       <label class="hint" style="display:flex;gap:4px;align-items:center;white-space:nowrap;cursor:pointer" title="บันทึกขึ้น GitHub อัตโนมัติหลังหยุดแก้ ~5 วินาที"><input type="checkbox" id="chk-autosave" checked=""> auto-save</label>
       <button class="btn" id="btn-token" title="ใส่/เปลี่ยน GitHub token (ถ้าเซฟไม่ขึ้น/token เสีย กดอันนี้)">🔑 Token</button>
       <button class="btn" id="btn-refresh" title="ดึงผลล่าสุดจาก GitHub มา merge (ไม่ต้อง reload)">🔄 ดึงล่าสุด</button>
@@ -2918,15 +2914,15 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <!-- Epic 3 -->
 <tr class="epicrow" data-epic="3"><td colspan="7">🎨 ขั้นที่ 3 · โอเวอร์เลย์ผูกกับคลิป (Epic 13 · FR-BB) <span class="rp">(14 เคสหลัก <span style="color:var(--muted);font-weight:400">+ 5 edge🆕</span>)</span></td></tr>
 <tr class="featrow" data-featkey="overlay-brand"><td colspan="7">📁 overlay-brand <span class="rp"><span class="lv lvl-ui">🌐 5 <span style="color:var(--muted)">+1🆕</span></span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="overlay-brand"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
-<tr class="trow open" data-feat="epic3" data-level="ui" data-prio="P0" onclick="tg(this)">
+<tr class="trow" data-feat="epic3" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-BB1.1</td>
   <td class="ctitle">ตั้งโอเวอร์เลย์แบรนด์ของบัญชี แล้วใช้กับทุกคลิปอัตโนมัติ</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
   <td class="status" data-uid="tc-3026"><span class="stb pending">รอเทส</span></td>
-  <td class="jira-cell" data-uid="tc-3026"><a href="https://kitdi.atlassian.net/browse/TAK-401" target="_blank" rel="noopener" class="jira-chip">TAK-401</a></td>
+  <td class="jira-cell" data-uid="tc-3026"></td>
 </tr>
-<tr class="detail show"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">ตั้งโอเวอร์เลย์แบรนด์ของบัญชี แล้วใช้กับทุกคลิปอัตโนมัติ</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · overlay-brand · ขั้นที่ 3 · Epic 13</div>
   <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>มีบัญชี TikTok เชื่อมไว้ในระบบแล้วอย่างน้อย 1 บัญชี และคุกกี้ยังไม่หมดอายุ</li><li>เปิดหน้ารายละเอียดบัญชี แล้วไปที่แท็บ "โอเวอร์เลย์"</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Rerun (Windows)</li><li>ล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>ไปที่เมนู "บัญชีไลฟ์"</li><li>เปิดบัญชีไลฟ์ที่ต้องการ</li><li>เปิดแท็บ "โอเวอร์เลย์"</li><li>อ่านคำอธิบายของแท็บ</li><li>เพิ่มเลเยอร์โลโก้ 1 อัน และเลเยอร์นาฬิกา 1 อัน แล้วจัดตำแหน่ง จากนั้นกด "บันทึก"</li><li>สลับคลิปที่เลือกไว้ของบัญชีเป็นอีกคลิป แล้วกลับมาดูแท็บ "โอเวอร์เลย์" ว่าโอเวอร์เลย์ยังใช้กับคลิปใหม่</li><li>ตรวจสอบผลลัพธ์</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>เลเยอร์: โลโก้มุมซ้ายบน + นาฬิกามุมขวาบน</li></ul></div>
@@ -2942,7 +2938,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <span class="opt skip" data-uid="tc-3026" data-st="skip">SKIP</span>
   </div></div>
   <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
-    <div class="jira-list" data-uid="tc-3026"><div class="jira-item"><a href="https://kitdi.atlassian.net/browse/TAK-401" target="_blank" rel="noopener">TAK-401</a><span class="jira-del" title="ลบลิงก์">✕</span></div></div>
+    <div class="jira-list" data-uid="tc-3026"></div>
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-3026" placeholder="วางลิงก์ Jira หรือพิมพ์ TAK-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-3026">+ เพิ่มลิงก์</button></div>
   </div>
 </div></td></tr>
@@ -3143,7 +3139,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-3033" placeholder="วางลิงก์ Jira หรือพิมพ์ TAK-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-3033">+ เพิ่มลิงก์</button></div>
   </div>
 </div></td></tr>
-<tr class="trow" data-feat="epic3" data-level="ui" data-prio="P0" onclick="tg(this)">
+<tr class="trow open" data-feat="epic3" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-BB2.3</td>
   <td class="ctitle">ไลฟ์คลิปที่มีโอเวอร์เลย์เฉพาะ ภาพที่ออกต้องเป็นของคลิปนั้น</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -3151,7 +3147,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-3034"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-3034"><a href="https://kitdi.atlassian.net/browse/TAK-401" target="_blank" rel="noopener" class="jira-chip">TAK-401</a></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail show"><td colspan="7"><div class="card">
   <div class="h-title">ไลฟ์คลิปที่มีโอเวอร์เลย์เฉพาะ ภาพที่ออกต้องเป็นของคลิปนั้น</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · overlay-per-clip · ขั้นที่ 3 · Epic 13</div>
   <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>มีบัญชี TikTok เชื่อมไว้ในระบบแล้วอย่างน้อย 1 บัญชี และคุกกี้ยังไม่หมดอายุ</li><li>คลิป A มีโอเวอร์เลย์เฉพาะ · คลิป B ไม่มี · ทั้งสองอยู่ในเพลย์ลิสต์เดียวกัน</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Rerun (Windows)</li><li>ล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>ไปที่เมนู "บัญชีไลฟ์"</li><li>เปิดบัญชีไลฟ์ที่ต้องการ</li><li>ผูกเพลย์ลิสต์ที่มีโอเวอร์เลย์เฉพาะกับบัญชี แล้วกด "เริ่มไลฟ์" ยืนยัน</li><li>รอจนคลิป A ออกอากาศ แล้วดูภาพในห้องไลฟ์ TikTok</li><li>รอจนหมุนไปคลิป B แล้วดูภาพอีกครั้ง</li><li>ตรวจสอบผลลัพธ์</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>คลิป A: มีข้อความ "ครีมกลางวัน SPF50" · คลิป B: ไม่มีข้อความเฉพาะ</li></ul></div>
