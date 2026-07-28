@@ -794,7 +794,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     "st": "pass"
   },
   "tc-3224": {
-    "st": "fail"
+    "st": "fail",
+    "jira": [
+      "https://kitdi.atlassian.net/browse/TAK-417"
+    ]
   }
 }
 </script>
@@ -833,7 +836,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <button class="btn" onclick="toggleAll(false)">▾ ยุบทั้งหมด</button>
     <span class="hint">💡 คลิกแถว → ดู Steps / Expected (UI only)</span>
     <span style="margin-left:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-      <span id="save-status" class="hint" style="white-space: nowrap; color: var(--muted);">✓ ตรงกับ GitHub</span>
+      <span id="save-status" class="hint" style="white-space: nowrap; color: var(--hold);">● ยังไม่ได้บันทึก</span>
       <label class="hint" style="display:flex;gap:4px;align-items:center;white-space:nowrap;cursor:pointer" title="บันทึกขึ้น GitHub อัตโนมัติหลังหยุดแก้ ~5 วินาที"><input type="checkbox" id="chk-autosave" checked=""> auto-save</label>
       <button class="btn" id="btn-token" title="ใส่/เปลี่ยน GitHub token (ถ้าเซฟไม่ขึ้น/token เสีย กดอันนี้)">🔑 Token</button>
       <button class="btn" id="btn-refresh" title="ดึงผลล่าสุดจาก GitHub มา merge (ไม่ต้อง reload)">🔄 ดึงล่าสุด</button>
@@ -886,7 +889,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     </div>
     <div class="row"><label>สถานะ</label>
       <button class="fchip" data-f="status" data-v="pass">✅ PASS</button>
-      <button class="fchip" data-f="status" data-v="fail">❌ FAIL</button>
+      <button class="fchip active" data-f="status" data-v="fail">❌ FAIL</button>
       <button class="fchip" data-f="status" data-v="hold">⏸ HOLD</button>
       <button class="fchip" data-f="status" data-v="block">🚫 BLOCKED</button>
       <button class="fchip" data-f="status" data-v="skip">⏭ SKIP</button>
@@ -1057,8 +1060,8 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 
 <!-- MVP-1 Epic 2 -->
-<tr class="epicrow hide" data-epic="m1e2"><td colspan="7">👤 MVP-1 · E2 · บัญชี TikTok &amp; การส่งออก (Account &amp; Egress) <span class="rp">(8 เคส · happy path)</span></td></tr>
-<tr class="featrow hide" data-featkey="account-crud"><td colspan="7">📁 account-crud <span class="rp"><span class="lv lvl-ui">🌐 6</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="account-crud"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="epicrow" data-epic="m1e2"><td colspan="7">👤 MVP-1 · E2 · บัญชี TikTok &amp; การส่งออก (Account &amp; Egress) <span class="rp">(8 เคส · happy path)</span></td></tr>
+<tr class="featrow" data-featkey="account-crud"><td colspan="7">📁 account-crud <span class="rp"><span class="lv lvl-ui">🌐 6</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="account-crud"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
 <tr class="trow hide" data-feat="m1e2" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">M1-B.1</td>
   <td class="ctitle">เปิดเมนูบัญชีไลฟ์แล้วเห็นรายการบัญชี</td>
@@ -1150,7 +1153,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow hide" data-feat="m1e2" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow" data-feat="m1e2" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">M1-B.4</td>
   <td class="ctitle">ตรวจสอบบัญชี (verify) แล้วขึ้นสถานะพร้อมใช้งาน</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -1158,7 +1161,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-1009"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-1009"></td>
 </tr>
-<tr class="detail hide"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">ตรวจสอบบัญชี (verify) แล้วขึ้นสถานะพร้อมใช้งาน</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · account-crud · MVP-1 Epic 2 · Story E2 · verify</div>
   <div class="sec"><h4>Precondition</h4><ul><li>มีบัญชีที่เพิ่งเพิ่ม</li></ul></div>
@@ -1707,7 +1710,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 </div></td></tr>
 
 <tr class="featrow" data-featkey="telegram"><td colspan="7">📁 telegram <span class="rp"><span class="lv lvl-ui">🌐 2</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="telegram"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
-<tr class="trow hide" data-feat="m1e5" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow" data-feat="m1e5" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">M1-E.4</td>
   <td class="ctitle">ตั้งค่า Telegram (token / chat) สำเร็จ</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -1715,7 +1718,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-1027"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-1027"></td>
 </tr>
-<tr class="detail hide"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">ตั้งค่า Telegram (token / chat) สำเร็จ</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · telegram · MVP-1 Epic 5 · Story E5 · Telegram setup (vaulted)</div>
   <div class="sec"><h4>Precondition</h4><ul><li>ล็อกอินเข้าแอป</li><li>มี Telegram bot token และ chat id สำหรับทดสอบ</li></ul></div>
@@ -2391,7 +2394,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-3013" placeholder="วางลิงก์ Jira หรือพิมพ์ TAK-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-3013">+ เพิ่มลิงก์</button></div>
   </div>
 </div></td></tr>
-<tr class="trow hide" data-feat="epic2" data-level="ui" data-prio="P2" onclick="tg(this)">
+<tr class="trow" data-feat="epic2" data-level="ui" data-prio="P2" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-Z1.7</td>
   <td class="ctitle">ตั้งชื่อเพลย์ลิสต์เป็นค่าว่างหรือเว้นวรรคล้วน ระบบต้องกันไว้ <span class="edge-badge">🆕 edge</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -2399,7 +2402,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-3014"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-3014"></td>
 </tr>
-<tr class="detail hide"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">ตั้งชื่อเพลย์ลิสต์เป็นค่าว่างหรือเว้นวรรคล้วน ระบบต้องกันไว้</div>
   <div class="h-prio">Priority: <b>P2</b> · UI · playlist-crud · ขั้นที่ 2 · Epic 12</div>
   <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>เปิดหน้าต่างสร้างเพลย์ลิสต์ใหม่</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบด้วยบัญชีทดสอบ</li><li>ไปที่เมนู "คลังวิดีโอ" แล้วกด "สร้างเพลย์ลิสต์ใหม่"</li><li>เว้นช่องชื่อไว้ว่าง แล้วดูปุ่ม "สร้าง"</li><li>ใส่ชื่อเป็นเว้นวรรคล้วน แล้วดูปุ่ม "สร้าง"</li><li>ถ้าปุ่มกดได้ ให้กดแล้วดูว่าระบบตอบอะไร</li><li>ปิดหน้าต่างแล้วดูรายการเพลย์ลิสต์</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ชื่อว่าง · ชื่อ "   " (เว้นวรรค 3 ตัว)</li></ul></div>
@@ -2419,15 +2422,15 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-3014" placeholder="วางลิงก์ Jira หรือพิมพ์ TAK-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-3014">+ เพิ่มลิงก์</button></div>
   </div>
 </div></td></tr>
-<tr class="trow open hide" data-feat="epic2" data-level="ui" data-prio="P2" onclick="tg(this)">
+<tr class="trow" data-feat="epic2" data-level="ui" data-prio="P2" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-Z1.10</td>
   <td class="ctitle">ตั้งชื่อเพลย์ลิสต์ยาวเกินไป ระบบต้องกันไว้ <span class="edge-badge">🆕 edge</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p2">P2</span></td>
   <td class="status" data-uid="tc-3224"><span class="stb fail">FAIL</span></td>
-  <td class="jira-cell" data-uid="tc-3224"></td>
+  <td class="jira-cell" data-uid="tc-3224"><a href="https://kitdi.atlassian.net/browse/TAK-417" target="_blank" rel="noopener" class="jira-chip">TAK-417</a></td>
 </tr>
-<tr class="detail show hide"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">ตั้งชื่อเพลย์ลิสต์ยาวเกินไป ระบบต้องกันไว้</div>
   <div class="h-prio">Priority: <b>P2</b> · UI · playlist-crud · ขั้นที่ 2 · Epic 12</div>
   <div class="sec"><h4>⚠️ ข้อควรรู้ก่อนเทส</h4><div class="hint" style="font-size:12px">แยกออกมาจาก TC-Z1.7 เพราะให้ผลคนละแบบ · <b>ข้อสังเกต</b> จากการอ่านซอร์ส takra-rerun (branch develop ลงวันที่ 2026-07-23 — <b>อาจไม่ใช่บิลด์ล่าสุด</b>) ยังไม่พบการจำกัดความยาวชื่อ: หน้าจอไม่มี maxLength · service เช็คแค่ว่าเว้นวรรคล้วนหรือไม่ · ฐานข้อมูลเก็บเป็น TEXT → ให้ยึดผลที่เห็นจากแอปจริงเป็นหลัก ถ้าระบบยอมสร้างชื่อยาวเกิน ให้บันทึก FAIL แล้วเปิดบั๊ก</div></div>
@@ -2444,7 +2447,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <span class="opt skip" data-uid="tc-3224" data-st="skip">SKIP</span>
   </div></div>
   <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
-    <div class="jira-list" data-uid="tc-3224"></div>
+    <div class="jira-list" data-uid="tc-3224"><div class="jira-item"><a href="https://kitdi.atlassian.net/browse/TAK-417" target="_blank" rel="noopener">TAK-417</a><span class="jira-del" title="ลบลิงก์">✕</span></div></div>
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-3224" placeholder="วางลิงก์ Jira หรือพิมพ์ TAK-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-3224">+ เพิ่มลิงก์</button></div>
   </div>
 </div></td></tr>
@@ -2762,7 +2765,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <!-- Epic 3 -->
 <tr class="epicrow" data-epic="3"><td colspan="7">🎨 ขั้นที่ 3 · โอเวอร์เลย์ผูกกับคลิป (Epic 13 · FR-BB) <span class="rp">(14 เคสหลัก <span style="color:var(--muted);font-weight:400">+ 5 edge🆕</span>)</span></td></tr>
 <tr class="featrow" data-featkey="overlay-brand"><td colspan="7">📁 overlay-brand <span class="rp"><span class="lv lvl-ui">🌐 5 <span style="color:var(--muted)">+1🆕</span></span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="overlay-brand"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
-<tr class="trow hide" data-feat="epic3" data-level="ui" data-prio="P0" onclick="tg(this)">
+<tr class="trow" data-feat="epic3" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-BB1.1</td>
   <td class="ctitle">ตั้งโอเวอร์เลย์แบรนด์ของบัญชี แล้วใช้กับทุกคลิปอัตโนมัติ</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -2770,7 +2773,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-3026"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-3026"><a href="https://kitdi.atlassian.net/browse/TAK-401" target="_blank" rel="noopener" class="jira-chip">TAK-401</a></td>
 </tr>
-<tr class="detail hide"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">ตั้งโอเวอร์เลย์แบรนด์ของบัญชี แล้วใช้กับทุกคลิปอัตโนมัติ</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · overlay-brand · ขั้นที่ 3 · Epic 13</div>
   <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>มีบัญชี TikTok เชื่อมไว้ในระบบแล้วอย่างน้อย 1 บัญชี และคุกกี้ยังไม่หมดอายุ</li><li>เปิดหน้ารายละเอียดบัญชี แล้วไปที่แท็บ "โอเวอร์เลย์"</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบด้วยบัญชีทดสอบ</li><li>ไปที่ หน้าหลัก (บัญชีไลฟ์) แล้วเปิดบัญชีไลฟ์ที่ต้องการ</li><li>เปิดแท็บ "โอเวอร์เลย์" แล้วอ่านคำอธิบายของแท็บ</li><li>เพิ่มเลเยอร์โลโก้ 1 อัน และเลเยอร์นาฬิกา 1 อัน แล้วจัดตำแหน่ง จากนั้นกด "บันทึก"</li><li>สลับคลิปที่เลือกไว้ของบัญชีเป็นอีกคลิป แล้วกลับมาดูแท็บ "โอเวอร์เลย์" ว่าโอเวอร์เลย์ยังใช้กับคลิปใหม่</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>เลเยอร์: โลโก้มุมซ้ายบน + นาฬิกามุมขวาบน</li></ul></div>
@@ -2987,7 +2990,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-3033" placeholder="วางลิงก์ Jira หรือพิมพ์ TAK-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-3033">+ เพิ่มลิงก์</button></div>
   </div>
 </div></td></tr>
-<tr class="trow hide" data-feat="epic3" data-level="ui" data-prio="P0" onclick="tg(this)">
+<tr class="trow" data-feat="epic3" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-BB2.3</td>
   <td class="ctitle">ไลฟ์คลิปที่มีโอเวอร์เลย์เฉพาะ ภาพที่ออกต้องเป็นของคลิปนั้น</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -2995,7 +2998,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-3034"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-3034"><a href="https://kitdi.atlassian.net/browse/TAK-401" target="_blank" rel="noopener" class="jira-chip">TAK-401</a></td>
 </tr>
-<tr class="detail hide"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">ไลฟ์คลิปที่มีโอเวอร์เลย์เฉพาะ ภาพที่ออกต้องเป็นของคลิปนั้น</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · overlay-per-clip · ขั้นที่ 3 · Epic 13</div>
   <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>มีบัญชี TikTok เชื่อมไว้ในระบบแล้วอย่างน้อย 1 บัญชี และคุกกี้ยังไม่หมดอายุ</li><li>คลิป A มีโอเวอร์เลย์เฉพาะ · คลิป B ไม่มี · ทั้งสองอยู่ในเพลย์ลิสต์เดียวกัน</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบด้วยบัญชีทดสอบ</li><li>ไปที่ หน้าหลัก (บัญชีไลฟ์) แล้วเปิดบัญชีไลฟ์ที่ต้องการ</li><li>ผูกเพลย์ลิสต์ที่มีโอเวอร์เลย์เฉพาะกับบัญชี แล้วกด "เริ่มไลฟ์" ยืนยัน</li><li>รอจนคลิป A ออกอากาศ แล้วดูภาพในห้องไลฟ์ TikTok</li><li>รอจนหมุนไปคลิป B แล้วดูภาพอีกครั้ง</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>คลิป A: มีข้อความ "ครีมกลางวัน SPF50" · คลิป B: ไม่มีข้อความเฉพาะ</li></ul></div>
@@ -3808,7 +3811,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 <!-- Epic 5 -->
 <tr class="epicrow" data-epic="5"><td colspan="7">📡 ขั้นที่ 5 · ผูกเพลย์ลิสต์เข้ากับไลฟ์ (Epic 12 · FR-Z3/Z8/Z7c) <span class="rp">(15 เคสหลัก <span style="color:var(--muted);font-weight:400">+ 1 edge🆕</span>)</span></td></tr>
-<tr class="featrow hide" data-featkey="playlist-bind"><td colspan="7">📁 playlist-bind <span class="rp"><span class="lv lvl-ui">🌐 6 <span style="color:var(--muted)">+1🆕</span></span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="playlist-bind"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="featrow" data-featkey="playlist-bind"><td colspan="7">📁 playlist-bind <span class="rp"><span class="lv lvl-ui">🌐 6 <span style="color:var(--muted)">+1🆕</span></span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="playlist-bind"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
 <tr class="trow hide" data-feat="epic5" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-Z3.1</td>
   <td class="ctitle">เลือกเพลย์ลิสต์ให้บัญชีในแท็บไลฟ์</td>
@@ -3921,7 +3924,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-3066" placeholder="วางลิงก์ Jira หรือพิมพ์ TAK-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-3066">+ เพิ่มลิงก์</button></div>
   </div>
 </div></td></tr>
-<tr class="trow hide" data-feat="epic5" data-level="ui" data-prio="P0" onclick="tg(this)">
+<tr class="trow" data-feat="epic5" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-Z3.5</td>
   <td class="ctitle">เริ่มไลฟ์แล้วออกอากาศคลิปจากเพลย์ลิสต์ ไม่ใช่คลิปอื่นในคลัง</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -3929,7 +3932,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-3067"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-3067"><a href="https://kitdi.atlassian.net/browse/TAK-401" target="_blank" rel="noopener" class="jira-chip">TAK-401</a></td>
 </tr>
-<tr class="detail hide"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">เริ่มไลฟ์แล้วออกอากาศคลิปจากเพลย์ลิสต์ ไม่ใช่คลิปอื่นในคลัง</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · playlist-bind · ขั้นที่ 5 · Epic 12</div>
   <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>มีบัญชี TikTok เชื่อมไว้ในระบบแล้วอย่างน้อย 1 บัญชี และคุกกี้ยังไม่หมดอายุ</li><li>บัญชีผูกเพลย์ลิสต์ที่มี 2 คลิป และคลังวิดีโอมีคลิปอื่นอีกหลายตัว</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบด้วยบัญชีทดสอบ แล้วเปิดบัญชีไลฟ์ที่ผูกเพลย์ลิสต์ไว้</li><li>จดชื่อคลิปทั้งหมดในเพลย์ลิสต์ไว้</li><li>กด "เริ่มไลฟ์" แล้วยืนยัน</li><li>ดูว่าคลิปแรกที่ออกอากาศคือคลิปไหน</li><li>รอจนหมุนไปคลิปถัดไป แล้วจดอีกครั้ง แล้วยืนยันว่าทั้งหมดเป็นคลิปในเพลย์ลิสต์</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>เพลย์ลิสต์: 2 คลิป · คลังวิดีโอ: 6 คลิป</li></ul></div>
@@ -5027,8 +5030,8 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 <!-- Epic 8 -->
 <tr class="epicrow" data-epic="8"><td colspan="7">🔒 ขั้นที่ 8 · เริ่มไลฟ์ — ล็อกข้ามเครื่อง + เพดานแพ็กเกจ (Epic 14 · FR-FF) <span class="rp">(17 เคสหลัก <span style="color:var(--muted);font-weight:400">+ 2 edge🆕</span>)</span></td></tr>
-<tr class="featrow hide" data-featkey="single-active-lock"><td colspan="7">📁 single-active-lock <span class="rp"><span class="lv lvl-ui">🌐 7 <span style="color:var(--muted)">+1🆕</span></span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="single-active-lock"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
-<tr class="trow hide" data-feat="epic8" data-level="ui" data-prio="P0" onclick="tg(this)">
+<tr class="featrow" data-featkey="single-active-lock"><td colspan="7">📁 single-active-lock <span class="rp"><span class="lv lvl-ui">🌐 7 <span style="color:var(--muted)">+1🆕</span></span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="single-active-lock"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow" data-feat="epic8" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-FF4.1</td>
   <td class="ctitle">บัญชีเดียวกันไลฟ์อยู่เครื่องที่ 1 แล้วกดไลฟ์จากเครื่องที่ 2 ต้องถูกปฏิเสธ</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -5036,7 +5039,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-3106"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-3106"><a href="https://kitdi.atlassian.net/browse/TAK-406" target="_blank" rel="noopener" class="jira-chip">TAK-406</a></td>
 </tr>
-<tr class="detail hide"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">บัญชีเดียวกันไลฟ์อยู่เครื่องที่ 1 แล้วกดไลฟ์จากเครื่องที่ 2 ต้องถูกปฏิเสธ</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · single-active-lock · ขั้นที่ 8 · Epic 14</div>
   <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>มีเครื่องทดสอบ 2 เครื่องที่ลงแอปแล้ว และล็อกอินด้วยบัญชี UAT ตัวเดียวกัน (workspace เดียวกัน)</li><li>บัญชี TikTok ตัวเดียวกันปรากฏบนทั้งสองเครื่อง</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ที่เครื่องที่ 1 เข้าสู่ระบบ แล้วกด "เริ่มไลฟ์" บัญชี X จนขึ้นสถานะ "กำลังไลฟ์"</li><li>ที่เครื่องที่ 2 เข้าสู่ระบบ แล้วเปิดบัญชี X ตัวเดียวกัน</li><li>ที่เครื่องที่ 2 กด "เริ่มไลฟ์"</li><li>อ่านข้อความที่ขึ้นบนเครื่องที่ 2</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>บัญชี X ไลฟ์อยู่ที่เครื่องที่ 1</li></ul></div>
@@ -5084,7 +5087,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-3107" placeholder="วางลิงก์ Jira หรือพิมพ์ TAK-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-3107">+ เพิ่มลิงก์</button></div>
   </div>
 </div></td></tr>
-<tr class="trow hide" data-feat="epic8" data-level="ui" data-prio="P0" onclick="tg(this)">
+<tr class="trow" data-feat="epic8" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-FF4.3</td>
   <td class="ctitle">หยุดไลฟ์ที่เครื่องที่ 1 แล้วเครื่องที่ 2 ไลฟ์ได้</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -5092,7 +5095,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-3108"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-3108"><a href="https://kitdi.atlassian.net/browse/TAK-406" target="_blank" rel="noopener" class="jira-chip">TAK-406</a></td>
 </tr>
-<tr class="detail hide"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">หยุดไลฟ์ที่เครื่องที่ 1 แล้วเครื่องที่ 2 ไลฟ์ได้</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · single-active-lock · ขั้นที่ 8 · Epic 14</div>
   <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>มีเครื่องทดสอบ 2 เครื่องที่ลงแอปแล้ว และล็อกอินด้วยบัญชี UAT ตัวเดียวกัน (workspace เดียวกัน)</li><li>บัญชี X กำลังไลฟ์อยู่ที่เครื่องที่ 1</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ที่เครื่องที่ 1 กด "หยุด" จนสถานะกลับเป็นไม่ได้ไลฟ์</li><li>ที่เครื่องที่ 2 กด "เริ่มไลฟ์" บัญชี X</li><li>ที่เครื่องที่ 2 ดูสถานะและห้องไลฟ์</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>บัญชี X · หยุดที่เครื่อง 1 แล้วเริ่มที่เครื่อง 2</li></ul></div>
@@ -5112,7 +5115,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-3108" placeholder="วางลิงก์ Jira หรือพิมพ์ TAK-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-3108">+ เพิ่มลิงก์</button></div>
   </div>
 </div></td></tr>
-<tr class="trow hide" data-feat="epic8" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow" data-feat="epic8" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-FF4.4</td>
   <td class="ctitle">คนละบัญชี 2 เครื่อง ไลฟ์พร้อมกันได้</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -5120,7 +5123,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-3109"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-3109"><a href="https://kitdi.atlassian.net/browse/TAK-406" target="_blank" rel="noopener" class="jira-chip">TAK-406</a></td>
 </tr>
-<tr class="detail hide"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">คนละบัญชี 2 เครื่อง ไลฟ์พร้อมกันได้</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · single-active-lock · ขั้นที่ 8 · Epic 14</div>
   <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>มีเครื่องทดสอบ 2 เครื่องที่ลงแอปแล้ว และล็อกอินด้วยบัญชี UAT ตัวเดียวกัน (workspace เดียวกัน)</li><li>มีบัญชี TikTok 2 บัญชี คือ X และ Y</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ที่เครื่องที่ 1 เข้าสู่ระบบ แล้วกด "เริ่มไลฟ์" บัญชี X</li><li>ที่เครื่องที่ 2 เข้าสู่ระบบ แล้วกด "เริ่มไลฟ์" บัญชี Y</li><li>ดูสถานะทั้งสองเครื่อง</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>เครื่อง 1 → บัญชี X · เครื่อง 2 → บัญชี Y</li></ul></div>
@@ -5140,7 +5143,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-3109" placeholder="วางลิงก์ Jira หรือพิมพ์ TAK-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-3109">+ เพิ่มลิงก์</button></div>
   </div>
 </div></td></tr>
-<tr class="trow hide" data-feat="epic8" data-level="ui" data-prio="P0" onclick="tg(this)">
+<tr class="trow" data-feat="epic8" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-FF4.5</td>
   <td class="ctitle">กดไลฟ์บัญชีเดียวกันพร้อมกันจาก 2 เครื่อง ต้องผ่านแค่เครื่องเดียว</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -5148,7 +5151,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-3110"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-3110"><a href="https://kitdi.atlassian.net/browse/TAK-406" target="_blank" rel="noopener" class="jira-chip">TAK-406</a></td>
 </tr>
-<tr class="detail hide"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">กดไลฟ์บัญชีเดียวกันพร้อมกันจาก 2 เครื่อง ต้องผ่านแค่เครื่องเดียว</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · single-active-lock · ขั้นที่ 8 · Epic 14</div>
   <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>มีเครื่องทดสอบ 2 เครื่องที่ลงแอปแล้ว และล็อกอินด้วยบัญชี UAT ตัวเดียวกัน (workspace เดียวกัน)</li><li>บัญชี X ยังไม่ได้ไลฟ์ที่เครื่องไหน</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เตรียมทั้งสองเครื่องให้เปิดบัญชี X ค้างไว้ พร้อมกด "เริ่มไลฟ์"</li><li>นับ 3 แล้วกด "เริ่มไลฟ์" พร้อมกันทั้งสองเครื่อง</li><li>ดูผลของทั้งสองเครื่อง</li><li>เปิดดูห้องไลฟ์บน TikTok ว่ามีกี่ห้อง</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>กดพร้อมกันภายในเวลาไม่เกิน 1 วินาที</li></ul></div>
@@ -5224,7 +5227,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-3112" placeholder="วางลิงก์ Jira หรือพิมพ์ TAK-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-3112">+ เพิ่มลิงก์</button></div>
   </div>
 </div></td></tr>
-<tr class="trow hide" data-feat="epic8" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow" data-feat="epic8" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-FF4.8</td>
   <td class="ctitle">บัญชีที่ไลฟ์อยู่ กดไลฟ์ซ้ำที่เครื่องเดิม ต้องไม่เปิดห้องซ้อน <span class="edge-badge">🆕 edge</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -5232,7 +5235,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-3113"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-3113"><a href="https://kitdi.atlassian.net/browse/TAK-406" target="_blank" rel="noopener" class="jira-chip">TAK-406</a></td>
 </tr>
-<tr class="detail hide"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">บัญชีที่ไลฟ์อยู่ กดไลฟ์ซ้ำที่เครื่องเดิม ต้องไม่เปิดห้องซ้อน</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · single-active-lock · ขั้นที่ 8 · Epic 14</div>
   <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>บัญชี X กำลังไลฟ์อยู่ที่เครื่องนี้</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ที่เครื่องเดิมที่ไลฟ์อยู่ กด "เริ่มไลฟ์" ซ้ำอีกครั้ง</li><li>ดูสถานะบัญชีและจำนวนห้องไลฟ์</li><li>เปิดดูห้องไลฟ์บน TikTok</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>กดเริ่มไลฟ์ซ้ำ 2 ครั้งติดกัน</li></ul></div>
@@ -5252,8 +5255,8 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-3113" placeholder="วางลิงก์ Jira หรือพิมพ์ TAK-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-3113">+ เพิ่มลิงก์</button></div>
   </div>
 </div></td></tr>
-<tr class="featrow hide" data-featkey="cross-device-cap"><td colspan="7">📁 cross-device-cap <span class="rp"><span class="lv lvl-ui">🌐 6 <span style="color:var(--muted)">+0🆕</span></span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="cross-device-cap"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
-<tr class="trow hide" data-feat="epic8" data-level="ui" data-prio="P0" onclick="tg(this)">
+<tr class="featrow" data-featkey="cross-device-cap"><td colspan="7">📁 cross-device-cap <span class="rp"><span class="lv lvl-ui">🌐 6 <span style="color:var(--muted)">+0🆕</span></span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="cross-device-cap"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow" data-feat="epic8" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-FF1.1</td>
   <td class="ctitle">ไลฟ์พร้อมกันจนถึงเพดานแพ็กเกจ แล้วเพิ่มอีกห้องต้องถูกปฏิเสธ</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -5261,7 +5264,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-3114"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-3114"><a href="https://kitdi.atlassian.net/browse/TAK-407" target="_blank" rel="noopener" class="jira-chip">TAK-407</a></td>
 </tr>
-<tr class="detail hide"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">ไลฟ์พร้อมกันจนถึงเพดานแพ็กเกจ แล้วเพิ่มอีกห้องต้องถูกปฏิเสธ</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · cross-device-cap · ขั้นที่ 8 · Epic 14</div>
   <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>รู้เพดานจำนวนไลฟ์พร้อมกันของแพ็กเกจปัจจุบัน</li><li>มีบัญชีมากกว่าเพดาน 1 บัญชี</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบด้วยบัญชีทดสอบ</li><li>กด "เริ่มไลฟ์" ทีละบัญชีจนครบเพดาน</li><li>กด "เริ่มไลฟ์" อีก 1 บัญชี</li><li>อ่านข้อความที่ขึ้น</li><li>ดูว่าห้องที่ไลฟ์อยู่แล้วยังปกติหรือไม่</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>เพดานไลฟ์พร้อมกัน: 2 · จำนวนบัญชี: 3</li></ul></div>
@@ -5281,7 +5284,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-3114" placeholder="วางลิงก์ Jira หรือพิมพ์ TAK-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-3114">+ เพิ่มลิงก์</button></div>
   </div>
 </div></td></tr>
-<tr class="trow hide" data-feat="epic8" data-level="ui" data-prio="P0" onclick="tg(this)">
+<tr class="trow" data-feat="epic8" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-FF1.2</td>
   <td class="ctitle">จำนวนไลฟ์ต้องนับรวมข้ามทุกเครื่อง ไม่ใช่นับแค่เครื่องเดียว</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -5289,7 +5292,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-3115"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-3115"><a href="https://kitdi.atlassian.net/browse/TAK-408" target="_blank" rel="noopener" class="jira-chip">TAK-408</a></td>
 </tr>
-<tr class="detail hide"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">จำนวนไลฟ์ต้องนับรวมข้ามทุกเครื่อง ไม่ใช่นับแค่เครื่องเดียว</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · cross-device-cap · ขั้นที่ 8 · Epic 14</div>
   <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>มีเครื่องทดสอบ 2 เครื่องที่ลงแอปแล้ว และล็อกอินด้วยบัญชี UAT ตัวเดียวกัน (workspace เดียวกัน)</li><li>เพดานไลฟ์พร้อมกันของแพ็กเกจคือ 2</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ที่เครื่องที่ 1 เข้าสู่ระบบ แล้วกด "เริ่มไลฟ์" 2 บัญชีจนครบเพดาน</li><li>ที่เครื่องที่ 2 เข้าสู่ระบบ แล้วกด "เริ่มไลฟ์" อีก 1 บัญชี</li><li>อ่านข้อความที่ขึ้นบนเครื่องที่ 2</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>เครื่อง 1 ไลฟ์ 2 ห้อง · เครื่อง 2 พยายามเปิดห้องที่ 3</li></ul></div>
@@ -5337,7 +5340,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-3116" placeholder="วางลิงก์ Jira หรือพิมพ์ TAK-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-3116">+ เพิ่มลิงก์</button></div>
   </div>
 </div></td></tr>
-<tr class="trow hide" data-feat="epic8" data-level="ui" data-prio="P0" onclick="tg(this)">
+<tr class="trow" data-feat="epic8" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-FF2.1</td>
   <td class="ctitle">เพิ่มบัญชี TikTok จนเต็มเพดาน แล้วเพิ่มอีกจากอีกเครื่อง ต้องถูกบล็อก</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -5345,7 +5348,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-3117"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-3117"><a href="https://kitdi.atlassian.net/browse/TAK-409" target="_blank" rel="noopener" class="jira-chip">TAK-409</a></td>
 </tr>
-<tr class="detail hide"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">เพิ่มบัญชี TikTok จนเต็มเพดาน แล้วเพิ่มอีกจากอีกเครื่อง ต้องถูกบล็อก</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · cross-device-cap · ขั้นที่ 8 · Epic 14</div>
   <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>มีเครื่องทดสอบ 2 เครื่องที่ลงแอปแล้ว และล็อกอินด้วยบัญชี UAT ตัวเดียวกัน (workspace เดียวกัน)</li><li>รู้เพดานจำนวนบัญชีของแพ็กเกจปัจจุบัน</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ที่เครื่องที่ 1 เข้าสู่ระบบ แล้วกด "เพิ่มบัญชี" TikTok จนครบเพดาน</li><li>ที่เครื่องที่ 2 เข้าสู่ระบบ แล้วกด "เพิ่มบัญชี" อีก 1 ตัว</li><li>อ่านข้อความที่ขึ้น</li><li>ดูจำนวนบัญชีในระบบว่าเพิ่มขึ้นหรือไม่</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>เพดานบัญชี: 3 · เพิ่มครบ 3 ที่เครื่อง 1 แล้วลองเพิ่มตัวที่ 4 ที่เครื่อง 2</li></ul></div>
@@ -5365,7 +5368,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-3117" placeholder="วางลิงก์ Jira หรือพิมพ์ TAK-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-3117">+ เพิ่มลิงก์</button></div>
   </div>
 </div></td></tr>
-<tr class="trow hide" data-feat="epic8" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow" data-feat="epic8" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-FF2.2</td>
   <td class="ctitle">อัปเกรดแพ็กเกจที่ Hub แล้วกลับมา เพดานใหม่ต้องมีผล</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -5373,7 +5376,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-3118"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-3118"><a href="https://kitdi.atlassian.net/browse/TAK-410" target="_blank" rel="noopener" class="jira-chip">TAK-410</a></td>
 </tr>
-<tr class="detail hide"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">อัปเกรดแพ็กเกจที่ Hub แล้วกลับมา เพดานใหม่ต้องมีผล</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · cross-device-cap · ขั้นที่ 8 · Epic 14</div>
   <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>บัญชีทดสอบชนเพดานอยู่ และมีสิทธิ์อัปเกรดแพ็กเกจที่ TAKRA Hub</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>จดเพดานปัจจุบันที่แอปแสดงไว้</li><li>ไปอัปเกรดแพ็กเกจที่ Hub</li><li>กลับมาที่แอป แล้วรีเฟรชหรือเข้าหน้าใหม่</li><li>ลองกด "เพิ่มบัญชี" หรือ "เริ่มไลฟ์" เกินเพดานเดิม</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>แพ็กเกจเดิม: เพดาน 2 → แพ็กเกจใหม่: เพดาน 4</li></ul></div>
@@ -5393,7 +5396,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-3118" placeholder="วางลิงก์ Jira หรือพิมพ์ TAK-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-3118">+ เพิ่มลิงก์</button></div>
   </div>
 </div></td></tr>
-<tr class="trow hide" data-feat="epic8" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow" data-feat="epic8" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-FF3.1</td>
   <td class="ctitle">ข้อความตอนชนเพดานต้องบอกตัวเลขและทางไปต่อ</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -5401,7 +5404,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-3119"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-3119"><a href="https://kitdi.atlassian.net/browse/TAK-407" target="_blank" rel="noopener" class="jira-chip">TAK-407</a></td>
 </tr>
-<tr class="detail hide"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">ข้อความตอนชนเพดานต้องบอกตัวเลขและทางไปต่อ</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · cross-device-cap · ขั้นที่ 8 · Epic 14</div>
   <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>เพิ่งถูกบล็อกเพราะชนเพดานแพ็กเกจ</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>อ่านข้อความที่ขึ้นทั้งหมด</li><li>สังเกตว่ามีปุ่มหรือลิงก์ไปจัดการแพ็กเกจที่ Hub หรือไม่</li><li>กดลิงก์นั้น แล้วดูว่าเปิดปลายทางถูกที่หรือไม่</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ข้อความตอนชนเพดานไลฟ์พร้อมกัน</li></ul></div>
@@ -5906,7 +5909,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <!-- Epic 10 -->
 <tr class="epicrow" data-epic="10"><td colspan="7">🔁 ขั้นที่ 10 · หมุนคลิปในเพลย์ลิสต์ + โอเวอร์เลย์ตามคลิป (Epic 12.4 · 13.4) <span class="rp">(8 เคสหลัก <span style="color:var(--muted);font-weight:400">+ 0 edge🆕</span>)</span></td></tr>
 <tr class="featrow" data-featkey="playlist-rotation"><td colspan="7">📁 playlist-rotation <span class="rp"><span class="lv lvl-ui">🌐 8 <span style="color:var(--muted)">+0🆕</span></span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="playlist-rotation"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
-<tr class="trow hide" data-feat="epic10" data-level="ui" data-prio="P0" onclick="tg(this)">
+<tr class="trow" data-feat="epic10" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-Z4.1</td>
   <td class="ctitle">ไลฟ์เพลย์ลิสต์ที่มีหลายคลิป คลิปต้องเล่นตามลำดับที่จัดไว้</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -5914,7 +5917,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-3137"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-3137"><a href="https://kitdi.atlassian.net/browse/TAK-401" target="_blank" rel="noopener" class="jira-chip">TAK-401</a></td>
 </tr>
-<tr class="detail hide"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">ไลฟ์เพลย์ลิสต์ที่มีหลายคลิป คลิปต้องเล่นตามลำดับที่จัดไว้</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · playlist-rotation · ขั้นที่ 10 · Epic 12.4</div>
   <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>มีบัญชี TikTok เชื่อมไว้ในระบบแล้วอย่างน้อย 1 บัญชี และคุกกี้ยังไม่หมดอายุ</li><li>บัญชีผูกเพลย์ลิสต์ที่มี 3 คลิปเรียงลำดับไว้แล้ว</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบด้วยบัญชีทดสอบ</li><li>ไปที่ หน้าหลัก (บัญชีไลฟ์) แล้วเปิดบัญชีไลฟ์ที่ต้องการ</li><li>จดลำดับคลิปในเพลย์ลิสต์ไว้ก่อน</li><li>กด "เริ่มไลฟ์" แล้วยืนยัน</li><li>เฝ้าดูภาพในห้องไลฟ์ TikTok จนครบทั้ง 3 คลิป แล้วจดลำดับที่ออกอากาศจริงเทียบกับที่จดไว้</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ลำดับที่จัดไว้: A → B → C</li></ul></div>
@@ -5934,7 +5937,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-3137" placeholder="วางลิงก์ Jira หรือพิมพ์ TAK-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-3137">+ เพิ่มลิงก์</button></div>
   </div>
 </div></td></tr>
-<tr class="trow hide" data-feat="epic10" data-level="ui" data-prio="P0" onclick="tg(this)">
+<tr class="trow" data-feat="epic10" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-Z4.2</td>
   <td class="ctitle">เล่นครบทุกคลิปแล้ววนกลับมาคลิปแรก</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -5942,7 +5945,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-3138"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-3138"><a href="https://kitdi.atlassian.net/browse/TAK-401" target="_blank" rel="noopener" class="jira-chip">TAK-401</a></td>
 </tr>
-<tr class="detail hide"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">เล่นครบทุกคลิปแล้ววนกลับมาคลิปแรก</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · playlist-rotation · ขั้นที่ 10 · Epic 12.4</div>
   <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>ไลฟ์เพลย์ลิสต์ 3 คลิปและเล่นจนถึงคลิปสุดท้ายแล้ว</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ระหว่างไลฟ์ที่กำลังเล่นเพลย์ลิสต์ รอจนคลิปสุดท้ายเล่นจบ</li><li>สังเกตว่าคลิปต่อไปที่ออกอากาศคือคลิปไหน</li><li>ปล่อยให้วนอีก 1 รอบเต็ม แล้วดูว่าวนกลับมาคลิปแรกหรือไม่</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>เพลย์ลิสต์: A → B → C</li></ul></div>
@@ -5962,7 +5965,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-3138" placeholder="วางลิงก์ Jira หรือพิมพ์ TAK-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-3138">+ เพิ่มลิงก์</button></div>
   </div>
 </div></td></tr>
-<tr class="trow hide" data-feat="epic10" data-level="ui" data-prio="P0" onclick="tg(this)">
+<tr class="trow" data-feat="epic10" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-Z4.3</td>
   <td class="ctitle">ระหว่างหมุน ต้องไม่มีคลิปจากเพลย์ลิสต์อื่นโผล่มา</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -5970,7 +5973,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-3139"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-3139"><a href="https://kitdi.atlassian.net/browse/TAK-401" target="_blank" rel="noopener" class="jira-chip">TAK-401</a></td>
 </tr>
-<tr class="detail hide"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">ระหว่างหมุน ต้องไม่มีคลิปจากเพลย์ลิสต์อื่นโผล่มา</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · playlist-rotation · ขั้นที่ 10 · Epic 12.4</div>
   <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>มีคลิปในคลังวิดีโออย่างน้อย 4 คลิป <b>ตั้งชื่อไฟล์ให้แยกออกชัด ๆ</b> เช่น <code>rot-A.mp4</code> <code>rot-B.mp4</code> <code>other-X.mp4</code> <code>other-Y.mp4</code></li><li>สร้างเพลย์ลิสต์ไว้ 2 อัน คลิปคนละชุดกัน — <b>เพลย์ลิสต์ 1</b> = rot-A, rot-B · <b>เพลย์ลิสต์ 2</b> = other-X, other-Y</li><li>ใช้คลิปสั้น (ราว 30–60 วินาที) จะได้ดูครบ 2 รอบเร็ว</li><li>มีบัญชี TikTok ที่พร้อมไลฟ์ และเปิดดูไลฟ์จากอีกเครื่อง/อีกบัญชีได้</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบด้วยบัญชีทดสอบ</li><li>ไปเมนู <b>คลังวิดีโอ</b> → เปิด <b>เพลย์ลิสต์ 1</b> แล้ว<b>จดชื่อไฟล์ตามลำดับที่เห็น</b> ลงกระดาษ/โน้ต (เช่น 1. rot-A.mp4 · 2. rot-B.mp4) — ลำดับนี้คือลำดับที่ควรออกอากาศ</li><li>เปิด <b>เพลย์ลิสต์ 2</b> แล้วจดชื่อไฟล์ไว้เหมือนกัน (other-X, other-Y) — ชุดนี้คือชุดที่<b>ห้ามโผล่</b></li><li>ไปที่ <b>หน้าหลัก (บัญชีไลฟ์)</b> → เปิดบัญชีไลฟ์ที่จะใช้ทดสอบ</li><li>เข้าแท็บ <b>วิดีโอ</b> → ที่ช่อง <b>เพลย์ลิสต์ที่ผูกไว้</b> เลือก <b>เพลย์ลิสต์ 1</b></li><li>ยืนยันว่าผูกติดจริง: ต้องเห็นข้อความเด้ง <b>"ผูกเพลย์ลิสต์แล้ว ✓"</b> และมีคำอธิบายว่า <b>"กำลังใช้เพลย์ลิสต์ · คลิปเดี่ยวด้านล่างจะถูกใช้เมื่อไม่ได้ผูกเพลย์ลิสต์"</b> (แท็บนี้<b>บันทึกอัตโนมัติ</b> ไม่มีปุ่มบันทึก)</li><li>กด <b>เริ่มไลฟ์</b> แล้วยืนยัน → รอจนสถานะเป็นกำลังไลฟ์</li><li>เปิดดูไลฟ์จากอีกเครื่อง/อีกบัญชี เพื่อดูภาพที่ออกอากาศจริง (อย่าดูจากในแอปอย่างเดียว)</li><li><b>จดสิ่งที่เห็นเรียงตามเวลา</b> ทุกครั้งที่คลิปเปลี่ยน — บันทึกเป็น เวลา + ชื่อ/เนื้อหาคลิปที่จำได้ เช่น 0:00 rot-A · 0:45 rot-B · 1:30 rot-A …</li><li><b>วิธีนับว่าครบ 1 รอบ:</b> เมื่อคลิปแรก (rot-A) กลับมาเล่นซ้ำอีกครั้ง = ครบ 1 รอบ · ให้เฝ้าต่อจนครบ <b>2 รอบ</b> (คือเห็น rot-A เป็นครั้งที่ 3)</li><li>เอาสิ่งที่จดไว้มาเทียบกับรายการจากข้อ 2–3 ว่ามีชื่อจากเพลย์ลิสต์ 2 หลุดมาไหม และมีคลิปอื่นในคลังที่ไม่ได้อยู่ในเพลย์ลิสต์ทั้งสองโผล่มาหรือเปล่า</li><li>กด <b>หยุดไลฟ์</b> เมื่อเก็บข้อมูลครบ</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li><b>เพลย์ลิสต์ 1</b> (ผูกกับบัญชี): rot-A.mp4 · rot-B.mp4</li><li><b>เพลย์ลิสต์ 2</b> (ไม่ได้ผูก · ห้ามโผล่): other-X.mp4 · other-Y.mp4</li><li>ตารางจดผล: เวลา | คลิปที่เห็น | อยู่ในเพลย์ลิสต์ไหน</li></ul></div>
@@ -6018,7 +6021,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-3140" placeholder="วางลิงก์ Jira หรือพิมพ์ TAK-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-3140">+ เพิ่มลิงก์</button></div>
   </div>
 </div></td></tr>
-<tr class="trow hide" data-feat="epic10" data-level="ui" data-prio="P0" onclick="tg(this)">
+<tr class="trow" data-feat="epic10" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-Z4.5</td>
   <td class="ctitle">พอเปลี่ยนคลิป โอเวอร์เลย์เปลี่ยนตามคลิปใหม่</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -6026,7 +6029,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-3141"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-3141"><a href="https://kitdi.atlassian.net/browse/TAK-397" target="_blank" rel="noopener" class="jira-chip">TAK-397</a></td>
 </tr>
-<tr class="detail hide"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">พอเปลี่ยนคลิป โอเวอร์เลย์เปลี่ยนตามคลิปใหม่</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · playlist-rotation · ขั้นที่ 10 · Epic 12.4</div>
   <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>เพลย์ลิสต์มีคลิป A ที่มีโอเวอร์เลย์เฉพาะ และคลิป B ที่ไม่มี</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบด้วยบัญชีทดสอบ</li><li>ไปที่ หน้าหลัก (บัญชีไลฟ์) แล้วเปิดบัญชีไลฟ์ที่ต้องการ</li><li>กด "เริ่มไลฟ์" แล้วยืนยัน</li><li>ดูโอเวอร์เลย์บนภาพตอนคลิป A ออกอากาศ แล้วจดว่ามีข้อความอะไร</li><li>รอจนหมุนไปคลิป B แล้วดูภาพอีกครั้ง จากนั้นรอจนวนกลับมาคลิป A แล้วดูว่าโอเวอร์เลย์เปลี่ยนตามคลิปหรือไม่</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>คลิป A: มีข้อความเฉพาะ · คลิป B: ไม่มี</li></ul></div>
@@ -6102,7 +6105,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-3143" placeholder="วางลิงก์ Jira หรือพิมพ์ TAK-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-3143">+ เพิ่มลิงก์</button></div>
   </div>
 </div></td></tr>
-<tr class="trow hide" data-feat="epic10" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow" data-feat="epic10" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-Z4.8</td>
   <td class="ctitle">ภาพตอนเปลี่ยนคลิปต้องไม่ค้างหรือดำยาว</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -6110,7 +6113,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-3144"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-3144"><a href="https://kitdi.atlassian.net/browse/TAK-401" target="_blank" rel="noopener" class="jira-chip">TAK-401</a></td>
 </tr>
-<tr class="detail hide"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">ภาพตอนเปลี่ยนคลิปต้องไม่ค้างหรือดำยาว</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · playlist-rotation · ขั้นที่ 10 · Epic 12.4</div>
   <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>กำลังไลฟ์เพลย์ลิสต์หลายคลิป</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ระหว่างไลฟ์ เฝ้าดูภาพในห้องไลฟ์ TikTok ตอนคลิปเปลี่ยน 3 ครั้ง</li><li>จับเวลาว่าภาพดำหรือค้างนานแค่ไหนตอนเปลี่ยนคลิป</li><li>ฟังว่าเสียงขาดหายนานหรือไม่</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ดูการเปลี่ยนคลิป 3 ครั้ง</li></ul></div>
@@ -6871,7 +6874,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-3170" placeholder="วางลิงก์ Jira หรือพิมพ์ TAK-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-3170">+ เพิ่มลิงก์</button></div>
   </div>
 </div></td></tr>
-<tr class="trow hide" data-feat="epic13" data-level="ui" data-prio="P0" onclick="tg(this)">
+<tr class="trow" data-feat="epic13" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-Q4.2</td>
   <td class="ctitle">เปิดโหมดร่างคำตอบ แล้วคนดูถามเรื่องสินค้า ระบบร่างคำตอบมาให้</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -6879,7 +6882,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-3171"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-3171"><a href="https://kitdi.atlassian.net/browse/TAK-418" target="_blank" rel="noopener" class="jira-chip">TAK-418</a></td>
 </tr>
-<tr class="detail hide"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">เปิดโหมดร่างคำตอบ แล้วคนดูถามเรื่องสินค้า ระบบร่างคำตอบมาให้</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · auto-chat-reply · ขั้นที่ 13 · Epic 22</div>
   <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>มีบัญชี TikTok เชื่อมไว้ในระบบแล้วอย่างน้อย 1 บัญชี และคุกกี้ยังไม่หมดอายุ</li><li>เปิดฟีเจอร์ตอบแชทอัตโนมัติเป็นโหมดร่างคำตอบ</li><li>กำลังไลฟ์และมีคนดูพิมพ์แชทได้</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบ แล้วเปิดบัญชีไลฟ์ที่กำลังไลฟ์อยู่</li><li>เปิดโหมดร่างคำตอบของฟีเจอร์ตอบแชทอัตโนมัติ</li><li>ให้ผู้ทดสอบอีกคนพิมพ์คำถามเรื่องราคาสินค้าในห้องไลฟ์ TikTok</li><li>ดูแผงแชทในแอป แล้วดูว่ามีคำตอบที่ระบบร่างไว้โผล่ขึ้นมาหรือไม่</li><li>อ่านคำตอบที่ร่างมา</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>คำถาม: "ครีมตัวนี้ราคาเท่าไหร่คะ"</li></ul></div>
@@ -6899,7 +6902,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-3171" placeholder="วางลิงก์ Jira หรือพิมพ์ TAK-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-3171">+ เพิ่มลิงก์</button></div>
   </div>
 </div></td></tr>
-<tr class="trow hide" data-feat="epic13" data-level="ui" data-prio="P0" onclick="tg(this)">
+<tr class="trow" data-feat="epic13" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-Q4.3</td>
   <td class="ctitle">คำตอบที่ร่างมาต้องรอเรากดยืนยันก่อนถึงจะส่ง</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -6907,7 +6910,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-3172"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-3172"><a href="https://kitdi.atlassian.net/browse/TAK-418" target="_blank" rel="noopener" class="jira-chip">TAK-418</a></td>
 </tr>
-<tr class="detail hide"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">คำตอบที่ร่างมาต้องรอเรากดยืนยันก่อนถึงจะส่ง</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · auto-chat-reply · ขั้นที่ 13 · Epic 22</div>
   <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>มีคำตอบที่ระบบร่างไว้รออยู่</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ปล่อยคำตอบที่ระบบร่างไว้ทิ้งไว้ 2 นาทีโดยไม่แตะอะไร</li><li>เปิดห้องไลฟ์ TikTok แล้วดูว่ามีข้อความถูกส่งไปหรือไม่</li><li>กลับมาดูแผงแชทในแอป</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>คำตอบที่ร่างไว้ 1 ข้อความ · รอ 2 นาที</li></ul></div>
@@ -6927,7 +6930,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-3172" placeholder="วางลิงก์ Jira หรือพิมพ์ TAK-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-3172">+ เพิ่มลิงก์</button></div>
   </div>
 </div></td></tr>
-<tr class="trow hide" data-feat="epic13" data-level="ui" data-prio="P0" onclick="tg(this)">
+<tr class="trow" data-feat="epic13" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-Q4.4</td>
   <td class="ctitle">กดยืนยันแล้วข้อความไปโผล่ในห้องไลฟ์จริง</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -6935,7 +6938,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-3173"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-3173"><a href="https://kitdi.atlassian.net/browse/TAK-418" target="_blank" rel="noopener" class="jira-chip">TAK-418</a></td>
 </tr>
-<tr class="detail hide"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">กดยืนยันแล้วข้อความไปโผล่ในห้องไลฟ์จริง</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · auto-chat-reply · ขั้นที่ 13 · Epic 22</div>
   <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>มีคำตอบที่ระบบร่างไว้รออยู่ และกำลังไลฟ์</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>กดปุ่มยืนยันส่งที่คำตอบที่ระบบร่างไว้</li><li>ดูแผงแชทในแอป</li><li>เปิดห้องไลฟ์ TikTok แล้วดูว่าข้อความโผล่หรือไม่</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>คำตอบ: "ครีมตัวนี้ราคา 590 บาทค่ะ"</li></ul></div>
@@ -6955,7 +6958,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-3173" placeholder="วางลิงก์ Jira หรือพิมพ์ TAK-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-3173">+ เพิ่มลิงก์</button></div>
   </div>
 </div></td></tr>
-<tr class="trow hide" data-feat="epic13" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow" data-feat="epic13" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-Q4.5</td>
   <td class="ctitle">กดไม่ส่ง แล้วข้อความต้องไม่ถูกส่ง</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -6963,7 +6966,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-3174"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-3174"><a href="https://kitdi.atlassian.net/browse/TAK-418" target="_blank" rel="noopener" class="jira-chip">TAK-418</a></td>
 </tr>
-<tr class="detail hide"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">กดไม่ส่ง แล้วข้อความต้องไม่ถูกส่ง</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · auto-chat-reply · ขั้นที่ 13 · Epic 22</div>
   <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>มีคำตอบที่ระบบร่างไว้รออยู่</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>กดปุ่มไม่ส่งหรือทิ้งคำตอบที่ระบบร่างไว้</li><li>ดูแผงแชทในแอป</li><li>เปิดห้องไลฟ์ TikTok แล้วดูว่ามีข้อความไปหรือไม่</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>กดทิ้งคำตอบที่ร่างไว้</li></ul></div>
@@ -7194,9 +7197,9 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">อัปโหลดวิดีโอแล้วไฟล์ขึ้นคลาวด์ ไม่ได้อยู่แค่เครื่องเดียว</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · cloud-files · ขั้นที่ 14 · Epic 15</div>
-  <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>เปิดเมนูคลังวิดีโอ</li><li>เตรียมไฟล์ .mp4 ที่ยังไม่เคยอัปโหลด</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบด้วยบัญชี UAT แล้วกดเมนู <b>คลังวิดีโอ</b> ที่แถบด้านซ้าย และอยู่ที่แท็บ <b>คลังวิดีโอ</b> (ไม่ใช่แท็บ เพลย์ลิสต์)</li><li>จดตัวเลขในกล่อง <b>พื้นที่จัดเก็บ</b> (ใช้ไป … · เหลือ …) ไว้ก่อน</li><li>กดปุ่ม <b>อัปโหลดวิดีโอ</b> มุมขวาบน แล้วเลือกหรือลากไฟล์ demo-new-60s.mp4 มาวาง</li><li>ดูแถบ <b>ความคืบหน้าการอัปโหลด</b> จนถึง 100% แล้วรอข้อความแจ้งผล</li><li>ปิดกล่องอัปโหลด แล้วเฝ้าดูป้ายสถานะบนการ์ดไฟล์ที่เพิ่งอัปโหลด จนป้ายหยุดเปลี่ยน (อาจใช้เวลาสักครู่ตามขนาดไฟล์)</li><li>รีเฟรชหน้า แล้วดูกล่อง <b>พื้นที่จัดเก็บ</b> อีกครั้ง</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ไฟล์: demo-new-60s.mp4</li></ul></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>เปิดเมนูคลังวิดีโอ</li><li>เตรียมไฟล์ .mp4 ที่ยังไม่เคยอัปโหลด</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เข้าสู่ระบบด้วยบัญชีทดสอบ</li><li>ไปที่เมนู "คลังวิดีโอ"</li><li>กด "อัปโหลดวิดีโอ" แล้วอัปโหลดไฟล์ให้เสร็จ</li><li>ดูรายการในคลังวิดีโอว่ามีไฟล์ขึ้นมาแล้ว</li><li>ดูว่ามีเครื่องหมายบอกว่าไฟล์อยู่บนคลาวด์แล้วหรือไม่</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ไฟล์: demo-new-60s.mp4</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ระหว่างอัปโหลดเห็นแถบ % พร้อมข้อความ "กำลังอัปโหลด demo-new-60s.mp4 … N%" และตัวเลข % เดินขึ้นจริง</li><li>อัปโหลดเสร็จขึ้นข้อความ <b>อัปโหลดสำเร็จ</b> พร้อมบรรทัด "บันทึกเป็น demo-new-60s.mp4" และการ์ดไฟล์โผล่ในรายการ</li><li>ป้ายสำรองบนการ์ดไล่จาก <b>กำลังสำรอง</b> ไปเป็น <b>สำรองบนคลาวด์แล้ว</b> (ป้ายเขียว) เองโดยไม่ต้องกดอะไรเพิ่ม</li><li>กล่อง <b>พื้นที่จัดเก็บ</b> อัปเดต "ใช้ไป" เพิ่มขึ้นตามขนาดไฟล์ และ "เหลือ" ลดลงเท่ากัน</li><li>ถ้าป้ายค้างที่ <b>กำลังลองใหม่</b> นานเกิน ~5 นาที ถือว่าไม่ผ่าน — ให้เอาเมาส์ชี้ที่ป้ายเพื่ออ่านสาเหตุแล้วบันทึกไว้</li><li>ถ้าไม่เห็นป้ายสำรองบนการ์ดเลยแม้แต่ป้ายเดียว แปลว่าฝั่งคลาวด์ยังไม่ถูกเปิดใช้ในเครื่องทดสอบ — ให้บันทึกเป็น BLOCKED แล้วแจ้งทีมก่อน อย่าตัดสินเป็น FAIL</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>อัปโหลดสำเร็จและไฟล์โผล่ในคลังวิดีโอ</li><li>มีเครื่องหมายหรือสถานะบอกว่าไฟล์ถูกเก็บบนคลาวด์แล้ว</li><li>โควตาที่ใช้ไปอัปเดตตามขนาดไฟล์</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -7211,7 +7214,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-3182" placeholder="วางลิงก์ Jira หรือพิมพ์ TAK-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-3182">+ เพิ่มลิงก์</button></div>
   </div>
 </div></td></tr>
-<tr class="trow hide" data-feat="epic14" data-level="ui" data-prio="P0" onclick="tg(this)">
+<tr class="trow" data-feat="epic14" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-HH.2</td>
   <td class="ctitle">เข้าจากอีกเครื่องด้วย workspace เดียวกัน เห็นรายการไฟล์เดียวกัน</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -7219,12 +7222,12 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-3183"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-3183"><a href="https://kitdi.atlassian.net/browse/TAK-419" target="_blank" rel="noopener" class="jira-chip">TAK-419</a></td>
 </tr>
-<tr class="detail hide"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">เข้าจากอีกเครื่องด้วย workspace เดียวกัน เห็นรายการไฟล์เดียวกัน</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · cloud-files · ขั้นที่ 14 · Epic 15</div>
-  <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>มีเครื่องทดสอบ 2 เครื่องที่ลงแอปแล้ว และล็อกอินด้วยบัญชี UAT ตัวเดียวกัน (workspace เดียวกัน)</li><li>อัปโหลดไฟล์จากเครื่องที่ 1 ไปแล้ว</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เครื่องที่ 1: เปิด <b>คลังวิดีโอ</b> เลือกจัดเรียงเป็น <b>ใหม่สุด</b> กดปุ่ม <b>โหลดเพิ่ม</b> จนหมด แล้วจดชื่อไฟล์กับขนาดไว้ทั้งหมด</li><li>เครื่องที่ 2: เข้าสู่ระบบด้วยบัญชี UAT เดียวกัน แล้วเลือก workspace เดียวกับเครื่องที่ 1</li><li>เครื่องที่ 2: เปิด <b>คลังวิดีโอ</b> จัดเรียง <b>ใหม่สุด</b> เหมือนกัน แล้วกด <b>โหลดเพิ่ม</b> จนหมด</li><li>เทียบชื่อไฟล์และขนาดกับที่จดไว้จากเครื่องที่ 1 ทีละรายการ</li><li>ดูแถบคำอธิบายสัญลักษณ์ใต้หัวข้อ แล้วแยกว่าการ์ดไหนเป็น <b>ในเครื่องแล้ว</b> (จุดเขียว) การ์ดไหนเป็น <b>อยู่บนคลาวด์</b> (จุดน้ำเงิน)</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>workspace เดียวกัน · เครื่อง 2 เพิ่งลงแอปใหม่</li></ul></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>มีเครื่องทดสอบ 2 เครื่องที่ลงแอปแล้ว และล็อกอินด้วยบัญชี UAT ตัวเดียวกัน (workspace เดียวกัน)</li><li>อัปโหลดไฟล์จากเครื่องที่ 1 ไปแล้ว</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ที่เครื่องที่ 1 เข้าสู่ระบบ แล้วเปิดเมนู "คลังวิดีโอ" จดชื่อไฟล์ทั้งหมดไว้</li><li>ที่เครื่องที่ 2 เข้าสู่ระบบด้วย workspace เดียวกัน แล้วเปิดเมนู "คลังวิดีโอ"</li><li>เทียบรายการไฟล์กับที่จดไว้จากเครื่องที่ 1</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>workspace เดียวกัน · เครื่อง 2 เพิ่งลงแอปใหม่</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>เครื่องที่ 2 เห็นไฟล์ครบชุดเดียวกับเครื่องที่ 1 — ชื่อไฟล์และขนาดตรงกันทุกรายการ</li><li>ไฟล์ที่ยังไม่ได้โหลดลงเครื่องที่ 2 แสดงเป็นการ์ดที่มีป้าย <b>บนคลาวด์</b> พร้อมปุ่ม <b>ดาวน์โหลด</b> และรูปตัวอย่างเป็นไอคอนเมฆ (ยังไม่มีภาพนิ่งของคลิป)</li><li>ไฟล์ที่มีอยู่ในเครื่องที่ 2 อยู่แล้วแสดงป้าย <b>ในเครื่อง</b> และมีภาพนิ่งของคลิป</li><li>ไม่มีไฟล์ของ workspace อื่นปนเข้ามาในรายการ</li><li>กล่อง <b>พื้นที่จัดเก็บ</b> ของทั้งสองเครื่องแสดงตัวเลขเดียวกัน (โควตาเป็นของ workspace ไม่ใช่ของเครื่อง)</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>เครื่องที่ 2 เห็นรายการไฟล์ชุดเดียวกับเครื่องที่ 1</li><li>ชื่อไฟล์และขนาดตรงกัน</li><li>ไฟล์ที่ยังไม่ได้โหลดลงเครื่องมีเครื่องหมายบอกให้เห็น</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -7250,9 +7253,9 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">ดาวน์โหลดไฟล์จากคลาวด์ลงเครื่องที่สอง</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · cloud-files · ขั้นที่ 14 · Epic 15</div>
-  <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>อยู่ที่เครื่องที่ 2 และเห็นรายการไฟล์จากคลาวด์</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เครื่องที่ 2: เปิด <b>คลังวิดีโอ</b> แล้วหาการ์ดที่มีป้าย <b>บนคลาวด์</b></li><li>กดปุ่ม <b>ดาวน์โหลด</b> บนการ์ดนั้น 1 ใบ</li><li>เฝ้าดูการ์ดระหว่างโหลด — ดูว่าป้ายและปุ่มบนการ์ดเปลี่ยนเป็นอะไร แล้วลองกดปุ่มซ้ำดู</li><li>รอจนโหลดเสร็จ แล้วดูว่าการ์ดเปลี่ยนรูปแบบไปอย่างไร</li><li>กดที่การ์ดเพื่อเปิดดูตัวอย่างคลิป</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ไฟล์: demo-new-60s.mp4 (ประมาณ 100 MB)</li></ul></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>อยู่ที่เครื่องที่ 2 และเห็นรายการไฟล์จากคลาวด์</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ที่เครื่องที่ 2 เปิดเมนู "คลังวิดีโอ" แล้วกดปุ่มดาวน์โหลดที่ไฟล์หนึ่ง</li><li>ดูแถบความคืบหน้าระหว่างโหลด</li><li>รอจนโหลดเสร็จ แล้วดูสถานะของไฟล์</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ไฟล์: demo-new-60s.mp4 (ประมาณ 100 MB)</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ระหว่างโหลด การ์ดแสดงป้าย <b>กำลังดึงลง</b> (มีไอคอนหมุน) และ <b>ปุ่มดาวน์โหลดถูกซ่อน</b> จึงกดซ้ำไม่ได้</li><li>การดาวน์โหลด <b>ไม่มีแถบ %</b> — แถบเปอร์เซ็นต์มีเฉพาะตอนอัปโหลดเท่านั้น ถ้าต้องการยืนยันว่าโหลดเดินจริงให้ดูขนาดไฟล์ในโฟลเดอร์ปลายทางหรือดูที่แท็บ Network ของ DevTools</li><li>โหลดเสร็จแล้วการ์ดแบบคลาวด์หายไป และไฟล์กลายเป็นการ์ดปกติที่มีภาพนิ่งของคลิป พร้อมป้าย <b>ในเครื่อง</b></li><li>เปิดดูตัวอย่างคลิปจากเครื่องที่ 2 ได้และภาพเล่นได้จริง</li><li>ไม่มีข้อความ error ค้างบนการ์ดหลังโหลดสำเร็จ</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>มีแถบความคืบหน้าที่ขยับตามจริง</li><li>โหลดเสร็จแล้วสถานะเปลี่ยนเป็นมีอยู่ในเครื่องนี้แล้ว</li><li>เปิดดูตัวอย่างคลิปได้จากเครื่องที่ 2</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -7278,9 +7281,9 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">ไฟล์ที่ดาวน์โหลดแล้วเอาไปไลฟ์ได้เหมือนไฟล์ที่อัปโหลดเอง</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · cloud-files · ขั้นที่ 14 · Epic 15</div>
-  <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>มีบัญชี TikTok เชื่อมไว้ในระบบแล้วอย่างน้อย 1 บัญชี และคุกกี้ยังไม่หมดอายุ</li><li>อยู่ที่เครื่องที่ 2 และดาวน์โหลดไฟล์ลงเครื่องแล้ว</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เครื่องที่ 2: ยืนยันก่อนว่าไฟล์เป้าหมายมีป้าย <b>ในเครื่อง</b> แล้วในคลังวิดีโอ</li><li>ไปเมนู <b>บัญชีไลฟ์</b> แล้วเปิดบัญชีไลฟ์ที่ต้องการ</li><li>ที่แท็บ <b>วิดีโอ</b> เลือกไฟล์ที่เพิ่งดาวน์โหลดมาให้บัญชีนั้น</li><li>กด <b>เริ่มไลฟ์</b> แล้วยืนยัน</li><li>เปิดห้องไลฟ์ TikTok ดูภาพ แล้วปล่อยให้คลิปวนอย่างน้อย 2 รอบ</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ไฟล์: demo-new-60s.mp4 (ดาวน์โหลดมา)</li></ul></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>มีบัญชี TikTok เชื่อมไว้ในระบบแล้วอย่างน้อย 1 บัญชี และคุกกี้ยังไม่หมดอายุ</li><li>อยู่ที่เครื่องที่ 2 และดาวน์โหลดไฟล์ลงเครื่องแล้ว</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ไปที่ หน้าหลัก (บัญชีไลฟ์) แล้วเปิดบัญชีไลฟ์ที่ต้องการ</li><li>ที่แท็บ "วิดีโอ" เลือกไฟล์ที่เพิ่งดาวน์โหลดให้บัญชี</li><li>กด "เริ่มไลฟ์" แล้วยืนยัน</li><li>เปิดห้องไลฟ์ TikTok แล้วดูภาพ</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ไฟล์: demo-new-60s.mp4 (ดาวน์โหลดมา)</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ไฟล์ที่ดาวน์โหลดมาเลือกได้จากแท็บ <b>วิดีโอ</b> เหมือนไฟล์ที่อัปโหลดจากเครื่องนี้เอง ไม่มีป้ายบอกว่าใช้ไม่ได้</li><li>ไลฟ์เริ่มได้และภาพออกในห้อง TikTok ภายในเวลาปกติเหมือนไฟล์ที่อัปโหลดเอง</li><li>ภาพไม่กระตุกและไม่ค้างผิดปกติ</li><li>คลิปวนซ้ำต่อเนื่องอย่างน้อย 2 รอบ โดยตอนวนกลับไม่สะดุด</li><li>ไม่มีข้อความ error เรื่องไฟล์หรือคลาวด์ขึ้นระหว่างไลฟ์</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ไลฟ์เริ่มได้และภาพออกปกติเหมือนไฟล์ที่อัปโหลดจากเครื่องนี้เอง</li><li>ภาพไม่กระตุกผิดปกติ</li><li>คลิปวนซ้ำได้ตามปกติ</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -7306,9 +7309,9 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">ไฟล์ที่โหลดไว้แล้ว กดใช้ซ้ำต้องไม่โหลดใหม่</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · cloud-files · ขั้นที่ 14 · Epic 15</div>
-  <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>มีไฟล์ที่ดาวน์โหลดลงเครื่องแล้ว</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ยืนยันว่าไฟล์เป้าหมายมีป้าย <b>ในเครื่อง</b> อยู่แล้ว</li><li>ปิดแอปจนสุด แล้วเปิดใหม่และเข้าสู่ระบบ</li><li>เปิด <b>คลังวิดีโอ</b> แล้วหาไฟล์เดิม</li><li>ดูว่าการ์ดของไฟล์นั้นมีปุ่ม <b>ดาวน์โหลด</b> ให้กดอีกหรือไม่ และมีป้าย <b>กำลังดึงลง</b> โผล่ขึ้นเองหรือไม่</li><li>เอาไฟล์นั้นไปเลือกในแท็บ <b>วิดีโอ</b> ของบัญชีไลฟ์ แล้วดูว่าพร้อมใช้ทันทีไหม</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ไฟล์เดิมที่โหลดไว้แล้ว</li></ul></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>มีไฟล์ที่ดาวน์โหลดลงเครื่องแล้ว</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ปิดแล้วเปิดแอปใหม่</li><li>เปิดเมนู "คลังวิดีโอ" แล้วเลือกไฟล์เดิมที่โหลดไว้แล้ว</li><li>ดูว่าระบบเริ่มดาวน์โหลดใหม่หรือไม่</li><li>ดูเวลาที่ใช้ก่อนไฟล์พร้อมใช้</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ไฟล์เดิมที่โหลดไว้แล้ว</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>การ์ดยังเป็นแบบมีภาพนิ่งของคลิป พร้อมป้าย <b>ในเครื่อง</b> และ <b>ไม่มีปุ่มดาวน์โหลด</b> ให้กดอีก</li><li>ไม่มีป้าย <b>กำลังดึงลง</b> ขึ้นเอง — ระบบไม่ดาวน์โหลดไฟล์เดิมซ้ำ</li><li>เลือกไฟล์ไปใช้ในบัญชีไลฟ์ได้ทันที ไม่มีช่วงรอโหลด</li><li>ถ้าดูที่แท็บ Network ของ DevTools ได้ ต้องไม่มี request ดาวน์โหลดไฟล์นั้นเกิดขึ้นซ้ำ</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ไม่มีการดาวน์โหลดใหม่</li><li>ไฟล์พร้อมใช้ทันที</li><li>โควตาเน็ตไม่ถูกใช้ซ้ำโดยไม่จำเป็น</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -7334,9 +7337,9 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">workspace อื่นต้องไม่เห็นไฟล์ของเรา</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · cloud-files · ขั้นที่ 14 · Epic 15</div>
-  <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>บัญชีที่ใช้ทดสอบเข้าถึงได้ 2 workspace</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ที่ workspace A เปิด <b>คลังวิดีโอ</b> กด <b>โหลดเพิ่ม</b> จนหมด แล้วจดชื่อไฟล์ทั้งหมดกับตัวเลขในกล่อง <b>พื้นที่จัดเก็บ</b></li><li>สลับไป workspace B จากตัวสลับ workspace</li><li>เปิด <b>คลังวิดีโอ</b> ของ workspace B กด <b>โหลดเพิ่ม</b> จนหมด แล้วไล่ดูรายชื่อไฟล์ทั้งการ์ด <b>ในเครื่อง</b> และการ์ด <b>บนคลาวด์</b></li><li>ใช้ช่องค้นหา พิมพ์ชื่อไฟล์ของ workspace A ลงไปตรง ๆ</li><li>สลับกลับ workspace A แล้วดูรายการอีกครั้ง</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>workspace A: 5 ไฟล์ · workspace B: 2 ไฟล์</li></ul></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>บัญชีที่ใช้ทดสอบเข้าถึงได้ 2 workspace</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ที่ workspace A เปิดเมนู "คลังวิดีโอ" แล้วจดชื่อไฟล์ทั้งหมดไว้</li><li>สลับไป workspace B</li><li>เปิดเมนู "คลังวิดีโอ" แล้วดูรายการไฟล์ว่ามีไฟล์ของ workspace A หรือไม่</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>workspace A: 5 ไฟล์ · workspace B: 2 ไฟล์</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>workspace B เห็นเฉพาะไฟล์ของตัวเอง</li><li>ไม่มีไฟล์ของ workspace A โผล่ปนมา ทั้งในการ์ดในเครื่องและการ์ดบนคลาวด์</li><li>ค้นหาชื่อไฟล์ของ workspace A ใน workspace B แล้วขึ้นข้อความว่าไม่พบวิดีโอที่ตรงกับคำค้นนั้น</li><li>กล่อง <b>พื้นที่จัดเก็บ</b> ของ workspace B เป็นตัวเลขของตัวเอง ไม่ใช่ตัวเลขชุดเดียวกับ workspace A</li><li>สลับกลับ workspace A แล้วไฟล์ครบเหมือนเดิม</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>workspace B เห็นเฉพาะไฟล์ของตัวเอง</li><li>ไม่มีไฟล์ของ workspace A โผล่ปนมา</li><li>สลับกลับ workspace A แล้วไฟล์ครบเหมือนเดิม</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -7362,9 +7365,9 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="detail hide"><td colspan="7"><div class="card">
   <div class="h-title">อัปโหลดตอนเน็ตหลุด ระบบต้องพักไว้แล้วส่งต่อเองเมื่อเน็ตกลับมา</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · cloud-files · ขั้นที่ 14 · Epic 15</div>
-  <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>เตรียมไฟล์ขนาดใหญ่พอที่จะอัปโหลดนานพอให้ตัดเน็ตทัน</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li><b>ส่วนที่ 1 — อัปโหลดเข้าเครื่อง:</b> เปิด <b>คลังวิดีโอ</b> กด <b>อัปโหลดวิดีโอ</b> แล้วเลือกไฟล์ขนาดประมาณ 300 MB</li><li>ระหว่างที่แถบ % ยังไม่เต็ม ให้ปิด Wi-Fi แล้วอ่านข้อความที่ขึ้นในกล่องอัปโหลด</li><li>เปิด Wi-Fi กลับมา แล้วกดอัปโหลดไฟล์เดิมใหม่จนสำเร็จ (ต้องเห็นข้อความ อัปโหลดสำเร็จ)</li><li><b>ส่วนที่ 2 — สำรองขึ้นคลาวด์:</b> ทันทีที่อัปโหลดเสร็จ ให้ปิด Wi-Fi อีกครั้ง แล้วเฝ้าดูป้ายสำรองบนการ์ดไฟล์นั้น</li><li>เอาเมาส์ชี้ค้างที่ป้าย เพื่ออ่านสาเหตุที่ระบบบอก</li><li>เปิด Wi-Fi กลับมา แล้ว <b>ไม่ต้องกดอะไรเลย</b> เฝ้าดูป้ายต่ออีก 2–3 นาที</li><li>ระหว่างรอ ลองสลับไปเมนู <b>บัญชีไลฟ์</b> แล้วกลับมา เพื่อดูว่าหน้าจอค้างหรือไม่</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ไฟล์ประมาณ 300 MB · ตัดเน็ตกลางทาง</li></ul></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>เตรียมไฟล์ขนาดใหญ่พอที่จะอัปโหลดนานพอให้ตัดเน็ตทัน</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เปิดเมนู "คลังวิดีโอ" แล้วกด "อัปโหลดวิดีโอ" เพื่อเริ่มอัปโหลดไฟล์</li><li>ระหว่างที่แถบความคืบหน้ายังไม่เต็ม ให้ปิด Wi-Fi</li><li>อ่านสถานะที่ระบบแสดง</li><li>เปิด Wi-Fi กลับมาแล้วเฝ้าดูโดยไม่กดอะไร</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ไฟล์ประมาณ 300 MB · ตัดเน็ตกลางทาง</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ส่วนที่ 1: เน็ตหลุดกลางอัปโหลด กล่องขึ้นข้อความ <b>เครือข่ายขัดข้อง กรุณาลองใหม่อีกครั้ง</b> และกดอัปโหลดใหม่ได้</li><li>ส่วนที่ 1: การอัปโหลดจากกล่องนี้ <b>ไม่มีการต่อเองอัตโนมัติ</b> — ผู้ใช้ต้องกดอัปโหลดใหม่เอง (เป็นพฤติกรรมที่ออกแบบไว้ ไม่ใช่บั๊ก)</li><li>ส่วนที่ 2: หลังไฟล์เข้าเครื่องแล้วตัดเน็ต ป้ายสำรองบนการ์ดเปลี่ยนเป็น <b>กำลังลองใหม่</b> (ป้ายเหลือง ไอคอนหมุน) ไม่ใช่ขึ้นว่าล้มเหลวถาวร และไม่ใช่หายไปเฉย ๆ</li><li>ชี้เมาส์ที่ป้าย <b>กำลังลองใหม่</b> แล้วมีคำอธิบายสาเหตุแบบอ่านรู้เรื่อง ไม่ใช่รหัส error ดิบหรือข้อความระบบภายใน</li><li>หน้าจอไม่ค้าง — สลับเมนูไปมาได้ตามปกติระหว่างที่ยังลองใหม่อยู่</li><li>เน็ตกลับมาแล้วป้ายเปลี่ยนเป็น <b>สำรองบนคลาวด์แล้ว</b> เองภายในไม่กี่นาที โดยไม่ต้องกดอะไร</li><li>ไฟล์ไม่ซ้ำในรายการ — การลองใหม่ไม่ทำให้เกิดไฟล์ซ้ำ</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ระบบไม่ขึ้นว่าอัปโหลดล้มเหลวถาวร แต่บอกว่าพักไว้และจะลองใหม่</li><li>หน้าจอไม่ค้างจนใช้งานเมนูอื่นไม่ได้</li><li>เน็ตกลับมาแล้วอัปโหลดเดินต่อเองจนสำเร็จ</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -7390,9 +7393,9 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">ดาวน์โหลดค้างกลางทาง แล้วลองใหม่ได้โดยไฟล์ไม่เสีย</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · cloud-files · ขั้นที่ 14 · Epic 15</div>
-  <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>อยู่ที่เครื่องที่ 2 และมีไฟล์ใหญ่รอโหลด</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เครื่องที่ 2: เปิด <b>คลังวิดีโอ</b> หาการ์ด <b>บนคลาวด์</b> ของไฟล์ใหญ่ (ประมาณ 300 MB) แล้วกด <b>ดาวน์โหลด</b></li><li>รอให้ป้าย <b>กำลังดึงลง</b> ขึ้นก่อน แล้วปิด Wi-Fi</li><li>อ่านข้อความ error ที่ขึ้นบนการ์ด และดูว่าปุ่ม <b>ดาวน์โหลด</b> กลับมาให้กดหรือไม่</li><li>เปิด Wi-Fi กลับมา แล้วกด <b>ดาวน์โหลด</b> ซ้ำที่การ์ดเดิม</li><li>โหลดเสร็จแล้วกดเปิดดูตัวอย่างคลิป และเทียบขนาดไฟล์กับที่เคยแสดงบนการ์ดคลาวด์</li><li>เอาไฟล์นั้นไปเลือกใช้ในบัญชีไลฟ์ 1 รอบ</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ไฟล์ประมาณ 300 MB · ตัดเน็ตตอนโหลดได้ครึ่งทาง</li></ul></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>อยู่ที่เครื่องที่ 2 และมีไฟล์ใหญ่รอโหลด</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เปิดเมนู "คลังวิดีโอ" แล้วกดปุ่มดาวน์โหลดที่ไฟล์หนึ่ง</li><li>ตัดเน็ตระหว่างโหลด</li><li>อ่านสถานะที่ขึ้น</li><li>เปิดเน็ตกลับมาแล้วกดลองใหม่ จากนั้นเปิดคลิปดูหลังโหลดเสร็จ</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ไฟล์ประมาณ 300 MB · ตัดเน็ตตอนโหลดได้ครึ่งทาง</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ตัดเน็ตแล้วขึ้นข้อความบนการ์ดแบบอ่านรู้เรื่อง เช่น <b>ดาวน์โหลดไม่สำเร็จ กรุณาลองใหม่อีกครั้ง</b> หรือ <b>ระบบจัดเก็บไฟล์ไม่พร้อมใช้งานชั่วคราว ลองใหม่อีกครั้ง</b></li><li>ปุ่ม <b>ดาวน์โหลด</b> กลับมากดได้ — ระบบไม่ลองเองอัตโนมัติ (ต่างจากการสำรองขึ้นคลาวด์ที่ลองเอง) เป็นพฤติกรรมที่ออกแบบไว้</li><li>กดใหม่แล้วโหลดต่อจนเสร็จ การ์ดเปลี่ยนเป็นการ์ดปกติพร้อมป้าย <b>ในเครื่อง</b></li><li>ขนาดไฟล์ตรงกับที่เคยแสดงบนการ์ดคลาวด์ ไม่ใช่ไฟล์ที่โหลดมาครึ่งเดียว</li><li>เปิดดูตัวอย่างเล่นได้ปกติ และเอาไปไลฟ์ได้จริง ไม่ใช่ไฟล์เสีย</li><li>ถ้าไฟล์ที่ได้ไม่ครบ ระบบต้องบอกว่า <b>ไฟล์ที่ดาวน์โหลดไม่สมบูรณ์ กรุณาลองใหม่อีกครั้ง</b> ไม่ใช่ปล่อยไฟล์เสียเข้าคลัง</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ระบบบอกว่าโหลดไม่สำเร็จพร้อมปุ่มลองใหม่</li><li>กดลองใหม่แล้วโหลดต่อจนเสร็จ</li><li>เปิดคลิปที่โหลดมาแล้วเล่นได้ปกติ ไม่ใช่ไฟล์เสีย</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -7418,9 +7421,9 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="detail hide"><td colspan="7"><div class="card">
   <div class="h-title">อัปโหลดไฟล์ที่ไม่ใช่ชนิดที่รองรับ ต้องถูกปฏิเสธพร้อมบอกเหตุผล</div>
   <div class="h-prio">Priority: <b>P2</b> · UI · cloud-files · ขั้นที่ 14 · Epic 15</div>
-  <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>เตรียมไฟล์ .pdf และไฟล์ .mov ไว้</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>จดตัวเลขในกล่อง <b>พื้นที่จัดเก็บ</b> และจำนวนไฟล์ในคลังไว้ก่อน</li><li>กด <b>อัปโหลดวิดีโอ</b> แล้วอ่านข้อความในกล่องว่าระบบบอกว่ารองรับไฟล์แบบไหน</li><li>เลือกไฟล์ report.pdf แล้วอ่านข้อความที่ขึ้น</li><li>เลือกไฟล์ clip.mov แล้วอ่านข้อความที่ขึ้น</li><li>เลือกไฟล์ที่ชื่อมีตัวพิมพ์ใหญ่และเว้นวรรค เช่น My Clip 01.MP4 แล้วดูว่าระบบทำอย่างไรกับชื่อไฟล์</li><li>ปิดกล่อง แล้วดูรายการไฟล์และกล่อง <b>พื้นที่จัดเก็บ</b> อีกครั้ง</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ไฟล์: report.pdf · clip.mov</li></ul></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>เตรียมไฟล์ .pdf และไฟล์ .mov ไว้</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เปิดเมนู "คลังวิดีโอ" แล้วกด "อัปโหลดวิดีโอ"</li><li>ลองอัปโหลดไฟล์ .pdf แล้วอ่านข้อความที่ขึ้น</li><li>ลองอัปโหลดไฟล์ .mov แล้วดูผล</li><li>ดูรายการในคลังวิดีโอ</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ไฟล์: report.pdf · clip.mov</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>กล่องอัปโหลดบอกไว้ชัดว่า "ลากไฟล์ .mp4 มาวางที่นี่ หรือคลิกเพื่อเลือกไฟล์" และมีบรรทัดบอกขนาดสูงสุดต่อไฟล์</li><li>report.pdf ถูกปฏิเสธพร้อมข้อความ <b>รองรับเฉพาะไฟล์ .mp4 เท่านั้น</b></li><li>clip.mov <b>ถูกปฏิเสธเช่นกัน</b> ด้วยข้อความเดียวกัน — ระบบรองรับเฉพาะ .mp4 ไม่รวม .mov</li><li>My Clip 01.MP4 <b>ผ่าน</b> และระบบปรับชื่อให้เองเป็นตัวพิมพ์เล็กไม่มีเว้นวรรค (คาดว่าเป็น my_clip_01.mp4) โดยข้อความแจ้งผลบอกว่า "บันทึกเป็น <ชื่อใหม่>"</li><li>ไม่มีไฟล์ .pdf หรือ .mov หลุดเข้าไปในคลังวิดีโอ</li><li>ตัวเลข "ใช้ไป" ในกล่องพื้นที่จัดเก็บไม่ขยับจากไฟล์ที่ถูกปฏิเสธ</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ไฟล์ที่ไม่รองรับถูกปฏิเสธพร้อมบอกว่ารองรับชนิดไหน</li><li>ไม่มีไฟล์ขยะเข้าไปในคลังวิดีโอ</li><li>โควตาที่ใช้ไม่ถูกหักจากไฟล์ที่อัปโหลดไม่สำเร็จ</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -7446,9 +7449,9 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="detail hide"><td colspan="7"><div class="card">
   <div class="h-title">รายการไฟล์บนคลาวด์โหลดไม่สำเร็จ ต้องขึ้นข้อความ + ปุ่มลองใหม่</div>
   <div class="h-prio">Priority: <b>P2</b> · UI · cloud-files · ขั้นที่ 14 · Epic 15</div>
-  <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>ตัดเน็ตของเครื่องทดสอบ</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ปิด Wi-Fi ก่อน แล้วเปิดเมนู <b>คลังวิดีโอ</b></li><li>อ่านข้อความที่ขึ้นในพื้นที่รายการไฟล์ และดูว่ามีปุ่มให้กดหรือไม่</li><li>เทียบกับสถานะตอนไม่มีไฟล์เลย — ถ้ามี workspace เปล่าให้เปิดดูเทียบข้อความกัน</li><li>เปิด Wi-Fi กลับมาแล้วกดปุ่ม <b>ลองใหม่</b> โดยไม่รีเฟรชทั้งหน้า</li><li>ถ้าเจอกรณีที่ไฟล์ในเครื่องยังขึ้นได้แต่ส่วนคลาวด์พัง ให้บันทึกข้อความที่ขึ้นไว้ด้วย</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ตัดเน็ตแล้วเปิดคลังวิดีโอ</li></ul></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>ตัดเน็ตของเครื่องทดสอบ</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ปิด Wi-Fi แล้วเปิดเมนู "คลังวิดีโอ"</li><li>อ่านข้อความที่แสดงในพื้นที่รายการไฟล์</li><li>เปิด Wi-Fi กลับมาแล้วกดปุ่มลองใหม่</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ตัดเน็ตแล้วเปิดคลังวิดีโอ</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ขึ้นข้อความ <b>โหลดคลังวิดีโอไม่สำเร็จ</b> พร้อมปุ่ม <b>ลองใหม่</b></li><li>ข้อความนี้แยกจากสถานะว่าง <b>ยังไม่มีรายการคลังวิดีโอ</b> อย่างชัดเจน — คนละข้อความและคนละปุ่ม (สถานะว่างจะมีปุ่ม อัปโหลดวิดีโอ แทน)</li><li>กด <b>ลองใหม่</b> หลังเน็ตกลับมาแล้วรายการขึ้นครบ โดยไม่ต้องรีเฟรชทั้งหน้า</li><li>กรณีที่โหลดไฟล์ในเครื่องได้แต่ดึงรายการคลาวด์ไม่ได้ ต้องขึ้นแถบ <b>โหลดรายการไฟล์บนคลาวด์ไม่สำเร็จ — แสดงเฉพาะไฟล์ในเครื่องไปก่อน</b> แทนที่จะทำทั้งหน้าพัง</li><li>ไม่มีหน้าจอขาวและแอปไม่ค้าง</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ขึ้นข้อความว่าโหลดรายการไม่สำเร็จ พร้อมปุ่มลองใหม่</li><li>สถานะนี้แยกจากสถานะว่าง (ไม่มีไฟล์) ชัดเจน</li><li>กดลองใหม่หลังเน็ตกลับมาแล้วรายการขึ้นครบ</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -7464,7 +7467,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 <tr class="featrow" data-featkey="device-portability"><td colspan="7">📁 device-portability <span class="rp"><span class="lv lvl-ui">🌐 4 <span style="color:var(--muted)">+1🆕</span></span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="device-portability"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
-<tr class="trow open hide" data-feat="epic14" data-level="ui" data-prio="P0" onclick="tg(this)">
+<tr class="trow open" data-feat="epic14" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-HH6.1</td>
   <td class="ctitle">ลงแอปใหม่บนอีกเครื่องแล้วล็อกอิน ไฟล์ต้องกลับมาให้เห็น</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -7472,12 +7475,12 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-3192"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-3192"><a href="https://kitdi.atlassian.net/browse/TAK-419" target="_blank" rel="noopener" class="jira-chip">TAK-419</a></td>
 </tr>
-<tr class="detail show hide"><td colspan="7"><div class="card">
+<tr class="detail show"><td colspan="7"><div class="card">
   <div class="h-title">ลงแอปใหม่บนอีกเครื่องแล้วล็อกอิน ไฟล์ต้องกลับมาให้เห็น</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · device-portability · ขั้นที่ 14 · Epic 15</div>
-  <div class="sec"><h4>Precondition</h4><ul><li>อัปโหลดไฟล์ไว้แล้วจากเครื่องที่ 1</li><li>มีเครื่องที่ 2 ที่ลงแอปใหม่และยังไม่เคยล็อกอิน</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เครื่องที่ 2 (ลงแอปใหม่ ยังไม่เคยล็อกอิน): เปิดแอปแล้วเข้าสู่ระบบด้วยบัญชี UAT เดียวกับเครื่องที่ 1</li><li>เลือก workspace เดียวกับเครื่องที่ 1</li><li>เปิดเมนู <b>คลังวิดีโอ</b> แล้วกด <b>โหลดเพิ่ม</b> จนหมด</li><li>เทียบจำนวนไฟล์และชื่อไฟล์กับเครื่องที่ 1</li><li>เลือกการ์ด <b>บนคลาวด์</b> 1 ใบ กด <b>ดาวน์โหลด</b> จนเสร็จ แล้วลองเปิดดูตัวอย่างคลิป</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>เครื่องที่ 2 ลงแอปใหม่ · workspace เดียวกัน</li></ul></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>อัปโหลดไฟล์ไว้แล้วจากเครื่องที่ 1</li><li>มีเครื่องที่ 2 ที่ลงแอปใหม่และยังไม่เคยล็อกอิน</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ที่เครื่องที่ 2 เปิดแอปแล้วเข้าสู่ระบบด้วยบัญชี UAT เดียวกัน</li><li>เลือก workspace เดียวกับเครื่องที่ 1</li><li>เปิดเมนู "คลังวิดีโอ"</li><li>เทียบรายการไฟล์กับเครื่องที่ 1</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>เครื่องที่ 2 ลงแอปใหม่ · workspace เดียวกัน</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>เห็นรายการไฟล์ของ workspace ครบเหมือนเครื่องที่ 1 ทั้งที่เพิ่งลงแอปใหม่</li><li>ไฟล์ทั้งหมดขึ้นเป็นการ์ด <b>บนคลาวด์</b> พร้อมปุ่ม <b>ดาวน์โหลด</b> เพราะยังไม่มีไฟล์ในเครื่องนี้</li><li>ดาวน์โหลดลงเครื่องที่ 2 แล้วใช้งานได้จริง — เปิดดูตัวอย่างได้ และเลือกไปใช้ในบัญชีไลฟ์ได้</li><li>ไม่ต้องอัปโหลดไฟล์ใหม่จากเครื่องที่ 2 เลย</li><li>กล่อง <b>พื้นที่จัดเก็บ</b> แสดงตัวเลขชุดเดียวกับเครื่องที่ 1</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>เห็นรายการไฟล์ของ workspace ครบเหมือนเครื่องที่ 1</li><li>ดาวน์โหลดไฟล์ลงเครื่องที่ 2 แล้วใช้งานได้</li><li>ไม่ต้องอัปโหลดไฟล์ใหม่ทั้งหมด</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -7492,7 +7495,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-3192" placeholder="วางลิงก์ Jira หรือพิมพ์ TAK-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-3192">+ เพิ่มลิงก์</button></div>
   </div>
 </div></td></tr>
-<tr class="trow hide" data-feat="epic14" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow" data-feat="epic14" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-HH6.2</td>
   <td class="ctitle">บัญชี TikTok และการตั้งค่ายังไม่ตามมาด้วย (ตามขอบเขต MVP-2)</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -7500,12 +7503,12 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-3193"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-3193"><a href="https://kitdi.atlassian.net/browse/TAK-420" target="_blank" rel="noopener" class="jira-chip">TAK-420</a></td>
 </tr>
-<tr class="detail hide"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">บัญชี TikTok และการตั้งค่ายังไม่ตามมาด้วย (ตามขอบเขต MVP-2)</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · device-portability · ขั้นที่ 14 · Epic 15</div>
-  <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>อยู่ที่เครื่องที่ 2 ที่เพิ่งลงแอปใหม่และล็อกอินแล้ว</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เครื่องที่ 2 (เพิ่งลงแอปใหม่และล็อกอินแล้ว): ไปเมนู <b>บัญชีไลฟ์</b> แล้วดูรายการบัญชี</li><li>เทียบรายการบัญชีกับที่มีอยู่บนเครื่องที่ 1</li><li>เปิดหน้าตั้งค่า แล้วเทียบค่าที่เคยตั้งไว้จากเครื่องที่ 1</li><li>กลับไปเมนู <b>คลังวิดีโอ</b> แล้วเทียบรายการไฟล์อีกครั้ง</li><li>ไล่อ่านหาข้อความหรือคำอธิบายในหน้าที่บอกผู้ใช้ว่าอะไรตามมาบ้าง อะไรต้องตั้งใหม่</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>เครื่องที่ 2 ลงใหม่</li></ul></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>อยู่ที่เครื่องที่ 2 ที่เพิ่งลงแอปใหม่และล็อกอินแล้ว</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ที่เครื่องที่ 2 ไปที่ หน้าหลัก (บัญชีไลฟ์) แล้วดูรายการบัญชี TikTok</li><li>เปิดหน้าตั้งค่าดูค่าที่เคยตั้งไว้ที่เครื่องที่ 1</li><li>เปิดเมนู "คลังวิดีโอ" เทียบอีกครั้ง</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>เครื่องที่ 2 ลงใหม่</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li><b>คลังวิดีโอ</b> ตามมาครบ — ไฟล์เห็นเหมือนเครื่องที่ 1</li><li><b>บัญชี TikTok ยังไม่ตามมา</b> ต้องเพิ่มและเชื่อมใหม่ที่เครื่องนี้ (เป็นขอบเขตที่ตั้งใจของ MVP-2 ไม่ใช่บั๊ก)</li><li>ค่าตั้งค่าอื่นที่ผูกกับเครื่องยังไม่ตามมาเช่นกัน</li><li>มีข้อความหรือคำอธิบายในแอปที่ทำให้ผู้ใช้เข้าใจว่าอะไรตามมา อะไรต้องตั้งใหม่ — <b>ถ้าไม่มีข้อความอธิบายเลย ให้ถือว่าไม่ผ่านข้อนี้</b> และบันทึกไว้ว่าเป็นช่องว่างด้าน UX</li><li>ไม่มีหน้าจอ error และไม่มีรายการบัญชีที่ขึ้นค้างแบบไม่บอกสาเหตุ</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ไฟล์วิดีโอกลับมาให้เห็น</li><li>บัญชี TikTok และการตั้งค่ายังไม่ตามมา ต้องเพิ่มใหม่ที่เครื่องนี้</li><li>มีข้อความหรือคำอธิบายให้ผู้ใช้เข้าใจว่าอะไรตามมาบ้าง ไม่ใช่ปล่อยให้งง</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -7531,9 +7534,9 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">ตัดเน็ตแล้วไลฟ์ไฟล์ที่โหลดไว้ในเครื่อง ต้องยังไลฟ์ได้</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · device-portability · ขั้นที่ 14 · Epic 15</div>
-  <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>มีบัญชี TikTok เชื่อมไว้ในระบบแล้วอย่างน้อย 1 บัญชี และคุกกี้ยังไม่หมดอายุ</li><li>ไฟล์ที่จะใช้ไลฟ์ถูกดาวน์โหลดลงเครื่องเรียบร้อยแล้ว</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ยืนยันว่าไฟล์ที่จะใช้ไลฟ์มีป้าย <b>ในเครื่อง</b> แล้ว (ไม่ใช่การ์ด บนคลาวด์)</li><li>ไปเมนู <b>บัญชีไลฟ์</b> เปิดบัญชีที่ต้องการ เลือกไฟล์นั้น แล้วกด <b>เริ่มไลฟ์</b> จนภาพออกในห้อง TikTok ปกติ</li><li>ให้ทีม dev หรือ DevOps บล็อกการเชื่อมต่อไปยัง <b>คลาวด์เก็บไฟล์อย่างเดียว</b> (ผ่าน firewall / hosts / proxy) โดยยังให้เน็ตทั่วไปและ TikTok ใช้ได้ — ถ้าจัดสภาพนี้ไม่ได้ ให้บันทึกเป็น BLOCKED พร้อมเหตุผล อย่าเดาผล</li><li>ยืนยันว่าคลาวด์ถูกตัดจริง โดยเปิดเมนู <b>คลังวิดีโอ</b> แล้วต้องเห็นแถบ โหลดรายการไฟล์บนคลาวด์ไม่สำเร็จ</li><li>กลับไปเฝ้าดูภาพในห้องไลฟ์ TikTok ปล่อยให้คลิปวนอย่างน้อย 2 รอบ</li><li>เปิดการเชื่อมต่อคลาวด์กลับมา แล้วดูว่าไลฟ์ยังปกติและรายการคลาวด์กลับมาเองหรือไม่</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ไฟล์อยู่ในเครื่องแล้ว · ตัดการเชื่อมต่อคลาวด์เก็บไฟล์</li></ul></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>มีบัญชี TikTok เชื่อมไว้ในระบบแล้วอย่างน้อย 1 บัญชี และคุกกี้ยังไม่หมดอายุ</li><li>ไฟล์ที่จะใช้ไลฟ์ถูกดาวน์โหลดลงเครื่องเรียบร้อยแล้ว</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ไปที่ หน้าหลัก (บัญชีไลฟ์) แล้วเปิดบัญชีไลฟ์ที่ต้องการ</li><li>กด "เริ่มไลฟ์" แล้วยืนยันให้ไลฟ์ปกติก่อน</li><li>ตัดการเชื่อมต่อไปยังคลาวด์เก็บไฟล์ตามที่ทีมจัดเตรียมให้ แต่ยังมีเน็ตทั่วไป</li><li>เฝ้าดูภาพในห้องไลฟ์ TikTok แล้วปล่อยให้คลิปวนอย่างน้อย 2 รอบ</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ไฟล์อยู่ในเครื่องแล้ว · ตัดการเชื่อมต่อคลาวด์เก็บไฟล์</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ไลฟ์ยังออกอากาศต่อได้จากไฟล์ในเครื่อง ภาพไม่ดับและไม่มีจอดำ</li><li>คลิปวนซ้ำได้ตามปกติอย่างน้อย 2 รอบ ตอนวนกลับไม่สะดุด</li><li>ไม่มีข้อความ error เรื่องโหลดไฟล์หรือคลาวด์เด้งขึ้นมาทับหน้าจอไลฟ์</li><li>หน้า <b>คลังวิดีโอ</b> ยังเปิดได้และยังเห็นไฟล์ที่มีป้าย <b>ในเครื่อง</b> — พังเฉพาะส่วนคลาวด์เท่านั้น</li><li>เปิดคลาวด์กลับมาแล้วแถบ error หายเอง รายการคลาวด์กลับมาโดยไม่ต้องรีสตาร์ตแอป และไลฟ์ไม่สะดุดจากเหตุนี้</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ไลฟ์ยังออกอากาศต่อได้จากไฟล์ในเครื่อง</li><li>คลิปวนซ้ำได้ตามปกติ</li><li>ไม่มีข้อความ error เรื่องโหลดไฟล์ระหว่างไลฟ์</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -7548,7 +7551,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-3194" placeholder="วางลิงก์ Jira หรือพิมพ์ TAK-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-3194">+ เพิ่มลิงก์</button></div>
   </div>
 </div></td></tr>
-<tr class="trow hide" data-feat="epic14" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow" data-feat="epic14" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-HH6.4</td>
   <td class="ctitle">อัปโหลดไฟล์ใหม่จากเครื่องที่หนึ่ง อีกเครื่องเห็นไฟล์นั้น</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -7556,12 +7559,12 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-3195"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-3195"><a href="https://kitdi.atlassian.net/browse/TAK-419" target="_blank" rel="noopener" class="jira-chip">TAK-419</a></td>
 </tr>
-<tr class="detail hide"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">อัปโหลดไฟล์ใหม่จากเครื่องที่หนึ่ง อีกเครื่องเห็นไฟล์นั้น</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · device-portability · ขั้นที่ 14 · Epic 15</div>
-  <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>มีเครื่องทดสอบ 2 เครื่องที่ลงแอปแล้ว และล็อกอินด้วยบัญชี UAT ตัวเดียวกัน (workspace เดียวกัน)</li><li>ทั้งสองเครื่องเปิดคลังวิดีโอของ workspace เดียวกันอยู่</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เปิด <b>คลังวิดีโอ</b> ค้างไว้ทั้งสองเครื่อง และตั้งจัดเรียงเป็น <b>ใหม่สุด</b> ทั้งคู่</li><li>เครื่องที่ 1: กด <b>อัปโหลดวิดีโอ</b> อัปโหลด demo-promo-30s.mp4 จนขึ้นข้อความ อัปโหลดสำเร็จ</li><li>เครื่องที่ 1: รอจนป้ายบนการ์ดเป็น <b>สำรองบนคลาวด์แล้ว</b> (ถ้ายังเป็น กำลังสำรอง ให้รอก่อน)</li><li>เครื่องที่ 2: <b>ไม่ต้องปิดเปิดแอป</b> ให้สลับไปแท็บ <b>เพลย์ลิสต์</b> แล้วกลับมาแท็บ <b>คลังวิดีโอ</b> หรือรีเฟรชหน้า</li><li>หาไฟล์ demo-promo-30s.mp4 แล้วเทียบชื่อกับขนาดที่แสดงบนการ์ด</li><li>กด <b>ดาวน์โหลด</b> ที่เครื่องที่ 2 จนเสร็จ</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ไฟล์ใหม่: demo-promo-30s.mp4</li></ul></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>มีเครื่องทดสอบ 2 เครื่องที่ลงแอปแล้ว และล็อกอินด้วยบัญชี UAT ตัวเดียวกัน (workspace เดียวกัน)</li><li>ทั้งสองเครื่องเปิดคลังวิดีโอของ workspace เดียวกันอยู่</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>ที่เครื่องที่ 1 เปิดเมนู "คลังวิดีโอ" แล้วกด "อัปโหลดวิดีโอ" อัปโหลดไฟล์ใหม่จนสำเร็จ</li><li>ที่เครื่องที่ 2 รีเฟรชหรือเปิดเมนู "คลังวิดีโอ" ใหม่</li><li>หาไฟล์ที่เพิ่งอัปโหลด</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ไฟล์ใหม่: demo-promo-30s.mp4</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>เครื่องที่ 2 เห็นไฟล์ใหม่หลังรีเฟรชหรือกลับเข้าแท็บ โดยไม่ต้องปิดเปิดแอป</li><li>ไฟล์ขึ้นเป็นการ์ด <b>บนคลาวด์</b> พร้อมปุ่ม <b>ดาวน์โหลด</b></li><li>ชื่อไฟล์และขนาดตรงกับที่อัปโหลดจากเครื่องที่ 1</li><li>กดดาวน์โหลดแล้วโหลดสำเร็จ การ์ดเปลี่ยนเป็นการ์ดปกติพร้อมป้าย <b>ในเครื่อง</b></li><li>ถ้าเครื่องที่ 1 ยังสำรองไม่เสร็จ (ป้ายยังเป็น กำลังสำรอง) เครื่องที่ 2 ยังไม่จำเป็นต้องเห็นไฟล์ — ให้รอจนสำรองเสร็จก่อนค่อยตัดสินผล</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>เครื่องที่ 2 เห็นไฟล์ใหม่หลังรีเฟรช</li><li>ชื่อและขนาดตรงกับที่อัปโหลดจากเครื่องที่ 1</li><li>ดาวน์โหลดลงเครื่องที่ 2 ได้</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -7587,9 +7590,9 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">ไฟล์เดิมที่ยังอยู่แค่ในเครื่อง ต้องใช้งานได้ปกติระหว่างช่วงย้ายขึ้นคลาวด์</div>
   <div class="h-prio">Priority: <b>P2</b> · UI · device-portability · ขั้นที่ 14 · Epic 15</div>
-  <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>มีไฟล์เก่าที่อัปโหลดไว้ก่อนระบบเก็บไฟล์บนคลาวด์จะเปิดใช้</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เปิด <b>คลังวิดีโอ</b> แล้วหาไฟล์เก่าที่อัปโหลดไว้ก่อนเปิดใช้ระบบเก็บไฟล์บนคลาวด์</li><li>ดูป้ายบนการ์ดของไฟล์เก่าเหล่านั้นว่าเป็น <b>กำลังสำรอง</b> / <b>สำรองบนคลาวด์แล้ว</b> หรือยังไม่มีป้ายสำรองเลย</li><li>เทียบกับไฟล์ที่เพิ่งอัปโหลดใหม่ในรอบทดสอบนี้ ว่าป้ายต่างกันอย่างไร</li><li>เลือกไฟล์เก่า 1 ไฟล์ไปเริ่มไลฟ์ 1 รอบ แล้วดูภาพในห้อง TikTok</li><li>กลับมาที่คลังวิดีโอ แล้วดูว่าไฟล์เก่ายังอยู่ครบและป้ายเปลี่ยนไปหรือไม่</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ไฟล์เก่าที่ยังไม่ได้ย้ายขึ้นคลาวด์</li></ul></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>มีไฟล์เก่าที่อัปโหลดไว้ก่อนระบบเก็บไฟล์บนคลาวด์จะเปิดใช้</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เปิดเมนู "คลังวิดีโอ" แล้วหาไฟล์เก่าเหล่านั้น</li><li>ดูสถานะว่าอยู่บนคลาวด์แล้วหรือยังอยู่แค่ในเครื่อง</li><li>เลือกไฟล์เก่าไปเริ่มไลฟ์ 1 รอบ</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ไฟล์เก่าที่ยังไม่ได้ย้ายขึ้นคลาวด์</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ไฟล์เก่ายังแสดงในคลังวิดีโอครบ ไม่มีไฟล์หายไปจากรายการ</li><li>ป้ายบนการ์ดบอกได้ด้วยตาว่าไฟล์ไหนสำรองขึ้นคลาวด์แล้ว ไฟล์ไหนยังอยู่แค่ในเครื่อง</li><li>ไฟล์เก่าที่ยังไม่ขึ้นคลาวด์ <b>ยังเลือกไปไลฟ์ได้ตามปกติ</b> ภาพออกและวนซ้ำได้</li><li>ไม่มีข้อความ error หรือป้ายเตือนที่ทำให้เข้าใจผิดว่าไฟล์ใช้ไม่ได้</li><li>ถ้าระบบทยอยสำรองไฟล์เก่าขึ้นคลาวด์ให้เอง ป้ายต้องเปลี่ยนเป็น <b>สำรองบนคลาวด์แล้ว</b> โดยผู้ใช้ไม่ต้องอัปโหลดซ้ำ</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ไฟล์เก่ายังเห็นในคลังวิดีโอและใช้ไลฟ์ได้</li><li>สถานะบอกได้ว่าไฟล์ไหนอยู่บนคลาวด์แล้วบ้าง</li><li>ไม่มีไฟล์เก่าหายไปจากรายการ</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -9010,11 +9013,11 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="detail show"><td colspan="7"><div class="card">
   <div class="h-title">เข้าหน้า War Room (staff) แล้วเห็น KPI รวม + ตารางไลฟ์</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · war-room · Epic 26 · Story 26.4</div>
-  <div class="sec"><h4>Precondition</h4><ul><li>ได้รับ URL ของ central และ username/password ของ staff จากทีม DevOps แล้ว</li><li>central มีข้อมูลไลฟ์ที่ sync ขึ้นมาแล้วอย่างน้อย 1 workspace</li><li>ใช้เบราว์เซอร์ Chrome บนเครื่องทดสอบ Windows</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ Chrome บนเครื่องทดสอบ</li><li>พิมพ์ URL ของหน้า War Room ลงในช่องที่อยู่: &lt;central-base-url&gt;/dashboard แล้วกด Enter</li><li>เบราว์เซอร์เด้งกล่องขอชื่อผู้ใช้/รหัสผ่าน (Basic auth · realm takra-admin) — ใส่บัญชี staff แล้วกดตกลง</li><li>รอหน้าโหลดเสร็จ (ระหว่างรอจะเห็นข้อความ กำลังโหลด…)</li><li>อ่านแถบหัวข้อด้านบนสุดของหน้า และดูชื่อแท็บของเบราว์เซอร์</li><li>ดูแถวการ์ดตัวเลข KPI ใต้แผงสรุปยอดขาย</li><li>เลื่อนลงไปที่แผง แยกตาม workspace แล้วอ่านบรรทัดใต้หัวข้อแผงกับหัวตาราง</li><li>เลื่อนดูแผงที่เหลือในหน้าจนสุด</li></ol></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เปิดหน้าแดชบอร์ด War Room ของ central service</li><li>ใส่รหัสผ่าน staff ผ่านแล้ว</li><li>มีข้อมูลไลฟ์ที่ sync มา</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดหน้า War Room</li><li>อ่านหัวข้อหน้า</li><li>ดูตัวเลข KPI ด้านบน</li><li>ดูตารางไลฟ์</li></ol></div>
   <div class="sec"><h4>Test Data</h4><ul><li>เข้าถึง: central/dashboard (staff · Basic auth)</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>แถบบนสุดแสดงโลโก้ Takra Rerun และหัวข้อ <b>War Room</b> · ชื่อแท็บเบราว์เซอร์เป็น Takra Rerun · War Room</li><li>แถบบนมีปุ่มช่วงเวลา <b>วันนี้ · 7 วัน · 30 วัน · 90 วัน · ทั้งหมด</b> พร้อมข้อความ อัปเดต &lt;เวลา&gt; และปุ่ม <b>รีเฟรช</b></li><li>มีแผงสรุปยอดขายรวมขอบเขต <b>ทุก workspace</b> พร้อมบรรทัด <b>คิดจากช่วงเวลาที่เลือก</b> และค่าเฉลี่ย ยอดขายต่อไลฟ์ · ชิ้นต่อไลฟ์ · ยอดขายต่อวัน</li><li>มีการ์ด KPI 6 ใบ: <b>ไลฟ์ทั้งหมด · จำนวนชิ้น · ผู้ชมสูงสุด · ผู้ชมสะสม · แชท · ตอบอัตโนมัติ</b></li><li>แผง <b>แยกตาม workspace</b> มีบรรทัดใต้หัวข้อว่า <b>เรียงตามยอดขาย · คลิกแถวเพื่อดูรายไลฟ์</b> และหัวตารางคือ <b>Workspace · ยอดขาย (฿) · สัดส่วน · ไลฟ์ · ชิ้น · ผู้ชมสูงสุด · แชท · ตอบอัตโนมัติ</b></li><li>ตารางรายไลฟ์ (บัญชี · เริ่ม / ระยะเวลา · …) <b>ไม่ได้อยู่ในหน้านี้</b> แต่อยู่ในหน้าเจาะลึกหลังคลิกแถว workspace — ตรวจที่ TC-WR.3</li><li>มีแผง <b>จำนวนไลฟ์รายวัน</b> พร้อมบรรทัด <b>นับตามวันที่เริ่มไลฟ์ (เวลาไทย)</b></li><li>ไม่มีหน้าจอ login ของแอปเอง — การยืนยันตัวตนใช้กล่อง Basic auth ของเบราว์เซอร์เท่านั้น</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>หน้าแสดงหัวข้อ "War Room"</li><li>มี KPI: ไลฟ์ทั้งหมด · ยอดขายรวม · ผู้ชมสูงสุด · ค่าเฉลี่ย ฯลฯ</li><li>มีตารางไลฟ์: บัญชี · เริ่ม / ระยะเวลา · ผู้ชมสูงสุด · ผู้ชมสะสม · ยอดขาย (฿) · แชท · ตอบอัตโนมัติ พร้อมหมายเหตุ "เรียงตามยอดขาย · คลิกแถวเพื่อดูรายไลฟ์"</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -9041,10 +9044,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="detail show"><td colspan="7"><div class="card">
   <div class="h-title">กรองช่วงเวลาและมุมมองต่อ workspace</div>
   <div class="h-prio">Priority: <b>P2</b> · UI · war-room · Epic 26 · Story 26.4</div>
-  <div class="sec"><h4>Precondition</h4><ul><li>ได้รับ URL ของ central และบัญชี staff จากทีม DevOps แล้ว</li><li>central มีข้อมูลไลฟ์ที่ครอบคลุมมากกว่า 1 ช่วงเวลา และมีมากกว่า 1 workspace</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ Chrome แล้วเข้า &lt;central-base-url&gt;/dashboard ผ่านกล่อง Basic auth จนเห็นหน้า War Room</li><li>จดตัวเลขการ์ด KPI และจำนวนแถวในตาราง แยกตาม workspace ของช่วงเวลาปัจจุบันไว้ก่อน</li><li>ที่แถบบน กดปุ่มช่วงเวลา <b>วันนี้</b></li><li>ดูว่าการ์ด KPI และตารางเปลี่ยนตามหรือไม่</li><li>กดปุ่ม <b>ทั้งหมด</b> แล้วเทียบตัวเลขอีกครั้งกับที่จดไว้</li><li>คลิกแถว workspace หนึ่งแถวในตาราง แยกตาม workspace</li><li>ดูแถบหัวข้อด้านบนและหัวข้อของหน้าที่เปิดขึ้น</li><li>กดปุ่ม <b>← ภาพรวมทุก workspace</b> เพื่อกลับหน้ารวม</li><li>กดปุ่ม <b>รีเฟรช</b> ที่แถบบน แล้วดูว่าช่วงเวลาที่เลือกไว้ยังอยู่หรือไม่</li></ol></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>อยู่ที่หน้า War Room ที่มีข้อมูล</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เลือกตัวกรองช่วงเวลา (เช่น วันนี้ / ทั้งหมด)</li><li>สลับมุมมอง "ทุก workspace" / "แยกตาม workspace"</li><li>สังเกต KPI และตารางที่ปรับตาม</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ปุ่มช่วงเวลามี 5 ตัวเลือกแบบสำเร็จรูป (<b>วันนี้ · 7 วัน · 30 วัน · 90 วัน · ทั้งหมด</b>) — <b>ไม่ใช่ตัวเลือกวันที่แบบปฏิทิน</b></li><li>เปลี่ยนช่วงเวลาแล้ว การ์ด KPI และตาราง แยกตาม workspace ปรับตามช่วงที่เลือกทันที</li><li>แผงสรุปยังมีบรรทัด <b>คิดจากช่วงเวลาที่เลือก</b> กำกับอยู่ทุกช่วงเวลา</li><li>คลิกแถว workspace แล้วเข้าสู่หน้าเจาะลึกของ workspace นั้น — ชื่อ workspace ขึ้นทั้งที่แถบบนและเป็นหัวข้อของหน้า</li><li>หน้าเจาะลึกมีปุ่ม <b>← ภาพรวมทุก workspace</b> กดแล้วกลับมาหน้ารวมได้</li><li>ระบบ <b>ไม่มีปุ่มสลับมุมมอง</b> ทุก workspace / แยกตาม workspace — ทุก workspace คือขอบเขตของแผงสรุป ส่วน แยกตาม workspace คือชื่อแผงตารางในหน้าเดียวกัน การเปลี่ยนมุมมองทำผ่านการคลิกแถวและปุ่มย้อนกลับเท่านั้น</li><li>กด <b>รีเฟรช</b> แล้วช่วงเวลาที่เลือกไว้ไม่ถูกรีเซ็ต และข้อความ อัปเดต &lt;เวลา&gt; เปลี่ยนเป็นเวลาปัจจุบัน</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>กรองช่วงเวลาแล้ว KPI และตารางปรับตามช่วงที่เลือก (มีหมายเหตุ "คิดจากช่วงเวลาที่เลือก")</li><li>สลับมุมมอง "ทุก workspace" / "แยกตาม workspace" ได้</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -9071,10 +9074,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">คลิกแถวไลฟ์เพื่อดูรายไลฟ์ + สินค้าขายดี</div>
   <div class="h-prio">Priority: <b>P2</b> · UI · war-room · Epic 26 · Story 26.4</div>
-  <div class="sec"><h4>Precondition</h4><ul><li>ได้รับ URL ของ central และบัญชี staff จากทีม DevOps แล้ว</li><li>มี workspace ที่มีไลฟ์อย่างน้อย 1 รายการที่ขายสินค้าได้ และถ้าเป็นไปได้ให้มีไลฟ์ที่ไม่มีสินค้าขายได้ด้วย 1 รายการ</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ Chrome แล้วเข้า &lt;central-base-url&gt;/dashboard ผ่านกล่อง Basic auth จนเห็นหน้า War Room</li><li>ที่ตาราง <b>แยกตาม workspace</b> คลิกแถวของ workspace ที่มีไลฟ์ เพื่อเข้าหน้าเจาะลึก</li><li>อ่านหัวตารางรายไลฟ์และบรรทัดคำอธิบายใต้หัวข้อแผง</li><li>คลิกแถวไลฟ์หนึ่งแถว</li><li>ดูส่วนที่กางออกมาใต้แถวนั้น</li><li>คลิกแถวเดิมซ้ำอีกครั้ง เพื่อดูว่าปิดกลับได้หรือไม่</li><li>ถ้ามีปุ่ม <b>ดูอีก N ไลฟ์</b> ให้กดแล้วดูว่ารายการยาวขึ้นหรือไม่</li><li>หาไลฟ์ที่ไม่มีสินค้าขายได้ แล้วคลิกกางดู</li></ol></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>อยู่ที่ตารางไลฟ์ในหน้า War Room</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>คลิกแถวไลฟ์หนึ่ง</li><li>ดูรายละเอียดที่แสดง</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>หน้าเจาะลึกมีตารางรายไลฟ์ หัวตาราง <b>บัญชี · เริ่ม / ระยะเวลา · ยอดขาย · ชิ้น · สินค้า · ผู้ชมสูงสุด · ผู้ชมสะสม · แชท · ตอบอัตโนมัติ</b></li><li>ใต้หัวข้อแผงมีบรรทัด <b>ล่าสุดอยู่บนสุด · คลิกแถวเพื่อดูสินค้าขายดี · ชื่อบัญชีเป็นค่าที่บันทึกไว้ตอนไลฟ์นั้น</b></li><li>คลิกแถวไลฟ์แล้วมีส่วนกางออกหัวข้อ <b>สินค้าขายดีของไลฟ์นี้</b> พร้อมตาราง <b>สินค้า · ยอดขาย (฿) · ชิ้น</b></li><li>คลิกซ้ำแล้วส่วนที่กางออกปิดกลับได้ — เป็นการกาง/หุบในหน้าเดิม ไม่ใช่เปิดหน้าใหม่</li><li>ไลฟ์ที่ไม่มีสินค้าขายได้ กางออกแล้วขึ้นข้อความ <b>ไลฟ์นี้ไม่มีข้อมูลสินค้าที่ขายได้</b></li><li>ถ้ามีไลฟ์มากกว่าที่แสดง จะมีปุ่ม <b>ดูอีก N ไลฟ์</b> กดแล้วรายการยาวขึ้นจนครบ</li><li>ตารางไม่มีคอลัมน์ผู้ดูแล — ถูกซ่อนไว้โดยตั้งใจเพราะข้อมูลยังว่างทุกแถว ไม่ถือว่าเป็นบั๊ก</li><li>ข้อมูลลึกสุดที่เปิดได้คือสินค้าขายดี — ไม่มีลิงก์ไปคอมเมนต์ดิบหรือ timeline (อยู่แค่ในเครื่อง desktop ตามขอบเขต Epic 26)</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>คลิกแถวแล้วเห็นรายละเอียดของไลฟ์นั้น รวม "สินค้าขายดีของไลฟ์นี้"</li><li>ถ้าไลฟ์ไม่มีสินค้าที่ขายได้ ขึ้น "ไลฟ์นี้ไม่มีข้อมูลสินค้าที่ขายได้"</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -9101,10 +9104,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">รหัสผ่าน staff หมดอายุ → แจ้งให้เข้าสู่ระบบใหม่</div>
   <div class="h-prio">Priority: <b>P2</b> · UI · war-room · Epic 26 · Story 26.4 (auth)</div>
-  <div class="sec"><h4>Precondition</h4><ul><li>เข้าหน้า War Room ด้วยบัญชี staff ได้ตามปกติแล้ว</li><li>ประสานทีม DevOps ให้เปลี่ยนหรือเพิกถอนรหัสผ่าน staff ได้ระหว่างทดสอบ</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ Chrome แล้วเข้า &lt;central-base-url&gt;/dashboard ผ่านกล่อง Basic auth จนเห็นหน้า War Room ปกติก่อน</li><li>ให้ทีม DevOps เปลี่ยนหรือเพิกถอนรหัสผ่าน staff ระหว่างที่ยังเปิดหน้าค้างอยู่ — ถ้าจัดไม่ได้ ให้เปิดหน้าต่างส่วนตัว (Incognito) แล้วใส่รหัสผิดแทน</li><li>กลับมาที่หน้าเดิม แล้วกดปุ่ม <b>รีเฟรช</b> ที่แถบบนของหน้า (ไม่ใช่ปุ่มรีเฟรชของเบราว์เซอร์)</li><li>อ่านข้อความที่ขึ้นบนหน้า ทั้งบรรทัดหัวข้อและบรรทัดคำอธิบายใต้หัวข้อ</li><li>ดูว่ามีปุ่มให้กดต่อหรือไม่ แล้วกดปุ่มนั้น</li><li>ใส่รหัสผ่านชุดใหม่ในกล่อง Basic auth ของเบราว์เซอร์</li></ol></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>อยู่ที่หน้า War Room · session staff หมดอายุ</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>ทำให้ session หมดอายุ (หรือรอ)</li><li>รีเฟรช/เรียกข้อมูลใหม่</li><li>อ่านข้อความ</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>เรียกข้อมูลไม่ผ่านแล้วหน้าแสดงหัวข้อ <b>ต้องเข้าสู่ระบบใหม่</b></li><li>ใต้หัวข้อมีคำแนะนำ <b>โหลดหน้านี้ใหม่เพื่อใส่รหัสผ่านอีกครั้ง</b></li><li>มีปุ่ม <b>โหลดใหม่</b> ให้กดได้ (ชื่อปุ่มในสถานะ error คือ โหลดใหม่ ไม่ใช่ รีเฟรช)</li><li>กดปุ่มแล้วเบราว์เซอร์เด้งกล่อง Basic auth ขึ้นมาใหม่</li><li>ใส่รหัสชุดใหม่ถูกต้องแล้วกลับเข้าหน้า War Room ได้ตามปกติ และข้อมูลขึ้นครบ</li><li>ตลอดกระบวนการไม่มีการแสดงรหัสผ่านหรือ header ยืนยันตัวตนบนหน้าจอ</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>เห็นข้อความ "ต้องเข้าสู่ระบบใหม่" พร้อมคำแนะนำ "โหลดหน้านี้ใหม่เพื่อใส่รหัสผ่านอีกครั้ง"</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -9131,10 +9134,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">ยังไม่มีข้อมูล หรือโหลดผิดพลาด แสดงสถานะที่เหมาะสม</div>
   <div class="h-prio">Priority: <b>P2</b> · UI · war-room · Epic 26 · Story 26.4 (empty/error)</div>
-  <div class="sec"><h4>Precondition</h4><ul><li>ได้รับ URL ของ central และบัญชี staff จากทีม DevOps แล้ว</li><li>มี environment ที่ยังไม่มีไลฟ์ sync เข้ามาเลย สำหรับตรวจสถานะว่างทั้งระบบ (ถ้าไม่มี ให้ข้ามข้อนั้นแล้วบันทึกเหตุผล)</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ Chrome แล้วเข้า &lt;central-base-url&gt;/dashboard ผ่านกล่อง Basic auth</li><li>กรณีไม่มีข้อมูลทั้งระบบ: ใช้ central ที่ยังไม่มีไลฟ์ sync เข้ามาเลย แล้วอ่านข้อความในพื้นที่ตาราง</li><li>กรณีไม่มีข้อมูลเฉพาะช่วงเวลา: กลับมาที่ environment ที่มีข้อมูล แล้วกดปุ่มช่วงเวลา <b>วันนี้</b> ในวันที่ยังไม่มีไลฟ์ แล้วอ่านข้อความและคำแนะนำที่ขึ้น</li><li>คลิกเข้า workspace ที่ไม่มีไลฟ์ในช่วงที่เลือก แล้วอ่านข้อความในตารางรายไลฟ์</li><li>กรณีโหลดผิดพลาด: เปิด DevTools แท็บ Network ตั้งเป็น Offline แล้วกดปุ่ม <b>รีเฟรช</b> ที่แถบบน</li><li>อ่านข้อความหัวข้อและคำอธิบายที่ขึ้น แล้วดูว่ามีปุ่มอะไรให้กด</li><li>ปิด Offline แล้วกดปุ่มที่ขึ้นในสถานะผิดพลาด</li></ol></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>หน้า War Room ที่ workspace/ช่วงเวลายังไม่มีข้อมูล หรือจำลอง error</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดหน้า/ช่วงเวลาที่ไม่มีข้อมูล</li><li>จำลองการโหลดผิดพลาด</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ไม่มีข้อมูลทั้งระบบ → ขึ้นข้อความ <b>ยังไม่มีข้อมูลไลฟ์</b></li><li>ไม่มีข้อมูลเฉพาะช่วงที่เลือก → ขึ้น <b>ไม่มีไลฟ์ในช่วง N วันที่ผ่านมา</b> พร้อมคำแนะนำให้ <b>เลือกช่วงเวลาที่กว้างขึ้น หรือ ทั้งหมด ที่แถบด้านบน</b></li><li>workspace ที่ไม่มีไลฟ์ในช่วงนั้น → ในตารางรายไลฟ์ขึ้น <b>ยังไม่มีไลฟ์ของ workspace นี้ในช่วงเวลาที่เลือก</b></li><li>โหลดผิดพลาด → ขึ้นหัวข้อ <b>เรียกข้อมูลไม่สำเร็จ (รหัสสถานะ)</b> พร้อมคำแนะนำ <b>ลองรีเฟรชอีกครั้ง</b> และปุ่ม <b>โหลดใหม่</b></li><li>สามสถานะ กำลังโหลด… / ว่าง / ผิดพลาด แยกออกจากกันได้ชัดเจน ไม่ใช้ข้อความเดียวกัน</li><li>ปิด Offline แล้วกด <b>โหลดใหม่</b> ข้อมูลกลับมาแสดงครบ ไม่ต้องใส่รหัสผ่านซ้ำ</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>กรณีไม่มีข้อมูล เห็น "ยังไม่มีข้อมูลไลฟ์" หรือ "ยังไม่มีข้อมูลในช่วงนี้"</li><li>กรณีผิดพลาด เห็น "เกิดข้อผิดพลาด" พร้อม "ลองรีเฟรชอีกครั้ง"</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
