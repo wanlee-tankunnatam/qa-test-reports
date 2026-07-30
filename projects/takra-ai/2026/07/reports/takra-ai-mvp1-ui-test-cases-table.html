@@ -1085,6 +1085,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   "tc-214": {
     "actual": "ทดสอบผ่าน: แสดง CPU cores 10 (OK), หน่วยความจำ ≥16GB (OK), WebGL: ANGLE (Apple, ANGLE Metal Renderer: Apple M5) (OK), JS benchmark 15ms (OK), ขนาดหน้าจอ 1062×667 · 2.0x (OK) คำตัดสินสรุป \"✓ เครื่องพร้อม render avatar 1080p ลื่นไหล\" ตรงตาม Expected Result",
     "st": "pass"
+  },
+  "tc-215": {
+    "actual": "พบบัค: กด \"หยุด\" ก่อนครบ 60 วินาที (หยุดที่ 14s/60s ระหว่างเช็คความเสถียร) ระบบกลับแสดงผลบวก \"✓ พร้อมไลฟ์ HD\" (สีเขียว) แทนที่จะแจ้ง \"ทดสอบไม่ครบ\" ตาม Expected Result — ไม่ตรงตาม Expected Result อาจทำให้เข้าใจผิดว่าเน็ตพร้อมไลฟ์แล้ว (ส่วนกรณี DevTools Offline ยังไม่ได้ทดสอบเนื่องจากข้อจำกัดเครื่องมือ) สร้าง Bug แล้ว: TAKRA-660",
+    "st": "fail"
   }
 }
 </script>
@@ -1110,14 +1114,14 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <h3>📊 สรุปผล Manual Test</h3>
     <div class="sumchips">
       <span class="cnt pass">PASS <b id="sum-pass">102</b></span>
-      <span class="cnt fail">FAIL <b id="sum-fail">63</b></span>
+      <span class="cnt fail">FAIL <b id="sum-fail">64</b></span>
       <span class="cnt hold">HOLD <b id="sum-hold">1</b></span>
       <span class="cnt block">BLOCKED <b id="sum-block">0</b></span>
       <span class="cnt skip">SKIP <b id="sum-skip">18</b></span>
-      <span class="cnt pending">รอเทส <b id="sum-pending">77</b></span>
+      <span class="cnt pending">รอเทส <b id="sum-pending">76</b></span>
     </div>
-    <div class="progress"><div id="sumbar" class="progressbar" style="width: 68%;"></div></div>
-    <div class="hint" id="sumpct" style="margin-top:5px">68% ทดสอบแล้ว (166/243) · ข้าม 18</div>
+    <div class="progress"><div id="sumbar" class="progressbar" style="width: 69%;"></div></div>
+    <div class="hint" id="sumpct" style="margin-top:5px">69% ทดสอบแล้ว (167/243) · ข้าม 18</div>
   </div>
 
   <div class="toolbar">
@@ -7758,15 +7762,15 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow" data-feat="epic4" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow open" data-feat="epic4" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-TL.E1</td>
   <td class="ctitle">ทดสอบเครือข่ายไม่ครบหรือเชื่อมต่อไม่ได้ แล้วเห็นผลที่บอกให้ทดสอบใหม่</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-215"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-215"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-215"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail show"><td colspan="7"><div class="card">
   <div class="h-title">ทดสอบเครือข่ายไม่ครบหรือเชื่อมต่อไม่ได้ แล้วเห็นผลที่บอกให้ทดสอบใหม่</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · pre-live-tools · Epic 4 · Story 4.1 (fail path)</div>
   <div class="sec"><h4>Precondition</h4><ul><li>อยู่ที่หน้าเครื่องมือ ส่วนเครือข่าย</li><li>สามารถหยุดการทดสอบกลางคันหรือจำลองเน็ตหลุดได้</li></ul></div>
@@ -7774,11 +7778,11 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Data</h4><ul><li>DevTools → Network → Offline</li></ul></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>กรณีหยุดกลางคัน เห็นคำตัดสินทำนอง "ทดสอบไม่ครบ" พร้อมให้ทดสอบใหม่</li><li>กรณีเชื่อมต่อไม่ได้ เห็นข้อความ error ที่ชัดเจน (เช่น เชื่อมต่อ Cloudflare ไม่ได้)</li><li>ไม่มีหน้าจอค้างหรือ error ระดับระบบ</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —">พบบัค: กด "หยุด" ก่อนครบ 60 วินาที (หยุดที่ 14s/60s ระหว่างเช็คความเสถียร) ระบบกลับแสดงผลบวก "✓ พร้อมไลฟ์ HD" (สีเขียว) แทนที่จะแจ้ง "ทดสอบไม่ครบ" ตาม Expected Result — ไม่ตรงตาม Expected Result อาจทำให้เข้าใจผิดว่าเน็ตพร้อมไลฟ์แล้ว (ส่วนกรณี DevTools Offline ยังไม่ได้ทดสอบเนื่องจากข้อจำกัดเครื่องมือ) สร้าง Bug แล้ว: TAKRA-660</textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-215" data-st="pass">PASS</span>
-    <span class="opt fail" data-uid="tc-215" data-st="fail">FAIL</span>
+    <span class="opt fail sel" data-uid="tc-215" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-215" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-215" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-215" data-st="skip">SKIP</span>
