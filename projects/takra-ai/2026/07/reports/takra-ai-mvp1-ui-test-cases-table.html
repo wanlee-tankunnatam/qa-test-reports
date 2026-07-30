@@ -306,13 +306,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   "tc-40": {
     "st": "pass"
   },
-  "tc-41": {
-    "actual": "กดปิดสวิตช์ Script Approve ของสมาชิกทดสอบ (Jane Smith) แล้วอ่านข้อความยืนยันและกด \"ยกเลิกสิทธิ์\" — พบว่าไม่มี API request ใดๆ (POST/PATCH/DELETE) ถูกส่งออกไปเลย ตรวจสอบผ่าน Network log ยืนยันว่ามีเพียง GET request สำหรับดึงข้อมูล permission-grants กลับมาเฉยๆ (status 200) ไม่มีการเปลี่ยนแปลงสิทธิ์จริงเกิดขึ้น — เป็นการล้มเหลวแบบเงียบ (silent failure) ไม่ใช่ error ที่มองเห็นได้ ต่างจาก TC-UR.3 ที่อย่างน้อยมี error toast แจ้งเตือนสิทธิ์ Owner ชัดเจน จึงสรุปว่าเป็นบั๊กจริง สร้างตั๋วใหม่ TAKRA-655",
-    "st": "fail",
-    "jira": [
-      "https://kitdi.atlassian.net/browse/TAKRA-655"
-    ]
-  },
+  "tc-41": {},
   "tc-42": {
     "st": "fail",
     "actual": "ไม่แสดงประวัติประวัติการมอบ/เพิกถอนสิทธิ์",
@@ -1074,6 +1068,9 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   },
   "tc-75": {
     "st": "pass"
+  },
+  "tc-69": {
+    "st": "fail"
   }
 }
 </script>
@@ -1126,8 +1123,8 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
   <div class="filters">
     <div class="row"><label>Epic</label>
-      <button class="fchip active" data-f="feat" data-v="epic1">🚪 E1 (60)</button>
-      <button class="fchip" data-f="feat" data-v="epic2">📦 E2 (74)</button>
+      <button class="fchip" data-f="feat" data-v="epic1">🚪 E1 (60)</button>
+      <button class="fchip active" data-f="feat" data-v="epic2">📦 E2 (74)</button>
       <button class="fchip" data-f="feat" data-v="epic3">🎬 E3 (75)</button>
       <button class="fchip" data-f="feat" data-v="epic4">📡 E4 (24)</button>
       <button class="fchip" data-f="feat" data-v="epic5">💬 E5 (8)</button>
@@ -1147,7 +1144,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
       <button class="fchip" data-f="status" data-v="hold">⏸ HOLD</button>
       <button class="fchip" data-f="status" data-v="block">🚫 BLOCKED</button>
       <button class="fchip" data-f="status" data-v="skip">⏭ SKIP</button>
-      <button class="fchip" data-f="status" data-v="pending">⏳ รอเทส</button>
+      <button class="fchip active" data-f="status" data-v="pending">⏳ รอเทส</button>
       <button class="clearbtn" data-clear="status">✕</button>
     </div>
   </div>
@@ -1158,9 +1155,9 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <tbody>
 
 <!-- Epic 1 -->
-<tr class="epicrow" data-epic="1"><td colspan="7">🚪 ขั้นที่ 1 · เข้าระบบ &amp; รากฐาน Workspace (Epic 1 · FR1-6 · FR3a) <span class="rp">(35 เคสหลัก <span style="color:var(--muted);font-weight:400">+ 25 edge🆕</span>)</span></td></tr>
-<tr class="featrow" data-featkey="login"><td colspan="7">📁 login <span class="rp"><span class="lv lvl-ui">🌐 8 <span style="color:var(--muted)">+5🆕</span></span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="login"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
-<tr class="trow" data-feat="epic1" data-level="ui" data-prio="P0" onclick="tg(this)">
+<tr class="epicrow hide" data-epic="1"><td colspan="7">🚪 ขั้นที่ 1 · เข้าระบบ &amp; รากฐาน Workspace (Epic 1 · FR1-6 · FR3a) <span class="rp">(35 เคสหลัก <span style="color:var(--muted);font-weight:400">+ 25 edge🆕</span>)</span></td></tr>
+<tr class="featrow hide" data-featkey="login"><td colspan="7">📁 login <span class="rp"><span class="lv lvl-ui">🌐 8 <span style="color:var(--muted)">+5🆕</span></span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="login"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow hide" data-feat="epic1" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-L1.1</td>
   <td class="ctitle">เปิดหน้าเข้าสู่ระบบแล้วเห็นองค์ประกอบครบตามที่ออกแบบ</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -1168,7 +1165,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-1"><span class="stb skip">SKIP</span></td>
   <td class="jira-cell" data-uid="tc-1"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail hide"><td colspan="7"><div class="card">
   <div class="h-title">เปิดหน้าเข้าสู่ระบบแล้วเห็นองค์ประกอบครบตามที่ออกแบบ</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · login · Epic 1 · Story 1.4</div>
   <div class="sec"><h4>Precondition</h4><ul><li>ยังไม่ได้ล็อกอิน (เปิดหน้าต่างเบราว์เซอร์แบบไม่ระบุตัวตน)</li></ul></div>
@@ -1191,7 +1188,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow" data-feat="epic1" data-level="ui" data-prio="P0" onclick="tg(this)">
+<tr class="trow hide" data-feat="epic1" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-L1.2</td>
   <td class="ctitle">เข้าสู่ระบบด้วย Google แล้วเข้าถึงหน้าแรกของระบบได้</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -1199,7 +1196,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-2"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-2"><a href="https://kitdi.atlassian.net/browse/TAKRA-599" target="_blank" rel="noopener" class="jira-chip">TAKRA-599</a></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail hide"><td colspan="7"><div class="card">
   <div class="h-title">เข้าสู่ระบบด้วย Google แล้วเข้าถึงหน้าแรกของระบบได้</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · login · Epic 1 · Story 1.4</div>
   <div class="sec"><h4>Precondition</h4><ul><li>มีบัญชี Google ที่ผูกกับ workspace ทดสอบไว้แล้ว</li><li>ยังไม่ได้ล็อกอิน</li></ul></div>
@@ -1222,7 +1219,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow" data-feat="epic1" data-level="ui" data-prio="P0" onclick="tg(this)">
+<tr class="trow hide" data-feat="epic1" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-L1.3</td>
   <td class="ctitle">เข้าสู่ระบบด้วยอีเมล/รหัสผ่านผ่าน Zitadel แล้วกลับเข้าแอปได้</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -1230,7 +1227,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-3"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-3"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail hide"><td colspan="7"><div class="card">
   <div class="h-title">เข้าสู่ระบบด้วยอีเมล/รหัสผ่านผ่าน Zitadel แล้วกลับเข้าแอปได้</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · login · Epic 1 · Story 1.4</div>
   <div class="sec"><h4>Precondition</h4><ul><li>มีบัญชีอีเมล/รหัสผ่านที่ใช้ได้ใน Zitadel</li><li>ยังไม่ได้ล็อกอิน</li></ul></div>
@@ -1253,7 +1250,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow" data-feat="epic1" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow hide" data-feat="epic1" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-L1.4</td>
   <td class="ctitle">กรอกอีเมลผิดรูปแบบแล้วเห็นข้อความเตือนที่ช่องกรอก</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -1261,7 +1258,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-4"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-4"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail hide"><td colspan="7"><div class="card">
   <div class="h-title">กรอกอีเมลผิดรูปแบบแล้วเห็นข้อความเตือนที่ช่องกรอก</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · login · Epic 1 · Story 1.4</div>
   <div class="sec"><h4>Precondition</h4><ul><li>อยู่ที่หน้า https://uat-live.takra.ai/login</li></ul></div>
@@ -1284,7 +1281,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow" data-feat="epic1" data-level="ui" data-prio="P0" onclick="tg(this)">
+<tr class="trow hide" data-feat="epic1" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-L1.5</td>
   <td class="ctitle">เข้าหน้าที่ต้องล็อกอินทั้งที่ยังไม่ได้ล็อกอิน แล้วถูกพาไปหน้า login</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -1292,7 +1289,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-5"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-5"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail hide"><td colspan="7"><div class="card">
   <div class="h-title">เข้าหน้าที่ต้องล็อกอินทั้งที่ยังไม่ได้ล็อกอิน แล้วถูกพาไปหน้า login</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · login · Epic 1 · Story 1.4</div>
   <div class="sec"><h4>Precondition</h4><ul><li>ยังไม่ได้ล็อกอิน (ล้างคุกกี้ของโดเมนแล้ว)</li></ul></div>
@@ -1315,7 +1312,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow" data-feat="epic1" data-level="ui" data-prio="P0" onclick="tg(this)">
+<tr class="trow hide" data-feat="epic1" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-L1.6</td>
   <td class="ctitle">ล็อกอินแล้วระบบพากลับไปหน้าที่ตั้งใจเปิดไว้ตั้งแต่แรก</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -1323,7 +1320,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-6"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-6"><a href="https://kitdi.atlassian.net/browse/TAKRA-600" target="_blank" rel="noopener" class="jira-chip">TAKRA-600</a></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail hide"><td colspan="7"><div class="card">
   <div class="h-title">ล็อกอินแล้วระบบพากลับไปหน้าที่ตั้งใจเปิดไว้ตั้งแต่แรก</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · login · Epic 1 · Story 1.4</div>
   <div class="sec"><h4>Precondition</h4><ul><li>ยังไม่ได้ล็อกอิน</li><li>รู้บัญชีทดสอบที่ล็อกอินได้</li></ul></div>
@@ -1346,7 +1343,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow" data-feat="epic1" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow hide" data-feat="epic1" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-L1.7</td>
   <td class="ctitle">ออกจากระบบแบบปกติแล้วกลับไปหน้าเข้าสู่ระบบ</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -1354,7 +1351,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-7"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-7"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail hide"><td colspan="7"><div class="card">
   <div class="h-title">ออกจากระบบแบบปกติแล้วกลับไปหน้าเข้าสู่ระบบ</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · login · Epic 1 · Story 1.4d</div>
   <div class="sec"><h4>Precondition</h4><ul><li>ล็อกอินอยู่ในระบบเรียบร้อยแล้ว</li></ul></div>
@@ -1377,7 +1374,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow" data-feat="epic1" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow hide" data-feat="epic1" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-L1.8</td>
   <td class="ctitle">ออกจากระบบทุกบริการแล้วต้องกรอกรหัสผ่านใหม่ตอนเข้าอีกครั้ง</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -1385,7 +1382,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-8"><span class="stb skip">SKIP</span></td>
   <td class="jira-cell" data-uid="tc-8"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail hide"><td colspan="7"><div class="card">
   <div class="h-title">ออกจากระบบทุกบริการแล้วต้องกรอกรหัสผ่านใหม่ตอนเข้าอีกครั้ง</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · login · Epic 1 · Story 1.4d</div>
   <div class="sec"><h4>Precondition</h4><ul><li>ล็อกอินอยู่ในระบบด้วยบัญชีอีเมล/รหัสผ่าน</li></ul></div>
@@ -1408,7 +1405,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow" data-feat="epic1" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow hide" data-feat="epic1" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-L1.E1</td>
   <td class="ctitle">เซสชันหมดอายุระหว่างใช้งาน แล้วเห็นข้อความแจ้งเหตุผลที่หน้า login</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -1416,7 +1413,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-9"><span class="stb skip">SKIP</span></td>
   <td class="jira-cell" data-uid="tc-9"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail hide"><td colspan="7"><div class="card">
   <div class="h-title">เซสชันหมดอายุระหว่างใช้งาน แล้วเห็นข้อความแจ้งเหตุผลที่หน้า login</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · login · Epic 1 · Story 1.4</div>
   <div class="sec"><h4>Precondition</h4><ul><li>ล็อกอินอยู่ในระบบ</li><li>ทีมพัฒนาช่วยลบ/หมดอายุคุกกี้เซสชัน หรือรอจนเซสชันหมดอายุ</li></ul></div>
@@ -1439,7 +1436,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow" data-feat="epic1" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow hide" data-feat="epic1" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-L1.E2</td>
   <td class="ctitle">กรอกรหัสผ่านผิดหลายครั้งแล้วบัญชีถูกล็อกชั่วคราวพร้อมข้อความบอกเวลา</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -1447,7 +1444,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-10"><span class="stb skip">SKIP</span></td>
   <td class="jira-cell" data-uid="tc-10"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail hide"><td colspan="7"><div class="card">
   <div class="h-title">กรอกรหัสผ่านผิดหลายครั้งแล้วบัญชีถูกล็อกชั่วคราวพร้อมข้อความบอกเวลา</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · login · Epic 1 · Story 1.4</div>
   <div class="sec"><h4>Precondition</h4><ul><li>มีบัญชีทดสอบที่ยอมให้ล็อกชั่วคราวได้ (ไม่ใช่บัญชีที่ทีมใช้จริง)</li></ul></div>
@@ -1470,7 +1467,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow" data-feat="epic1" data-level="ui" data-prio="P2" onclick="tg(this)">
+<tr class="trow hide" data-feat="epic1" data-level="ui" data-prio="P2" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-L1.E3</td>
   <td class="ctitle">ยกเลิกกลางทางที่หน้ายืนยันตัวตน แล้วกลับมาเห็นข้อความที่ปิดได้</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -1478,7 +1475,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-11"><span class="stb skip">SKIP</span></td>
   <td class="jira-cell" data-uid="tc-11"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail hide"><td colspan="7"><div class="card">
   <div class="h-title">ยกเลิกกลางทางที่หน้ายืนยันตัวตน แล้วกลับมาเห็นข้อความที่ปิดได้</div>
   <div class="h-prio">Priority: <b>P2</b> · UI · login · Epic 1 · Story 1.4</div>
   <div class="sec"><h4>Precondition</h4><ul><li>อยู่ที่หน้า https://uat-live.takra.ai/login</li></ul></div>
@@ -1500,7 +1497,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow" data-feat="epic1" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow hide" data-feat="epic1" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-L1.E4</td>
   <td class="ctitle">ล็อกอินสำเร็จแต่ยังไม่มี workspace แล้วถูกพาไปหน้าเริ่มต้นใช้งาน ไม่ใช่หน้าว่าง</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -1508,7 +1505,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-12"><span class="stb skip">SKIP</span></td>
   <td class="jira-cell" data-uid="tc-12"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail hide"><td colspan="7"><div class="card">
   <div class="h-title">ล็อกอินสำเร็จแต่ยังไม่มี workspace แล้วถูกพาไปหน้าเริ่มต้นใช้งาน ไม่ใช่หน้าว่าง</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · login · Epic 1 · Story 1.4</div>
   <div class="sec"><h4>Precondition</h4><ul><li>มีบัญชีทดสอบที่ยังไม่ได้เป็นสมาชิก workspace ใด</li></ul></div>
@@ -1531,7 +1528,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow" data-feat="epic1" data-level="ui" data-prio="P2" onclick="tg(this)">
+<tr class="trow hide" data-feat="epic1" data-level="ui" data-prio="P2" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-L1.E5</td>
   <td class="ctitle">เปิดลิงก์ตั้งรหัสผ่านใหม่ที่หมดอายุแล้ว เห็นทางแก้ที่ชัดเจน</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -1539,7 +1536,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-13"><span class="stb skip">SKIP</span></td>
   <td class="jira-cell" data-uid="tc-13"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail hide"><td colspan="7"><div class="card">
   <div class="h-title">เปิดลิงก์ตั้งรหัสผ่านใหม่ที่หมดอายุแล้ว เห็นทางแก้ที่ชัดเจน</div>
   <div class="h-prio">Priority: <b>P2</b> · UI · login · Epic 1 · Story 1.4</div>
   <div class="sec"><h4>Precondition</h4><ul><li>มีลิงก์ตั้งรหัสผ่านใหม่ที่หมดอายุหรือถูกใช้ไปแล้ว</li></ul></div>
@@ -1562,8 +1559,8 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="featrow" data-featkey="entitlement-gate"><td colspan="7">📁 entitlement-gate <span class="rp"><span class="lv lvl-ui">🌐 2 <span style="color:var(--muted)">+2🆕</span></span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="entitlement-gate"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
-<tr class="trow" data-feat="epic1" data-level="ui" data-prio="P0" onclick="tg(this)">
+<tr class="featrow hide" data-featkey="entitlement-gate"><td colspan="7">📁 entitlement-gate <span class="rp"><span class="lv lvl-ui">🌐 2 <span style="color:var(--muted)">+2🆕</span></span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="entitlement-gate"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow hide" data-feat="epic1" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-EN.1</td>
   <td class="ctitle">Workspace ที่ยังไม่มีแพ็กเกจ TAKRA AI เห็นหน้าแจ้งสิทธิ์พร้อมทางไปอัปเกรด</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -1571,7 +1568,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-14"><span class="stb skip">SKIP</span></td>
   <td class="jira-cell" data-uid="tc-14"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail hide"><td colspan="7"><div class="card">
   <div class="h-title">Workspace ที่ยังไม่มีแพ็กเกจ TAKRA AI เห็นหน้าแจ้งสิทธิ์พร้อมทางไปอัปเกรด</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · entitlement-gate · Epic 1 · Story 1.7b</div>
   <div class="sec"><h4>Precondition</h4><ul><li>ล็อกอินด้วยบัญชีที่เป็นสมาชิก workspace ซึ่งยังไม่มีแพ็กเกจ TAKRA AI</li></ul></div>
@@ -1594,7 +1591,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow" data-feat="epic1" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow hide" data-feat="epic1" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-EN.2</td>
   <td class="ctitle">Workspace ที่มีแพ็กเกจอยู่แล้วเข้าใช้งานได้ตามปกติโดยไม่ติดหน้าตรวจสิทธิ์</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -1602,7 +1599,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-15"><span class="stb skip">SKIP</span></td>
   <td class="jira-cell" data-uid="tc-15"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail hide"><td colspan="7"><div class="card">
   <div class="h-title">Workspace ที่มีแพ็กเกจอยู่แล้วเข้าใช้งานได้ตามปกติโดยไม่ติดหน้าตรวจสิทธิ์</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · entitlement-gate · Epic 1 · Story 1.7b</div>
   <div class="sec"><h4>Precondition</h4><ul><li>ล็อกอินด้วยบัญชีที่อยู่ใน workspace ที่มีแพ็กเกจ TAKRA AI แล้ว</li></ul></div>
@@ -1625,7 +1622,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow" data-feat="epic1" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow hide" data-feat="epic1" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-EN.E1</td>
   <td class="ctitle">สิทธิ์ถูกเพิกถอนระหว่างใช้งาน แล้วระบบกั้นในการกระทำถัดไปทันที</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -1633,7 +1630,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-16"><span class="stb skip">SKIP</span></td>
   <td class="jira-cell" data-uid="tc-16"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail hide"><td colspan="7"><div class="card">
   <div class="h-title">สิทธิ์ถูกเพิกถอนระหว่างใช้งาน แล้วระบบกั้นในการกระทำถัดไปทันที</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · entitlement-gate · Epic 1 · Story 1.7b</div>
   <div class="sec"><h4>Precondition</h4><ul><li>ล็อกอินและกำลังใช้งาน workspace ที่มีแพ็กเกจอยู่</li><li>ทีมงานเตรียมเพิกถอนแพ็กเกจของ workspace นี้ที่ TAKRA Hub ได้</li></ul></div>
@@ -1656,7 +1653,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow" data-feat="epic1" data-level="ui" data-prio="P2" onclick="tg(this)">
+<tr class="trow hide" data-feat="epic1" data-level="ui" data-prio="P2" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-EN.E2</td>
   <td class="ctitle">ระหว่างระบบตรวจสิทธิ์ ผู้ใช้เห็นสถานะกำลังโหลดแทนหน้าขาว</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -1664,7 +1661,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-17"><span class="stb skip">SKIP</span></td>
   <td class="jira-cell" data-uid="tc-17"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail hide"><td colspan="7"><div class="card">
   <div class="h-title">ระหว่างระบบตรวจสิทธิ์ ผู้ใช้เห็นสถานะกำลังโหลดแทนหน้าขาว</div>
   <div class="h-prio">Priority: <b>P2</b> · UI · entitlement-gate · Epic 1 · Story 1.7b</div>
   <div class="sec"><h4>Precondition</h4><ul><li>ล็อกอินอยู่</li><li>จำลองเน็ตช้าด้วยเครื่องมือ throttling ของเบราว์เซอร์</li></ul></div>
@@ -1687,8 +1684,8 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="featrow" data-featkey="workspace-config"><td colspan="7">📁 workspace-config <span class="rp"><span class="lv lvl-ui">🌐 5 <span style="color:var(--muted)">+3🆕</span></span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="workspace-config"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
-<tr class="trow" data-feat="epic1" data-level="ui" data-prio="P0" onclick="tg(this)">
+<tr class="featrow hide" data-featkey="workspace-config"><td colspan="7">📁 workspace-config <span class="rp"><span class="lv lvl-ui">🌐 5 <span style="color:var(--muted)">+3🆕</span></span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="workspace-config"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow hide" data-feat="epic1" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-W1.1</td>
   <td class="ctitle">เปิดหน้าตั้งค่า Workspace จากหน้าภาพรวมได้</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -1696,7 +1693,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-18"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-18"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail hide"><td colspan="7"><div class="card">
   <div class="h-title">เปิดหน้าตั้งค่า Workspace จากหน้าภาพรวมได้</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · workspace-config · Epic 1 · Story 1.5</div>
   <div class="sec"><h4>Precondition</h4><ul><li>ล็อกอินด้วยผู้ใช้สิทธิ์ Owner</li><li>workspace มีอย่างน้อย 1 แห่ง</li></ul></div>
@@ -1719,7 +1716,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow" data-feat="epic1" data-level="ui" data-prio="P0" onclick="tg(this)">
+<tr class="trow hide" data-feat="epic1" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-W1.2</td>
   <td class="ctitle">ตั้งโทนเสียงแบรนด์และแนวทางการพูดแล้วบันทึกสำเร็จ</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -1727,7 +1724,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-19"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-19"><a href="https://kitdi.atlassian.net/browse/TAKRA-601" target="_blank" rel="noopener" class="jira-chip">TAKRA-601</a></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail hide"><td colspan="7"><div class="card">
   <div class="h-title">ตั้งโทนเสียงแบรนด์และแนวทางการพูดแล้วบันทึกสำเร็จ</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · workspace-config · Epic 1 · Story 1.5</div>
   <div class="sec"><h4>Precondition</h4><ul><li>อยู่ที่หน้าตั้งค่า Workspace ในฐานะ Owner</li></ul></div>
@@ -1750,7 +1747,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow" data-feat="epic1" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow hide" data-feat="epic1" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-W1.3</td>
   <td class="ctitle">ตั้งค่าเริ่มต้นของ Workspace (ภาษา · หมวดธุรกิจ · แพลตฟอร์ม) แล้วค่าคงอยู่</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -1758,7 +1755,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-20"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-20"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail hide"><td colspan="7"><div class="card">
   <div class="h-title">ตั้งค่าเริ่มต้นของ Workspace (ภาษา · หมวดธุรกิจ · แพลตฟอร์ม) แล้วค่าคงอยู่</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · workspace-config · Epic 1 · Story 1.5</div>
   <div class="sec"><h4>Precondition</h4><ul><li>อยู่ที่หน้าตั้งค่า Workspace ในฐานะ Owner</li></ul></div>
@@ -1781,7 +1778,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow" data-feat="epic1" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow hide" data-feat="epic1" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-W1.4</td>
   <td class="ctitle">ชื่อ Workspace · สมาชิก · แพ็กเกจ เป็นข้อมูลอ่านอย่างเดียวพร้อมลิงก์ไป TAKRA Hub</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -1789,7 +1786,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-21"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-21"><a href="https://kitdi.atlassian.net/browse/TAKRA-309" target="_blank" rel="noopener" class="jira-chip">TAKRA-309</a></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail hide"><td colspan="7"><div class="card">
   <div class="h-title">ชื่อ Workspace · สมาชิก · แพ็กเกจ เป็นข้อมูลอ่านอย่างเดียวพร้อมลิงก์ไป TAKRA Hub</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · workspace-config · Epic 1 · Story 1.5</div>
   <div class="sec"><h4>Precondition</h4><ul><li>อยู่ที่หน้าตั้งค่า Workspace ในฐานะ Owner</li></ul></div>
@@ -1811,7 +1808,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow" data-feat="epic1" data-level="ui" data-prio="P0" onclick="tg(this)">
+<tr class="trow hide" data-feat="epic1" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-W1.5</td>
   <td class="ctitle">หน้าสร้าง Workspace ใหม่ชี้ไป TAKRA Hub ไม่มีฟอร์มสร้างในแอป</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -1819,7 +1816,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-22"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-22"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail hide"><td colspan="7"><div class="card">
   <div class="h-title">หน้าสร้าง Workspace ใหม่ชี้ไป TAKRA Hub ไม่มีฟอร์มสร้างในแอป</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · workspace-config · Epic 1 · Story 1.5</div>
   <div class="sec"><h4>Precondition</h4><ul><li>ล็อกอินอยู่ในระบบ</li></ul></div>
@@ -1842,7 +1839,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow" data-feat="epic1" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow hide" data-feat="epic1" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-W1.E1</td>
   <td class="ctitle">ผู้ใช้ที่ไม่ใช่ Owner เปิดหน้าตั้งค่าแล้วดูได้อย่างเดียว</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -1850,7 +1847,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-23"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-23"><a href="https://kitdi.atlassian.net/browse/TAKRA-309" target="_blank" rel="noopener" class="jira-chip">TAKRA-309</a></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail hide"><td colspan="7"><div class="card">
   <div class="h-title">ผู้ใช้ที่ไม่ใช่ Owner เปิดหน้าตั้งค่าแล้วดูได้อย่างเดียว</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · workspace-config · Epic 1 · Story 1.5</div>
   <div class="sec"><h4>Precondition</h4><ul><li>มีผู้ใช้ทดสอบที่เป็นสมาชิกธรรมดา (ไม่ใช่ Owner) ใน workspace เดียวกัน</li></ul></div>
@@ -1873,7 +1870,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow" data-feat="epic1" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow hide" data-feat="epic1" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-W1.E2</td>
   <td class="ctitle">บันทึกไม่สำเร็จเพราะเน็ตหลุด แล้วข้อมูลที่กรอกไว้ยังอยู่</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -1881,7 +1878,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-24"><span class="stb skip">SKIP</span></td>
   <td class="jira-cell" data-uid="tc-24"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail hide"><td colspan="7"><div class="card">
   <div class="h-title">บันทึกไม่สำเร็จเพราะเน็ตหลุด แล้วข้อมูลที่กรอกไว้ยังอยู่</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · workspace-config · Epic 1 · Story 1.5</div>
   <div class="sec"><h4>Precondition</h4><ul><li>อยู่ที่หน้าตั้งค่า Workspace ในฐานะ Owner</li></ul></div>
@@ -1904,7 +1901,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow" data-feat="epic1" data-level="ui" data-prio="P2" onclick="tg(this)">
+<tr class="trow hide" data-feat="epic1" data-level="ui" data-prio="P2" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-W1.E3</td>
   <td class="ctitle">บัญชีที่ยังไม่มี Workspace เปิดหน้าตั้งค่าแล้วเห็นทางออกที่ชัดเจน</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -1912,7 +1909,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-25"><span class="stb skip">SKIP</span></td>
   <td class="jira-cell" data-uid="tc-25"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail hide"><td colspan="7"><div class="card">
   <div class="h-title">บัญชีที่ยังไม่มี Workspace เปิดหน้าตั้งค่าแล้วเห็นทางออกที่ชัดเจน</div>
   <div class="h-prio">Priority: <b>P2</b> · UI · workspace-config · Epic 1 · Story 1.5</div>
   <div class="sec"><h4>Precondition</h4><ul><li>มีบัญชีทดสอบที่ยังไม่เป็นสมาชิก workspace ใด</li></ul></div>
@@ -1935,8 +1932,8 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="featrow" data-featkey="switch-workspace"><td colspan="7">📁 switch-workspace <span class="rp"><span class="lv lvl-ui">🌐 3 <span style="color:var(--muted)">+3🆕</span></span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="switch-workspace"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
-<tr class="trow" data-feat="epic1" data-level="ui" data-prio="P0" onclick="tg(this)">
+<tr class="featrow hide" data-featkey="switch-workspace"><td colspan="7">📁 switch-workspace <span class="rp"><span class="lv lvl-ui">🌐 3 <span style="color:var(--muted)">+3🆕</span></span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="switch-workspace"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow hide" data-feat="epic1" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-SW.1</td>
   <td class="ctitle">สลับ Workspace ผ่านตัวสลับแล้วบริบทการทำงานเปลี่ยนตาม</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -1944,7 +1941,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-26"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-26"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail hide"><td colspan="7"><div class="card">
   <div class="h-title">สลับ Workspace ผ่านตัวสลับแล้วบริบทการทำงานเปลี่ยนตาม</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · switch-workspace · Epic 1 · Story 1.9</div>
   <div class="sec"><h4>Precondition</h4><ul><li>บัญชีทดสอบเป็นสมาชิกของ workspace อย่างน้อย 2 แห่ง</li><li>ล็อกอินอยู่ที่ workspace A</li></ul></div>
@@ -1967,7 +1964,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow" data-feat="epic1" data-level="ui" data-prio="P0" onclick="tg(this)">
+<tr class="trow hide" data-feat="epic1" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-SW.2</td>
   <td class="ctitle">ข้อมูลในทุกคลังถูกจำกัดเฉพาะ Workspace ที่กำลังใช้งาน</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -1975,7 +1972,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-27"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-27"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail hide"><td colspan="7"><div class="card">
   <div class="h-title">ข้อมูลในทุกคลังถูกจำกัดเฉพาะ Workspace ที่กำลังใช้งาน</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · switch-workspace · Epic 1 · Story 1.9</div>
   <div class="sec"><h4>Precondition</h4><ul><li>บัญชีทดสอบเป็นสมาชิกของ workspace A และ B</li><li>workspace A มีสินค้า/สคริปต์ที่ชื่อไม่ซ้ำกับ B</li></ul></div>
@@ -1998,7 +1995,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow" data-feat="epic1" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow hide" data-feat="epic1" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-SW.3</td>
   <td class="ctitle">Workspace ที่เลือกไว้ยังคงเดิมหลังรีเฟรชและเปิดแท็บใหม่</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -2006,7 +2003,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-28"><span class="stb hold">HOLD</span></td>
   <td class="jira-cell" data-uid="tc-28"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail hide"><td colspan="7"><div class="card">
   <div class="h-title">Workspace ที่เลือกไว้ยังคงเดิมหลังรีเฟรชและเปิดแท็บใหม่</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · switch-workspace · Epic 1 · Story 1.9</div>
   <div class="sec"><h4>Precondition</h4><ul><li>บัญชีทดสอบเป็นสมาชิกของ workspace อย่างน้อย 2 แห่ง</li></ul></div>
@@ -2028,7 +2025,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow" data-feat="epic1" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow hide" data-feat="epic1" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-SW.E1</td>
   <td class="ctitle">กดยกเลิกในหน้าต่างยืนยันแล้วไม่สลับ Workspace</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -2036,7 +2033,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-29"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-29"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail hide"><td colspan="7"><div class="card">
   <div class="h-title">กดยกเลิกในหน้าต่างยืนยันแล้วไม่สลับ Workspace</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · switch-workspace · Epic 1 · Story 1.9</div>
   <div class="sec"><h4>Precondition</h4><ul><li>อยู่ที่ workspace A และเป็นสมาชิกของ B ด้วย</li></ul></div>
@@ -2058,7 +2055,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow" data-feat="epic1" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow hide" data-feat="epic1" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-SW.E2</td>
   <td class="ctitle">ถูกถอดออกจาก Workspace ระหว่างใช้งาน แล้วระบบพาออกจากบริบทนั้น</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -2066,7 +2063,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-30"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-30"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail hide"><td colspan="7"><div class="card">
   <div class="h-title">ถูกถอดออกจาก Workspace ระหว่างใช้งาน แล้วระบบพาออกจากบริบทนั้น</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · switch-workspace · Epic 1 · Story 1.9</div>
   <div class="sec"><h4>Precondition</h4><ul><li>อยู่ที่ workspace B</li><li>ทีมงานสามารถถอดผู้ใช้ออกจาก workspace B ที่ Hub ได้</li></ul></div>
@@ -2089,7 +2086,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow" data-feat="epic1" data-level="ui" data-prio="P2" onclick="tg(this)">
+<tr class="trow hide" data-feat="epic1" data-level="ui" data-prio="P2" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-SW.E3</td>
   <td class="ctitle">โหลดรายการ Workspace ไม่สำเร็จ แล้วมีปุ่มให้ลองใหม่ในที่เดิม</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -2097,7 +2094,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-31"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-31"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail hide"><td colspan="7"><div class="card">
   <div class="h-title">โหลดรายการ Workspace ไม่สำเร็จ แล้วมีปุ่มให้ลองใหม่ในที่เดิม</div>
   <div class="h-prio">Priority: <b>P2</b> · UI · switch-workspace · Epic 1 · Story 1.9</div>
   <div class="sec"><h4>Precondition</h4><ul><li>ล็อกอินอยู่</li><li>สามารถจำลองการเรียกข้อมูลล้มเหลวได้ (Offline หรือ block request)</li></ul></div>
@@ -2120,8 +2117,8 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="featrow" data-featkey="users-roles"><td colspan="7">📁 users-roles <span class="rp"><span class="lv lvl-ui">🌐 5 <span style="color:var(--muted)">+3🆕</span></span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="users-roles"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
-<tr class="trow" data-feat="epic1" data-level="ui" data-prio="P0" onclick="tg(this)">
+<tr class="featrow hide" data-featkey="users-roles"><td colspan="7">📁 users-roles <span class="rp"><span class="lv lvl-ui">🌐 5 <span style="color:var(--muted)">+3🆕</span></span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="users-roles"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow hide" data-feat="epic1" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-UR.1</td>
   <td class="ctitle">เปิดหน้าผู้ใช้และบทบาทแล้วเห็นสมาชิกครบพร้อมข้อมูลที่จำเป็น</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -2129,7 +2126,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-32"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-32"><a href="https://kitdi.atlassian.net/browse/TAKRA-602" target="_blank" rel="noopener" class="jira-chip">TAKRA-602</a></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail hide"><td colspan="7"><div class="card">
   <div class="h-title">เปิดหน้าผู้ใช้และบทบาทแล้วเห็นสมาชิกครบพร้อมข้อมูลที่จำเป็น</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · users-roles · Epic 1 · Story 1.7</div>
   <div class="sec"><h4>Precondition</h4><ul><li>ล็อกอินด้วยผู้ใช้สิทธิ์ Owner</li><li>workspace มีสมาชิกอย่างน้อย 2 คน</li></ul></div>
@@ -2152,7 +2149,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow" data-feat="epic1" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow hide" data-feat="epic1" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-UR.2</td>
   <td class="ctitle">ค้นหาและกรองสมาชิกตามบทบาทและช่วงเวลาเข้าใช้งาน</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -2160,7 +2157,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-33"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-33"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail hide"><td colspan="7"><div class="card">
   <div class="h-title">ค้นหาและกรองสมาชิกตามบทบาทและช่วงเวลาเข้าใช้งาน</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · users-roles · Epic 1 · Story 1.7</div>
   <div class="sec"><h4>Precondition</h4><ul><li>อยู่ที่หน้า https://uat-live.takra.ai/users และมีสมาชิกหลายคนหลายบทบาท</li></ul></div>
@@ -2183,7 +2180,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow" data-feat="epic1" data-level="ui" data-prio="P0" onclick="tg(this)">
+<tr class="trow hide" data-feat="epic1" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-UR.3</td>
   <td class="ctitle">เปลี่ยนบทบาทการใช้งานของสมาชิกเป็น Live Operator แล้วมีผลทันที</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -2191,7 +2188,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-34"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-34"><a href="https://kitdi.atlassian.net/browse/TAKRA-603" target="_blank" rel="noopener" class="jira-chip">TAKRA-603</a></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail hide"><td colspan="7"><div class="card">
   <div class="h-title">เปลี่ยนบทบาทการใช้งานของสมาชิกเป็น Live Operator แล้วมีผลทันที</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · users-roles · Epic 1 · Story 1.7</div>
   <div class="sec"><h4>Precondition</h4><ul><li>ล็อกอินเป็น Owner</li><li>มีสมาชิกธรรมดาอย่างน้อย 1 คนที่ตอบรับคำเชิญแล้ว</li></ul></div>
@@ -2214,7 +2211,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow" data-feat="epic1" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow hide" data-feat="epic1" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-UR.4</td>
   <td class="ctitle">ระดับใน workspace มาจาก TAKRA Hub และแก้ไขในแอปนี้ไม่ได้</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -2222,7 +2219,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-35"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-35"><a href="https://kitdi.atlassian.net/browse/TAKRA-320" target="_blank" rel="noopener" class="jira-chip">TAKRA-320</a></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail hide"><td colspan="7"><div class="card">
   <div class="h-title">ระดับใน workspace มาจาก TAKRA Hub และแก้ไขในแอปนี้ไม่ได้</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · users-roles · Epic 1 · Story 1.7</div>
   <div class="sec"><h4>Precondition</h4><ul><li>อยู่ที่หน้า /users ในฐานะ Owner</li></ul></div>
@@ -2244,7 +2241,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow" data-feat="epic1" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow hide" data-feat="epic1" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-UR.5</td>
   <td class="ctitle">ลบสมาชิกออกจาก Workspace ต้องพิมพ์ยืนยันก่อนจึงทำได้</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -2252,7 +2249,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-36"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-36"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail hide"><td colspan="7"><div class="card">
   <div class="h-title">ลบสมาชิกออกจาก Workspace ต้องพิมพ์ยืนยันก่อนจึงทำได้</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · users-roles · Epic 1 · Story 1.7</div>
   <div class="sec"><h4>Precondition</h4><ul><li>ล็อกอินเป็น Owner</li><li>มีสมาชิกทดสอบที่ลบได้</li></ul></div>
@@ -2275,7 +2272,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow" data-feat="epic1" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow hide" data-feat="epic1" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-UR.E1</td>
   <td class="ctitle">Live Operator เปิดหน้าที่เป็นสิทธิ์ Owner แล้วถูกกั้นตามสิทธิ์</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -2283,7 +2280,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-37"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-37"><a href="https://kitdi.atlassian.net/browse/TAKRA-309" target="_blank" rel="noopener" class="jira-chip">TAKRA-309</a></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail hide"><td colspan="7"><div class="card">
   <div class="h-title">Live Operator เปิดหน้าที่เป็นสิทธิ์ Owner แล้วถูกกั้นตามสิทธิ์</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · users-roles · Epic 1 · Story 1.7</div>
   <div class="sec"><h4>Precondition</h4><ul><li>มีบัญชีทดสอบที่เป็น Live Operator (ไม่ใช่ Owner)</li></ul></div>
@@ -2306,7 +2303,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow" data-feat="epic1" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow hide" data-feat="epic1" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-UR.E2</td>
   <td class="ctitle">สมาชิกที่ยังไม่ตอบรับคำเชิญ กำหนดบทบาทการใช้งานไม่ได้</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -2314,7 +2311,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-38"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-38"><a href="https://kitdi.atlassian.net/browse/TAKRA-320" target="_blank" rel="noopener" class="jira-chip">TAKRA-320</a></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail hide"><td colspan="7"><div class="card">
   <div class="h-title">สมาชิกที่ยังไม่ตอบรับคำเชิญ กำหนดบทบาทการใช้งานไม่ได้</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · users-roles · Epic 1 · Story 1.7</div>
   <div class="sec"><h4>Precondition</h4><ul><li>มีคำเชิญค้างอยู่อย่างน้อย 1 รายการ (เชิญจาก TAKRA Hub)</li></ul></div>
@@ -2337,7 +2334,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow" data-feat="epic1" data-level="ui" data-prio="P2" onclick="tg(this)">
+<tr class="trow hide" data-feat="epic1" data-level="ui" data-prio="P2" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-UR.E3</td>
   <td class="ctitle">กรองแล้วไม่พบผู้ใช้ ระบบแสดงสถานะว่างพร้อมทางแก้</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -2345,7 +2342,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-39"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-39"><a href="https://kitdi.atlassian.net/browse/TAKRA-309" target="_blank" rel="noopener" class="jira-chip">TAKRA-309</a></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail hide"><td colspan="7"><div class="card">
   <div class="h-title">กรองแล้วไม่พบผู้ใช้ ระบบแสดงสถานะว่างพร้อมทางแก้</div>
   <div class="h-prio">Priority: <b>P2</b> · UI · users-roles · Epic 1 · Story 1.7</div>
   <div class="sec"><h4>Precondition</h4><ul><li>อยู่ที่หน้า https://uat-live.takra.ai/users</li></ul></div>
@@ -2368,8 +2365,8 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="featrow" data-featkey="script-approve-delegate"><td colspan="7">📁 script-approve-delegate <span class="rp"><span class="lv lvl-ui">🌐 4 <span style="color:var(--muted)">+2🆕</span></span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="script-approve-delegate"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
-<tr class="trow" data-feat="epic1" data-level="ui" data-prio="P0" onclick="tg(this)">
+<tr class="featrow hide" data-featkey="script-approve-delegate"><td colspan="7">📁 script-approve-delegate <span class="rp"><span class="lv lvl-ui">🌐 4 <span style="color:var(--muted)">+2🆕</span></span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="script-approve-delegate"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow hide" data-feat="epic1" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-SA.1</td>
   <td class="ctitle">มอบสิทธิ์ Script Approve ให้สมาชิกแล้วมีผลทันที</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -2377,7 +2374,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-40"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-40"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail hide"><td colspan="7"><div class="card">
   <div class="h-title">มอบสิทธิ์ Script Approve ให้สมาชิกแล้วมีผลทันที</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · script-approve-delegate · Epic 1 · Story 1.8 · FR3a</div>
   <div class="sec"><h4>Precondition</h4><ul><li>ล็อกอินเป็น Owner</li><li>มีสมาชิกที่ตอบรับคำเชิญแล้วและยังไม่มีสิทธิ์ Script Approve</li></ul></div>
@@ -2400,15 +2397,15 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow open" data-feat="epic1" data-level="ui" data-prio="P0" onclick="tg(this)">
+<tr class="trow hide" data-feat="epic1" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-SA.2</td>
   <td class="ctitle">เพิกถอนสิทธิ์ Script Approve แล้วสมาชิกอนุมัติไม่ได้อีก</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
-  <td class="status" data-uid="tc-41"><span class="stb fail">FAIL</span></td>
-  <td class="jira-cell" data-uid="tc-41"><a href="https://kitdi.atlassian.net/browse/TAKRA-655" target="_blank" rel="noopener" class="jira-chip">TAKRA-655</a></td>
+  <td class="status" data-uid="tc-41"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-41"></td>
 </tr>
-<tr class="detail show"><td colspan="7"><div class="card">
+<tr class="detail hide"><td colspan="7"><div class="card">
   <div class="h-title">เพิกถอนสิทธิ์ Script Approve แล้วสมาชิกอนุมัติไม่ได้อีก</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · script-approve-delegate · Epic 1 · Story 1.8 · FR3a</div>
   <div class="sec"><h4>Precondition</h4><ul><li>มีสมาชิกที่ได้รับสิทธิ์ Script Approve อยู่แล้ว</li></ul></div>
@@ -2416,22 +2413,22 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Data</h4><ul><li>สคริปต์ที่อยู่สถานะ "รอรีวิว" 1 รายการ</li></ul></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>หน้าต่างยืนยันบอกว่าผู้ใช้จะอนุมัติสคริปต์ไม่ได้อีก · บันทึกใน log · มอบสิทธิ์ใหม่ได้ภายหลัง</li><li>หลังยืนยัน เห็นข้อความ "ยกเลิกสิทธิ์ Script Approve แล้ว" และสวิตช์ปิด</li><li>สมาชิกคนนั้นอนุมัติสคริปต์ไม่ได้แล้ว</li><li>สคริปต์ที่อนุมัติไปก่อนหน้ายังคงสถานะ "อนุมัติแล้ว" ไม่ถูกย้อนกลับ</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —">กดปิดสวิตช์ Script Approve ของสมาชิกทดสอบ (Jane Smith) แล้วอ่านข้อความยืนยันและกด "ยกเลิกสิทธิ์" — พบว่าไม่มี API request ใดๆ (POST/PATCH/DELETE) ถูกส่งออกไปเลย ตรวจสอบผ่าน Network log ยืนยันว่ามีเพียง GET request สำหรับดึงข้อมูล permission-grants กลับมาเฉยๆ (status 200) ไม่มีการเปลี่ยนแปลงสิทธิ์จริงเกิดขึ้น — เป็นการล้มเหลวแบบเงียบ (silent failure) ไม่ใช่ error ที่มองเห็นได้ ต่างจาก TC-UR.3 ที่อย่างน้อยมี error toast แจ้งเตือนสิทธิ์ Owner ชัดเจน จึงสรุปว่าเป็นบั๊กจริง สร้างตั๋วใหม่ TAKRA-655</textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-41" data-st="pass">PASS</span>
-    <span class="opt fail sel" data-uid="tc-41" data-st="fail">FAIL</span>
+    <span class="opt fail" data-uid="tc-41" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-41" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-41" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-41" data-st="skip">SKIP</span>
   </div></div>
   <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
-    <div class="jira-list" data-uid="tc-41"><div class="jira-item"><a href="https://kitdi.atlassian.net/browse/TAKRA-655" target="_blank" rel="noopener">TAKRA-655</a><span class="jira-del" title="ลบลิงก์">✕</span></div></div>
+    <div class="jira-list" data-uid="tc-41"></div>
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-41" placeholder="วางลิงก์ Jira หรือพิมพ์ TAK-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-41">+ เพิ่มลิงก์</button></div>
   </div>
 </div></td></tr>
 
-<tr class="trow" data-feat="epic1" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow hide" data-feat="epic1" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-SA.3</td>
   <td class="ctitle">ประวัติการมอบ/เพิกถอนสิทธิ์แสดงครบและเรียงจากใหม่ไปเก่า</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -2439,7 +2436,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-42"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-42"><a href="https://kitdi.atlassian.net/browse/TAKRA-605" target="_blank" rel="noopener" class="jira-chip">TAKRA-605</a></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail hide"><td colspan="7"><div class="card">
   <div class="h-title">ประวัติการมอบ/เพิกถอนสิทธิ์แสดงครบและเรียงจากใหม่ไปเก่า</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · script-approve-delegate · Epic 1 · Story 1.8 · FR3a</div>
   <div class="sec"><h4>Precondition</h4><ul><li>เคยมอบและเพิกถอนสิทธิ์ Script Approve มาแล้วอย่างน้อยอย่างละ 1 ครั้ง</li></ul></div>
@@ -2461,7 +2458,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow" data-feat="epic1" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow hide" data-feat="epic1" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-SA.4</td>
   <td class="ctitle">Owner มีสิทธิ์อนุมัติโดยอัตโนมัติและสวิตช์ถูกล็อกไว้</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -2469,7 +2466,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-43"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-43"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail hide"><td colspan="7"><div class="card">
   <div class="h-title">Owner มีสิทธิ์อนุมัติโดยอัตโนมัติและสวิตช์ถูกล็อกไว้</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · script-approve-delegate · Epic 1 · Story 1.8 · FR3a</div>
   <div class="sec"><h4>Precondition</h4><ul><li>ล็อกอินเป็น Owner</li></ul></div>
@@ -2491,7 +2488,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow" data-feat="epic1" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow hide" data-feat="epic1" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-SA.E1</td>
   <td class="ctitle">โหลดประวัติสิทธิ์ไม่สำเร็จ แล้วมีข้อความและปุ่มลองใหม่</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -2499,7 +2496,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-44"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-44"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail hide"><td colspan="7"><div class="card">
   <div class="h-title">โหลดประวัติสิทธิ์ไม่สำเร็จ แล้วมีข้อความและปุ่มลองใหม่</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · script-approve-delegate · Epic 1 · Story 1.8</div>
   <div class="sec"><h4>Precondition</h4><ul><li>อยู่ที่หน้า https://uat-live.takra.ai/users</li><li>สามารถจำลองการเรียกข้อมูลล้มเหลวได้</li></ul></div>
@@ -2522,7 +2519,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow" data-feat="epic1" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow hide" data-feat="epic1" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-SA.E2</td>
   <td class="ctitle">ผู้ที่ไม่ใช่ Owner พยายามมอบสิทธิ์ Script Approve แล้วถูกปฏิเสธ</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -2530,7 +2527,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-45"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-45"><a href="https://kitdi.atlassian.net/browse/TAKRA-309" target="_blank" rel="noopener" class="jira-chip">TAKRA-309</a></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail hide"><td colspan="7"><div class="card">
   <div class="h-title">ผู้ที่ไม่ใช่ Owner พยายามมอบสิทธิ์ Script Approve แล้วถูกปฏิเสธ</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · script-approve-delegate · Epic 1 · Story 1.8</div>
   <div class="sec"><h4>Precondition</h4><ul><li>มีบัญชี Live Operator ที่ได้รับสิทธิ์ Script Approve อยู่</li></ul></div>
@@ -2553,8 +2550,8 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="featrow" data-featkey="quota-dashboard"><td colspan="7">📁 quota-dashboard <span class="rp"><span class="lv lvl-ui">🌐 3 <span style="color:var(--muted)">+3🆕</span></span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="quota-dashboard"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
-<tr class="trow" data-feat="epic1" data-level="ui" data-prio="P0" onclick="tg(this)">
+<tr class="featrow hide" data-featkey="quota-dashboard"><td colspan="7">📁 quota-dashboard <span class="rp"><span class="lv lvl-ui">🌐 3 <span style="color:var(--muted)">+3🆕</span></span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="quota-dashboard"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow hide" data-feat="epic1" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-Q1.1</td>
   <td class="ctitle">เปิดหน้าแพ็กเกจและการใช้งานแล้วเห็นโควตาครบภายในเวลาที่กำหนด</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -2562,7 +2559,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-46"><span class="stb skip">SKIP</span></td>
   <td class="jira-cell" data-uid="tc-46"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail hide"><td colspan="7"><div class="card">
   <div class="h-title">เปิดหน้าแพ็กเกจและการใช้งานแล้วเห็นโควตาครบภายในเวลาที่กำหนด</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · quota-dashboard · Epic 1 · Story 1.10 · FR5</div>
   <div class="sec"><h4>Precondition</h4><ul><li>ล็อกอินเป็น Owner ของ workspace ที่มีการใช้งานอยู่บ้าง</li></ul></div>
@@ -2585,7 +2582,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow" data-feat="epic1" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow hide" data-feat="epic1" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-Q1.2</td>
   <td class="ctitle">หน้าภาพรวมแสดงชั่วโมงอวาตาร์ที่ใช้เทียบโควตาให้เห็นทันที</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -2593,7 +2590,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-47"><span class="stb skip">SKIP</span></td>
   <td class="jira-cell" data-uid="tc-47"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail hide"><td colspan="7"><div class="card">
   <div class="h-title">หน้าภาพรวมแสดงชั่วโมงอวาตาร์ที่ใช้เทียบโควตาให้เห็นทันที</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · quota-dashboard · Epic 1 · Story 1.10 · FR5</div>
   <div class="sec"><h4>Precondition</h4><ul><li>ล็อกอินเป็น Owner</li><li>อยู่ที่ https://uat-live.takra.ai/home</li></ul></div>
@@ -2615,7 +2612,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow" data-feat="epic1" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow hide" data-feat="epic1" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-Q1.3</td>
   <td class="ctitle">การเปลี่ยนแพ็กเกจและการชำระเงินชี้ไป TAKRA Hub ทั้งหมด</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -2623,7 +2620,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-48"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-48"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail hide"><td colspan="7"><div class="card">
   <div class="h-title">การเปลี่ยนแพ็กเกจและการชำระเงินชี้ไป TAKRA Hub ทั้งหมด</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · quota-dashboard · Epic 1 · Story 1.10 · FR5</div>
   <div class="sec"><h4>Precondition</h4><ul><li>อยู่ที่หน้าแพ็กเกจและการใช้งานในฐานะ Owner</li></ul></div>
@@ -2645,7 +2642,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow" data-feat="epic1" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow hide" data-feat="epic1" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-Q1.E1</td>
   <td class="ctitle">ดึงข้อมูลการใช้งานไม่สำเร็จ ระบบต้องไม่แสดง 0 หลอกว่าใช้หมด</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -2653,7 +2650,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-49"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-49"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail hide"><td colspan="7"><div class="card">
   <div class="h-title">ดึงข้อมูลการใช้งานไม่สำเร็จ ระบบต้องไม่แสดง 0 หลอกว่าใช้หมด</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · quota-dashboard · Epic 1 · Story 1.10</div>
   <div class="sec"><h4>Precondition</h4><ul><li>อยู่ที่หน้าแพ็กเกจและการใช้งาน</li><li>สามารถจำลองการเรียกข้อมูลล้มเหลวได้</li></ul></div>
@@ -2676,7 +2673,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow" data-feat="epic1" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow hide" data-feat="epic1" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-Q1.E2</td>
   <td class="ctitle">Workspace ใหม่ที่ยังไม่มีการใช้งาน แสดงสถานะว่างอย่างเรียบร้อย</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -2684,7 +2681,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-50"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-50"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail hide"><td colspan="7"><div class="card">
   <div class="h-title">Workspace ใหม่ที่ยังไม่มีการใช้งาน แสดงสถานะว่างอย่างเรียบร้อย</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · quota-dashboard · Epic 1 · Story 1.10</div>
   <div class="sec"><h4>Precondition</h4><ul><li>มี workspace ทดสอบที่เพิ่งสร้างและยังไม่เคยไลฟ์</li></ul></div>
@@ -2707,7 +2704,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow" data-feat="epic1" data-level="ui" data-prio="P2" onclick="tg(this)">
+<tr class="trow hide" data-feat="epic1" data-level="ui" data-prio="P2" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-Q1.E3</td>
   <td class="ctitle">ใช้งานเกินโควตาแล้วเห็นสัญญาณเตือนแต่ยังใช้งานต่อได้</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -2715,7 +2712,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-51"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-51"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail hide"><td colspan="7"><div class="card">
   <div class="h-title">ใช้งานเกินโควตาแล้วเห็นสัญญาณเตือนแต่ยังใช้งานต่อได้</div>
   <div class="h-prio">Priority: <b>P2</b> · UI · quota-dashboard · Epic 1 · Story 1.10</div>
   <div class="sec"><h4>Precondition</h4><ul><li>มี workspace ทดสอบที่การใช้งานเกิน 100% ของโควตา (ให้ทีมพัฒนาช่วยจัดข้อมูล)</li></ul></div>
@@ -2738,8 +2735,8 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="featrow" data-featkey="onboarding"><td colspan="7">📁 onboarding <span class="rp"><span class="lv lvl-ui">🌐 3 <span style="color:var(--muted)">+2🆕</span></span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="onboarding"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
-<tr class="trow" data-feat="epic1" data-level="ui" data-prio="P0" onclick="tg(this)">
+<tr class="featrow hide" data-featkey="onboarding"><td colspan="7">📁 onboarding <span class="rp"><span class="lv lvl-ui">🌐 3 <span style="color:var(--muted)">+2🆕</span></span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="onboarding"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow hide" data-feat="epic1" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-OB.1</td>
   <td class="ctitle">ผู้ใช้ใหม่เห็นเช็กลิสต์ 3 ขั้นก่อนไลฟ์แรกพร้อมทางไปแต่ละขั้น</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -2747,7 +2744,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-52"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-52"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail hide"><td colspan="7"><div class="card">
   <div class="h-title">ผู้ใช้ใหม่เห็นเช็กลิสต์ 3 ขั้นก่อนไลฟ์แรกพร้อมทางไปแต่ละขั้น</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · onboarding · Epic 1 · Story 1.11</div>
   <div class="sec"><h4>Precondition</h4><ul><li>มีบัญชีทดสอบใน workspace ที่ยังไม่ได้เตรียมอวาตาร์/สินค้า/ไลฟ์</li></ul></div>
@@ -2770,7 +2767,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow" data-feat="epic1" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow hide" data-feat="epic1" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-OB.2</td>
   <td class="ctitle">ทำขั้นตอนเสร็จแล้วเช็กลิสต์อัปเดตความคืบหน้าให้เห็น</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -2778,7 +2775,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-53"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-53"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail hide"><td colspan="7"><div class="card">
   <div class="h-title">ทำขั้นตอนเสร็จแล้วเช็กลิสต์อัปเดตความคืบหน้าให้เห็น</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · onboarding · Epic 1 · Story 1.11</div>
   <div class="sec"><h4>Precondition</h4><ul><li>อยู่ที่เช็กลิสต์เริ่มต้นใช้งาน และยังทำไม่ครบทุกขั้น</li></ul></div>
@@ -2801,7 +2798,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow" data-feat="epic1" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow hide" data-feat="epic1" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-OB.3</td>
   <td class="ctitle">ทำครบทุกขั้นแล้วระบบชี้ไปสร้างไลฟ์แรก</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -2809,7 +2806,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-54"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-54"><a href="https://kitdi.atlassian.net/browse/TAKRA-606" target="_blank" rel="noopener" class="jira-chip">TAKRA-606</a></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail hide"><td colspan="7"><div class="card">
   <div class="h-title">ทำครบทุกขั้นแล้วระบบชี้ไปสร้างไลฟ์แรก</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · onboarding · Epic 1 · Story 1.11</div>
   <div class="sec"><h4>Precondition</h4><ul><li>เตรียมอวาตาร์/เสียง · เพิ่มสินค้า · สร้างไลฟ์ ครบแล้วใน workspace ทดสอบ</li></ul></div>
@@ -2831,7 +2828,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow" data-feat="epic1" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow hide" data-feat="epic1" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-OB.E1</td>
   <td class="ctitle">ยังไม่มี Workspace แล้วเช็กลิสต์ชี้ไปสร้างที่ TAKRA Hub ก่อน</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -2839,7 +2836,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-55"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-55"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail hide"><td colspan="7"><div class="card">
   <div class="h-title">ยังไม่มี Workspace แล้วเช็กลิสต์ชี้ไปสร้างที่ TAKRA Hub ก่อน</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · onboarding · Epic 1 · Story 1.11</div>
   <div class="sec"><h4>Precondition</h4><ul><li>บัญชีทดสอบที่ยังไม่เป็นสมาชิก workspace ใด</li></ul></div>
@@ -2861,7 +2858,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow" data-feat="epic1" data-level="ui" data-prio="P2" onclick="tg(this)">
+<tr class="trow hide" data-feat="epic1" data-level="ui" data-prio="P2" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-OB.E2</td>
   <td class="ctitle">โหลดความคืบหน้าไม่สำเร็จ แล้วมีข้อความและปุ่มลองใหม่</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -2869,7 +2866,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-56"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-56"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail hide"><td colspan="7"><div class="card">
   <div class="h-title">โหลดความคืบหน้าไม่สำเร็จ แล้วมีข้อความและปุ่มลองใหม่</div>
   <div class="h-prio">Priority: <b>P2</b> · UI · onboarding · Epic 1 · Story 1.11</div>
   <div class="sec"><h4>Precondition</h4><ul><li>อยู่ที่หน้าเช็กลิสต์เริ่มต้นใช้งาน</li><li>สามารถจำลองการเรียกข้อมูลล้มเหลวได้</li></ul></div>
@@ -2892,8 +2889,8 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="featrow" data-featkey="pdpa-dsar"><td colspan="7">📁 pdpa-dsar <span class="rp"><span class="lv lvl-ui">🌐 2 <span style="color:var(--muted)">+2🆕</span></span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="pdpa-dsar"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
-<tr class="trow" data-feat="epic1" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="featrow hide" data-featkey="pdpa-dsar"><td colspan="7">📁 pdpa-dsar <span class="rp"><span class="lv lvl-ui">🌐 2 <span style="color:var(--muted)">+2🆕</span></span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="pdpa-dsar"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow hide" data-feat="epic1" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-PD.1</td>
   <td class="ctitle">หน้าตั้งค่าบัญชีมีส่วนลบบัญชีพร้อมคำเตือนผลกระทบครบ</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -2901,7 +2898,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-57"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-57"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail hide"><td colspan="7"><div class="card">
   <div class="h-title">หน้าตั้งค่าบัญชีมีส่วนลบบัญชีพร้อมคำเตือนผลกระทบครบ</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · pdpa-dsar · Epic 1 · Story 1.12 · NFR-COMP-04/05</div>
   <div class="sec"><h4>Precondition</h4><ul><li>ล็อกอินอยู่ในระบบ</li></ul></div>
@@ -2924,7 +2921,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow" data-feat="epic1" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow hide" data-feat="epic1" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-PD.2</td>
   <td class="ctitle">ส่งคำขอลบบัญชีต้องพิมพ์ข้อความยืนยันให้ตรงก่อนจึงทำได้</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -2932,7 +2929,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-58"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-58"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail hide"><td colspan="7"><div class="card">
   <div class="h-title">ส่งคำขอลบบัญชีต้องพิมพ์ข้อความยืนยันให้ตรงก่อนจึงทำได้</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · pdpa-dsar · Epic 1 · Story 1.12</div>
   <div class="sec"><h4>Precondition</h4><ul><li>อยู่ที่หมวดลบบัญชีในหน้าตั้งค่า</li><li>ใช้บัญชีทดสอบที่ลบได้</li></ul></div>
@@ -2955,7 +2952,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow" data-feat="epic1" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow hide" data-feat="epic1" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-PD.E1</td>
   <td class="ctitle">คำขอเพิกถอนความยินยอมเสียงถูกส่งให้ทีม Ops ดำเนินการ (ไม่ใช่ self-service)</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -2963,7 +2960,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-59"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-59"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail hide"><td colspan="7"><div class="card">
   <div class="h-title">คำขอเพิกถอนความยินยอมเสียงถูกส่งให้ทีม Ops ดำเนินการ (ไม่ใช่ self-service)</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · pdpa-dsar · Epic 1 · Story 1.12 · FR11</div>
   <div class="sec"><h4>Precondition</h4><ul><li>อยู่ที่หน้า https://uat-live.takra.ai/voices และมี Voice Profile อย่างน้อย 1 รายการ</li></ul></div>
@@ -2986,7 +2983,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow" data-feat="epic1" data-level="ui" data-prio="P2" onclick="tg(this)">
+<tr class="trow hide" data-feat="epic1" data-level="ui" data-prio="P2" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-PD.E2</td>
   <td class="ctitle">MVP-1 ยังไม่มีหน้าจอ self-service สำหรับขอเข้าถึง/ลบข้อมูลส่วนบุคคล</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -2994,7 +2991,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-60"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-60"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail hide"><td colspan="7"><div class="card">
   <div class="h-title">MVP-1 ยังไม่มีหน้าจอ self-service สำหรับขอเข้าถึง/ลบข้อมูลส่วนบุคคล</div>
   <div class="h-prio">Priority: <b>P2</b> · UI · pdpa-dsar · Epic 1 · Story 1.12</div>
   <div class="sec"><h4>Precondition</h4><ul><li>ล็อกอินอยู่ในระบบ</li></ul></div>
@@ -3018,8 +3015,8 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 
 <!-- Epic 2 -->
-<tr class="epicrow hide" data-epic="2"><td colspan="7">📦 ขั้นที่ 2 · คลังของ Workspace — Avatar/Voice · สินค้า · คำเสี่ยง · สคริปต์ (Epic 2 · FR7-13 · FR46 · FR67-72) <span class="rp">(45 เคสหลัก <span style="color:var(--muted);font-weight:400">+ 29 edge🆕</span>)</span></td></tr>
-<tr class="featrow hide" data-featkey="avatar-library"><td colspan="7">📁 avatar-library <span class="rp"><span class="lv lvl-ui">🌐 5 <span style="color:var(--muted)">+4🆕</span></span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="avatar-library"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="epicrow" data-epic="2"><td colspan="7">📦 ขั้นที่ 2 · คลังของ Workspace — Avatar/Voice · สินค้า · คำเสี่ยง · สคริปต์ (Epic 2 · FR7-13 · FR46 · FR67-72) <span class="rp">(45 เคสหลัก <span style="color:var(--muted);font-weight:400">+ 29 edge🆕</span>)</span></td></tr>
+<tr class="featrow" data-featkey="avatar-library"><td colspan="7">📁 avatar-library <span class="rp"><span class="lv lvl-ui">🌐 5 <span style="color:var(--muted)">+4🆕</span></span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="avatar-library"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
 <tr class="trow hide" data-feat="epic2" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-A2.1</td>
   <td class="ctitle">เปิดคลังอวาตาร์แล้วเห็นอวาตาร์ที่ทีม Ops จัดเตรียมให้ครบ</td>
@@ -3173,7 +3170,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow hide" data-feat="epic2" data-level="ui" data-prio="P0" onclick="tg(this)">
+<tr class="trow" data-feat="epic2" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-A2.E1</td>
   <td class="ctitle">Workspace ที่ยังไม่มีอวาตาร์เห็นข้อความกำลังเตรียมให้ ไม่ใช่หน้าจอว่าง</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -3181,7 +3178,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-66"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-66"></td>
 </tr>
-<tr class="detail hide"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">Workspace ที่ยังไม่มีอวาตาร์เห็นข้อความกำลังเตรียมให้ ไม่ใช่หน้าจอว่าง</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · avatar-library · Epic 2 · Story 2.1 (Sally's gap)</div>
   <div class="sec"><h4>Precondition</h4><ul><li>มี workspace ทดสอบที่ยังไม่ได้ provision อวาตาร์</li></ul></div>
@@ -3266,15 +3263,15 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow hide" data-feat="epic2" data-level="ui" data-prio="P2" onclick="tg(this)">
+<tr class="trow open hide" data-feat="epic2" data-level="ui" data-prio="P2" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-A2.E4</td>
   <td class="ctitle">เล่นตัวอย่างเสียงไม่สำเร็จ แล้วเห็นข้อความเฉพาะจุดพร้อมปุ่มลองใหม่</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p2">P2</span></td>
-  <td class="status" data-uid="tc-69"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-69"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-69"></td>
 </tr>
-<tr class="detail hide"><td colspan="7"><div class="card">
+<tr class="detail show hide"><td colspan="7"><div class="card">
   <div class="h-title">เล่นตัวอย่างเสียงไม่สำเร็จ แล้วเห็นข้อความเฉพาะจุดพร้อมปุ่มลองใหม่</div>
   <div class="h-prio">Priority: <b>P2</b> · UI · avatar-library · Epic 2 · Story 2.1</div>
   <div class="sec"><h4>Precondition</h4><ul><li>อยู่ในหน้าต่างพรีวิวอวาตาร์</li><li>สามารถบล็อกไฟล์เสียงด้วย DevTools ได้</li></ul></div>
@@ -3286,7 +3283,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-69" data-st="pass">PASS</span>
-    <span class="opt fail" data-uid="tc-69" data-st="fail">FAIL</span>
+    <span class="opt fail sel" data-uid="tc-69" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-69" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-69" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-69" data-st="skip">SKIP</span>
@@ -3539,7 +3536,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="featrow hide" data-featkey="product-catalog"><td colspan="7">📁 product-catalog <span class="rp"><span class="lv lvl-ui">🌐 7 <span style="color:var(--muted)">+5🆕</span></span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="product-catalog"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="featrow" data-featkey="product-catalog"><td colspan="7">📁 product-catalog <span class="rp"><span class="lv lvl-ui">🌐 7 <span style="color:var(--muted)">+5🆕</span></span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="product-catalog"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
 <tr class="trow hide" data-feat="epic2" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-P2.1</td>
   <td class="ctitle">เปิดคลังสินค้าแล้วเห็นตัวเลขสรุปและรายการสินค้าครบ</td>
@@ -3756,7 +3753,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow hide" data-feat="epic2" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow" data-feat="epic2" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-P2.E1</td>
   <td class="ctitle">อัปโหลดรูปเกิน 10MB แล้วถูกปฏิเสธพร้อมข้อความบอกขนาดจำกัด</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -3764,7 +3761,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-85"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-85"></td>
 </tr>
-<tr class="detail hide"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">อัปโหลดรูปเกิน 10MB แล้วถูกปฏิเสธพร้อมข้อความบอกขนาดจำกัด</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · product-catalog · Epic 2 · Story 2.3 · AR-5</div>
   <div class="sec"><h4>Precondition</h4><ul><li>อยู่ในฟอร์มสินค้า</li><li>เตรียมไฟล์รูปขนาดเกิน 10MB</li></ul></div>
@@ -3878,7 +3875,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow hide" data-feat="epic2" data-level="ui" data-prio="P2" onclick="tg(this)">
+<tr class="trow" data-feat="epic2" data-level="ui" data-prio="P2" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-P2.E5</td>
   <td class="ctitle">คลังสินค้าว่างหรือค้นหาไม่พบ แสดงสถานะว่างที่ต่างกันอย่างถูกต้อง</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -3886,7 +3883,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-89"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-89"></td>
 </tr>
-<tr class="detail hide"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">คลังสินค้าว่างหรือค้นหาไม่พบ แสดงสถานะว่างที่ต่างกันอย่างถูกต้อง</div>
   <div class="h-prio">Priority: <b>P2</b> · UI · product-catalog · Epic 2 · Story 2.3</div>
   <div class="sec"><h4>Precondition</h4><ul><li>มี workspace ทดสอบที่ยังไม่มีสินค้า และอีก workspace ที่มีสินค้า</li></ul></div>
@@ -4156,7 +4153,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="featrow hide" data-featkey="risk-word-library"><td colspan="7">📁 risk-word-library <span class="rp"><span class="lv lvl-ui">🌐 7 <span style="color:var(--muted)">+4🆕</span></span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="risk-word-library"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="featrow" data-featkey="risk-word-library"><td colspan="7">📁 risk-word-library <span class="rp"><span class="lv lvl-ui">🌐 7 <span style="color:var(--muted)">+4🆕</span></span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="risk-word-library"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
 <tr class="trow hide" data-feat="epic2" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-R2.1</td>
   <td class="ctitle">เปิดคลังคำเสี่ยงแล้วเห็นหมวดตามประเภทธุรกิจครบพร้อมจำนวนคำ</td>
@@ -4249,7 +4246,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow hide" data-feat="epic2" data-level="ui" data-prio="P0" onclick="tg(this)">
+<tr class="trow" data-feat="epic2" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-R2.4</td>
   <td class="ctitle">เพิ่มคำห้ามทั่วทั้ง Workspace ครั้งเดียวแล้วมีผลทุกหมวดทุกสินค้า</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -4257,7 +4254,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-101"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-101"></td>
 </tr>
-<tr class="detail hide"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">เพิ่มคำห้ามทั่วทั้ง Workspace ครั้งเดียวแล้วมีผลทุกหมวดทุกสินค้า</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · risk-word-library · Epic 2 · Story 2.5 · FR46b2</div>
   <div class="sec"><h4>Precondition</h4><ul><li>อยู่ที่หน้า https://uat-live.takra.ai/risk-words</li><li>มีสินค้าอย่างน้อย 2 ชิ้นที่อยู่คนละหมวด</li></ul></div>
@@ -4280,7 +4277,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow hide" data-feat="epic2" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow" data-feat="epic2" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-R2.5</td>
   <td class="ctitle">หมวด "อื่นๆ" ไม่มีชุดสำเร็จรูป ต้องเพิ่มคำเองและมีผลเฉพาะสินค้าในหมวดนั้น</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -4288,7 +4285,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-102"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-102"></td>
 </tr>
-<tr class="detail hide"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">หมวด "อื่นๆ" ไม่มีชุดสำเร็จรูป ต้องเพิ่มคำเองและมีผลเฉพาะสินค้าในหมวดนั้น</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · risk-word-library · Epic 2 · Story 2.5 · FR46b</div>
   <div class="sec"><h4>Precondition</h4><ul><li>มีสินค้าที่ติดหมวด "อื่นๆ" อย่างน้อย 1 ชิ้น</li></ul></div>
@@ -4311,7 +4308,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow hide" data-feat="epic2" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow" data-feat="epic2" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-R2.6</td>
   <td class="ctitle">ดูสถิติการกรอง 30 วันย้อนหลังพร้อมอัตราการบล็อกเทียบเป้า</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -4319,7 +4316,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-103"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-103"></td>
 </tr>
-<tr class="detail hide"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">ดูสถิติการกรอง 30 วันย้อนหลังพร้อมอัตราการบล็อกเทียบเป้า</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · risk-word-library · Epic 2 · Story 2.5 · FR46d</div>
   <div class="sec"><h4>Precondition</h4><ul><li>อยู่ที่หน้า https://uat-live.takra.ai/risk-words</li></ul></div>
@@ -4342,7 +4339,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow hide" data-feat="epic2" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow" data-feat="epic2" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-R2.7</td>
   <td class="ctitle">ตรวจชุดคำที่สแกนจริงของหมวด = universal + คำของหมวด − allowlist</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -4350,7 +4347,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-104"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-104"></td>
 </tr>
-<tr class="detail hide"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">ตรวจชุดคำที่สแกนจริงของหมวด = universal + คำของหมวด − allowlist</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · risk-word-library · Epic 2 · Story 2.5 · FR46c · FR46e</div>
   <div class="sec"><h4>Precondition</h4><ul><li>มีคำระดับ workspace (Tier 1) และคำเฉพาะหมวดอยู่แล้ว</li></ul></div>
@@ -4373,7 +4370,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow hide" data-feat="epic2" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow" data-feat="epic2" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-R2.E1</td>
   <td class="ctitle">เพิ่มคำเสี่ยงที่มีอยู่แล้วในหมวด ระบบเตือนและไม่สร้างซ้ำ</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -4381,7 +4378,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-105"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-105"></td>
 </tr>
-<tr class="detail hide"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">เพิ่มคำเสี่ยงที่มีอยู่แล้วในหมวด ระบบเตือนและไม่สร้างซ้ำ</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · risk-word-library · Epic 2 · Story 2.5</div>
   <div class="sec"><h4>Precondition</h4><ul><li>รู้คำที่มีอยู่แล้วในหมวดที่จะทดสอบ</li></ul></div>
@@ -4404,7 +4401,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow hide" data-feat="epic2" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow" data-feat="epic2" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-R2.E2</td>
   <td class="ctitle">ค้นหาและกรองคำในหมวด แล้วเห็นสถานะว่างเมื่อไม่ตรงเงื่อนไข</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -4412,7 +4409,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-106"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-106"></td>
 </tr>
-<tr class="detail hide"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">ค้นหาและกรองคำในหมวด แล้วเห็นสถานะว่างเมื่อไม่ตรงเงื่อนไข</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · risk-word-library · Epic 2 · Story 2.5</div>
   <div class="sec"><h4>Precondition</h4><ul><li>อยู่ในหน้าหมวดคำเสี่ยงที่มีคำหลายรายการ</li></ul></div>
@@ -4435,7 +4432,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow hide" data-feat="epic2" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow open" data-feat="epic2" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-R2.E3</td>
   <td class="ctitle">ลบคำที่เพิ่มเองได้ แต่คำสำเร็จรูปไม่มีทางลบ</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -4443,7 +4440,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-107"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-107"></td>
 </tr>
-<tr class="detail hide"><td colspan="7"><div class="card">
+<tr class="detail show"><td colspan="7"><div class="card">
   <div class="h-title">ลบคำที่เพิ่มเองได้ แต่คำสำเร็จรูปไม่มีทางลบ</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · risk-word-library · Epic 2 · Story 2.5 · FR46b (edge)</div>
   <div class="sec"><h4>Precondition</h4><ul><li>ในหมวดทดสอบมีทั้งคำสำเร็จรูปและคำที่เพิ่มเอง</li></ul></div>
@@ -4465,7 +4462,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow hide" data-feat="epic2" data-level="ui" data-prio="P2" onclick="tg(this)">
+<tr class="trow" data-feat="epic2" data-level="ui" data-prio="P2" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-R2.E4</td>
   <td class="ctitle">MVP-1 ยังไม่มีปุ่มส่งออกสถิติเป็น CSV</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -4473,7 +4470,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-108"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-108"></td>
 </tr>
-<tr class="detail hide"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">MVP-1 ยังไม่มีปุ่มส่งออกสถิติเป็น CSV</div>
   <div class="h-prio">Priority: <b>P2</b> · UI · risk-word-library · Epic 2 · Story 2.5 · FR46d (CSV = MVP-2)</div>
   <div class="sec"><h4>Precondition</h4><ul><li>อยู่ที่หน้า https://uat-live.takra.ai/risk-words</li></ul></div>
@@ -4801,7 +4798,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="featrow hide" data-featkey="script-lifecycle"><td colspan="7">📁 script-lifecycle <span class="rp"><span class="lv lvl-ui">🌐 4 <span style="color:var(--muted)">+3🆕</span></span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="script-lifecycle"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="featrow" data-featkey="script-lifecycle"><td colspan="7">📁 script-lifecycle <span class="rp"><span class="lv lvl-ui">🌐 4 <span style="color:var(--muted)">+3🆕</span></span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="script-lifecycle"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
 <tr class="trow hide" data-feat="epic2" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-SC.1</td>
   <td class="ctitle">ส่งสคริปต์ขออนุมัติแล้วสถานะเปลี่ยนเป็นรอรีวิวและเข้าคิว</td>
@@ -4923,7 +4920,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow hide" data-feat="epic2" data-level="ui" data-prio="P0" onclick="tg(this)">
+<tr class="trow" data-feat="epic2" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-SC.E1</td>
   <td class="ctitle">ผู้ที่ไม่มีสิทธิ์อนุมัติ กดอนุมัติสคริปต์ไม่ได้</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -4931,7 +4928,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-123"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-123"></td>
 </tr>
-<tr class="detail hide"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">ผู้ที่ไม่มีสิทธิ์อนุมัติ กดอนุมัติสคริปต์ไม่ได้</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · script-lifecycle · Epic 2 · Story 2.8 · FR3a</div>
   <div class="sec"><h4>Precondition</h4><ul><li>มีบัญชี Live Operator ที่ยังไม่ได้รับสิทธิ์ Script Approve</li><li>มีสคริปต์สถานะรอรีวิวอยู่ในคลัง</li></ul></div>
@@ -4985,7 +4982,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow hide" data-feat="epic2" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow" data-feat="epic2" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-SC.E3</td>
   <td class="ctitle">มีคนอนุมัติสคริปต์เดียวกันพร้อมกัน ระบบแจ้งให้รีเฟรชแทนการทับข้อมูล</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -4993,7 +4990,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-125"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-125"></td>
 </tr>
-<tr class="detail hide"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">มีคนอนุมัติสคริปต์เดียวกันพร้อมกัน ระบบแจ้งให้รีเฟรชแทนการทับข้อมูล</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · script-lifecycle · Epic 2 · Story 2.8</div>
   <div class="sec"><h4>Precondition</h4><ul><li>มีสคริปต์สถานะรอรีวิว</li><li>มีผู้ใช้ 2 คนที่มีสิทธิ์อนุมัติและเปิดหน้าเดียวกันไว้</li></ul></div>
@@ -5169,7 +5166,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="featrow hide" data-featkey="script-two-way-sync"><td colspan="7">📁 script-two-way-sync <span class="rp"><span class="lv lvl-ui">🌐 3 <span style="color:var(--muted)">+1🆕</span></span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="script-two-way-sync"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="featrow" data-featkey="script-two-way-sync"><td colspan="7">📁 script-two-way-sync <span class="rp"><span class="lv lvl-ui">🌐 3 <span style="color:var(--muted)">+1🆕</span></span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="script-two-way-sync"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
 <tr class="trow hide" data-feat="epic2" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-TS.1</td>
   <td class="ctitle">บันทึกสคริปต์ที่เขียนใน Studio กลับเข้าคลังเป็นต้นฉบับใหม่</td>
@@ -5230,7 +5227,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow hide" data-feat="epic2" data-level="ui" data-prio="P0" onclick="tg(this)">
+<tr class="trow" data-feat="epic2" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-TS.3</td>
   <td class="ctitle">กดอัปเดต snapshot แล้วต้องอนุมัติสคริปต์ใหม่อีกครั้ง</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -5238,7 +5235,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-133"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-133"></td>
 </tr>
-<tr class="detail hide"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">กดอัปเดต snapshot แล้วต้องอนุมัติสคริปต์ใหม่อีกครั้ง</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · script-two-way-sync · Epic 2 · Story 2.10 · FR72</div>
   <div class="sec"><h4>Precondition</h4><ul><li>มีฉากที่ติดป้ายว่าสำเนาล้าสมัย และสคริปต์เดิมในฉากอยู่สถานะอนุมัติแล้ว</li></ul></div>
@@ -5260,7 +5257,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow hide" data-feat="epic2" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow" data-feat="epic2" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-TS.E1</td>
   <td class="ctitle">แก้ต้นฉบับในคลังไม่กระทบไลฟ์ที่ยืนยันแล้วหรือกำลังออกอากาศ</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -5268,7 +5265,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-134"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-134"></td>
 </tr>
-<tr class="detail hide"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">แก้ต้นฉบับในคลังไม่กระทบไลฟ์ที่ยืนยันแล้วหรือกำลังออกอากาศ</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · script-two-way-sync · Epic 2 · Story 2.10 · FR72 (no auto-cascade)</div>
   <div class="sec"><h4>Precondition</h4><ul><li>มีไลฟ์ที่สถานะยืนยันแล้ว/กำลังออกอากาศ ซึ่งผูกสคริปต์จากคลังไว้</li></ul></div>
