@@ -1070,7 +1070,11 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     "st": "pass"
   },
   "tc-69": {
-    "st": "fail"
+    "st": "fail",
+    "actual": "หน้าต่างพรีวิวอวาตาร์ไม่มีปุ่มเล่นเสียงตัวอย่างเลย (ตาม TAKRA-607) จึงไม่มีจุดให้ทดสอบ block request แล้วดู error message/ปุ่มลองใหม่ได้",
+    "jira": [
+      "https://kitdi.atlassian.net/browse/TAKRA-607"
+    ]
   }
 }
 </script>
@@ -1140,7 +1144,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     </div>
     <div class="row"><label>สถานะ</label>
       <button class="fchip" data-f="status" data-v="pass">✅ PASS</button>
-      <button class="fchip" data-f="status" data-v="fail">❌ FAIL</button>
+      <button class="fchip active" data-f="status" data-v="fail">❌ FAIL</button>
       <button class="fchip" data-f="status" data-v="hold">⏸ HOLD</button>
       <button class="fchip" data-f="status" data-v="block">🚫 BLOCKED</button>
       <button class="fchip" data-f="status" data-v="skip">⏭ SKIP</button>
@@ -3079,7 +3083,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow hide" data-feat="epic2" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow" data-feat="epic2" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-A2.3</td>
   <td class="ctitle">เปิดหน้าต่างพรีวิวอวาตาร์แล้วเห็นข้อมูลครบและปิดด้วย Esc ได้</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -3087,7 +3091,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-63"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-63"><a href="https://kitdi.atlassian.net/browse/TAKRA-607" target="_blank" rel="noopener" class="jira-chip">TAKRA-607</a></td>
 </tr>
-<tr class="detail hide"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">เปิดหน้าต่างพรีวิวอวาตาร์แล้วเห็นข้อมูลครบและปิดด้วย Esc ได้</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · avatar-library · Epic 2 · Story 2.1 · FR8</div>
   <div class="sec"><h4>Precondition</h4><ul><li>อยู่ที่หน้า https://uat-live.takra.ai/avatars และมีอวาตาร์อย่างน้อย 1 ตัว</li><li>เปิดลำโพงหรือใส่หูฟัง</li></ul></div>
@@ -3263,15 +3267,15 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow open hide" data-feat="epic2" data-level="ui" data-prio="P2" onclick="tg(this)">
+<tr class="trow open" data-feat="epic2" data-level="ui" data-prio="P2" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-A2.E4</td>
   <td class="ctitle">เล่นตัวอย่างเสียงไม่สำเร็จ แล้วเห็นข้อความเฉพาะจุดพร้อมปุ่มลองใหม่</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p2">P2</span></td>
   <td class="status" data-uid="tc-69"><span class="stb fail">FAIL</span></td>
-  <td class="jira-cell" data-uid="tc-69"></td>
+  <td class="jira-cell" data-uid="tc-69"><a href="https://kitdi.atlassian.net/browse/TAKRA-607" target="_blank" rel="noopener" class="jira-chip">TAKRA-607</a></td>
 </tr>
-<tr class="detail show hide"><td colspan="7"><div class="card">
+<tr class="detail show"><td colspan="7"><div class="card">
   <div class="h-title">เล่นตัวอย่างเสียงไม่สำเร็จ แล้วเห็นข้อความเฉพาะจุดพร้อมปุ่มลองใหม่</div>
   <div class="h-prio">Priority: <b>P2</b> · UI · avatar-library · Epic 2 · Story 2.1</div>
   <div class="sec"><h4>Precondition</h4><ul><li>อยู่ในหน้าต่างพรีวิวอวาตาร์</li><li>สามารถบล็อกไฟล์เสียงด้วย DevTools ได้</li></ul></div>
@@ -3279,7 +3283,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Data</h4><ul><li>DevTools → Network → Block request domain</li></ul></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>เห็นข้อความ "เล่นตัวอย่างเสียงไม่ได้ / ไฟล์เสียงโหลดไม่สำเร็จ" เฉพาะในส่วนเสียง</li><li>มีปุ่ม "ลองใหม่" ในจุดนั้น</li><li>ส่วนอื่นของหน้าต่างพรีวิว (วิดีโอ · ข้อมูลคาแรกเตอร์) ยังแสดงได้ตามปกติ</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —">หน้าต่างพรีวิวอวาตาร์ไม่มีปุ่มเล่นเสียงตัวอย่างเลย (ตาม TAKRA-607) จึงไม่มีจุดให้ทดสอบ block request แล้วดู error message/ปุ่มลองใหม่ได้</textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-69" data-st="pass">PASS</span>
@@ -3289,12 +3293,12 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <span class="opt skip" data-uid="tc-69" data-st="skip">SKIP</span>
   </div></div>
   <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
-    <div class="jira-list" data-uid="tc-69"></div>
+    <div class="jira-list" data-uid="tc-69"><div class="jira-item"><a href="https://kitdi.atlassian.net/browse/TAKRA-607" target="_blank" rel="noopener">TAKRA-607</a><span class="jira-del" title="ลบลิงก์">✕</span></div></div>
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-69" placeholder="วางลิงก์ Jira หรือพิมพ์ TAK-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-69">+ เพิ่มลิงก์</button></div>
   </div>
 </div></td></tr>
 
-<tr class="featrow hide" data-featkey="voice-library"><td colspan="7">📁 voice-library <span class="rp"><span class="lv lvl-ui">🌐 5 <span style="color:var(--muted)">+3🆕</span></span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="voice-library"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="featrow" data-featkey="voice-library"><td colspan="7">📁 voice-library <span class="rp"><span class="lv lvl-ui">🌐 5 <span style="color:var(--muted)">+3🆕</span></span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="voice-library"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
 <tr class="trow hide" data-feat="epic2" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-V2.1</td>
   <td class="ctitle">เปิดคลังเสียงแล้วเห็นเสียงที่ Ops จัดเตรียมพร้อมข้อความ PDPA</td>
@@ -3326,7 +3330,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow hide" data-feat="epic2" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow" data-feat="epic2" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-V2.2</td>
   <td class="ctitle">กรองเสียงตามลักษณะและภาษา แล้วล้างตัวกรองได้</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -3334,7 +3338,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-71"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-71"><a href="https://kitdi.atlassian.net/browse/TAKRA-608" target="_blank" rel="noopener" class="jira-chip">TAKRA-608</a></td>
 </tr>
-<tr class="detail hide"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">กรองเสียงตามลักษณะและภาษา แล้วล้างตัวกรองได้</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · voice-library · Epic 2 · Story 2.2</div>
   <div class="sec"><h4>Precondition</h4><ul><li>อยู่ที่หน้า https://uat-live.takra.ai/voices ที่มีเสียงหลายรายการ</li></ul></div>
@@ -3476,7 +3480,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow hide" data-feat="epic2" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow" data-feat="epic2" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-V2.E2</td>
   <td class="ctitle">กรองเสียงจนไม่พบผลลัพธ์ แล้วเห็นสถานะว่างพร้อมทางล้างตัวกรอง</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -3484,7 +3488,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-76"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-76"><a href="https://kitdi.atlassian.net/browse/TAKRA-608" target="_blank" rel="noopener" class="jira-chip">TAKRA-608</a></td>
 </tr>
-<tr class="detail hide"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">กรองเสียงจนไม่พบผลลัพธ์ แล้วเห็นสถานะว่างพร้อมทางล้างตัวกรอง</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · voice-library · Epic 2 · Story 2.2</div>
   <div class="sec"><h4>Precondition</h4><ul><li>อยู่ที่หน้า https://uat-live.takra.ai/voices ที่มีเสียงอยู่</li></ul></div>
@@ -3630,7 +3634,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow open hide" data-feat="epic2" data-level="ui" data-prio="P0" onclick="tg(this)">
+<tr class="trow" data-feat="epic2" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-P2.4</td>
   <td class="ctitle">ติดหมวดเพิ่มเติมให้สินค้าหนึ่งชิ้น แล้วชุดคำเสี่ยงรวมจากทุกหมวด</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -3638,7 +3642,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-81"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-81"><a href="https://kitdi.atlassian.net/browse/TAKRA-604" target="_blank" rel="noopener" class="jira-chip">TAKRA-604</a></td>
 </tr>
-<tr class="detail show hide"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">ติดหมวดเพิ่มเติมให้สินค้าหนึ่งชิ้น แล้วชุดคำเสี่ยงรวมจากทุกหมวด</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · product-catalog · Epic 2 · Story 2.3 · FR12 (multi-category)</div>
   <div class="sec"><h4>Precondition</h4><ul><li>อยู่ในฟอร์มแก้ไขสินค้าที่เลือกประเภทหลักไว้แล้ว</li><li>คลังคำเสี่ยงมีชุดคำของหมวดที่จะเลือกอยู่แล้ว</li></ul></div>
@@ -3784,7 +3788,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow hide" data-feat="epic2" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow" data-feat="epic2" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-P2.E2</td>
   <td class="ctitle">บันทึกสินค้าที่ยังไม่ได้เลือกหมวด ยังบันทึกได้แต่มีคำแนะนำ</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -3792,7 +3796,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-86"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-86"><a href="https://kitdi.atlassian.net/browse/TAKRA-609" target="_blank" rel="noopener" class="jira-chip">TAKRA-609</a></td>
 </tr>
-<tr class="detail hide"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">บันทึกสินค้าที่ยังไม่ได้เลือกหมวด ยังบันทึกได้แต่มีคำแนะนำ</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · product-catalog · Epic 2 · Story 2.3 (edge)</div>
   <div class="sec"><h4>Precondition</h4><ul><li>อยู่ในฟอร์มเพิ่มสินค้าใหม่</li></ul></div>
@@ -3815,7 +3819,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow hide" data-feat="epic2" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow" data-feat="epic2" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-P2.E3</td>
   <td class="ctitle">บันทึกสินค้าโดยไม่กรอกชื่อ แล้วเห็นข้อความเตือนที่ฟิลด์และไม่ถูกบันทึก</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -3823,7 +3827,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-87"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-87"><a href="https://kitdi.atlassian.net/browse/TAKRA-610" target="_blank" rel="noopener" class="jira-chip">TAKRA-610</a></td>
 </tr>
-<tr class="detail hide"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">บันทึกสินค้าโดยไม่กรอกชื่อ แล้วเห็นข้อความเตือนที่ฟิลด์และไม่ถูกบันทึก</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · product-catalog · Epic 2 · Story 2.3</div>
   <div class="sec"><h4>Precondition</h4><ul><li>อยู่ในฟอร์มเพิ่มสินค้าใหม่</li></ul></div>
@@ -3906,7 +3910,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="featrow hide" data-featkey="product-enrich"><td colspan="7">📁 product-enrich <span class="rp"><span class="lv lvl-ui">🌐 5 <span style="color:var(--muted)">+3🆕</span></span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="product-enrich"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="featrow" data-featkey="product-enrich"><td colspan="7">📁 product-enrich <span class="rp"><span class="lv lvl-ui">🌐 5 <span style="color:var(--muted)">+3🆕</span></span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="product-enrich"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
 <tr class="trow hide" data-feat="epic2" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-PE.1</td>
   <td class="ctitle">เพิ่มจุดเด่นสินค้าแล้วแสดงในหน้ารายละเอียดครบทุกข้อ</td>
@@ -4031,7 +4035,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow hide" data-feat="epic2" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow" data-feat="epic2" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-PE.5</td>
   <td class="ctitle">ความพร้อมขายของสินค้าเปลี่ยนตามความครบของข้อมูล</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -4039,7 +4043,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-94"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-94"><a href="https://kitdi.atlassian.net/browse/TAKRA-611" target="_blank" rel="noopener" class="jira-chip">TAKRA-611</a></td>
 </tr>
-<tr class="detail hide"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">ความพร้อมขายของสินค้าเปลี่ยนตามความครบของข้อมูล</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · product-enrich · Epic 2 · Story 2.4</div>
   <div class="sec"><h4>Precondition</h4><ul><li>สร้างสินค้าใหม่ที่มีแค่ชื่อ (ยังไม่มี SKU / จุดเด่น / Claims / FAQ)</li></ul></div>
@@ -4062,7 +4066,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow hide" data-feat="epic2" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow" data-feat="epic2" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-PE.E1</td>
   <td class="ctitle">ใส่คำเสี่ยงเฉพาะสินค้าที่ซ้ำกับชุดของหมวด ระบบไม่สร้างรายการซ้ำ</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -4070,7 +4074,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-95"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-95"><a href="https://kitdi.atlassian.net/browse/TAKRA-612" target="_blank" rel="noopener" class="jira-chip">TAKRA-612</a></td>
 </tr>
-<tr class="detail hide"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">ใส่คำเสี่ยงเฉพาะสินค้าที่ซ้ำกับชุดของหมวด ระบบไม่สร้างรายการซ้ำ</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · product-enrich · Epic 2 · Story 2.4 (edge · dedupe)</div>
   <div class="sec"><h4>Precondition</h4><ul><li>สินค้าทดสอบเลือกประเภทที่มีชุดคำเสี่ยงอยู่แล้ว</li><li>รู้คำที่อยู่ในชุดของหมวดนั้นอย่างน้อย 1 คำ</li></ul></div>
@@ -4185,7 +4189,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow open hide" data-feat="epic2" data-level="ui" data-prio="P0" onclick="tg(this)">
+<tr class="trow" data-feat="epic2" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-R2.2</td>
   <td class="ctitle">คำในชุดสำเร็จรูปเป็นข้อมูลอ่านอย่างเดียว แก้ไข/ลบไม่ได้</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -4193,7 +4197,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-99"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-99"><a href="https://kitdi.atlassian.net/browse/TAKRA-613" target="_blank" rel="noopener" class="jira-chip">TAKRA-613</a></td>
 </tr>
-<tr class="detail show hide"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">คำในชุดสำเร็จรูปเป็นข้อมูลอ่านอย่างเดียว แก้ไข/ลบไม่ได้</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · risk-word-library · Epic 2 · Story 2.5 · FR46a</div>
   <div class="sec"><h4>Precondition</h4><ul><li>อยู่ที่หน้า https://uat-live.takra.ai/risk-words และมีหมวดที่มีชุดคำสำเร็จรูป</li></ul></div>
@@ -4432,7 +4436,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow open" data-feat="epic2" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow" data-feat="epic2" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-R2.E3</td>
   <td class="ctitle">ลบคำที่เพิ่มเองได้ แต่คำสำเร็จรูปไม่มีทางลบ</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -4440,7 +4444,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-107"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-107"></td>
 </tr>
-<tr class="detail show"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">ลบคำที่เพิ่มเองได้ แต่คำสำเร็จรูปไม่มีทางลบ</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · risk-word-library · Epic 2 · Story 2.5 · FR46b (edge)</div>
   <div class="sec"><h4>Precondition</h4><ul><li>ในหมวดทดสอบมีทั้งคำสำเร็จรูปและคำที่เพิ่มเอง</li></ul></div>
@@ -4492,8 +4496,8 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="featrow hide" data-featkey="script-library"><td colspan="7">📁 script-library <span class="rp"><span class="lv lvl-ui">🌐 6 <span style="color:var(--muted)">+4🆕</span></span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="script-library"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
-<tr class="trow hide" data-feat="epic2" data-level="ui" data-prio="P0" onclick="tg(this)">
+<tr class="featrow" data-featkey="script-library"><td colspan="7">📁 script-library <span class="rp"><span class="lv lvl-ui">🌐 6 <span style="color:var(--muted)">+4🆕</span></span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="script-library"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow" data-feat="epic2" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-SL.1</td>
   <td class="ctitle">เปิดคลังสคริปต์แล้วเห็นตัวเลขสรุป แท็บสถานะ และคิวรออนุมัติ</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -4501,7 +4505,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-109"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-109"><a href="https://kitdi.atlassian.net/browse/TAKRA-614" target="_blank" rel="noopener" class="jira-chip">TAKRA-614</a></td>
 </tr>
-<tr class="detail hide"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">เปิดคลังสคริปต์แล้วเห็นตัวเลขสรุป แท็บสถานะ และคิวรออนุมัติ</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · script-library · Epic 2 · Story 2.7 · FR67-69</div>
   <div class="sec"><h4>Precondition</h4><ul><li>ล็อกอินเป็น Owner</li><li>คลังมีสคริปต์หลายสถานะ (ร่าง · รอรีวิว · อนุมัติแล้ว)</li></ul></div>
@@ -4555,7 +4559,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow hide" data-feat="epic2" data-level="ui" data-prio="P0" onclick="tg(this)">
+<tr class="trow" data-feat="epic2" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-SL.3</td>
   <td class="ctitle">สร้างสคริปต์ใหม่ในคลังพร้อมบล็อกและเนื้อหาแล้วบันทึกสำเร็จ</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -4563,7 +4567,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-111"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-111"><a href="https://kitdi.atlassian.net/browse/TAKRA-615" target="_blank" rel="noopener" class="jira-chip">TAKRA-615</a></td>
 </tr>
-<tr class="detail hide"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">สร้างสคริปต์ใหม่ในคลังพร้อมบล็อกและเนื้อหาแล้วบันทึกสำเร็จ</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · script-library · Epic 2 · Story 2.7 · FR69</div>
   <div class="sec"><h4>Precondition</h4><ul><li>อยู่ที่หน้า https://uat-live.takra.ai/scripts ในฐานะ Owner</li><li>มีสินค้าในคลังอย่างน้อย 1 รายการ</li></ul></div>
@@ -4678,7 +4682,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow hide" data-feat="epic2" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow" data-feat="epic2" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-SL.E1</td>
   <td class="ctitle">เก็บสคริปต์เข้าคลัง (archive) แล้วหายจากรายการใช้งานและกู้คืนได้</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -4686,7 +4690,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-115"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-115"><a href="https://kitdi.atlassian.net/browse/TAKRA-616" target="_blank" rel="noopener" class="jira-chip">TAKRA-616</a></td>
 </tr>
-<tr class="detail hide"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">เก็บสคริปต์เข้าคลัง (archive) แล้วหายจากรายการใช้งานและกู้คืนได้</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · script-library · Epic 2 · Story 2.7</div>
   <div class="sec"><h4>Precondition</h4><ul><li>มีสคริปต์ที่สถานะใช้งานอยู่ในคลัง</li></ul></div>
@@ -4708,7 +4712,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow hide" data-feat="epic2" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow" data-feat="epic2" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-SL.E2</td>
   <td class="ctitle">บันทึกสคริปต์ที่ยังไม่มีชื่อหรือไม่มีเนื้อหา แล้วถูกกั้นพร้อมบอกเหตุผล</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -4716,7 +4720,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-116"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-116"><a href="https://kitdi.atlassian.net/browse/TAKRA-617" target="_blank" rel="noopener" class="jira-chip">TAKRA-617</a></td>
 </tr>
-<tr class="detail hide"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">บันทึกสคริปต์ที่ยังไม่มีชื่อหรือไม่มีเนื้อหา แล้วถูกกั้นพร้อมบอกเหตุผล</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · script-library · Epic 2 · Story 2.7</div>
   <div class="sec"><h4>Precondition</h4><ul><li>อยู่ที่ฟอร์ม https://uat-live.takra.ai/scripts/new</li></ul></div>
@@ -4738,7 +4742,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow hide" data-feat="epic2" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow" data-feat="epic2" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-SL.E3</td>
   <td class="ctitle">ลบโฟลเดอร์ที่ยังมีสคริปต์อยู่ ระบบเตือนว่าสคริปต์จะไม่ถูกลบ</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -4746,7 +4750,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-117"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-117"><a href="https://kitdi.atlassian.net/browse/TAKRA-618" target="_blank" rel="noopener" class="jira-chip">TAKRA-618</a></td>
 </tr>
-<tr class="detail hide"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">ลบโฟลเดอร์ที่ยังมีสคริปต์อยู่ ระบบเตือนว่าสคริปต์จะไม่ถูกลบ</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · script-library · Epic 2 · Story 2.7 · FR68</div>
   <div class="sec"><h4>Precondition</h4><ul><li>มีโฟลเดอร์ที่มีสคริปต์อยู่อย่างน้อย 1 รายการ</li></ul></div>
@@ -4889,7 +4893,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow hide" data-feat="epic2" data-level="ui" data-prio="P0" onclick="tg(this)">
+<tr class="trow" data-feat="epic2" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-SC.4</td>
   <td class="ctitle">สคริปต์ที่พบคำเสี่ยงถูกกั้นไม่ให้อนุมัติจนกว่าจะแก้</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -4897,7 +4901,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-122"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-122"><a href="https://kitdi.atlassian.net/browse/TAKRA-330" target="_blank" rel="noopener" class="jira-chip">TAKRA-330</a></td>
 </tr>
-<tr class="detail hide"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">สคริปต์ที่พบคำเสี่ยงถูกกั้นไม่ให้อนุมัติจนกว่าจะแก้</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · script-lifecycle · Epic 2 · Story 2.8 · FR33</div>
   <div class="sec"><h4>Precondition</h4><ul><li>มีสคริปต์ที่เนื้อหามีคำอยู่ในคลังคำเสี่ยง (ระดับ block)</li><li>ล็อกอินด้วยผู้ที่มีสิทธิ์อนุมัติ</li></ul></div>
@@ -4951,7 +4955,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow hide" data-feat="epic2" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow" data-feat="epic2" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-SC.E2</td>
   <td class="ctitle">อนุญาตคำเสี่ยงครบทุกคำแล้วปุ่มอนุมัติปลดล็อก</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -4959,7 +4963,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-124"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-124"><a href="https://kitdi.atlassian.net/browse/TAKRA-330" target="_blank" rel="noopener" class="jira-chip">TAKRA-330</a></td>
 </tr>
-<tr class="detail hide"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">อนุญาตคำเสี่ยงครบทุกคำแล้วปุ่มอนุมัติปลดล็อก</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · script-lifecycle · Epic 2 · Story 2.8 · FR33</div>
   <div class="sec"><h4>Precondition</h4><ul><li>มีสคริปต์ที่พบคำเสี่ยงหลายคำและอยู่ในสถานะรอรีวิว</li><li>ล็อกอินด้วยผู้ที่มีสิทธิ์อนุมัติ</li></ul></div>
@@ -5013,8 +5017,8 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="featrow hide" data-featkey="script-bind-live"><td colspan="7">📁 script-bind-live <span class="rp"><span class="lv lvl-ui">🌐 3 <span style="color:var(--muted)">+2🆕</span></span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="script-bind-live"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
-<tr class="trow hide" data-feat="epic2" data-level="ui" data-prio="P0" onclick="tg(this)">
+<tr class="featrow" data-featkey="script-bind-live"><td colspan="7">📁 script-bind-live <span class="rp"><span class="lv lvl-ui">🌐 3 <span style="color:var(--muted)">+2🆕</span></span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="script-bind-live"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow" data-feat="epic2" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-SB.1</td>
   <td class="ctitle">ผูกสคริปต์จากคลังเข้าฉากใน Studio แล้วเล่นจากสำเนาที่แช่ไว้</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -5022,7 +5026,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-126"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-126"><a href="https://kitdi.atlassian.net/browse/TAKRA-619" target="_blank" rel="noopener" class="jira-chip">TAKRA-619</a></td>
 </tr>
-<tr class="detail hide"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">ผูกสคริปต์จากคลังเข้าฉากใน Studio แล้วเล่นจากสำเนาที่แช่ไว้</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · script-bind-live · Epic 2 · Story 2.9 · FR71</div>
   <div class="sec"><h4>Precondition</h4><ul><li>มีสคริปต์สถานะ "อนุมัติแล้ว" ในคลัง</li><li>เปิด Studio ที่ https://uat-live.takra.ai/live/studio และมีอย่างน้อย 1 ฉาก</li></ul></div>
@@ -5105,7 +5109,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow hide" data-feat="epic2" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow" data-feat="epic2" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-SB.E1</td>
   <td class="ctitle">ผูกสคริปต์เกินจำนวนสูงสุดต่อฉาก แล้วถูกกั้นพร้อมบอกวิธีแก้</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -5113,7 +5117,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-129"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-129"><a href="https://kitdi.atlassian.net/browse/TAKRA-620" target="_blank" rel="noopener" class="jira-chip">TAKRA-620</a></td>
 </tr>
-<tr class="detail hide"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">ผูกสคริปต์เกินจำนวนสูงสุดต่อฉาก แล้วถูกกั้นพร้อมบอกวิธีแก้</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · script-bind-live · Epic 2 · Story 2.9 · FR28b (cap ≤3/scene)</div>
   <div class="sec"><h4>Precondition</h4><ul><li>มีฉากที่ผูกสคริปต์ครบจำนวนสูงสุดต่อฉากแล้ว</li><li>ในคลังยังมีสคริปต์อนุมัติแล้วเหลืออยู่</li></ul></div>
@@ -5136,7 +5140,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow hide" data-feat="epic2" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow" data-feat="epic2" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-SB.E2</td>
   <td class="ctitle">ผูกสคริปต์ตัวเดิมซ้ำในฉากเดียวกัน ระบบปฏิเสธพร้อมบอกเหตุผล</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -5144,7 +5148,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-130"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-130"><a href="https://kitdi.atlassian.net/browse/TAKRA-621" target="_blank" rel="noopener" class="jira-chip">TAKRA-621</a></td>
 </tr>
-<tr class="detail hide"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">ผูกสคริปต์ตัวเดิมซ้ำในฉากเดียวกัน ระบบปฏิเสธพร้อมบอกเหตุผล</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · script-bind-live · Epic 2 · Story 2.9</div>
   <div class="sec"><h4>Precondition</h4><ul><li>มีฉากที่ผูกสคริปต์ตัวหนึ่งไว้แล้ว</li></ul></div>
@@ -5167,7 +5171,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 </div></td></tr>
 
 <tr class="featrow" data-featkey="script-two-way-sync"><td colspan="7">📁 script-two-way-sync <span class="rp"><span class="lv lvl-ui">🌐 3 <span style="color:var(--muted)">+1🆕</span></span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="script-two-way-sync"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
-<tr class="trow hide" data-feat="epic2" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow" data-feat="epic2" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-TS.1</td>
   <td class="ctitle">บันทึกสคริปต์ที่เขียนใน Studio กลับเข้าคลังเป็นต้นฉบับใหม่</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -5175,7 +5179,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-131"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-131"><a href="https://kitdi.atlassian.net/browse/TAKRA-586" target="_blank" rel="noopener" class="jira-chip">TAKRA-586</a></td>
 </tr>
-<tr class="detail hide"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">บันทึกสคริปต์ที่เขียนใน Studio กลับเข้าคลังเป็นต้นฉบับใหม่</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · script-two-way-sync · Epic 2 · Story 2.10 · FR72</div>
   <div class="sec"><h4>Precondition</h4><ul><li>ใน Studio มีสคริปต์ที่สร้างเองในฉาก (ไม่ได้ผูกมาจากคลัง)</li></ul></div>
@@ -5197,7 +5201,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow hide" data-feat="epic2" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow" data-feat="epic2" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-TS.2</td>
   <td class="ctitle">ต้นฉบับในคลังถูกแก้แล้ว ฉากที่ผูกไว้ขึ้นป้ายว่าสำเนาล้าสมัย</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -5205,7 +5209,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-132"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-132"><a href="https://kitdi.atlassian.net/browse/TAKRA-619" target="_blank" rel="noopener" class="jira-chip">TAKRA-619</a></td>
 </tr>
-<tr class="detail hide"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">ต้นฉบับในคลังถูกแก้แล้ว ฉากที่ผูกไว้ขึ้นป้ายว่าสำเนาล้าสมัย</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · script-two-way-sync · Epic 2 · Story 2.10 · FR72</div>
   <div class="sec"><h4>Precondition</h4><ul><li>มีฉากที่ผูกสคริปต์จากคลังไว้</li><li>แก้ไขต้นฉบับในคลังจนเวอร์ชันเพิ่มขึ้น</li></ul></div>
