@@ -994,7 +994,8 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     "st": "fail"
   },
   "tc-162": {
-    "actual": "ลากด้วยเมาส์ผ่าน automation tool ไม่ตอบสนอง/ไม่เปลี่ยนลำดับ (อาจเป็นข้อจำกัดของเครื่องมือทดสอบ ไม่ใช่บั๊กจริง) แต่ทดสอบด้วย keyboard drag-and-drop (กด space เพื่อ pick up แล้วใช้ arrow key แล้วกด space วางอีกครั้ง) พบว่าลำดับฉากเปลี่ยนได้จริง ตัวเลขกำกับ (1,2,3) ปรับตามลำดับใหม่ถูกต้อง ยังไม่สามารถยืนยันการ persist หลัง refresh ได้ชัดเจนเนื่องจากหน้า /live/studio โหลดโปรเจกต์อื่นแทนหลัง refresh ควรทดสอบซ้ำด้วยการลากเมาส์จริงบนเบราว์เซอร์อีกครั้ง"
+    "actual": "ลากด้วยเมาส์ผ่าน automation tool ไม่ตอบสนอง/ไม่เปลี่ยนลำดับ (อาจเป็นข้อจำกัดของเครื่องมือทดสอบ ไม่ใช่บั๊กจริง) แต่ทดสอบด้วย keyboard drag-and-drop (กด space เพื่อ pick up แล้วใช้ arrow key แล้วกด space วางอีกครั้ง) พบว่าลำดับฉากเปลี่ยนได้จริง ตัวเลขกำกับ (1,2,3) ปรับตามลำดับใหม่ถูกต้อง ยังไม่สามารถยืนยันการ persist หลัง refresh ได้ชัดเจนเนื่องจากหน้า /live/studio โหลดโปรเจกต์อื่นแทนหลัง refresh ควรทดสอบซ้ำด้วยการลากเมาส์จริงบนเบราว์เซอร์อีกครั้ง",
+    "st": "pass"
   },
   "tc-164": {
     "actual": "ทดสอบลาก layer (avatar) ไปตำแหน่งใหม่บนแคนวาสได้อิสระ ไม่ถูกจำกัดตำแหน่งสำเร็จรูป. ปุ่มเครื่องมือบน toolbar เมื่อเลือก layer: หมุน 90° ทำงานถูกต้อง (เนื้อหาในเฟรมหมุนจริง), พลิกแนวนอนทำงานถูกต้อง, กดรีเซ็ตการแปลงแล้ว layer กลับสู่ตำแหน่ง/มุมเริ่มต้นถูกต้อง. ยังไม่ได้ทดสอบปุ่มเต็มจอ/พอดีจอ/จัดกึ่งกลาง และการลากมุมเพื่อปรับขนาดโดยตรง (ทดสอบผ่านการลากย้ายตำแหน่งเป็นหลัก) ผลลัพธ์เท่าที่ทดสอบตรงตาม expected"
@@ -1065,37 +1066,6 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   "tc-187": {
     "actual": "[QA] ทดสอบในหน้าแก้ไขสคริปต์กลาง (/scripts/.../edit) เพิ่ม Content 2 ในบล็อกเดียวกัน (บล็อกมี Content 2 รายการ). กดสวิตช์ (ไอคอนวงกลม) ที่ Content 2 — เปลี่ยนจากติ๊กสีส้ม (เปิด) เป็นวงกลมโปร่ง (ปิด) ทันที และกรอบ/พื้นหลังจางลงชัดเจนต่างจาก Content ที่เปิดอยู่. ตรวจสอบ accessible label ของสวิตช์พบว่าเปลี่ยนจาก \"ปิด Content 2\" เป็น \"เปิด Content 2\" ตามสถานะ (อธิบายการกดเพื่อเปิด/ปิดชัดเจน). กดเปิดกลับ สถานะกลับเป็นปกติทันที ตรงตาม expected ครบทุกข้อ (ไม่ได้บันทึกการเปลี่ยนแปลงนี้ไว้ถาวร - กดยกเลิกหลังทดสอบ)",
     "st": "pass"
-  },
-  "tc-210": {
-    "actual": "ทดสอบผ่าน: หน้า /live/tools แสดงหัวข้อ \"เตรียมพร้อมก่อนไลฟ์\" พร้อม 3 ส่วนตามลำดับ 1.เครือข่าย 2.ระบบ AI และเสียง 3.ฮาร์ดแวร์ ตรงตาม Expected Result ทุกประการ",
-    "st": "pass"
-  },
-  "tc-211": {
-    "actual": "ทดสอบผ่าน: กด \"เริ่มทดสอบ\" แล้ววัด Ping(35ms)→Download(324.8Mbps)→Upload(275.2Mbps)→ความเสถียร (Jitter/Packet Loss) ตามลำดับ ครบ 60 วินาที ผลสรุป \"✓ พร้อมไลฟ์ HD เต็มรูปแบบ\" ตรงตาม Expected Result มีปุ่ม \"ทดสอบอีกครั้ง\" ใช้งานได้",
-    "st": "pass"
-  },
-  "tc-212": {
-    "actual": "ทดสอบผ่าน: กด \"เล่นเสียงทดสอบ\" แล้วมี modal \"ได้ยินเสียงไหม?\" พร้อมปุ่ม \"ไม่ได้ยิน\"/\"ได้ยินชัด\" กด \"ไม่ได้ยิน\" แล้วแสดงเช็คลิสต์คำแนะนำ 3 ข้อ (mute/output device/browser tab mute) ตรงตาม Expected Result",
-    "st": "pass"
-  },
-  "tc-213": {
-    "actual": "ทดสอบผ่าน: กด \"เช็คตอนนี้\" แสดงสถานะ 4 บริการ (Avatar Render, Text-to-Speech, LLM (สนทนา), Chat Ingestion) ระหว่างเช็คแสดงสถานะกำลังเช็ค เมื่อเสร็จแสดงผลรายบริการ ครบทั้ง 4 บริการ ถ้ามีบริการไม่ตอบ แสดง \"✗ ไม่ตอบ\" เฉพาะบริการนั้น ตรงตาม Expected Result",
-    "st": "pass"
-  },
-  "tc-214": {
-    "actual": "ทดสอบผ่าน: แสดง CPU cores 10 (OK), หน่วยความจำ ≥16GB (OK), WebGL: ANGLE (Apple, ANGLE Metal Renderer: Apple M5) (OK), JS benchmark 15ms (OK), ขนาดหน้าจอ 1062×667 · 2.0x (OK) คำตัดสินสรุป \"✓ เครื่องพร้อม render avatar 1080p ลื่นไหล\" ตรงตาม Expected Result",
-    "st": "pass"
-  },
-  "tc-215": {
-    "actual": "พบบัค: กด \"หยุด\" ก่อนครบ 60 วินาที (หยุดที่ 14s/60s ระหว่างเช็คความเสถียร) ระบบกลับแสดงผลบวก \"✓ พร้อมไลฟ์ HD\" (สีเขียว) แทนที่จะแจ้ง \"ทดสอบไม่ครบ\" ตาม Expected Result — ไม่ตรงตาม Expected Result อาจทำให้เข้าใจผิดว่าเน็ตพร้อมไลฟ์แล้ว (ส่วนกรณี DevTools Offline ยังไม่ได้ทดสอบเนื่องจากข้อจำกัดเครื่องมือ) สร้าง Bug แล้ว: TAKRA-660",
-    "st": "fail",
-    "jira": [
-      "https://kitdi.atlassian.net/browse/TAKRA-660"
-    ]
-  },
-  "tc-216": {
-    "actual": "ทดสอบผ่าน: ก่อนให้สิทธิ์ dropdown แสดงชื่ออุปกรณ์ทั่วไป \"อุปกรณ์ 1\" พร้อมปุ่ม \"ขอสิทธิ์เพื่อแสดงชื่ออุปกรณ์\" กดปุ่มขอสิทธิ์แล้วไม่มี error เกิดขึ้น ระบบยังใช้งานได้ปกติ ตรงตาม Expected Result (หมายเหตุ: ไม่สามารถยืนยันขั้นตอนหลังอนุญาตสิทธิ์เต็มรูปแบบได้ เนื่องจาก native browser permission prompt อยู่นอกเหนือการควบคุมผ่านเครื่องมือทดสอบอัตโนมัติ)",
-    "st": "pass"
   }
 }
 </script>
@@ -1120,15 +1090,15 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="runsum">
     <h3>📊 สรุปผล Manual Test</h3>
     <div class="sumchips">
-      <span class="cnt pass">PASS <b id="sum-pass">103</b></span>
-      <span class="cnt fail">FAIL <b id="sum-fail">64</b></span>
+      <span class="cnt pass">PASS <b id="sum-pass">98</b></span>
+      <span class="cnt fail">FAIL <b id="sum-fail">63</b></span>
       <span class="cnt hold">HOLD <b id="sum-hold">1</b></span>
       <span class="cnt block">BLOCKED <b id="sum-block">0</b></span>
       <span class="cnt skip">SKIP <b id="sum-skip">18</b></span>
-      <span class="cnt pending">รอเทส <b id="sum-pending">75</b></span>
+      <span class="cnt pending">รอเทส <b id="sum-pending">81</b></span>
     </div>
-    <div class="progress"><div id="sumbar" class="progressbar" style="width: 69%;"></div></div>
-    <div class="hint" id="sumpct" style="margin-top:5px">69% ทดสอบแล้ว (168/243) · ข้าม 18</div>
+    <div class="progress"><div id="sumbar" class="progressbar" style="width: 67%;"></div></div>
+    <div class="hint" id="sumpct" style="margin-top:5px">67% ทดสอบแล้ว (162/243) · ข้าม 18</div>
   </div>
 
   <div class="toolbar">
@@ -6148,7 +6118,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">ลากเรียงลำดับฉากใหม่แล้วลำดับการเล่นเปลี่ยนตาม</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-162"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-162"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-162"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -6161,7 +6131,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —">ลากด้วยเมาส์ผ่าน automation tool ไม่ตอบสนอง/ไม่เปลี่ยนลำดับ (อาจเป็นข้อจำกัดของเครื่องมือทดสอบ ไม่ใช่บั๊กจริง) แต่ทดสอบด้วย keyboard drag-and-drop (กด space เพื่อ pick up แล้วใช้ arrow key แล้วกด space วางอีกครั้ง) พบว่าลำดับฉากเปลี่ยนได้จริง ตัวเลขกำกับ (1,2,3) ปรับตามลำดับใหม่ถูกต้อง ยังไม่สามารถยืนยันการ persist หลัง refresh ได้ชัดเจนเนื่องจากหน้า /live/studio โหลดโปรเจกต์อื่นแทนหลัง refresh ควรทดสอบซ้ำด้วยการลากเมาส์จริงบนเบราว์เซอร์อีกครั้ง</textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-162" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-162" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-162" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-162" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-162" data-st="block">BLOCKED</span>
@@ -7616,15 +7586,15 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <!-- Epic 4 -->
 <tr class="epicrow" data-epic="4"><td colspan="7">📡 ขั้นที่ 4 · ออกอากาศ (Avatar Live · Phone-as-Camera) (Epic 4 · FR34-39) <span class="rp">(14 เคสหลัก <span style="color:var(--muted);font-weight:400">+ 10 edge🆕</span>)</span></td></tr>
 <tr class="featrow" data-featkey="pre-live-tools"><td colspan="7">📁 pre-live-tools <span class="rp"><span class="lv lvl-ui">🌐 5 <span style="color:var(--muted)">+2🆕</span></span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="pre-live-tools"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
-<tr class="trow open" data-feat="epic4" data-level="ui" data-prio="P0" onclick="tg(this)">
+<tr class="trow" data-feat="epic4" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-TL.1</td>
   <td class="ctitle">เปิดหน้าเครื่องมือเตรียมพร้อมก่อนไลฟ์แล้วเห็นครบ 3 ชั้น</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
-  <td class="status" data-uid="tc-210"><span class="stb pass">PASS</span></td>
+  <td class="status" data-uid="tc-210"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-210"></td>
 </tr>
-<tr class="detail show"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">เปิดหน้าเครื่องมือเตรียมพร้อมก่อนไลฟ์แล้วเห็นครบ 3 ชั้น</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · pre-live-tools · Epic 4 · Story 4.1 · FR34 (device setup)</div>
   <div class="sec"><h4>Precondition</h4><ul><li>ล็อกอินเป็น Owner</li></ul></div>
@@ -7632,10 +7602,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Data</h4><ul><li>URL: https://uat-live.takra.ai/live/tools</li></ul></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>เห็นหัวข้อ "เตรียมพร้อมก่อนไลฟ์" พร้อมคำบรรยายเรื่องตรวจทุกชั้นก่อนกด Go Live</li><li>มี 3 ส่วนตามลำดับ: 1 · เครือข่าย · 2 · ระบบ AI และเสียง · 3 · ฮาร์ดแวร์</li><li>แต่ละส่วนมีเครื่องมือทดสอบของตัวเองที่กดเริ่มได้</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —">ทดสอบผ่าน: หน้า /live/tools แสดงหัวข้อ "เตรียมพร้อมก่อนไลฟ์" พร้อม 3 ส่วนตามลำดับ 1.เครือข่าย 2.ระบบ AI และเสียง 3.ฮาร์ดแวร์ ตรงตาม Expected Result ทุกประการ</textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass sel" data-uid="tc-210" data-st="pass">PASS</span>
+    <span class="opt pass" data-uid="tc-210" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-210" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-210" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-210" data-st="block">BLOCKED</span>
@@ -7647,15 +7617,15 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow open" data-feat="epic4" data-level="ui" data-prio="P0" onclick="tg(this)">
+<tr class="trow" data-feat="epic4" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-TL.2</td>
   <td class="ctitle">ทดสอบเครือข่ายแล้วเห็นผลความเร็วและความเสถียรพร้อมคำตัดสิน</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
-  <td class="status" data-uid="tc-211"><span class="stb pass">PASS</span></td>
+  <td class="status" data-uid="tc-211"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-211"></td>
 </tr>
-<tr class="detail show"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">ทดสอบเครือข่ายแล้วเห็นผลความเร็วและความเสถียรพร้อมคำตัดสิน</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · pre-live-tools · Epic 4 · Story 4.1 · NFR-DEV</div>
   <div class="sec"><h4>Precondition</h4><ul><li>อยู่ที่หน้า https://uat-live.takra.ai/live/tools ส่วนเครือข่าย</li></ul></div>
@@ -7663,10 +7633,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Data</h4><ul><li>ระยะเวลาโดยประมาณ ~90 วินาที · วัดผ่าน Cloudflare</li></ul></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ระหว่างวัด สถานะเปลี่ยนไปตามเฟส (กำลังวัด Ping/Download/Upload/ความเสถียร) พร้อมความคืบหน้า</li><li>ส่วนความเร็วแสดง Download/Upload และส่วนความเสถียรแสดง Jitter/Loss</li><li>มีคำตัดสินสรุป เช่น พร้อมไลฟ์ HD เต็มรูปแบบ / ไลฟ์ได้แต่อาจมี glitch / ไม่แนะนำให้ไลฟ์ตอนนี้ พร้อมเหตุผล</li><li>กดทดสอบอีกครั้งแล้ววัดใหม่ได้</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —">ทดสอบผ่าน: กด "เริ่มทดสอบ" แล้ววัด Ping(35ms)→Download(324.8Mbps)→Upload(275.2Mbps)→ความเสถียร (Jitter/Packet Loss) ตามลำดับ ครบ 60 วินาที ผลสรุป "✓ พร้อมไลฟ์ HD เต็มรูปแบบ" ตรงตาม Expected Result มีปุ่ม "ทดสอบอีกครั้ง" ใช้งานได้</textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass sel" data-uid="tc-211" data-st="pass">PASS</span>
+    <span class="opt pass" data-uid="tc-211" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-211" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-211" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-211" data-st="block">BLOCKED</span>
@@ -7678,25 +7648,25 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow open" data-feat="epic4" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow" data-feat="epic4" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-TL.3</td>
   <td class="ctitle">ทดสอบเสียง Output แล้วยืนยันผลว่าได้ยินหรือไม่</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-212"><span class="stb pass">PASS</span></td>
+  <td class="status" data-uid="tc-212"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-212"></td>
 </tr>
-<tr class="detail show"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">ทดสอบเสียง Output แล้วยืนยันผลว่าได้ยินหรือไม่</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · pre-live-tools · Epic 4 · Story 4.1</div>
   <div class="sec"><h4>Precondition</h4><ul><li>อยู่ที่หน้าเครื่องมือ ส่วนระบบ AI และเสียง</li><li>เปิดลำโพงหรือหูฟัง</li></ul></div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เลือกอุปกรณ์ Output จาก dropdown</li><li>กด "เล่นเสียงทดสอบ"</li><li>ในหน้าต่างยืนยัน กด "ได้ยินชัด"</li><li>ทำซ้ำแล้วกด "ไม่ได้ยิน" เพื่อดูคำแนะนำ</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>เลือกอุปกรณ์เสียง Output ได้จากรายการ</li><li>กดเล่นแล้วได้ยินเสียงทดสอบและปุ่มเปลี่ยนเป็นกำลังเล่น</li><li>หน้าต่างยืนยันถามว่าได้ยินไหม พร้อมปุ่ม ได้ยินชัด / ไม่ได้ยิน</li><li>เมื่อกดไม่ได้ยิน มีเช็กลิสต์คำแนะนำ (เช่น ระบบเสียงไม่ mute · เลือก output ถูก · เบราว์เซอร์ไม่ปิดเสียงแท็บ)</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —">ทดสอบผ่าน: กด "เล่นเสียงทดสอบ" แล้วมี modal "ได้ยินเสียงไหม?" พร้อมปุ่ม "ไม่ได้ยิน"/"ได้ยินชัด" กด "ไม่ได้ยิน" แล้วแสดงเช็คลิสต์คำแนะนำ 3 ข้อ (mute/output device/browser tab mute) ตรงตาม Expected Result</textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass sel" data-uid="tc-212" data-st="pass">PASS</span>
+    <span class="opt pass" data-uid="tc-212" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-212" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-212" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-212" data-st="block">BLOCKED</span>
@@ -7708,15 +7678,15 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow open" data-feat="epic4" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow" data-feat="epic4" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-TL.4</td>
   <td class="ctitle">ตรวจสุขภาพระบบ AI แล้วเห็นสถานะของแต่ละบริการ</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-213"><span class="stb pass">PASS</span></td>
+  <td class="status" data-uid="tc-213"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-213"></td>
 </tr>
-<tr class="detail show"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">ตรวจสุขภาพระบบ AI แล้วเห็นสถานะของแต่ละบริการ</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · pre-live-tools · Epic 4 · Story 4.8 · FR39 (system readiness)</div>
   <div class="sec"><h4>Precondition</h4><ul><li>อยู่ที่หน้าเครื่องมือ ส่วนระบบ AI และเสียง</li></ul></div>
@@ -7724,10 +7694,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Data</h4><ul><li>บริการที่เช็ค: Avatar Render · Text-to-Speech · LLM (สนทนา) · Chat Ingestion</li></ul></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ระหว่างเช็คแสดงสถานะกำลังเช็ค</li><li>แสดงสถานะรายบริการครบทั้ง 4 บริการ</li><li>ถ้าทุกบริการพร้อม เห็นข้อความ "ทุก service พร้อมใช้งาน"</li><li>ถ้าบริการใดไม่ตอบ แสดงสถานะ "✗ ไม่ตอบ" เฉพาะบริการนั้น</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —">ทดสอบผ่าน: กด "เช็คตอนนี้" แสดงสถานะ 4 บริการ (Avatar Render, Text-to-Speech, LLM (สนทนา), Chat Ingestion) ระหว่างเช็คแสดงสถานะกำลังเช็ค เมื่อเสร็จแสดงผลรายบริการ ครบทั้ง 4 บริการ ถ้ามีบริการไม่ตอบ แสดง "✗ ไม่ตอบ" เฉพาะบริการนั้น ตรงตาม Expected Result</textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass sel" data-uid="tc-213" data-st="pass">PASS</span>
+    <span class="opt pass" data-uid="tc-213" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-213" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-213" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-213" data-st="block">BLOCKED</span>
@@ -7739,25 +7709,25 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow open" data-feat="epic4" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow" data-feat="epic4" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-TL.5</td>
   <td class="ctitle">ตรวจความสามารถเครื่อง (CPU/หน่วยความจำ/WebGL) แล้วเห็นคำตัดสิน</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-214"><span class="stb pass">PASS</span></td>
+  <td class="status" data-uid="tc-214"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-214"></td>
 </tr>
-<tr class="detail show"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">ตรวจความสามารถเครื่อง (CPU/หน่วยความจำ/WebGL) แล้วเห็นคำตัดสิน</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · pre-live-tools · Epic 4 · Story 4.1 · NFR-DEV-01/02</div>
   <div class="sec"><h4>Precondition</h4><ul><li>อยู่ที่หน้าเครื่องมือ ส่วนฮาร์ดแวร์</li></ul></div>
   <div class="sec"><h4>Test Steps</h4><ol><li>ดูส่วน "ความสามารถเครื่อง"</li><li>รอจนตรวจเสร็จ</li><li>อ่านค่าแต่ละรายการและคำตัดสินสรุป</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ตรวจและแสดงค่า CPU · หน่วยความจำ · WebGL · ขนาดหน้าจอ</li><li>รายการที่เบราว์เซอร์ไม่บอกค่า แสดงข้อความแทน (เช่น "เบราว์เซอร์ไม่บอก") ไม่ใช่ค่าว่าง</li><li>มีคำตัดสินสรุป เช่น เครื่องพร้อม render 1080p / พอใช้ แนะนำ 720p / อาจไม่แรงพอ พร้อมเหตุผล</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —">ทดสอบผ่าน: แสดง CPU cores 10 (OK), หน่วยความจำ ≥16GB (OK), WebGL: ANGLE (Apple, ANGLE Metal Renderer: Apple M5) (OK), JS benchmark 15ms (OK), ขนาดหน้าจอ 1062×667 · 2.0x (OK) คำตัดสินสรุป "✓ เครื่องพร้อม render avatar 1080p ลื่นไหล" ตรงตาม Expected Result</textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass sel" data-uid="tc-214" data-st="pass">PASS</span>
+    <span class="opt pass" data-uid="tc-214" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-214" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-214" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-214" data-st="block">BLOCKED</span>
@@ -7769,15 +7739,15 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow open" data-feat="epic4" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow" data-feat="epic4" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-TL.E1</td>
   <td class="ctitle">ทดสอบเครือข่ายไม่ครบหรือเชื่อมต่อไม่ได้ แล้วเห็นผลที่บอกให้ทดสอบใหม่</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-215"><span class="stb fail">FAIL</span></td>
-  <td class="jira-cell" data-uid="tc-215"><a href="https://kitdi.atlassian.net/browse/TAKRA-660" target="_blank" rel="noopener" class="jira-chip">TAKRA-660</a></td>
+  <td class="status" data-uid="tc-215"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-215"></td>
 </tr>
-<tr class="detail show"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">ทดสอบเครือข่ายไม่ครบหรือเชื่อมต่อไม่ได้ แล้วเห็นผลที่บอกให้ทดสอบใหม่</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · pre-live-tools · Epic 4 · Story 4.1 (fail path)</div>
   <div class="sec"><h4>Precondition</h4><ul><li>อยู่ที่หน้าเครื่องมือ ส่วนเครือข่าย</li><li>สามารถหยุดการทดสอบกลางคันหรือจำลองเน็ตหลุดได้</li></ul></div>
@@ -7785,40 +7755,40 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Data</h4><ul><li>DevTools → Network → Offline</li></ul></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>กรณีหยุดกลางคัน เห็นคำตัดสินทำนอง "ทดสอบไม่ครบ" พร้อมให้ทดสอบใหม่</li><li>กรณีเชื่อมต่อไม่ได้ เห็นข้อความ error ที่ชัดเจน (เช่น เชื่อมต่อ Cloudflare ไม่ได้)</li><li>ไม่มีหน้าจอค้างหรือ error ระดับระบบ</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —">พบบัค: กด "หยุด" ก่อนครบ 60 วินาที (หยุดที่ 14s/60s ระหว่างเช็คความเสถียร) ระบบกลับแสดงผลบวก "✓ พร้อมไลฟ์ HD" (สีเขียว) แทนที่จะแจ้ง "ทดสอบไม่ครบ" ตาม Expected Result — ไม่ตรงตาม Expected Result อาจทำให้เข้าใจผิดว่าเน็ตพร้อมไลฟ์แล้ว (ส่วนกรณี DevTools Offline ยังไม่ได้ทดสอบเนื่องจากข้อจำกัดเครื่องมือ) สร้าง Bug แล้ว: TAKRA-660</textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-215" data-st="pass">PASS</span>
-    <span class="opt fail sel" data-uid="tc-215" data-st="fail">FAIL</span>
+    <span class="opt fail" data-uid="tc-215" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-215" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-215" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-215" data-st="skip">SKIP</span>
   </div></div>
   <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
-    <div class="jira-list" data-uid="tc-215"><div class="jira-item"><a href="https://kitdi.atlassian.net/browse/TAKRA-660" target="_blank" rel="noopener">TAKRA-660</a><span class="jira-del" title="ลบลิงก์">✕</span></div></div>
+    <div class="jira-list" data-uid="tc-215"></div>
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-215" placeholder="วางลิงก์ Jira หรือพิมพ์ TAK-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-215">+ เพิ่มลิงก์</button></div>
   </div>
 </div></td></tr>
 
-<tr class="trow open" data-feat="epic4" data-level="ui" data-prio="P2" onclick="tg(this)">
+<tr class="trow" data-feat="epic4" data-level="ui" data-prio="P2" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-TL.E2</td>
   <td class="ctitle">ยังไม่ได้ให้สิทธิ์เข้าถึงอุปกรณ์เสียง แล้วมีปุ่มขอสิทธิ์</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p2">P2</span></td>
-  <td class="status" data-uid="tc-216"><span class="stb pass">PASS</span></td>
+  <td class="status" data-uid="tc-216"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-216"></td>
 </tr>
-<tr class="detail show"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">ยังไม่ได้ให้สิทธิ์เข้าถึงอุปกรณ์เสียง แล้วมีปุ่มขอสิทธิ์</div>
   <div class="h-prio">Priority: <b>P2</b> · UI · pre-live-tools · Epic 4 · Story 4.1</div>
   <div class="sec"><h4>Precondition</h4><ul><li>อยู่ที่หน้าเครื่องมือ ส่วนทดสอบเสียง</li><li>ยังไม่ได้อนุญาตสิทธิ์อุปกรณ์</li></ul></div>
   <div class="sec"><h4>Test Steps</h4><ol><li>ดู dropdown อุปกรณ์ Output ก่อนให้สิทธิ์</li><li>กดปุ่มขอสิทธิ์เพื่อแสดงชื่ออุปกรณ์</li><li>อนุญาตสิทธิ์แล้วดู dropdown อีกครั้ง</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ก่อนให้สิทธิ์ อุปกรณ์แสดงเป็นชื่อทั่วไป (เช่น "อุปกรณ์เริ่มต้นของระบบ") พร้อมปุ่มขอสิทธิ์</li><li>หลังอนุญาต ชื่ออุปกรณ์จริงแสดงใน dropdown</li><li>ไม่มี error หากผู้ใช้ปฏิเสธสิทธิ์ (ยังใช้อุปกรณ์เริ่มต้นได้)</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —">ทดสอบผ่าน: ก่อนให้สิทธิ์ dropdown แสดงชื่ออุปกรณ์ทั่วไป "อุปกรณ์ 1" พร้อมปุ่ม "ขอสิทธิ์เพื่อแสดงชื่ออุปกรณ์" กดปุ่มขอสิทธิ์แล้วไม่มี error เกิดขึ้น ระบบยังใช้งานได้ปกติ ตรงตาม Expected Result (หมายเหตุ: ไม่สามารถยืนยันขั้นตอนหลังอนุญาตสิทธิ์เต็มรูปแบบได้ เนื่องจาก native browser permission prompt อยู่นอกเหนือการควบคุมผ่านเครื่องมือทดสอบอัตโนมัติ)</textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass sel" data-uid="tc-216" data-st="pass">PASS</span>
+    <span class="opt pass" data-uid="tc-216" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-216" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-216" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-216" data-st="block">BLOCKED</span>
