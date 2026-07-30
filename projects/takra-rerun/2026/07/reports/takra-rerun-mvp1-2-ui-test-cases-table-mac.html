@@ -325,7 +325,8 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     "st": "pass"
   },
   "tc-3042": {
-    "actual": "ต้องมี 2 account"
+    "actual": "ต้องมี 2 account",
+    "st": "skip"
   },
   "tc-3043": {
     "st": "pass"
@@ -711,6 +712,18 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   },
   "tc-1031": {
     "st": "skip"
+  },
+  "tc-3062": {
+    "st": "skip"
+  },
+  "tc-3104": {
+    "st": "skip"
+  },
+  "tc-3135": {
+    "st": "skip"
+  },
+  "tc-3136": {
+    "st": "skip"
   }
 }
 </script>
@@ -737,11 +750,11 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
       <span class="cnt fail">FAIL <b id="sum-fail">8</b></span>
       <span class="cnt hold">HOLD <b id="sum-hold">2</b></span>
       <span class="cnt block">BLOCKED <b id="sum-block">11</b></span>
-      <span class="cnt skip">SKIP <b id="sum-skip">52</b></span>
-      <span class="cnt pending">รอเทส <b id="sum-pending">120</b></span>
+      <span class="cnt skip">SKIP <b id="sum-skip">57</b></span>
+      <span class="cnt pending">รอเทส <b id="sum-pending">115</b></span>
     </div>
-    <div class="progress"><div id="sumbar" class="progressbar" style="width: 49%;"></div></div>
-    <div class="hint" id="sumpct" style="margin-top:5px">49% ทดสอบแล้ว (117/237) · ข้าม 52</div>
+    <div class="progress"><div id="sumbar" class="progressbar" style="width: 50%;"></div></div>
+    <div class="hint" id="sumpct" style="margin-top:5px">50% ทดสอบแล้ว (117/232) · ข้าม 57</div>
   </div>
 
   <div class="toolbar">
@@ -749,7 +762,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <button class="btn" onclick="toggleAll(false)">▾ ยุบทั้งหมด</button>
     <span class="hint">💡 คลิกแถว → ดู Steps / Expected (UI only)</span>
     <span style="margin-left:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-      <span id="save-status" class="hint" style="white-space: nowrap; color: var(--muted);">✓ ตรงกับ GitHub</span>
+      <span id="save-status" class="hint" style="white-space: nowrap; color: var(--hold);">● ยังไม่ได้บันทึก</span>
       <label class="hint" style="display:flex;gap:4px;align-items:center;white-space:nowrap;cursor:pointer" title="บันทึกขึ้น GitHub อัตโนมัติหลังหยุดแก้ ~5 วินาที"><input type="checkbox" id="chk-autosave" checked=""> auto-save</label>
       <button class="btn" id="btn-token" title="ใส่/เปลี่ยน GitHub token (ถ้าเซฟไม่ขึ้น/token เสีย กดอันนี้)">🔑 Token</button>
       <button class="btn" id="btn-refresh" title="ดึงผลล่าสุดจาก GitHub มา merge (ไม่ต้อง reload)">🔄 ดึงล่าสุด</button>
@@ -3129,7 +3142,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">ใช้เทมเพลตข้ามบัญชีภายใน workspace เดียวกัน</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p2">P2</span></td>
-  <td class="status" data-uid="tc-3042"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-3042"><span class="stb skip">SKIP</span></td>
   <td class="jira-cell" data-uid="tc-3042"></td>
 </tr>
 <tr class="detail show"><td colspan="7"><div class="card">
@@ -3145,7 +3158,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <span class="opt fail" data-uid="tc-3042" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-3042" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-3042" data-st="block">BLOCKED</span>
-    <span class="opt skip" data-uid="tc-3042" data-st="skip">SKIP</span>
+    <span class="opt skip sel" data-uid="tc-3042" data-st="skip">SKIP</span>
   </div></div>
   <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
     <div class="jira-list" data-uid="tc-3042"></div>
@@ -3689,15 +3702,15 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-3061" placeholder="วางลิงก์ Jira หรือพิมพ์ TAK-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-3061">+ เพิ่มลิงก์</button></div>
   </div>
 </div></td></tr>
-<tr class="trow" data-feat="epic4" data-level="ui" data-prio="P2" onclick="tg(this)">
+<tr class="trow open" data-feat="epic4" data-level="ui" data-prio="P2" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-Z7b.6</td>
   <td class="ctitle">ใส่เวลาแสดงเป็นตัวอักษร ทศนิยม หรือค่าติดลบ ระบบต้องเตือน <span class="edge-badge">🆕 edge</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p2">P2</span></td>
-  <td class="status" data-uid="tc-3062"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-3062"><span class="stb skip">SKIP</span></td>
   <td class="jira-cell" data-uid="tc-3062"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail show"><td colspan="7"><div class="card">
   <div class="h-title">ใส่เวลาแสดงเป็นตัวอักษร ทศนิยม หรือค่าติดลบ ระบบต้องเตือน</div>
   <div class="h-prio">Priority: <b>P2</b> · UI · pin-countdown · ขั้นที่ 4 · Epic 11</div>
   <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>อยู่ที่แท็บตารางปัก</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Rerun (macOS)</li><li>ล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>ไปที่เมนู "บัญชีไลฟ์"</li><li>เปิดบัญชีไลฟ์ที่ต้องการ แล้วเปิดแท็บ "ตารางปัก"</li><li>ใส่ค่าเวลาแสดงเป็น abc แล้วกด "บันทึก" จากนั้นใส่เป็น 12.5 แล้วกด "บันทึก"</li><li>ใส่เป็น -30 แล้วกด "บันทึก" จากนั้นใส่เป็นตัวเลขยาวมาก ๆ เช่น 999999999 แล้วกด "บันทึก"</li><li>ดูข้อความที่ระบบขึ้นในแต่ละรอบ</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>abc · 12.5 · -30 · 999999999</li></ul></div>
@@ -3710,7 +3723,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <span class="opt fail" data-uid="tc-3062" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-3062" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-3062" data-st="block">BLOCKED</span>
-    <span class="opt skip" data-uid="tc-3062" data-st="skip">SKIP</span>
+    <span class="opt skip sel" data-uid="tc-3062" data-st="skip">SKIP</span>
   </div></div>
   <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
     <div class="jira-list" data-uid="tc-3062"></div>
@@ -4880,15 +4893,15 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-3103" placeholder="วางลิงก์ Jira หรือพิมพ์ TAK-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-3103">+ เพิ่มลิงก์</button></div>
   </div>
 </div></td></tr>
-<tr class="trow" data-feat="epic7" data-level="ui" data-prio="P2" onclick="tg(this)">
+<tr class="trow open" data-feat="epic7" data-level="ui" data-prio="P2" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-R2.7</td>
   <td class="ctitle">พร็อกซีเดี๋ยวดีเดี๋ยวเสีย ระบบต้องไม่สลับถี่จนไลฟ์รวน <span class="edge-badge">🆕 edge</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p2">P2</span></td>
-  <td class="status" data-uid="tc-3104"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-3104"><span class="stb skip">SKIP</span></td>
   <td class="jira-cell" data-uid="tc-3104"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail show"><td colspan="7"><div class="card">
   <div class="h-title">พร็อกซีเดี๋ยวดีเดี๋ยวเสีย ระบบต้องไม่สลับถี่จนไลฟ์รวน</div>
   <div class="h-prio">Priority: <b>P2</b> · UI · proxy-failover · ขั้นที่ 7 · Epic 16</div>
   <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>มีพร็อกซีที่ทำให้ล่มและกลับมาสลับกันได้</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Rerun (macOS)</li><li>ล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>ไปที่เมนู "บัญชีไลฟ์"</li><li>เลือกบัญชีไลฟ์ที่ต้องการ</li><li>เปิดแท็บ "พร็อกซี"</li><li>ระหว่างไลฟ์ ทำให้พร็อกซีล่มแล้วกลับมาสลับกันหลายครั้งภายใน 5 นาที</li><li>เฝ้าดูสถานะพร็อกซีและภาพในห้องไลฟ์ TikTok</li><li>นับจำนวนครั้งที่ระบบสลับพร็อกซีว่าไม่ถี่จนไลฟ์รวน</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>พร็อกซีล่ม/กลับมา 4 ครั้งใน 5 นาที</li></ul></div>
@@ -4901,7 +4914,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <span class="opt fail" data-uid="tc-3104" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-3104" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-3104" data-st="block">BLOCKED</span>
-    <span class="opt skip" data-uid="tc-3104" data-st="skip">SKIP</span>
+    <span class="opt skip sel" data-uid="tc-3104" data-st="skip">SKIP</span>
   </div></div>
   <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
     <div class="jira-list" data-uid="tc-3104"></div>
@@ -5758,15 +5771,15 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-3134" placeholder="วางลิงก์ Jira หรือพิมพ์ TAK-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-3134">+ เพิ่มลิงก์</button></div>
   </div>
 </div></td></tr>
-<tr class="trow" data-feat="epic9" data-level="ui" data-prio="P2" onclick="tg(this)">
+<tr class="trow open" data-feat="epic9" data-level="ui" data-prio="P2" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-PIN.11</td>
   <td class="ctitle">คลิปสั้นมาก วนเร็ว สินค้ายังสลับตรงจังหวะทุกรอบ <span class="edge-badge">🆕 edge</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p2">P2</span></td>
-  <td class="status" data-uid="tc-3135"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-3135"><span class="stb skip">SKIP</span></td>
   <td class="jira-cell" data-uid="tc-3135"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail show"><td colspan="7"><div class="card">
   <div class="h-title">คลิปสั้นมาก วนเร็ว สินค้ายังสลับตรงจังหวะทุกรอบ</div>
   <div class="h-prio">Priority: <b>P2</b> · UI · pin-auto-live · ขั้นที่ 9 · Epic 11</div>
   <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>มีบัญชี TikTok เชื่อมไว้ในระบบแล้วอย่างน้อย 1 บัญชี และคุกกี้ยังไม่หมดอายุ</li><li>มีคลิปสั้นประมาณ 10-15 วินาที และตั้งตารางปัก 2 แถวในช่วงนั้น</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Rerun (macOS)</li><li>ล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>ไปที่เมนู "บัญชีไลฟ์"</li><li>กด "เริ่มไลฟ์"</li><li>เฝ้าดูตะกร้าต่อเนื่อง 3 นาที (คลิปวนหลายรอบ)</li><li>นับว่าสินค้าสลับครบทุกรอบหรือไม่</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>คลิปยาว 15 วินาที · ตาราง 00:00 → A, 00:08 → B</li></ul></div>
@@ -5779,22 +5792,22 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <span class="opt fail" data-uid="tc-3135" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-3135" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-3135" data-st="block">BLOCKED</span>
-    <span class="opt skip" data-uid="tc-3135" data-st="skip">SKIP</span>
+    <span class="opt skip sel" data-uid="tc-3135" data-st="skip">SKIP</span>
   </div></div>
   <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
     <div class="jira-list" data-uid="tc-3135"></div>
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-3135" placeholder="วางลิงก์ Jira หรือพิมพ์ TAK-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-3135">+ เพิ่มลิงก์</button></div>
   </div>
 </div></td></tr>
-<tr class="trow" data-feat="epic9" data-level="ui" data-prio="P2" onclick="tg(this)">
+<tr class="trow open" data-feat="epic9" data-level="ui" data-prio="P2" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-PIN.12</td>
   <td class="ctitle">แก้ตารางปักระหว่างไลฟ์ ต้องบอกได้ว่ามีผลกับรอบไหน <span class="edge-badge">🆕 edge</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p2">P2</span></td>
-  <td class="status" data-uid="tc-3136"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-3136"><span class="stb skip">SKIP</span></td>
   <td class="jira-cell" data-uid="tc-3136"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail show"><td colspan="7"><div class="card">
   <div class="h-title">แก้ตารางปักระหว่างไลฟ์ ต้องบอกได้ว่ามีผลกับรอบไหน</div>
   <div class="h-prio">Priority: <b>P2</b> · UI · pin-auto-live · ขั้นที่ 9 · Epic 11</div>
   <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>มีบัญชี TikTok เชื่อมไว้ในระบบแล้วอย่างน้อย 1 บัญชี และคุกกี้ยังไม่หมดอายุ</li><li>กำลังไลฟ์ด้วยตารางปักที่ตั้งไว้</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Rerun (macOS)</li><li>ล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>ระหว่างไลฟ์ เปิดแท็บ "ตารางปัก" แล้วเพิ่มแถวใหม่และบันทึก</li><li>อ่านข้อความที่ระบบขึ้น</li><li>เฝ้าดูว่ารอบที่กำลังเล่นอยู่ใช้ตารางเก่าหรือใหม่</li><li>รอจนคลิปวนรอบใหม่ แล้วดูอีกครั้ง</li><li>ตรวจสอบผลลัพธ์</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>เพิ่มแถว 00:30 → สินค้า C ระหว่างไลฟ์</li></ul></div>
@@ -5807,7 +5820,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <span class="opt fail" data-uid="tc-3136" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-3136" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-3136" data-st="block">BLOCKED</span>
-    <span class="opt skip" data-uid="tc-3136" data-st="skip">SKIP</span>
+    <span class="opt skip sel" data-uid="tc-3136" data-st="skip">SKIP</span>
   </div></div>
   <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
     <div class="jira-list" data-uid="tc-3136"></div>
@@ -7347,7 +7360,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-3190" placeholder="วางลิงก์ Jira หรือพิมพ์ TAK-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-3190">+ เพิ่มลิงก์</button></div>
   </div>
 </div></td></tr>
-<tr class="trow" data-feat="epic14" data-level="ui" data-prio="P2" onclick="tg(this)">
+<tr class="trow open" data-feat="epic14" data-level="ui" data-prio="P2" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-HH.10</td>
   <td class="ctitle">รายการไฟล์บนคลาวด์โหลดไม่สำเร็จ ต้องขึ้นข้อความ + ปุ่มลองใหม่ <span class="edge-badge">🆕 edge</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -7355,7 +7368,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-3191"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-3191"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail show"><td colspan="7"><div class="card">
   <div class="h-title">รายการไฟล์บนคลาวด์โหลดไม่สำเร็จ ต้องขึ้นข้อความ + ปุ่มลองใหม่</div>
   <div class="h-prio">Priority: <b>P2</b> · UI · cloud-files · ขั้นที่ 14 · Epic 15</div>
   <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>ตัดเน็ตของเครื่องทดสอบ</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Rerun (macOS)</li><li>ล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>ปิด Wi-Fi ก่อน แล้วเปิดเมนู <b>คลังวิดีโอ</b></li><li>อ่านข้อความที่ขึ้นในพื้นที่รายการไฟล์ และดูว่ามีปุ่มให้กดหรือไม่</li><li>เทียบกับสถานะตอนไม่มีไฟล์เลย — ถ้ามี workspace เปล่าให้เปิดดูเทียบข้อความกัน</li><li>เปิด Wi-Fi กลับมาแล้วกดปุ่ม <b>ลองใหม่</b> โดยไม่รีเฟรชทั้งหน้า</li><li>ถ้าเจอกรณีที่ไฟล์ในเครื่องยังขึ้นได้แต่ส่วนคลาวด์พัง ให้บันทึกข้อความที่ขึ้นไว้ด้วย</li><li>ตรวจสอบผลลัพธ์</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ตัดเน็ตแล้วเปิดคลังวิดีโอ</li></ul></div>
