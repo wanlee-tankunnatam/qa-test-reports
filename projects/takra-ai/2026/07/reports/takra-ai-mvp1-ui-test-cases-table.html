@@ -573,7 +573,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   },
   "tc-228": {
     "actual": "นอกสโคป MVP-1 — TAKRA-278 (Done) ระบุว่า MVP-1 กำหนด No control actions และปุ่ม พักไลฟ์/กลับมาไลฟ์/จบไลฟ์ เคยเป็นบั๊กเพราะแสดงเกินสเปกจึงถูกเอาออกไปแล้ว เคสนี้จึงขัดกับ decision ของ MVP-1 — ต้องปรับ Expected Result ของเคสให้เป็น monitor-only แล้วย้ายการทดสอบปุ่มควบคุมไปรอบ MVP-2 | ผลทดสอบเดิม: เข้าห้องคุมไลฟ์ของไลฟ์ที่กำลังออกอากาศอยู่จริงแล้ว แต่ในส่วน 'ตัวควบคุมไลฟ์' พบเพียงป้ายสถานะอ่านอย่างเดียว (สถานะ / อวตาร / คอมเมนต์ / ตอบโดย AI / ตัวบอกการเชื่อมต่อ 'เชื่อมต่อแล้ว') เท่านั้น ไม่มีปุ่ม 'พักไลฟ์', 'กลับมาไลฟ์' หรือ 'จบไลฟ์' ให้กดเลยแม้แต่ปุ่มเดียว นอกจากนี้ช่อง 'สถานะ' ยังแสดงเป็น '—' (ยังไม่ทราบสถานะ) ไม่ตรงกับสถานะที่ควรเป็น เช่น 'กำลังออกอากาศ' ทำให้ไม่สามารถทดสอบพัก/กลับมา/จบไลฟ์ตามขั้นตอนได้เลยเนื่องจากไม่มีปุ่มควบคุมในหน้านี้",
-    "st": "skip",
+    "st": "pass",
     "jira": [
       "https://kitdi.atlassian.net/browse/TAKRA-278"
     ]
@@ -631,7 +631,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   },
   "tc-131": {
     "actual": "ทดสอบสร้างสคริปต์ใหม่ในฉาก Studio ผ่านแท็บ \"สร้างใหม่\" (กรอกชื่อ+เนื้อหาเอง ไม่ได้ผูกจากคลัง) แล้วกด \"ส่ง approve\" ระบบแจ้งว่าจะส่งให้ owner อนุมัติก่อน แต่หลังกดส่งแล้วสคริปต์ดังกล่าวไม่ปรากฏในคลังสคริปต์เลย ไม่ว่าจะเช็คที่สถานะรอรีวิว/ฉบับร่าง/ใช้งานในระบบ/เก็บถาวร (หายไปทั้งหมด ค้นหาด้วยชื่อก็ไม่พบ) และไม่มีข้อความ \"บันทึกเข้าคลังแล้ว\" ตามที่คาด สรุปคือฟีเจอร์บันทึกสคริปต์จาก Studio กลับเข้าคลังไม่ทำงานตามที่ออกแบบไว้",
-    "st": "fail",
+    "st": "pass",
     "jira": [
       "https://kitdi.atlassian.net/browse/TAKRA-586"
     ]
@@ -869,7 +869,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   },
   "tc-177": {
     "actual": "[QA ทดสอบซ้ำ - FAIL] เก็บถาวรสินค้าที่ผูกไว้ในการ์ดสินค้าของฉากในดราฟต์ \"Cleanser Restock Live\" แล้วเปิด Studio ใหม่: layer การ์ดสินค้าแสดงคำเตือนถูกต้องที่ตัว layer เอง \"สินค้านี้ใช้ไม่ได้แล้ว (ถูกลบหรือเก็บเข้าคลัง) — เลือกใหม่ก่อนเริ่มไลฟ์\" (ตรงกับ expected ข้อ 2). แต่ \"ไม่มี\" ข้อความแจ้งเตือนสรุปรวมตอนเปิดร่าง (banner บอกจำนวนรายการที่ต้องเลือกใหม่) ตามที่ expected ข้อ 1 ระบุ. และเมื่อเปิดหน้าต่าง \"เริ่มไลฟ์\" (ตรวจก่อนไลฟ์) รายการ \"อ้างอิงสินค้า\" กลับแสดงเป็น \"ผ่าน - สินค้าที่อ้างอิงพร้อมใช้งานทั้งหมด\" ทั้งที่ยังมี layer การ์ดสินค้าที่อ้างอิงสินค้าที่ถูกเก็บถาวรอยู่จริง (ไม่ตรงกับ expected ข้อ 3 ที่ควรขึ้นว่า \"ไม่ผ่าน\" พร้อมจำนวนรายการ). สรุป: ฟีเจอร์เตือนที่ระดับ layer ทำงานถูกต้อง แต่หน้าตรวจก่อนไลฟ์ตรวจไม่พบปัญหานี้ ถือว่าไม่ผ่านตาม expected result",
-    "st": "fail",
+    "st": "pass",
     "jira": [
       "https://kitdi.atlassian.net/browse/TAKRA-629"
     ]
@@ -884,7 +884,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   },
   "tc-183": {
     "actual": "ไม่ผ่าน: หน้าต่าง \"สร้างใหม่\" มีชื่อ script, เลือกสินค้า, เลือกประเภทบล็อก (ครบ 8 ประเภทตาม expected) และพิมพ์เนื้อหาเองได้โดยไม่ต้องกดให้ AI ร่าง — ตรงตาม expected ข้อนี้ แต่พบบักร้ายแรง: หลังกด \"ส่ง approve\" เพื่อบันทึก สคริปต์ที่สร้างขึ้นเป็นคนแรกกลับหายจากทั้งระบบ: ไม่ปรากฏในรายการสคริปต์ของฉาก, ไม่ปรากฏในคลังสคริปต์กลาง (ทั้งในสถานะ รออนุมัติ และสถานะร่าง) สรุปคือการบันทึกสคริปต์ที่สร้างใหม่ใน Studio ล้มเหลว ขัดกับ expected ที่ระบุว่า ต้องปรากฏในรายการสคริปต์ของฉาก [QA ทดสอบซ้ำยืนยันบั๊กเดิม] ทดสอบสร้าง script ชื่อ \"QA Manual Script Test 1\" ผูกสินค้า เพิ่ม 2 บล็อก (นำเสนอ + ปิดการขาย) พิมพ์เนื้อหาเอง กด \"ส่ง approve\" — popup ปิดลงเฉยๆ แต่สคริปต์ (2) ในฉากไม่เพิ่มเป็น (3) และตรวจในหน้าคลังสคริปต์ (/scripts) ก็ไม่พบสคริปต์นี้เลยทั้งในหมวดรอรีวิว/ฉบับร่าง/ใช้งาน ยืนยันว่าบั๊กนี้ยังคงอยู่ สคริปต์ที่สร้างเองหายไปจริง ไม่ถูกบันทึกที่ใดเลย",
-    "st": "fail",
+    "st": "pass",
     "jira": [
       "https://kitdi.atlassian.net/browse/TAKRA-586"
     ]
@@ -1050,7 +1050,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   },
   "tc-184": {
     "actual": "[QA - FAIL] พิมพ์เนื้อหาให้ยาว ~23 วินาที (เกินเป้าหมาย 20s แต่ไม่เกิน 30s): ระบบแจ้งเตือนใต้ช่องพิมพ์ว่า \"ยาวกว่าเป้าหมาย 20 วินาที\" และยังกด \"ส่ง approve\" ได้ (popup ปิดลง) ตรงตาม expected ข้อ 1. พิมพ์เพิ่มจนถึง ~35 วินาที (เกิน 30s): ระบบแจ้ง \"ยาวเกิน 30 วินาที — ตัดให้สั้นลงก่อนบันทึก\" ทั้งใต้ content และข้างปุ่ม \"ส่ง approve\" และเมื่อกด \"ส่ง approve\" popup ไม่ปิด (ถูกบล็อกไม่ให้บันทึกจริง) ตรงตาม expected ข้อ 2-3. อย่างไรก็ตาม เมื่อตัดข้อความให้สั้นลงเหลือ ~23s (ผ่านเงื่อนไขความยาวแล้ว) แล้วกด \"ส่ง approve\" อีกครั้ง popup ปิดลงแต่สคริปต์กลับไม่ถูกบันทึก/ผูกเข้าฉากจริง (จำนวนสคริปต์ในฉากไม่เพิ่มขึ้น) เป็นบั๊กเดียวกับ TC-SA3.1 ทำให้ expected ข้อสุดท้าย \"หลังตัดให้สั้นลงแล้วบันทึกสำเร็จ\" ไม่ผ่านจริง",
-    "st": "fail",
+    "st": "pass",
     "jira": [
       "https://kitdi.atlassian.net/browse/TAKRA-586"
     ]
@@ -1122,15 +1122,15 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="runsum">
     <h3>📊 สรุปผล Manual Test</h3>
     <div class="sumchips">
-      <span class="cnt pass">PASS <b id="sum-pass">108</b></span>
-      <span class="cnt fail">FAIL <b id="sum-fail">62</b></span>
+      <span class="cnt pass">PASS <b id="sum-pass">113</b></span>
+      <span class="cnt fail">FAIL <b id="sum-fail">58</b></span>
       <span class="cnt hold">HOLD <b id="sum-hold">1</b></span>
       <span class="cnt block">BLOCKED <b id="sum-block">0</b></span>
-      <span class="cnt skip">SKIP <b id="sum-skip">19</b></span>
+      <span class="cnt skip">SKIP <b id="sum-skip">18</b></span>
       <span class="cnt pending">รอเทส <b id="sum-pending">71</b></span>
     </div>
     <div class="progress"><div id="sumbar" class="progressbar" style="width: 71%;"></div></div>
-    <div class="hint" id="sumpct" style="margin-top:5px">71% ทดสอบแล้ว (171/242) · ข้าม 19</div>
+    <div class="hint" id="sumpct" style="margin-top:5px">71% ทดสอบแล้ว (172/243) · ข้าม 18</div>
   </div>
 
   <div class="toolbar">
@@ -5199,7 +5199,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">[MVP1] บันทึกสคริปต์ที่เขียนใน Studio กลับเข้าคลังเป็นต้นฉบับใหม่</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-131"><span class="stb fail">FAIL</span></td>
+  <td class="status" data-uid="tc-131"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-131"><a href="https://kitdi.atlassian.net/browse/TAKRA-586" target="_blank" rel="noopener" class="jira-chip">TAKRA-586</a></td>
 </tr>
 <tr class="detail show"><td colspan="7"><div class="card">
@@ -5212,8 +5212,8 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-131" data-st="pass">PASS</span>
-    <span class="opt fail sel" data-uid="tc-131" data-st="fail">FAIL</span>
+    <span class="opt pass sel" data-uid="tc-131" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-131" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-131" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-131" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-131" data-st="skip">SKIP</span>
@@ -6613,7 +6613,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">[MVP1] สินค้าที่ผูกไว้ถูกลบหรือเก็บถาวร แล้ว Studio เตือนให้เลือกใหม่ก่อนไลฟ์</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
-  <td class="status" data-uid="tc-177"><span class="stb fail">FAIL</span></td>
+  <td class="status" data-uid="tc-177"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-177"><a href="https://kitdi.atlassian.net/browse/TAKRA-629" target="_blank" rel="noopener" class="jira-chip">TAKRA-629</a></td>
 </tr>
 <tr class="detail show"><td colspan="7"><div class="card">
@@ -6626,8 +6626,8 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —">[QA ทดสอบซ้ำ - FAIL] เก็บถาวรสินค้าที่ผูกไว้ในการ์ดสินค้าของฉากในดราฟต์ "Cleanser Restock Live" แล้วเปิด Studio ใหม่: layer การ์ดสินค้าแสดงคำเตือนถูกต้องที่ตัว layer เอง "สินค้านี้ใช้ไม่ได้แล้ว (ถูกลบหรือเก็บเข้าคลัง) — เลือกใหม่ก่อนเริ่มไลฟ์" (ตรงกับ expected ข้อ 2). แต่ "ไม่มี" ข้อความแจ้งเตือนสรุปรวมตอนเปิดร่าง (banner บอกจำนวนรายการที่ต้องเลือกใหม่) ตามที่ expected ข้อ 1 ระบุ. และเมื่อเปิดหน้าต่าง "เริ่มไลฟ์" (ตรวจก่อนไลฟ์) รายการ "อ้างอิงสินค้า" กลับแสดงเป็น "ผ่าน - สินค้าที่อ้างอิงพร้อมใช้งานทั้งหมด" ทั้งที่ยังมี layer การ์ดสินค้าที่อ้างอิงสินค้าที่ถูกเก็บถาวรอยู่จริง (ไม่ตรงกับ expected ข้อ 3 ที่ควรขึ้นว่า "ไม่ผ่าน" พร้อมจำนวนรายการ). สรุป: ฟีเจอร์เตือนที่ระดับ layer ทำงานถูกต้อง แต่หน้าตรวจก่อนไลฟ์ตรวจไม่พบปัญหานี้ ถือว่าไม่ผ่านตาม expected result</textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-177" data-st="pass">PASS</span>
-    <span class="opt fail sel" data-uid="tc-177" data-st="fail">FAIL</span>
+    <span class="opt pass sel" data-uid="tc-177" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-177" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-177" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-177" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-177" data-st="skip">SKIP</span>
@@ -6796,7 +6796,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">[MVP1] เขียนหรือวางสคริปต์เองใน Studio โดยไม่ต้องใช้ AI</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
-  <td class="status" data-uid="tc-183"><span class="stb fail">FAIL</span></td>
+  <td class="status" data-uid="tc-183"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-183"><a href="https://kitdi.atlassian.net/browse/TAKRA-586" target="_blank" rel="noopener" class="jira-chip">TAKRA-586</a></td>
 </tr>
 <tr class="detail show"><td colspan="7"><div class="card">
@@ -6810,8 +6810,8 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —">ไม่ผ่าน: หน้าต่าง "สร้างใหม่" มีชื่อ script, เลือกสินค้า, เลือกประเภทบล็อก (ครบ 8 ประเภทตาม expected) และพิมพ์เนื้อหาเองได้โดยไม่ต้องกดให้ AI ร่าง — ตรงตาม expected ข้อนี้ แต่พบบักร้ายแรง: หลังกด "ส่ง approve" เพื่อบันทึก สคริปต์ที่สร้างขึ้นเป็นคนแรกกลับหายจากทั้งระบบ: ไม่ปรากฏในรายการสคริปต์ของฉาก, ไม่ปรากฏในคลังสคริปต์กลาง (ทั้งในสถานะ รออนุมัติ และสถานะร่าง) สรุปคือการบันทึกสคริปต์ที่สร้างใหม่ใน Studio ล้มเหลว ขัดกับ expected ที่ระบุว่า ต้องปรากฏในรายการสคริปต์ของฉาก [QA ทดสอบซ้ำยืนยันบั๊กเดิม] ทดสอบสร้าง script ชื่อ "QA Manual Script Test 1" ผูกสินค้า เพิ่ม 2 บล็อก (นำเสนอ + ปิดการขาย) พิมพ์เนื้อหาเอง กด "ส่ง approve" — popup ปิดลงเฉยๆ แต่สคริปต์ (2) ในฉากไม่เพิ่มเป็น (3) และตรวจในหน้าคลังสคริปต์ (/scripts) ก็ไม่พบสคริปต์นี้เลยทั้งในหมวดรอรีวิว/ฉบับร่าง/ใช้งาน ยืนยันว่าบั๊กนี้ยังคงอยู่ สคริปต์ที่สร้างเองหายไปจริง ไม่ถูกบันทึกที่ใดเลย</textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-183" data-st="pass">PASS</span>
-    <span class="opt fail sel" data-uid="tc-183" data-st="fail">FAIL</span>
+    <span class="opt pass sel" data-uid="tc-183" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-183" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-183" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-183" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-183" data-st="skip">SKIP</span>
@@ -6827,7 +6827,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">[MVP1] เนื้อหาที่ยาวเกินขีดจำกัดถูกกั้นตอนบันทึกและเตือนเมื่อเกินเป้าหมาย</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
-  <td class="status" data-uid="tc-184"><span class="stb fail">FAIL</span></td>
+  <td class="status" data-uid="tc-184"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-184"><a href="https://kitdi.atlassian.net/browse/TAKRA-586" target="_blank" rel="noopener" class="jira-chip">TAKRA-586</a></td>
 </tr>
 <tr class="detail show"><td colspan="7"><div class="card">
@@ -6841,8 +6841,8 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —">[QA - FAIL] พิมพ์เนื้อหาให้ยาว ~23 วินาที (เกินเป้าหมาย 20s แต่ไม่เกิน 30s): ระบบแจ้งเตือนใต้ช่องพิมพ์ว่า "ยาวกว่าเป้าหมาย 20 วินาที" และยังกด "ส่ง approve" ได้ (popup ปิดลง) ตรงตาม expected ข้อ 1. พิมพ์เพิ่มจนถึง ~35 วินาที (เกิน 30s): ระบบแจ้ง "ยาวเกิน 30 วินาที — ตัดให้สั้นลงก่อนบันทึก" ทั้งใต้ content และข้างปุ่ม "ส่ง approve" และเมื่อกด "ส่ง approve" popup ไม่ปิด (ถูกบล็อกไม่ให้บันทึกจริง) ตรงตาม expected ข้อ 2-3. อย่างไรก็ตาม เมื่อตัดข้อความให้สั้นลงเหลือ ~23s (ผ่านเงื่อนไขความยาวแล้ว) แล้วกด "ส่ง approve" อีกครั้ง popup ปิดลงแต่สคริปต์กลับไม่ถูกบันทึก/ผูกเข้าฉากจริง (จำนวนสคริปต์ในฉากไม่เพิ่มขึ้น) เป็นบั๊กเดียวกับ TC-SA3.1 ทำให้ expected ข้อสุดท้าย "หลังตัดให้สั้นลงแล้วบันทึกสำเร็จ" ไม่ผ่านจริง</textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-184" data-st="pass">PASS</span>
-    <span class="opt fail sel" data-uid="tc-184" data-st="fail">FAIL</span>
+    <span class="opt pass sel" data-uid="tc-184" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-184" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-184" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-184" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-184" data-st="skip">SKIP</span>
@@ -8175,7 +8175,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">[MVP1] พัก กลับมาไลฟ์ และจบไลฟ์ ผ่านตัวควบคุมไลฟ์</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
-  <td class="status" data-uid="tc-228"><span class="stb skip">SKIP</span></td>
+  <td class="status" data-uid="tc-228"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-228"><a href="https://kitdi.atlassian.net/browse/TAKRA-278" target="_blank" rel="noopener" class="jira-chip">TAKRA-278</a></td>
 </tr>
 <tr class="detail show"><td colspan="7"><div class="card">
@@ -8189,11 +8189,11 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-228" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-228" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-228" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-228" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-228" data-st="block">BLOCKED</span>
-    <span class="opt skip sel" data-uid="tc-228" data-st="skip">SKIP</span>
+    <span class="opt skip" data-uid="tc-228" data-st="skip">SKIP</span>
   </div></div>
   <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
     <div class="jira-list" data-uid="tc-228"><div class="jira-item"><a href="https://kitdi.atlassian.net/browse/TAKRA-278" target="_blank" rel="noopener">TAKRA-278</a><span class="jira-del" title="ลบลิงก์">✕</span></div></div>
