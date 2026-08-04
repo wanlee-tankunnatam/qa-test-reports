@@ -1158,6 +1158,13 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   "tc-157": {
     "actual": "ทดสอบที่ Workspace \"ทีมของ QA Tester\": เปิด Studio ผ่าน \"เริ่มไลฟ์ใหม่\" กด \"เพิ่มฉาก\" ให้มี 2 ฉาก → ฉากที่ 1 ตั้งอวาตาร์ \"Graham (พื้นหลังเขียว)\" → ฉากที่ 2 ตั้งอวาตาร์ \"staff White\" (คนละตัว) สลับกลับไปดูฉากที่ 1 — พบว่ายันเป็น Graham บนแคนวาสและพานซืลขวามือ ไม่ปนกันกับสตาฟชื่อที่หน้าจอและพานซืลขวามือ สลับกลับไปดูฉากที่ 2 ก็เป็น staff White เหมือนเดิม ไม่ปนกัน — ช่องโปรเฟีลด้านซ้าย (แผงซ้าย) แสดงภาพย่อที่สอดกล้องกับอวาตาร์จรงของแต่ละฉาก (ฉากที่ 1 = ไอคอนสีเขียวเข้มจาก Graham, ฉากที่ 2 = ไอคอนเชลเก่อออกจาก staff White) ตรงกับ Expected Result ครบทุกข้อ",
     "st": "pass"
+  },
+  "tc-151": {
+    "st": "fail",
+    "actual": "FAIL: หลังกดยืนยันออกจาก Studio (\"กลับไปไลฟ์\") ข้อความในไดอะล็อกระบุว่า \"งานของคุณถูกบันทึกอัตโนมัติแล้ว\" แต่เมื่อกลับไปดูที่ \"โปรเจกต์ของฉัน\" (/live/projects) ไม่พบ draft ที่สร้าง/แก้ไขไว้เลย (ทดสอบซ้ำ 2 ครั้งด้วยชื่อ draft ต่างกัน ผลลัพธ์เหมือนกัน) แสดงว่างานไม่ได้ถูกบันทึกจริงตามที่แจ้ง ไม่ตรงกับ Expected Result ที่ระบุว่าต้องกลับเข้ามาที่ร่างเดิมได้และงานยังอยู่ครบ ตรงกับปัญหาที่มีการรายงานไว้แล้วใน TAKRA-540 (Studio Drafts List อ่านจาก mock/localStorage ไม่ได้เชื่อมกับ BE draft จริง)",
+    "jira": [
+      "https://kitdi.atlassian.net/browse/TAKRA-540"
+    ]
   }
 }
 </script>
@@ -1183,14 +1190,14 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <h3>📊 สรุปผล Manual Test</h3>
     <div class="sumchips">
       <span class="cnt pass">PASS <b id="sum-pass">144</b></span>
-      <span class="cnt fail">FAIL <b id="sum-fail">5</b></span>
+      <span class="cnt fail">FAIL <b id="sum-fail">6</b></span>
       <span class="cnt hold">HOLD <b id="sum-hold">36</b></span>
       <span class="cnt block">BLOCKED <b id="sum-block">1</b></span>
       <span class="cnt skip">SKIP <b id="sum-skip">23</b></span>
-      <span class="cnt pending">รอเทส <b id="sum-pending">52</b></span>
+      <span class="cnt pending">รอเทส <b id="sum-pending">51</b></span>
     </div>
-    <div class="progress"><div id="sumbar" class="progressbar" style="width: 78%;"></div></div>
-    <div class="hint" id="sumpct" style="margin-top:5px">78% ทดสอบแล้ว (186/238) · ข้าม 23</div>
+    <div class="progress"><div id="sumbar" class="progressbar" style="width: 79%;"></div></div>
+    <div class="hint" id="sumpct" style="margin-top:5px">79% ทดสอบแล้ว (187/238) · ข้าม 23</div>
   </div>
 
   <div class="toolbar">
@@ -5871,37 +5878,37 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow" data-feat="epic3" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow open" data-feat="epic3" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-ST.3</td>
   <td class="ctitle">[MVP1] ออกจาก Studio ต้องยืนยันและงานไม่หาย</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-151"><span class="stb pending">รอเทส</span></td>
-  <td class="jira-cell" data-uid="tc-151"></td>
+  <td class="status" data-uid="tc-151"><span class="stb fail">FAIL</span></td>
+  <td class="jira-cell" data-uid="tc-151"><a href="https://kitdi.atlassian.net/browse/TAKRA-540" target="_blank" rel="noopener" class="jira-chip">TAKRA-540</a></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail show"><td colspan="7"><div class="card">
   <div class="h-title">[MVP1] ออกจาก Studio ต้องยืนยันและงานไม่หาย</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · studio-shell · Epic 3 · Story 3.12</div>
   <div class="sec"><h4>Precondition</h4><ul><li>อยู่ใน Studio ที่แก้ไขค้างไว้</li></ul></div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "แพลตฟอร์มไลฟ์" (ยืนยัน "เปลี่ยนแพลตฟอร์ม") กดปุ่ม "เริ่มไลฟ์ใหม่" เปิด Studio แล้วแก้ไขงานสักอย่าง เช่น เพิ่มฉากหรือ Layer</li><li>กดปุ่ม "กลับไปแดชบอร์ด" ที่แถบบน แล้วอ่านข้อความในหน้าต่างยืนยัน</li><li>กด "อยู่ต่อ" แล้วดูว่ายังอยู่ใน Studio และงานไม่หาย</li><li>กดกลับอีกครั้งแล้วกดปุ่มยืนยันเพื่อออก</li><li>กลับเข้ามาที่ร่างเดิมอีกครั้ง แล้วตรวจว่างานยังอยู่ครบ</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>หน้าต่างยืนยันหัวข้อ "ออกจาก Studio?" ระบุว่า "งานของคุณถูกบันทึกอัตโนมัติแล้ว" พร้อมปุ่ม "อยู่ต่อ" และปุ่มยืนยัน "กลับไปแดชบอร์ด"</li><li>กด "อยู่ต่อ" แล้วยังอยู่ใน Studio และงานไม่หาย</li><li>ยืนยันออกแล้วกลับไปหน้าแดชบอร์ดตามที่ระบุ</li><li>กลับเข้าร่างเดิมอีกครั้ง งานทั้งหมดยังอยู่ครบ</li><li>ที่มา: Epic 3 · Story 3.12 · FR21</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —">FAIL: หลังกดยืนยันออกจาก Studio ("กลับไปไลฟ์") ข้อความในไดอะล็อกระบุว่า "งานของคุณถูกบันทึกอัตโนมัติแล้ว" แต่เมื่อกลับไปดูที่ "โปรเจกต์ของฉัน" (/live/projects) ไม่พบ draft ที่สร้าง/แก้ไขไว้เลย (ทดสอบซ้ำ 2 ครั้งด้วยชื่อ draft ต่างกัน ผลลัพธ์เหมือนกัน) แสดงว่างานไม่ได้ถูกบันทึกจริงตามที่แจ้ง ไม่ตรงกับ Expected Result ที่ระบุว่าต้องกลับเข้ามาที่ร่างเดิมได้และงานยังอยู่ครบ ตรงกับปัญหาที่มีการรายงานไว้แล้วใน TAKRA-540 (Studio Drafts List อ่านจาก mock/localStorage ไม่ได้เชื่อมกับ BE draft จริง)</textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-151" data-st="pass">PASS</span>
-    <span class="opt fail" data-uid="tc-151" data-st="fail">FAIL</span>
+    <span class="opt fail sel" data-uid="tc-151" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-151" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-151" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-151" data-st="skip">SKIP</span>
   </div></div>
   <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
-    <div class="jira-list" data-uid="tc-151"></div>
+    <div class="jira-list" data-uid="tc-151"><div class="jira-item"><a href="https://kitdi.atlassian.net/browse/TAKRA-540" target="_blank" rel="noopener">TAKRA-540</a><span class="jira-del" title="ลบลิงก์">✕</span></div></div>
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-151" placeholder="วางลิงก์ Jira หรือพิมพ์ TAK-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-151">+ เพิ่มลิงก์</button></div>
   </div>
 </div></td></tr>
 
-<tr class="trow" data-feat="epic3" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow open" data-feat="epic3" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-ST.4</td>
   <td class="ctitle">[MVP1] ตั้งค่า Studio (คุณภาพพรีวิว · เส้นกริด · บันทึกอัตโนมัติ · คีย์ลัด)</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -5909,7 +5916,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="status" data-uid="tc-152"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-152"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail show"><td colspan="7"><div class="card">
   <div class="h-title">[MVP1] ตั้งค่า Studio (คุณภาพพรีวิว · เส้นกริด · บันทึกอัตโนมัติ · คีย์ลัด)</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · studio-shell · Epic 3 · Story 3.12</div>
   <div class="sec"><h4>Precondition</h4><ul><li>อยู่ใน Studio</li></ul></div>
