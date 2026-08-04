@@ -1103,6 +1103,13 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   },
   "tc-85": {
     "st": "skip"
+  },
+  "tc-102": {
+    "st": "block",
+    "actual": "BLOCKED: พบสินค้าที่ติดหมวด \"อื่นๆ\" 0 รายการจากทั้งหมด 33 รายการในคลังสินค้า (precondition ไม่ผ่าน) และไม่พบปุ่ม/ช่องสำหรับเพิ่มคำเฉพาะหมวดในแผง \"คำเฉพาะหมวดนี้\" เมื่อหมวดมีคำอยู่แล้วอย่างน้อย 1 คำ (ตรวจสอบ DOM ยืนยันไม่มี input/button ที่เกี่ยวข้อง) — ทดสอบทั้งหมวด \"อื่นๆ\" และ \"Beauty/Skincare\" ให้ผลเหมือนกัน จึงไม่สามารถดำเนินการตามขั้นตอนทดสอบต่อได้ อ้างอิงบัค TAKRA-656 (Risk Words: ไม่มีปุ่ม/UI สำหรับเพิ่ม-แก้ไข-ลบ-ค้นหาคำเสี่ยง Global & รายหมวด) ซึ่งระบุ TC-R2.5 ไว้ในนั้นแล้ว",
+    "jira": [
+      "https://kitdi.atlassian.net/browse/TAKRA-656"
+    ]
   }
 }
 </script>
@@ -1130,12 +1137,12 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
       <span class="cnt pass">PASS <b id="sum-pass">135</b></span>
       <span class="cnt fail">FAIL <b id="sum-fail">2</b></span>
       <span class="cnt hold">HOLD <b id="sum-hold">35</b></span>
-      <span class="cnt block">BLOCKED <b id="sum-block">1</b></span>
+      <span class="cnt block">BLOCKED <b id="sum-block">2</b></span>
       <span class="cnt skip">SKIP <b id="sum-skip">20</b></span>
-      <span class="cnt pending">รอเทส <b id="sum-pending">68</b></span>
+      <span class="cnt pending">รอเทส <b id="sum-pending">67</b></span>
     </div>
     <div class="progress"><div id="sumbar" class="progressbar" style="width: 72%;"></div></div>
-    <div class="hint" id="sumpct" style="margin-top:5px">72% ทดสอบแล้ว (173/241) · ข้าม 20</div>
+    <div class="hint" id="sumpct" style="margin-top:5px">72% ทดสอบแล้ว (174/241) · ข้าม 20</div>
   </div>
 
   <div class="toolbar">
@@ -4314,8 +4321,8 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">[MVP1] หมวด "อื่นๆ" ไม่มีชุดสำเร็จรูป ต้องเพิ่มคำเองและมีผลเฉพาะสินค้าในหมวดนั้น</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-102"><span class="stb pending">รอเทส</span></td>
-  <td class="jira-cell" data-uid="tc-102"></td>
+  <td class="status" data-uid="tc-102"><span class="stb block">BLOCKED</span></td>
+  <td class="jira-cell" data-uid="tc-102"><a href="https://kitdi.atlassian.net/browse/TAKRA-656" target="_blank" rel="noopener" class="jira-chip">TAKRA-656</a></td>
 </tr>
 <tr class="detail show"><td colspan="7"><div class="card">
   <div class="h-title">[MVP1] หมวด "อื่นๆ" ไม่มีชุดสำเร็จรูป ต้องเพิ่มคำเองและมีผลเฉพาะสินค้าในหมวดนั้น</div>
@@ -4325,17 +4332,17 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Data</h4><ul><li>คำทดสอบ: QAWORD-OTHER</li></ul></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>หมวด "อื่นๆ" ไม่มีชุดคำสำเร็จรูปจากระบบ — ก่อนเพิ่มคำ การ์ดแสดง "ยังไม่มีคำเสี่ยง — เพิ่มเอง" และในหมวดแสดง "— ยังไม่มีคำเสี่ยงในชุดนี้ —"</li><li>หลังเพิ่มคำ สินค้าที่ติดหมวด "อื่นๆ" พบคำนั้นในชุดคำเสี่ยงของสินค้า</li><li>สินค้าที่ไม่ได้ติดหมวด "อื่นๆ" ไม่พบคำนั้น (มีผลเฉพาะสินค้าที่ติดหมวดนี้ ไม่กลายเป็น global)</li><li>ที่มา: Epic 2 · Story 2.5 · FR46b</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —">BLOCKED: พบสินค้าที่ติดหมวด "อื่นๆ" 0 รายการจากทั้งหมด 33 รายการในคลังสินค้า (precondition ไม่ผ่าน) และไม่พบปุ่ม/ช่องสำหรับเพิ่มคำเฉพาะหมวดในแผง "คำเฉพาะหมวดนี้" เมื่อหมวดมีคำอยู่แล้วอย่างน้อย 1 คำ (ตรวจสอบ DOM ยืนยันไม่มี input/button ที่เกี่ยวข้อง) — ทดสอบทั้งหมวด "อื่นๆ" และ "Beauty/Skincare" ให้ผลเหมือนกัน จึงไม่สามารถดำเนินการตามขั้นตอนทดสอบต่อได้ อ้างอิงบัค TAKRA-656 (Risk Words: ไม่มีปุ่ม/UI สำหรับเพิ่ม-แก้ไข-ลบ-ค้นหาคำเสี่ยง Global &amp; รายหมวด) ซึ่งระบุ TC-R2.5 ไว้ในนั้นแล้ว</textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-102" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-102" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-102" data-st="hold">HOLD</span>
-    <span class="opt block" data-uid="tc-102" data-st="block">BLOCKED</span>
+    <span class="opt block sel" data-uid="tc-102" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-102" data-st="skip">SKIP</span>
   </div></div>
   <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
-    <div class="jira-list" data-uid="tc-102"></div>
+    <div class="jira-list" data-uid="tc-102"><div class="jira-item"><a href="https://kitdi.atlassian.net/browse/TAKRA-656" target="_blank" rel="noopener">TAKRA-656</a><span class="jira-del" title="ลบลิงก์">✕</span></div></div>
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-102" placeholder="วางลิงก์ Jira หรือพิมพ์ TAK-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-102">+ เพิ่มลิงก์</button></div>
   </div>
 </div></td></tr>
