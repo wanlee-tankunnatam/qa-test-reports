@@ -970,7 +970,8 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     "actual": "ข้ามการทดสอบในรอบนี้ (สถานะไม่เปลี่ยน) — precondition ต้องใช้บัญชี Live Operator ที่ไม่มีสิทธิ์อนุมัติ เป็นเคสเกี่ยวกับ roles จะทดสอบภายหลังหลังจากทดสอบ role Owner ครบแล้ว"
   },
   "tc-190": {
-    "actual": "ข้ามการทดสอบในรอบนี้ (สถานะไม่เปลี่ยน) — ต้องสลับ login ระหว่างผู้มีสิทธิ์อนุมัติกับผู้เขียนสคริปต์ เป็นเคสเกี่ยวกับ roles จะทดสอบภายหลัง"
+    "actual": "ทดสอบด้วยสคริปต์ \"QA Test Script AP3\" (สถานะรอการอนุมัติ): กดปุ่ม \"ตีกลับ\" ที่คลังสคริปต์ เห็นกล่องยืนยัน \"ตีกลับสคริปต์นี้? QA Test Script AP3 จะถูกส่งกลับเป็นฉบับร่างให้ผู้เขียนแก้ไขใหม่\" ตรงตาม Expected — หลังยืนยัน สถานะย้ายไปกลุ่ม \"ฉบับร่าง\" ทันที (นับ ฉบับร่าง 8→9, รอรีวิว 4→3) และหลุดจากคิว \"รอการอนุมัติ\" แล้ว จากนั้นเปิดแก้ไขเนื้อหาสคริปต์ (v1→v2) บันทึกสำเร็จ แล้วกด \"ส่งขออนุมัติ\" อีกครั้ง เห็นข้อความแจ้ง \"ส่งขออนุมัติแล้ว — QA Test Script AP3 เข้าคิวรอรีวิว\" และกลับเข้ากลุ่ม \"รอการอนุมัติ\" ตามเดิม ครบตาม Expected Result ทั้ง 3 ข้อ · หมายเหตุ: ใช้บัญชี Owner (qa@takra.ai) ทำทั้งขั้นตอนตีกลับและแก้ไข/ส่งใหม่ เนื่องจากไม่มีบัญชีผู้เขียนสคริปต์แยกต่างหากให้สลับ login ตาม step 4 ของ test steps",
+    "st": "pass"
   },
   "tc-191": {
     "actual": "ข้ามการทดสอบในรอบนี้ (สถานะไม่เปลี่ยน) — ต้องมีผู้ใช้ 2 คนที่มีสิทธิ์อนุมัติ login พร้อมกันเพื่อจำลอง race condition ยังไม่มีบัญชีทดสอบที่สองในรอบนี้"
@@ -1158,20 +1159,6 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   "tc-157": {
     "actual": "ทดสอบที่ Workspace \"ทีมของ QA Tester\": เปิด Studio ผ่าน \"เริ่มไลฟ์ใหม่\" กด \"เพิ่มฉาก\" ให้มี 2 ฉาก → ฉากที่ 1 ตั้งอวาตาร์ \"Graham (พื้นหลังเขียว)\" → ฉากที่ 2 ตั้งอวาตาร์ \"staff White\" (คนละตัว) สลับกลับไปดูฉากที่ 1 — พบว่ายันเป็น Graham บนแคนวาสและพานซืลขวามือ ไม่ปนกันกับสตาฟชื่อที่หน้าจอและพานซืลขวามือ สลับกลับไปดูฉากที่ 2 ก็เป็น staff White เหมือนเดิม ไม่ปนกัน — ช่องโปรเฟีลด้านซ้าย (แผงซ้าย) แสดงภาพย่อที่สอดกล้องกับอวาตาร์จรงของแต่ละฉาก (ฉากที่ 1 = ไอคอนสีเขียวเข้มจาก Graham, ฉากที่ 2 = ไอคอนเชลเก่อออกจาก staff White) ตรงกับ Expected Result ครบทุกข้อ",
     "st": "pass"
-  },
-  "tc-151": {
-    "st": "fail",
-    "actual": "FAIL: หลังกดยืนยันออกจาก Studio (\"กลับไปไลฟ์\") ข้อความในไดอะล็อกระบุว่า \"งานของคุณถูกบันทึกอัตโนมัติแล้ว\" แต่เมื่อกลับไปดูที่ \"โปรเจกต์ของฉัน\" (/live/projects) ไม่พบ draft ที่สร้าง/แก้ไขไว้เลย (ทดสอบซ้ำ 2 ครั้งด้วยชื่อ draft ต่างกัน ผลลัพธ์เหมือนกัน) แสดงว่างานไม่ได้ถูกบันทึกจริงตามที่แจ้ง ไม่ตรงกับ Expected Result ที่ระบุว่าต้องกลับเข้ามาที่ร่างเดิมได้และงานยังอยู่ครบ ตรงกับปัญหาที่มีการรายงานไว้แล้วใน TAKRA-540 (Studio Drafts List อ่านจาก mock/localStorage ไม่ได้เชื่อมกับ BE draft จริง)",
-    "jira": [
-      "https://kitdi.atlassian.net/browse/TAKRA-540"
-    ]
-  },
-  "tc-152": {
-    "st": "fail",
-    "actual": "FAIL: เปิดแผง \"ตั้งค่า Studio\" ได้ครบทั้ง 3 ส่วน (พรีวิว/การบันทึก/คีย์ลัด) และ UI ตรงกับที่ออกแบบไว้ทุกส่วน แต่เมื่อลองเปลี่ยนค่าจริง (เช่น เปลี่ยน \"คุณภาพพรีวิว\" เป็น \"สูง\" และปิด \"แสดงเส้นกริดบนแคนวาส\") แล้วกด \"เสร็จสิ้น\" เมื่อเปิดแผงซ้ำอีกค่าที่เปลี่ยนไว้กลับเป็นค่าเริ่มต้นทันที (ไม่ตรงกับ Expected Result) และเส้นกริดบนแคนวาสก็ไม่เปลี่ยนแปลงตามการสลับที่เห็นจริง สรุปคือฟีเจอร์ในเมนูนี้ไม่มีผลการทำงานจริง/ไม่บันทึกค่า ตรงกับปัญหาที่มีการรายงานไว้แล้วใน TAKRA-585 (ฟังก์ชันในเมนูตั้งค่า Studio ไม่สามารถใช้งานได้)",
-    "jira": [
-      "https://kitdi.atlassian.net/browse/TAKRA-585"
-    ]
   }
 }
 </script>
@@ -1196,15 +1183,15 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="runsum">
     <h3>📊 สรุปผล Manual Test</h3>
     <div class="sumchips">
-      <span class="cnt pass">PASS <b id="sum-pass">144</b></span>
-      <span class="cnt fail">FAIL <b id="sum-fail">7</b></span>
+      <span class="cnt pass">PASS <b id="sum-pass">145</b></span>
+      <span class="cnt fail">FAIL <b id="sum-fail">5</b></span>
       <span class="cnt hold">HOLD <b id="sum-hold">36</b></span>
       <span class="cnt block">BLOCKED <b id="sum-block">1</b></span>
       <span class="cnt skip">SKIP <b id="sum-skip">23</b></span>
-      <span class="cnt pending">รอเทส <b id="sum-pending">50</b></span>
+      <span class="cnt pending">รอเทส <b id="sum-pending">51</b></span>
     </div>
     <div class="progress"><div id="sumbar" class="progressbar" style="width: 79%;"></div></div>
-    <div class="hint" id="sumpct" style="margin-top:5px">79% ทดสอบแล้ว (188/238) · ข้าม 23</div>
+    <div class="hint" id="sumpct" style="margin-top:5px">79% ทดสอบแล้ว (187/238) · ข้าม 23</div>
   </div>
 
   <div class="toolbar">
@@ -5885,62 +5872,62 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow open" data-feat="epic3" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow" data-feat="epic3" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-ST.3</td>
   <td class="ctitle">[MVP1] ออกจาก Studio ต้องยืนยันและงานไม่หาย</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-151"><span class="stb fail">FAIL</span></td>
-  <td class="jira-cell" data-uid="tc-151"><a href="https://kitdi.atlassian.net/browse/TAKRA-540" target="_blank" rel="noopener" class="jira-chip">TAKRA-540</a></td>
+  <td class="status" data-uid="tc-151"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-151"></td>
 </tr>
-<tr class="detail show"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">[MVP1] ออกจาก Studio ต้องยืนยันและงานไม่หาย</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · studio-shell · Epic 3 · Story 3.12</div>
   <div class="sec"><h4>Precondition</h4><ul><li>อยู่ใน Studio ที่แก้ไขค้างไว้</li></ul></div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "แพลตฟอร์มไลฟ์" (ยืนยัน "เปลี่ยนแพลตฟอร์ม") กดปุ่ม "เริ่มไลฟ์ใหม่" เปิด Studio แล้วแก้ไขงานสักอย่าง เช่น เพิ่มฉากหรือ Layer</li><li>กดปุ่ม "กลับไปแดชบอร์ด" ที่แถบบน แล้วอ่านข้อความในหน้าต่างยืนยัน</li><li>กด "อยู่ต่อ" แล้วดูว่ายังอยู่ใน Studio และงานไม่หาย</li><li>กดกลับอีกครั้งแล้วกดปุ่มยืนยันเพื่อออก</li><li>กลับเข้ามาที่ร่างเดิมอีกครั้ง แล้วตรวจว่างานยังอยู่ครบ</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>หน้าต่างยืนยันหัวข้อ "ออกจาก Studio?" ระบุว่า "งานของคุณถูกบันทึกอัตโนมัติแล้ว" พร้อมปุ่ม "อยู่ต่อ" และปุ่มยืนยัน "กลับไปแดชบอร์ด"</li><li>กด "อยู่ต่อ" แล้วยังอยู่ใน Studio และงานไม่หาย</li><li>ยืนยันออกแล้วกลับไปหน้าแดชบอร์ดตามที่ระบุ</li><li>กลับเข้าร่างเดิมอีกครั้ง งานทั้งหมดยังอยู่ครบ</li><li>ที่มา: Epic 3 · Story 3.12 · FR21</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —">FAIL: หลังกดยืนยันออกจาก Studio ("กลับไปไลฟ์") ข้อความในไดอะล็อกระบุว่า "งานของคุณถูกบันทึกอัตโนมัติแล้ว" แต่เมื่อกลับไปดูที่ "โปรเจกต์ของฉัน" (/live/projects) ไม่พบ draft ที่สร้าง/แก้ไขไว้เลย (ทดสอบซ้ำ 2 ครั้งด้วยชื่อ draft ต่างกัน ผลลัพธ์เหมือนกัน) แสดงว่างานไม่ได้ถูกบันทึกจริงตามที่แจ้ง ไม่ตรงกับ Expected Result ที่ระบุว่าต้องกลับเข้ามาที่ร่างเดิมได้และงานยังอยู่ครบ ตรงกับปัญหาที่มีการรายงานไว้แล้วใน TAKRA-540 (Studio Drafts List อ่านจาก mock/localStorage ไม่ได้เชื่อมกับ BE draft จริง)</textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-151" data-st="pass">PASS</span>
-    <span class="opt fail sel" data-uid="tc-151" data-st="fail">FAIL</span>
+    <span class="opt fail" data-uid="tc-151" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-151" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-151" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-151" data-st="skip">SKIP</span>
   </div></div>
   <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
-    <div class="jira-list" data-uid="tc-151"><div class="jira-item"><a href="https://kitdi.atlassian.net/browse/TAKRA-540" target="_blank" rel="noopener">TAKRA-540</a><span class="jira-del" title="ลบลิงก์">✕</span></div></div>
+    <div class="jira-list" data-uid="tc-151"></div>
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-151" placeholder="วางลิงก์ Jira หรือพิมพ์ TAK-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-151">+ เพิ่มลิงก์</button></div>
   </div>
 </div></td></tr>
 
-<tr class="trow open" data-feat="epic3" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow" data-feat="epic3" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-ST.4</td>
   <td class="ctitle">[MVP1] ตั้งค่า Studio (คุณภาพพรีวิว · เส้นกริด · บันทึกอัตโนมัติ · คีย์ลัด)</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-152"><span class="stb fail">FAIL</span></td>
-  <td class="jira-cell" data-uid="tc-152"><a href="https://kitdi.atlassian.net/browse/TAKRA-585" target="_blank" rel="noopener" class="jira-chip">TAKRA-585</a></td>
+  <td class="status" data-uid="tc-152"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-152"></td>
 </tr>
-<tr class="detail show"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">[MVP1] ตั้งค่า Studio (คุณภาพพรีวิว · เส้นกริด · บันทึกอัตโนมัติ · คีย์ลัด)</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · studio-shell · Epic 3 · Story 3.12</div>
   <div class="sec"><h4>Precondition</h4><ul><li>อยู่ใน Studio</li></ul></div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "แพลตฟอร์มไลฟ์" (ยืนยัน "เปลี่ยนแพลตฟอร์ม") แล้วกดปุ่ม "เริ่มไลฟ์ใหม่" ที่แดชบอร์ดเพื่อเปิด Studio</li><li>กดปุ่ม "ตั้งค่า Studio" ที่แถบควบคุมสื่อด้านล่าง แล้วไล่ดูหัวข้อและตัวเลือกในแต่ละส่วน</li><li>สลับเปิด "แสดงเส้นกริดบนแคนวาส" แล้วดูแคนวาส</li><li>อ่านรายการคีย์ลัดที่ระบบให้มา แล้วกด "เสร็จสิ้น"</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>แผงตั้งค่าหัวข้อ "ตั้งค่า Studio" แบ่งเป็นส่วน "พรีวิว" · "การบันทึก" · "คีย์ลัด"</li><li>ส่วนพรีวิว เปลี่ยน "คุณภาพพรีวิว" ("มาตรฐาน" / "สูง") และสลับ "ปิดเสียงพรีวิวเมื่อเปิด Studio" ได้</li><li>เปิด "แสดงเส้นกริดบนแคนวาส" แล้วแคนวาสแสดงเส้นกริดจริง</li><li>"บันทึกอัตโนมัติ" มีคำอธิบายรอบการบันทึก "บันทึกงานให้อัตโนมัติทุก 2 นาที"</li><li>รายการคีย์ลัดครอบคลุม "เปิดหน้าต่าง Preview" · "ย้อนกลับ" · "ทำซ้ำ" · "ลบ Layer ที่เลือก" และกด "เสร็จสิ้น" แล้วแผงปิดลง</li><li>ที่มา: Epic 3 · Story 3.12</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —">FAIL: เปิดแผง "ตั้งค่า Studio" ได้ครบทั้ง 3 ส่วน (พรีวิว/การบันทึก/คีย์ลัด) และ UI ตรงกับที่ออกแบบไว้ทุกส่วน แต่เมื่อลองเปลี่ยนค่าจริง (เช่น เปลี่ยน "คุณภาพพรีวิว" เป็น "สูง" และปิด "แสดงเส้นกริดบนแคนวาส") แล้วกด "เสร็จสิ้น" เมื่อเปิดแผงซ้ำอีกค่าที่เปลี่ยนไว้กลับเป็นค่าเริ่มต้นทันที (ไม่ตรงกับ Expected Result) และเส้นกริดบนแคนวาสก็ไม่เปลี่ยนแปลงตามการสลับที่เห็นจริง สรุปคือฟีเจอร์ในเมนูนี้ไม่มีผลการทำงานจริง/ไม่บันทึกค่า ตรงกับปัญหาที่มีการรายงานไว้แล้วใน TAKRA-585 (ฟังก์ชันในเมนูตั้งค่า Studio ไม่สามารถใช้งานได้)</textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-152" data-st="pass">PASS</span>
-    <span class="opt fail sel" data-uid="tc-152" data-st="fail">FAIL</span>
+    <span class="opt fail" data-uid="tc-152" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-152" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-152" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-152" data-st="skip">SKIP</span>
   </div></div>
   <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
-    <div class="jira-list" data-uid="tc-152"><div class="jira-item"><a href="https://kitdi.atlassian.net/browse/TAKRA-585" target="_blank" rel="noopener">TAKRA-585</a><span class="jira-del" title="ลบลิงก์">✕</span></div></div>
+    <div class="jira-list" data-uid="tc-152"></div>
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-152" placeholder="วางลิงก์ Jira หรือพิมพ์ TAK-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-152">+ เพิ่มลิงก์</button></div>
   </div>
 </div></td></tr>
@@ -7081,25 +7068,25 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow" data-feat="epic3" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow open" data-feat="epic3" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-AP.3</td>
   <td class="ctitle">[MVP1] ตีกลับสคริปต์จาก Studio แล้วผู้เขียนแก้ต่อได้</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-190"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-190"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-190"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail show"><td colspan="7"><div class="card">
   <div class="h-title">[MVP1] ตีกลับสคริปต์จาก Studio แล้วผู้เขียนแก้ต่อได้</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · script-approval-studio · Epic 3 · Story 3.8a</div>
   <div class="sec"><h4>Precondition</h4><ul><li>ล็อกอินด้วยผู้มีสิทธิ์อนุมัติ</li><li>มีสคริปต์สถานะรออนุมัติในฉาก</li></ul></div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชีผู้มีสิทธิ์อนุมัติ (Owner)</li><li>ไปที่เมนู "คลังสคริปต์" ในแถบด้านซ้าย กลุ่ม "รอการอนุมัติ" กดปุ่ม "ตีกลับ" ที่สคริปต์ตาม Precondition อ่านกล่องยืนยัน แล้วกด "ตีกลับ" เพื่อยืนยัน</li><li>ดูสถานะของสคริปต์ที่เปลี่ยนไป</li><li>ออกจากระบบ แล้วเข้าสู่ระบบด้วยบัญชีผู้เขียนสคริปต์ เปิดเมนู "คลังสคริปต์" แล้วกด "แก้ไข" ที่สคริปต์นั้นเพื่อแก้เนื้อหาและบันทึก</li><li>กด "ส่งขออนุมัติ" อีกครั้ง แล้วสังเกตสถานะ</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>กล่องยืนยัน "ตีกลับสคริปต์นี้?" ระบุว่า "จะถูกส่งกลับเป็นฉบับร่างให้ผู้เขียนแก้ไขใหม่" — หลังยืนยัน สถานะกลับเป็น "ร่าง" ย้ายไปกลุ่ม "ฉบับร่าง" และไม่อยู่ในคิว "รอการอนุมัติ" แล้ว</li><li>ผู้เขียนกลับมาแก้ไขเนื้อหาสคริปต์ได้ตามปกติ</li><li>ส่งขออนุมัติซ้ำได้ — เห็นข้อความ "ส่งขออนุมัติแล้ว" และสคริปต์กลับเข้าคิว "รอการอนุมัติ" อีกครั้ง</li><li>ที่มา: Epic 3 · Story 3.8a</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —">ข้ามการทดสอบในรอบนี้ (สถานะไม่เปลี่ยน) — ต้องสลับ login ระหว่างผู้มีสิทธิ์อนุมัติกับผู้เขียนสคริปต์ เป็นเคสเกี่ยวกับ roles จะทดสอบภายหลัง</textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —">ทดสอบด้วยสคริปต์ "QA Test Script AP3" (สถานะรอการอนุมัติ): กดปุ่ม "ตีกลับ" ที่คลังสคริปต์ เห็นกล่องยืนยัน "ตีกลับสคริปต์นี้? QA Test Script AP3 จะถูกส่งกลับเป็นฉบับร่างให้ผู้เขียนแก้ไขใหม่" ตรงตาม Expected — หลังยืนยัน สถานะย้ายไปกลุ่ม "ฉบับร่าง" ทันที (นับ ฉบับร่าง 8→9, รอรีวิว 4→3) และหลุดจากคิว "รอการอนุมัติ" แล้ว จากนั้นเปิดแก้ไขเนื้อหาสคริปต์ (v1→v2) บันทึกสำเร็จ แล้วกด "ส่งขออนุมัติ" อีกครั้ง เห็นข้อความแจ้ง "ส่งขออนุมัติแล้ว — QA Test Script AP3 เข้าคิวรอรีวิว" และกลับเข้ากลุ่ม "รอการอนุมัติ" ตามเดิม ครบตาม Expected Result ทั้ง 3 ข้อ · หมายเหตุ: ใช้บัญชี Owner (qa@takra.ai) ทำทั้งขั้นตอนตีกลับและแก้ไข/ส่งใหม่ เนื่องจากไม่มีบัญชีผู้เขียนสคริปต์แยกต่างหากให้สลับ login ตาม step 4 ของ test steps</textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-190" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-190" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-190" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-190" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-190" data-st="block">BLOCKED</span>
