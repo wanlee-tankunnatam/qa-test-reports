@@ -1132,6 +1132,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   "tc-107": {
     "actual": "ทดสอบที่หมวด Beauty/Skincare: กดเมนู (...) ของคำ \"Acne Free Forever\" (เพิ่มเอง) เลือก \"ลบ\" — กล่องยืนยันแสดงข้อความ 'ลบ \"Acne Free Forever\" ออกจากรายการ? มีผลทันทีและย้อนกลับไม่ได้' ตรงตาม Expected Result หลังกดลบ เห็น toast ยืนยัน 'ลบ \"Acne Free Forever\" แล้ว' คำหายจากรายการและตัวเลขจำนวนคำ/สแกนจริงลดลงตาม (122→121, หมวด 117→116) ตรวจแถวคำ \"ชุดสำเร็จ\" (เช่น รักษามะเร็ง, หายขาด) พบว่าไม่มีเมนูตัวเลือก (...) หรือปุ่มลบใดๆ เลย — เป็นข้อมูลอ่านอย่างเดียวจริงตามที่คาดหวัง",
     "st": "pass"
+  },
+  "tc-108": {
+    "actual": "ตรวจหน้า \"คำเสี่ยง\" (/risk-words) การ์ด \"ภาพรวมคำเสี่ยง\" และส่วน \"Top Triggered\" รวมถึงหน้าในหมวด Beauty/Skincare (/risk-words/cat-beauty) ทั้งหน้า — ไม่พบปุ่มส่งออก/ดาวน์โหลด CSV ที่ใดเลย (ตรวจสอบ DOM ยืนยันไม่มี element ที่เกี่ยวข้อง) ไม่มีปุ่มที่กดแล้วไม่เกิดอะไรขึ้นหรือ error ตัวเลขภาพรวม/สถิติ (คำเสี่ยงทั้งหมด, หมวดหมู่, การแจ้งเตือน 30 วัน, Top Triggered) แสดงครบบนหน้าจอ ตรงตามขอบเขต MVP-1",
+    "st": "pass"
   }
 }
 </script>
@@ -1156,15 +1160,15 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="runsum">
     <h3>📊 สรุปผล Manual Test</h3>
     <div class="sumchips">
-      <span class="cnt pass">PASS <b id="sum-pass">137</b></span>
+      <span class="cnt pass">PASS <b id="sum-pass">138</b></span>
       <span class="cnt fail">FAIL <b id="sum-fail">5</b></span>
       <span class="cnt hold">HOLD <b id="sum-hold">35</b></span>
       <span class="cnt block">BLOCKED <b id="sum-block">1</b></span>
       <span class="cnt skip">SKIP <b id="sum-skip">20</b></span>
-      <span class="cnt pending">รอเทส <b id="sum-pending">63</b></span>
+      <span class="cnt pending">รอเทส <b id="sum-pending">62</b></span>
     </div>
     <div class="progress"><div id="sumbar" class="progressbar" style="width: 74%;"></div></div>
-    <div class="hint" id="sumpct" style="margin-top:5px">74% ทดสอบแล้ว (178/241) · ข้าม 20</div>
+    <div class="hint" id="sumpct" style="margin-top:5px">74% ทดสอบแล้ว (179/241) · ข้าม 20</div>
   </div>
 
   <div class="toolbar">
@@ -4533,7 +4537,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">[MVP1] MVP-1 ยังไม่มีปุ่มส่งออกสถิติเป็น CSV</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p2">P2</span></td>
-  <td class="status" data-uid="tc-108"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-108"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-108"></td>
 </tr>
 <tr class="detail show"><td colspan="7"><div class="card">
@@ -4543,10 +4547,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คำเสี่ยง" ไล่ดูการ์ด "ภาพรวมคำเสี่ยง" และส่วน Top Triggered ทั้งหน้า มองหาปุ่มส่งออก / ดาวน์โหลด CSV</li><li>เปิดหมวดหนึ่งแล้วไล่ดูทั้งหน้าเช่นเดียวกัน</li><li>สังเกตว่าไม่มีปุ่มส่งออกที่ใดในทั้งสองหน้า</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ไม่มีปุ่มส่งออก/ดาวน์โหลด CSV ทั้งในหน้า "คำเสี่ยง" และหน้าในหมวด (ตรงตามขอบเขต MVP-1 — CSV export เลื่อนไป MVP-2)</li><li>ไม่มีปุ่มที่กดแล้วไม่เกิดอะไรขึ้นหรือขึ้น error</li><li>ตัวเลขภาพรวม/สถิติที่มียังดูได้ครบบนหน้าจอ</li><li>ที่มา: Epic 2 · Story 2.5 · FR46d</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —">ตรวจหน้า "คำเสี่ยง" (/risk-words) การ์ด "ภาพรวมคำเสี่ยง" และส่วน "Top Triggered" รวมถึงหน้าในหมวด Beauty/Skincare (/risk-words/cat-beauty) ทั้งหน้า — ไม่พบปุ่มส่งออก/ดาวน์โหลด CSV ที่ใดเลย (ตรวจสอบ DOM ยืนยันไม่มี element ที่เกี่ยวข้อง) ไม่มีปุ่มที่กดแล้วไม่เกิดอะไรขึ้นหรือ error ตัวเลขภาพรวม/สถิติ (คำเสี่ยงทั้งหมด, หมวดหมู่, การแจ้งเตือน 30 วัน, Top Triggered) แสดงครบบนหน้าจอ ตรงตามขอบเขต MVP-1</textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-108" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-108" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-108" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-108" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-108" data-st="block">BLOCKED</span>
@@ -9803,4 +9807,4 @@ document.querySelectorAll('.feat-owner').forEach(function(sel){var e=sel.dataset
         <path d="M128,20A108,108,0,1,0,236,128,108.12,108.12,0,0,0,128,20Zm0,192a84,84,0,1,1,84-84A84.09,84.09,0,0,1,128,212Zm40-112v56a12,12,0,0,1-12,12H100a12,12,0,0,1-12-12V100a12,12,0,0,1,12-12h56A12,12,0,0,1,168,100Z"></path>
       </svg>
       <span style="vertical-align: middle;">Stop Claude</span>
-    </button></div><div id="claude-phantom-cursor" aria-hidden="true" style="position: fixed; top: 0px; left: 0px; pointer-events: none; z-index: 2147483646; transform: translate3d(67px, 152px, 0px); transition: transform 180ms cubic-bezier(0.2, 0, 0, 1); will-change: transform;"><svg id="claude-phantom-cursor-plain" width="20" height="26" viewBox="0 0 20 26" style="position: absolute; top: 0px; left: 0px; overflow: visible;"><path d="M0 0 L0 18 L4.5 14 L7.5 21.5 L11 20 L8 13 L14 13 Z" stroke="white" stroke-width="3" stroke-linejoin="round" fill="white"></path><path d="M0 0 L0 18 L4.5 14 L7.5 21.5 L11 20 L8 13 L14 13 Z" fill="#111"></path></svg><svg id="claude-phantom-cursor-styled" width="20" height="26" viewBox="0 0 20 26" style="position: absolute; top: 0px; left: 0px; overflow: visible; filter: drop-shadow(rgba(217, 119, 87, 0.9) 0px 0px 4px) drop-shadow(rgba(217, 119, 87, 0.45) 0px 0px 10px);"><path d="M0 0 L0 18 L4.5 14 L7.5 21.5 L11 20 L8 13 L14 13 Z" stroke="#D97757" stroke-width="3" stroke-linejoin="round" fill="#D97757"></path><path d="M0 0 L0 18 L4.5 14 L7.5 21.5 L11 20 L8 13 L14 13 Z" fill="#FAF9F5"></path></svg></div></body></html>
+    </button></div><div id="claude-phantom-cursor" aria-hidden="true" style="position: fixed; top: 0px; left: 0px; pointer-events: none; z-index: 2147483646; transform: translate3d(67px, 398px, 0px); transition: transform 180ms cubic-bezier(0.2, 0, 0, 1); will-change: transform;"><svg id="claude-phantom-cursor-plain" width="20" height="26" viewBox="0 0 20 26" style="position: absolute; top: 0px; left: 0px; overflow: visible;"><path d="M0 0 L0 18 L4.5 14 L7.5 21.5 L11 20 L8 13 L14 13 Z" stroke="white" stroke-width="3" stroke-linejoin="round" fill="white"></path><path d="M0 0 L0 18 L4.5 14 L7.5 21.5 L11 20 L8 13 L14 13 Z" fill="#111"></path></svg><svg id="claude-phantom-cursor-styled" width="20" height="26" viewBox="0 0 20 26" style="position: absolute; top: 0px; left: 0px; overflow: visible; filter: drop-shadow(rgba(217, 119, 87, 0.9) 0px 0px 4px) drop-shadow(rgba(217, 119, 87, 0.45) 0px 0px 10px);"><path d="M0 0 L0 18 L4.5 14 L7.5 21.5 L11 20 L8 13 L14 13 Z" stroke="#D97757" stroke-width="3" stroke-linejoin="round" fill="#D97757"></path><path d="M0 0 L0 18 L4.5 14 L7.5 21.5 L11 20 L8 13 L14 13 Z" fill="#FAF9F5"></path></svg></div></body></html>
