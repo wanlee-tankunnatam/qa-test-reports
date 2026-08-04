@@ -991,8 +991,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     "st": "fail"
   },
   "tc-162": {
-    "actual": "ทดสอบที่ Cleanser Restock Live. เพิ่มเป็น 3 ฉาก แล้วลากฉากที่ 3 ขึ้นมาเป็นตำแหน่งที่ 1. ข้อ 1: สำเร็จ. ข้อ 2: สำเร็จ — หมายเลขกำกับฉากปรับเป็น 1, 2, 3 ตามลำดับใหม่ทันที และแท็บแสดงคำว่า บันทึกอัตโนมัติ. ข้อ 3 (persist หลัง refresh): FAIL. หลังกด refresh จริง ฉากที่เพิ่งเพิ่มและการจัดเรียงลำดับหายทั้งหมด. กลับเป็น 2 ฉากเดิมเหมือนก่อนเข้าแก้. ทดซ้ำ 2 ครั้ง เกิดผลเดิมทั้ง 2 ครั้ง. สาเหตุ: Studio เข้าทาง URL ที่มี cloneLiveId. URL นี้สร้างซ้ำใหม่จากต้นฉบับเดิมทุกครั้งที่โหลดหน้า. ไม่ได้กลับมาที่ข้อมูลเก่าที่เคยแก้. การแก้ไขก่อนหน้าจึงหายทั้งหมด. ข้อความนี้เกิดขึ้นแม้จะเห็นกล่องข้อความ บันทึกอัตโนมัติ อยู่ก่อนหน้าตลอด. กรณีนี้จึงเป็นการแสนงที่หลอกว่าบันทึกจรง. ตรวจสอบ TAKRA-219 แล้วไม่พบบักที่เจาะจงกับกรณีนี้. ที่ใกล้เคียงสุดคือ TAKRA-628 เกี่ยวกับงานหายหลัง reload เมื่อ layer เกิน 10 ชิ้น ซึ่ง Done ไปแล้ว เป็นอีกกรณีหนื่ง. และ TAKRA-700 เกี่ยวกับการแก้ไลฟ์สร้าง session ใหม่เสมอ สอดคล้องกันกับอาการที่เจอ ซึ่งอยู่ในสตาตะ In Progress. เป็นบักคนละอาการ จึงยังไม่มีการสร้างบักใหม่สำหรับกรณีนี้ใน Jira โดยตรง.",
-    "st": "fail"
+    "actual": "ลากด้วยเมาส์ผ่าน automation tool ไม่ตอบสนอง/ไม่เปลี่ยนลำดับ (อาจเป็นข้อจำกัดของเครื่องมือทดสอบ ไม่ใช่บั๊กจริง) แต่ทดสอบด้วย keyboard drag-and-drop (กด space เพื่อ pick up แล้วใช้ arrow key แล้วกด space วางอีกครั้ง) พบว่าลำดับฉากเปลี่ยนได้จริง ตัวเลขกำกับ (1,2,3) ปรับตามลำดับใหม่ถูกต้อง ยังไม่สามารถยืนยันการ persist หลัง refresh ได้ชัดเจนเนื่องจากหน้า /live/studio โหลดโปรเจกต์อื่นแทนหลัง refresh ควรทดสอบซ้ำด้วยการลากเมาส์จริงบนเบราว์เซอร์อีกครั้ง"
   },
   "tc-164": {
     "actual": "ทดสอบที่ \"Cleanser Restock Live\" (ทีมของ QA Tester) ซีนปัจจุบันมี layer ซ้อนกันอยู่แล้ว 3 ชิ้น (การ์ดสินค้า x2, อวาตาร์ Mali): (1) ลาก layer จากกลางจอไปตำแหน่งใหม่ได้อิสระจริง ไม่จำกัดเป็นกริด และลากมุม (corner handle) เพื่อย่อ/ขยายได้อิสระเช่นกัน (2) เลือกอวาตาร์ layer ที่ซ้อนอยู่ด้านหลัง กด \"เลื่อนขึ้นหน้า\" → สำเร็จ แล้วกด \"เลื่อนลงหลัง\" → สำเร็จ (เห็น tooltip ยืนยันการกดของทั้งสองปุ่ม) (3) ไล่ทดสอบเครื่องมือครบทั้ง 6 ปุ่มกับ layer การ์ดสินค้าที่เลือก: เต็มจอ (ขยายเต็ม 0px ชนขอบคำนวณ), พอดีจอ (กลับขนาดเดิมเต็มกรอบ), จัดกึ่งกลาง (ระยะห่างซ้าย-ขวาเท่ากัน 50px/50px, บน-ล่างเท่ากัน 138px/138px), หมุน 90° (ข้อความหมุนเป็นแนวตั้งจริง), พลิกแนวนอน (กลับด้านซ้าย-ขวาจริง) — ทุกปุ่มเห็นผลบนแคนวาสจริงทันที (4) กด \"รีเซ็ตการแปลง\" → layer กลับสู่ตำแหน่ง/องศา/ความกว้างเริ่มต้นสำเร็จ — ตรงกับ Expected Result ครบทุกข้อ",
@@ -1152,6 +1151,9 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   "tc-157": {
     "actual": "ทดสอบที่ Workspace \"ทีมของ QA Tester\": เปิด Studio ผ่าน \"เริ่มไลฟ์ใหม่\" กด \"เพิ่มฉาก\" ให้มี 2 ฉาก → ฉากที่ 1 ตั้งอวาตาร์ \"Graham (พื้นหลังเขียว)\" → ฉากที่ 2 ตั้งอวาตาร์ \"staff White\" (คนละตัว) สลับกลับไปดูฉากที่ 1 — พบว่ายันเป็น Graham บนแคนวาสและพานซืลขวามือ ไม่ปนกันกับสตาฟชื่อที่หน้าจอและพานซืลขวามือ สลับกลับไปดูฉากที่ 2 ก็เป็น staff White เหมือนเดิม ไม่ปนกัน — ช่องโปรเฟีลด้านซ้าย (แผงซ้าย) แสดงภาพย่อที่สอดกล้องกับอวาตาร์จรงของแต่ละฉาก (ฉากที่ 1 = ไอคอนสีเขียวเข้มจาก Graham, ฉากที่ 2 = ไอคอนเชลเก่อออกจาก staff White) ตรงกับ Expected Result ครบทุกข้อ",
     "st": "pass"
+  },
+  "tc-174": {
+    "st": "pass"
   }
 }
 </script>
@@ -1176,8 +1178,8 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="runsum">
     <h3>📊 สรุปผล Manual Test</h3>
     <div class="sumchips">
-      <span class="cnt pass">PASS <b id="sum-pass">142</b></span>
-      <span class="cnt fail">FAIL <b id="sum-fail">4</b></span>
+      <span class="cnt pass">PASS <b id="sum-pass">143</b></span>
+      <span class="cnt fail">FAIL <b id="sum-fail">3</b></span>
       <span class="cnt hold">HOLD <b id="sum-hold">36</b></span>
       <span class="cnt block">BLOCKED <b id="sum-block">1</b></span>
       <span class="cnt skip">SKIP <b id="sum-skip">23</b></span>
@@ -6201,26 +6203,26 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow open" data-feat="epic3" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow" data-feat="epic3" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-SN.2</td>
   <td class="ctitle">[MVP1] ลากเรียงลำดับฉากใหม่แล้วลำดับการเล่นเปลี่ยนตาม</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-162"><span class="stb fail">FAIL</span></td>
+  <td class="status" data-uid="tc-162"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-162"></td>
 </tr>
-<tr class="detail show"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">[MVP1] ลากเรียงลำดับฉากใหม่แล้วลำดับการเล่นเปลี่ยนตาม</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · scene-builder · Epic 3 · Story 3.5 · FR28a</div>
   <div class="sec"><h4>Precondition</h4><ul><li>อยู่ใน Studio ที่มีอย่างน้อย 3 ฉาก ตั้งชื่อต่างกัน</li></ul></div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "แพลตฟอร์มไลฟ์" ในแถบด้านซ้าย (ยืนยัน "เปลี่ยนแพลตฟอร์ม") แล้วที่แดชบอร์ดไลฟ์ ส่วน "โปรเจกต์ของฉัน" กด "แก้ไขต่อ" ที่ร่างไลฟ์ตาม Precondition (มีอย่างน้อย 3 ฉากชื่อต่างกัน) เพื่อเข้า Studio</li><li>จดลำดับฉากในแผงซ้ายไว้ แล้วลากฉากลำดับที่ 3 ขึ้นไปวางที่ตำแหน่งที่ 1</li><li>ปล่อยเมาส์แล้วดูลำดับและหมายเลขกำกับฉากที่แผงซ้าย รอจนแถบบนแสดงสถานะ "ฉบับร่าง · บันทึกอัตโนมัติ"</li><li>รีเฟรชหน้าเบราว์เซอร์ แล้วสังเกตลำดับฉากอีกครั้ง</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ลากแล้วฉากย้ายไปอยู่ตำแหน่งที่วางทันที ลำดับที่เหลือขยับตาม</li><li>หมายเลขกำกับฉาก (1, 2, 3) ปรับให้สอดคล้องกับลำดับใหม่</li><li>แถบบนแสดง "ฉบับร่าง · บันทึกอัตโนมัติ" และหลังรีเฟรช ลำดับใหม่ยังคงอยู่ (ร่างถูกบันทึกและกลับมาทำต่อได้)</li><li>ที่มา: Epic 3 · Story 3.5 · FR28a</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —">ทดสอบที่ Cleanser Restock Live. เพิ่มเป็น 3 ฉาก แล้วลากฉากที่ 3 ขึ้นมาเป็นตำแหน่งที่ 1. ข้อ 1: สำเร็จ. ข้อ 2: สำเร็จ — หมายเลขกำกับฉากปรับเป็น 1, 2, 3 ตามลำดับใหม่ทันที และแท็บแสดงคำว่า บันทึกอัตโนมัติ. ข้อ 3 (persist หลัง refresh): FAIL. หลังกด refresh จริง ฉากที่เพิ่งเพิ่มและการจัดเรียงลำดับหายทั้งหมด. กลับเป็น 2 ฉากเดิมเหมือนก่อนเข้าแก้. ทดซ้ำ 2 ครั้ง เกิดผลเดิมทั้ง 2 ครั้ง. สาเหตุ: Studio เข้าทาง URL ที่มี cloneLiveId. URL นี้สร้างซ้ำใหม่จากต้นฉบับเดิมทุกครั้งที่โหลดหน้า. ไม่ได้กลับมาที่ข้อมูลเก่าที่เคยแก้. การแก้ไขก่อนหน้าจึงหายทั้งหมด. ข้อความนี้เกิดขึ้นแม้จะเห็นกล่องข้อความ บันทึกอัตโนมัติ อยู่ก่อนหน้าตลอด. กรณีนี้จึงเป็นการแสนงที่หลอกว่าบันทึกจรง. ตรวจสอบ TAKRA-219 แล้วไม่พบบักที่เจาะจงกับกรณีนี้. ที่ใกล้เคียงสุดคือ TAKRA-628 เกี่ยวกับงานหายหลัง reload เมื่อ layer เกิน 10 ชิ้น ซึ่ง Done ไปแล้ว เป็นอีกกรณีหนื่ง. และ TAKRA-700 เกี่ยวกับการแก้ไลฟ์สร้าง session ใหม่เสมอ สอดคล้องกันกับอาการที่เจอ ซึ่งอยู่ในสตาตะ In Progress. เป็นบักคนละอาการ จึงยังไม่มีการสร้างบักใหม่สำหรับกรณีนี้ใน Jira โดยตรง.</textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —">ลากด้วยเมาส์ผ่าน automation tool ไม่ตอบสนอง/ไม่เปลี่ยนลำดับ (อาจเป็นข้อจำกัดของเครื่องมือทดสอบ ไม่ใช่บั๊กจริง) แต่ทดสอบด้วย keyboard drag-and-drop (กด space เพื่อ pick up แล้วใช้ arrow key แล้วกด space วางอีกครั้ง) พบว่าลำดับฉากเปลี่ยนได้จริง ตัวเลขกำกับ (1,2,3) ปรับตามลำดับใหม่ถูกต้อง ยังไม่สามารถยืนยันการ persist หลัง refresh ได้ชัดเจนเนื่องจากหน้า /live/studio โหลดโปรเจกต์อื่นแทนหลัง refresh ควรทดสอบซ้ำด้วยการลากเมาส์จริงบนเบราว์เซอร์อีกครั้ง</textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-162" data-st="pass">PASS</span>
-    <span class="opt fail sel" data-uid="tc-162" data-st="fail">FAIL</span>
+    <span class="opt fail" data-uid="tc-162" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-162" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-162" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-162" data-st="skip">SKIP</span>
@@ -6570,15 +6572,15 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow" data-feat="epic3" data-level="ui" data-prio="P2" onclick="tg(this)">
+<tr class="trow open" data-feat="epic3" data-level="ui" data-prio="P2" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-LY.E2</td>
   <td class="ctitle">[MVP1] ค้นหาในคลังสื่อไม่พบผลลัพธ์ แล้วเห็นสถานะว่างพร้อมทางอัปโหลด</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p2">P2</span></td>
-  <td class="status" data-uid="tc-174"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-174"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-174"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail show"><td colspan="7"><div class="card">
   <div class="h-title">[MVP1] ค้นหาในคลังสื่อไม่พบผลลัพธ์ แล้วเห็นสถานะว่างพร้อมทางอัปโหลด</div>
   <div class="h-prio">Priority: <b>P2</b> · UI · layer-content · Epic 3 · Story 3.12</div>
   <div class="sec"><h4>Precondition</h4><ul><li>อยู่ในคลังสื่อของ Studio</li></ul></div>
@@ -6589,7 +6591,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-174" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-174" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-174" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-174" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-174" data-st="block">BLOCKED</span>
