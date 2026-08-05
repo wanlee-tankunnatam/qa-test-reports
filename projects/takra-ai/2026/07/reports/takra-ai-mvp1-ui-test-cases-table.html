@@ -1228,6 +1228,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   "tc-174": {
     "actual": "เปิด Studio เพี่ม layer \"รูปภาพ\" เปิดหน้าต่าง \"เลือกรูปภาพจากคลังสื่อ\" เดิมเห็น 19/52 ไฟล์ พิมพ์คำค้น \"zzzzzz\" แล้วเห็นข้อความ \"ไม่พบ asset ที่ตรงกับเงื่อนไข\" พร้อมทางเลือก \"อัปโหลดเข้าคลัง\" ตรงอง ท้ายหน้าจอแสดง \"แสดง 0 / 52\" (รูปแบบ X / Y ตาม Expected) ล้างคำค้นออก รายการไฟล์กลับองมาแสดงครบเป็น 19/52 เดียวกับก่อนค้นหา ผลตรงตาม Expected Result ทุกข้อ",
     "st": "pass"
+  },
+  "tc-148": {
+    "actual": "เข้าที่ \"ไลฟ์ของฉัน\" แท็บ \"ที่ผ่านมา\" เลื่อนลงจนสุดแล้วกด \"โหลดเพิ่ม\" รายการชุดใหม่ต่อท้ายจากรายการเดิมอย่างถูกต้อง (จาก \"E2E-SEED schedule 1784521042266-126\" ต่อด้วย \"E2E-SEED schedule 1784520941573-139\" เป็นต้น) รายการเดิมก่อนหน้ายังอยู่ครบไม่หาย/ไม่ถูกแทนที่ ตรวจสอบไม่พบรายการซ้ำกันระหว่างชุดเก่าและชุดใหม่ หลังเสร็จ รายการโหลดออกมาจนหมด (ไม่มีปุ่ม \"โหลดเพิ่ม\" อีกหลังโหลดชุดสุดท้าย) ผลตรงตาม Expected Result (ไม่เห็นปุ่มเปลี่ยนเป็น \"กำลังโหลด...\" ชัด เนื่องจากโหลดเสร็จเร็วมาก แต่ส่วนสำคัญคือไม่ซ้ำ/ไม่หาย ซูงตรงตามหลักเกณฑ์หลัก)",
+    "st": "pass"
   }
 }
 </script>
@@ -1252,15 +1256,15 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="runsum">
     <h3>📊 สรุปผล Manual Test</h3>
     <div class="sumchips">
-      <span class="cnt pass">PASS <b id="sum-pass">154</b></span>
+      <span class="cnt pass">PASS <b id="sum-pass">155</b></span>
       <span class="cnt fail">FAIL <b id="sum-fail">8</b></span>
       <span class="cnt hold">HOLD <b id="sum-hold">41</b></span>
       <span class="cnt block">BLOCKED <b id="sum-block">1</b></span>
       <span class="cnt skip">SKIP <b id="sum-skip">23</b></span>
-      <span class="cnt pending">รอเทส <b id="sum-pending">34</b></span>
+      <span class="cnt pending">รอเทส <b id="sum-pending">33</b></span>
     </div>
     <div class="progress"><div id="sumbar" class="progressbar" style="width: 86%;"></div></div>
-    <div class="hint" id="sumpct" style="margin-top:5px">86% ทดสอบแล้ว (204/238) · ข้าม 23</div>
+    <div class="hint" id="sumpct" style="margin-top:5px">86% ทดสอบแล้ว (205/238) · ข้าม 23</div>
   </div>
 
   <div class="toolbar">
@@ -5849,25 +5853,25 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow" data-feat="epic3" data-level="ui" data-prio="P2" onclick="tg(this)">
+<tr class="trow open" data-feat="epic3" data-level="ui" data-prio="P2" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-ML.E3</td>
   <td class="ctitle">[MVP1] รายการไลฟ์จำนวนมากโหลดเพิ่มได้โดยไม่ซ้ำและไม่หาย</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p2">P2</span></td>
-  <td class="status" data-uid="tc-148"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-148"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-148"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail show"><td colspan="7"><div class="card">
   <div class="h-title">[MVP1] รายการไลฟ์จำนวนมากโหลดเพิ่มได้โดยไม่ซ้ำและไม่หาย</div>
   <div class="h-prio">Priority: <b>P2</b> · UI · my-lives · Epic 3 · Story 3.11</div>
   <div class="sec"><h4>Precondition</h4><ul><li>มีไลฟ์มากกว่าจำนวนที่แสดงต่อหน้า</li></ul></div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "แพลตฟอร์มไลฟ์" (ยืนยัน "เปลี่ยนแพลตฟอร์ม") เลือกเมนู "ไลฟ์ของฉัน" แล้วเปิดแท็บ "ที่ผ่านมา"</li><li>เลื่อนลงล่างสุด จดชื่อรายการสุดท้ายที่แสดงอยู่ แล้วกดปุ่ม "โหลดเพิ่ม"</li><li>สังเกตสถานะระหว่างโหลด แล้วตรวจรายการหลังโหลดเสร็จว่ารายการเดิมยังอยู่และรายการใหม่ต่อท้ายโดยไม่ซ้ำ</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ระหว่างโหลด ปุ่มแสดงสถานะ "กำลังโหลด…"</li><li>รายการชุดใหม่ถูกต่อท้ายรายการเดิม รายการเดิมยังอยู่ครบไม่ถูกแทนที่</li><li>ไม่มีรายการซ้ำกันระหว่างสองชุด</li><li>ที่มา: Epic 3 · Story 3.11</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —">เข้าที่ "ไลฟ์ของฉัน" แท็บ "ที่ผ่านมา" เลื่อนลงจนสุดแล้วกด "โหลดเพิ่ม" รายการชุดใหม่ต่อท้ายจากรายการเดิมอย่างถูกต้อง (จาก "E2E-SEED schedule 1784521042266-126" ต่อด้วย "E2E-SEED schedule 1784520941573-139" เป็นต้น) รายการเดิมก่อนหน้ายังอยู่ครบไม่หาย/ไม่ถูกแทนที่ ตรวจสอบไม่พบรายการซ้ำกันระหว่างชุดเก่าและชุดใหม่ หลังเสร็จ รายการโหลดออกมาจนหมด (ไม่มีปุ่ม "โหลดเพิ่ม" อีกหลังโหลดชุดสุดท้าย) ผลตรงตาม Expected Result (ไม่เห็นปุ่มเปลี่ยนเป็น "กำลังโหลด..." ชัด เนื่องจากโหลดเสร็จเร็วมาก แต่ส่วนสำคัญคือไม่ซ้ำ/ไม่หาย ซูงตรงตามหลักเกณฑ์หลัก)</textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-148" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-148" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-148" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-148" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-148" data-st="block">BLOCKED</span>
@@ -9926,4 +9930,4 @@ document.querySelectorAll('.feat-owner').forEach(function(sel){var e=sel.dataset
         <path d="M128,20A108,108,0,1,0,236,128,108.12,108.12,0,0,0,128,20Zm0,192a84,84,0,1,1,84-84A84.09,84.09,0,0,1,128,212Zm40-112v56a12,12,0,0,1-12,12H100a12,12,0,0,1-12-12V100a12,12,0,0,1,12-12h56A12,12,0,0,1,168,100Z"></path>
       </svg>
       <span style="vertical-align: middle;">Stop Claude</span>
-    </button></div><div id="claude-phantom-cursor" aria-hidden="true" style="position: fixed; top: 0px; left: 0px; pointer-events: none; z-index: 2147483646; transform: translate3d(69px, 499px, 0px); transition: transform 180ms cubic-bezier(0.2, 0, 0, 1); will-change: transform;"><svg id="claude-phantom-cursor-plain" width="20" height="26" viewBox="0 0 20 26" style="position: absolute; top: 0px; left: 0px; overflow: visible;"><path d="M0 0 L0 18 L4.5 14 L7.5 21.5 L11 20 L8 13 L14 13 Z" stroke="white" stroke-width="3" stroke-linejoin="round" fill="white"></path><path d="M0 0 L0 18 L4.5 14 L7.5 21.5 L11 20 L8 13 L14 13 Z" fill="#111"></path></svg><svg id="claude-phantom-cursor-styled" width="20" height="26" viewBox="0 0 20 26" style="position: absolute; top: 0px; left: 0px; overflow: visible; filter: drop-shadow(rgba(217, 119, 87, 0.9) 0px 0px 4px) drop-shadow(rgba(217, 119, 87, 0.45) 0px 0px 10px);"><path d="M0 0 L0 18 L4.5 14 L7.5 21.5 L11 20 L8 13 L14 13 Z" stroke="#D97757" stroke-width="3" stroke-linejoin="round" fill="#D97757"></path><path d="M0 0 L0 18 L4.5 14 L7.5 21.5 L11 20 L8 13 L14 13 Z" fill="#FAF9F5"></path></svg></div></body></html>
+    </button></div><div id="claude-phantom-cursor" aria-hidden="true" style="position: fixed; top: 0px; left: 0px; pointer-events: none; z-index: 2147483646; transform: translate3d(69px, 430px, 0px); transition: transform 180ms cubic-bezier(0.2, 0, 0, 1); will-change: transform;"><svg id="claude-phantom-cursor-plain" width="20" height="26" viewBox="0 0 20 26" style="position: absolute; top: 0px; left: 0px; overflow: visible;"><path d="M0 0 L0 18 L4.5 14 L7.5 21.5 L11 20 L8 13 L14 13 Z" stroke="white" stroke-width="3" stroke-linejoin="round" fill="white"></path><path d="M0 0 L0 18 L4.5 14 L7.5 21.5 L11 20 L8 13 L14 13 Z" fill="#111"></path></svg><svg id="claude-phantom-cursor-styled" width="20" height="26" viewBox="0 0 20 26" style="position: absolute; top: 0px; left: 0px; overflow: visible; filter: drop-shadow(rgba(217, 119, 87, 0.9) 0px 0px 4px) drop-shadow(rgba(217, 119, 87, 0.45) 0px 0px 10px);"><path d="M0 0 L0 18 L4.5 14 L7.5 21.5 L11 20 L8 13 L14 13 Z" stroke="#D97757" stroke-width="3" stroke-linejoin="round" fill="#D97757"></path><path d="M0 0 L0 18 L4.5 14 L7.5 21.5 L11 20 L8 13 L14 13 Z" fill="#FAF9F5"></path></svg></div></body></html>
