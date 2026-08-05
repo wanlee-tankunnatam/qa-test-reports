@@ -719,7 +719,11 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     ]
   },
   "tc-133": {
-    "actual": "[ข้ามไปก่อน - ยังทดสอบไม่ได้] ไม่สามารถทดสอบตาม precondition ได้ เนื่องจากผลจาก TC-TS.2 พบว่าเมื่อแก้ไขต้นฉบับในคลังแล้ว สคริปต์ที่ผูกไว้ในฉากหายไปทั้งหมดแทนที่จะขึ้นป้าย \"ล้าสมัย\" จึงไม่มีปุ่ม \"อัปเดต snapshot\" ให้ทดสอบตามสเปค ต้องรอแก้บั๊กใน TC-TS.2 ก่อนจึงจะทดสอบเคสนี้ได้จริง (สถานะยังไม่เปลี่ยน รอทดสอบใหม่ภายหลัง)"
+    "actual": "ทดลองตั้ง precondition: ผูกสคริปต์สำเร็จ 1 ตัวเข้าบนองค์ (สถานะอนุมัติแล้ว) จากนั้นเข้าไปแก้เนื้อหาสคริปต์ต้นฉบับในคลังแล้วกดบันทึก (สำเร็จ เวอร์ชันของสคริปต์เป็น draft รออนุมัติ) แต่เมื่อกลับเข้า Studio ของไลฟ์เดิม (กด \"ไปแก้ใน Studio\" จากหน้าคิวไลฟ์) กลับเป็นเปิด URL /live/studio?new=1 ซั้นเป็นไลฟ์เปล่าเปล่าใหม่ที่ไม่มีฯาก/สคริปต์เดิมเลย ไม่เห็นสคริปต์ที่ผูกไว้ก่อนหน้า จึงไม่สามารถตรวจสอบเอฟเฟกต์ \"ล้าสอบ\"/สนิโต update ตาม test steps ได้จริง อีกทั้งการผูกสคริปต์เป็นช่วง ๆ เองก็ติดบัค TAKRA-667 (bind-script HTTP 500 เป็นช่วง) อยู่แล้ว ขอพักเป็น HOLD ไว้ก่อน เนื่องจากสองปัญหานี้ทำให้ตั้ง precondition และเข้าไปตรวจสอบไม่ได้จริง",
+    "st": "hold",
+    "jira": [
+      "https://kitdi.atlassian.net/browse/TAKRA-667"
+    ]
   },
   "tc-134": {
     "actual": "[ข้ามไปก่อน - ยังทดสอบไม่ได้] เคสนี้ต้องมีไลฟ์สถานะ \"ยืนยันแล้ว\" หรือ \"กำลังออกอากาศ\" ที่ผูกสคริปต์จากคลังไว้ ซึ่งต้องผ่านขั้นตอนตั้งเวลา/preflight/launch เพิ่มเติม และมีความเสี่ยงต่อไลฟ์จริงที่กำลังออกอากาศอยู่ในระบบ (พบ 2 ไลฟ์ที่กำลังออกอากาศจริงในระบบ UAT ขณะทดสอบ) จึงขอข้ามการทดสอบเคสนี้ไปก่อนตามที่แจ้งไว้ (สถานะยังไม่เปลี่ยน)"
@@ -1242,13 +1246,13 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="sumchips">
       <span class="cnt pass">PASS <b id="sum-pass">153</b></span>
       <span class="cnt fail">FAIL <b id="sum-fail">8</b></span>
-      <span class="cnt hold">HOLD <b id="sum-hold">39</b></span>
+      <span class="cnt hold">HOLD <b id="sum-hold">40</b></span>
       <span class="cnt block">BLOCKED <b id="sum-block">1</b></span>
       <span class="cnt skip">SKIP <b id="sum-skip">23</b></span>
-      <span class="cnt pending">รอเทส <b id="sum-pending">37</b></span>
+      <span class="cnt pending">รอเทส <b id="sum-pending">36</b></span>
     </div>
-    <div class="progress"><div id="sumbar" class="progressbar" style="width: 84%;"></div></div>
-    <div class="hint" id="sumpct" style="margin-top:5px">84% ทดสอบแล้ว (201/238) · ข้าม 23</div>
+    <div class="progress"><div id="sumbar" class="progressbar" style="width: 85%;"></div></div>
+    <div class="hint" id="sumpct" style="margin-top:5px">85% ทดสอบแล้ว (202/238) · ข้าม 23</div>
   </div>
 
   <div class="toolbar">
@@ -5372,32 +5376,32 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow" data-feat="epic2" data-level="ui" data-prio="P0" onclick="tg(this)">
+<tr class="trow open" data-feat="epic2" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-TS.3</td>
   <td class="ctitle">[MVP1] กดอัปเดต snapshot แล้วต้องอนุมัติสคริปต์ใหม่อีกครั้ง</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
-  <td class="status" data-uid="tc-133"><span class="stb pending">รอเทส</span></td>
-  <td class="jira-cell" data-uid="tc-133"></td>
+  <td class="status" data-uid="tc-133"><span class="stb hold">HOLD</span></td>
+  <td class="jira-cell" data-uid="tc-133"><a href="https://kitdi.atlassian.net/browse/TAKRA-667" target="_blank" rel="noopener" class="jira-chip">TAKRA-667</a></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail show"><td colspan="7"><div class="card">
   <div class="h-title">[MVP1] กดอัปเดต snapshot แล้วต้องอนุมัติสคริปต์ใหม่อีกครั้ง</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · script-two-way-sync · Epic 2 · Story 2.10 · FR72</div>
   <div class="sec"><h4>Precondition</h4><ul><li>มีฉากที่ติดป้ายว่าสำเนาล้าสมัย และสคริปต์เดิมในฉากอยู่สถานะอนุมัติแล้ว</li></ul></div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "แพลตฟอร์มไลฟ์" กด "เปลี่ยนแพลตฟอร์ม" แล้วเปิด Studio ของไลฟ์ที่มีสคริปต์ในฉากขึ้นแถบ "ล้าสมัย"</li><li>กดปุ่ม "อัปเดต snapshot" ที่แถวสคริปต์นั้น แล้วอ่านข้อความแจ้งผล</li><li>ขยายดูเนื้อหาสคริปต์ในฉากและสถานะการอนุมัติของสคริปต์</li><li>กดปุ่มเริ่มไลฟ์เพื่อเปิดหน้าต่างที่มีส่วน "ตรวจก่อนไลฟ์" แล้วดูรายการ "การอนุมัติสคริปต์"</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>เห็นข้อความ "อัปเดต snapshot แล้ว" พร้อม "ดึงเนื้อหาล่าสุดเข้าฉาก — ต้องอนุมัติสคริปต์ใหม่อีกครั้ง"</li><li>เนื้อหาในฉากเปลี่ยนเป็นเวอร์ชันล่าสุดของต้นฉบับ และแถบล้าสมัยหายไป</li><li>สถานะการอนุมัติของสคริปต์ในฉากถูกรีเซ็ต (ไม่คงสถานะอนุมัติเดิม — ต้องรีวิว/อนุมัติใหม่ต่อไลฟ์)</li><li>รายการ "การอนุมัติสคริปต์" ในส่วนตรวจก่อนไลฟ์แสดงว่ายังไม่ผ่าน เช่น "N สคริปต์ยังรออนุมัติ"</li><li>ที่มา: Epic 2 · Story 2.10 · FR72</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —">ทดลองตั้ง precondition: ผูกสคริปต์สำเร็จ 1 ตัวเข้าบนองค์ (สถานะอนุมัติแล้ว) จากนั้นเข้าไปแก้เนื้อหาสคริปต์ต้นฉบับในคลังแล้วกดบันทึก (สำเร็จ เวอร์ชันของสคริปต์เป็น draft รออนุมัติ) แต่เมื่อกลับเข้า Studio ของไลฟ์เดิม (กด "ไปแก้ใน Studio" จากหน้าคิวไลฟ์) กลับเป็นเปิด URL /live/studio?new=1 ซั้นเป็นไลฟ์เปล่าเปล่าใหม่ที่ไม่มีฯาก/สคริปต์เดิมเลย ไม่เห็นสคริปต์ที่ผูกไว้ก่อนหน้า จึงไม่สามารถตรวจสอบเอฟเฟกต์ "ล้าสอบ"/สนิโต update ตาม test steps ได้จริง อีกทั้งการผูกสคริปต์เป็นช่วง ๆ เองก็ติดบัค TAKRA-667 (bind-script HTTP 500 เป็นช่วง) อยู่แล้ว ขอพักเป็น HOLD ไว้ก่อน เนื่องจากสองปัญหานี้ทำให้ตั้ง precondition และเข้าไปตรวจสอบไม่ได้จริง</textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-133" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-133" data-st="fail">FAIL</span>
-    <span class="opt hold" data-uid="tc-133" data-st="hold">HOLD</span>
+    <span class="opt hold sel" data-uid="tc-133" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-133" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-133" data-st="skip">SKIP</span>
   </div></div>
   <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
-    <div class="jira-list" data-uid="tc-133"></div>
+    <div class="jira-list" data-uid="tc-133"><div class="jira-item"><a href="https://kitdi.atlassian.net/browse/TAKRA-667" target="_blank" rel="noopener">TAKRA-667</a><span class="jira-del" title="ลบลิงก์">✕</span></div></div>
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-133" placeholder="วางลิงก์ Jira หรือพิมพ์ TAK-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-133">+ เพิ่มลิงก์</button></div>
   </div>
 </div></td></tr>
