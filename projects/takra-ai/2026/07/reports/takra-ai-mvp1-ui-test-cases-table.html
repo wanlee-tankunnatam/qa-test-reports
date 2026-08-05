@@ -1185,6 +1185,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     "jira": [
       "https://kitdi.atlassian.net/browse/TAKRA-59"
     ]
+  },
+  "tc-52": {
+    "actual": "HOLD: เข้าหน้า /onboarding พบหัวข้อ \"ยินดีต้อนรับสู่ takra·ai\" และเช็กลิสต์ \"3 ขั้นก่อนไลฟ์แรก\" พร้อมคำบรรยาย \"ทำ 3 ขั้นนี้ให้ครบ แล้วคุณก็พร้อมเริ่มไลฟ์รอบแรกได้เลย\" ตรงตาม Expected ทุกตัวอักษร รายการ 3 ขั้น (เตรียม Avatar และ Voice / เพิ่มสินค้าเข้าคลัง / สร้าง Live แรก) ครบถูกต้อง — แต่ไม่สามารถทดสอบ precondition \"ยังไม่ได้เตรียมอวาตาร์\" ได้ครบ เพราะทุก workspace ที่มีอยู่ (wanleeta QA/test01/wwww) มีคลังอวาตาร์กลาง 27 ตัวพร้อมใช้อยู่แล้วตั้งแต่ต้น ทำให้ขั้นที่ 1 ขึ้นสถานะ \"เสร็จแล้ว\" ทันที และความคืบหน้าแสดง \"เสร็จแล้ว 1/3 ขั้น\" แทนที่จะเป็น \"0/3 ขั้น\" ตาม Expected ปุ่มของขั้นแรก (แสดงเป็น \"ดูอีกครั้ง\" แทน \"เลือก Avatar/Voice\" เพราะเสร็จแล้ว) กดแล้วพาไปหน้าคลังอวาตาร์จริง ถูกต้องตาม Expected — ต้องการ workspace ที่ไม่มีอวาตาร์เลยจากทีมพัฒนาเพื่อทดสอบ 0/3 ขั้นให้ครบ",
+    "st": "hold"
   }
 }
 </script>
@@ -1211,13 +1215,13 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="sumchips">
       <span class="cnt pass">PASS <b id="sum-pass">150</b></span>
       <span class="cnt fail">FAIL <b id="sum-fail">6</b></span>
-      <span class="cnt hold">HOLD <b id="sum-hold">36</b></span>
+      <span class="cnt hold">HOLD <b id="sum-hold">37</b></span>
       <span class="cnt block">BLOCKED <b id="sum-block">1</b></span>
       <span class="cnt skip">SKIP <b id="sum-skip">23</b></span>
-      <span class="cnt pending">รอเทส <b id="sum-pending">45</b></span>
+      <span class="cnt pending">รอเทส <b id="sum-pending">44</b></span>
     </div>
-    <div class="progress"><div id="sumbar" class="progressbar" style="width: 81%;"></div></div>
-    <div class="hint" id="sumpct" style="margin-top:5px">81% ทดสอบแล้ว (193/238) · ข้าม 23</div>
+    <div class="progress"><div id="sumbar" class="progressbar" style="width: 82%;"></div></div>
+    <div class="hint" id="sumpct" style="margin-top:5px">82% ทดสอบแล้ว (194/238) · ข้าม 23</div>
   </div>
 
   <div class="toolbar">
@@ -2855,7 +2859,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">[MVP1] ผู้ใช้ใหม่เห็นเช็กลิสต์ 3 ขั้นก่อนไลฟ์แรกพร้อมทางไปแต่ละขั้น</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
-  <td class="status" data-uid="tc-52"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-52"><span class="stb hold">HOLD</span></td>
   <td class="jira-cell" data-uid="tc-52"></td>
 </tr>
 <tr class="detail show"><td colspan="7"><div class="card">
@@ -2866,12 +2870,12 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Data</h4><ul><li>URL: https://uat-live.takra.ai/onboarding</li></ul></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>เห็นหัวข้อต้อนรับ "ยินดีต้อนรับสู่ takra·ai" และเช็กลิสต์ "3 ขั้นก่อนไลฟ์แรก" พร้อมคำบรรยาย "ทำ 3 ขั้นนี้ให้ครบ แล้วคุณก็พร้อมเริ่มไลฟ์รอบแรกได้เลย"</li><li>3 ขั้นคือ "เตรียม Avatar และ Voice" · "เพิ่มสินค้าเข้าคลัง" · "สร้าง Live แรก" พร้อมคำอธิบายสั้นของแต่ละขั้น</li><li>แสดงความคืบหน้า "เสร็จแล้ว 0/3 ขั้น"</li><li>ปุ่มของขั้นแรกพาไปหน้าคลังอวาตาร์จริง</li><li>ที่มา: Epic 1 · Story 1.11</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —">HOLD: เข้าหน้า /onboarding พบหัวข้อ "ยินดีต้อนรับสู่ takra·ai" และเช็กลิสต์ "3 ขั้นก่อนไลฟ์แรก" พร้อมคำบรรยาย "ทำ 3 ขั้นนี้ให้ครบ แล้วคุณก็พร้อมเริ่มไลฟ์รอบแรกได้เลย" ตรงตาม Expected ทุกตัวอักษร รายการ 3 ขั้น (เตรียม Avatar และ Voice / เพิ่มสินค้าเข้าคลัง / สร้าง Live แรก) ครบถูกต้อง — แต่ไม่สามารถทดสอบ precondition "ยังไม่ได้เตรียมอวาตาร์" ได้ครบ เพราะทุก workspace ที่มีอยู่ (wanleeta QA/test01/wwww) มีคลังอวาตาร์กลาง 27 ตัวพร้อมใช้อยู่แล้วตั้งแต่ต้น ทำให้ขั้นที่ 1 ขึ้นสถานะ "เสร็จแล้ว" ทันที และความคืบหน้าแสดง "เสร็จแล้ว 1/3 ขั้น" แทนที่จะเป็น "0/3 ขั้น" ตาม Expected ปุ่มของขั้นแรก (แสดงเป็น "ดูอีกครั้ง" แทน "เลือก Avatar/Voice" เพราะเสร็จแล้ว) กดแล้วพาไปหน้าคลังอวาตาร์จริง ถูกต้องตาม Expected — ต้องการ workspace ที่ไม่มีอวาตาร์เลยจากทีมพัฒนาเพื่อทดสอบ 0/3 ขั้นให้ครบ</textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-52" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-52" data-st="fail">FAIL</span>
-    <span class="opt hold" data-uid="tc-52" data-st="hold">HOLD</span>
+    <span class="opt hold sel" data-uid="tc-52" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-52" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-52" data-st="skip">SKIP</span>
   </div></div>
@@ -9868,4 +9872,4 @@ document.querySelectorAll('.feat-owner').forEach(function(sel){var e=sel.dataset
         <path d="M128,20A108,108,0,1,0,236,128,108.12,108.12,0,0,0,128,20Zm0,192a84,84,0,1,1,84-84A84.09,84.09,0,0,1,128,212Zm40-112v56a12,12,0,0,1-12,12H100a12,12,0,0,1-12-12V100a12,12,0,0,1,12-12h56A12,12,0,0,1,168,100Z"></path>
       </svg>
       <span style="vertical-align: middle;">Stop Claude</span>
-    </button></div><div id="claude-phantom-cursor" aria-hidden="true" style="position: fixed; top: 0px; left: 0px; pointer-events: none; z-index: 2147483646; transform: translate3d(598px, 636px, 0px); transition: transform 180ms cubic-bezier(0.2, 0, 0, 1); will-change: transform;"><svg id="claude-phantom-cursor-plain" width="20" height="26" viewBox="0 0 20 26" style="position: absolute; top: 0px; left: 0px; overflow: visible;"><path d="M0 0 L0 18 L4.5 14 L7.5 21.5 L11 20 L8 13 L14 13 Z" stroke="white" stroke-width="3" stroke-linejoin="round" fill="white"></path><path d="M0 0 L0 18 L4.5 14 L7.5 21.5 L11 20 L8 13 L14 13 Z" fill="#111"></path></svg><svg id="claude-phantom-cursor-styled" width="20" height="26" viewBox="0 0 20 26" style="position: absolute; top: 0px; left: 0px; overflow: visible; filter: drop-shadow(rgba(217, 119, 87, 0.9) 0px 0px 4px) drop-shadow(rgba(217, 119, 87, 0.45) 0px 0px 10px);"><path d="M0 0 L0 18 L4.5 14 L7.5 21.5 L11 20 L8 13 L14 13 Z" stroke="#D97757" stroke-width="3" stroke-linejoin="round" fill="#D97757"></path><path d="M0 0 L0 18 L4.5 14 L7.5 21.5 L11 20 L8 13 L14 13 Z" fill="#FAF9F5"></path></svg></div></body></html>
+    </button></div><div id="claude-phantom-cursor" aria-hidden="true" style="position: fixed; top: 0px; left: 0px; pointer-events: none; z-index: 2147483646; transform: translate3d(176px, 584px, 0px); transition: transform 180ms cubic-bezier(0.2, 0, 0, 1); will-change: transform;"><svg id="claude-phantom-cursor-plain" width="20" height="26" viewBox="0 0 20 26" style="position: absolute; top: 0px; left: 0px; overflow: visible;"><path d="M0 0 L0 18 L4.5 14 L7.5 21.5 L11 20 L8 13 L14 13 Z" stroke="white" stroke-width="3" stroke-linejoin="round" fill="white"></path><path d="M0 0 L0 18 L4.5 14 L7.5 21.5 L11 20 L8 13 L14 13 Z" fill="#111"></path></svg><svg id="claude-phantom-cursor-styled" width="20" height="26" viewBox="0 0 20 26" style="position: absolute; top: 0px; left: 0px; overflow: visible; filter: drop-shadow(rgba(217, 119, 87, 0.9) 0px 0px 4px) drop-shadow(rgba(217, 119, 87, 0.45) 0px 0px 10px);"><path d="M0 0 L0 18 L4.5 14 L7.5 21.5 L11 20 L8 13 L14 13 Z" stroke="#D97757" stroke-width="3" stroke-linejoin="round" fill="#D97757"></path><path d="M0 0 L0 18 L4.5 14 L7.5 21.5 L11 20 L8 13 L14 13 Z" fill="#FAF9F5"></path></svg></div></body></html>
