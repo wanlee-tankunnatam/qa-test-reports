@@ -986,7 +986,11 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     "st": "pass"
   },
   "tc-198": {
-    "actual": "ข้ามการทดสอบในรอบนี้ (สถานะไม่เปลี่ยน) — ทดลองลากสคริปต์เพื่อเรียงลำดับใหม่ด้วยเครื่องมือทดสอบอัตโนมัติ (drag-and-drop) หลายครั้งแล้วลำดับไม่เปลี่ยนแปลง คาดว่าเครื่องมือจำลองการลากไม่รองรับ interaction ของ component นี้ ต้องทดสอบด้วยมือจริงเพื่อยืนยันผลอีกครั้ง"
+    "actual": "ไม่สามารถตั้งเงื่อนไข precondition ได้: เข้า Studio แล้วทดลองผูกสคริปต์ 3 ตัวเข้าบนองค์เดียว (จากคลังที่ approved แล้ว) พบว่าผูกสำเร็จเฉพาะตัวแรก ส่วนตัวที่ 2 และ 3 ขึ้น toast แจ้ง \"ผูกสคริปต์เข้าไลฟ์ไม่สำเร็จ คุณไม่มีสิทธิ์ดำเนินการนี้\" หรือเงียบไปโดยไม่ผูกเพิ่ม ลองหลายครั้งกับสคริปต์หลายตัวที่ไม่มีแท็ก \"รออนุมัติ\" ผลเหมือนเดิมทุกครั้ง: ผูกสำเร็จแค่ 1 ใน 5-6 ครั้งที่ลอง ตรงกับบัก Jira ที่มีอยู่แล้ว TAKRA-667 \"ผูกสคริปต์เข้าไลฟ์ล้มเป็นช่วง ๆ ด้วย HTTP 500\" (สถานะ READY TO TEST) จึงสรุปว่าเป็นบัคที่ทราบอยู่แล้ว เนื่องจากบัคนี้ทำให้ไม่สามารถตั้ง precondition (ฯากฯมีสคริปต์ผูกในฉากเดียวกันอย่างน้อย 3 ตัว) ได้เลย จึงยังไม่สามารถทดสอบ drag-and-drop เรียงลำดับสคริปต์ตาม test steps ได้จริง",
+    "st": "fail",
+    "jira": [
+      "https://kitdi.atlassian.net/browse/TAKRA-667"
+    ]
   },
   "tc-201": {
     "actual": "ข้ามการทดสอบในรอบนี้ (สถานะไม่เปลี่ยน) — ต้องการฉากปลายทางที่มีสคริปต์ตัวเดียวกันอยู่แล้วแต่ไม่เต็ม แต่หน้าต่าง \"ผูกสคริปต์เข้าฉาก\" กรองสคริปต์ที่ถูกผูกกับฉากอื่นในไลฟ์เดียวกันออกจากคลังไปแล้ว (ค้นหาไม่เจอ) ทำให้จำลอง scenario ตามสเต็ปไม่ได้ในรอบนี้ ต้องตรวจสอบเพิ่มเติมว่ากรณีนี้เกิดขึ้นได้จริงหรือไม่"
@@ -1233,14 +1237,14 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <h3>📊 สรุปผล Manual Test</h3>
     <div class="sumchips">
       <span class="cnt pass">PASS <b id="sum-pass">153</b></span>
-      <span class="cnt fail">FAIL <b id="sum-fail">6</b></span>
+      <span class="cnt fail">FAIL <b id="sum-fail">7</b></span>
       <span class="cnt hold">HOLD <b id="sum-hold">39</b></span>
       <span class="cnt block">BLOCKED <b id="sum-block">1</b></span>
       <span class="cnt skip">SKIP <b id="sum-skip">23</b></span>
-      <span class="cnt pending">รอเทส <b id="sum-pending">39</b></span>
+      <span class="cnt pending">รอเทส <b id="sum-pending">38</b></span>
     </div>
     <div class="progress"><div id="sumbar" class="progressbar" style="width: 84%;"></div></div>
-    <div class="hint" id="sumpct" style="margin-top:5px">84% ทดสอบแล้ว (199/238) · ข้าม 23</div>
+    <div class="hint" id="sumpct" style="margin-top:5px">84% ทดสอบแล้ว (200/238) · ข้าม 23</div>
   </div>
 
   <div class="toolbar">
@@ -7361,32 +7365,32 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 </div></td></tr>
 
 <tr class="featrow" data-featkey="script-reorder-move"><td colspan="7">📁 script-reorder-move <span class="rp"><span class="lv lvl-ui">🌐 2 <span style="color:var(--muted)">+3🆕</span></span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="script-reorder-move"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
-<tr class="trow" data-feat="epic3" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow open" data-feat="epic3" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-RM.1</td>
   <td class="ctitle">[MVP1] ลากเรียงลำดับสคริปต์ในฉากใหม่แล้วลำดับการเล่นเปลี่ยนตาม</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-198"><span class="stb pending">รอเทส</span></td>
-  <td class="jira-cell" data-uid="tc-198"></td>
+  <td class="status" data-uid="tc-198"><span class="stb fail">FAIL</span></td>
+  <td class="jira-cell" data-uid="tc-198"><a href="https://kitdi.atlassian.net/browse/TAKRA-667" target="_blank" rel="noopener" class="jira-chip">TAKRA-667</a></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail show"><td colspan="7"><div class="card">
   <div class="h-title">[MVP1] ลากเรียงลำดับสคริปต์ในฉากใหม่แล้วลำดับการเล่นเปลี่ยนตาม</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · script-reorder-move · Epic 3 · Story 3.9 · FR33c</div>
   <div class="sec"><h4>Precondition</h4><ul><li>มีฉากที่ผูกสคริปต์ไว้อย่างน้อย 3 ตัว</li></ul></div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "แพลตฟอร์มไลฟ์" ในแถบด้านซ้าย แล้วกดปุ่ม "เปลี่ยนแพลตฟอร์ม" ในกล่องยืนยัน จากนั้นเลือกเมนู "โปรเจกต์ของฉัน" แล้วกด "แก้ไขต่อ" ที่ไลฟ์ตาม Precondition เพื่อเข้า Studio</li><li>ดูรายการสคริปต์ของฉากในแผงด้านขวา แล้วจดลำดับปัจจุบันไว้</li><li>กดค้างที่จุดจับลากของสคริปต์ตัวสุดท้าย (มีคำกำกับ "กดค้างเพื่อลาก") แล้วลากขึ้นไปวางบนสุด</li><li>ดูลำดับใหม่ในรายการ แล้วรีเฟรชหน้าเบราว์เซอร์ เปิดฉากเดิมและดูลำดับอีกครั้ง</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ทุกแถวสคริปต์มีจุดจับสำหรับลาก (คำกำกับ "ลากเพื่อเรียงลำดับ" / "กดค้างเพื่อลาก")</li><li>ลำดับสคริปต์เปลี่ยนตามตำแหน่งที่วางทันที</li><li>หลังรีเฟรช ลำดับใหม่ยังคงอยู่ (ระบบบันทึกอัตโนมัติ)</li><li>ที่มา: Epic 3 · Story 3.9 · FR33c</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —">ข้ามการทดสอบในรอบนี้ (สถานะไม่เปลี่ยน) — ทดลองลากสคริปต์เพื่อเรียงลำดับใหม่ด้วยเครื่องมือทดสอบอัตโนมัติ (drag-and-drop) หลายครั้งแล้วลำดับไม่เปลี่ยนแปลง คาดว่าเครื่องมือจำลองการลากไม่รองรับ interaction ของ component นี้ ต้องทดสอบด้วยมือจริงเพื่อยืนยันผลอีกครั้ง</textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —">ไม่สามารถตั้งเงื่อนไข precondition ได้: เข้า Studio แล้วทดลองผูกสคริปต์ 3 ตัวเข้าบนองค์เดียว (จากคลังที่ approved แล้ว) พบว่าผูกสำเร็จเฉพาะตัวแรก ส่วนตัวที่ 2 และ 3 ขึ้น toast แจ้ง "ผูกสคริปต์เข้าไลฟ์ไม่สำเร็จ คุณไม่มีสิทธิ์ดำเนินการนี้" หรือเงียบไปโดยไม่ผูกเพิ่ม ลองหลายครั้งกับสคริปต์หลายตัวที่ไม่มีแท็ก "รออนุมัติ" ผลเหมือนเดิมทุกครั้ง: ผูกสำเร็จแค่ 1 ใน 5-6 ครั้งที่ลอง ตรงกับบัก Jira ที่มีอยู่แล้ว TAKRA-667 "ผูกสคริปต์เข้าไลฟ์ล้มเป็นช่วง ๆ ด้วย HTTP 500" (สถานะ READY TO TEST) จึงสรุปว่าเป็นบัคที่ทราบอยู่แล้ว เนื่องจากบัคนี้ทำให้ไม่สามารถตั้ง precondition (ฯากฯมีสคริปต์ผูกในฉากเดียวกันอย่างน้อย 3 ตัว) ได้เลย จึงยังไม่สามารถทดสอบ drag-and-drop เรียงลำดับสคริปต์ตาม test steps ได้จริง</textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-198" data-st="pass">PASS</span>
-    <span class="opt fail" data-uid="tc-198" data-st="fail">FAIL</span>
+    <span class="opt fail sel" data-uid="tc-198" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-198" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-198" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-198" data-st="skip">SKIP</span>
   </div></div>
   <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
-    <div class="jira-list" data-uid="tc-198"></div>
+    <div class="jira-list" data-uid="tc-198"><div class="jira-item"><a href="https://kitdi.atlassian.net/browse/TAKRA-667" target="_blank" rel="noopener">TAKRA-667</a><span class="jira-del" title="ลบลิงก์">✕</span></div></div>
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-198" placeholder="วางลิงก์ Jira หรือพิมพ์ TAK-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-198">+ เพิ่มลิงก์</button></div>
   </div>
 </div></td></tr>
