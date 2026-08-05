@@ -1197,8 +1197,12 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     "actual": "HOLD: ตรวจสอบ workspace ทั้งหมดที่มีสิทธิ์เข้าถึงในบัญชีทดสอบ (ทีมของ wanleeta QA, test01, wwww, ทีมของ QA Tester) พบว่าทุก workspace มีคลังอวาตาร์กลางพร้อมใช้ 27 ตัวติดมาตั้งแต่สร้าง workspace ใหม่ ไม่มี workspace ใดที่ \"ยังไม่มีอวาตาร์\" ตาม precondition ที่ต้องการ จึงไม่สามารถทดสอบสถานะ \"ทีมงานกำลังเตรียมอวาตาร์ให้\" ตาม Expected Result ได้ครบถ้วน ต้องการให้ทีมพัฒนา/Ops จัดเตรียม workspace ทดสอบที่ยังไม่ได้ provision อวาตาร์เลยเพื่อทดสอบเคสนี้โดยเฉพาะ",
     "st": "hold"
   },
+  "tc-89": {
+    "actual": "ทดสอบผ่าน: workspace \"test01\" ที่ยังไม่มีสินค้าเลย เข้าเมนู \"คลังสินค้า\" พบข้อความ \"ยังไม่มีสินค้าในคลัง — เพิ่มสินค้าแรกของคุณ\" ตรงตาม Expected สลับไป workspace \"ทีมของ QA Tester\" ที่มีสินค้า 34 รายการ พิมพ์คำค้น \"zzzzzz\" ที่ไม่มีทางตรง พบข้อความ \"ไม่พบสินค้าที่ตรงกับการค้นหา\" ซึ่งต่างจากข้อความกรณีคลังว่างชัดเจน ตรงตาม Expected ล้างคำค้นแล้วรายการสินค้าทั้ง 34 รายการกลับมาแสดงครบตามเดิม",
+    "st": "pass"
+  },
   "tc-152": {
-    "actual": "ทดสอบเปิดหน้าตั้งค่า Studio ผ่านไอคอนรูปเฟือง พบแผงตั้งค่าแบ่งเป็น 3 ส่วนตรงตาม Expected: \"พรีวิว\" (คุณภาพพรีวิว), \"การบันทึก\" (บันทึกอัตโนมัติ), \"คีย์ลัด\" ทดลองสลับสวิตช์ \"แสดงเส้นกริดบนแคนวาส\" แล้วเส้นกริดปรากฏ/หายไปบนแคนวาสถูกต้อง กดปุ่ม \"เสร็จสิ้น\" แล้วแผงปิดลงตามที่คาด ผลตรงตาม Expected Result ทุกข้อ",
+    "actual": "ทดสอบเปิดหน้าตั้งค่า Studio ผ่านไอคอนรูปเฟือง พบแผงตั้งค่าแบ่งเป็น 3 ส่วนตรงตาม Expected: \"พรีวิว\", \"การบันทึก\", \"คีย์ลัด\" ทดลองสลับสวิตช์ \"แสดงเส้นกริดบนแคนวาส\" แล้วเส้นกริดปรากฏ/หายไปถูกต้อง กดปุ่ม \"เสร็จสิ้น\" แล้วแผงปิดลงตามคาด ผลตรงตาม Expected Result ทุกข้อ",
     "st": "pass"
   }
 }
@@ -1224,15 +1228,15 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="runsum">
     <h3>📊 สรุปผล Manual Test</h3>
     <div class="sumchips">
-      <span class="cnt pass">PASS <b id="sum-pass">152</b></span>
+      <span class="cnt pass">PASS <b id="sum-pass">153</b></span>
       <span class="cnt fail">FAIL <b id="sum-fail">6</b></span>
       <span class="cnt hold">HOLD <b id="sum-hold">38</b></span>
       <span class="cnt block">BLOCKED <b id="sum-block">1</b></span>
       <span class="cnt skip">SKIP <b id="sum-skip">23</b></span>
-      <span class="cnt pending">รอเทส <b id="sum-pending">41</b></span>
+      <span class="cnt pending">รอเทส <b id="sum-pending">40</b></span>
     </div>
     <div class="progress"><div id="sumbar" class="progressbar" style="width: 83%;"></div></div>
-    <div class="hint" id="sumpct" style="margin-top:5px">83% ทดสอบแล้ว (197/238) · ข้าม 23</div>
+    <div class="hint" id="sumpct" style="margin-top:5px">83% ทดสอบแล้ว (198/238) · ข้าม 23</div>
   </div>
 
   <div class="toolbar">
@@ -4009,7 +4013,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">[MVP1] คลังสินค้าว่างหรือค้นหาไม่พบ แสดงสถานะว่างที่ต่างกันอย่างถูกต้อง</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p2">P2</span></td>
-  <td class="status" data-uid="tc-89"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-89"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-89"></td>
 </tr>
 <tr class="detail show"><td colspan="7"><div class="card">
@@ -4020,10 +4024,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Data</h4><ul><li>คำค้น: zzzzzz</li></ul></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>กรณีคลังว่าง เห็นข้อความ "ยังไม่มีสินค้าในคลัง — เพิ่มสินค้าแรกของคุณ"</li><li>กรณีค้นหาไม่พบ เห็นข้อความ "ไม่พบสินค้าที่ตรงกับการค้นหา" ซึ่งต่างจากข้อความกรณีคลังว่าง</li><li>ล้างคำค้นแล้วรายการสินค้ากลับมาแสดงครบ</li><li>ที่มา: Epic 2 · Story 2.3</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —">ทดสอบผ่าน: workspace "test01" ที่ยังไม่มีสินค้าเลย เข้าเมนู "คลังสินค้า" พบข้อความ "ยังไม่มีสินค้าในคลัง — เพิ่มสินค้าแรกของคุณ" ตรงตาม Expected สลับไป workspace "ทีมของ QA Tester" ที่มีสินค้า 34 รายการ พิมพ์คำค้น "zzzzzz" ที่ไม่มีทางตรง พบข้อความ "ไม่พบสินค้าที่ตรงกับการค้นหา" ซึ่งต่างจากข้อความกรณีคลังว่างชัดเจน ตรงตาม Expected ล้างคำค้นแล้วรายการสินค้าทั้ง 34 รายการกลับมาแสดงครบตามเดิม</textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-89" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-89" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-89" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-89" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-89" data-st="block">BLOCKED</span>
@@ -5958,7 +5962,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "แพลตฟอร์มไลฟ์" (ยืนยัน "เปลี่ยนแพลตฟอร์ม") แล้วกดปุ่ม "เริ่มไลฟ์ใหม่" ที่แดชบอร์ดเพื่อเปิด Studio</li><li>กดปุ่ม "ตั้งค่า Studio" ที่แถบควบคุมสื่อด้านล่าง แล้วไล่ดูหัวข้อและตัวเลือกในแต่ละส่วน</li><li>สลับเปิด "แสดงเส้นกริดบนแคนวาส" แล้วดูแคนวาส</li><li>อ่านรายการคีย์ลัดที่ระบบให้มา แล้วกด "เสร็จสิ้น"</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>แผงตั้งค่าหัวข้อ "ตั้งค่า Studio" แบ่งเป็นส่วน "พรีวิว" · "การบันทึก" · "คีย์ลัด"</li><li>ส่วนพรีวิว เปลี่ยน "คุณภาพพรีวิว" ("มาตรฐาน" / "สูง") และสลับ "ปิดเสียงพรีวิวเมื่อเปิด Studio" ได้</li><li>เปิด "แสดงเส้นกริดบนแคนวาส" แล้วแคนวาสแสดงเส้นกริดจริง</li><li>"บันทึกอัตโนมัติ" มีคำอธิบายรอบการบันทึก "บันทึกงานให้อัตโนมัติทุก 2 นาที"</li><li>รายการคีย์ลัดครอบคลุม "เปิดหน้าต่าง Preview" · "ย้อนกลับ" · "ทำซ้ำ" · "ลบ Layer ที่เลือก" และกด "เสร็จสิ้น" แล้วแผงปิดลง</li><li>ที่มา: Epic 3 · Story 3.12</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —">ทดสอบเปิดหน้าตั้งค่า Studio ผ่านไอคอนรูปเฟือง พบแผงตั้งค่าแบ่งเป็น 3 ส่วนตรงตาม Expected: "พรีวิว" (คุณภาพพรีวิว), "การบันทึก" (บันทึกอัตโนมัติ), "คีย์ลัด" ทดลองสลับสวิตช์ "แสดงเส้นกริดบนแคนวาส" แล้วเส้นกริดปรากฏ/หายไปบนแคนวาสถูกต้อง กดปุ่ม "เสร็จสิ้น" แล้วแผงปิดลงตามที่คาด ผลตรงตาม Expected Result ทุกข้อ</textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —">ทดสอบเปิดหน้าตั้งค่า Studio ผ่านไอคอนรูปเฟือง พบแผงตั้งค่าแบ่งเป็น 3 ส่วนตรงตาม Expected: "พรีวิว", "การบันทึก", "คีย์ลัด" ทดลองสลับสวิตช์ "แสดงเส้นกริดบนแคนวาส" แล้วเส้นกริดปรากฏ/หายไปถูกต้อง กดปุ่ม "เสร็จสิ้น" แล้วแผงปิดลงตามคาด ผลตรงตาม Expected Result ทุกข้อ</textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass sel" data-uid="tc-152" data-st="pass">PASS</span>
@@ -9884,6 +9888,11 @@ document.querySelectorAll('.feat-owner').forEach(function(sel){var e=sel.dataset
       </svg>
       <span style="vertical-align: middle;">Stop Claude</span>
     </button></div><div id="claude-phantom-cursor" aria-hidden="true" style="position: fixed; top: 0px; left: 0px; pointer-events: none; z-index: 2147483646; transform: translate3d(176px, 568px, 0px); transition: transform 180ms cubic-bezier(0.2, 0, 0, 1); will-change: transform;"><svg id="claude-phantom-cursor-plain" width="20" height="26" viewBox="0 0 20 26" style="position: absolute; top: 0px; left: 0px; overflow: visible;"><path d="M0 0 L0 18 L4.5 14 L7.5 21.5 L11 20 L8 13 L14 13 Z" stroke="white" stroke-width="3" stroke-linejoin="round" fill="white"></path><path d="M0 0 L0 18 L4.5 14 L7.5 21.5 L11 20 L8 13 L14 13 Z" fill="#111"></path></svg><svg id="claude-phantom-cursor-styled" width="20" height="26" viewBox="0 0 20 26" style="position: absolute; top: 0px; left: 0px; overflow: visible; filter: drop-shadow(rgba(217, 119, 87, 0.9) 0px 0px 4px) drop-shadow(rgba(217, 119, 87, 0.45) 0px 0px 10px);"><path d="M0 0 L0 18 L4.5 14 L7.5 21.5 L11 20 L8 13 L14 13 Z" stroke="#D97757" stroke-width="3" stroke-linejoin="round" fill="#D97757"></path><path d="M0 0 L0 18 L4.5 14 L7.5 21.5 L11 20 L8 13 L14 13 Z" fill="#FAF9F5"></path></svg></div><div id="claude-agent-glow-border" style="position: fixed; inset: 0px; pointer-events: none; z-index: 2147483646; opacity: 1; transition: opacity 0.3s ease-in-out;"><div id="claude-agent-glow-border-inner" style="position: absolute; inset: 0px; will-change: opacity; box-shadow: rgba(217, 119, 87, 0.7) 0px 0px 15px inset, rgba(217, 119, 87, 0.5) 0px 0px 25px inset, rgba(217, 119, 87, 0.2) 0px 0px 35px inset;"></div></div><div id="claude-agent-stop-container" style="position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%); justify-content: center; align-items: center; pointer-events: none; z-index: 2147483647;"><button id="claude-agent-stop-button" style="position: relative; transform: translateY(0px); padding: 12px 16px; background: rgb(250, 249, 245); color: rgb(20, 20, 19); border: 0.5px solid rgba(31, 30, 29, 0.4); border-radius: 12px; font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; box-shadow: rgba(217, 119, 87, 0.24) 0px 40px 80px, rgba(217, 119, 87, 0.24) 0px 4px 14px; transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); opacity: 1; user-select: none; pointer-events: auto; white-space: nowrap; margin: 0px auto;">
+      <svg width="16" height="16" viewBox="0 0 256 256" fill="currentColor" style="margin-right: 12px; vertical-align: middle;">
+        <path d="M128,20A108,108,0,1,0,236,128,108.12,108.12,0,0,0,128,20Zm0,192a84,84,0,1,1,84-84A84.09,84.09,0,0,1,128,212Zm40-112v56a12,12,0,0,1-12,12H100a12,12,0,0,1-12-12V100a12,12,0,0,1,12-12h56A12,12,0,0,1,168,100Z"></path>
+      </svg>
+      <span style="vertical-align: middle;">Stop Claude</span>
+    </button></div><div id="claude-phantom-cursor" aria-hidden="true" style="position: fixed; top: 0px; left: 0px; pointer-events: none; z-index: 2147483646; transform: translate3d(68px, 502px, 0px); transition: transform 180ms cubic-bezier(0.2, 0, 0, 1); will-change: transform;"><svg id="claude-phantom-cursor-plain" width="20" height="26" viewBox="0 0 20 26" style="position: absolute; top: 0px; left: 0px; overflow: visible;"><path d="M0 0 L0 18 L4.5 14 L7.5 21.5 L11 20 L8 13 L14 13 Z" stroke="white" stroke-width="3" stroke-linejoin="round" fill="white"></path><path d="M0 0 L0 18 L4.5 14 L7.5 21.5 L11 20 L8 13 L14 13 Z" fill="#111"></path></svg><svg id="claude-phantom-cursor-styled" width="20" height="26" viewBox="0 0 20 26" style="position: absolute; top: 0px; left: 0px; overflow: visible; filter: drop-shadow(rgba(217, 119, 87, 0.9) 0px 0px 4px) drop-shadow(rgba(217, 119, 87, 0.45) 0px 0px 10px);"><path d="M0 0 L0 18 L4.5 14 L7.5 21.5 L11 20 L8 13 L14 13 Z" stroke="#D97757" stroke-width="3" stroke-linejoin="round" fill="#D97757"></path><path d="M0 0 L0 18 L4.5 14 L7.5 21.5 L11 20 L8 13 L14 13 Z" fill="#FAF9F5"></path></svg></div><div id="claude-agent-glow-border" style="position: fixed; inset: 0px; pointer-events: none; z-index: 2147483646; opacity: 1; transition: opacity 0.3s ease-in-out;"><div id="claude-agent-glow-border-inner" style="position: absolute; inset: 0px; will-change: opacity; box-shadow: rgba(217, 119, 87, 0.7) 0px 0px 15px inset, rgba(217, 119, 87, 0.5) 0px 0px 25px inset, rgba(217, 119, 87, 0.2) 0px 0px 35px inset;"></div></div><div id="claude-agent-stop-container" style="position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%); justify-content: center; align-items: center; pointer-events: none; z-index: 2147483647;"><button id="claude-agent-stop-button" style="position: relative; transform: translateY(0px); padding: 12px 16px; background: rgb(250, 249, 245); color: rgb(20, 20, 19); border: 0.5px solid rgba(31, 30, 29, 0.4); border-radius: 12px; font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; box-shadow: rgba(217, 119, 87, 0.24) 0px 40px 80px, rgba(217, 119, 87, 0.24) 0px 4px 14px; transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); opacity: 1; user-select: none; pointer-events: auto; white-space: nowrap; margin: 0px auto;">
       <svg width="16" height="16" viewBox="0 0 256 256" fill="currentColor" style="margin-right: 12px; vertical-align: middle;">
         <path d="M128,20A108,108,0,1,0,236,128,108.12,108.12,0,0,0,128,20Zm0,192a84,84,0,1,1,84-84A84.09,84.09,0,0,1,128,212Zm40-112v56a12,12,0,0,1-12,12H100a12,12,0,0,1-12-12V100a12,12,0,0,1,12-12h56A12,12,0,0,1,168,100Z"></path>
       </svg>
