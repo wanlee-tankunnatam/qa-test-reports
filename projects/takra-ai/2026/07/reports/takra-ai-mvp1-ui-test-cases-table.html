@@ -1204,6 +1204,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   "tc-152": {
     "actual": "ทดสอบเปิดหน้าตั้งค่า Studio ผ่านไอคอนรูปเฟือง พบแผงตั้งค่าแบ่งเป็น 3 ส่วนตรงตาม Expected: \"พรีวิว\", \"การบันทึก\", \"คีย์ลัด\" ทดลองสลับสวิตช์ \"แสดงเส้นกริดบนแคนวาส\" แล้วเส้นกริดปรากฏ/หายไปถูกต้อง กดปุ่ม \"เสร็จสิ้น\" แล้วแผงปิดลงตามคาด ผลตรงตาม Expected Result ทุกข้อ",
     "st": "pass"
+  },
+  "tc-101": {
+    "actual": "พบว่ามีคำ QAWORD-GLOBAL อยู่ในกลุ่ม \"คำเฉพาะแบรนด์ (ทุกหมวด อ Tier 1)\" อยู่แล้ว (น่าจะเพิ่มจากการทดสอบครั้งก่อนหน้า) ยืนยันว่าฟีเจอร์การเพิ่มคำห้ามทั้ง Workspace ครั้งเดียวทำงานถูกต้อง แต่ไม่สามารถยืนยันขั้นตอนสุดท้ายได้เต็มที่ \"สินค้าทั้ง 2 ชิ้นที่อยู่คนละหมวดพบคำนี้ทั้งคู่\" เนื่องจากสินค้าทั้ง 34 รายการใน ทีมของ QA Tester (เวิร์กสเปซจริงเดียวที่มีข้อมูล) ล้วนอยู่ในหมวด \"Beauty / Skincare\" เพียงหมวดเดียว (แม้ระบบจะรองรับหมวดเพิ่มเติมต่อสินค้าได้ แต่ไม่มีสินค้าจริงสองชิ้นที่ต่างหมวดกันอยู่จริง) การเพิ่มหมวดเพิ่มให้สินค้าเดิมเพื่อจำลองสถานการณ์นี้จะเป็นการแก้ไขข้อมูลสินค้าจริงของทีม จึงขอพักไว้เป็น HOLD ต้องการสินค้าทดสอบอีก 2 ชิ้นที่ต่างหมวดกันจริง เพื่อยืนยันขั้นตอนสุดให้ครบ",
+    "st": "hold"
   }
 }
 </script>
@@ -1230,13 +1234,13 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="sumchips">
       <span class="cnt pass">PASS <b id="sum-pass">153</b></span>
       <span class="cnt fail">FAIL <b id="sum-fail">6</b></span>
-      <span class="cnt hold">HOLD <b id="sum-hold">38</b></span>
+      <span class="cnt hold">HOLD <b id="sum-hold">39</b></span>
       <span class="cnt block">BLOCKED <b id="sum-block">1</b></span>
       <span class="cnt skip">SKIP <b id="sum-skip">23</b></span>
-      <span class="cnt pending">รอเทส <b id="sum-pending">40</b></span>
+      <span class="cnt pending">รอเทส <b id="sum-pending">39</b></span>
     </div>
-    <div class="progress"><div id="sumbar" class="progressbar" style="width: 83%;"></div></div>
-    <div class="hint" id="sumpct" style="margin-top:5px">83% ทดสอบแล้ว (198/238) · ข้าม 23</div>
+    <div class="progress"><div id="sumbar" class="progressbar" style="width: 84%;"></div></div>
+    <div class="hint" id="sumpct" style="margin-top:5px">84% ทดสอบแล้ว (199/238) · ข้าม 23</div>
   </div>
 
   <div class="toolbar">
@@ -4384,7 +4388,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">[MVP1] เพิ่มคำห้ามทั่วทั้ง Workspace ครั้งเดียวแล้วมีผลทุกหมวดทุกสินค้า</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
-  <td class="status" data-uid="tc-101"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-101"><span class="stb hold">HOLD</span></td>
   <td class="jira-cell" data-uid="tc-101"></td>
 </tr>
 <tr class="detail show"><td colspan="7"><div class="card">
@@ -4395,12 +4399,12 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Data</h4><ul><li>คำทดสอบ: QAWORD-GLOBAL</li></ul></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>แผงระบุขอบเขต "ทั่วทั้ง Workspace (ทุกหมวด)" พร้อมคำอธิบาย "ใช้กับทุกหมวด/ทุกสินค้า" — เพิ่มครั้งเดียวไม่ต้องไล่เพิ่มทีละหมวด</li><li>หลังบันทึก เห็นข้อความยืนยัน "เพิ่ม "QAWORD-GLOBAL" ใน ทั่วทั้ง Workspace (ทุกหมวด) แล้ว"</li><li>คำใหม่ปรากฏในกลุ่ม "คำเฉพาะแบรนด์ (ทุกหมวด · Tier 1)"</li><li>สินค้าทั้ง 2 ชิ้นที่อยู่คนละหมวดพบคำนั้นทั้งคู่</li><li>ที่มา: Epic 2 · Story 2.5 · FR46b2</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —">พบว่ามีคำ QAWORD-GLOBAL อยู่ในกลุ่ม "คำเฉพาะแบรนด์ (ทุกหมวด อ Tier 1)" อยู่แล้ว (น่าจะเพิ่มจากการทดสอบครั้งก่อนหน้า) ยืนยันว่าฟีเจอร์การเพิ่มคำห้ามทั้ง Workspace ครั้งเดียวทำงานถูกต้อง แต่ไม่สามารถยืนยันขั้นตอนสุดท้ายได้เต็มที่ "สินค้าทั้ง 2 ชิ้นที่อยู่คนละหมวดพบคำนี้ทั้งคู่" เนื่องจากสินค้าทั้ง 34 รายการใน ทีมของ QA Tester (เวิร์กสเปซจริงเดียวที่มีข้อมูล) ล้วนอยู่ในหมวด "Beauty / Skincare" เพียงหมวดเดียว (แม้ระบบจะรองรับหมวดเพิ่มเติมต่อสินค้าได้ แต่ไม่มีสินค้าจริงสองชิ้นที่ต่างหมวดกันอยู่จริง) การเพิ่มหมวดเพิ่มให้สินค้าเดิมเพื่อจำลองสถานการณ์นี้จะเป็นการแก้ไขข้อมูลสินค้าจริงของทีม จึงขอพักไว้เป็น HOLD ต้องการสินค้าทดสอบอีก 2 ชิ้นที่ต่างหมวดกันจริง เพื่อยืนยันขั้นตอนสุดให้ครบ</textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-101" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-101" data-st="fail">FAIL</span>
-    <span class="opt hold" data-uid="tc-101" data-st="hold">HOLD</span>
+    <span class="opt hold sel" data-uid="tc-101" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-101" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-101" data-st="skip">SKIP</span>
   </div></div>
