@@ -726,7 +726,11 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     ]
   },
   "tc-134": {
-    "actual": "[ข้ามไปก่อน - ยังทดสอบไม่ได้] เคสนี้ต้องมีไลฟ์สถานะ \"ยืนยันแล้ว\" หรือ \"กำลังออกอากาศ\" ที่ผูกสคริปต์จากคลังไว้ ซึ่งต้องผ่านขั้นตอนตั้งเวลา/preflight/launch เพิ่มเติม และมีความเสี่ยงต่อไลฟ์จริงที่กำลังออกอากาศอยู่ในระบบ (พบ 2 ไลฟ์ที่กำลังออกอากาศจริงในระบบ UAT ขณะทดสอบ) จึงขอข้ามการทดสอบเคสนี้ไปก่อนตามที่แจ้งไว้ (สถานะยังไม่เปลี่ยน)"
+    "actual": "เนื่องจากการผูกสคริปต์เข้าฯาก/ไลฟ์ติดบัค TAKRA-667 (bind-script ล้มเหลวด้วย HTTP 500 เป็นช่วง) และการกลับเข้า Studio ของไลฟ์ดราฟท์เดิมเป็นไลฟ์เปล่าใหม่เสมอ (ตามที่เจอใน TC-TS.3) จึงยำเตียกกว่าเดีม เพราะเคสนี้ต้องการไลฟ์ที่อยู่สถานะ \"ยืนยันแล้ว/กำลังออกอากาศ\" (ซูงกว่าแค่ดราฟท์) ซึ่งต้องการเริ่มไลฟ์จริงหรือการยืนยันก่อนไลฟ์ ซึ่งทำไม่ได้เนื่องจากติดปัญหาเดียวกับการผูกสคริปต์อยู่แล้ว จึงยังไม่สามารถทดสอบ auto-cascade prevention ตาม test steps ได้จริง ขอพักเป็น HOLD",
+    "st": "hold",
+    "jira": [
+      "https://kitdi.atlassian.net/browse/TAKRA-667"
+    ]
   },
   "tc-135": {
     "actual": "ทดสอบผ่าน: เปิด /schedule เห็นหัวข้อ \"ตารางไลฟ์\" คำบรรยาย การ์ดสรุป (สัปดาห์นี้/กำลังจะมาถึง/ออกอากาศแล้ว) ครบถ้วน สลับมุมมอง วัน/สัปดาห์/เดือน ได้ครบทุกมุมมอง ปุ่มก่อนหน้า/ถัดไป/วันนี้ ทำงานถูกต้อง กดที่ช่องวันที่มีรอบไลฟ์แล้วสลับเป็นมุมมองวันนั้นได้ถูกต้อง ตรงตาม Expected ทุกข้อ",
@@ -1246,13 +1250,13 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="sumchips">
       <span class="cnt pass">PASS <b id="sum-pass">153</b></span>
       <span class="cnt fail">FAIL <b id="sum-fail">8</b></span>
-      <span class="cnt hold">HOLD <b id="sum-hold">40</b></span>
+      <span class="cnt hold">HOLD <b id="sum-hold">41</b></span>
       <span class="cnt block">BLOCKED <b id="sum-block">1</b></span>
       <span class="cnt skip">SKIP <b id="sum-skip">23</b></span>
-      <span class="cnt pending">รอเทส <b id="sum-pending">36</b></span>
+      <span class="cnt pending">รอเทส <b id="sum-pending">35</b></span>
     </div>
     <div class="progress"><div id="sumbar" class="progressbar" style="width: 85%;"></div></div>
-    <div class="hint" id="sumpct" style="margin-top:5px">85% ทดสอบแล้ว (202/238) · ข้าม 23</div>
+    <div class="hint" id="sumpct" style="margin-top:5px">85% ทดสอบแล้ว (203/238) · ข้าม 23</div>
   </div>
 
   <div class="toolbar">
@@ -5406,32 +5410,32 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow" data-feat="epic2" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow open" data-feat="epic2" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-TS.E1</td>
   <td class="ctitle">[MVP1] แก้ต้นฉบับในคลังไม่กระทบไลฟ์ที่ยืนยันแล้วหรือกำลังออกอากาศ</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-134"><span class="stb pending">รอเทส</span></td>
-  <td class="jira-cell" data-uid="tc-134"></td>
+  <td class="status" data-uid="tc-134"><span class="stb hold">HOLD</span></td>
+  <td class="jira-cell" data-uid="tc-134"><a href="https://kitdi.atlassian.net/browse/TAKRA-667" target="_blank" rel="noopener" class="jira-chip">TAKRA-667</a></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail show"><td colspan="7"><div class="card">
   <div class="h-title">[MVP1] แก้ต้นฉบับในคลังไม่กระทบไลฟ์ที่ยืนยันแล้วหรือกำลังออกอากาศ</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · script-two-way-sync · Epic 2 · Story 2.10 · FR72 (no auto-cascade)</div>
   <div class="sec"><h4>Precondition</h4><ul><li>มีไลฟ์ที่สถานะยืนยันแล้ว/กำลังออกอากาศ ซึ่งผูกสคริปต์จากคลังไว้</li></ul></div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "แพลตฟอร์มไลฟ์" กด "เปลี่ยนแพลตฟอร์ม" แล้วที่เมนู "ไลฟ์ของฉัน" เปิดไลฟ์ที่ยืนยันแล้ว/กำลังออกอากาศซึ่งผูกสคริปต์จากคลังไว้ แล้วจดเนื้อหาสคริปต์ที่ใช้อยู่</li><li>กลับฝั่งหลังบ้านผ่านเมนู "หลังบ้าน" ไปที่เมนู "คลังสคริปต์" แก้เนื้อหาต้นฉบับให้ต่างจากเดิมชัดเจน แล้วกด "บันทึกการแก้ไข"</li><li>กลับมาดูสคริปต์ของไลฟ์รอบนั้น แล้วเทียบเนื้อหากับที่จดไว้</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>เนื้อหาที่ไลฟ์ใช้ยังเป็นสำเนาเดิม ไม่ถูกอัปเดตอัตโนมัติ (ไม่ auto-cascade — ไลฟ์ที่ Approved/กำลังไลฟ์ไม่ถูกแก้เงียบๆ)</li><li>ระบบทำได้เพียงแจ้งว่ามีเวอร์ชันใหม่ (แถบ "ล้าสมัย" พร้อมปุ่ม "อัปเดต snapshot") แต่ไม่แก้ให้เอง</li><li>การอัปเดต snapshot ต้องเกิดจากการกดของผู้ใช้เท่านั้น</li><li>ที่มา: Epic 2 · Story 2.10 · FR72</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —">เนื่องจากการผูกสคริปต์เข้าฯาก/ไลฟ์ติดบัค TAKRA-667 (bind-script ล้มเหลวด้วย HTTP 500 เป็นช่วง) และการกลับเข้า Studio ของไลฟ์ดราฟท์เดิมเป็นไลฟ์เปล่าใหม่เสมอ (ตามที่เจอใน TC-TS.3) จึงยำเตียกกว่าเดีม เพราะเคสนี้ต้องการไลฟ์ที่อยู่สถานะ "ยืนยันแล้ว/กำลังออกอากาศ" (ซูงกว่าแค่ดราฟท์) ซึ่งต้องการเริ่มไลฟ์จริงหรือการยืนยันก่อนไลฟ์ ซึ่งทำไม่ได้เนื่องจากติดปัญหาเดียวกับการผูกสคริปต์อยู่แล้ว จึงยังไม่สามารถทดสอบ auto-cascade prevention ตาม test steps ได้จริง ขอพักเป็น HOLD</textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-134" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-134" data-st="fail">FAIL</span>
-    <span class="opt hold" data-uid="tc-134" data-st="hold">HOLD</span>
+    <span class="opt hold sel" data-uid="tc-134" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-134" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-134" data-st="skip">SKIP</span>
   </div></div>
   <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
-    <div class="jira-list" data-uid="tc-134"></div>
+    <div class="jira-list" data-uid="tc-134"><div class="jira-item"><a href="https://kitdi.atlassian.net/browse/TAKRA-667" target="_blank" rel="noopener">TAKRA-667</a><span class="jira-del" title="ลบลิงก์">✕</span></div></div>
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-134" placeholder="วางลิงก์ Jira หรือพิมพ์ TAK-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-134">+ เพิ่มลิงก์</button></div>
   </div>
 </div></td></tr>
