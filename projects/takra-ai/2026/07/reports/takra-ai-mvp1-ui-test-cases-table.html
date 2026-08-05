@@ -993,7 +993,11 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     ]
   },
   "tc-201": {
-    "actual": "ข้ามการทดสอบในรอบนี้ (สถานะไม่เปลี่ยน) — ต้องการฉากปลายทางที่มีสคริปต์ตัวเดียวกันอยู่แล้วแต่ไม่เต็ม แต่หน้าต่าง \"ผูกสคริปต์เข้าฉาก\" กรองสคริปต์ที่ถูกผูกกับฉากอื่นในไลฟ์เดียวกันออกจากคลังไปแล้ว (ค้นหาไม่เจอ) ทำให้จำลอง scenario ตามสเต็ปไม่ได้ในรอบนี้ ต้องตรวจสอบเพิ่มเติมว่ากรณีนี้เกิดขึ้นได้จริงหรือไม่"
+    "actual": "ไม่สามารถตั้ง precondition ได้: ทดลองสร้างฯากที่ 2 แล้วผูกสคริปต์ตัวเดียวกัน (ที่ผูกอยู่ในฯากที่ 1 แล้ว) เข้าไปผูกที่ฯากที่ 2 ซ้ำ แต่การผูกสคริปต์เข้าฯากไม่สำเร็จ (เงียบไป ไม่ขึ้นเป็น checkbox จริง นับสคริปต์ในฯากยังเป็น 0/3) ตรงกับปัญหาเดียวกับ TC-RM.1 ซึ่งตรงกับบัค Jira ที่มีอยู่แล้ว TAKRA-667 \"ผูกสคริปต์เข้าไลฟ์ล้มเป็นช่วง ๆ ด้วย HTTP 500\" (สถานะ READY TO TEST) จึงสรุปว่าเป็นบัคที่ทราบอยู่แล้ว ทำให้ไม่สามารถทดสอบพ์การกันซ้ำตาม test steps ได้จริง",
+    "st": "fail",
+    "jira": [
+      "https://kitdi.atlassian.net/browse/TAKRA-667"
+    ]
   },
   "tc-160": {
     "st": "fail"
@@ -1237,14 +1241,14 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <h3>📊 สรุปผล Manual Test</h3>
     <div class="sumchips">
       <span class="cnt pass">PASS <b id="sum-pass">153</b></span>
-      <span class="cnt fail">FAIL <b id="sum-fail">7</b></span>
+      <span class="cnt fail">FAIL <b id="sum-fail">8</b></span>
       <span class="cnt hold">HOLD <b id="sum-hold">39</b></span>
       <span class="cnt block">BLOCKED <b id="sum-block">1</b></span>
       <span class="cnt skip">SKIP <b id="sum-skip">23</b></span>
-      <span class="cnt pending">รอเทส <b id="sum-pending">38</b></span>
+      <span class="cnt pending">รอเทส <b id="sum-pending">37</b></span>
     </div>
     <div class="progress"><div id="sumbar" class="progressbar" style="width: 84%;"></div></div>
-    <div class="hint" id="sumpct" style="margin-top:5px">84% ทดสอบแล้ว (200/238) · ข้าม 23</div>
+    <div class="hint" id="sumpct" style="margin-top:5px">84% ทดสอบแล้ว (201/238) · ข้าม 23</div>
   </div>
 
   <div class="toolbar">
@@ -7456,32 +7460,32 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 </div></td></tr>
 
-<tr class="trow" data-feat="epic3" data-level="ui" data-prio="P1" onclick="tg(this)">
+<tr class="trow open" data-feat="epic3" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-RM.E2</td>
   <td class="ctitle">[MVP1] ย้ายสคริปต์ไปฉากที่มีสคริปต์ตัวเดียวกันอยู่แล้ว ระบบกั้น</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-201"><span class="stb pending">รอเทส</span></td>
-  <td class="jira-cell" data-uid="tc-201"></td>
+  <td class="status" data-uid="tc-201"><span class="stb fail">FAIL</span></td>
+  <td class="jira-cell" data-uid="tc-201"><a href="https://kitdi.atlassian.net/browse/TAKRA-667" target="_blank" rel="noopener" class="jira-chip">TAKRA-667</a></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail show"><td colspan="7"><div class="card">
   <div class="h-title">[MVP1] ย้ายสคริปต์ไปฉากที่มีสคริปต์ตัวเดียวกันอยู่แล้ว ระบบกั้น</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · script-reorder-move · Epic 3 · Story 3.9 (edge)</div>
   <div class="sec"><h4>Precondition</h4><ul><li>มีสคริปต์ตัวเดียวกันอยู่ในฉากปลายทางแล้ว</li></ul></div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "แพลตฟอร์มไลฟ์" ในแถบด้านซ้าย แล้วกดปุ่ม "เปลี่ยนแพลตฟอร์ม" ในกล่องยืนยัน จากนั้นเลือกเมนู "โปรเจกต์ของฉัน" แล้วกด "แก้ไขต่อ" ที่ไลฟ์ตาม Precondition เพื่อเข้า Studio</li><li>กดไอคอน "ย้ายไปฉาก…" ที่สคริปต์ซึ่งมีตัวเดียวกันอยู่ในฉากปลายทางแล้ว</li><li>ดูป้ายกำกับของฉากนั้นในเมนูย้าย แล้วลองเลือกฉากนั้นเป็นปลายทาง และอ่านข้อความที่แสดง</li><li>ตรวจรายการสคริปต์ของฉากปลายทางว่ามีรายการซ้ำหรือไม่</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ฉากที่มีสคริปต์ตัวเดียวกันอยู่แล้วติดป้าย "มีแล้ว" ในเมนูย้าย</li><li>ถ้าเลือกฉากนั้น ระบบไม่ย้ายและแจ้ง "ฉากปลายทางมี script นี้แล้ว" พร้อมเหตุผล "script ตัวเดียวกันใส่ซ้ำในฉากไม่ได้"</li><li>ไม่มีรายการซ้ำเกิดขึ้นในฉากปลายทาง และสคริปต์ยังอยู่ที่ฉากต้นทาง</li><li>ที่มา: Epic 3 · Story 3.9</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —">ข้ามการทดสอบในรอบนี้ (สถานะไม่เปลี่ยน) — ต้องการฉากปลายทางที่มีสคริปต์ตัวเดียวกันอยู่แล้วแต่ไม่เต็ม แต่หน้าต่าง "ผูกสคริปต์เข้าฉาก" กรองสคริปต์ที่ถูกผูกกับฉากอื่นในไลฟ์เดียวกันออกจากคลังไปแล้ว (ค้นหาไม่เจอ) ทำให้จำลอง scenario ตามสเต็ปไม่ได้ในรอบนี้ ต้องตรวจสอบเพิ่มเติมว่ากรณีนี้เกิดขึ้นได้จริงหรือไม่</textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —">ไม่สามารถตั้ง precondition ได้: ทดลองสร้างฯากที่ 2 แล้วผูกสคริปต์ตัวเดียวกัน (ที่ผูกอยู่ในฯากที่ 1 แล้ว) เข้าไปผูกที่ฯากที่ 2 ซ้ำ แต่การผูกสคริปต์เข้าฯากไม่สำเร็จ (เงียบไป ไม่ขึ้นเป็น checkbox จริง นับสคริปต์ในฯากยังเป็น 0/3) ตรงกับปัญหาเดียวกับ TC-RM.1 ซึ่งตรงกับบัค Jira ที่มีอยู่แล้ว TAKRA-667 "ผูกสคริปต์เข้าไลฟ์ล้มเป็นช่วง ๆ ด้วย HTTP 500" (สถานะ READY TO TEST) จึงสรุปว่าเป็นบัคที่ทราบอยู่แล้ว ทำให้ไม่สามารถทดสอบพ์การกันซ้ำตาม test steps ได้จริง</textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-201" data-st="pass">PASS</span>
-    <span class="opt fail" data-uid="tc-201" data-st="fail">FAIL</span>
+    <span class="opt fail sel" data-uid="tc-201" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-201" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-201" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-201" data-st="skip">SKIP</span>
   </div></div>
   <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
-    <div class="jira-list" data-uid="tc-201"></div>
+    <div class="jira-list" data-uid="tc-201"><div class="jira-item"><a href="https://kitdi.atlassian.net/browse/TAKRA-667" target="_blank" rel="noopener">TAKRA-667</a><span class="jira-del" title="ลบลิงก์">✕</span></div></div>
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-201" placeholder="วางลิงก์ Jira หรือพิมพ์ TAK-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-201">+ เพิ่มลิงก์</button></div>
   </div>
 </div></td></tr>
