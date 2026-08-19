@@ -194,6 +194,14 @@ tr.featrow .ty{margin-left:3px}
       font-weight: 100 900;
       src: url('chrome-extension://lknmjhcajhfbbglglccadlfdjbaiifig/fonts/work-sans-latin-wght-normal.woff2') format('woff2');
     }
+  </style><style type="text/css">
+    @font-face {
+      font-family: 'Work Sans';
+      font-style: normal;
+      font-display: swap;
+      font-weight: 100 900;
+      src: url('chrome-extension://lknmjhcajhfbbglglccadlfdjbaiifig/fonts/work-sans-latin-wght-normal.woff2') format('woff2');
+    }
   </style></head>
 <body>
 <a id="hub-back-btn" href="https://wanlee-tankunnatam.github.io/qa-test-reports/?project=ai" title="กลับไปหน้ารวมรายงาน (Hub)" style="position:fixed;top:12px;right:14px;z-index:99999;display:inline-flex;align-items:center;gap:7px;padding:10px 18px;border-radius:999px;background:#ffffff;color:#1e3a8a;font-size:14px;font-weight:800;text-decoration:none;box-shadow:0 4px 16px rgba(0,0,0,.35);border:2px solid #1e3a8a;font-family:'Segoe UI','Sarabun',system-ui,sans-serif">🏠 รายงานทั้งหมด</a>
@@ -288,6 +296,22 @@ tr.featrow .ty{margin-left:3px}
   "tc-20": {
     "actual": "[2026-08-19 · AI-assisted UI check] SKIP — ตามที่ผู้ว่าจ้างทดสอบสั่งให้ข้ามไปก่อน เพราะเคสนี้ต้องมอบสิทธิ์ Script Approve ให้สมาชิกจริงใน workspace UAT (เป็นการเปลี่ยนสิทธิ์ที่ถูกบันทึกลง AIEventLog)\nสิ่งที่ยืนยันได้โดยไม่แตะสิทธิ์ของใคร:\n- ตาราง /users มีคอลัมน์ \"SCRIPT APPROVE\" (หัวคอลัมน์มีไอคอนแม่กุญแจ) พร้อมสวิตช์รายคน — สมาชิกที่ยังไม่ได้รับสิทธิ์แสดงสวิตช์ปิดและสถานะ \"ไม่ได้รับสิทธิ์\" (wanleeta QA · kachain bumrungta) ส่วน Owner แสดงเปิดถาวรและล็อกไว้\n- แผงรายละเอียดของสมาชิก (ที่ไม่ใช่ Owner) มีหัวข้อ \"Script Approve\" พร้อมคำอธิบาย \"อนุญาตให้ผู้ใช้คนนี้ approve script ได้ · revoke ได้ทันที · บันทึกใน AIEventLog\" และแถวสวิตช์ \"มอบสิทธิ์ Script Approve\"\n- ประวัติท้ายหน้ายืนยันว่า flow นี้เคยถูกใช้จริงและบันทึกครบ: \"QA Tester → wanleeta QA · มอบสิทธิ์ · 11 ชม.ที่แล้ว\" และ \"เพิกถอนสิทธิ์ · 11 ชม.ที่แล้ว\"\nยังไม่ได้ตรวจ: ข้อความแจ้งผลหลังกดมอบสิทธิ์ · การอัปเดตสถานะในตารางแบบทันที (real-time) · การบันทึกรายการใหม่เข้าประวัติทันที — แนะนำให้ QA ที่เป็นคนรันทดสอบเอง",
     "st": "skip"
+  },
+  "tc-30": {
+    "actual": "ผ่าน — /avatars แสดงหัวข้อ \"คลังอวาตาร์\" + คำบรรยาย \"เลือกอวาตาร์ที่จะใช้ในห้องไลฟ์ของคุณ\", เมนู \"คลังอวาตาร์\" ในแถบซ้ายถูกไฮไลต์, หัวข้อกลุ่ม \"อวาตาร์ที่ทีมจัดเตรียมให้\" แสดงการ์ด 22 ใบเป็นตาราง แต่ละใบมีชื่ออวาตาร์ + ป้ายสไตล์ \"พรีเซ็นเตอร์\" (API avatar-profiles = 34 รายการ: active 22 / unpublished 12 → ซ่อน unpublished ถูกต้อง)\nHover การ์ด → ขึ้นกรอบสีส้ม + ไอคอนปิดเสียง/ขยายเต็มจอ + ปุ่ม \"ดูตัวอย่าง\" ตามที่คาด\n[ข้อสังเกต 1] 5/22 การ์ด (K.Bow, Mascott Test (No), staff Black, staff White, คุณทรี) ไม่มีทั้งรูปและวิดีโอพรีวิว ระบบ fallback เป็น placeholder SVG สีเทา — ฝั่ง API imageUrl/previewVideoUrl = null (ทั้งชุด 16/34 ไม่มีสื่อ) → ขอทีม Ops เติมสื่อ\n[ข้อสังเกต 2] ข้อ \"วิดีโอตัวอย่างเริ่มเล่นแทนรูปนิ่งตอน hover\" ยืนยันไม่ได้จากเครื่องทดสอบนี้: video element ค้างที่ readyState=0 (event: loadstart → stalled, ไม่มี progress) แม้ไฟล์ .mp4 บน CDN โหลดผ่าน fetch ได้ปกติ (HTTP 200, 1.65 MB, avc1) และเล่นจาก blob URL ก็ยังค้าง → น่าจะเป็นข้อจำกัดของ environment ทดสอบ ขอให้ผู้ทดสอบยืนยันด้วยตาบนเครื่องจริงอีกครั้ง\nทดสอบ 19 ส.ค. 2569 · Chrome · บัญชี Owner (qa@takra.ai) · workspace \"ทีมของ QA Tester\"",
+    "st": "pass"
+  },
+  "tc-31": {
+    "actual": "กลไกตัวกรองทำงานถูกต้องทุกจุด: คลิกชิป \"พรีเซ็นเตอร์\" → เปลี่ยนเป็นสถานะถูกเลือก และขึ้นข้อความ \"แสดง 22 จาก 22 ตัว · ล้างตัวกรอง\" ตรงรูปแบบที่คาด; เลือก \"เพศ\" เพิ่ม → ตัวเลขบนชิปสไตล์ทุกปุ่มปรับตามทันที (เงื่อนไข AND ถูกต้อง); เมื่อไม่พบผลลัพธ์ → empty state \"ไม่พบ avatar ตามตัวกรอง\" + ปุ่ม \"ล้างตัวกรอง\"; กด \"ล้างตัวกรอง\" → รายการกลับมา 22 ตัวเท่าเดิม และ dropdown เพศรีเซ็ตเป็น \"เพศ\"\nแต่ Precondition \"ในคลังมีอวาตาร์หลายสไตล์และหลายเพศปนกัน\" ไม่เป็นจริงบน UAT: GET /api/v1/workspaces/{wsId}/avatar-profiles คืนค่า style=presenter และ gender=neutral ครบทั้ง 34/34 รายการ\nผลที่ตามมา → ชิป \"เซลฟี่\" = 0 และ \"อื่นๆ\" = 0 เสมอ; ตัวกรองเพศ \"หญิง\" = 0, \"ชาย\" = 0, \"LGBT+\" = 22 (อวาตาร์ทุกตัวถูกจัดเป็น LGBT+ ซึ่งไม่ตรงกับตัวอวาตาร์จริง เช่น \"ททท Women (LiveAvatar)\")\n→ ลง HOLD: ขอ Ops/BE เติม metadata สไตล์ + เพศให้ถูกต้องก่อน แล้วรันเคสนี้ซ้ำ (ตัว UI ไม่พบข้อบกพร่อง)",
+    "st": "hold"
+  },
+  "tc-32": {
+    "actual": "ไม่ผ่าน — หน้าต่างพรีวิวเปิดได้จากปุ่ม \"ดูตัวอย่าง\" และกด Esc ปิดได้ปกติ (โฟกัสกลับไปที่ปุ่มเดิม ตำแหน่ง scroll คงเดิม) แต่เนื้อหาในกล่องไม่ครบตามสเปก\nพบจริงในกล่อง (ข้อความทั้งหมด): ชื่ออวาตาร์ / \"เสียง (กำหนดโดย OPS)\" = \"ค่าเริ่มต้น (TTS)\" / หมายเหตุ \"ค่าตั้งค่าของอวาตาร์ (เสียง · โทน · คาแรกเตอร์) จัดการโดยทีม TAKRA Ops — ติดต่อ Ops เพื่อเปลี่ยน config\" / ปุ่ม \"โคลนเข้า workspace\" / ปุ่ม \"ใช้ในห้องไลฟ์\"\n[ขาดตามสเปก] 1) ไม่มีหัวข้อ \"คาแรกเตอร์\"  2) ไม่มีหัวข้อ \"โทนการพูด (กำหนดโดย Ops)\"  3) ไม่มีแถบคลื่นเสียงและปุ่มเล่นตัวอย่างเสียง (จึงทดสอบข้อ \"กดเล่นแล้วปุ่มเปลี่ยนเป็นปุ่มหยุด\" ไม่ได้)\n[ต่างจากสเปก] ใช้คำว่า \"(กำหนดโดย OPS)\" พิมพ์ใหญ่ทั้งคำ แทน \"(กำหนดโดย Ops)\"; วิดีโอในกล่องใช้ native controls ของเบราว์เซอร์แทนตัวเล่นของระบบ\n[เพิ่มจากสเปก] มีปุ่ม \"โคลนเข้า workspace\" และมี section ใหม่ \"อวาตาร์ของฉัน\" ท้ายหน้า /avatars ซึ่งยังไม่มี TC รองรับ\n[หมายเหตุ] ฝั่ง API persona = null ทุกรายการ และไม่มี field โทนการพูดเลย → ขอ BA/Dev ยืนยันว่าตัด 2 หัวข้อนี้ออกจริงหรือเป็นบั๊ก ถ้าตัดออกตามดีไซน์ใหม่ให้ปรับสเปก TC ตาม",
+    "st": "fail"
+  },
+  "tc-33": {
+    "actual": "ผ่าน — \"อัปเดตล่าสุด\" ก่อนกด = 19 ส.ค. 2569 13:41\nกด \"อัปเดตคลังอวาตาร์\" → ปุ่มเปลี่ยนเป็น \"กำลังอัปเดต...\" พร้อมไอคอนหมุน และถูก disable ระหว่างทำงาน\nเสร็จแล้วขึ้น toast สีเขียว \"อัปเดตคลังอวาตาร์แล้ว\" พร้อมบรรทัดรอง \"22 avatar จาก Realfact\" ตรงรูปแบบ \"N avatar จาก Realfact\"\n\"อัปเดตล่าสุด\" เปลี่ยนเป็น 19 ส.ค. 2569 20:33 และจำนวนการ์ดในหน้า = 22 ใบ สอดคล้องกับจำนวนที่แจ้งใน toast",
+    "st": "pass"
   }
 }
 </script>
@@ -318,15 +342,15 @@ tr.featrow .ty{margin-left:3px}
   <div class="runsum">
     <h3>📊 สรุปผล Manual Test</h3>
     <div class="sumchips">
-      <span class="cnt pass">PASS <b id="sum-pass">12</b></span>
-      <span class="cnt fail">FAIL <b id="sum-fail">2</b></span>
-      <span class="cnt hold">HOLD <b id="sum-hold">1</b></span>
+      <span class="cnt pass">PASS <b id="sum-pass">14</b></span>
+      <span class="cnt fail">FAIL <b id="sum-fail">3</b></span>
+      <span class="cnt hold">HOLD <b id="sum-hold">2</b></span>
       <span class="cnt block">BLOCKED <b id="sum-block">4</b></span>
       <span class="cnt skip">SKIP <b id="sum-skip">3</b></span>
-      <span class="cnt pending">รอเทส <b id="sum-pending">207</b></span>
+      <span class="cnt pending">รอเทส <b id="sum-pending">203</b></span>
     </div>
-    <div class="progress"><div id="sumbar" class="progressbar" style="width: 8%;"></div></div>
-    <div class="hint" id="sumpct" style="margin-top:5px">8% ทดสอบแล้ว (19/226) · ข้าม 3</div>
+    <div class="progress"><div id="sumbar" class="progressbar" style="width: 10%;"></div></div>
+    <div class="hint" id="sumpct" style="margin-top:5px">10% ทดสอบแล้ว (23/226) · ข้าม 3</div>
   </div>
 
   <div class="toolbar">
@@ -854,7 +878,7 @@ tr.featrow .ty{margin-left:3px}
 </div></td></tr>
 
 <tr class="featrow" data-featkey="m1-users-roles"><td colspan="7">📁 users-roles <span class="rp"><span class="lv lvl-ui">🌐 5</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="m1-users-roles"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
-<tr class="trow open" data-mvp="mvp1" data-feat="m1e1" data-type="happy" data-level="ui" data-prio="P0" onclick="tg(this)">
+<tr class="trow" data-mvp="mvp1" data-feat="m1e1" data-type="happy" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-UR.1</td>
   <td class="ctitle">เปิดหน้าผู้ใช้และบทบาทแล้วเห็นสมาชิกครบพร้อมข้อมูลที่จำเป็น <span class="ty ty-happy" title="Happy Path">✅ Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -862,7 +886,7 @@ tr.featrow .ty{margin-left:3px}
   <td class="status" data-uid="tc-15"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-15"></td>
 </tr>
-<tr class="detail show"><td colspan="7">
+<tr class="detail"><td colspan="7">
 <div class="card">
   <div class="h-title">เปิดหน้าผู้ใช้และบทบาทแล้วเห็นสมาชิกครบพร้อมข้อมูลที่จำเป็น</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · users-roles · Epic 1 · Story 1.7 · ประเภท: <b>✅ Happy Path</b> · MVP-1</div>
@@ -1339,7 +1363,7 @@ tr.featrow .ty{margin-left:3px}
   <td class="ctitle">เปิดคลังอวาตาร์แล้วเห็นอวาตาร์ที่ทีม Ops จัดเตรียมให้ครบ <span class="ty ty-happy" title="Happy Path">✅ Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
-  <td class="status" data-uid="tc-30"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-30"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-30"></td>
 </tr>
 <tr class="detail"><td colspan="7">
@@ -1351,10 +1375,10 @@ tr.featrow .ty{margin-left:3px}
   <div class="sec"><h4>Test Data</h4><ul><li>URL: https://uat-live.takra.ai/avatars</li></ul></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>เห็นหัวข้อ "คลังอวาตาร์" พร้อมคำบรรยาย "เลือกอวาตาร์ที่จะใช้ในห้องไลฟ์ของคุณ" และเมนู "คลังอวาตาร์" ในแถบด้านซ้ายถูกไฮไลต์</li><li>ใต้หัวข้อกลุ่ม "อวาตาร์ที่ทีมจัดเตรียมให้" มีการ์ดอวาตาร์ที่ Ops จัดเตรียมแสดงครบเป็นตาราง แต่ละใบเห็นชื่ออวาตาร์</li><li>เมื่อชี้เมาส์ค้าง วิดีโอตัวอย่างของอวาตาร์ตัวนั้นเริ่มเล่นแทนรูปนิ่ง และปุ่ม "ดูตัวอย่าง" โผล่ขึ้นมาบนการ์ด</li><li>ที่มา: Epic 2 · Story 2.1 · FR7</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-30" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-30" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-30" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-30" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-30" data-st="block">BLOCKED</span>
@@ -1371,7 +1395,7 @@ tr.featrow .ty{margin-left:3px}
   <td class="ctitle">กรองอวาตาร์ตามสไตล์และเพศ แล้วล้างตัวกรองกลับมาดูทั้งหมด <span class="ty ty-happy" title="Happy Path">✅ Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-31"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-31"><span class="stb hold">HOLD</span></td>
   <td class="jira-cell" data-uid="tc-31"></td>
 </tr>
 <tr class="detail"><td colspan="7">
@@ -1383,12 +1407,12 @@ tr.featrow .ty{margin-left:3px}
   <div class="sec"><h4>Test Data</h4><ul><li>สไตล์: ทั้งหมด / พรีเซ็นเตอร์ / เซลฟี่ / อื่นๆ</li><li>เพศ: ทั้งหมด / หญิง / ชาย / LGBT+</li></ul></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ปุ่ม "พรีเซ็นเตอร์" เปลี่ยนเป็นสถานะถูกเลือก ตารางเหลือเฉพาะอวาตาร์สไตล์นั้น และจำนวนการ์ดตรงกับตัวเลขบนปุ่ม</li><li>เมื่อเลือกเพศ "หญิง" เพิ่ม ตัวเลขบนปุ่มสไตล์แต่ละปุ่มปรับลดตามเพศที่เลือก และตารางกรองซ้อนสองเงื่อนไขถูกต้อง</li><li>เห็นข้อความสรุป "แสดง X จาก Y ตัว" พร้อมลิงก์ "ล้างตัวกรอง"</li><li>หลังกด "ล้างตัวกรอง" รายการกลับมาแสดงครบเท่าตัวเลขเดิมของปุ่ม "ทั้งหมด"</li><li>ที่มา: Epic 2 · Story 2.1</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-31" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-31" data-st="fail">FAIL</span>
-    <span class="opt hold" data-uid="tc-31" data-st="hold">HOLD</span>
+    <span class="opt hold sel" data-uid="tc-31" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-31" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-31" data-st="skip">SKIP</span>
   </div></div>
@@ -1403,7 +1427,7 @@ tr.featrow .ty{margin-left:3px}
   <td class="ctitle">เปิดหน้าต่างพรีวิวอวาตาร์แล้วเห็นข้อมูลครบและปิดด้วย Esc ได้ <span class="ty ty-happy" title="Happy Path">✅ Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-32"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-32"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-32"></td>
 </tr>
 <tr class="detail"><td colspan="7">
@@ -1415,11 +1439,11 @@ tr.featrow .ty{margin-left:3px}
   <div class="sec"><h4>Test Data</h4><ul><li>อวาตาร์ที่ผูก Voice Profile และโทนการพูดไว้แล้ว</li></ul></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>หน้าต่างพรีวิวเปิดขึ้นพร้อมวิดีโอตัวอย่าง และแสดงหัวข้อ "คาแรกเตอร์" · "เสียง (กำหนดโดย Ops)" · "โทนการพูด (กำหนดโดย Ops)" ครบเป็นข้อมูลอ่านอย่างเดียว</li><li>หัวข้อที่ Ops กำหนดมีวงเล็บ "(กำหนดโดย Ops)" กำกับชัดเจน</li><li>กดเล่นบนแถบคลื่นเสียงแล้วได้ยินตัวอย่างเสียงจริง และปุ่มเปลี่ยนเป็นปุ่มหยุด</li><li>มีปุ่ม "ใช้ในห้องไลฟ์" สำหรับนำอวาตาร์ตัวนั้นไปใช้ต่อ และกด Esc แล้วหน้าต่างปิดกลับมาที่หน้าคลังตามเดิม</li><li>ที่มา: Epic 2 · Story 2.1 · FR8</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-32" data-st="pass">PASS</span>
-    <span class="opt fail" data-uid="tc-32" data-st="fail">FAIL</span>
+    <span class="opt fail sel" data-uid="tc-32" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-32" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-32" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-32" data-st="skip">SKIP</span>
@@ -1435,7 +1459,7 @@ tr.featrow .ty{margin-left:3px}
   <td class="ctitle">กดอัปเดตคลังอวาตาร์แล้วดึงรายการล่าสุดพร้อมแจ้งจำนวนที่ได้ <span class="ty ty-happy" title="Happy Path">✅ Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-33"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-33"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-33"></td>
 </tr>
 <tr class="detail"><td colspan="7">
@@ -1446,10 +1470,10 @@ tr.featrow .ty{margin-left:3px}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังอวาตาร์" แล้วจดเวลาที่แสดงตรง "อัปเดตล่าสุด" ไว้</li><li>กดปุ่ม "อัปเดตคลังอวาตาร์" แล้วสังเกตสถานะปุ่มระหว่างทำงาน</li><li>อ่านข้อความแจ้งผลเมื่อเสร็จ แล้วดูเวลา "อัปเดตล่าสุด" อีกครั้ง</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ระหว่างทำงาน ปุ่มเปลี่ยนเป็น "กำลังอัปเดต…" และกดซ้ำไม่ได้</li><li>เมื่อเสร็จ เห็นข้อความ "อัปเดตคลังอวาตาร์แล้ว" พร้อมจำนวนที่ดึงมาได้ทำนอง "N avatar จาก Realfact"</li><li>เวลา "อัปเดตล่าสุด" เปลี่ยนเป็นเวลาปัจจุบัน และจำนวนการ์ดในหน้าสอดคล้องกับจำนวนที่แจ้ง</li><li>ที่มา: Epic 2 · Story 2.1</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-33" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-33" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-33" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-33" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-33" data-st="block">BLOCKED</span>
@@ -8371,4 +8395,9 @@ document.querySelectorAll('.feat-owner').forEach(function(sel){var e=sel.dataset
         </svg>
         <span id="claude-static-close-tooltip" style="position: absolute; bottom: calc(100% + 12px); left: 50%; transform: translateX(-50%); padding: 6px 12px; background: #30302E; color: #FAF9F5; border-radius: 6px; font-size: 12px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.2s; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;">Dismiss</span>
       </button>
-    </div><tldx-lmi-shadow-root></tldx-lmi-shadow-root><div id="tldx-toast-container"></div></body></html>
+    </div><tldx-lmi-shadow-root></tldx-lmi-shadow-root><div id="tldx-toast-container"></div><tldx-lmi-shadow-root></tldx-lmi-shadow-root><div id="tldx-toast-container"></div><div id="claude-agent-glow-border" style="position: fixed; inset: 0px; pointer-events: none; z-index: 2147483646; opacity: 1; transition: opacity 0.3s ease-in-out;"><div id="claude-agent-glow-border-inner" style="position: absolute; inset: 0px; will-change: opacity; box-shadow: rgba(217, 119, 87, 0.7) 0px 0px 15px inset, rgba(217, 119, 87, 0.5) 0px 0px 25px inset, rgba(217, 119, 87, 0.2) 0px 0px 35px inset;"></div></div><div id="claude-agent-stop-container" style="position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%); justify-content: center; align-items: center; pointer-events: none; z-index: 2147483647;"><button id="claude-agent-stop-button" style="position: relative; transform: translateY(0px); padding: 12px 16px; background: rgb(250, 249, 245); color: rgb(20, 20, 19); border: 0.5px solid rgba(31, 30, 29, 0.4); border-radius: 12px; font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; box-shadow: rgba(217, 119, 87, 0.24) 0px 40px 80px, rgba(217, 119, 87, 0.24) 0px 4px 14px; transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); opacity: 1; user-select: none; pointer-events: auto; white-space: nowrap; margin: 0px auto;">
+      <svg width="16" height="16" viewBox="0 0 256 256" fill="currentColor" style="margin-right: 12px; vertical-align: middle;">
+        <path d="M128,20A108,108,0,1,0,236,128,108.12,108.12,0,0,0,128,20Zm0,192a84,84,0,1,1,84-84A84.09,84.09,0,0,1,128,212Zm40-112v56a12,12,0,0,1-12,12H100a12,12,0,0,1-12-12V100a12,12,0,0,1,12-12h56A12,12,0,0,1,168,100Z"></path>
+      </svg>
+      <span style="vertical-align: middle;">Stop Claude</span>
+    </button></div><div id="claude-phantom-cursor" aria-hidden="true" style="position: fixed; top: 0px; left: 0px; pointer-events: none; z-index: 2147483646; transform: translate3d(520px, 336px, 0px); transition: transform 180ms cubic-bezier(0.2, 0, 0, 1); will-change: transform;"><svg id="claude-phantom-cursor-plain" width="20" height="26" viewBox="0 0 20 26" style="position: absolute; top: 0px; left: 0px; overflow: visible;"><path d="M0 0 L0 18 L4.5 14 L7.5 21.5 L11 20 L8 13 L14 13 Z" stroke="white" stroke-width="3" stroke-linejoin="round" fill="white"></path><path d="M0 0 L0 18 L4.5 14 L7.5 21.5 L11 20 L8 13 L14 13 Z" fill="#111"></path></svg><svg id="claude-phantom-cursor-styled" width="20" height="26" viewBox="0 0 20 26" style="position: absolute; top: 0px; left: 0px; overflow: visible; filter: drop-shadow(rgba(217, 119, 87, 0.9) 0px 0px 4px) drop-shadow(rgba(217, 119, 87, 0.45) 0px 0px 10px);"><path d="M0 0 L0 18 L4.5 14 L7.5 21.5 L11 20 L8 13 L14 13 Z" stroke="#D97757" stroke-width="3" stroke-linejoin="round" fill="#D97757"></path><path d="M0 0 L0 18 L4.5 14 L7.5 21.5 L11 20 L8 13 L14 13 Z" fill="#FAF9F5"></path></svg></div></body></html>
