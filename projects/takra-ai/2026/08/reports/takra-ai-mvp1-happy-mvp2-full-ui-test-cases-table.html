@@ -257,37 +257,21 @@ tr.featrow .ty{margin-left:3px}
     "actual": "[2026-08-19 · AI-assisted UI check] PASS — Expected 1-2 ผ่านจากการทดสอบจริง · Expected 3 ยืนยันด้วยหลักฐานทางเทคนิค\n[PASS] Expected 1 — สลับไป \"Wanlee Qa\" แล้วรีเฟรชหน้า (โหลดใหม่ที่ /home) → ยังเป็น \"Wanlee Qa\" ทั้งหัวแถบข้าง breadcrumb และการ์ดภาพรวม ไม่รีเซ็ต\n[PASS] Expected 2 — เปิดแท็บใหม่แล้วพิมพ์ https://uat-live.takra.ai → เข้ามาที่ /home ของ \"Wanlee Qa\" เช่นกัน ไม่กลับไปค่าเริ่มต้น\n[PASS by evidence] Expected 3 — ขั้นตอน \"ปิดเบราว์เซอร์ทั้งหมดแล้วเปิดใหม่\" ไม่ได้รันจริง (ผู้ทดสอบไม่ได้รับอนุญาตให้ปิดเบราว์เซอร์ของผู้ใช้) แต่ตรวจกลไกที่ใช้เก็บค่าแทน: workspace ที่เลือกถูกเก็บใน cookie ชื่อ takra_active_workspace · path=/ · sameSite=lax · expires 2027-08-19 (อายุ 1 ปี ไม่ใช่ session cookie) → ค่าจะคงอยู่ข้ามการปิด-เปิดเบราว์เซอร์แน่นอนตราบใดที่ยังไม่ล้าง cookie · แนะนำให้ QA ที่เป็นคนรันทวนขั้นตอนนี้ด้วยมืออีกครั้งเพื่อปิดเคส 100%\n\n[NOTE ความปลอดภัย ระดับต่ำ] cookie takra_active_workspace ตั้ง secure=false ทั้งที่เว็บรันบน HTTPS — แนะนำเพิ่ม flag Secure\n\n[หลังทดสอบเสร็จ] สลับกลับมาที่ \"ทีมของ QA Tester\" (WS-A) เรียบร้อยแล้ว ระบบอยู่ในสภาพเดิม\n\n[BUG พบระหว่างทาง — ควรเปิดเคสแยก] หน้าคลังข้อมูลแสดง \"empty state ปลอม\" ระหว่างโหลด แทนที่จะเป็น skeleton\n- เปิด /scripts ของ WS-A (ซึ่งมีสคริปต์จริง 19 รายการ) → หน้าจอค้างแสดงการ์ดสรุปเป็น 0 ทุกช่อง พร้อมข้อความสถานะจบงานว่า \"ไม่มีสคริปต์รอรีวิว — เคลียร์หมดแล้ว\" นานประมาณ 17-25 วินาที แล้วค่อยเด้งเป็นเลขจริง (2 · 4 · 19 · 11)\n- /products และ /risk-words ก็ใช้เวลาโหลดนานคล้ายกัน (~20-30 วิ) แต่ /products ยังดีกว่าเพราะขึ้นข้อความ \"กำลังโหลดสินค้า...\" ให้รู้ว่ากำลังโหลด\n- ผลกระทบ: ผู้ใช้เข้าใจผิดว่า workspace ไม่มีข้อมูล และทำให้เคสประเภท Empty/Null (เช่น TC-E12-USG-08 · TC-E8-AHV-15) แยกไม่ออกระหว่าง \"ว่างจริง\" กับ \"ยังโหลดไม่เสร็จ\"",
     "st": "pass"
   },
-  "tc-15": {
-    "actual": "[2026-08-19 · AI-assisted UI check] FAIL — Expected ข้อ 1-2 ผ่าน แต่ข้อ 3-4 ไม่ตรงกับ UI จริง (ขาดข้อมูล \"เข้าใช้งานล่าสุด\" ทั้งหน้า)\n[PASS] Expected 1 — เห็นหัวข้อ \"ผู้ใช้และบทบาท\" พร้อมคำอธิบาย \"จัดการผู้ใช้และบทบาทใน Workspace · MVP-1 รองรับ 2 บทบาท (Owner / Live Operator)\" ตรงตามสเปก\n[PASS] Expected 2 — มีตัวเลขสรุป \"ทั้งหมด 3 คน\" และปุ่ม \"จัดการสมาชิกที่ TAKRA Hub\" (เปิดลิงก์ภายนอก) · มีแถบแจ้ง \"มีคำเชิญค้างอยู่ 1 รายการ · ที่นั่ง 4/30 · จัดการคำเชิญที่ TAKRA Hub\" เพิ่มมาด้วย\n[FAIL] Expected 3 — คอลัมน์ตารางจริงคือ \"ผู้ใช้\" · \"บทบาท\" · \"SCRIPT APPROVE\" — ไม่มีคอลัมน์ \"เข้าใช้งานล่าสุด\" ตามที่สเปกกำหนด (ตรวจ DOM ทั้งหน้าแล้วไม่พบคำว่า \"เข้าใช้งาน\" เลยแม้แต่จุดเดียว)\n[FAIL] Expected 4 — กดแถวสมาชิกแล้วแผงด้านข้างเปิดขึ้นจริง และมี \"บทบาท\" (ระดับใน workspace + บทบาทการใช้งาน) · สวิตช์ \"มอบสิทธิ์ Script Approve\" ครบ แต่ \"ไม่มี\" หัวข้อ \"การใช้งาน\" และ \"เข้าใช้งานล่าสุด\" ในแผง — แผงมีแค่ บทบาท → Script Approve → ปุ่มลบออกจาก workspace\n\nข้อมูลที่เห็นจริงในตาราง: QA Tester (qa@takra.ai · Owner · ได้รับสิทธิ์ approve) · wanleeta QA (wanleeta.official@gmail.com · ผู้ดูแล · ไม่ได้รับสิทธิ์) · kachain bumrungta (kachain.b@realfactory.co.th · ผู้จัดการ · ไม่ได้รับสิทธิ์)\n\n[ข้อสังเกตเพิ่ม — ค่าบทบาทไม่สอดคล้องกัน ควรถามทีมพัฒนา] คอลัมน์ \"บทบาท\" ในตารางแสดง \"ผู้ดูแล\" สำหรับ wanleeta QA แต่พอเปิดแผงรายละเอียดของคนเดียวกัน หัวข้อ \"ระดับใน workspace (จาก TAKRA Hub)\" กลับแสดง \"สมาชิก\" — ค่าคนละอย่างสำหรับผู้ใช้คนเดียวกัน",
+  "tc-30": {
+    "actual": "ผ่าน — /avatars แสดงหัวข้อ \"คลังอวาตาร์\" + คำบรรยาย \"เลือกอวาตาร์ที่จะใช้ในห้องไลฟ์ของคุณ\", เมนู \"คลังอวาตาร์\" ในแถบซ้ายถูกไฮไลต์, หัวข้อกลุ่ม \"อวาตาร์ที่ทีมจัดเตรียมให้\" แสดงการ์ด 22 ใบเป็นตาราง แต่ละใบมีชื่ออวาตาร์ + ป้ายสไตล์ \"พรีเซ็นเตอร์\" (API avatar-profiles = 34 รายการ: active 22 / unpublished 12 → ซ่อน unpublished ถูกต้อง)\nHover การ์ด → ขึ้นกรอบสีส้ม + ไอคอนปิดเสียง/ขยายเต็มจอ + ปุ่ม \"ดูตัวอย่าง\" ตามที่คาด\n[ข้อสังเกต 1] 5/22 การ์ด (K.Bow, Mascott Test (No), staff Black, staff White, คุณทรี) ไม่มีทั้งรูปและวิดีโอพรีวิว ระบบ fallback เป็น placeholder SVG สีเทา — ฝั่ง API imageUrl/previewVideoUrl = null (ทั้งชุด 16/34 ไม่มีสื่อ) → ขอทีม Ops เติมสื่อ\n[ข้อสังเกต 2] ข้อ \"วิดีโอตัวอย่างเริ่มเล่นแทนรูปนิ่งตอน hover\" ยืนยันไม่ได้จากเครื่องทดสอบนี้: video element ค้างที่ readyState=0 (event: loadstart → stalled, ไม่มี progress) แม้ไฟล์ .mp4 บน CDN โหลดผ่าน fetch ได้ปกติ (HTTP 200, 1.65 MB, avc1) และเล่นจาก blob URL ก็ยังค้าง → น่าจะเป็นข้อจำกัดของ environment ทดสอบ ขอให้ผู้ทดสอบยืนยันด้วยตาบนเครื่องจริงอีกครั้ง\nทดสอบ 19 ส.ค. 2569 · Chrome · บัญชี Owner (qa@takra.ai) · workspace \"ทีมของ QA Tester\"",
+    "st": "pass"
+  },
+  "tc-31": {
+    "actual": "กลไกตัวกรองทำงานถูกต้องทุกจุด: คลิกชิป \"พรีเซ็นเตอร์\" → เปลี่ยนเป็นสถานะถูกเลือก และขึ้นข้อความ \"แสดง 22 จาก 22 ตัว · ล้างตัวกรอง\" ตรงรูปแบบที่คาด; เลือก \"เพศ\" เพิ่ม → ตัวเลขบนชิปสไตล์ทุกปุ่มปรับตามทันที (เงื่อนไข AND ถูกต้อง); เมื่อไม่พบผลลัพธ์ → empty state \"ไม่พบ avatar ตามตัวกรอง\" + ปุ่ม \"ล้างตัวกรอง\"; กด \"ล้างตัวกรอง\" → รายการกลับมา 22 ตัวเท่าเดิม และ dropdown เพศรีเซ็ตเป็น \"เพศ\"\nแต่ Precondition \"ในคลังมีอวาตาร์หลายสไตล์และหลายเพศปนกัน\" ไม่เป็นจริงบน UAT: GET /api/v1/workspaces/{wsId}/avatar-profiles คืนค่า style=presenter และ gender=neutral ครบทั้ง 34/34 รายการ\nผลที่ตามมา → ชิป \"เซลฟี่\" = 0 และ \"อื่นๆ\" = 0 เสมอ; ตัวกรองเพศ \"หญิง\" = 0, \"ชาย\" = 0, \"LGBT+\" = 22 (อวาตาร์ทุกตัวถูกจัดเป็น LGBT+ ซึ่งไม่ตรงกับตัวอวาตาร์จริง เช่น \"ททท Women (LiveAvatar)\")\n→ ลง HOLD: ขอ Ops/BE เติม metadata สไตล์ + เพศให้ถูกต้องก่อน แล้วรันเคสนี้ซ้ำ (ตัว UI ไม่พบข้อบกพร่อง)",
+    "st": "hold"
+  },
+  "tc-32": {
+    "actual": "ไม่ผ่าน — หน้าต่างพรีวิวเปิดได้จากปุ่ม \"ดูตัวอย่าง\" และกด Esc ปิดได้ปกติ (โฟกัสกลับไปที่ปุ่มเดิม ตำแหน่ง scroll คงเดิม) แต่เนื้อหาในกล่องไม่ครบตามสเปก\nพบจริงในกล่อง (ข้อความทั้งหมด): ชื่ออวาตาร์ / \"เสียง (กำหนดโดย OPS)\" = \"ค่าเริ่มต้น (TTS)\" / หมายเหตุ \"ค่าตั้งค่าของอวาตาร์ (เสียง · โทน · คาแรกเตอร์) จัดการโดยทีม TAKRA Ops — ติดต่อ Ops เพื่อเปลี่ยน config\" / ปุ่ม \"โคลนเข้า workspace\" / ปุ่ม \"ใช้ในห้องไลฟ์\"\n[ขาดตามสเปก] 1) ไม่มีหัวข้อ \"คาแรกเตอร์\"  2) ไม่มีหัวข้อ \"โทนการพูด (กำหนดโดย Ops)\"  3) ไม่มีแถบคลื่นเสียงและปุ่มเล่นตัวอย่างเสียง (จึงทดสอบข้อ \"กดเล่นแล้วปุ่มเปลี่ยนเป็นปุ่มหยุด\" ไม่ได้)\n[ต่างจากสเปก] ใช้คำว่า \"(กำหนดโดย OPS)\" พิมพ์ใหญ่ทั้งคำ แทน \"(กำหนดโดย Ops)\"; วิดีโอในกล่องใช้ native controls ของเบราว์เซอร์แทนตัวเล่นของระบบ\n[เพิ่มจากสเปก] มีปุ่ม \"โคลนเข้า workspace\" และมี section ใหม่ \"อวาตาร์ของฉัน\" ท้ายหน้า /avatars ซึ่งยังไม่มี TC รองรับ\n[หมายเหตุ] ฝั่ง API persona = null ทุกรายการ และไม่มี field โทนการพูดเลย → ขอ BA/Dev ยืนยันว่าตัด 2 หัวข้อนี้ออกจริงหรือเป็นบั๊ก ถ้าตัดออกตามดีไซน์ใหม่ให้ปรับสเปก TC ตาม",
     "st": "fail"
   },
-  "tc-16": {
-    "actual": "[2026-08-19 · AI-assisted UI check] FAIL — ส่วนที่มีอยู่ทำงานถูกทั้งหมด แต่ตัวกรอง \"เข้าใช้งาน:\" ไม่มีอยู่ใน UI เลย\n[PASS] คำค้น — พิมพ์ \"kachain\" ในช่อง \"ค้นหาด้วยชื่อหรืออีเมล…\" → เหลือ 1 แถว (kachain bumrungta) และขึ้นชิป \"กรอง: ค้นหา \"kachain\" · 1 คน\" ตรงรูปแบบที่ Expected ข้อ 2 กำหนด\n[PASS] ตัวกรอง \"บทบาท:\" — เปิดแล้วมี 3 ตัวเลือก: ทั้งหมด / Owner / Live Operator · เลือก \"Live Operator\" → ชิป \"กรอง: Live Operator · 0 คน\" และขึ้น empty state \"ไม่มีผู้ใช้ในตัวกรองนี้ / ลองล้างตัวกรอง หรือเชิญผู้ใช้ใหม่\" (ถูกต้อง เพราะยังไม่มีใครเป็น Live Operator)\n[PASS] Expected 4 — กดกากบาทบนชิป → ตัวกรองกลับเป็น \"บทบาท: ทั้งหมด\" และรายชื่อกลับมาครบ 3 คนเหมือนเดิม\n[FAIL] Expected 1 + 3 — \"ไม่พบ\" ตัวกรอง \"เข้าใช้งาน:\" ในหน้านี้เลย ทั้งหน้ามี control กรองแค่ 2 ตัว (ช่องค้นหา 1 ช่อง + dropdown บทบาท 1 ตัว) จึงทดสอบไม่ได้ทั้ง 5 ตัวเลือกตาม Test Data (ทั้งหมด / 24 ชม.ล่าสุด / 7 วันล่าสุด / 30 วันล่าสุด / ยังไม่เคย) และไม่พบคำกำกับ \"เฉพาะ pending invites\" ตาม Expected ข้อ 3\nสาเหตุเดียวกับ TC-UR.1: ระบบยังไม่มีข้อมูล \"เข้าใช้งานล่าสุด\" ในหน้านี้ ทั้งคอลัมน์และตัวกรอง\n\n[ข้อสังเกต] ตัวกรองบทบาทให้เลือกได้แค่ Owner / Live Operator แต่คอลัมน์ \"บทบาท\" ในตารางแสดงค่าจริงเป็น \"ผู้ดูแล\" · \"ผู้จัดการ\" → ผู้ใช้กรองตามสิ่งที่ตาเห็นในตารางไม่ได้",
-    "st": "fail"
-  },
-  "tc-17": {
-    "actual": "[2026-08-19 · AI-assisted UI check] SKIP — ตามที่ผู้ว่าจ้างทดสอบสั่งให้ข้ามไปก่อน (2026-08-19) เพราะเคสนี้ต้องแก้บทบาทของสมาชิกจริงใน workspace UAT\nสิ่งที่ยืนยันได้โดยไม่แตะข้อมูล: แผงรายละเอียดของสมาชิกที่ไม่ใช่ Owner มีหัวข้อ \"บทบาทการใช้งาน\" แสดงค่าปัจจุบัน \"สมาชิก (ไม่มีบทบาทเพิ่ม)\" พร้อมปุ่ม \"เปลี่ยนบทบาท\" อยู่จริงตาม Test Step ข้อ 3 — ยังไม่ได้เปิด dialog \"เปลี่ยนบทบาทการใช้งาน\" จึงยังไม่ได้ตรวจ Expected ทั้ง 4 ข้อ",
-    "st": "skip"
-  },
-  "tc-18": {
-    "actual": "[2026-08-19 · AI-assisted UI check] PASS — ครบทั้ง 3 ข้อของ Expected\n[PASS] Expected 1 — เปิดแผงของสมาชิก (wanleeta QA) เห็นหัวข้อ \"ระดับใน workspace (จาก TAKRA Hub)\" แสดงค่า \"สมาชิก\" พร้อมป้าย \"อ่านอย่างเดียว\" มุมขวา · ทดสอบ triple-click ที่ค่าระดับแล้วพิมพ์ \"ZZZ\" ทับ → ค่าไม่เปลี่ยน ยังเป็น \"สมาชิก\" (focus ตกที่ body · ทั้งหน้ามี input แค่ช่องค้นหา 1 ช่อง)\n[PASS] Expected 2 — เปิดแผงของ Owner (QA Tester) แสดงข้อความ \"Owner เข้าถึงได้ทุกอย่างตามสิทธิ์ของ Hub · ไม่สามารถกำหนดบทบาทการใช้งานได้\" ตรงตามสเปก และ \"ไม่มี\" ปุ่ม \"เปลี่ยนบทบาท\" ในแผงนี้ (ต่างจากแผงของสมาชิกที่มีปุ่ม)\n[PASS] Expected 3 — ท้ายแผงของ Owner ระบุ \"Owner ของ workspace · ไม่สามารถลบออกจาก workspace ได้\" และไม่มีปุ่ม \"ลบออกจาก workspace\" (ต่างจากแผงของสมาชิกที่มีปุ่มสีแดง)\n[เพิ่มเติม] แผงของ Owner ส่วน Script Approve แสดง \"Owner สามารถ approve script ได้โดย default\" + สถานะ \"มีสิทธิ์ approve · by role\" (ล็อกไว้ ไม่ใช่สวิตช์) — สอดคล้องกับ TC-SA.4",
+  "tc-33": {
+    "actual": "ผ่าน — \"อัปเดตล่าสุด\" ก่อนกด = 19 ส.ค. 2569 13:41\nกด \"อัปเดตคลังอวาตาร์\" → ปุ่มเปลี่ยนเป็น \"กำลังอัปเดต...\" พร้อมไอคอนหมุน และถูก disable ระหว่างทำงาน\nเสร็จแล้วขึ้น toast สีเขียว \"อัปเดตคลังอวาตาร์แล้ว\" พร้อมบรรทัดรอง \"22 avatar จาก Realfact\" ตรงรูปแบบ \"N avatar จาก Realfact\"\n\"อัปเดตล่าสุด\" เปลี่ยนเป็น 19 ส.ค. 2569 20:33 และจำนวนการ์ดในหน้า = 22 ใบ สอดคล้องกับจำนวนที่แจ้งใน toast",
     "st": "pass"
-  },
-  "tc-19": {
-    "actual": "[2026-08-19 · AI-assisted UI check] SKIP — ตามที่ผู้ว่าจ้างทดสอบสั่งให้ข้ามไปก่อน (2026-08-19)\nเหตุผลเพิ่มเติม: เคสนี้จบด้วยการลบสมาชิกออกจาก workspace ถาวร ซึ่งหน้าต่างยืนยันเองระบุว่า \"ย้อนกลับไม่ได้\" — ผู้ทดสอบ (AI) ไม่ลบข้อมูลถาวรแทนผู้ใช้ตามนโยบายความปลอดภัย\nสิ่งที่ยืนยันได้โดยไม่แตะข้อมูล: ปุ่ม \"ลบออกจาก workspace\" (สีแดง มีไอคอนถังขยะ) อยู่ท้ายแผงรายละเอียดของสมาชิกที่ไม่ใช่ Owner จริงตาม Test Step ข้อ 2 และไม่มีปุ่มนี้ในแผงของ Owner (ดู TC-UR.4)\nยังไม่ได้ตรวจ: รายการผลกระทบ 3 ข้อในหน้าต่างยืนยัน · เงื่อนไขปุ่มยืนยันกดไม่ได้จนกว่าจะพิมพ์ข้อความให้ตรง · ข้อความ \"ลบผู้ใช้แล้ว\" — แนะนำให้ QA ที่เป็นคนรันทดสอบเองกับบัญชีทดสอบที่ลบทิ้งได้",
-    "st": "skip"
-  },
-  "tc-21": {
-    "actual": "[2026-08-19 · AI-assisted UI check] PASS — ครบทุกข้อที่ทดสอบได้ (ข้อ 4 ไม่เข้าเงื่อนไข)\n[PASS] Expected 1 — ตาราง \"ประวัติการมอบ/เพิกถอนสิทธิ์\" ท้ายหน้า /users มีคอลัมน์ครบ 4 คอลัมน์ตามสเปก: \"ผู้ทำ\" · \"เป้าหมาย\" · \"เหตุการณ์\" · \"เมื่อ\" (อ่านจาก <th> ใน DOM)\n[PASS] Expected 2 — คอลัมน์เหตุการณ์แสดงเป็นภาษาไทยที่อ่านเข้าใจครบ 3 แบบ: \"มอบสิทธิ์\" · \"เพิกถอนสิทธิ์\" · \"อนุมัติสคริปต์\"\n[PASS] Expected 3 — มีหมายเหตุ \"เรียงใหม่ → เก่า\" มุมขวาของหัวข้อ และลำดับจริงตรงตามนั้น: 11 ชม.ที่แล้ว → 11 ชม.ที่แล้ว → 2 สัปดาห์ก่อน → 3 สัปดาห์ก่อน → 3 สัปดาห์ก่อน → 4 สัปดาห์ก่อน\n[N/A] Expected 4 — ไม่มีปุ่ม \"โหลดเพิ่ม\" เพราะประวัติมีเพียง 6 รายการ ไม่เกิน 1 หน้า จึงไม่เข้าเงื่อนไข \"ถ้ามีรายการมากกว่าหนึ่งหน้า\" — ยังทดสอบ pagination ไม่ได้จนกว่าจะมีข้อมูลมากพอ\n\nข้อมูลที่เห็นจริง 6 แถว: QA Tester → wanleeta QA (เพิกถอนสิทธิ์ · 11 ชม.) · QA Tester → wanleeta QA (มอบสิทธิ์ · 11 ชม.) · QA Tester → u_patty (เพิกถอนสิทธิ์ · 2 สัปดาห์) · QA Tester → 3 แถวอนุมัติสคริปต์ (3-4 สัปดาห์)\n\n[BUG ควรเปิดเคสแยก] คอลัมน์ \"เป้าหมาย\" แสดง UUID ดิบแทนชื่อที่อ่านเข้าใจใน 3 แถวที่เป็นเหตุการณ์ \"อนุมัติสคริปต์\" — เช่น \"030a212d-f7d6-47ca-8a60-335e35761096\" · \"21600ebc-eb7d-4529-aa96-3beaa240dd3d\" · \"6d0c0c63-a5b4-45a2-b1d7-864bc025d175\" ขณะที่แถวมอบ/เพิกถอนสิทธิ์แสดงชื่อคนถูกต้อง (\"wanleeta QA\" · \"u_patty\") — ผู้ตรวจ audit อ่านไม่รู้เรื่องว่าอนุมัติสคริปต์ตัวไหน ควร resolve เป็นชื่อสคริปต์",
-    "st": "pass"
-  },
-  "tc-22": {
-    "actual": "[2026-08-19 · AI-assisted UI check] PASS — ครบทั้ง 3 ข้อของ Expected\n[PASS] Expected 1 — สวิตช์ Script Approve ของแถว Owner (QA Tester · qa@takra.ai) อยู่สถานะเปิด และกดปิดไม่ได้จริง: ตรวจ DOM พบ aria-checked=\"true\" · disabled=true · aria-label=\"Script Approve สำหรับ QA Tester (Owner — เปิดถาวรตามบทบาท)\" · หัวคอลัมน์ \"SCRIPT APPROVE\" มีไอคอนแม่กุญแจ และท้ายแถว Owner มีไอคอนแม่กุญแจแทนลูกศรเปิดแผง (ต่างจากแถวสมาชิกอื่นที่เป็นลูกศร >)\nทดสอบด้วยการคลิกจริงที่สวิตช์ → สถานะไม่เปลี่ยน ยังเป็นเปิดอยู่ ไม่มี toast ไม่มีการเรียก API\n[PASS] Expected 2 — เปิดแผงรายละเอียดของ Owner เห็นหัวข้อ \"Script Approve\" พร้อมคำอธิบาย \"Owner สามารถ approve script ได้โดย default\" ตรงตามสเปก (ต่างจากแผงของสมาชิกที่เขียนว่า \"อนุญาตให้ผู้ใช้คนนี้ approve script ได้ · revoke ได้ทันที · บันทึกใน AIEventLog\")\n[PASS] Expected 3 — ในแผงของ Owner แสดงป้าย \"มีสิทธิ์ approve · by role\" พร้อมเครื่องหมายถูก (เป็นป้ายสถานะ ไม่ใช่สวิตช์ที่กดได้) ตรงตามสเปก",
-    "st": "pass"
-  },
-  "tc-20": {
-    "actual": "[2026-08-19 · AI-assisted UI check] SKIP — ตามที่ผู้ว่าจ้างทดสอบสั่งให้ข้ามไปก่อน เพราะเคสนี้ต้องมอบสิทธิ์ Script Approve ให้สมาชิกจริงใน workspace UAT (เป็นการเปลี่ยนสิทธิ์ที่ถูกบันทึกลง AIEventLog)\nสิ่งที่ยืนยันได้โดยไม่แตะสิทธิ์ของใคร:\n- ตาราง /users มีคอลัมน์ \"SCRIPT APPROVE\" (หัวคอลัมน์มีไอคอนแม่กุญแจ) พร้อมสวิตช์รายคน — สมาชิกที่ยังไม่ได้รับสิทธิ์แสดงสวิตช์ปิดและสถานะ \"ไม่ได้รับสิทธิ์\" (wanleeta QA · kachain bumrungta) ส่วน Owner แสดงเปิดถาวรและล็อกไว้\n- แผงรายละเอียดของสมาชิก (ที่ไม่ใช่ Owner) มีหัวข้อ \"Script Approve\" พร้อมคำอธิบาย \"อนุญาตให้ผู้ใช้คนนี้ approve script ได้ · revoke ได้ทันที · บันทึกใน AIEventLog\" และแถวสวิตช์ \"มอบสิทธิ์ Script Approve\"\n- ประวัติท้ายหน้ายืนยันว่า flow นี้เคยถูกใช้จริงและบันทึกครบ: \"QA Tester → wanleeta QA · มอบสิทธิ์ · 11 ชม.ที่แล้ว\" และ \"เพิกถอนสิทธิ์ · 11 ชม.ที่แล้ว\"\nยังไม่ได้ตรวจ: ข้อความแจ้งผลหลังกดมอบสิทธิ์ · การอัปเดตสถานะในตารางแบบทันที (real-time) · การบันทึกรายการใหม่เข้าประวัติทันที — แนะนำให้ QA ที่เป็นคนรันทดสอบเอง",
-    "st": "skip"
   }
 }
 </script>
@@ -318,15 +302,15 @@ tr.featrow .ty{margin-left:3px}
   <div class="runsum">
     <h3>📊 สรุปผล Manual Test</h3>
     <div class="sumchips">
-      <span class="cnt pass">PASS <b id="sum-pass">12</b></span>
-      <span class="cnt fail">FAIL <b id="sum-fail">2</b></span>
-      <span class="cnt hold">HOLD <b id="sum-hold">1</b></span>
+      <span class="cnt pass">PASS <b id="sum-pass">11</b></span>
+      <span class="cnt fail">FAIL <b id="sum-fail">1</b></span>
+      <span class="cnt hold">HOLD <b id="sum-hold">2</b></span>
       <span class="cnt block">BLOCKED <b id="sum-block">4</b></span>
-      <span class="cnt skip">SKIP <b id="sum-skip">3</b></span>
-      <span class="cnt pending">รอเทส <b id="sum-pending">207</b></span>
+      <span class="cnt skip">SKIP <b id="sum-skip">0</b></span>
+      <span class="cnt pending">รอเทส <b id="sum-pending">211</b></span>
     </div>
     <div class="progress"><div id="sumbar" class="progressbar" style="width: 8%;"></div></div>
-    <div class="hint" id="sumpct" style="margin-top:5px">8% ทดสอบแล้ว (19/226) · ข้าม 3</div>
+    <div class="hint" id="sumpct" style="margin-top:5px">8% ทดสอบแล้ว (18/229)</div>
   </div>
 
   <div class="toolbar">
@@ -334,7 +318,7 @@ tr.featrow .ty{margin-left:3px}
     <button class="btn" onclick="toggleAll(false)">▾ ยุบทั้งหมด</button>
     <span class="hint">💡 คลิกแถว → ดู Steps / Expected (UI only)</span>
     <span style="margin-left:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-      <span id="save-status" class="hint" style="white-space: nowrap; color: var(--hold);">● ยังไม่ได้บันทึก</span>
+      <span id="save-status" class="hint" style="white-space: nowrap; color: var(--muted);">✓ ตรงกับ GitHub</span>
       <label class="hint" style="display:flex;gap:4px;align-items:center;white-space:nowrap;cursor:pointer" title="บันทึกขึ้น GitHub อัตโนมัติหลังหยุดแก้ ~5 วินาที"><input type="checkbox" id="chk-autosave" checked=""> auto-save</label>
       <button class="btn" id="btn-token" title="ใส่/เปลี่ยน GitHub token (ถ้าเซฟไม่ขึ้น/token เสีย กดอันนี้)">🔑 Token</button>
       <button class="btn" id="btn-refresh" title="ดึงผลล่าสุดจาก GitHub มา merge (ไม่ต้อง reload)">🔄 ดึงล่าสุด</button>
@@ -854,15 +838,15 @@ tr.featrow .ty{margin-left:3px}
 </div></td></tr>
 
 <tr class="featrow" data-featkey="m1-users-roles"><td colspan="7">📁 users-roles <span class="rp"><span class="lv lvl-ui">🌐 5</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="m1-users-roles"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
-<tr class="trow open" data-mvp="mvp1" data-feat="m1e1" data-type="happy" data-level="ui" data-prio="P0" onclick="tg(this)">
+<tr class="trow" data-mvp="mvp1" data-feat="m1e1" data-type="happy" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-UR.1</td>
   <td class="ctitle">เปิดหน้าผู้ใช้และบทบาทแล้วเห็นสมาชิกครบพร้อมข้อมูลที่จำเป็น <span class="ty ty-happy" title="Happy Path">✅ Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
-  <td class="status" data-uid="tc-15"><span class="stb fail">FAIL</span></td>
+  <td class="status" data-uid="tc-15"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-15"></td>
 </tr>
-<tr class="detail show"><td colspan="7">
+<tr class="detail"><td colspan="7">
 <div class="card">
   <div class="h-title">เปิดหน้าผู้ใช้และบทบาทแล้วเห็นสมาชิกครบพร้อมข้อมูลที่จำเป็น</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · users-roles · Epic 1 · Story 1.7 · ประเภท: <b>✅ Happy Path</b> · MVP-1</div>
@@ -871,11 +855,11 @@ tr.featrow .ty{margin-left:3px}
   <div class="sec"><h4>Test Data</h4><ul><li>URL: https://uat-live.takra.ai/users</li></ul></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>เห็นหัวข้อ "ผู้ใช้และบทบาท" พร้อมคำอธิบาย "จัดการผู้ใช้และบทบาทใน Workspace · MVP-1 รองรับ 2 บทบาท (Owner / Live Operator)"</li><li>มีตัวเลขสรุปจำนวนสมาชิกรูปแบบ "ทั้งหมด X คน" และปุ่ม "จัดการสมาชิกที่ TAKRA Hub" (การเพิ่ม/เชิญสมาชิกทำที่ Hub)</li><li>ตารางมีคอลัมน์ "ผู้ใช้" · "บทบาท" · "เข้าใช้งานล่าสุด"</li><li>กดแถวแล้วแผงด้านข้างเปิดขึ้น แสดงหัวข้อ "บทบาท" (ระดับใน workspace + บทบาทการใช้งาน) · สวิตช์ Script Approve · "การใช้งาน" · "เข้าใช้งานล่าสุด"</li><li>ที่มา: Epic 1 · Story 1.7 · FR3</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-15" data-st="pass">PASS</span>
-    <span class="opt fail sel" data-uid="tc-15" data-st="fail">FAIL</span>
+    <span class="opt fail" data-uid="tc-15" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-15" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-15" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-15" data-st="skip">SKIP</span>
@@ -891,7 +875,7 @@ tr.featrow .ty{margin-left:3px}
   <td class="ctitle">ค้นหาและกรองสมาชิกตามบทบาทและช่วงเวลาเข้าใช้งาน <span class="ty ty-happy" title="Happy Path">✅ Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-16"><span class="stb fail">FAIL</span></td>
+  <td class="status" data-uid="tc-16"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-16"></td>
 </tr>
 <tr class="detail"><td colspan="7">
@@ -903,11 +887,11 @@ tr.featrow .ty{margin-left:3px}
   <div class="sec"><h4>Test Data</h4><ul><li>ตัวกรองเข้าใช้งาน: ทั้งหมด / 24 ชม.ล่าสุด / 7 วันล่าสุด / 30 วันล่าสุด / ยังไม่เคย</li></ul></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>รายการถูกกรองตรงตามเงื่อนไขที่เลือกในทุกกรณี (คำค้น + บทบาท + ช่วงเวลาเข้าใช้งาน ทำงานร่วมกัน)</li><li>ตัวกรองที่ใช้อยู่แสดงเป็นชิปหลังคำว่า "กรอง:" พร้อมจำนวนคนที่เหลือ (รูปแบบ "X คน")</li><li>ตัวเลือก "ยังไม่เคย" มีคำกำกับ "เฉพาะ pending invites" (ใช้กับคำเชิญที่ยังไม่ตอบรับ)</li><li>ล้างตัวกรองครบแล้วรายชื่อกลับมาแสดงครบเหมือนเดิม</li><li>ที่มา: Epic 1 · Story 1.7</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-16" data-st="pass">PASS</span>
-    <span class="opt fail sel" data-uid="tc-16" data-st="fail">FAIL</span>
+    <span class="opt fail" data-uid="tc-16" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-16" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-16" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-16" data-st="skip">SKIP</span>
@@ -923,7 +907,7 @@ tr.featrow .ty{margin-left:3px}
   <td class="ctitle">เปลี่ยนบทบาทการใช้งานของสมาชิกเป็น Live Operator แล้วมีผลทันที <span class="ty ty-happy" title="Happy Path">✅ Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
-  <td class="status" data-uid="tc-17"><span class="stb skip">SKIP</span></td>
+  <td class="status" data-uid="tc-17"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-17"></td>
 </tr>
 <tr class="detail"><td colspan="7">
@@ -935,14 +919,14 @@ tr.featrow .ty{margin-left:3px}
   <div class="sec"><h4>Test Data</h4><ul><li>บทบาทการใช้งาน: Live Operator / สมาชิก (ไม่มีบทบาทเพิ่ม)</li></ul></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ตัวเลือก Live Operator มีคำอธิบาย "เข้าถึง Library + ไลฟ์สตูดิโอ + ห้องคุมไลฟ์"</li><li>มีหมายเหตุ "สิทธิ์จะถูก resolve ใหม่ทันทีใน request ถัดไป (real-time) · บันทึกใน audit log"</li><li>หลังยืนยัน เห็นข้อความแจ้งผล "เปลี่ยนบทบาทแล้ว" พร้อมชื่อผู้ใช้และบทบาทใหม่ (มีผลทันทีใน request ถัดไป)</li><li>บทบาทในตารางเปลี่ยนเป็น Live Operator ทันทีโดยไม่ต้องรีเฟรชหน้า</li><li>ที่มา: Epic 1 · Story 1.7 · FR3</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-17" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-17" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-17" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-17" data-st="block">BLOCKED</span>
-    <span class="opt skip sel" data-uid="tc-17" data-st="skip">SKIP</span>
+    <span class="opt skip" data-uid="tc-17" data-st="skip">SKIP</span>
   </div></div>
   <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
     <div class="jira-list" data-uid="tc-17"></div>
@@ -955,7 +939,7 @@ tr.featrow .ty{margin-left:3px}
   <td class="ctitle">ระดับใน workspace มาจาก TAKRA Hub และแก้ไขในแอปนี้ไม่ได้ <span class="ty ty-happy" title="Happy Path">✅ Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-18"><span class="stb pass">PASS</span></td>
+  <td class="status" data-uid="tc-18"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-18"></td>
 </tr>
 <tr class="detail"><td colspan="7">
@@ -966,10 +950,10 @@ tr.featrow .ty{margin-left:3px}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "ทีมงาน" แล้วกดแถวสมาชิกคนหนึ่งเพื่อเปิดแผงรายละเอียด</li><li>ดูหัวข้อ "ระดับใน workspace (จาก TAKRA Hub)" แล้วลองคลิกที่ค่าระดับเพื่อแก้ไข</li><li>ปิดแผง แล้วเปิดแผงของผู้ใช้ที่เป็น Owner ดูส่วนบทบาทการใช้งานและข้อความท้ายแผง</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ระดับใน workspace ติดป้าย "อ่านอย่างเดียว" และคลิกแก้ไขไม่ได้</li><li>แผงของ Owner แสดงข้อความ "Owner เข้าถึงได้ทุกอย่างตามสิทธิ์ของ Hub · ไม่สามารถกำหนดบทบาทการใช้งานได้" (ไม่มีปุ่มเปลี่ยนบทบาท)</li><li>ท้ายแผงของ Owner ระบุ "Owner ของ workspace · ไม่สามารถลบออกจาก workspace ได้"</li><li>ที่มา: Epic 1 · Story 1.7 · FR3</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass sel" data-uid="tc-18" data-st="pass">PASS</span>
+    <span class="opt pass" data-uid="tc-18" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-18" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-18" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-18" data-st="block">BLOCKED</span>
@@ -986,7 +970,7 @@ tr.featrow .ty{margin-left:3px}
   <td class="ctitle">ลบสมาชิกออกจาก Workspace ต้องพิมพ์ยืนยันก่อนจึงทำได้ <span class="ty ty-happy" title="Happy Path">✅ Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-19"><span class="stb skip">SKIP</span></td>
+  <td class="status" data-uid="tc-19"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-19"></td>
 </tr>
 <tr class="detail"><td colspan="7">
@@ -998,14 +982,14 @@ tr.featrow .ty{margin-left:3px}
   <div class="sec"><h4>Test Data</h4><ul><li>สมาชิกทดสอบที่ไม่ใช่ Owner</li></ul></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>หน้าต่างยืนยันแจ้งผลกระทบครบ: "ผู้ใช้จะออกจาก workspace ทันที" · "Library / Live history ของผู้ใช้คนนี้จะถูกเก็บไว้ (audit)" · "action นี้บันทึกใน AIEventLog · ย้อนกลับไม่ได้"</li><li>ปุ่มยืนยันกดไม่ได้ตราบใดที่ยังไม่พิมพ์ข้อความยืนยัน ("พิมพ์ … เพื่อยืนยัน") ให้ตรง</li><li>หลังยืนยัน เห็นข้อความ "ลบผู้ใช้แล้ว" พร้อมชื่อผู้ใช้ และรายชื่อหายจากตาราง</li><li>ที่มา: Epic 1 · Story 1.7</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-19" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-19" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-19" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-19" data-st="block">BLOCKED</span>
-    <span class="opt skip sel" data-uid="tc-19" data-st="skip">SKIP</span>
+    <span class="opt skip" data-uid="tc-19" data-st="skip">SKIP</span>
   </div></div>
   <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
     <div class="jira-list" data-uid="tc-19"></div>
@@ -1019,7 +1003,7 @@ tr.featrow .ty{margin-left:3px}
   <td class="ctitle">มอบสิทธิ์ Script Approve ให้สมาชิกแล้วมีผลทันที <span class="ty ty-happy" title="Happy Path">✅ Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
-  <td class="status" data-uid="tc-20"><span class="stb skip">SKIP</span></td>
+  <td class="status" data-uid="tc-20"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-20"></td>
 </tr>
 <tr class="detail"><td colspan="7">
@@ -1031,14 +1015,14 @@ tr.featrow .ty{margin-left:3px}
   <div class="sec"><h4>Test Data</h4><ul><li>สมาชิกทดสอบ 1 คน</li></ul></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>หน้าต่างยืนยันระบุ "ผู้ใช้คนนี้จะสามารถอนุมัติสคริปต์ได้ · มีผลทันทีใน request ถัดไป · บันทึกใน audit log · เพิกถอนได้ภายหลัง"</li><li>หลังยืนยัน เห็นข้อความ "มอบสิทธิ์ Script Approve แล้ว" พร้อมชื่อผู้ใช้</li><li>สวิตช์เปลี่ยนเป็นเปิด และแสดง "มอบสิทธิ์โดย &lt;ชื่อผู้มอบ&gt; · &lt;เวลา&gt;"</li><li>สมาชิกคนนั้นเห็นปุ่ม "อนุมัติ" และกดอนุมัติสคริปต์ได้จริงโดยไม่ต้องล็อกอินใหม่</li><li>ที่มา: Epic 1 · Story 1.8 · FR3a</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-20" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-20" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-20" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-20" data-st="block">BLOCKED</span>
-    <span class="opt skip sel" data-uid="tc-20" data-st="skip">SKIP</span>
+    <span class="opt skip" data-uid="tc-20" data-st="skip">SKIP</span>
   </div></div>
   <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
     <div class="jira-list" data-uid="tc-20"></div>
@@ -1051,7 +1035,7 @@ tr.featrow .ty{margin-left:3px}
   <td class="ctitle">ประวัติการมอบ/เพิกถอนสิทธิ์แสดงครบและเรียงจากใหม่ไปเก่า <span class="ty ty-happy" title="Happy Path">✅ Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-21"><span class="stb pass">PASS</span></td>
+  <td class="status" data-uid="tc-21"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-21"></td>
 </tr>
 <tr class="detail"><td colspan="7">
@@ -1062,10 +1046,10 @@ tr.featrow .ty{margin-left:3px}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "ทีมงาน" แล้วเลื่อนลงไปท้ายหน้าที่หัวข้อ "ประวัติการมอบ/เพิกถอนสิทธิ์"</li><li>ตรวจคอลัมน์และค่าที่แสดงในแต่ละแถว รวมถึงลำดับเวลา</li><li>กดปุ่ม "โหลดเพิ่ม" (ถ้ามีรายการมากกว่าหนึ่งหน้า) แล้วสังเกตรายการที่เพิ่มเข้ามา</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ตารางมีคอลัมน์ "ผู้ทำ" · "เป้าหมาย" · "เหตุการณ์" · "เมื่อ"</li><li>เหตุการณ์แสดงเป็นภาษาที่อ่านเข้าใจ: "มอบสิทธิ์" / "เพิกถอนสิทธิ์" / "อนุมัติสคริปต์"</li><li>มีหมายเหตุ "เรียงใหม่ → เก่า" และลำดับรายการตรงตามนั้นจริง</li><li>กด "โหลดเพิ่ม" แล้วรายการเก่าถูกต่อท้ายโดยไม่ซ้ำกับที่มีอยู่</li><li>ที่มา: Epic 1 · Story 1.8 · FR3a</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass sel" data-uid="tc-21" data-st="pass">PASS</span>
+    <span class="opt pass" data-uid="tc-21" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-21" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-21" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-21" data-st="block">BLOCKED</span>
@@ -1082,7 +1066,7 @@ tr.featrow .ty{margin-left:3px}
   <td class="ctitle">Owner มีสิทธิ์อนุมัติโดยอัตโนมัติและสวิตช์ถูกล็อกไว้ <span class="ty ty-happy" title="Happy Path">✅ Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-22"><span class="stb pass">PASS</span></td>
+  <td class="status" data-uid="tc-22"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-22"></td>
 </tr>
 <tr class="detail"><td colspan="7">
@@ -1093,10 +1077,10 @@ tr.featrow .ty{margin-left:3px}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "ทีมงาน" แล้วกดแถวของตัว Owner เองเพื่อเปิดแผงรายละเอียด</li><li>ดูสวิตช์ Script Approve ป้ายและคำอธิบายรอบๆ แล้วลองกดสวิตช์เพื่อปิด</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>สวิตช์อยู่สถานะเปิดถาวรและกดปิดไม่ได้</li><li>มีคำอธิบาย "Owner สามารถ approve script ได้โดย default" (ระบบระบุว่า Owner มีสิทธิ์อนุมัติสคริปต์โดยอัตโนมัติตามบทบาท)</li><li>แสดงป้าย "มีสิทธิ์ approve · by role"</li><li>ที่มา: Epic 1 · Story 1.8 · FR3a</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass sel" data-uid="tc-22" data-st="pass">PASS</span>
+    <span class="opt pass" data-uid="tc-22" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-22" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-22" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-22" data-st="block">BLOCKED</span>
@@ -1339,7 +1323,7 @@ tr.featrow .ty{margin-left:3px}
   <td class="ctitle">เปิดคลังอวาตาร์แล้วเห็นอวาตาร์ที่ทีม Ops จัดเตรียมให้ครบ <span class="ty ty-happy" title="Happy Path">✅ Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
-  <td class="status" data-uid="tc-30"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-30"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-30"></td>
 </tr>
 <tr class="detail"><td colspan="7">
@@ -1351,10 +1335,10 @@ tr.featrow .ty{margin-left:3px}
   <div class="sec"><h4>Test Data</h4><ul><li>URL: https://uat-live.takra.ai/avatars</li></ul></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>เห็นหัวข้อ "คลังอวาตาร์" พร้อมคำบรรยาย "เลือกอวาตาร์ที่จะใช้ในห้องไลฟ์ของคุณ" และเมนู "คลังอวาตาร์" ในแถบด้านซ้ายถูกไฮไลต์</li><li>ใต้หัวข้อกลุ่ม "อวาตาร์ที่ทีมจัดเตรียมให้" มีการ์ดอวาตาร์ที่ Ops จัดเตรียมแสดงครบเป็นตาราง แต่ละใบเห็นชื่ออวาตาร์</li><li>เมื่อชี้เมาส์ค้าง วิดีโอตัวอย่างของอวาตาร์ตัวนั้นเริ่มเล่นแทนรูปนิ่ง และปุ่ม "ดูตัวอย่าง" โผล่ขึ้นมาบนการ์ด</li><li>ที่มา: Epic 2 · Story 2.1 · FR7</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-30" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-30" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-30" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-30" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-30" data-st="block">BLOCKED</span>
@@ -1371,7 +1355,7 @@ tr.featrow .ty{margin-left:3px}
   <td class="ctitle">กรองอวาตาร์ตามสไตล์และเพศ แล้วล้างตัวกรองกลับมาดูทั้งหมด <span class="ty ty-happy" title="Happy Path">✅ Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-31"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-31"><span class="stb hold">HOLD</span></td>
   <td class="jira-cell" data-uid="tc-31"></td>
 </tr>
 <tr class="detail"><td colspan="7">
@@ -1383,12 +1367,12 @@ tr.featrow .ty{margin-left:3px}
   <div class="sec"><h4>Test Data</h4><ul><li>สไตล์: ทั้งหมด / พรีเซ็นเตอร์ / เซลฟี่ / อื่นๆ</li><li>เพศ: ทั้งหมด / หญิง / ชาย / LGBT+</li></ul></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ปุ่ม "พรีเซ็นเตอร์" เปลี่ยนเป็นสถานะถูกเลือก ตารางเหลือเฉพาะอวาตาร์สไตล์นั้น และจำนวนการ์ดตรงกับตัวเลขบนปุ่ม</li><li>เมื่อเลือกเพศ "หญิง" เพิ่ม ตัวเลขบนปุ่มสไตล์แต่ละปุ่มปรับลดตามเพศที่เลือก และตารางกรองซ้อนสองเงื่อนไขถูกต้อง</li><li>เห็นข้อความสรุป "แสดง X จาก Y ตัว" พร้อมลิงก์ "ล้างตัวกรอง"</li><li>หลังกด "ล้างตัวกรอง" รายการกลับมาแสดงครบเท่าตัวเลขเดิมของปุ่ม "ทั้งหมด"</li><li>ที่มา: Epic 2 · Story 2.1</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-31" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-31" data-st="fail">FAIL</span>
-    <span class="opt hold" data-uid="tc-31" data-st="hold">HOLD</span>
+    <span class="opt hold sel" data-uid="tc-31" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-31" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-31" data-st="skip">SKIP</span>
   </div></div>
@@ -1403,7 +1387,7 @@ tr.featrow .ty{margin-left:3px}
   <td class="ctitle">เปิดหน้าต่างพรีวิวอวาตาร์แล้วเห็นข้อมูลครบและปิดด้วย Esc ได้ <span class="ty ty-happy" title="Happy Path">✅ Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-32"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-32"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-32"></td>
 </tr>
 <tr class="detail"><td colspan="7">
@@ -1415,11 +1399,11 @@ tr.featrow .ty{margin-left:3px}
   <div class="sec"><h4>Test Data</h4><ul><li>อวาตาร์ที่ผูก Voice Profile และโทนการพูดไว้แล้ว</li></ul></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>หน้าต่างพรีวิวเปิดขึ้นพร้อมวิดีโอตัวอย่าง และแสดงหัวข้อ "คาแรกเตอร์" · "เสียง (กำหนดโดย Ops)" · "โทนการพูด (กำหนดโดย Ops)" ครบเป็นข้อมูลอ่านอย่างเดียว</li><li>หัวข้อที่ Ops กำหนดมีวงเล็บ "(กำหนดโดย Ops)" กำกับชัดเจน</li><li>กดเล่นบนแถบคลื่นเสียงแล้วได้ยินตัวอย่างเสียงจริง และปุ่มเปลี่ยนเป็นปุ่มหยุด</li><li>มีปุ่ม "ใช้ในห้องไลฟ์" สำหรับนำอวาตาร์ตัวนั้นไปใช้ต่อ และกด Esc แล้วหน้าต่างปิดกลับมาที่หน้าคลังตามเดิม</li><li>ที่มา: Epic 2 · Story 2.1 · FR8</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-32" data-st="pass">PASS</span>
-    <span class="opt fail" data-uid="tc-32" data-st="fail">FAIL</span>
+    <span class="opt fail sel" data-uid="tc-32" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-32" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-32" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-32" data-st="skip">SKIP</span>
@@ -1435,7 +1419,7 @@ tr.featrow .ty{margin-left:3px}
   <td class="ctitle">กดอัปเดตคลังอวาตาร์แล้วดึงรายการล่าสุดพร้อมแจ้งจำนวนที่ได้ <span class="ty ty-happy" title="Happy Path">✅ Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-33"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-33"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-33"></td>
 </tr>
 <tr class="detail"><td colspan="7">
@@ -1446,10 +1430,10 @@ tr.featrow .ty{margin-left:3px}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังอวาตาร์" แล้วจดเวลาที่แสดงตรง "อัปเดตล่าสุด" ไว้</li><li>กดปุ่ม "อัปเดตคลังอวาตาร์" แล้วสังเกตสถานะปุ่มระหว่างทำงาน</li><li>อ่านข้อความแจ้งผลเมื่อเสร็จ แล้วดูเวลา "อัปเดตล่าสุด" อีกครั้ง</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ระหว่างทำงาน ปุ่มเปลี่ยนเป็น "กำลังอัปเดต…" และกดซ้ำไม่ได้</li><li>เมื่อเสร็จ เห็นข้อความ "อัปเดตคลังอวาตาร์แล้ว" พร้อมจำนวนที่ดึงมาได้ทำนอง "N avatar จาก Realfact"</li><li>เวลา "อัปเดตล่าสุด" เปลี่ยนเป็นเวลาปัจจุบัน และจำนวนการ์ดในหน้าสอดคล้องกับจำนวนที่แจ้ง</li><li>ที่มา: Epic 2 · Story 2.1</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-33" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-33" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-33" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-33" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-33" data-st="block">BLOCKED</span>
@@ -8371,4 +8355,4 @@ document.querySelectorAll('.feat-owner').forEach(function(sel){var e=sel.dataset
         </svg>
         <span id="claude-static-close-tooltip" style="position: absolute; bottom: calc(100% + 12px); left: 50%; transform: translateX(-50%); padding: 6px 12px; background: #30302E; color: #FAF9F5; border-radius: 6px; font-size: 12px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.2s; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;">Dismiss</span>
       </button>
-    </div><tldx-lmi-shadow-root></tldx-lmi-shadow-root><div id="tldx-toast-container"></div></body></html>
+    </div><tldx-lmi-shadow-root></tldx-lmi-shadow-root><div id="tldx-toast-container"></div><div id="claude-agent-glow-border" style="position: fixed; inset: 0px; pointer-events: none; z-index: 2147483646; opacity: 1; transition: opacity 0.3s ease-in-out; display: none;"><div id="claude-agent-glow-border-inner" style="position: absolute; inset: 0px; will-change: opacity; box-shadow: rgba(217, 119, 87, 0.7) 0px 0px 15px inset, rgba(217, 119, 87, 0.5) 0px 0px 25px inset, rgba(217, 119, 87, 0.2) 0px 0px 35px inset;"></div></div></body></html>
