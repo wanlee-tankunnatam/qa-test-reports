@@ -186,6 +186,14 @@ tr.featrow .ty{margin-left:3px}
       font-weight: 100 900;
       src: url('chrome-extension://lknmjhcajhfbbglglccadlfdjbaiifig/fonts/work-sans-latin-wght-normal.woff2') format('woff2');
     }
+  </style><style type="text/css">
+    @font-face {
+      font-family: 'Work Sans';
+      font-style: normal;
+      font-display: swap;
+      font-weight: 100 900;
+      src: url('chrome-extension://lknmjhcajhfbbglglccadlfdjbaiifig/fonts/work-sans-latin-wght-normal.woff2') format('woff2');
+    }
   </style></head>
 <body>
 <a id="hub-back-btn" href="https://wanlee-tankunnatam.github.io/qa-test-reports/?project=ai" title="กลับไปหน้ารวมรายงาน (Hub)" style="position:fixed;top:12px;right:14px;z-index:99999;display:inline-flex;align-items:center;gap:7px;padding:10px 18px;border-radius:999px;background:#ffffff;color:#1e3a8a;font-size:14px;font-weight:800;text-decoration:none;box-shadow:0 4px 16px rgba(0,0,0,.35);border:2px solid #1e3a8a;font-family:'Segoe UI','Sarabun',system-ui,sans-serif">🏠 รายงานทั้งหมด</a>
@@ -268,6 +276,14 @@ tr.featrow .ty{margin-left:3px}
   "tc-19": {
     "actual": "[2026-08-19 · AI-assisted UI check] SKIP — ตามที่ผู้ว่าจ้างทดสอบสั่งให้ข้ามไปก่อน (2026-08-19)\nเหตุผลเพิ่มเติม: เคสนี้จบด้วยการลบสมาชิกออกจาก workspace ถาวร ซึ่งหน้าต่างยืนยันเองระบุว่า \"ย้อนกลับไม่ได้\" — ผู้ทดสอบ (AI) ไม่ลบข้อมูลถาวรแทนผู้ใช้ตามนโยบายความปลอดภัย\nสิ่งที่ยืนยันได้โดยไม่แตะข้อมูล: ปุ่ม \"ลบออกจาก workspace\" (สีแดง มีไอคอนถังขยะ) อยู่ท้ายแผงรายละเอียดของสมาชิกที่ไม่ใช่ Owner จริงตาม Test Step ข้อ 2 และไม่มีปุ่มนี้ในแผงของ Owner (ดู TC-UR.4)\nยังไม่ได้ตรวจ: รายการผลกระทบ 3 ข้อในหน้าต่างยืนยัน · เงื่อนไขปุ่มยืนยันกดไม่ได้จนกว่าจะพิมพ์ข้อความให้ตรง · ข้อความ \"ลบผู้ใช้แล้ว\" — แนะนำให้ QA ที่เป็นคนรันทดสอบเองกับบัญชีทดสอบที่ลบทิ้งได้",
     "st": "skip"
+  },
+  "tc-21": {
+    "actual": "[2026-08-19 · AI-assisted UI check] PASS — ครบทุกข้อที่ทดสอบได้ (ข้อ 4 ไม่เข้าเงื่อนไข)\n[PASS] Expected 1 — ตาราง \"ประวัติการมอบ/เพิกถอนสิทธิ์\" ท้ายหน้า /users มีคอลัมน์ครบ 4 คอลัมน์ตามสเปก: \"ผู้ทำ\" · \"เป้าหมาย\" · \"เหตุการณ์\" · \"เมื่อ\" (อ่านจาก <th> ใน DOM)\n[PASS] Expected 2 — คอลัมน์เหตุการณ์แสดงเป็นภาษาไทยที่อ่านเข้าใจครบ 3 แบบ: \"มอบสิทธิ์\" · \"เพิกถอนสิทธิ์\" · \"อนุมัติสคริปต์\"\n[PASS] Expected 3 — มีหมายเหตุ \"เรียงใหม่ → เก่า\" มุมขวาของหัวข้อ และลำดับจริงตรงตามนั้น: 11 ชม.ที่แล้ว → 11 ชม.ที่แล้ว → 2 สัปดาห์ก่อน → 3 สัปดาห์ก่อน → 3 สัปดาห์ก่อน → 4 สัปดาห์ก่อน\n[N/A] Expected 4 — ไม่มีปุ่ม \"โหลดเพิ่ม\" เพราะประวัติมีเพียง 6 รายการ ไม่เกิน 1 หน้า จึงไม่เข้าเงื่อนไข \"ถ้ามีรายการมากกว่าหนึ่งหน้า\" — ยังทดสอบ pagination ไม่ได้จนกว่าจะมีข้อมูลมากพอ\n\nข้อมูลที่เห็นจริง 6 แถว: QA Tester → wanleeta QA (เพิกถอนสิทธิ์ · 11 ชม.) · QA Tester → wanleeta QA (มอบสิทธิ์ · 11 ชม.) · QA Tester → u_patty (เพิกถอนสิทธิ์ · 2 สัปดาห์) · QA Tester → 3 แถวอนุมัติสคริปต์ (3-4 สัปดาห์)\n\n[BUG ควรเปิดเคสแยก] คอลัมน์ \"เป้าหมาย\" แสดง UUID ดิบแทนชื่อที่อ่านเข้าใจใน 3 แถวที่เป็นเหตุการณ์ \"อนุมัติสคริปต์\" — เช่น \"030a212d-f7d6-47ca-8a60-335e35761096\" · \"21600ebc-eb7d-4529-aa96-3beaa240dd3d\" · \"6d0c0c63-a5b4-45a2-b1d7-864bc025d175\" ขณะที่แถวมอบ/เพิกถอนสิทธิ์แสดงชื่อคนถูกต้อง (\"wanleeta QA\" · \"u_patty\") — ผู้ตรวจ audit อ่านไม่รู้เรื่องว่าอนุมัติสคริปต์ตัวไหน ควร resolve เป็นชื่อสคริปต์",
+    "st": "pass"
+  },
+  "tc-22": {
+    "actual": "[2026-08-19 · AI-assisted UI check] PASS — ครบทั้ง 3 ข้อของ Expected\n[PASS] Expected 1 — สวิตช์ Script Approve ของแถว Owner (QA Tester · qa@takra.ai) อยู่สถานะเปิด และกดปิดไม่ได้จริง: ตรวจ DOM พบ aria-checked=\"true\" · disabled=true · aria-label=\"Script Approve สำหรับ QA Tester (Owner — เปิดถาวรตามบทบาท)\" · หัวคอลัมน์ \"SCRIPT APPROVE\" มีไอคอนแม่กุญแจ และท้ายแถว Owner มีไอคอนแม่กุญแจแทนลูกศรเปิดแผง (ต่างจากแถวสมาชิกอื่นที่เป็นลูกศร >)\nทดสอบด้วยการคลิกจริงที่สวิตช์ → สถานะไม่เปลี่ยน ยังเป็นเปิดอยู่ ไม่มี toast ไม่มีการเรียก API\n[PASS] Expected 2 — เปิดแผงรายละเอียดของ Owner เห็นหัวข้อ \"Script Approve\" พร้อมคำอธิบาย \"Owner สามารถ approve script ได้โดย default\" ตรงตามสเปก (ต่างจากแผงของสมาชิกที่เขียนว่า \"อนุญาตให้ผู้ใช้คนนี้ approve script ได้ · revoke ได้ทันที · บันทึกใน AIEventLog\")\n[PASS] Expected 3 — ในแผงของ Owner แสดงป้าย \"มีสิทธิ์ approve · by role\" พร้อมเครื่องหมายถูก (เป็นป้ายสถานะ ไม่ใช่สวิตช์ที่กดได้) ตรงตามสเปก",
+    "st": "pass"
   }
 }
 </script>
@@ -298,15 +314,15 @@ tr.featrow .ty{margin-left:3px}
   <div class="runsum">
     <h3>📊 สรุปผล Manual Test</h3>
     <div class="sumchips">
-      <span class="cnt pass">PASS <b id="sum-pass">10</b></span>
+      <span class="cnt pass">PASS <b id="sum-pass">12</b></span>
       <span class="cnt fail">FAIL <b id="sum-fail">2</b></span>
       <span class="cnt hold">HOLD <b id="sum-hold">1</b></span>
       <span class="cnt block">BLOCKED <b id="sum-block">4</b></span>
       <span class="cnt skip">SKIP <b id="sum-skip">2</b></span>
-      <span class="cnt pending">รอเทส <b id="sum-pending">210</b></span>
+      <span class="cnt pending">รอเทส <b id="sum-pending">208</b></span>
     </div>
-    <div class="progress"><div id="sumbar" class="progressbar" style="width: 7%;"></div></div>
-    <div class="hint" id="sumpct" style="margin-top:5px">7% ทดสอบแล้ว (17/227) · ข้าม 2</div>
+    <div class="progress"><div id="sumbar" class="progressbar" style="width: 8%;"></div></div>
+    <div class="hint" id="sumpct" style="margin-top:5px">8% ทดสอบแล้ว (19/227) · ข้าม 2</div>
   </div>
 
   <div class="toolbar">
@@ -314,7 +330,7 @@ tr.featrow .ty{margin-left:3px}
     <button class="btn" onclick="toggleAll(false)">▾ ยุบทั้งหมด</button>
     <span class="hint">💡 คลิกแถว → ดู Steps / Expected (UI only)</span>
     <span style="margin-left:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-      <span id="save-status" class="hint" style="white-space: nowrap; color: var(--muted);">✓ ตรงกับ GitHub</span>
+      <span id="save-status" class="hint" style="white-space: nowrap; color: var(--hold);">● ยังไม่ได้บันทึก</span>
       <label class="hint" style="display:flex;gap:4px;align-items:center;white-space:nowrap;cursor:pointer" title="บันทึกขึ้น GitHub อัตโนมัติหลังหยุดแก้ ~5 วินาที"><input type="checkbox" id="chk-autosave" checked=""> auto-save</label>
       <button class="btn" id="btn-token" title="ใส่/เปลี่ยน GitHub token (ถ้าเซฟไม่ขึ้น/token เสีย กดอันนี้)">🔑 Token</button>
       <button class="btn" id="btn-refresh" title="ดึงผลล่าสุดจาก GitHub มา merge (ไม่ต้อง reload)">🔄 ดึงล่าสุด</button>
@@ -834,7 +850,7 @@ tr.featrow .ty{margin-left:3px}
 </div></td></tr>
 
 <tr class="featrow" data-featkey="m1-users-roles"><td colspan="7">📁 users-roles <span class="rp"><span class="lv lvl-ui">🌐 5</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="m1-users-roles"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
-<tr class="trow" data-mvp="mvp1" data-feat="m1e1" data-type="happy" data-level="ui" data-prio="P0" onclick="tg(this)">
+<tr class="trow open" data-mvp="mvp1" data-feat="m1e1" data-type="happy" data-level="ui" data-prio="P0" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-UR.1</td>
   <td class="ctitle">เปิดหน้าผู้ใช้และบทบาทแล้วเห็นสมาชิกครบพร้อมข้อมูลที่จำเป็น <span class="ty ty-happy" title="Happy Path">✅ Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
@@ -842,7 +858,7 @@ tr.featrow .ty{margin-left:3px}
   <td class="status" data-uid="tc-15"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-15"></td>
 </tr>
-<tr class="detail"><td colspan="7">
+<tr class="detail show"><td colspan="7">
 <div class="card">
   <div class="h-title">เปิดหน้าผู้ใช้และบทบาทแล้วเห็นสมาชิกครบพร้อมข้อมูลที่จำเป็น</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · users-roles · Epic 1 · Story 1.7 · ประเภท: <b>✅ Happy Path</b> · MVP-1</div>
@@ -1031,7 +1047,7 @@ tr.featrow .ty{margin-left:3px}
   <td class="ctitle">ประวัติการมอบ/เพิกถอนสิทธิ์แสดงครบและเรียงจากใหม่ไปเก่า <span class="ty ty-happy" title="Happy Path">✅ Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-21"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-21"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-21"></td>
 </tr>
 <tr class="detail"><td colspan="7">
@@ -1042,10 +1058,10 @@ tr.featrow .ty{margin-left:3px}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "ทีมงาน" แล้วเลื่อนลงไปท้ายหน้าที่หัวข้อ "ประวัติการมอบ/เพิกถอนสิทธิ์"</li><li>ตรวจคอลัมน์และค่าที่แสดงในแต่ละแถว รวมถึงลำดับเวลา</li><li>กดปุ่ม "โหลดเพิ่ม" (ถ้ามีรายการมากกว่าหนึ่งหน้า) แล้วสังเกตรายการที่เพิ่มเข้ามา</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ตารางมีคอลัมน์ "ผู้ทำ" · "เป้าหมาย" · "เหตุการณ์" · "เมื่อ"</li><li>เหตุการณ์แสดงเป็นภาษาที่อ่านเข้าใจ: "มอบสิทธิ์" / "เพิกถอนสิทธิ์" / "อนุมัติสคริปต์"</li><li>มีหมายเหตุ "เรียงใหม่ → เก่า" และลำดับรายการตรงตามนั้นจริง</li><li>กด "โหลดเพิ่ม" แล้วรายการเก่าถูกต่อท้ายโดยไม่ซ้ำกับที่มีอยู่</li><li>ที่มา: Epic 1 · Story 1.8 · FR3a</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-21" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-21" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-21" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-21" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-21" data-st="block">BLOCKED</span>
@@ -1062,7 +1078,7 @@ tr.featrow .ty{margin-left:3px}
   <td class="ctitle">Owner มีสิทธิ์อนุมัติโดยอัตโนมัติและสวิตช์ถูกล็อกไว้ <span class="ty ty-happy" title="Happy Path">✅ Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-22"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-22"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-22"></td>
 </tr>
 <tr class="detail"><td colspan="7">
@@ -1073,10 +1089,10 @@ tr.featrow .ty{margin-left:3px}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "ทีมงาน" แล้วกดแถวของตัว Owner เองเพื่อเปิดแผงรายละเอียด</li><li>ดูสวิตช์ Script Approve ป้ายและคำอธิบายรอบๆ แล้วลองกดสวิตช์เพื่อปิด</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>สวิตช์อยู่สถานะเปิดถาวรและกดปิดไม่ได้</li><li>มีคำอธิบาย "Owner สามารถ approve script ได้โดย default" (ระบบระบุว่า Owner มีสิทธิ์อนุมัติสคริปต์โดยอัตโนมัติตามบทบาท)</li><li>แสดงป้าย "มีสิทธิ์ approve · by role"</li><li>ที่มา: Epic 1 · Story 1.8 · FR3a</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-22" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-22" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-22" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-22" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-22" data-st="block">BLOCKED</span>
@@ -8351,4 +8367,4 @@ document.querySelectorAll('.feat-owner').forEach(function(sel){var e=sel.dataset
         </svg>
         <span id="claude-static-close-tooltip" style="position: absolute; bottom: calc(100% + 12px); left: 50%; transform: translateX(-50%); padding: 6px 12px; background: #30302E; color: #FAF9F5; border-radius: 6px; font-size: 12px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.2s; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;">Dismiss</span>
       </button>
-    </div></body></html>
+    </div><tldx-lmi-shadow-root></tldx-lmi-shadow-root><div id="tldx-toast-container"></div></body></html>
