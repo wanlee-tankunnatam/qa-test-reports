@@ -15,15 +15,27 @@ OUT_REL = 'projects/takra-ai/2026/08/reports/takra-ai-mvp1-happy-mvp2-full-ui-te
 OUT = f'{REPO}/{OUT_REL}'
 
 TYPES = OrderedDict([
-    ('happy', ('Happy Path', '✅')),
-    ('negative', ('Negative Case', '⛔')),
-    ('edge', ('Edge Case', '🧩')),
-    ('validation', ('Validation', '🧪')),
-    ('error', ('Error Handling', '💥')),
-    ('empty', ('Empty / Null', '🫙')),
-    ('duplicate', ('Duplicate', '👯')),
-    ('permission', ('Permission / Authorization', '🔐')),
+    ('happy', ('Happy Path', '✅', 'Flow ปกติ')),
+    ('negative', ('Negative', '⛔', 'ข้อมูลผิด / Action ผิด')),
+    ('boundary', ('Boundary / Edge', '🧩', 'Min / Max / ก่อนขอบ / ตรงขอบ / เกินขอบ')),
+    ('validation', ('Validation', '🧪', 'Format · Required · Character · Length')),
+    ('error', ('Exception / Error', '💥', 'API fail · Network fail · Server error · Timeout')),
+    ('permission', ('Permission', '🔐', 'Role ไหนทำได้ / ทำไม่ได้')),
+    ('data', ('Data', '🗂️', 'Empty · Null · Duplicate · Existing · Non-existing')),
 ])
+# legacy → new (in case a source JSON still uses the old 8-type taxonomy)
+LEGACY = {'edge': ('boundary', 'Edge'), 'empty': ('data', 'Empty'), 'duplicate': ('data', 'Duplicate')}
+
+
+def norm_type(c):
+    t = c.get('type')
+    if t in LEGACY:
+        t, sub = LEGACY[t]
+        c['type'] = t
+        c.setdefault('sub', sub)
+    if t == 'happy' and not c.get('sub'):
+        c['sub'] = 'Flow ปกติ'
+    return c
 
 # ---------- MVP-1 (happy path, carried over) ----------
 MVP1_EXCL = {'TC-L1.4', 'TC-L1.5', 'TC-L1.8', 'TC-EN.1', 'TC-SA.2', 'TC-A2.4', 'TC-V2.4', 'TC-R2.2', 'TC-SC.4',
@@ -102,12 +114,12 @@ def li(items):
 
 
 def card_mvp2(c, featlabel, epic_n):
-    tlabel, temoji = TYPES.get(c['type'], (c['type'], ''))
+    tlabel, temoji, _d = TYPES.get(c['type'], (c['type'], '', ''))
     lvl = 'E2E' if c.get('level') == 'e2e' else 'UI'
     meta = f"Priority: <b>{esc(c['prio'])}</b> · {lvl} · {esc(featlabel)} · Epic {epic_n}"
     if c.get('story'):
         meta += f" · Story {esc(c['story'])}"
-    meta += f" · ประเภท: <b>{temoji} {tlabel}</b> · MVP-2"
+    meta += f" · ประเภท: <b>{temoji} {tlabel}</b>" + (f" › {esc(c['sub'])}" if c.get('sub') else '') + " · MVP-2"
     out = ['<div class="card">',
            f'  <div class="h-title">{esc(c["title"])}</div>',
            f'  <div class="h-prio">{meta}</div>']
@@ -140,11 +152,12 @@ def status_jira(uid):
 '''
 
 
-def trow(uid, cid, title, level, prio, mvp, featv, typ, ui_status):
+def trow(uid, cid, title, level, prio, mvp, featv, typ, ui_status, sub=''):
     lvlcls = 'lvl-e2e' if level == 'e2e' else 'lvl-ui'
     lvltxt = 'E2E' if level == 'e2e' else 'UI'
-    tlabel, temoji = TYPES.get(typ, (typ, ''))
-    badge = f'<span class="ty ty-{typ}" title="{tlabel}">{temoji} {tlabel}</span>'
+    tlabel, temoji, _d = TYPES.get(typ, (typ, '', ''))
+    subtxt = f' › {esc(sub)}' if sub and typ != 'happy' else ''
+    badge = f'<span class="ty ty-{typ}" title="{tlabel}">{temoji} {tlabel}{subtxt}</span>'
     if ui_status == 'not-in-ui':
         badge += ' <span class="edge-badge" title="ยังไม่พบหน้าจอนี้ใน UI (เขียนจากสเปก)">ไม่พบใน UI</span>'
     return (f'<tr class="trow" data-mvp="{mvp}" data-feat="{featv}" data-type="{typ}" data-level="{level}" data-prio="{prio}" onclick="tg(this)">\n'
@@ -164,14 +177,47 @@ def owner_select(featkey):
 
 def type_counts_html(cnt):
     bits = []
-    for k, (lab, em) in TYPES.items():
+    for k, (lab, em, _d) in TYPES.items():
         if cnt.get(k):
             bits.append(f'<span class="ty ty-{k}" style="margin-left:4px">{em} {cnt[k]}</span>')
     return ''.join(bits)
 
 
+UID_MAP = f'{SCR}/uid_map.json'
+
+
+def load_uid_map():
+    try:
+        return json.load(open(UID_MAP, encoding='utf-8'))
+    except FileNotFoundError:
+        return {}
+
+
+def existing_store():
+    """Carry saved results over from the current published file (never reset testers' work)."""
+    try:
+        cur = open(OUT, encoding='utf-8').read()
+    except FileNotFoundError:
+        return {}
+    m = re.search(r'<script id="store-data"[^>]*>([\s\S]*?)</script>', cur)
+    try:
+        return json.loads((m.group(1) or '{}').strip() or '{}') if m else {}
+    except Exception:
+        return {}
+
+
 def main():
     tpl = open(TPL, encoding='utf-8').read()
+    uid_map = load_uid_map()
+    next_uid = [max(uid_map.values()) + 1 if uid_map else 1]
+
+    def uid_for(mvp, cid):
+        k = f'{mvp}:{cid}'
+        if k not in uid_map:
+            uid_map[k] = next_uid[0]
+            next_uid[0] += 1
+        return f'tc-{uid_map[k]}'
+
     mvp1_cases, mvp1_featlabels = load_mvp1()
     mvp2 = load_mvp2()
 
@@ -205,7 +251,7 @@ def main():
             rows.append(f'<tr class="featrow" data-featkey="m1-{fk}"><td colspan="7">{lab} <span class="rp"><span class="lv {lv} {len(cases)}</span></span> {owner_select("m1-" + fk)}</td></tr>')
             for c in cases:
                 uid_n += 1
-                uid = f'tc-{uid_n}'
+                uid = uid_for('mvp1', c['id'])
                 rows.append(trow(uid, c['id'], c['title'], c['level'], c['prio'], 'mvp1', featv, 'happy', 'in-ui'))
                 card = c['card']
                 card = card.replace('<div class="h-title">[MVP1] ', '<div class="h-title">', 1)
@@ -217,7 +263,7 @@ def main():
                 stats['mvp1'] += 1
 
     # ===== MVP-2 =====
-    rows.append('<tr class="mvprow" data-mvp="mvp2"><td colspan="7">🟪 MVP-2 — ครบทุกประเภท: Happy Path · Negative · Edge · Validation · Error Handling · Empty/Null · Duplicate · Permission/Authorization (Epic 8–16 · ออกแบบจาก epics-mvp2.md + test-artifacts/mvp-2 + UI จริง) <span class="rp" id="mvp2-count"></span></td></tr>')
+    rows.append('<tr class="mvprow" data-mvp="mvp2"><td colspan="7">🟪 MVP-2 — ครบ 7 ประเภท: Happy Path · Negative · Boundary/Edge · Validation · Exception/Error · Permission · Data (Epic 8–16 · ออกแบบจาก epics-mvp2.md + test-artifacts/mvp-2 + UI จริง) <span class="rp" id="mvp2-count"></span></td></tr>')
     step = 0
     for n in MVP2_ORDER:
         if n not in mvp2:
@@ -226,6 +272,9 @@ def main():
         step += 1
         featv = f'm2e{n}'
         n_ep = sum(len(f['cases']) for f in d['features'])
+        for f in d['features']:
+            for c in f['cases']:
+                norm_type(c)
         tc = Counter(c['type'] for f in d['features'] for c in f['cases'])
         mvp2_epic_type[n] = tc
         emoji = MVP2_EMOJI.get(n, '•')
@@ -252,14 +301,14 @@ def main():
             cases = sorted(f['cases'], key=lambda c: order.get(c['type'], 99))
             for c in cases:
                 uid_n += 1
-                uid = f'tc-{uid_n}'
+                uid = uid_for('mvp2', c['id'])
                 lvl = c.get('level', 'ui')
                 us = c.get('ui_status') or fstat
                 if us == 'partial':
                     us = 'in-ui'
                 if us == 'not-in-ui':
                     not_in_ui += 1
-                rows.append(trow(uid, c['id'], c['title'], lvl, c['prio'], 'mvp2', featv, c['type'], us))
+                rows.append(trow(uid, c['id'], c['title'], lvl, c['prio'], 'mvp2', featv, c['type'], us, c.get('sub', '')))
                 rows.append(card_mvp2(c, f['key'], n if n != 99 else '8-16') + status_jira(uid))
                 type_cnt[c['type']] += 1
                 prio_cnt[c['prio']] += 1
@@ -282,18 +331,18 @@ tr.mvprow.hide{display:none!important}
 .ty{display:inline-block;margin-left:6px;padding:1px 7px;border-radius:999px;font-size:9.5px;font-weight:700;border:1px solid;vertical-align:middle;white-space:nowrap;background:#fff}
 .ty-happy{color:#15803d;border-color:#86efac;background:#f0fdf4}
 .ty-negative{color:#b91c1c;border-color:#fca5a5;background:#fef2f2}
-.ty-edge{color:#7c3aed;border-color:#c4b5fd;background:#f5f3ff}
+.ty-boundary{color:#7c3aed;border-color:#c4b5fd;background:#f5f3ff}
 .ty-validation{color:#0e7490;border-color:#67e8f9;background:#ecfeff}
 .ty-error{color:#c2410c;border-color:#fdba74;background:#fff7ed}
-.ty-empty{color:#4b5563;border-color:#d1d5db;background:#f9fafb}
-.ty-duplicate{color:#a16207;border-color:#fde047;background:#fefce8}
+.ty-data{color:#a16207;border-color:#fde047;background:#fefce8}
 .ty-permission{color:#1d4ed8;border-color:#93c5fd;background:#eff6ff}
 .fchip .ty{margin-left:0;font-size:9px;padding:0 5px}
 tr.featrow .ty{margin-left:3px}
 </style>'''
     out = out.replace('</style>', css_add, 1)
-    # store-data → empty
-    out = re.sub(r'(<script id="store-data"[^>]*>)[\s\S]*?(</script>)', r'\1\n{}\n\2', out, count=1)
+    # store-data → carry over saved results from the currently published file (keyed by stable uid)
+    store_json = json.dumps(existing_store(), ensure_ascii=False, indent=2)
+    out = re.sub(r'(<script id="store-data"[^>]*>)[\s\S]*?(</script>)', lambda m: m.group(1) + '\n' + store_json + '\n' + m.group(2), out, count=1)
     # header block
     hdr_old = re.search(r'<header class="top">[\s\S]*?</header>', out).group(0)
     p0, p1, p2 = prio_cnt.get('P0', 0), prio_cnt.get('P1', 0), prio_cnt.get('P2', 0)
@@ -301,7 +350,7 @@ tr.featrow .ty{margin-left:3px}
     mvp2_e2e = sum(len(f['cases']) for f in mvp2.get(99, {'features': []})['features'])
     hdr_new = f'''<header class="top">
   <h1>🤖 [MVP1+2] TAKRA AI — MVP-1 Happy Path + MVP-2 Full-Category UI Manual Test Cases</h1>
-  <div class="sub">เทส UI อย่างเดียว (Manual) · MVP-1 = happy path regression · MVP-2 = ครบทุกประเภท (Happy · Negative · Edge · Validation · Error · Empty/Null · Duplicate · Permission) · Target: <b>https://uat-live.takra.ai/</b></div>
+  <div class="sub">เทส UI อย่างเดียว (Manual) · MVP-1 = happy path regression · MVP-2 = ครบ 7 ประเภท (Happy Path · Negative · Boundary/Edge · Validation · Exception/Error · Permission · Data) · Target: <b>https://uat-live.takra.ai/</b></div>
   <div class="meta">
     <span class="pill">รวม {total} เคส</span>
     <span class="pill">MVP-1 happy {mvp_cnt['mvp1']}</span>
@@ -320,11 +369,12 @@ tr.featrow .ty{margin-left:3px}
             for c in f['cases']:
                 mvp2_type_only[c['type']] += 1
     tcount2 = ' · '.join(f'{TYPES[k][1]} {TYPES[k][0]} <b>{mvp2_type_only.get(k,0)}</b>' for k in TYPES)
+    typedefs = ' · '.join(f'<b>{TYPES[k][1]} {TYPES[k][0]}</b> = {esc(TYPES[k][2])}' for k in TYPES)
     scope_note = f'''
   <div class="note-box" style="background:#eef2ff;border-color:#c7d2fe;color:#3730a3">📚 <b>ขอบเขตรายงานนี้</b> ·
     <b>MVP-1 (Happy Path)</b> = เคส flow หลัก {mvp_cnt['mvp1']} เคส ยกมาจากรายงาน <a href="https://wanlee-tankunnatam.github.io/qa-test-reports/projects/takra-ai/2026/07/reports/takra-ai-mvp1-ui-test-cases-table.html" target="_blank" rel="noopener">MVP-1 UI</a> (ตัดเคส edge/negative/validation ออก · ID เดิม · อ้าง <code>epics.md</code>) ·
     <b>MVP-2</b> = {mvp_cnt['mvp2']} เคส ออกแบบใหม่จาก <code>_bmad-output/planning-artifacts/epics-mvp2.md</code> + <code>_bmad-output/test-artifacts/mvp-2/</code> (test-plan · gaps · case/mvp2-*) + UI จริงใน <code>apps/web/src</code> (as of 2026-08-19) ·
-    ประเภท MVP-2: {tcount2} ·
+    ประเภท MVP-2: {tcount2} ·<br>📖 <b>นิยาม:</b> {typedefs} ·
     ⚠️ <b>Epic 11 (Ops/Support)</b> ย้ายไป TAKRA Hub แล้ว (2026-08-10) — ไม่มีเคสในรายงานนี้ · <b>Epic 13</b> (Tool-calling) = backend-only ไม่มีหน้าจอ ·
     เคสที่ติดป้าย <span class="edge-badge">ไม่พบใน UI</span> ({not_in_ui} เคส) = หน้าจอนั้นยังไม่พบในโค้ด UI ณ วันสร้าง เขียนจากสเปก → ถ้า UI ยังไม่มาให้ลงผล BLOCKED</div>
 '''
@@ -338,7 +388,7 @@ tr.featrow .ty{margin-left:3px}
     # filters block: rebuild Epic row + add MVP row + type row
     filt_old = re.search(r'<div class="filters">[\s\S]*?\n  </div>\n\n  <div class="tablewrap">', out).group(0)
     epic_chips = '\n'.join(f'      <button class="fchip" data-f="feat" data-v="{v}">{esc(l)} ({n})</button>' for v, l, n in epic_chip)
-    type_chips = '\n'.join(f'      <button class="fchip" data-f="type" data-v="{k}"><span class="ty ty-{k}">{TYPES[k][1]} {TYPES[k][0]}</span> ({type_cnt.get(k,0)})</button>' for k in TYPES)
+    type_chips = '\n'.join(f'      <button class="fchip" data-f="type" data-v="{k}" title="{esc(TYPES[k][2])}"><span class="ty ty-{k}">{TYPES[k][1]} {TYPES[k][0]}</span> ({type_cnt.get(k,0)})</button>' for k in TYPES)
     filt_new = f'''<div class="filters">
     <div class="row"><label>MVP</label>
       <button class="fchip" data-f="mvp" data-v="mvp1">🟦 MVP-1 Happy Path ({mvp_cnt['mvp1']})</button>
@@ -387,6 +437,47 @@ tr.featrow .ty{margin-left:3px}
     out = re.sub(r'<footer>.*?</footer>', f'<footer>[MVP1+2] TAKRA AI — MVP-1 Happy Path + MVP-2 Full-Category UI Manual Test Cases · {total} TCs · UI only · UAT https://uat-live.takra.ai/ · สร้าง 2026-08-19</footer>', out, count=1)
 
     # JS: filters (add mvp + type), mvprow hide, GH_PATH, download name, remove TC-AD.1 hack
+    # JS: GitHub contents API omits `content` for files > 1MB → auto-save used to fall back to
+    # serialising the LOCAL DOM (a stale tab could revert the whole report structure). Fix:
+    # fetch the blob via the git/blobs API, and never fall back to the local DOM.
+    js_fetch_old = out[out.find('  async function fetchRemote() {'):out.find('  // Merge statuses that exist on the remote copy')]
+    js_fetch_new = '''  async function fetchRemote() {
+    var r = await fetch(
+      API + '?ref=' + GH_BRANCH + '&t=' + Date.now(),
+      { cache: 'no-store', headers: { Authorization: 'token ' + token, Accept: 'application/vnd.github+json' } }
+    );
+    if (!r.ok) {
+      if (r.status === 401) { localStorage.removeItem('gh_pat'); }
+      throw new Error('ดึงไฟล์ไม่ได้ (HTTP ' + r.status + ') — ตรวจ token หรือ branch');
+    }
+    var j = await r.json();
+    // Files > 1MB: the contents API returns content "" (encoding "none") → read the blob instead.
+    if ((!j.content || !j.content.length) && j.sha) {
+      var b = await fetch(
+        'https://api.github.com/repos/' + GH_OWNER + '/' + GH_REPO + '/git/blobs/' + j.sha + '?t=' + Date.now(),
+        { cache: 'no-store', headers: { Authorization: 'token ' + token, Accept: 'application/vnd.github+json' } }
+      );
+      if (!b.ok) throw new Error('ดึงเนื้อไฟล์ (blob) ไม่ได้ (HTTP ' + b.status + ')');
+      var bj = await b.json();
+      j.content = bj.content; j.encoding = bj.encoding;
+    }
+    return j;
+  }
+
+'''
+    assert js_fetch_old.strip().startswith('async function fetchRemote()')
+    out = out.replace(js_fetch_old, js_fetch_new, 1)
+    out = out.replace(
+        "      if (!/<script id=\"store-data\"[^>]*>[\\s\\S]*?<\\/script>/.test(remoteHtml)) return buildEncoded();",
+        "      if (!/<script id=\"store-data\"[^>]*>[\\s\\S]*?<\\/script>/.test(remoteHtml)) throw new Error('ไฟล์บน GitHub ไม่มี store-data — ไม่บันทึกเพื่อกันทับโครงสร้าง');")
+    out = out.replace(
+        "    } catch (_) {\n      return buildEncoded();   // fallback: serialize local DOM\n    }",
+        "    } catch (e) {\n      throw new Error('ประกอบไฟล์จาก GitHub ไม่ได้ (' + (e && e.message) + ') — ไม่บันทึกเพื่อกันทับโครงสร้าง');\n    }")
+    # pullLatest (token path) has the same >1MB problem → reuse blob fallback
+    out = out.replace(
+        "      html = decodeURIComponent(escape(atob(((await r.json()).content || '').replace(/\\s/g, ''))));",
+        "      var pj = await r.json();\n      if ((!pj.content || !pj.content.length) && pj.sha) {\n        var pb = await fetch('https://api.github.com/repos/' + GH_OWNER + '/' + GH_REPO + '/git/blobs/' + pj.sha + '?t=' + Date.now(), { cache: 'no-store', headers: { Authorization: 'token ' + token, Accept: 'application/vnd.github+json' } });\n        if (!pb.ok) throw new Error('HTTP ' + pb.status + ' (blob)');\n        pj = await pb.json();\n      }\n      html = decodeURIComponent(escape(atob((pj.content || '').replace(/\\s/g, ''))));")
+
     out = out.replace("var filters = { feat: new Set(), level: new Set(), prio: new Set(), status: new Set() };",
                       "var filters = { mvp: new Set(), feat: new Set(), type: new Set(), level: new Set(), prio: new Set(), status: new Set() };")
     out = out.replace("    if (filters.feat.size  && !filters.feat.has(row.dataset.feat))   ok = false;",
@@ -413,6 +504,8 @@ tr.featrow .ty{margin-left:3px}
 
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
     open(OUT, 'w', encoding='utf-8').write(out)
+    json.dump(uid_map, open(UID_MAP, 'w', encoding='utf-8'), ensure_ascii=False, indent=0)
+    print('uid map', len(uid_map), 'max', max(uid_map.values()))
     print('WROTE', OUT, len(out), 'bytes')
     print('total', total, 'mvp1', mvp_cnt['mvp1'], 'mvp2', mvp_cnt['mvp2'], 'not_in_ui', not_in_ui)
     print('types', dict(type_cnt))
