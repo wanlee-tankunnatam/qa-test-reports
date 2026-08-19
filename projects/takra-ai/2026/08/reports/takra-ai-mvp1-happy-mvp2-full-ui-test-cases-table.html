@@ -236,6 +236,18 @@ tr.featrow .ty{margin-left:3px}
   "tc-11": {
     "actual": "[2026-08-19 · AI-assisted UI check] PASS — ครบทั้ง 3 ข้อของ Expected\n[PASS] กดชื่อ workspace ที่หัวแถบข้างซ้าย → เปิดตัวสลับ Workspace เห็นรายการ 4 แห่ง (ทีมของ kachain bumrungta ครับ · ทีมของ QA Tester [ติ๊กถูก = ใช้งานอยู่] · Wanlee Qa · wanlee 01) และท้ายรายการมี \"เพิ่ม Workspace ใหม่\" พร้อมป้ายรอง \"จัดการที่ TAKRA Hub\" + ไอคอนเปิดลิงก์ภายนอก\n[PASS] ไม่มีฟอร์มหรือช่องกรอกสร้าง workspace ในเมนูนี้ (นับ input/textarea ในหน้า = 0)\n[PASS] \"เพิ่ม Workspace ใหม่\" เป็น <a> href=https://uat-hub.takra.ai/dashboard (พารามิเตอร์ new=workspace) · target=_blank · rel=noopener → เปิดแท็บใหม่ไป Hub ไม่ใช่ฟอร์มในแอป\n[PASS] ทดสอบเพิ่ม: เปิด URL ตรง /workspace/new → ได้การ์ด \"สร้าง Workspace ที่ TAKRA Hub\" พร้อมข้อความ \"Workspace ใหม่ผูกกับแพ็กเกจและการชำระเงิน จึงสร้างได้ที่ TAKRA Hub — สร้างเสร็จแล้วกลับมาที่นี่ Workspace จะปรากฏในตัวสลับอัตโนมัติ\" และปุ่ม \"ไปที่ TAKRA Hub\" (https://uat-hub.takra.ai/) — ไม่มีฟอร์มสร้างในแอปจริง",
     "st": "pass"
+  },
+  "tc-12": {
+    "actual": "[2026-08-19 · AI-assisted UI check] PASS — WS-A = \"ทีมของ QA Tester\" (แพ็กเกจ Scale) · WS-B = \"Wanlee Qa\" (แพ็กเกจ Starter) บัญชี qa@takra.ai เป็น Owner ทั้งคู่\n[PASS] Expected 1 — หน้าต่างยืนยันแสดงหัวข้อ \"คุณต้องการเปลี่ยนพื้นที่ทำงานใช่หรือไม่?\" พร้อมคำอธิบาย \"การเปลี่ยนพื้นที่ทำงานจะทำให้ข้อมูลและบริบทการทำงานเปลี่ยนไป\" และปุ่ม \"ยกเลิก\" / \"เปลี่ยนพื้นที่ทำงาน\" ตรงตามสเปกทุกตัวอักษร\n[PASS] Expected 2 — หลังยืนยัน ชื่อที่หัวแถบข้างซ้าย · breadcrumb · การ์ดบนหน้าภาพรวม เปลี่ยนเป็น \"Wanlee Qa\" ครบทุกจุด และป้ายแพ็กเกจเปลี่ยนจาก \"TAKRA AI · Scale (รายเดือน)\" เป็น \"Starter\" ทั้งบนการ์ดและในการ์ดโปรไฟล์มุมล่างซ้าย\n[PASS] Expected 3 — ตัวเลขที่เป็นข้อมูลของ workspace เปลี่ยนตามจริง:\n  · ทีมงาน 3 คน → 1 คน\n  · ไลฟ์สัปดาห์นี้ 4 รอบ → 0 รอบ\n  · คลังสินค้า 34 รายการ · 1 หมวด → 1 รายการ · 1 หมวด\n  · ตารางไลฟ์ 4 รอบนัดสัปดาห์นี้ → 0 รอบนัดสัปดาห์นี้\n\n[NOTE ควรแก้ถ้อยคำใน Expected] คลังเสียง (47 เสียง) และ คลังอวาตาร์ (22 ตัว) แสดงเลขเท่ากันทั้ง 2 workspace — ตรวจแล้วเป็นพฤติกรรมที่ถูกต้องตามสเปก ไม่ใช่บั๊ก เพราะทั้งสองคลังเป็นแคตตาล็อกกลางที่ทีม TAKRA Ops จัดเตรียมให้ทุก workspace (ตาม TC-A2.1 \"อวาตาร์ที่ทีม Ops จัดเตรียมให้\" · TC-V2.1 \"เสียงที่ Ops จัดเตรียม\") พิสูจน์เพิ่มโดยเปิด /voices ทั้ง 2 ฝั่ง: ส่วนที่เป็นของ workspace จริงคือ \"เสียงของฉัน\" ซึ่งแยกกันถูกต้อง — WS-A มีเสียงอัปโหลด 2 รายการ ส่วน WS-B ขึ้น \"ยังไม่มีเสียงที่อัปโหลด\" → ข้อความ Expected ที่ระบุว่าเลขคลังเสียง/คลังอวาตาร์ต้องเปลี่ยนตาม workspace ควรแก้เป็นเฉพาะส่วน \"เสียงของฉัน\"\n\n[BUG ต้องสงสัย — ควรเปิดเคสแยก อยู่ในขอบเขต TC-E12-USG-10] \"ชั่วโมงอวาตาร์\" แสดง 38 / 50 ชม. เท่ากันเป๊ะทั้ง WS-A และ WS-B ทั้งที่คนละแพ็กเกจ (Scale vs Starter) และ WS-B มีไลฟ์ 0 รอบ — การใช้งานควรแยกราย workspace ตามสเปก",
+    "st": "pass"
+  },
+  "tc-13": {
+    "actual": "[2026-08-19 · AI-assisted UI check] PASS — ตรวจ 3 คลังหลัก + ค้นหาข้ามระหว่างสอง workspace\n[PASS] Expected 1 — ข้อมูลไม่ปนกันเลยทุกหน้า:\n  · คลังสินค้า — WS-A: 34 รายการ (พร้อมขาย 1 · ต้องเติมข้อมูล 2 · ฉบับร่าง 25) เช่น \"เซรั่มทดสอบคู่มือ QA\" · \"ครีมบำรุงผิวหน้า\" · \"Anti-Hairfall Shampoo แชมพูลดผมร่วง\" | WS-B: 1 รายการเดียวคือ \"Lumina Glow Serum วิตามินซีเซรั่ม\" (฿890 · 1 SKU · ฉบับร่าง) — ไม่มีรายการของ A โผล่แม้แต่ตัวเดียว\n  · คลังสคริปต์ — WS-A: รอรีวิว 2 · มีคำเสี่ยง 4 · ใช้งานในระบบ 19 · ฉบับร่าง 11 (ร่าง 11 · เก็บถาวร 8) | WS-B: 0 ทั้งหมด (รอรีวิว 0 · มีคำเสี่ยง 0 · ใช้งานในระบบ 0 · ฉบับร่าง 0)\n  · คำเสี่ยง — WS-A: 172 คำ | WS-B: 63 คำ (หมวดหมู่ 12 เท่ากันทั้งคู่ = ชุดคำมาตรฐานจากระบบ ถูกต้องตามสเปก)\n  · เสียงของฉัน — WS-A มี 2 รายการ | WS-B \"ยังไม่มีเสียงที่อัปโหลด\"\n[PASS] Expected 2 — พิมพ์ \"เซรั่มทดสอบคู่มือ QA\" (สินค้าเฉพาะของ WS-A) ในช่องค้นหาคลังสินค้าขณะอยู่ WS-B → ผลลัพธ์ \"0 รายการ / ไม่พบสินค้าที่ตรงกับการค้นหา\" ไม่รั่วข้าม workspace\n[PASS] Expected 3 — ตัวเลขสรุปหัวหน้าจอของทุกหน้าสอดคล้องกับ workspace ที่เลือกอยู่ (การ์ดสรุปคลังสินค้า/สคริปต์เปลี่ยนตามครบ)\n\n[NOTE] แผง \"Top Triggered\" ในหน้าคำเสี่ยงแสดง 2,847 ครั้งเท่ากันทั้ง 2 workspace — แต่ UI ติดป้ายกำกับไว้ชัดว่า \"ทั้ง workspace · 30 วัน\" และ \"ตัวอย่าง\" จึงถือว่าเป็น mock/cross-workspace ที่ตั้งใจ ไม่นับเป็นข้อมูลรั่ว",
+    "st": "pass"
+  },
+  "tc-14": {
+    "actual": "[2026-08-19 · AI-assisted UI check] PASS — Expected 1-2 ผ่านจากการทดสอบจริง · Expected 3 ยืนยันด้วยหลักฐานทางเทคนิค\n[PASS] Expected 1 — สลับไป \"Wanlee Qa\" แล้วรีเฟรชหน้า (โหลดใหม่ที่ /home) → ยังเป็น \"Wanlee Qa\" ทั้งหัวแถบข้าง breadcrumb และการ์ดภาพรวม ไม่รีเซ็ต\n[PASS] Expected 2 — เปิดแท็บใหม่แล้วพิมพ์ https://uat-live.takra.ai → เข้ามาที่ /home ของ \"Wanlee Qa\" เช่นกัน ไม่กลับไปค่าเริ่มต้น\n[PASS by evidence] Expected 3 — ขั้นตอน \"ปิดเบราว์เซอร์ทั้งหมดแล้วเปิดใหม่\" ไม่ได้รันจริง (ผู้ทดสอบไม่ได้รับอนุญาตให้ปิดเบราว์เซอร์ของผู้ใช้) แต่ตรวจกลไกที่ใช้เก็บค่าแทน: workspace ที่เลือกถูกเก็บใน cookie ชื่อ takra_active_workspace · path=/ · sameSite=lax · expires 2027-08-19 (อายุ 1 ปี ไม่ใช่ session cookie) → ค่าจะคงอยู่ข้ามการปิด-เปิดเบราว์เซอร์แน่นอนตราบใดที่ยังไม่ล้าง cookie · แนะนำให้ QA ที่เป็นคนรันทวนขั้นตอนนี้ด้วยมืออีกครั้งเพื่อปิดเคส 100%\n\n[NOTE ความปลอดภัย ระดับต่ำ] cookie takra_active_workspace ตั้ง secure=false ทั้งที่เว็บรันบน HTTPS — แนะนำเพิ่ม flag Secure\n\n[หลังทดสอบเสร็จ] สลับกลับมาที่ \"ทีมของ QA Tester\" (WS-A) เรียบร้อยแล้ว ระบบอยู่ในสภาพเดิม\n\n[BUG พบระหว่างทาง — ควรเปิดเคสแยก] หน้าคลังข้อมูลแสดง \"empty state ปลอม\" ระหว่างโหลด แทนที่จะเป็น skeleton\n- เปิด /scripts ของ WS-A (ซึ่งมีสคริปต์จริง 19 รายการ) → หน้าจอค้างแสดงการ์ดสรุปเป็น 0 ทุกช่อง พร้อมข้อความสถานะจบงานว่า \"ไม่มีสคริปต์รอรีวิว — เคลียร์หมดแล้ว\" นานประมาณ 17-25 วินาที แล้วค่อยเด้งเป็นเลขจริง (2 · 4 · 19 · 11)\n- /products และ /risk-words ก็ใช้เวลาโหลดนานคล้ายกัน (~20-30 วิ) แต่ /products ยังดีกว่าเพราะขึ้นข้อความ \"กำลังโหลดสินค้า...\" ให้รู้ว่ากำลังโหลด\n- ผลกระทบ: ผู้ใช้เข้าใจผิดว่า workspace ไม่มีข้อมูล และทำให้เคสประเภท Empty/Null (เช่น TC-E12-USG-08 · TC-E8-AHV-15) แยกไม่ออกระหว่าง \"ว่างจริง\" กับ \"ยังโหลดไม่เสร็จ\"",
+    "st": "pass"
   }
 }
 </script>
@@ -266,15 +278,15 @@ tr.featrow .ty{margin-left:3px}
   <div class="runsum">
     <h3>📊 สรุปผล Manual Test</h3>
     <div class="sumchips">
-      <span class="cnt pass">PASS <b id="sum-pass">6</b></span>
+      <span class="cnt pass">PASS <b id="sum-pass">9</b></span>
       <span class="cnt fail">FAIL <b id="sum-fail">0</b></span>
       <span class="cnt hold">HOLD <b id="sum-hold">1</b></span>
       <span class="cnt block">BLOCKED <b id="sum-block">4</b></span>
       <span class="cnt skip">SKIP <b id="sum-skip">0</b></span>
-      <span class="cnt pending">รอเทส <b id="sum-pending">218</b></span>
+      <span class="cnt pending">รอเทส <b id="sum-pending">215</b></span>
     </div>
-    <div class="progress"><div id="sumbar" class="progressbar" style="width: 5%;"></div></div>
-    <div class="hint" id="sumpct" style="margin-top:5px">5% ทดสอบแล้ว (11/229)</div>
+    <div class="progress"><div id="sumbar" class="progressbar" style="width: 6%;"></div></div>
+    <div class="hint" id="sumpct" style="margin-top:5px">6% ทดสอบแล้ว (14/229)</div>
   </div>
 
   <div class="toolbar">
@@ -711,7 +723,7 @@ tr.featrow .ty{margin-left:3px}
   <td class="ctitle">สลับ Workspace ผ่านตัวสลับแล้วบริบทการทำงานเปลี่ยนตาม <span class="ty ty-happy" title="Happy Path">✅ Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
-  <td class="status" data-uid="tc-12"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-12"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-12"></td>
 </tr>
 <tr class="detail"><td colspan="7">
@@ -723,10 +735,10 @@ tr.featrow .ty{margin-left:3px}
   <div class="sec"><h4>Test Data</h4><ul><li>workspace A และ B ที่มีข้อมูลต่างกันชัดเจน</li></ul></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>หน้าต่างยืนยันแสดงหัวข้อ "คุณต้องการเปลี่ยนพื้นที่ทำงานใช่หรือไม่?" พร้อมคำอธิบาย "การเปลี่ยนพื้นที่ทำงานจะทำให้ข้อมูลและบริบทการทำงานเปลี่ยนไป"</li><li>หลังยืนยัน ชื่อ workspace ที่หัวแถบซ้ายและบนหน้าภาพรวมเปลี่ยนเป็น B</li><li>ตัวเลขในการ์ด "เครื่องมือ Workspace" (คลังเสียง/คลังอวาตาร์/คลังสินค้า/คำเสี่ยง/ทีมงาน) เปลี่ยนเป็นข้อมูลของ workspace B</li><li>ที่มา: Epic 1 · Story 1.9 · FR4</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-12" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-12" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-12" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-12" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-12" data-st="block">BLOCKED</span>
@@ -743,7 +755,7 @@ tr.featrow .ty{margin-left:3px}
   <td class="ctitle">ข้อมูลในทุกคลังถูกจำกัดเฉพาะ Workspace ที่กำลังใช้งาน <span class="ty ty-happy" title="Happy Path">✅ Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
-  <td class="status" data-uid="tc-13"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13"></td>
 </tr>
 <tr class="detail"><td colspan="7">
@@ -755,10 +767,10 @@ tr.featrow .ty{margin-left:3px}
   <div class="sec"><h4>Test Data</h4><ul><li>ชื่อสินค้าเฉพาะของ A เช่น "A-ONLY-Serum" · ของ B เช่น "B-ONLY-Cream"</li></ul></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>รายการที่แสดงใน workspace B ไม่มีข้อมูลของ workspace A ปนเลย</li><li>ค้นหาชื่อรายการของ A ขณะอยู่ B แล้วไม่พบผลลัพธ์</li><li>ตัวเลขสรุปของแต่ละหน้าสอดคล้องกับ workspace ที่เลือกอยู่</li><li>ที่มา: Epic 1 · Story 1.9 · FR6</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13" data-st="block">BLOCKED</span>
@@ -775,7 +787,7 @@ tr.featrow .ty{margin-left:3px}
   <td class="ctitle">Workspace ที่เลือกไว้ยังคงเดิมหลังรีเฟรชและเปิดแท็บใหม่ <span class="ty ty-happy" title="Happy Path">✅ Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-14"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-14"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-14"></td>
 </tr>
 <tr class="detail"><td colspan="7">
@@ -786,10 +798,10 @@ tr.featrow .ty{margin-left:3px}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชีที่เป็นสมาชิก workspace อย่างน้อย 2 แห่ง</li><li>กดที่ชื่อ workspace ที่หัวแถบข้างซ้าย สลับไป workspace B แล้วกดยืนยัน "เปลี่ยนพื้นที่ทำงาน"</li><li>กดรีเฟรชหน้า (F5) แล้วดูชื่อ workspace ที่แสดง</li><li>เปิดแท็บใหม่แล้วพิมพ์ https://uat-live.takra.ai เพื่อเข้าแอปอีกครั้ง</li><li>ปิดเบราว์เซอร์ทั้งหมดแล้วเปิดใหม่ เข้าแอปอีกครั้งโดยยังล็อกอินอยู่ แล้วสังเกตชื่อ workspace</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>หลังรีเฟรช workspace ที่แสดงยังเป็น B</li><li>แท็บใหม่เปิดมาที่ workspace B เช่นกัน (ไม่รีเซ็ตกลับค่าเริ่มต้น)</li><li>หลังเปิดเบราว์เซอร์ใหม่และยังล็อกอินอยู่ ก็ยังอยู่ที่ workspace B</li><li>ที่มา: Epic 1 · Story 1.9 · FR4</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-14" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-14" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-14" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-14" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-14" data-st="block">BLOCKED</span>
@@ -8301,7 +8313,7 @@ document.querySelectorAll('.feat-owner').forEach(function(sel){var e=sel.dataset
         </svg>
         <span id="claude-static-close-tooltip" style="position: absolute; bottom: calc(100% + 12px); left: 50%; transform: translateX(-50%); padding: 6px 12px; background: #30302E; color: #FAF9F5; border-radius: 6px; font-size: 12px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.2s; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;">Dismiss</span>
       </button>
-    </div><tldx-lmi-shadow-root></tldx-lmi-shadow-root><div id="tldx-toast-container"></div><div id="claude-agent-glow-border" style="position: fixed; inset: 0px; pointer-events: none; z-index: 2147483646; opacity: 1; transition: opacity 0.3s ease-in-out;"><div id="claude-agent-glow-border-inner" style="position: absolute; inset: 0px; will-change: opacity; box-shadow: rgba(217, 119, 87, 0.7) 0px 0px 15px inset, rgba(217, 119, 87, 0.5) 0px 0px 25px inset, rgba(217, 119, 87, 0.2) 0px 0px 35px inset;"></div></div><div id="claude-static-indicator-container" style="position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%); display: inline-flex; align-items: center; justify-content: center; padding: 6px 6px 6px 16px; background: rgb(250, 249, 245); border: 0.5px solid rgba(31, 30, 29, 0.3); border-radius: 14px; box-shadow: rgba(0, 0, 0, 0.15) 0px 40px 80px 0px; z-index: 2147483647; pointer-events: none; white-space: nowrap; user-select: none; font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, sans-serif;">
+    </div><tldx-lmi-shadow-root></tldx-lmi-shadow-root><div id="tldx-toast-container"></div><div id="claude-agent-glow-border" style="position: fixed; inset: 0px; pointer-events: none; z-index: 2147483646; opacity: 1; transition: opacity 0.3s ease-in-out;"><div id="claude-agent-glow-border-inner" style="position: absolute; inset: 0px; will-change: opacity; box-shadow: rgba(217, 119, 87, 0.7) 0px 0px 15px inset, rgba(217, 119, 87, 0.5) 0px 0px 25px inset, rgba(217, 119, 87, 0.2) 0px 0px 35px inset;"></div></div><div id="claude-static-indicator-container" style="position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%); align-items: center; justify-content: center; padding: 6px 6px 6px 16px; background: rgb(250, 249, 245); border: 0.5px solid rgba(31, 30, 29, 0.3); border-radius: 14px; box-shadow: rgba(0, 0, 0, 0.15) 0px 40px 80px 0px; z-index: 2147483647; pointer-events: none; white-space: nowrap; user-select: none; font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, sans-serif;">
       <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 16px; height: 16px; display: inline-block; vertical-align: middle; flex-shrink: 0; margin-right: 8px;">
         <path d="M3.13946 10.6399L6.28757 8.87462L6.37405 8.73821L6.28757 8.6339H6.13189L5.60432 8.6018L3.80541 8.55366L2.24865 8.48947L0.735135 8.40923H0.492973L0.354595 8.32899L0.181622 8.1685L0.0345946 8.01605L0 7.85557L0.0345946 7.62287L0.138378 7.44634L0.224865 7.40622H0.354595L0.812973 7.44634L1.82486 7.51856L3.34703 7.62287L4.44541 7.68706L6.08 7.85557H6.33946L6.37405 7.75125L6.28757 7.68706L6.21838 7.62287L4.64432 6.55567L2.94054 5.4323L2.04973 4.78235L1.57405 4.45336L1.33189 4.14845L1.22811 3.92377L1.17622 3.69107L1.22811 3.47442L1.33189 3.28185L1.46162 3.13741L1.66054 2.99298H1.87676L2.24865 3.0331L2.39568 3.07322L2.99243 3.53059L4.26378 4.51755L5.92432 5.73721L6.16649 5.93781H6.27892V5.82548L6.16649 5.64092L5.26703 4.01204L4.30703 2.35105L3.87459 1.66098L3.76216 1.25176C3.7391 1.16082 3.69297 0.977332 3.69297 0.970913V0.762287L3.77946 0.505517L3.93513 0.240722L4.18595 0.0882648L4.4627 0H4.67892L4.83459 0.0240722L5.12865 0.0882648L5.4054 0.328987L5.82054 1.27583L6.48649 2.76028L7.52432 4.78235L7.82703 5.38415L7.99135 5.93781L8.05189 6.10632H8.15567V6.01003L8.24216 4.87061L8.39784 3.47442L8.55351 1.67703L8.6054 1.17151L8.85622 0.561685L8.9773 0.417252L9.21946 0.232698H9.35784L9.74703 0.417252L9.97189 0.665998L10.067 0.874624L10.0238 1.17151L9.83351 2.40722L9.46162 4.34102L9.21946 5.64092H9.35784L9.52216 5.47242L10.1795 4.60582L11.2778 3.22568L11.7622 2.68004L12.333 2.07823L12.6962 1.78937L13.0162 1.67703L13.3881 1.78937L13.7168 2.06219L13.8897 2.54363V2.76028L13.6649 3.32197L12.9557 4.22066L12.3676 4.98295L12.0043 5.56871L11.0011 7.02106V7.08526H11.1741L13.0768 6.67603L14.1059 6.49147L15.3341 6.28285L15.5762 6.34704L15.8876 6.53962L15.9481 6.80441L15.8876 7.12538L15.7319 7.34203L14.4173 7.66299L12.8778 7.97593L10.5854 8.51559C10.5705 8.51909 10.56 8.53236 10.56 8.54764C10.56 8.56468 10.573 8.57891 10.59 8.58044L11.6238 8.67402L12.0649 8.69809H13.1459L15.1611 8.85055L15.6886 9.19559L15.9481 9.39619L16 9.62086L15.9481 9.94985L15.8443 10.1023L15.4119 10.3029L15.1351 10.3591L14.0454 10.1023L11.4941 9.49248L10.6205 9.27583H10.4995V9.34804L11.2259 10.0622L12.5665 11.2658L14.2357 12.8225L14.3222 13.0953V13.2076L14.1059 13.5125L13.9243 13.5206L13.8811 13.4804L12.4108 12.3731L12.2984 12.325L11.84 11.8756L10.56 10.7924H10.4735V10.9047L10.7676 11.338L12.333 13.6891L12.4108 14.4112L12.2984 14.6439L11.8919 14.7884L11.667 14.7563L11.4508 14.7081L11.2605 14.5396L10.5254 13.4162L9.5827 11.9719L8.82162 10.672H8.79342C8.76039 10.672 8.73278 10.6972 8.7297 10.73L8.27676 15.5667L8.06919 15.8154L7.6454 16H7.58486L7.17838 15.6951L6.96216 15.1976L7.17838 14.2106L7.43784 12.9268L7.6454 11.9077L7.83567 10.6399L7.95187 10.2164C7.9548 10.2057 7.95069 10.1944 7.94161 10.1881C7.91157 10.1672 7.87034 10.1741 7.84878 10.2037L6.89297 11.5145L5.44 13.4804L4.28973 14.7081L4.01297 14.8205H3.80541L3.5373 14.5717V14.4514L3.58054 14.1304L3.84865 13.7372L5.44 11.7151L6.4 10.4554L7.01872 9.73222C7.04511 9.70139 7.04245 9.65523 7.0127 9.62763C7.00333 9.61894 6.98925 9.61773 6.97854 9.62471L2.75027 12.3811L1.99784 12.4774L1.66919 12.1725L1.71243 11.675L1.86811 11.5145L3.13946 10.6399Z" fill="#D97757"></path>
       </svg>
