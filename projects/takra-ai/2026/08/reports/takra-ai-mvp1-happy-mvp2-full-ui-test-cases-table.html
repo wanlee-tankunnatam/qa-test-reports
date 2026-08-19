@@ -248,6 +248,26 @@ tr.featrow .ty{margin-left:3px}
   "tc-14": {
     "actual": "[2026-08-19 · AI-assisted UI check] PASS — Expected 1-2 ผ่านจากการทดสอบจริง · Expected 3 ยืนยันด้วยหลักฐานทางเทคนิค\n[PASS] Expected 1 — สลับไป \"Wanlee Qa\" แล้วรีเฟรชหน้า (โหลดใหม่ที่ /home) → ยังเป็น \"Wanlee Qa\" ทั้งหัวแถบข้าง breadcrumb และการ์ดภาพรวม ไม่รีเซ็ต\n[PASS] Expected 2 — เปิดแท็บใหม่แล้วพิมพ์ https://uat-live.takra.ai → เข้ามาที่ /home ของ \"Wanlee Qa\" เช่นกัน ไม่กลับไปค่าเริ่มต้น\n[PASS by evidence] Expected 3 — ขั้นตอน \"ปิดเบราว์เซอร์ทั้งหมดแล้วเปิดใหม่\" ไม่ได้รันจริง (ผู้ทดสอบไม่ได้รับอนุญาตให้ปิดเบราว์เซอร์ของผู้ใช้) แต่ตรวจกลไกที่ใช้เก็บค่าแทน: workspace ที่เลือกถูกเก็บใน cookie ชื่อ takra_active_workspace · path=/ · sameSite=lax · expires 2027-08-19 (อายุ 1 ปี ไม่ใช่ session cookie) → ค่าจะคงอยู่ข้ามการปิด-เปิดเบราว์เซอร์แน่นอนตราบใดที่ยังไม่ล้าง cookie · แนะนำให้ QA ที่เป็นคนรันทวนขั้นตอนนี้ด้วยมืออีกครั้งเพื่อปิดเคส 100%\n\n[NOTE ความปลอดภัย ระดับต่ำ] cookie takra_active_workspace ตั้ง secure=false ทั้งที่เว็บรันบน HTTPS — แนะนำเพิ่ม flag Secure\n\n[หลังทดสอบเสร็จ] สลับกลับมาที่ \"ทีมของ QA Tester\" (WS-A) เรียบร้อยแล้ว ระบบอยู่ในสภาพเดิม\n\n[BUG พบระหว่างทาง — ควรเปิดเคสแยก] หน้าคลังข้อมูลแสดง \"empty state ปลอม\" ระหว่างโหลด แทนที่จะเป็น skeleton\n- เปิด /scripts ของ WS-A (ซึ่งมีสคริปต์จริง 19 รายการ) → หน้าจอค้างแสดงการ์ดสรุปเป็น 0 ทุกช่อง พร้อมข้อความสถานะจบงานว่า \"ไม่มีสคริปต์รอรีวิว — เคลียร์หมดแล้ว\" นานประมาณ 17-25 วินาที แล้วค่อยเด้งเป็นเลขจริง (2 · 4 · 19 · 11)\n- /products และ /risk-words ก็ใช้เวลาโหลดนานคล้ายกัน (~20-30 วิ) แต่ /products ยังดีกว่าเพราะขึ้นข้อความ \"กำลังโหลดสินค้า...\" ให้รู้ว่ากำลังโหลด\n- ผลกระทบ: ผู้ใช้เข้าใจผิดว่า workspace ไม่มีข้อมูล และทำให้เคสประเภท Empty/Null (เช่น TC-E12-USG-08 · TC-E8-AHV-15) แยกไม่ออกระหว่าง \"ว่างจริง\" กับ \"ยังโหลดไม่เสร็จ\"",
     "st": "pass"
+  },
+  "tc-15": {
+    "actual": "[2026-08-19 · AI-assisted UI check] FAIL — Expected ข้อ 1-2 ผ่าน แต่ข้อ 3-4 ไม่ตรงกับ UI จริง (ขาดข้อมูล \"เข้าใช้งานล่าสุด\" ทั้งหน้า)\n[PASS] Expected 1 — เห็นหัวข้อ \"ผู้ใช้และบทบาท\" พร้อมคำอธิบาย \"จัดการผู้ใช้และบทบาทใน Workspace · MVP-1 รองรับ 2 บทบาท (Owner / Live Operator)\" ตรงตามสเปก\n[PASS] Expected 2 — มีตัวเลขสรุป \"ทั้งหมด 3 คน\" และปุ่ม \"จัดการสมาชิกที่ TAKRA Hub\" (เปิดลิงก์ภายนอก) · มีแถบแจ้ง \"มีคำเชิญค้างอยู่ 1 รายการ · ที่นั่ง 4/30 · จัดการคำเชิญที่ TAKRA Hub\" เพิ่มมาด้วย\n[FAIL] Expected 3 — คอลัมน์ตารางจริงคือ \"ผู้ใช้\" · \"บทบาท\" · \"SCRIPT APPROVE\" — ไม่มีคอลัมน์ \"เข้าใช้งานล่าสุด\" ตามที่สเปกกำหนด (ตรวจ DOM ทั้งหน้าแล้วไม่พบคำว่า \"เข้าใช้งาน\" เลยแม้แต่จุดเดียว)\n[FAIL] Expected 4 — กดแถวสมาชิกแล้วแผงด้านข้างเปิดขึ้นจริง และมี \"บทบาท\" (ระดับใน workspace + บทบาทการใช้งาน) · สวิตช์ \"มอบสิทธิ์ Script Approve\" ครบ แต่ \"ไม่มี\" หัวข้อ \"การใช้งาน\" และ \"เข้าใช้งานล่าสุด\" ในแผง — แผงมีแค่ บทบาท → Script Approve → ปุ่มลบออกจาก workspace\n\nข้อมูลที่เห็นจริงในตาราง: QA Tester (qa@takra.ai · Owner · ได้รับสิทธิ์ approve) · wanleeta QA (wanleeta.official@gmail.com · ผู้ดูแล · ไม่ได้รับสิทธิ์) · kachain bumrungta (kachain.b@realfactory.co.th · ผู้จัดการ · ไม่ได้รับสิทธิ์)\n\n[ข้อสังเกตเพิ่ม — ค่าบทบาทไม่สอดคล้องกัน ควรถามทีมพัฒนา] คอลัมน์ \"บทบาท\" ในตารางแสดง \"ผู้ดูแล\" สำหรับ wanleeta QA แต่พอเปิดแผงรายละเอียดของคนเดียวกัน หัวข้อ \"ระดับใน workspace (จาก TAKRA Hub)\" กลับแสดง \"สมาชิก\" — ค่าคนละอย่างสำหรับผู้ใช้คนเดียวกัน",
+    "st": "fail"
+  },
+  "tc-16": {
+    "actual": "[2026-08-19 · AI-assisted UI check] FAIL — ส่วนที่มีอยู่ทำงานถูกทั้งหมด แต่ตัวกรอง \"เข้าใช้งาน:\" ไม่มีอยู่ใน UI เลย\n[PASS] คำค้น — พิมพ์ \"kachain\" ในช่อง \"ค้นหาด้วยชื่อหรืออีเมล…\" → เหลือ 1 แถว (kachain bumrungta) และขึ้นชิป \"กรอง: ค้นหา \"kachain\" · 1 คน\" ตรงรูปแบบที่ Expected ข้อ 2 กำหนด\n[PASS] ตัวกรอง \"บทบาท:\" — เปิดแล้วมี 3 ตัวเลือก: ทั้งหมด / Owner / Live Operator · เลือก \"Live Operator\" → ชิป \"กรอง: Live Operator · 0 คน\" และขึ้น empty state \"ไม่มีผู้ใช้ในตัวกรองนี้ / ลองล้างตัวกรอง หรือเชิญผู้ใช้ใหม่\" (ถูกต้อง เพราะยังไม่มีใครเป็น Live Operator)\n[PASS] Expected 4 — กดกากบาทบนชิป → ตัวกรองกลับเป็น \"บทบาท: ทั้งหมด\" และรายชื่อกลับมาครบ 3 คนเหมือนเดิม\n[FAIL] Expected 1 + 3 — \"ไม่พบ\" ตัวกรอง \"เข้าใช้งาน:\" ในหน้านี้เลย ทั้งหน้ามี control กรองแค่ 2 ตัว (ช่องค้นหา 1 ช่อง + dropdown บทบาท 1 ตัว) จึงทดสอบไม่ได้ทั้ง 5 ตัวเลือกตาม Test Data (ทั้งหมด / 24 ชม.ล่าสุด / 7 วันล่าสุด / 30 วันล่าสุด / ยังไม่เคย) และไม่พบคำกำกับ \"เฉพาะ pending invites\" ตาม Expected ข้อ 3\nสาเหตุเดียวกับ TC-UR.1: ระบบยังไม่มีข้อมูล \"เข้าใช้งานล่าสุด\" ในหน้านี้ ทั้งคอลัมน์และตัวกรอง\n\n[ข้อสังเกต] ตัวกรองบทบาทให้เลือกได้แค่ Owner / Live Operator แต่คอลัมน์ \"บทบาท\" ในตารางแสดงค่าจริงเป็น \"ผู้ดูแล\" · \"ผู้จัดการ\" → ผู้ใช้กรองตามสิ่งที่ตาเห็นในตารางไม่ได้",
+    "st": "fail"
+  },
+  "tc-17": {
+    "actual": "[2026-08-19 · AI-assisted UI check] SKIP — ตามที่ผู้ว่าจ้างทดสอบสั่งให้ข้ามไปก่อน (2026-08-19) เพราะเคสนี้ต้องแก้บทบาทของสมาชิกจริงใน workspace UAT\nสิ่งที่ยืนยันได้โดยไม่แตะข้อมูล: แผงรายละเอียดของสมาชิกที่ไม่ใช่ Owner มีหัวข้อ \"บทบาทการใช้งาน\" แสดงค่าปัจจุบัน \"สมาชิก (ไม่มีบทบาทเพิ่ม)\" พร้อมปุ่ม \"เปลี่ยนบทบาท\" อยู่จริงตาม Test Step ข้อ 3 — ยังไม่ได้เปิด dialog \"เปลี่ยนบทบาทการใช้งาน\" จึงยังไม่ได้ตรวจ Expected ทั้ง 4 ข้อ",
+    "st": "skip"
+  },
+  "tc-18": {
+    "actual": "[2026-08-19 · AI-assisted UI check] PASS — ครบทั้ง 3 ข้อของ Expected\n[PASS] Expected 1 — เปิดแผงของสมาชิก (wanleeta QA) เห็นหัวข้อ \"ระดับใน workspace (จาก TAKRA Hub)\" แสดงค่า \"สมาชิก\" พร้อมป้าย \"อ่านอย่างเดียว\" มุมขวา · ทดสอบ triple-click ที่ค่าระดับแล้วพิมพ์ \"ZZZ\" ทับ → ค่าไม่เปลี่ยน ยังเป็น \"สมาชิก\" (focus ตกที่ body · ทั้งหน้ามี input แค่ช่องค้นหา 1 ช่อง)\n[PASS] Expected 2 — เปิดแผงของ Owner (QA Tester) แสดงข้อความ \"Owner เข้าถึงได้ทุกอย่างตามสิทธิ์ของ Hub · ไม่สามารถกำหนดบทบาทการใช้งานได้\" ตรงตามสเปก และ \"ไม่มี\" ปุ่ม \"เปลี่ยนบทบาท\" ในแผงนี้ (ต่างจากแผงของสมาชิกที่มีปุ่ม)\n[PASS] Expected 3 — ท้ายแผงของ Owner ระบุ \"Owner ของ workspace · ไม่สามารถลบออกจาก workspace ได้\" และไม่มีปุ่ม \"ลบออกจาก workspace\" (ต่างจากแผงของสมาชิกที่มีปุ่มสีแดง)\n[เพิ่มเติม] แผงของ Owner ส่วน Script Approve แสดง \"Owner สามารถ approve script ได้โดย default\" + สถานะ \"มีสิทธิ์ approve · by role\" (ล็อกไว้ ไม่ใช่สวิตช์) — สอดคล้องกับ TC-SA.4",
+    "st": "pass"
+  },
+  "tc-19": {
+    "actual": "[2026-08-19 · AI-assisted UI check] SKIP — ตามที่ผู้ว่าจ้างทดสอบสั่งให้ข้ามไปก่อน (2026-08-19)\nเหตุผลเพิ่มเติม: เคสนี้จบด้วยการลบสมาชิกออกจาก workspace ถาวร ซึ่งหน้าต่างยืนยันเองระบุว่า \"ย้อนกลับไม่ได้\" — ผู้ทดสอบ (AI) ไม่ลบข้อมูลถาวรแทนผู้ใช้ตามนโยบายความปลอดภัย\nสิ่งที่ยืนยันได้โดยไม่แตะข้อมูล: ปุ่ม \"ลบออกจาก workspace\" (สีแดง มีไอคอนถังขยะ) อยู่ท้ายแผงรายละเอียดของสมาชิกที่ไม่ใช่ Owner จริงตาม Test Step ข้อ 2 และไม่มีปุ่มนี้ในแผงของ Owner (ดู TC-UR.4)\nยังไม่ได้ตรวจ: รายการผลกระทบ 3 ข้อในหน้าต่างยืนยัน · เงื่อนไขปุ่มยืนยันกดไม่ได้จนกว่าจะพิมพ์ข้อความให้ตรง · ข้อความ \"ลบผู้ใช้แล้ว\" — แนะนำให้ QA ที่เป็นคนรันทดสอบเองกับบัญชีทดสอบที่ลบทิ้งได้",
+    "st": "skip"
   }
 }
 </script>
@@ -278,15 +298,15 @@ tr.featrow .ty{margin-left:3px}
   <div class="runsum">
     <h3>📊 สรุปผล Manual Test</h3>
     <div class="sumchips">
-      <span class="cnt pass">PASS <b id="sum-pass">9</b></span>
-      <span class="cnt fail">FAIL <b id="sum-fail">0</b></span>
+      <span class="cnt pass">PASS <b id="sum-pass">10</b></span>
+      <span class="cnt fail">FAIL <b id="sum-fail">2</b></span>
       <span class="cnt hold">HOLD <b id="sum-hold">1</b></span>
       <span class="cnt block">BLOCKED <b id="sum-block">4</b></span>
-      <span class="cnt skip">SKIP <b id="sum-skip">0</b></span>
-      <span class="cnt pending">รอเทส <b id="sum-pending">215</b></span>
+      <span class="cnt skip">SKIP <b id="sum-skip">2</b></span>
+      <span class="cnt pending">รอเทส <b id="sum-pending">210</b></span>
     </div>
-    <div class="progress"><div id="sumbar" class="progressbar" style="width: 6%;"></div></div>
-    <div class="hint" id="sumpct" style="margin-top:5px">6% ทดสอบแล้ว (14/229)</div>
+    <div class="progress"><div id="sumbar" class="progressbar" style="width: 7%;"></div></div>
+    <div class="hint" id="sumpct" style="margin-top:5px">7% ทดสอบแล้ว (17/227) · ข้าม 2</div>
   </div>
 
   <div class="toolbar">
@@ -294,7 +314,7 @@ tr.featrow .ty{margin-left:3px}
     <button class="btn" onclick="toggleAll(false)">▾ ยุบทั้งหมด</button>
     <span class="hint">💡 คลิกแถว → ดู Steps / Expected (UI only)</span>
     <span style="margin-left:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-      <span id="save-status" class="hint" style="white-space: nowrap; color: var(--muted);">✓ ตรงกับ GitHub</span>
+      <span id="save-status" class="hint" style="white-space: nowrap; color: var(--hold);">● ยังไม่ได้บันทึก</span>
       <label class="hint" style="display:flex;gap:4px;align-items:center;white-space:nowrap;cursor:pointer" title="บันทึกขึ้น GitHub อัตโนมัติหลังหยุดแก้ ~5 วินาที"><input type="checkbox" id="chk-autosave" checked=""> auto-save</label>
       <button class="btn" id="btn-token" title="ใส่/เปลี่ยน GitHub token (ถ้าเซฟไม่ขึ้น/token เสีย กดอันนี้)">🔑 Token</button>
       <button class="btn" id="btn-refresh" title="ดึงผลล่าสุดจาก GitHub มา merge (ไม่ต้อง reload)">🔄 ดึงล่าสุด</button>
@@ -819,7 +839,7 @@ tr.featrow .ty{margin-left:3px}
   <td class="ctitle">เปิดหน้าผู้ใช้และบทบาทแล้วเห็นสมาชิกครบพร้อมข้อมูลที่จำเป็น <span class="ty ty-happy" title="Happy Path">✅ Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
-  <td class="status" data-uid="tc-15"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-15"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-15"></td>
 </tr>
 <tr class="detail"><td colspan="7">
@@ -831,11 +851,11 @@ tr.featrow .ty{margin-left:3px}
   <div class="sec"><h4>Test Data</h4><ul><li>URL: https://uat-live.takra.ai/users</li></ul></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>เห็นหัวข้อ "ผู้ใช้และบทบาท" พร้อมคำอธิบาย "จัดการผู้ใช้และบทบาทใน Workspace · MVP-1 รองรับ 2 บทบาท (Owner / Live Operator)"</li><li>มีตัวเลขสรุปจำนวนสมาชิกรูปแบบ "ทั้งหมด X คน" และปุ่ม "จัดการสมาชิกที่ TAKRA Hub" (การเพิ่ม/เชิญสมาชิกทำที่ Hub)</li><li>ตารางมีคอลัมน์ "ผู้ใช้" · "บทบาท" · "เข้าใช้งานล่าสุด"</li><li>กดแถวแล้วแผงด้านข้างเปิดขึ้น แสดงหัวข้อ "บทบาท" (ระดับใน workspace + บทบาทการใช้งาน) · สวิตช์ Script Approve · "การใช้งาน" · "เข้าใช้งานล่าสุด"</li><li>ที่มา: Epic 1 · Story 1.7 · FR3</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-15" data-st="pass">PASS</span>
-    <span class="opt fail" data-uid="tc-15" data-st="fail">FAIL</span>
+    <span class="opt fail sel" data-uid="tc-15" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-15" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-15" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-15" data-st="skip">SKIP</span>
@@ -851,7 +871,7 @@ tr.featrow .ty{margin-left:3px}
   <td class="ctitle">ค้นหาและกรองสมาชิกตามบทบาทและช่วงเวลาเข้าใช้งาน <span class="ty ty-happy" title="Happy Path">✅ Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-16"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-16"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-16"></td>
 </tr>
 <tr class="detail"><td colspan="7">
@@ -863,11 +883,11 @@ tr.featrow .ty{margin-left:3px}
   <div class="sec"><h4>Test Data</h4><ul><li>ตัวกรองเข้าใช้งาน: ทั้งหมด / 24 ชม.ล่าสุด / 7 วันล่าสุด / 30 วันล่าสุด / ยังไม่เคย</li></ul></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>รายการถูกกรองตรงตามเงื่อนไขที่เลือกในทุกกรณี (คำค้น + บทบาท + ช่วงเวลาเข้าใช้งาน ทำงานร่วมกัน)</li><li>ตัวกรองที่ใช้อยู่แสดงเป็นชิปหลังคำว่า "กรอง:" พร้อมจำนวนคนที่เหลือ (รูปแบบ "X คน")</li><li>ตัวเลือก "ยังไม่เคย" มีคำกำกับ "เฉพาะ pending invites" (ใช้กับคำเชิญที่ยังไม่ตอบรับ)</li><li>ล้างตัวกรองครบแล้วรายชื่อกลับมาแสดงครบเหมือนเดิม</li><li>ที่มา: Epic 1 · Story 1.7</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-16" data-st="pass">PASS</span>
-    <span class="opt fail" data-uid="tc-16" data-st="fail">FAIL</span>
+    <span class="opt fail sel" data-uid="tc-16" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-16" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-16" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-16" data-st="skip">SKIP</span>
@@ -883,7 +903,7 @@ tr.featrow .ty{margin-left:3px}
   <td class="ctitle">เปลี่ยนบทบาทการใช้งานของสมาชิกเป็น Live Operator แล้วมีผลทันที <span class="ty ty-happy" title="Happy Path">✅ Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
-  <td class="status" data-uid="tc-17"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-17"><span class="stb skip">SKIP</span></td>
   <td class="jira-cell" data-uid="tc-17"></td>
 </tr>
 <tr class="detail"><td colspan="7">
@@ -895,14 +915,14 @@ tr.featrow .ty{margin-left:3px}
   <div class="sec"><h4>Test Data</h4><ul><li>บทบาทการใช้งาน: Live Operator / สมาชิก (ไม่มีบทบาทเพิ่ม)</li></ul></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ตัวเลือก Live Operator มีคำอธิบาย "เข้าถึง Library + ไลฟ์สตูดิโอ + ห้องคุมไลฟ์"</li><li>มีหมายเหตุ "สิทธิ์จะถูก resolve ใหม่ทันทีใน request ถัดไป (real-time) · บันทึกใน audit log"</li><li>หลังยืนยัน เห็นข้อความแจ้งผล "เปลี่ยนบทบาทแล้ว" พร้อมชื่อผู้ใช้และบทบาทใหม่ (มีผลทันทีใน request ถัดไป)</li><li>บทบาทในตารางเปลี่ยนเป็น Live Operator ทันทีโดยไม่ต้องรีเฟรชหน้า</li><li>ที่มา: Epic 1 · Story 1.7 · FR3</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-17" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-17" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-17" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-17" data-st="block">BLOCKED</span>
-    <span class="opt skip" data-uid="tc-17" data-st="skip">SKIP</span>
+    <span class="opt skip sel" data-uid="tc-17" data-st="skip">SKIP</span>
   </div></div>
   <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
     <div class="jira-list" data-uid="tc-17"></div>
@@ -915,7 +935,7 @@ tr.featrow .ty{margin-left:3px}
   <td class="ctitle">ระดับใน workspace มาจาก TAKRA Hub และแก้ไขในแอปนี้ไม่ได้ <span class="ty ty-happy" title="Happy Path">✅ Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-18"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-18"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-18"></td>
 </tr>
 <tr class="detail"><td colspan="7">
@@ -926,10 +946,10 @@ tr.featrow .ty{margin-left:3px}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "ทีมงาน" แล้วกดแถวสมาชิกคนหนึ่งเพื่อเปิดแผงรายละเอียด</li><li>ดูหัวข้อ "ระดับใน workspace (จาก TAKRA Hub)" แล้วลองคลิกที่ค่าระดับเพื่อแก้ไข</li><li>ปิดแผง แล้วเปิดแผงของผู้ใช้ที่เป็น Owner ดูส่วนบทบาทการใช้งานและข้อความท้ายแผง</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ระดับใน workspace ติดป้าย "อ่านอย่างเดียว" และคลิกแก้ไขไม่ได้</li><li>แผงของ Owner แสดงข้อความ "Owner เข้าถึงได้ทุกอย่างตามสิทธิ์ของ Hub · ไม่สามารถกำหนดบทบาทการใช้งานได้" (ไม่มีปุ่มเปลี่ยนบทบาท)</li><li>ท้ายแผงของ Owner ระบุ "Owner ของ workspace · ไม่สามารถลบออกจาก workspace ได้"</li><li>ที่มา: Epic 1 · Story 1.7 · FR3</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-18" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-18" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-18" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-18" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-18" data-st="block">BLOCKED</span>
@@ -946,7 +966,7 @@ tr.featrow .ty{margin-left:3px}
   <td class="ctitle">ลบสมาชิกออกจาก Workspace ต้องพิมพ์ยืนยันก่อนจึงทำได้ <span class="ty ty-happy" title="Happy Path">✅ Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-19"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-19"><span class="stb skip">SKIP</span></td>
   <td class="jira-cell" data-uid="tc-19"></td>
 </tr>
 <tr class="detail"><td colspan="7">
@@ -958,14 +978,14 @@ tr.featrow .ty{margin-left:3px}
   <div class="sec"><h4>Test Data</h4><ul><li>สมาชิกทดสอบที่ไม่ใช่ Owner</li></ul></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>หน้าต่างยืนยันแจ้งผลกระทบครบ: "ผู้ใช้จะออกจาก workspace ทันที" · "Library / Live history ของผู้ใช้คนนี้จะถูกเก็บไว้ (audit)" · "action นี้บันทึกใน AIEventLog · ย้อนกลับไม่ได้"</li><li>ปุ่มยืนยันกดไม่ได้ตราบใดที่ยังไม่พิมพ์ข้อความยืนยัน ("พิมพ์ … เพื่อยืนยัน") ให้ตรง</li><li>หลังยืนยัน เห็นข้อความ "ลบผู้ใช้แล้ว" พร้อมชื่อผู้ใช้ และรายชื่อหายจากตาราง</li><li>ที่มา: Epic 1 · Story 1.7</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-19" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-19" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-19" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-19" data-st="block">BLOCKED</span>
-    <span class="opt skip" data-uid="tc-19" data-st="skip">SKIP</span>
+    <span class="opt skip sel" data-uid="tc-19" data-st="skip">SKIP</span>
   </div></div>
   <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
     <div class="jira-list" data-uid="tc-19"></div>
