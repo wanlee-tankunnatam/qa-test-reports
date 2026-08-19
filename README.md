@@ -36,7 +36,7 @@ qa-test-reports/
     └── README.md                   ← QA dashboard (แยกขาด ไม่เกี่ยวกับเว็บนี้)
 ```
 
-โปรเจคปัจจุบัน: `takra-ai` · `takra-insight` · `takra-rerun`
+โปรเจคปัจจุบัน: `takra-ai` · `takra-insight` · `takra-rerun` · `takra-hub`
 
 ### แกนของแต่ละประเภทไม่เหมือนกัน
 
@@ -60,7 +60,7 @@ qa-test-reports/
 
 | ส่วน | ค่าที่ใช้ได้ |
 |---|---|
-| `project` | ชื่อโฟลเดอร์โปรเจคเป๊ะ ๆ — `takra-ai` / `takra-insight` / `takra-rerun` |
+| `project` | ชื่อโฟลเดอร์โปรเจคเป๊ะ ๆ — `takra-ai` / `takra-insight` / `takra-rerun` / `takra-hub` |
 | `N` | `0.5` `1` `2` … หรือช่วง `0.5-1` `1-2` สำหรับรายงานที่คร่อม MVP |
 | `kind` | `ui-test-cases-table` · `e2e-test-cases-table` · `full-test-cases-table` · `qa-summary` · `qa-dod-checklist` |
 | `platform` | `mac` / `windows` — ใส่เฉพาะรายงานที่แยกตาม OS |
@@ -85,7 +85,7 @@ qa-test-reports/
    var GH_PATH = 'projects/takra-ai/2026/07/reports/takra-ai-mvp2-ui-test-cases-table.html';
    ```
    ค่านี้คือ path ที่ปุ่มเซฟจะเขียนกลับผ่าน GitHub API ถ้าไม่ตรง = เซฟไปผิดที่
-3. **ตั้ง back-link** ให้ตรงโปรเจค — `?project=` รับได้แค่ `rerun` · `ai` · `insight` · `notes`
+3. **ตั้ง back-link** ให้ตรงโปรเจค — `?project=` รับได้แค่ `rerun` · `ai` · `insight` · `hub` · `notes`
    ```html
    <a href="https://wanlee-tankunnatam.github.io/qa-test-reports/?project=ai">
    ```
@@ -119,6 +119,20 @@ python3 tools/build/add_e2e.py             # เขียนจริง (ข้
 
 ---
 
+## รายงาน TAKRA Hub — สร้างจากสคริปต์
+
+`projects/takra-hub/.../takra-hub-mvp1-ui-test-cases-table.html` **ไม่ได้เขียนมือ** — generate จาก
+[`tools/build/hub_cases.py`](tools/build/hub_cases.py) (ข้อมูลเคส) ด้วย [`tools/build/build_hub_report.py`](tools/build/build_hub_report.py)
+(harness CSS/JS ลอกจากรายงาน rerun MVP-2 แล้วแพตช์ `GH_PATH` + ตัวกรอง "ประเภท")
+
+```bash
+python3 tools/build/build_hub_report.py --check   # นับเคส/ตรวจ ไม่เขียน
+python3 tools/build/build_hub_report.py           # เขียนทับไฟล์ (คง store-data ผลเทสเดิมไว้)
+```
+
+> แก้เคส = แก้ที่ `hub_cases.py` แล้ว build ใหม่ · อย่าแก้ HTML ตรง ๆ (จะหายตอน build รอบหน้า) ·
+> uid เริ่ม `tc-5001` เรียงตามลำดับเคส — **แทรกเคสกลางลิสต์จะเลื่อน uid ของเคสถัดไป** ถ้ามีผลเทสบันทึกแล้วให้เพิ่มท้ายกลุ่มแทน
+
 ## ตรวจความถูกต้องก่อน push
 
 ```bash
@@ -131,7 +145,7 @@ grep -o 'href="[^"]*qa-test-reports/projects/[^"]*\.html"' index.html \
 grep -r "var GH_PATH" projects/ | sed "s/:.*'\(.*\)';/ -> \1/" \
   | awk -F' -> ' '{split($1,a,":"); if(a[1]!=$2) print "MISMATCH", a[1], "!=", $2}'
 
-# back-link ต้องมีแค่ ai / insight / rerun
+# back-link ต้องมีแค่ ai / insight / rerun / hub
 grep -rho "qa-test-reports/?project=[a-z]*" projects/ | sort | uniq -c
 
 # ลองเปิดจริง

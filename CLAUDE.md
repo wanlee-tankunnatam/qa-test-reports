@@ -40,6 +40,7 @@ repo นี้เก็บรายงาน manual test case (UI) ของท�
 | **takra-ai** | `/Users/ice/Documents/rf/takra-ai` | `apps/web/src` | **i18n** — `apps/web/src/i18n/locales/th/*.ts` (namespace: auth · live · liveRoom · products · settings · studio · schedule · scripts · pages · pagesLive · home · entitlement · voices · avatars …) | `epics.md` · `epics-mvp2.md` · `prd.md` |
 | **takra-rerun** | `/Users/ice/Documents/rf/takra-rerun` | `web/src` | **ฝังไทยในโค้ด** — grep คำใน `web/src/features/**` (ไม่มี i18n) | `epics.md` · `epics-mvp2.md` · `prd.md` |
 | **takra-insight** | `/Users/ice/Documents/rf/takra-insight` | `apps/web/src` | **ฝังไทยในโค้ด** — grep คำใน `apps/web/src/**` (ไม่มี i18n) | `epics.md` · `epics-th.md` · `prd.md` · `prd-th.md` (มีเวอร์ชันไทย) |
+| **takra-hub** | `/Users/ice/Documents/rf/takra-hub` (local develop ตามหลัง origin มาก — อ่านจาก `origin/develop` ผ่าน worktree/`git show`) | `apps/web/src` | **ฝังไทยในโค้ด** — grep คำใน `apps/web/src/**` (ไม่มี i18n) | ⚠️ อยู่ที่ `docs/` ไม่ใช่ `_bmad-output/planning-artifacts/` — `docs/epics.md` (MVP-1 Epic 1–4) · `docs/epics-mvp2.md` · `docs/prd.md` · เคส UI เดิม `_bmad-output/test-artifacts/case/*/ui.md` · รายงาน generate จาก `tools/build/hub_cases.py` (ดู README) |
 
 > ก่อนเริ่มทุกครั้ง: ยืนยันว่ากำลังทำ **โปรเจกต์ไหน** แล้วใช้ path จากแถวนั้น — อย่าเอา path ข้ามโปรเจกต์
 
