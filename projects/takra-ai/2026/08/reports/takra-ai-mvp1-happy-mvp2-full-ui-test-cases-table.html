@@ -197,7 +197,20 @@ tr.featrow .ty{margin-left:3px}
       font-weight: 100 900;
       src: url('chrome-extension://lknmjhcajhfbbglglccadlfdjbaiifig/fonts/work-sans-latin-wght-normal.woff2') format('woff2');
     }
-  </style></head>
+  </style><style id="claude-agent-animation-styles">
+      @keyframes claude-pulse {
+        0%, 100% { opacity: 0.6; }
+        50% { opacity: 1; }
+      }
+      #claude-agent-glow-border-inner {
+        animation: claude-pulse 2s ease-in-out infinite;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        #claude-agent-glow-border-inner {
+          animation: none;
+        }
+      }
+    </style></head>
 <body>
 <a id="hub-back-btn" href="https://wanlee-tankunnatam.github.io/qa-test-reports/?project=ai" title="กลับไปหน้ารวมรายงาน (Hub)" style="position:fixed;top:12px;right:14px;z-index:99999;display:inline-flex;align-items:center;gap:7px;padding:10px 18px;border-radius:999px;background:#ffffff;color:#1e3a8a;font-size:14px;font-weight:800;text-decoration:none;box-shadow:0 4px 16px rgba(0,0,0,.35);border:2px solid #1e3a8a;font-family:'Segoe UI','Sarabun',system-ui,sans-serif">🏠 รายงานทั้งหมด</a>
 
@@ -395,6 +408,82 @@ tr.featrow .ty{margin-left:3px}
   "tc-33": {
     "actual": "[2026-08-20 · AI-assisted UI check]\nสภาพแวดล้อม: https://live.takra.ai (PROD) · บัญชี qa@takra.ai · workspace \"ทีมของ qa team\"\n✅ ก่อนกด: \"อัปเดตล่าสุด 10 ส.ค. 2569 17:58\"\n✅ ระหว่างทำงาน ปุ่มเปลี่ยนข้อความเป็น \"กำลังอัปเดต…\" และถูก disable กดซ้ำไม่ได้จริง\n✅ เมื่อเสร็จ ขึ้นข้อความแจ้งผล (toast) \"อัปเดตคลังอวาตาร์แล้ว\" พร้อมบรรทัดรอง \"6 avatar จาก Realfact\"\n✅ เวลา \"อัปเดตล่าสุด\" เปลี่ยนเป็น \"20 ส.ค. 2569 09:44\" และจำนวนการ์ดในหน้า = 6 ใบ สอดคล้องกับจำนวนที่แจ้ง\n✅ ตัวกรองสไตล์ที่เลือกไว้ก่อนกดยังคงอยู่หลังอัปเดตเสร็จ\n⚠️ ข้อความ toast ใช้คำว่า \"avatar\" (อังกฤษ) ขณะที่ทั้งหน้าใช้คำว่า \"อวาตาร์\" — ควรใช้คำให้สอดคล้องกัน",
     "st": "pass"
+  },
+  "tc-34": {
+    "actual": "[2026-08-20 · AI-assisted UI check · env https://uat-live.takra.ai · qa@takra.ai · workspace \"ทีมของ QA Tester\"]\n✅ เมนู \"คลังเสียง\" ไฮไลต์ · หัวข้อ \"คลังเสียง\" + คำบรรยาย \"เสียงพากย์สำเร็จรูปที่ทีม TAKRA Ops จัดเตรียมและดูแลให้ — พร้อมยินยอม PDPA\" ตรงตาม Expected ทุกตัวอักษร\n✅ ตารางมีหัวคอลัมน์ \"VOICE PROFILE · ลักษณะ · อวาตาร์ที่ใช้ · PDPA\" ครบ (Expected ระบุ ลักษณะ + อวาตาร์ที่ใช้ → พบทั้งคู่) แต่ละแถวเห็นชื่อเสียง\n✅ มีปุ่ม \"อัปเดตคลังเสียง\" พร้อม \"อัปเดตล่าสุด 19 ส.ค. 2569 21:06\" อยู่ด้านบนขวา\n✅ จำนวนรายการตอนเริ่มทดสอบ 46 Voice Profile\n⚠️ นอก Expected เดิม (UI เพิ่มมาใหม่): มีหัวข้อ \"เสียงของฉัน\" + ปุ่ม \"อัปโหลดเสียง\" พร้อม flow ยืนยัน consent (\"เริ่มยืนยัน consent\" / \"ถอนความยินยอม\") และแบนเนอร์ \"อยากได้เสียงเฉพาะแบรนด์ของคุณ?\" → ยังไม่มีเคสครอบคลุม ควรเพิ่มชุดเคสใหม่\n⚠️ คอลัมน์ \"อวาตาร์ที่ใช้\" เป็น \"—\" ทุกแถว และ \"ลักษณะ\" เป็น \"—\" กว่าครึ่ง (ข้อมูล Ops ยังไม่ครบ) — ไม่ขัด Expected แต่ทำให้เคสอื่นที่อิงข้อมูลนี้ตรวจได้ไม่เต็ม",
+    "st": "pass"
+  },
+  "tc-35": {
+    "actual": "[2026-08-20 · AI-assisted UI check · env https://uat-live.takra.ai]\n❌ FAIL — ไม่มีตัวกรอง \"ภาษา\" ในหน้าคลังเสียง มีเพียงตัวกรองเดียวคือ \"ลักษณะ\" (ปุ่ม aria-label \"กรองตามลักษณะ\") → ทดสอบ Expected ข้อ 1 (\"กรองเหลือเฉพาะเสียงที่ตรงทั้งสองเงื่อนไขพร้อมกัน\") ไม่ได้เลย\n✅ ตัวกรอง \"ลักษณะ\" ทำงานถูกต้อง: ตัวเลือก ทั้งหมด / หญิง / ชาย / กลาง / ไม่ระบุ · เลือก \"หญิง\" เหลือ 6 เสียง · เลือก \"ชาย\" เหลือ 8 เสียง (จากทั้งหมด 46)\n✅ ข้อความสรุปขึ้นถูกต้องตาม Expected \"แสดง 6 จาก 46 เสียง · ล้างตัวกรอง\" (เปลี่ยนตามค่าที่เลือก)\n✅ กด \"ล้างตัวกรอง\" แล้วรายการกลับมาครบ 46 เสียง ปุ่มตัวกรองรีเซ็ตกลับเป็น \"ลักษณะ\" และข้อความสรุปหายไป\n⚠️ สถานะตัวกรองไม่ถูกเก็บใน URL — แชร์ลิงก์มุมมองที่กรองไว้ไม่ได้ (เหมือนหน้าคลังอวาตาร์)",
+    "st": "fail"
+  },
+  "tc-36": {
+    "actual": "[2026-08-20 · AI-assisted UI check · env https://uat-live.takra.ai · ทดสอบกับ \"Chirp3 HD Kore (Female)\" และ \"Ash (Male, Confident)\"]\n✅ คลิกแถวเสียงแล้วแผงรายละเอียดด้านข้างเปิด (role=\"dialog\" · aria-modal=\"true\")\n✅ หัวข้อ \"ความยินยอม PDPA\" ครบทุกบรรทัดตาม Expected: \"เอกสารยินยอม PDPA\" = \"มีในระบบ\" · \"ยืนยันตัวตน\" = \"ยืนยันแล้ว\" · \"จัดเตรียมเมื่อ\" = 2026-06-25 (อีกตัว 2026-07-23) วันที่ชัดเจน\n✅ มีหมายเหตุตรงตาม Expected ทุกตัวอักษร: \"บันทึกความยินยอมและการยืนยันตัวตนดำเนินการโดยทีม TAKRA Ops ตอนจัดเตรียมเสียง (ตรวจสอบย้อนหลังได้) — ไม่สามารถแก้ไขในแอป\"\n✅ ทุกค่าเป็นข้อความอ่านอย่างเดียว — คลิก/ดับเบิลคลิกที่ค่าแล้วไม่มีช่องแก้ไขใดๆ ปรากฏ (นับ input/textarea/contenteditable ในแผง = 0)\n✅ แผงเดียวกันมีหัวข้อ \"อวาตาร์ที่ใช้เสียงนี้\" และ \"ตัวอย่างเสียง\" แสดงอยู่ด้วยครบตาม Expected\n🐞 พบบั๊กระหว่างทาง (นอก Expected ข้อนี้ แต่ควรออก issue แยก): ปุ่ม \"เล่นตัวอย่างเสียง\" กดแล้ว \"ไม่เล่น\" — ปุ่มถูก disable ค้างถาวร ไม่มี element เสียงถูกสร้าง เวลาค้างที่ 0:00 และไม่มีข้อความ error ใดๆ ทดสอบซ้ำ 3 เสียง (Chirp3 HD Kore · Chirp3 HD Aoede · k.bow-clone) เป็นเหมือนกันทุกตัว รอนานกว่า 10 วิก็ไม่เล่น\n⚠️ เสียงที่ไม่มีตัวอย่างแสดง empty state ถูกต้อง (\"ยังไม่มีตัวอย่างเสียงสำหรับเสียงนี้\" — เช่น Ash, Nova) → ปัญหาอยู่ที่ตัวที่ \"มี\" player เท่านั้น\n⚠️ คำ UI ปนภาษา: \"ยังไม่มี avatar ใช้\" ขณะที่ทั้งระบบใช้คำว่า \"อวาตาร์\"\n⚠️ นอก Expected: มีปุ่ม \"ขอเพิกถอน consent (ส่งให้ Ops)\" ในแผง ซึ่งยังไม่มีเคสครอบคลุม",
+    "st": "pass"
+  },
+  "tc-37": {
+    "actual": "[2026-08-20 · AI-assisted UI check · env https://uat-live.takra.ai]\n✅ ก่อนกด \"อัปเดตล่าสุด 19 ส.ค. 2569 21:06\" · จำนวนแถวในตาราง 46\n✅ ระหว่างทำงาน ปุ่มเปลี่ยนเป็น \"กำลังอัปเดต…\" และถูก disable กดซ้ำไม่ได้\n✅ เมื่อเสร็จ ขึ้น toast \"อัปเดตคลังเสียงแล้ว\" + บรรทัดรอง \"48 เสียงจาก Realfact\" ตรงรูปแบบที่ Expected ระบุ\n✅ เวลา \"อัปเดตล่าสุด\" เปลี่ยนเป็น 20 ส.ค. 2569 10:12 ตามเวลาปัจจุบัน\n❓ HOLD — ตัวเลขไม่สอดคล้องกันตาม Expected ข้อ 2: toast แจ้ง \"48 เสียง\" แต่ตารางหลังอัปเดตมี 49 แถว (นับจาก Voice Profile ที่ไม่ซ้ำกัน — ตรวจแล้วไม่มีชื่อซ้ำ) ต่างกัน 1 รายการ\n   ขอทีมยืนยันนิยามก่อนสรุป PASS/FAIL: ตัวเลขใน toast = \"จำนวนที่ดึงมาจาก Realfact รอบนี้\" หรือ \"จำนวนทั้งหมดในคลัง\"? ถ้าเป็นอย่างหลังถือว่า FAIL\n⚠️ หลังอัปเดต มีเสียงใหม่ 3 รายการที่ชื่อแสดงเป็นรหัสดิบ เช่น \"voice-07d8411b-8ecf-4e84-84ed-8980341f7560\" → ผู้ใช้อ่านไม่รู้เรื่อง ควรมี fallback ชื่อที่อ่านได้",
+    "st": "hold"
+  },
+  "tc-38": {
+    "actual": "[2026-08-20 · AI-assisted UI check · env https://uat-live.takra.ai · qa@takra.ai · workspace \"ทีมของ QA Tester\"]\n✅ หัวข้อ \"คลังสินค้า\" + คำบรรยาย \"จัดการสินค้าและข้อมูลที่ AI ใช้ขาย · เติมจุดเด่น / Claims / FAQ ให้ครบก่อนนำไปไลฟ์\" ตรงตาม Expected ทุกตัวอักษร\n✅ การ์ดสรุปครบ 3 ใบ \"พร้อมขาย 2 รายการ · ต้องเติมข้อมูล 4 รายการ · ฉบับร่าง 26 รายการ\" (ตัวเลข ณ ตอนเริ่มเทส)\n✅ แต่ละแถวแสดง ชื่อสินค้า · สถานะ · หมวด · ราคา · จำนวน SKU · ป้าย \"ความพร้อมขาย\" ครบ เช่น \"เซรั่มทดสอบคู่มือ QA | เปิดใช้ | Beauty / Skincare | ฿590–990 | 2 SKU | พร้อมขาย\"\n✅ ปุ่ม \"เพิ่มสินค้า\" (สีส้ม) อยู่มุมขวาบน หาเจอง่าย · คลังมีทั้งหมด 37 รายการหลายสถานะ ตรงตาม Precondition\n🐞 ประสิทธิภาพ: หน้าคลังสินค้าค้างที่ข้อความ \"กำลังโหลดสินค้า…\" นาน 20–40 วินาทีในหลายรอบที่เปิด (สินค้า 38 รายการ) โดยไม่มีตัวบอกความคืบหน้า — ควรออก issue ด้าน performance แยก",
+    "st": "pass"
+  },
+  "tc-39": {
+    "actual": "[2026-08-20 · AI-assisted UI check · env https://uat-live.takra.ai]\n✅ กด \"เพิ่มสินค้า\" ไปที่ /products/new · ฟอร์มมีสารบัญด้านข้างครบ 4 หัวข้อตาม Expected: \"1 ข้อมูลสินค้า · 2 SKU & ราคา · 3 ข้อมูลให้ AI · 4 Risk Words\"\n✅ กรอก \"ชื่อสินค้า\" = QA Test Serum · \"คำโปรย\" = Vitamin C 15% · 30ml · ฿890 (ช่องมี placeholder ตัวอย่างตรงกัน)\n✅ เลือก \"ประเภทสินค้า\" = Beauty / Skincare แล้วคำอธิบายใต้ช่องเปลี่ยนเป็น \"ระบบจะดึงชุดคำเสี่ยงของ 1 หมวดมาคุมการพูดของ AI โดยอัตโนมัติ — ดูจำนวนคำได้ที่การ์ดด้านล่าง\" ตรงตาม Expected ข้อ 2 และการ์ด \"ชุดคำเสี่ยงของ Beauty / Skincare (125 คำ)\" โผล่ขึ้นมาจริง\n✅ Validation ทำงาน: กดบันทึกโดยยังไม่ใส่รูป → ขึ้น \"กรุณาอัปโหลดรูปสินค้าอย่างน้อย 1 รูป\" และไม่บันทึกให้ (ช่อง \"รูปสินค้า*\" เป็นฟิลด์บังคับ)\n✅ ใส่รูป 1 รูป + เลือกสถานะ \"เปิดใช้\" แล้วกด \"เพิ่มสินค้า\" → ระบบพากลับหน้าคลัง และสินค้าใหม่ \"QA Test Serum\" ปรากฏในรายการทันทีพร้อมสถานะ \"เปิดใช้\" ตามที่เลือก · ยอดรวมคลัง 37 → 38 รายการ\n⚠️ ไม่ได้ยืนยันข้อความ toast \"เพิ่มสินค้าแล้ว\" ด้วยตา (toast หายไปก่อนจับภาพได้ในรอบนี้) — ผลอื่นทั้งหมดยืนยันแล้วว่าบันทึกสำเร็จ ควรตรวจซ้ำเฉพาะข้อความ toast\n⚠️ วิธีทดสอบ: ไฟล์รูปถูกแนบเข้า input โดยตรง ไม่ได้ผ่านหน้าต่างเลือกไฟล์ของเครื่อง (ผู้ทดสอบเป็น AI) — เส้นทาง \"กดเลือกไฟล์จาก OS\" ยังต้องให้คนตรวจซ้ำ\n⚠️ ในคลังมีสินค้าชื่อ \"QA Test Serum\" ซ้ำกัน 3 รายการจากการเทสรอบก่อนๆ — ควรเคลียร์ข้อมูลทดสอบเก่าบน UAT",
+    "st": "pass"
+  },
+  "tc-40": {
+    "actual": "[2026-08-20 · AI-assisted UI check · env https://uat-live.takra.ai · สินค้า \"QA Test Serum\" (fdcb25b4…)]\n✅ เมนูตัวเลือกของสินค้ามี \"แก้ไข / ทำซ้ำ / เก็บถาวร\" · เลือก \"แก้ไข\" เข้าฟอร์มได้\n✅ หัวข้อ \"SKU & ราคา\" เพิ่ม SKU ได้หลายรายการ แต่ละรายการมีช่อง \"ขนาด / ตัวเลือก\" และ \"ราคา (฿)\" แยกของตัวเอง (กรอก SKU 1 = 30ml/890 · SKU 2 = Bundle 3 ขวด/2390)\n✅ ปุ่ม \"ลบ SKU 2\" ลบเฉพาะแถวนั้น — ตรวจแล้ว SKU 1 ยังคงค่า \"30ml / 890\" ครบ ไม่กระทบ · เพิ่มกลับใหม่แล้วกรอกได้ตามปกติ\n✅ หลัง \"บันทึกการเปลี่ยนแปลง\" หน้ารายละเอียดสินค้าแสดงหัวข้อ \"SKUs — 2 ตัวเลือก · ขนาดและราคา\" พร้อมรายการ \"30ml ฿890\" และ \"Bundle 3 ขวด ฿2,390\" ครบตามที่กรอก ตรงตาม Expected ทุกข้อ\n✅ ส่วนหัวสินค้าแสดงช่วงราคา \"฿890–2,390 · 2 SKU\" สอดคล้องกัน",
+    "st": "pass"
+  },
+  "tc-41": {
+    "actual": "[2026-08-20 · AI-assisted UI check · env https://uat-live.takra.ai · สินค้า \"QA Test Serum\" ประเภทหลัก Beauty / Skincare]\n✅ ก่อนเพิ่มหมวด: การ์ดชุดคำเสี่ยงมีใบเดียว \"ชุดคำเสี่ยงของ Beauty / Skincare — 125 คำ\"\n✅ ช่อง \"หมวดเพิ่มเติม\" มีคำอธิบายตรงตาม Expected ทุกตัวอักษร: \"ถ้าสินค้าอยู่ได้หลายหมวด — เลือกเพิ่มได้ เช่น อาหารเสริมบำรุงผิว (รวมคำเสี่ยงทุกหมวด)\"\n✅ เลือกเพิ่ม \"Supplement / อาหารเสริม\" แล้วคำอธิบายด้านบนเปลี่ยนจาก \"ชุดคำเสี่ยงของ 1 หมวด\" เป็น \"ชุดคำเสี่ยงของ 2 หมวด\" ทันที และการ์ดชุดคำเสี่ยงขึ้นครบทั้ง 2 หมวด (Beauty / Skincare + Supplement / อาหารเสริม)\n✅ หลังบันทึก หน้ารายละเอียดแสดง \"ชุดคำเสี่ยงรวมจาก 2 หมวด\" — N = 2 ตรงกับจำนวนหมวดที่เลือกจริง\n✅ ชุดคำที่ใช้เป็นการรวมแบบ union จริง: หมวดเดียว 125 คำ → รวม 2 หมวดได้ 131 คำ (มากกว่าหมวดเดียว และน้อยกว่าผลบวกตรงๆ = มีการตัดคำซ้ำ)",
+    "st": "pass"
+  },
+  "tc-42": {
+    "actual": "[2026-08-20 · AI-assisted UI check · env https://uat-live.takra.ai] — SKIP ตามที่ผู้สั่งงานกำหนด\nเหตุผล: ผู้ทดสอบ (AI) เลือกไฟล์จากเครื่องผ่านหน้าต่าง File Picker ของ OS ไม่ได้ → เส้นทางหลักของเคสนี้ (อัปโหลด 3 ไฟล์) ทดสอบจริงไม่ได้ ต้องให้คนรันซ้ำ\nสิ่งที่ตรวจได้ระหว่างทำ TC-P2.2/P2.3 และยืนยันแล้ว (ใช้เป็นข้อมูลตั้งต้นตอนรันเคสนี้จริง):\n✅ คำอธิบายใต้หัวข้อ \"รูปสินค้า*\" ระบุ \"อัปโหลดได้ 1–5 รูป · รูปแรกใช้เป็นรูปปกในแคตตาล็อก\" ตรงตาม Expected ข้อ 1\n✅ รูปแรกติดป้าย \"ปก\" บนภาพจริง ตรงตาม Expected ข้อ 2\n✅ รูปที่อัปโหลดถูกใช้เป็นรูปปกในหน้ารายละเอียดสินค้าและในรายการคลังจริง\n✅ มีปุ่มลบรูป (aria-label \"ลบรูป\") ต่อรูป และปุ่ม \"เพิ่มรูป\" สำหรับเพิ่มทีละไฟล์\n❌ ยังไม่ได้ตรวจ: อัปโหลดครบ 3 ไฟล์ · ลบทีละรูปแล้วรูปอื่นไม่หาย · รูปปกเปลี่ยนตามรูปแรกที่เหลือหลังลบ · ข้อจำกัดขนาด 10MB",
+    "st": "skip"
+  },
+  "tc-43": {
+    "actual": "[2026-08-20 · AI-assisted UI check · env https://uat-live.takra.ai · สินค้า \"QA Test Serum\" (5e6e2880…) สถานะเริ่มต้น \"เปิดใช้\"]\n✅ เมนูตัวเลือก → \"เก็บถาวร\" แล้วกล่องยืนยันขึ้นตรงตาม Expected ทุกตัวอักษร: หัวข้อ \"เก็บถาวรสินค้านี้?\" · เนื้อความ \"QA Test Serum จะถูกซ่อนจากตัวเลือกสินค้าที่ใช้งาน — กู้คืนได้ภายหลังจากแท็บ \"เก็บถาวร\"\" · ปุ่ม \"ยกเลิก\" / \"เก็บถาวร\"\n✅ หลังยืนยัน ขึ้น toast \"เก็บถาวรแล้ว\" + \"ย้าย 1 รายการไปที่เก็บถาวร\"\n✅ สินค้าหายจากตัวกรอง \"เปิดใช้\" และไปปรากฏใต้ตัวกรอง \"เก็บถาวร\" จริง (ตรวจทั้งสองแท็บ)\n✅ ตัวเลือกสินค้าใน Studio ไม่แสดงสินค้าที่เก็บถาวร — ตรวจที่ Studio → ผูกสคริปต์เข้าฉาก → \"เลือกสินค้าที่สคริปต์นี้จะพูดถึง\": คลังมี 38 รายการ (เก็บถาวร 6) แต่ตัวเลือกใน Studio ขึ้นเพียง 38−6 = 32 รายการพอดี · ชื่อ \"QA Test Serum\" ที่มี 3 ตัวเหลือให้เลือก 2 ตัว · สินค้า \"QA PE Test Serum\" ที่เก็บถาวรไว้ก่อนแล้วก็ไม่อยู่ในตัวเลือก\n✅ กู้คืน: ติ๊กเลือกสินค้าในแท็บ \"เก็บถาวร\" แล้วกด \"เปิดใช้\" ในแถบเครื่องมือ → ขึ้น toast \"อัปเดตสถานะแล้ว\" + \"1 สินค้า → เปิดใช้\" และสินค้ากลับมาใช้งานได้ (สถานะสุดท้ายกลับเป็น \"เปิดใช้\" ตามเดิม)\n⚠️ นอก Expected: เมนูตัวเลือก (⋯) ของสินค้าที่ \"เก็บถาวร\" แล้ว ยังแสดงเมนู \"เก็บถาวร\" เหมือนเดิม ไม่มีตัวเลือก \"กู้คืน/เปิดใช้\" ในเมนูรายแถว — ต้องใช้เส้นทางติ๊กเลือก + แถบเครื่องมือเท่านั้น ควรพิจารณาเพิ่มให้ครบ",
+    "st": "pass"
+  },
+  "tc-44": {
+    "actual": "[2026-08-20 · AI-assisted UI check · env https://uat-live.takra.ai · คลัง 38 รายการ]\n❌ FAIL — ช่องค้นหา \"ใช้ค้นได้ทั้งชื่อสินค้า SKU และหมวด\" ตาม placeholder ไม่จริง: ค้นด้วยค่าใน SKU ไม่เจอ\n   • ค้น \"Bundle\" → 0 รายการ · ค้น \"Bundle 3\" → 0 รายการ · ค้น \"ขวด\" → 0 รายการ ทั้งที่สินค้า \"QA Test Serum\" มี SKU ชื่อ \"Bundle 3 ขวด\" อยู่จริงและยืนยันแล้วจากหน้ารายละเอียด\n   • ส่วนชื่อสินค้าและหมวดค้นได้ปกติ: \"QA Test\" → 4 · \"เซรั่ม\" → 5 · \"Beauty\" → 37 · \"Skincare\" → 37\n   (หมายเหตุ: \"30ml\" → 7 รายการ เป็นการแมตช์คำโปรย ไม่ใช่ค่าใน SKU)\n✅ ตัวกรองสถานะทำงานถูก: ทั้งหมด 38 · เปิดใช้ 7 · ฉบับร่าง 26 · เก็บถาวร 5 (รวมกันได้ 38 พอดี)\n✅ การเรียงลำดับมีครบ 3 แบบตาม Test Data: \"ชื่อ A–Z / ความพร้อมขาย — ต้องแก้ก่อน / ราคา — สูงไปต่ำ\" · เปลี่ยนเป็น \"ความพร้อมขาย — ต้องแก้ก่อน\" แล้วลำดับเปลี่ยนจริง และยังคงตัวกรอง \"ฉบับร่าง\" (26 รายการ) ไว้ → ตัวกรอง + เรียงลำดับทำงานร่วมกันได้ถูกต้อง\n✅ ติ๊กเลือกสินค้า 2 รายการแล้วแถบเครื่องมือขึ้น \"เลือกแล้ว 2 รายการ\" พร้อมปุ่ม \"เปิดใช้\" / \"เก็บถาวร\" / \"ล้าง\" ครบตาม Expected\n✅ กด \"เปิดใช้\" แล้วสินค้าทั้งสอง (QA-Other-0819 · QA PE2 Empty Product) เปลี่ยนสถานะเป็น \"เปิดใช้\" จริง\n⚠️ ไม่ได้จับข้อความ toast ของการทำงานหลายรายการรอบนี้ (\"อัปเดตสถานะแล้ว · 2 สินค้า → เปิดใช้\") แต่รูปแบบเดียวกันยืนยันแล้วในเคส TC-P2.6 (\"อัปเดตสถานะแล้ว · 1 สินค้า → เปิดใช้\")",
+    "st": "fail"
+  },
+  "tc-45": {
+    "actual": "[2026-08-20 · AI-assisted UI check · env https://uat-live.takra.ai · สินค้า \"QA Test Serum\" (fdcb25b4…)]\n✅ ช่อง \"จุดเด่นสินค้า\" ในหัวข้อ \"ข้อมูลให้ AI\" มีคำแนะนำตรงตาม Expected ทุกตัวอักษร: \"จุดขายที่ AI พูดถึงได้ — แนะนำอย่างน้อย 3 ข้อ\"\n✅ กด \"เพิ่มจุดเด่น\" แล้วกรอกครบ 3 ข้อตาม Test Data: ลดจุดด่างดำใน 4 สัปดาห์ · ซึมไว ไม่เหนียวเหนอะ · ใช้ได้ทุกสภาพผิว\n✅ ลบจุดเด่นข้อที่ 2 ออก (ปุ่ม \"ลบรายการ\") แล้วเหลือ 2 ข้อโดยข้ออื่นไม่หายและค่าไม่เพี้ยน · เพิ่มกลับใหม่แล้วครบ 3 ข้อเหมือนเดิม\n✅ หลัง \"บันทึกการเปลี่ยนแปลง\" หน้ารายละเอียดสินค้าแสดงหัวข้อ \"Key Benefits (จุดเด่นที่ AI พูดได้)\" พร้อมจุดเด่นครบทั้ง 3 ข้อตามที่กรอก\n✅ ป้ายความพร้อมขายขยับจาก 1/4 เป็น 2/4 หลังบันทึก",
+    "st": "pass"
+  },
+  "tc-46": {
+    "actual": "[2026-08-20 · AI-assisted UI check · env https://uat-live.takra.ai · สินค้า \"QA Test Serum\" (fdcb25b4…) ที่ยังไม่มี Claims]\n✅ คำอธิบายใต้หัวข้อ \"Claims ที่อนุมัติ\" ตรงตาม Expected ทุกตัวอักษร: \"ข้อความเคลมที่ผ่านการตรวจ — AI พูดได้เฉพาะที่อยู่ในรายการนี้\"\n✅ กด \"เพิ่ม Claim\" แล้วกรอกตาม Test Data: \"ผ่านมาตรฐาน อย. เลขที่ xx-x-xxxxxxxxx\" (ช่องมี placeholder \"เช่น ผ่านมาตรฐาน อย.\")\n✅ หลังบันทึก หน้ารายละเอียดมีหัวข้อ \"Claims ที่พูดได้ (ข้อความเคลมที่ได้รับอนุญาต)\" พร้อมข้อความเคลมที่กรอกครบ\n✅ Claims อยู่ในกล่องของตัวเองแยกจาก \"Key Benefits\" และ \"FAQ\" ชัดเจน ไม่ปนกัน ตรงตาม Expected ข้อ 3\n⚠️ เกณฑ์ความพร้อมขายต้องมี Claims อย่างน้อย 2 ข้อ (\"Claims ที่อนุมัติ · อย่างน้อย 2 ข้อ\") แต่ Test Data ของเคสนี้ให้มาเพียง 1 ข้อ → หลังบันทึกป้ายยังคง 2/4 ซึ่งถูกต้องตามเกณฑ์ ไม่ใช่บั๊ก แต่ควรปรับ Test Data ให้สอดคล้อง",
+    "st": "pass"
+  },
+  "tc-47": {
+    "actual": "[2026-08-20 · AI-assisted UI check · env https://uat-live.takra.ai · สินค้า \"QA Test Serum\" (fdcb25b4…)]\n✅ ฟอร์ม FAQ มีช่อง \"คำถาม\" (placeholder \"เช่น ใช้ตอนเช้าหรือกลางคืน?\") และ \"คำตอบ\" (placeholder \"คำตอบที่ AI จะใช้ตอบลูกค้า\") แยกกันชัดเจน พร้อมคำแนะนำตรงตาม Expected: \"คำถามที่ลูกค้าถามบ่อย — ช่วย AI ตอบคอมเมนต์ระหว่างไลฟ์\"\n✅ เพิ่ม FAQ 1 = \"ใช้ตอนเช้าหรือกลางคืน? / ใช้ได้ทั้งเช้าและก่อนนอน\" ตาม Test Data · เพิ่ม FAQ 2 = \"ใช้ได้กับผิวแพ้ง่ายไหม? / ทดสอบแล้วอ่อนโยนกับผิวแพ้ง่าย\"\n✅ ลบ FAQ 1 ออก (ปุ่ม \"ลบ FAQ 1\") แล้วรายการที่เหลือยังคงคำถาม-คำตอบครบถ้วน ไม่หายและไม่สลับค่า (เลขลำดับ renumber เป็น FAQ 1 ให้อัตโนมัติ)\n✅ หลังบันทึก หน้ารายละเอียดแสดง \"FAQ — 1 คำถามพบบ่อย\" พร้อมคำถาม-คำตอบที่เหลืออยู่จริง → จำนวนตรงกับที่เหลือ ตรงตาม Expected ข้อ 3",
+    "st": "pass"
+  },
+  "tc-48": {
+    "actual": "[2026-08-20 · AI-assisted UI check · env https://uat-live.takra.ai · สินค้า \"QA Test Serum\" (fdcb25b4…) · ประเภท Beauty / Skincare + หมวดเพิ่มเติม Supplement]\n✅ คำอธิบายหัวข้อ Risk Words ในฟอร์มตรงตาม Expected ทุกตัวอักษร: \"คำที่ห้าม AI พูดถึงสินค้านี้ — รวมจากชุดของประเภทสินค้า + คำที่เพิ่มเองด้านล่าง\"\n✅ กดการ์ด \"ชุดคำเสี่ยงของ \"Beauty / Skincare\"\" แล้วเปิดหน้าต่างรายการคำได้จริง — หัวข้อ \"คำเสี่ยงของหมวด · Beauty / Skincare · 125 คำ\" มีช่องค้นหา \"ค้นหาคำเสี่ยง\" และแสดงคำพร้อมระดับความรุนแรง (เช่น รักษามะเร็ง–สูง · หายขาด–สูง · ใช้แทนยา–สูง)\n✅ เป็นแบบอ่านอย่างเดียวจริง — ในหน้าต่างมีเพียงปุ่ม \"ปิด\" ไม่มีปุ่มแก้/ลบคำของหมวด และมีหมายเหตุ \"ชุดคำเสี่ยงนี้มาจากหมวดที่เลือก — ระบบใช้คุมการพูดของ AI ให้อัตโนมัติ แก้ไขได้ที่หน้าหมวดหมู่/คำเสี่ยง\" · ปิดด้วย Esc ได้\n✅ พิมพ์คำเสี่ยงเฉพาะสินค้า 2 คำในช่อง \"เพิ่มคำเสี่ยงเฉพาะสินค้านี้\" แล้วกด Enter ทีละคำ → ขึ้นเป็นชิปทั้ง 2 คำ และลบได้ทีละคำ (ปุ่ม aria-label \"ลบ <คำ>\") โดยคำอื่นไม่หาย\n✅ หลังบันทึก หน้ารายละเอียดแสดง \"คำเสี่ยงเฉพาะสินค้านี้\" พร้อมคำทั้งสอง แยกกล่องออกจากการ์ด \"ชุดคำเสี่ยงรวมจาก 2 หมวด (131 คำ)\" ชัดเจน ตรงตาม Expected ข้อ 4",
+    "st": "pass"
+  },
+  "tc-49": {
+    "actual": "[2026-08-20 · AI-assisted UI check · env https://uat-live.takra.ai · ไล่ระดับกับสินค้า \"QA Test Serum\" (fdcb25b4…) ที่สร้างใหม่ในรอบนี้]\n✅ ตอนสร้างเสร็จ (มีแค่ชื่อ+คำโปรย+รูป ยังไม่มี SKU/จุดเด่น/Claims/FAQ) → ป้ายในรายการคลังขึ้น \"ยังขายไม่ได้\" · หน้ารายละเอียด \"ความพร้อมขาย 0/4\" แล้วเป็น 1/4 หลังใส่ SKU\n✅ เกณฑ์ 4 ด้านแสดงชัดในหน้ารายละเอียด: \"จุดเด่นสินค้า (อย่างน้อย 3 ข้อ)\" · \"Claims ที่อนุมัติ (อย่างน้อย 2 ข้อ)\" · \"FAQ (อย่างน้อย 2 ข้อ)\" · \"SKU & ราคา (มีอย่างน้อย 1 SKU ที่ตั้งราคาเรียบร้อย)\"\n✅ ป้ายเลื่อนระดับขึ้นตามข้อมูลที่เติมจริง: 0/4 → 1/4 (เพิ่ม SKU + ราคา) → 2/4 (เพิ่มจุดเด่น 3 ข้อ) → 4/4 (เพิ่ม Claims ครบ 2 ข้อ + FAQ ครบ 2 ข้อ)\n✅ เมื่อครบทุกด้าน หน้ารายละเอียดแสดง \"พร้อมขาย 4/4 · พร้อมขายแล้ว\" พร้อมคำอธิบาย \"ข้อมูลครบทุกด้าน — AI พร้อมพูดขายสินค้านี้ได้เต็มที่\" ตรงตาม Expected ทุกตัวอักษร\n✅ การ์ดสรุปด้านบนของคลังสินค้าอัปเดตตามจริง: \"พร้อมขาย\" 2 → 3 รายการ หลังสินค้านี้เลื่อนเป็นพร้อมขาย",
+    "st": "pass"
+  },
+  "tc-67": {
+    "actual": "[2026-08-20 · AI-assisted UI check · env https://uat-live.takra.ai · Studio โปรเจกต์ \"E2E-FIXTURE\" ฉากที่ 1]\nเตรียมสถานะ: ผูกสคริปต์ \"QA - เปิดไลฟ์ทดสอบ 0819 (แก้ไขแล้ว)\" (v2 · อนุมัติแล้ว) เข้าฉากที่ 1 สำเร็จ — แผงในฉากขึ้น \"สคริปต์ (1)\" และ API bind-script ตอบ 201\n✅ ปุ่ม \"บันทึกเข้าคลัง\" มีอยู่จริงที่แถวสคริปต์ในฉาก (ไอคอนรูปบันทึก · title \"บันทึกเข้าคลัง\" · aria-label \"บันทึก <ชื่อสคริปต์> เข้าคลัง\")\n❌ FAIL — กดปุ่มแล้ว \"ไม่สำเร็จ\": ขึ้นข้อความ \"บันทึกเข้าคลังไม่สำเร็จ — ไม่พบสคริปต์ในฉากนี้ของ Live นี้\" ทั้งที่สคริปต์แสดงอยู่ในฉากชัดเจน\n   ทดสอบซ้ำอีกครั้งหลังรอให้บันทึกอัตโนมัติทำงาน (~10 วิ) ได้ผลเหมือนเดิม\n   หลักฐานระดับเครือข่าย (นอกขอบเขต UI): POST .../live-drafts/studio-<workspaceId>/scenes/sc-1/scripts/<scriptId>/save-to-library ตอบ HTTP 404\n   → ไม่สามารถตรวจ Expected ทั้ง 3 ข้อได้เลย (ไม่มีข้อความ \"บันทึกเข้าคลังแล้ว\" · ไม่เกิด master ใหม่ในคลัง · ตรวจการเข้ากระบวนการรีวิว–อนุมัติไม่ได้)\n⚠️ ข้อจำกัดของการทดสอบรอบนี้: Precondition เดิมระบุ \"สคริปต์ที่สร้างเองในฉาก (ไม่ได้ผูกมาจากคลัง)\" แต่ UI ปัจจุบันสร้างสคริปต์ใหม่จาก Studio ผ่านแท็บ \"สร้างใหม่\" ซึ่งมีหมายเหตุว่า \"script ใหม่จากตรงนี้จะส่ง owner approve ก่อน\" (คือเข้าคลังอยู่แล้ว) → สคริปต์ที่อยู่เฉพาะในฉากอาจสร้างไม่ได้แล้ว ควรทบทวน Precondition ของเคสนี้กับ flow ปัจจุบัน",
+    "st": "fail"
+  },
+  "tc-68": {
+    "actual": "[2026-08-20 · AI-assisted UI check · env https://uat-live.takra.ai]\nเตรียมสถานะ: ฉากที่ 1 ของ Studio \"E2E-FIXTURE\" ผูกสคริปต์ \"QA - เปิดไลฟ์ทดสอบ 0819 (แก้ไขแล้ว)\" ไว้ (ตอนผูกอยู่ที่ v2)\n✅ ที่คลังสคริปต์ เมนูตัวเลือก (⋯) มี \"ดูรายละเอียด / แก้ไข / ทำซ้ำ / เก็บเข้าคลัง / ลบ\" · เลือก \"แก้ไข\" แก้เนื้อหาบทพูดแล้วกด \"บันทึกการแก้ไข\"\n✅ ขึ้น toast \"บันทึกการแก้ไขแล้ว — อัปเดต \"QA - เปิดไลฟ์ทดสอบ 0819 (แก้ไขแล้ว)\" เรียบร้อย\" และเวอร์ชันต้นฉบับเพิ่มจาก v2 เป็น v3\n✅ กลับมาที่ Studio ฉากเดิม: แถวสคริปต์ขึ้นแถบ \"ล้าสมัย (v2→v3)\" ระบุเวอร์ชันเก่า→ใหม่ ตรงตาม Expected ข้อ 1\n✅ ในแถบมีปุ่ม \"อัปเดต snapshot\" ให้กด ตรงตาม Expected ข้อ 2\n✅ เนื้อหาที่แสดงในฉากยังเป็นของเวอร์ชันเดิม (ข้อความ \"…รอบที่ 2…\") ไม่ถูกเปลี่ยนเงียบๆ ตรงตาม Expected ข้อ 3\n⚠️ ก่อนแก้ ต้นฉบับแสดง \"ใช้ใน 1 ไลฟ์\" ในคลังสคริปต์ ถูกต้องตามที่ผูกไว้",
+    "st": "pass"
+  },
+  "tc-69": {
+    "actual": "[2026-08-20 · AI-assisted UI check · env https://uat-live.takra.ai] — BLOCKED (รันจนจบไม่ได้)\n✅ ตรวจได้: แถบ \"ล้าสมัย (v2→v3)\" และปุ่ม \"อัปเดต snapshot\" แสดงอยู่ที่แถวสคริปต์ในฉากตาม Precondition และสถานะสคริปต์ในฉากคือ \"อนุมัติแล้ว\"\n❌ กดปุ่ม \"อัปเดต snapshot\" แล้วไม่สำเร็จ: ขึ้นข้อความ \"อัปเดต snapshot ไม่สำเร็จ — อัปเดต snapshot ได้เฉพาะสคริปต์ที่อนุมัติแล้ว (approved) เท่านั้น\"\n   สาเหตุที่น่าจะเป็น: การแก้ไขต้นฉบับใน TC-TS.2 ทำให้เวอร์ชันใหม่ (v3) กลับไปรอการอนุมัติ จึงยังดึงเข้าฉากไม่ได้ — ถ้าเป็นพฤติกรรมที่ออกแบบไว้ ก็ยังถือเป็นปัญหา UX เพราะ UI โชว์ปุ่มให้กดได้โดยไม่บอกล่วงหน้าว่าต้องอนุมัติเวอร์ชันใหม่ก่อน (ผู้ใช้รู้ก็ต่อเมื่อกดแล้วล้มเหลว) ควรขึ้นเป็นสถานะ \"รออนุมัติ v3\" หรือ disable ปุ่มพร้อมคำอธิบาย\n🚫 ตรวจต่อไม่ได้เพราะบล็อกซ้อน: จะอนุมัติ v3 ต้องเข้าหน้า \"คลังสคริปต์\" แต่หน้านี้โหลดไม่ขึ้นเป็นระยะ — เปิดแล้วค้างที่หน้าเปล่า/ตัวเลขสรุปเป็น 0 ทุกช่อง (\"รอรีวิว 0 · มีคำเสี่ยง 0 · ใช้งานในระบบ 0 · ฉบับร่าง 0\" + \"ไม่มีสคริปต์รอรีวิว — เคลียร์หมดแล้ว\") นานเกิน 40 วินาที ทั้งที่คลังมีสคริปต์ 122 รายการจริง (Studio ยังเห็นครบ)\n   หลักฐานระดับเครือข่าย: request /scripts?_rsc=… ตอบ HTTP 503 หลายครั้งติดกัน โดย UI ไม่แสดงข้อความ error ใดๆ ให้ผู้ใช้เห็น — ผู้ใช้จะเข้าใจผิดว่า \"ไม่มีสคริปต์ในระบบ\"\n   → ยังไม่ได้ตรวจ Expected ทั้ง 4 ข้อ (ข้อความ \"อัปเดต snapshot แล้ว\" · เนื้อหาในฉากเปลี่ยนเป็นเวอร์ชันล่าสุด · สถานะอนุมัติถูกรีเซ็ต · รายการ \"การอนุมัติสคริปต์\" ในส่วนตรวจก่อนไลฟ์)\nต้องรันซ้ำเมื่อ: (1) หน้าคลังสคริปต์โหลดได้เสถียร และ (2) อนุมัติ v3 ของสคริปต์ต้นฉบับแล้ว",
+    "st": "block"
   }
 }
 </script>
@@ -425,15 +514,15 @@ tr.featrow .ty{margin-left:3px}
   <div class="runsum">
     <h3>📊 สรุปผล Manual Test</h3>
     <div class="sumchips">
-      <span class="cnt pass">PASS <b id="sum-pass">31</b></span>
-      <span class="cnt fail">FAIL <b id="sum-fail">7</b></span>
-      <span class="cnt hold">HOLD <b id="sum-hold">3</b></span>
-      <span class="cnt block">BLOCKED <b id="sum-block">4</b></span>
-      <span class="cnt skip">SKIP <b id="sum-skip">3</b></span>
-      <span class="cnt pending">รอเทส <b id="sum-pending">181</b></span>
+      <span class="cnt pass">PASS <b id="sum-pass">44</b></span>
+      <span class="cnt fail">FAIL <b id="sum-fail">10</b></span>
+      <span class="cnt hold">HOLD <b id="sum-hold">4</b></span>
+      <span class="cnt block">BLOCKED <b id="sum-block">5</b></span>
+      <span class="cnt skip">SKIP <b id="sum-skip">4</b></span>
+      <span class="cnt pending">รอเทส <b id="sum-pending">162</b></span>
     </div>
-    <div class="progress"><div id="sumbar" class="progressbar" style="width: 20%;"></div></div>
-    <div class="hint" id="sumpct" style="margin-top:5px">20% ทดสอบแล้ว (45/226) · ข้าม 3</div>
+    <div class="progress"><div id="sumbar" class="progressbar" style="width: 28%;"></div></div>
+    <div class="hint" id="sumpct" style="margin-top:5px">28% ทดสอบแล้ว (63/225) · ข้าม 4</div>
   </div>
 
   <div class="toolbar">
@@ -441,7 +530,7 @@ tr.featrow .ty{margin-left:3px}
     <button class="btn" onclick="toggleAll(false)">▾ ยุบทั้งหมด</button>
     <span class="hint">💡 คลิกแถว → ดู Steps / Expected (UI only)</span>
     <span style="margin-left:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-      <span id="save-status" class="hint" style="white-space: nowrap; color: var(--muted);">✓ ตรงกับ GitHub</span>
+      <span id="save-status" class="hint" style="white-space: nowrap; color: var(--hold);">● ยังไม่ได้บันทึก</span>
       <label class="hint" style="display:flex;gap:4px;align-items:center;white-space:nowrap;cursor:pointer" title="บันทึกขึ้น GitHub อัตโนมัติหลังหยุดแก้ ~5 วินาที"><input type="checkbox" id="chk-autosave" checked=""> auto-save</label>
       <button class="btn" id="btn-token" title="ใส่/เปลี่ยน GitHub token (ถ้าเซฟไม่ขึ้น/token เสีย กดอันนี้)">🔑 Token</button>
       <button class="btn" id="btn-refresh" title="ดึงผลล่าสุดจาก GitHub มา merge (ไม่ต้อง reload)">🔄 ดึงล่าสุด</button>
@@ -1574,7 +1663,7 @@ tr.featrow .ty{margin-left:3px}
   <td class="ctitle">เปิดคลังเสียงแล้วเห็นเสียงที่ Ops จัดเตรียมพร้อมข้อความ PDPA <span class="ty ty-happy" title="Happy Path">✅ Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
-  <td class="status" data-uid="tc-34"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-34"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-34"></td>
 </tr>
 <tr class="detail"><td colspan="7">
@@ -1586,10 +1675,10 @@ tr.featrow .ty{margin-left:3px}
   <div class="sec"><h4>Test Data</h4><ul><li>URL: https://uat-live.takra.ai/voices</li></ul></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>เห็นหัวข้อ "คลังเสียง" พร้อมคำบรรยาย "เสียงพากย์สำเร็จรูปที่ทีม TAKRA Ops จัดเตรียมและดูแลให้ — พร้อมยินยอม PDPA"</li><li>ตารางแสดงชื่อเสียงแต่ละรายการ พร้อมคอลัมน์ "ลักษณะ" และ "อวาตาร์ที่ใช้"</li><li>มีปุ่ม "อัปเดตคลังเสียง" พร้อมเวลา "อัปเดตล่าสุด" แสดงอยู่ด้านบน</li><li>ที่มา: Epic 2 · Story 2.2 · FR9</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-34" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-34" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-34" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-34" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-34" data-st="block">BLOCKED</span>
@@ -1606,7 +1695,7 @@ tr.featrow .ty{margin-left:3px}
   <td class="ctitle">กรองเสียงตามลักษณะและภาษา แล้วล้างตัวกรองได้ <span class="ty ty-happy" title="Happy Path">✅ Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-35"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-35"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-35"></td>
 </tr>
 <tr class="detail"><td colspan="7">
@@ -1617,11 +1706,11 @@ tr.featrow .ty{margin-left:3px}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังเสียง" แล้วรอจนรายการโหลดเสร็จ</li><li>เลือกตัวกรอง "ลักษณะ" ค่าใดค่าหนึ่ง แล้วเลือกตัวกรอง "ภาษา" เพิ่มอีกหนึ่งค่า</li><li>อ่านข้อความสรุปจำนวนใต้แถวตัวกรอง</li><li>กด "ล้างตัวกรอง" แล้วสังเกตรายการ</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ตารางกรองเหลือเฉพาะเสียงที่ตรงทั้งสองเงื่อนไขพร้อมกัน</li><li>เห็นข้อความสรุป "แสดง X จาก Y เสียง" พร้อมลิงก์ "ล้างตัวกรอง"</li><li>หลังล้างตัวกรอง รายการเสียงกลับมาแสดงครบเท่าเดิม</li><li>ที่มา: Epic 2 · Story 2.2</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-35" data-st="pass">PASS</span>
-    <span class="opt fail" data-uid="tc-35" data-st="fail">FAIL</span>
+    <span class="opt fail sel" data-uid="tc-35" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-35" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-35" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-35" data-st="skip">SKIP</span>
@@ -1637,7 +1726,7 @@ tr.featrow .ty{margin-left:3px}
   <td class="ctitle">แผงรายละเอียดเสียงแสดงบันทึกความยินยอม PDPA ที่ตรวจสอบย้อนหลังได้ <span class="ty ty-happy" title="Happy Path">✅ Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
-  <td class="status" data-uid="tc-36"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-36"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-36"></td>
 </tr>
 <tr class="detail"><td colspan="7">
@@ -1648,10 +1737,10 @@ tr.featrow .ty{margin-left:3px}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังเสียง" แล้วคลิกแถวเสียงหนึ่งเพื่อเปิดแผงรายละเอียดด้านข้าง</li><li>เลื่อนไปหัวข้อ "ความยินยอม PDPA" อ่านค่าของแต่ละบรรทัดและหมายเหตุใต้ส่วนนี้</li><li>ลองคลิกที่ค่าต่าง ๆ เพื่อดูว่าแก้ไขได้หรือไม่</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>เห็นบรรทัด "เอกสารยินยอม PDPA" ค่า "มีในระบบ" · "ยืนยันตัวตน" ค่า "ยืนยันแล้ว" · "จัดเตรียมเมื่อ" พร้อมวันที่ชัดเจน</li><li>มีหมายเหตุ "บันทึกความยินยอมและการยืนยันตัวตนดำเนินการโดยทีม TAKRA Ops ตอนจัดเตรียมเสียง (ตรวจสอบย้อนหลังได้) — ไม่สามารถแก้ไขในแอป"</li><li>ทุกค่าเป็นข้อความอ่านอย่างเดียว คลิกแล้วไม่เปลี่ยนเป็นช่องแก้ไข</li><li>แผงเดียวกันมีหัวข้อ "อวาตาร์ที่ใช้เสียงนี้" และ "ตัวอย่างเสียง" แสดงอยู่ด้วย</li><li>ที่มา: Epic 2 · Story 2.2 · FR10</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-36" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-36" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-36" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-36" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-36" data-st="block">BLOCKED</span>
@@ -1668,7 +1757,7 @@ tr.featrow .ty{margin-left:3px}
   <td class="ctitle">กดอัปเดตคลังเสียงแล้วดึงรายการล่าสุดพร้อมแจ้งจำนวน <span class="ty ty-happy" title="Happy Path">✅ Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-37"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-37"><span class="stb hold">HOLD</span></td>
   <td class="jira-cell" data-uid="tc-37"></td>
 </tr>
 <tr class="detail"><td colspan="7">
@@ -1679,12 +1768,12 @@ tr.featrow .ty{margin-left:3px}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังเสียง" แล้วจดเวลา "อัปเดตล่าสุด" ไว้</li><li>กดปุ่ม "อัปเดตคลังเสียง" แล้วสังเกตสถานะปุ่มระหว่างทำงาน</li><li>อ่านข้อความแจ้งผลเมื่อเสร็จ แล้วเทียบจำนวนแถวในตารางกับจำนวนที่แจ้ง</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ระหว่างทำงาน ปุ่มเปลี่ยนเป็น "กำลังอัปเดต…"</li><li>เมื่อเสร็จ เห็นข้อความ "อัปเดตคลังเสียงแล้ว" พร้อมจำนวนทำนอง "N เสียงจาก Realfact" และจำนวนแถวในตารางสอดคล้องกัน</li><li>เวลา "อัปเดตล่าสุด" เปลี่ยนเป็นเวลาปัจจุบัน</li><li>ที่มา: Epic 2 · Story 2.2</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-37" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-37" data-st="fail">FAIL</span>
-    <span class="opt hold" data-uid="tc-37" data-st="hold">HOLD</span>
+    <span class="opt hold sel" data-uid="tc-37" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-37" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-37" data-st="skip">SKIP</span>
   </div></div>
@@ -1700,7 +1789,7 @@ tr.featrow .ty{margin-left:3px}
   <td class="ctitle">เปิดคลังสินค้าแล้วเห็นตัวเลขสรุปและรายการสินค้าครบ <span class="ty ty-happy" title="Happy Path">✅ Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
-  <td class="status" data-uid="tc-38"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-38"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-38"></td>
 </tr>
 <tr class="detail"><td colspan="7">
@@ -1712,10 +1801,10 @@ tr.featrow .ty{margin-left:3px}
   <div class="sec"><h4>Test Data</h4><ul><li>URL: https://uat-live.takra.ai/products</li></ul></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>เห็นหัวข้อ "คลังสินค้า" พร้อมคำบรรยาย "จัดการสินค้าและข้อมูลที่ AI ใช้ขาย · เติมจุดเด่น / Claims / FAQ ให้ครบก่อนนำไปไลฟ์"</li><li>มีการ์ดสรุป "พร้อมขาย" · "ต้องเติมข้อมูล" · "ฉบับร่าง" พร้อมจำนวนรายการของแต่ละกลุ่ม</li><li>แต่ละแถวแสดงชื่อสินค้า · หมวด · ราคา · สถานะ · "ความพร้อมขาย"</li><li>มีปุ่ม "เพิ่มสินค้า" อยู่ในตำแหน่งที่หาเจอง่าย</li><li>ที่มา: Epic 2 · Story 2.3 · FR12</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-38" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-38" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-38" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-38" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-38" data-st="block">BLOCKED</span>
@@ -1732,7 +1821,7 @@ tr.featrow .ty{margin-left:3px}
   <td class="ctitle">เพิ่มสินค้าใหม่พร้อมประเภทสินค้าแล้วบันทึกเข้าคลังสำเร็จ <span class="ty ty-happy" title="Happy Path">✅ Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
-  <td class="status" data-uid="tc-39"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-39"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-39"></td>
 </tr>
 <tr class="detail"><td colspan="7">
@@ -1744,10 +1833,10 @@ tr.featrow .ty{margin-left:3px}
   <div class="sec"><h4>Test Data</h4><ul><li>ชื่อ: QA Test Serum</li><li>คำโปรย: Vitamin C 15% · 30ml · ฿890</li><li>ประเภท: Beauty / Skincare</li></ul></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ฟอร์มมีสารบัญด้านข้าง: "ข้อมูลสินค้า" · "SKU &amp; ราคา" · "ข้อมูลให้ AI" · "Risk Words"</li><li>เมื่อเลือกประเภทสินค้าแล้ว มีคำอธิบายว่าระบบจะดึงชุดคำเสี่ยงของหมวดมาคุมการพูดของ AI โดยอัตโนมัติ</li><li>หลังบันทึก เห็นข้อความ "เพิ่มสินค้าแล้ว" พร้อมชื่อสินค้าและข้อความว่าถูกเพิ่มเข้าแคตตาล็อก</li><li>สินค้าใหม่ปรากฏในรายการคลังทันทีพร้อมสถานะ "เปิดใช้" ที่เลือกไว้</li><li>ที่มา: Epic 2 · Story 2.3 · FR12</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-39" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-39" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-39" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-39" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-39" data-st="block">BLOCKED</span>
@@ -1764,7 +1853,7 @@ tr.featrow .ty{margin-left:3px}
   <td class="ctitle">เพิ่ม SKU หลายตัวเลือกพร้อมราคาให้สินค้าหนึ่งชิ้น <span class="ty ty-happy" title="Happy Path">✅ Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-40"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-40"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-40"></td>
 </tr>
 <tr class="detail"><td colspan="7">
@@ -1776,10 +1865,10 @@ tr.featrow .ty{margin-left:3px}
   <div class="sec"><h4>Test Data</h4><ul><li>SKU 1: 30ml · ฿890</li><li>SKU 2: Bundle 3 ขวด · ฿2,390</li></ul></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>เพิ่ม SKU ได้หลายรายการ แต่ละรายการมีช่อง "ขนาด / ตัวเลือก" และ "ราคา (฿)" แยกของตัวเอง</li><li>ปุ่มลบ SKU ลบเฉพาะแถวนั้น แถวอื่นไม่กระทบ</li><li>หลังบันทึก หน้ารายละเอียดแสดงจำนวนตัวเลือกและราคาครบตามที่กรอก (เช่น "2 ตัวเลือก · ขนาดและราคา")</li><li>ที่มา: Epic 2 · Story 2.3 · FR12</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-40" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-40" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-40" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-40" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-40" data-st="block">BLOCKED</span>
@@ -1796,7 +1885,7 @@ tr.featrow .ty{margin-left:3px}
   <td class="ctitle">ติดหมวดเพิ่มเติมให้สินค้าหนึ่งชิ้น แล้วชุดคำเสี่ยงรวมจากทุกหมวด <span class="ty ty-happy" title="Happy Path">✅ Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
-  <td class="status" data-uid="tc-41"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-41"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-41"></td>
 </tr>
 <tr class="detail"><td colspan="7">
@@ -1808,10 +1897,10 @@ tr.featrow .ty{margin-left:3px}
   <div class="sec"><h4>Test Data</h4><ul><li>ประเภทหลัก: Beauty / Skincare</li><li>หมวดเพิ่มเติม: Supplement / อาหารเสริม</li></ul></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ช่อง "หมวดเพิ่มเติม" มีคำอธิบาย "ถ้าสินค้าอยู่ได้หลายหมวด — เลือกเพิ่มได้ เช่น อาหารเสริมบำรุงผิว (รวมคำเสี่ยงทุกหมวด)"</li><li>หลังเลือกหมวดเพิ่ม หัวข้อ Risk Words แสดงการ์ดชุดคำเสี่ยงครบทุกหมวดที่ติดไว้</li><li>หมวดเพิ่มเติมถูกบันทึกติดไปกับสินค้า และหน้ารายละเอียดแสดง "ชุดคำเสี่ยงรวมจาก N หมวด" โดย N ตรงกับจำนวนหมวดที่เลือก</li><li>ชุดคำที่ใช้เป็นการรวมจากทุกหมวด (union) ไม่ใช่เฉพาะหมวดเดียว</li><li>ที่มา: Epic 2 · Story 2.3 · FR12</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —">FAIL (บั๊ก): ตอนกรอกฟอร์ม เลือกหมวดเพิ่มเติม "Supplement / อาหารเสริม" แล้วข้อความและการ์ดชุดคำเสี่ยงอัปเดตถูกต้องเป็น 2 หมวด (Beauty/Skincare 120 คำ + Supplement 10 คำ) แต่หลังกดบันทึกสินค้า หน้ารายละเอียดสินค้าและฟอร์มแก้ไขกลับแสดงแค่หมวดหลัก "Beauty / Skincare" เพียงหมวดเดียว (120 คำ) หมวดเพิ่มเติมที่เลือกไว้ไม่ถูกบันทึก/ไม่ persist หลัง save ไม่มีข้อความ "ชุดคำเสี่ยงรวมจาก N หมวด" ปรากฏเลย</textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —">FAIL (บั๊ก): ตอนกรอกฟอร์ม เลือกหมวดเพิ่มเติม "Supplement / อาหารเสริม" แล้วข้อความและการ์ดชุดคำเสี่ยงอัปเดตถูกต้องเป็น 2 หมวด (Beauty/Skincare 120 คำ + Supplement 10 คำ) แต่หลังกดบันทึกสินค้า หน้ารายละเอียดสินค้าและฟอร์มแก้ไขกลับแสดงแค่หมวดหลัก "Beauty / Skincare" เพียงหมวดเดียว (120 คำ) หมวดเพิ่มเติมที่เลือกไว้ไม่ถูกบันทึก/ไม่ persist หลัง save ไม่มีข้อความ "ชุดคำเสี่ยงรวมจาก N หมวด" ปรากฏเลย</textarea></div>
   </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-41" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-41" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-41" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-41" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-41" data-st="block">BLOCKED</span>
@@ -1828,7 +1917,7 @@ tr.featrow .ty{margin-left:3px}
   <td class="ctitle">อัปโหลดรูปสินค้าได้หลายรูปและรูปแรกถูกใช้เป็นปก <span class="ty ty-happy" title="Happy Path">✅ Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-42"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-42"><span class="stb skip">SKIP</span></td>
   <td class="jira-cell" data-uid="tc-42"></td>
 </tr>
 <tr class="detail"><td colspan="7">
@@ -1840,14 +1929,14 @@ tr.featrow .ty{margin-left:3px}
   <div class="sec"><h4>Test Data</h4><ul><li>ไฟล์ทดสอบ: 3 ไฟล์ ขนาดไฟล์ละ ≤ 10MB</li></ul></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>คำอธิบายระบุ "อัปโหลดได้ 1–5 รูป · รูปแรกใช้เป็นรูปปกในแคตตาล็อก"</li><li>รูปแรกติดป้าย "ปก"</li><li>ลบรูปได้ทีละรูปโดยรูปอื่นไม่หาย</li><li>รูปปกที่แสดงในรายการคลังตรงกับรูปแรกที่เหลืออยู่หลังบันทึก</li><li>ที่มา: Epic 2 · Story 2.3</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-42" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-42" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-42" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-42" data-st="block">BLOCKED</span>
-    <span class="opt skip" data-uid="tc-42" data-st="skip">SKIP</span>
+    <span class="opt skip sel" data-uid="tc-42" data-st="skip">SKIP</span>
   </div></div>
   <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
     <div class="jira-list" data-uid="tc-42"></div>
@@ -1860,7 +1949,7 @@ tr.featrow .ty{margin-left:3px}
   <td class="ctitle">เก็บถาวรสินค้าแล้วหายจากตัวเลือกที่ใช้งานและกู้คืนได้ <span class="ty ty-happy" title="Happy Path">✅ Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-43"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-43"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-43"></td>
 </tr>
 <tr class="detail"><td colspan="7">
@@ -1871,10 +1960,10 @@ tr.featrow .ty{margin-left:3px}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังสินค้า" กดเมนูตัวเลือกของสินค้าสถานะ "เปิดใช้" แล้วเลือก "เก็บถาวร"</li><li>อ่านข้อความในกล่องยืนยัน แล้วกดปุ่มยืนยัน "เก็บถาวร"</li><li>สลับดูรายการด้วยตัวกรองสถานะ "เปิดใช้" และ "เก็บถาวร"</li><li>สลับไปฝั่งไลฟ์ (เมนู "แพลตฟอร์มไลฟ์" → ยืนยัน "เปลี่ยนแพลตฟอร์ม") เปิดโปรเจกต์ใน Studio แล้วลองกด "เลือกสินค้า" ในการ์ดสินค้า</li><li>กลับมาที่เมนู "คลังสินค้า" ติ๊กเลือกสินค้านั้นในรายการเก็บถาวร แล้วกด "เปิดใช้" ในแถบเครื่องมือ</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>กล่องยืนยัน "เก็บถาวรสินค้านี้?" ระบุว่าสินค้าจะถูกซ่อนจากตัวเลือกสินค้าที่ใช้งาน และกู้คืนได้ภายหลังจากแท็บ "เก็บถาวร"</li><li>หลังยืนยัน เห็นข้อความ "เก็บถาวรแล้ว" และสินค้าย้ายไปอยู่ใต้ตัวกรอง "เก็บถาวร" (หายจากรายการ "เปิดใช้")</li><li>ตัวเลือกสินค้าใน Studio ไม่แสดงสินค้าที่ถูกเก็บถาวร</li><li>หลังกด "เปิดใช้" เห็นข้อความ "อัปเดตสถานะแล้ว" และสินค้ากลับมาเลือกใช้งานได้อีกครั้ง</li><li>ที่มา: Epic 2 · Story 2.3 · FR12</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-43" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-43" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-43" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-43" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-43" data-st="block">BLOCKED</span>
@@ -1891,7 +1980,7 @@ tr.featrow .ty{margin-left:3px}
   <td class="ctitle">ค้นหา กรองสถานะ เรียงลำดับ และทำงานหลายรายการพร้อมกันในคลังสินค้า <span class="ty ty-happy" title="Happy Path">✅ Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-44"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-44"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-44"></td>
 </tr>
 <tr class="detail"><td colspan="7">
@@ -1903,11 +1992,11 @@ tr.featrow .ty{margin-left:3px}
   <div class="sec"><h4>Test Data</h4><ul><li>ตัวเลือกเรียง: ชื่อ A–Z / ความพร้อมขาย / ราคา สูงไปต่ำ</li></ul></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ช่องค้นหาใช้ค้นได้ทั้งชื่อสินค้า SKU และหมวด ตาม placeholder ที่ระบุ และรายการกรองตามคำค้นทันที</li><li>ตัวกรองสถานะและการเรียงลำดับทำงานร่วมกันได้ถูกต้อง</li><li>เมื่อเลือกหลายรายการ แถบเครื่องมือแสดง "เลือกแล้ว 2 รายการ" พร้อมปุ่ม "เปิดใช้" / "เก็บถาวร" / "ล้าง"</li><li>หลังกด "เปิดใช้" เห็นข้อความ "อัปเดตสถานะแล้ว" พร้อมสรุปทำนอง "2 สินค้า → เปิดใช้"</li><li>ที่มา: Epic 2 · Story 2.3</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-44" data-st="pass">PASS</span>
-    <span class="opt fail" data-uid="tc-44" data-st="fail">FAIL</span>
+    <span class="opt fail sel" data-uid="tc-44" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-44" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-44" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-44" data-st="skip">SKIP</span>
@@ -1924,7 +2013,7 @@ tr.featrow .ty{margin-left:3px}
   <td class="ctitle">เพิ่มจุดเด่นสินค้าแล้วแสดงในหน้ารายละเอียดครบทุกข้อ <span class="ty ty-happy" title="Happy Path">✅ Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
-  <td class="status" data-uid="tc-45"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-45"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-45"></td>
 </tr>
 <tr class="detail"><td colspan="7">
@@ -1936,10 +2025,10 @@ tr.featrow .ty{margin-left:3px}
   <div class="sec"><h4>Test Data</h4><ul><li>จุดเด่นตัวอย่าง: ลดจุดด่างดำใน 4 สัปดาห์ · ซึมไว ไม่เหนียวเหนอะ · ใช้ได้ทุกสภาพผิว</li></ul></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ช่อง "จุดเด่นสินค้า" มีคำแนะนำ "จุดขายที่ AI พูดถึงได้ — แนะนำอย่างน้อย 3 ข้อ"</li><li>เพิ่ม/ลบจุดเด่นได้รายข้อโดยข้ออื่นไม่หาย</li><li>หลังบันทึก หน้ารายละเอียดแสดงหัวข้อ "Key Benefits" (จุดเด่นที่ AI พูดได้) พร้อมจุดเด่นครบ 3 ข้อตามที่กรอก</li><li>ที่มา: Epic 2 · Story 2.4 · FR13</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-45" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-45" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-45" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-45" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-45" data-st="block">BLOCKED</span>
@@ -1956,7 +2045,7 @@ tr.featrow .ty{margin-left:3px}
   <td class="ctitle">เพิ่ม Claims ที่อนุมัติแล้วสินค้าแสดงข้อความที่พูดได้ <span class="ty ty-happy" title="Happy Path">✅ Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
-  <td class="status" data-uid="tc-46"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-46"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-46"></td>
 </tr>
 <tr class="detail"><td colspan="7">
@@ -1968,10 +2057,10 @@ tr.featrow .ty{margin-left:3px}
   <div class="sec"><h4>Test Data</h4><ul><li>Claim: ผ่านมาตรฐาน อย. เลขที่ xx-x-xxxxxxxxx</li></ul></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>คำอธิบายระบุ "ข้อความเคลมที่ผ่านการตรวจ — AI พูดได้เฉพาะที่อยู่ในรายการนี้"</li><li>หลังบันทึก หน้ารายละเอียดมีหัวข้อ "Claims ที่พูดได้" พร้อมข้อความเคลมที่กรอก</li><li>Claims แสดงแยกส่วนของตัวเอง ไม่ถูกนำไปปนกับจุดเด่นหรือ FAQ</li><li>ที่มา: Epic 2 · Story 2.4 · FR13</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-46" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-46" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-46" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-46" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-46" data-st="block">BLOCKED</span>
@@ -1988,7 +2077,7 @@ tr.featrow .ty{margin-left:3px}
   <td class="ctitle">เพิ่ม FAQ คำถาม-คำตอบให้สินค้าและนับจำนวนถูกต้อง <span class="ty ty-happy" title="Happy Path">✅ Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-47"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-47"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-47"></td>
 </tr>
 <tr class="detail"><td colspan="7">
@@ -2000,10 +2089,10 @@ tr.featrow .ty{margin-left:3px}
   <div class="sec"><h4>Test Data</h4><ul><li>คำถาม: ใช้ตอนเช้าหรือกลางคืน?</li><li>คำตอบ: ใช้ได้ทั้งเช้าและก่อนนอน</li></ul></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ฟอร์ม FAQ มีช่อง "คำถาม" และ "คำตอบ" แยกกันชัดเจน พร้อมคำแนะนำ "คำถามที่ลูกค้าถามบ่อย — ช่วย AI ตอบคอมเมนต์ระหว่างไลฟ์"</li><li>ลบ FAQ รายข้อได้โดยรายการอื่นไม่หาย</li><li>หน้ารายละเอียดแสดงจำนวนคำถามตรงกับที่เหลืออยู่จริง (เช่น "1 คำถามพบบ่อย")</li><li>ที่มา: Epic 2 · Story 2.4 · FR13</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-47" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-47" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-47" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-47" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-47" data-st="block">BLOCKED</span>
@@ -2020,7 +2109,7 @@ tr.featrow .ty{margin-left:3px}
   <td class="ctitle">เพิ่มคำเสี่ยงเฉพาะสินค้านี้และแสดงแยกจากชุดของหมวด <span class="ty ty-happy" title="Happy Path">✅ Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
-  <td class="status" data-uid="tc-48"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-48"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-48"></td>
 </tr>
 <tr class="detail"><td colspan="7">
@@ -2032,10 +2121,10 @@ tr.featrow .ty{margin-left:3px}
   <div class="sec"><h4>Test Data</h4><ul><li>คำเสี่ยงเฉพาะสินค้า: 2 คำที่ไม่ซ้ำกับชุดของหมวด</li></ul></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>คำอธิบายหัวข้อระบุ "คำที่ห้าม AI พูดถึงสินค้านี้ — รวมจากชุดของประเภทสินค้า + คำที่เพิ่มเองด้านล่าง"</li><li>การ์ดชุดคำเสี่ยงของหมวดกดเปิดดูรายการคำได้ และเป็นแบบอ่านอย่างเดียว (ไม่มีปุ่มแก้/ลบคำของหมวด)</li><li>คำที่พิมพ์ปรากฏเป็นชิปและลบได้ทีละคำ</li><li>หน้ารายละเอียดแสดง "คำเสี่ยงเฉพาะสินค้านี้" แยกออกจากการ์ดชุดของหมวด</li><li>ที่มา: Epic 2 · Story 2.4 · FR13</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-48" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-48" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-48" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-48" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-48" data-st="block">BLOCKED</span>
@@ -2052,7 +2141,7 @@ tr.featrow .ty{margin-left:3px}
   <td class="ctitle">ความพร้อมขายของสินค้าเปลี่ยนตามความครบของข้อมูล <span class="ty ty-happy" title="Happy Path">✅ Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-49"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-49"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-49"></td>
 </tr>
 <tr class="detail"><td colspan="7">
@@ -2064,10 +2153,10 @@ tr.featrow .ty{margin-left:3px}
   <div class="sec"><h4>Test Data</h4><ul><li>ระดับความพร้อม: ยังขายไม่ได้ / ข้อมูลไม่ครบ / พร้อมขาย</li></ul></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ตอนข้อมูลน้อย ป้ายแสดงระดับต่ำ ("ยังขายไม่ได้" หรือ "ข้อมูลไม่ครบ")</li><li>เมื่อเติมข้อมูลครบขึ้น ป้ายเลื่อนระดับขึ้นตามจนถึง "พร้อมขาย"</li><li>เมื่อครบทุกด้าน หน้ารายละเอียดแสดง "พร้อมขายแล้ว" พร้อมคำอธิบาย "ข้อมูลครบทุกด้าน — AI พร้อมพูดขายสินค้านี้ได้เต็มที่"</li><li>การ์ดสรุปด้านบนของคลังสินค้า ("พร้อมขาย" / "ต้องเติมข้อมูล" / "ฉบับร่าง") อัปเดตจำนวนตามระดับที่เปลี่ยนไป</li><li>ที่มา: Epic 2 · Story 2.4</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —">สร้างสินค้าใหม่มีแค่ชื่อ ป้ายความพร้อมขายแสดง "ยังขายไม่ได้" 0/4 ถูกต้อง เพิ่ม SKU+ราคา และเพิ่มจุดเด่น 3 ข้อ+Claims 2 ข้อ+FAQ 2 ข้อ แล้วบันทึก ป้ายเลื่อนขึ้นเป็น "พร้อมขาย" 4/4 และหน้ารายละเอียดขึ้นข้อความ "พร้อมขายแล้ว — ข้อมูลครบทุกด้าน AI พร้อมพูดขายสินค้านี้ได้เต็มที่" ถูกต้องตามคาดหวัง แต่การ์ดสรุปด้านบนของหน้าคลังสินค้า ("พร้อมขาย N รายการ") ไม่อัปเดตจำนวนตามจริง — ทดสอบพบว่ามีสินค้าอย่างน้อย 3 ชิ้นที่ป้ายแสดง "พร้อมขาย" ในรายการ (รวมสินค้าที่เพิ่งทำให้ครบข้อมูล) แต่การ์ดสรุปด้านบนยังคงแสดงว่า "พร้อมขาย 1 รายการ" ไม่ตรงกับจำนวนจริง จึงถือว่าไม่ผ่านในส่วนการ์ดสรุป (Expected Result ข้อ 4)</textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —">สร้างสินค้าใหม่มีแค่ชื่อ ป้ายความพร้อมขายแสดง "ยังขายไม่ได้" 0/4 ถูกต้อง เพิ่ม SKU+ราคา และเพิ่มจุดเด่น 3 ข้อ+Claims 2 ข้อ+FAQ 2 ข้อ แล้วบันทึก ป้ายเลื่อนขึ้นเป็น "พร้อมขาย" 4/4 และหน้ารายละเอียดขึ้นข้อความ "พร้อมขายแล้ว — ข้อมูลครบทุกด้าน AI พร้อมพูดขายสินค้านี้ได้เต็มที่" ถูกต้องตามคาดหวัง แต่การ์ดสรุปด้านบนของหน้าคลังสินค้า ("พร้อมขาย N รายการ") ไม่อัปเดตจำนวนตามจริง — ทดสอบพบว่ามีสินค้าอย่างน้อย 3 ชิ้นที่ป้ายแสดง "พร้อมขาย" ในรายการ (รวมสินค้าที่เพิ่งทำให้ครบข้อมูล) แต่การ์ดสรุปด้านบนยังคงแสดงว่า "พร้อมขาย 1 รายการ" ไม่ตรงกับจำนวนจริง จึงถือว่าไม่ผ่านในส่วนการ์ดสรุป (Expected Result ข้อ 4)</textarea></div>
   </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-49" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-49" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-49" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-49" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-49" data-st="block">BLOCKED</span>
@@ -2628,7 +2717,7 @@ tr.featrow .ty{margin-left:3px}
   <td class="ctitle">บันทึกสคริปต์ที่เขียนใน Studio กลับเข้าคลังเป็นต้นฉบับใหม่ <span class="ty ty-happy" title="Happy Path">✅ Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-67"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-67"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-67"></td>
 </tr>
 <tr class="detail"><td colspan="7">
@@ -2639,11 +2728,11 @@ tr.featrow .ty{margin-left:3px}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "แพลตฟอร์มไลฟ์" กด "เปลี่ยนแพลตฟอร์ม" แล้วเปิด Studio ของไลฟ์ที่มีสคริปต์ซึ่งสร้างเองในฉาก (ไม่ได้ผูกมาจากคลัง)</li><li>ที่รายการสคริปต์ในฉาก กดปุ่ม "บันทึกเข้าคลัง" (ไอคอนรูปบันทึก) แล้วอ่านข้อความแจ้งผล</li><li>กลับฝั่งหลังบ้านผ่านเมนู "หลังบ้าน" ไปที่เมนู "คลังสคริปต์" ค้นหาสคริปต์ชื่อเดียวกัน แล้วเปิดแผงรายละเอียดเทียบเนื้อหากับใน Studio</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>เห็นข้อความ "บันทึกเข้าคลังแล้ว" พร้อม "สร้าง master ใหม่ในคลังสคริปต์เรียบร้อย"</li><li>สคริปต์ปรากฏในคลังพร้อมเนื้อหาตรงกับที่เขียนใน Studio</li><li>สคริปต์ในคลังเข้ากระบวนการรีวิว–อนุมัติตามปกติ (ไม่ข้ามการรีวิว)</li><li>ที่มา: Epic 2 · Story 2.10 · FR72</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-67" data-st="pass">PASS</span>
-    <span class="opt fail" data-uid="tc-67" data-st="fail">FAIL</span>
+    <span class="opt fail sel" data-uid="tc-67" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-67" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-67" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-67" data-st="skip">SKIP</span>
@@ -2659,7 +2748,7 @@ tr.featrow .ty{margin-left:3px}
   <td class="ctitle">ต้นฉบับในคลังถูกแก้แล้ว ฉากที่ผูกไว้ขึ้นป้ายว่าสำเนาล้าสมัย <span class="ty ty-happy" title="Happy Path">✅ Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-68"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-68"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-68"></td>
 </tr>
 <tr class="detail"><td colspan="7">
@@ -2670,10 +2759,10 @@ tr.featrow .ty{margin-left:3px}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังสคริปต์" กดเมนูตัวเลือก (⋯) ของสคริปต์ต้นฉบับที่ถูกผูกเข้าไลฟ์ไว้ เลือก "แก้ไข" แก้เนื้อหา แล้วกด "บันทึกการแก้ไข"</li><li>ไปที่เมนู "แพลตฟอร์มไลฟ์" กด "เปลี่ยนแพลตฟอร์ม" แล้วเปิด Studio ของไลฟ์ที่ผูกสคริปต์นั้นไว้</li><li>ดูรายการสคริปต์ในฉากและแถบแจ้งเตือนที่ขึ้นใหม่ที่แถวสคริปต์นั้น</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>แถวสคริปต์ในฉากขึ้นแถบ "ล้าสมัย (vN→vN+1)" ระบุเวอร์ชันเก่า→ใหม่</li><li>ในแถบมีปุ่ม "อัปเดต snapshot" ให้กดเมื่อพร้อม</li><li>เนื้อหาที่ยังแสดงในฉากเป็นของเวอร์ชันเดิม ไม่ถูกเปลี่ยนเงียบๆ</li><li>ที่มา: Epic 2 · Story 2.10 · FR72</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-68" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-68" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-68" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-68" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-68" data-st="block">BLOCKED</span>
@@ -2690,7 +2779,7 @@ tr.featrow .ty{margin-left:3px}
   <td class="ctitle">กดอัปเดต snapshot แล้วต้องอนุมัติสคริปต์ใหม่อีกครั้ง <span class="ty ty-happy" title="Happy Path">✅ Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
-  <td class="status" data-uid="tc-69"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-69"><span class="stb block">BLOCKED</span></td>
   <td class="jira-cell" data-uid="tc-69"></td>
 </tr>
 <tr class="detail"><td colspan="7">
@@ -2701,13 +2790,13 @@ tr.featrow .ty{margin-left:3px}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "แพลตฟอร์มไลฟ์" กด "เปลี่ยนแพลตฟอร์ม" แล้วเปิด Studio ของไลฟ์ที่มีสคริปต์ในฉากขึ้นแถบ "ล้าสมัย"</li><li>กดปุ่ม "อัปเดต snapshot" ที่แถวสคริปต์นั้น แล้วอ่านข้อความแจ้งผล</li><li>ขยายดูเนื้อหาสคริปต์ในฉากและสถานะการอนุมัติของสคริปต์</li><li>กดปุ่มเริ่มไลฟ์เพื่อเปิดหน้าต่างที่มีส่วน "ตรวจก่อนไลฟ์" แล้วดูรายการ "การอนุมัติสคริปต์"</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>เห็นข้อความ "อัปเดต snapshot แล้ว" พร้อม "ดึงเนื้อหาล่าสุดเข้าฉาก — ต้องอนุมัติสคริปต์ใหม่อีกครั้ง"</li><li>เนื้อหาในฉากเปลี่ยนเป็นเวอร์ชันล่าสุดของต้นฉบับ และแถบล้าสมัยหายไป</li><li>สถานะการอนุมัติของสคริปต์ในฉากถูกรีเซ็ต (ไม่คงสถานะอนุมัติเดิม — ต้องรีวิว/อนุมัติใหม่ต่อไลฟ์)</li><li>รายการ "การอนุมัติสคริปต์" ในส่วนตรวจก่อนไลฟ์แสดงว่ายังไม่ผ่าน เช่น "N สคริปต์ยังรออนุมัติ"</li><li>ที่มา: Epic 2 · Story 2.10 · FR72</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-69" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-69" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-69" data-st="hold">HOLD</span>
-    <span class="opt block" data-uid="tc-69" data-st="block">BLOCKED</span>
+    <span class="opt block sel" data-uid="tc-69" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-69" data-st="skip">SKIP</span>
   </div></div>
   <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
@@ -8442,4 +8531,4 @@ document.querySelectorAll('.feat-owner').forEach(function(sel){var e=sel.dataset
 </script>
 
 
-</body></html>
+<div id="claude-agent-glow-border" style="position: fixed; inset: 0px; pointer-events: none; z-index: 2147483646; opacity: 1; transition: opacity 0.3s ease-in-out;"><div id="claude-agent-glow-border-inner" style="position: absolute; inset: 0px; will-change: opacity; box-shadow: rgba(217, 119, 87, 0.7) 0px 0px 15px inset, rgba(217, 119, 87, 0.5) 0px 0px 25px inset, rgba(217, 119, 87, 0.2) 0px 0px 35px inset;"></div></div></body></html>
