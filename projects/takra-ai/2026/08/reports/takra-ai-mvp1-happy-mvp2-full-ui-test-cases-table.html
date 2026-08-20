@@ -19816,7 +19816,7 @@ function toggleAll(open) {
 
 // ── Save store back into the embedded script tag ──
 function save() {
-  storeEl.textContent = '\n' + JSON.stringify(store, null, 2) + '\n';
+  storeEl.textContent = '\n' + JSON.stringify(store, null, 2).replace(/</g, '\\u003c') + '\n';
 }
 
 // ── Status opt buttons ──
@@ -20069,7 +20069,7 @@ async function publishToGH(auto) {
     try {
       var remoteHtml = decodeURIComponent(escape(atob((remote.content || '').replace(/\s/g, ''))));
       if (!/<script id="store-data"[^>]*>[\s\S]*?<\/script>/.test(remoteHtml)) throw new Error('ไฟล์บน GitHub ไม่มี store-data — ไม่บันทึกเพื่อกันทับโครงสร้าง');
-      var json = '\n' + JSON.stringify(store, null, 2) + '\n';
+      var json = '\n' + JSON.stringify(store, null, 2).replace(/</g, '\\u003c') + '\n';
       var replaced = remoteHtml.replace(
         /(<script id="store-data"[^>]*>)[\s\S]*?(<\/script>)/,
         function(_m, o, c) { return o + json + c; }
