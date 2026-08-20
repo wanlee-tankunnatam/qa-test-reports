@@ -9,6 +9,19 @@
 CASE = dict(id, title, prio, level?, pre[], steps[], data[]?, expected[], src, note?)
 """
 
+META = dict(
+    out_rel='projects/takra-hub/2026/08/reports/takra-hub-mvp1-ui-test-cases-table.html',
+    title='[MVP1] TAKRA Hub — MVP-1 UI Manual Test Cases',
+    emoji='🏢', uid_start=5001, download='takra-hub-mvp1-ui-test-cases.html',
+    sub='เทส UI ด้วยมืออย่างเดียว · MVP-1 (Epic 1–4 + ส่วน UI ตาม PRD §5/§8) · Target: <b>TAKRA Hub Web (UAT)</b> · login ด้วยบัญชี UAT',
+    groups_label='8 กลุ่ม (A–H) + E2E',
+    note=('🖥️ <b>Test target:</b> เว็บ <b>TAKRA Hub</b> รุ่น UAT (uat-hub.takra.ai · branch <code>develop</code>) เปิดด้วยเบราว์เซอร์บนเดสก์ท็อป · บัญชี <b>UAT</b> ที่ต้องเตรียม: ลูกค้า (เจ้าของทีม) · UAT-B (สมาชิกทีม) · CS (role cs) · admin · อีเมลใหม่สำหรับเคสสมัคร · หน้าที่อ้างถึง: หน้าแรก · เข้าสู่ระบบ/สมัครสมาชิก · แดชบอร์ด · บริการ · ดาวน์โหลด · โปรไฟล์ · ตั้งค่าทีม · หน้าโอนเงิน (/checkout) · ตรวจสลิป (/cs/payments) · แพ็กเกจและราคา (/pricing)<br>'
+          '📎 <b>ที่มาของเคส:</b> <code>docs/epics.md</code> (Epic 1–4 · Story AC) + <code>docs/prd.md</code> §5/§8 + <code>_bmad-output/test-artifacts/case/*/ui.md</code> · คำ UI ลอกจาก <code>apps/web/src</code> (origin/develop 2026-08-18) — คัดเฉพาะข้อที่ <b>คนกดเองแล้วเห็นผลบนหน้าจอได้</b>; ข้อที่ต้องยิง API / เปิดฐานข้อมูล (JWT · verify API · audit log · trial_claim · affiliate event) <b>ไม่อยู่ในตั๋วนี้</b><br>'
+          '🏷️ <b>ประเภทเคส (กรองได้):</b> Happy Path (flow ปกติ) · Negative (ข้อมูล/action ผิด) · Boundary (min/max/ขอบ) · Validation (format/required/length) · Exception (API/network/server/timeout) · Permission (role ไหนทำได้) · Data (empty/duplicate/existing/non-existing)<br>'
+          '⚠️ <b>นอกขอบเขต/ไม่พบใน UI:</b> Admin Console ปิดชั่วคราว (TRIPWIRE — มีเคส M1-H.1 ตรวจว่าปิดจริง) · Referral card ในโปรไฟล์ (Story 2.3) ถูก retire เป็น affiliate (#102) จึงไม่มีเคส · pre-fill ?ref (Story 1.7) ไม่พบใน UI → M1-B.12 ไว้ยืนยันกับ dev · ฟีเจอร์ MVP-2 (บัญชีพนักงาน · เอกสารกฎหมาย · QR/Omise · โปรโมชัน) ไม่อยู่ในรายงานนี้ — ดูรายงาน MVP-2'),
+    footer='UI only (manual) · TAKRA Hub Web UAT (branch develop) · login UAT',
+)
+
 HUB = 'เปิดเว็บ TAKRA Hub (UAT)'
 LOGIN = 'เข้าสู่ระบบด้วยบัญชี UAT'
 
@@ -22,9 +35,9 @@ KINDS = {  # ประเภทเคส (ตามกรอบที่ QA ก�
     'data':       ('Data', 'empty · null · duplicate · existing · non-existing'),
 }
 
-def C(id, title, prio, steps, expected, src, pre=None, data=None, note=None, level='ui', kind='happy'):
+def C(id, title, prio, steps, expected, src, pre=None, data=None, note=None, level='ui', kind='happy', ui=True):
     assert kind in KINDS, kind
-    return dict(id=id, title=title, prio=prio, level=level, kind=kind, pre=pre or [], steps=steps,
+    return dict(id=id, title=title, prio=prio, level=level, kind=kind, ui=ui, pre=pre or [], steps=steps,
                 data=data or [], expected=expected, src=src, note=note)
 
 EPICS = []

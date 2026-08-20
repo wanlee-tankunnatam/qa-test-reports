@@ -4,11 +4,13 @@
 harness (CSS + JS ปุ่ม ☁️ เซฟ/ตัวกรอง/Jira/owner) ลอกจากรายงาน takra-rerun MVP-2 เพื่อให้หน้าตา/พฤติกรรมเหมือนกัน
 แล้วแพตช์เฉพาะ GH_PATH · ชื่อไฟล์ดาวน์โหลด · ตัวกรอง "ประเภท" (kind)
 
-ใช้:  python3 tools/build/build_hub_report.py            # เขียนไฟล์
-      python3 tools/build/build_hub_report.py --check    # แค่ตรวจ/นับ ไม่เขียน
+ใช้:  python3 tools/build/build_hub_report.py [mvp1|mvp2]            # เขียนไฟล์ (default mvp1)
+      python3 tools/build/build_hub_report.py mvp2 --check            # แค่ตรวจ/นับ ไม่เขียน
+ข้อมูลเคส: mvp1 = hub_cases.py · mvp2 = hub_mvp2_cases.py (แต่ละไฟล์มี META บอก path/ชื่อ/uid เริ่ม)
 สถานะผลเทสเดิมในไฟล์ปลายทาง (<script id="store-data">) จะถูกคงไว้ถ้ามีอยู่แล้ว
 """
 import html
+import importlib
 import json
 import pathlib
 import re
@@ -16,13 +18,16 @@ import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
-from hub_cases import EPICS, KINDS  # noqa: E402
+MODULES = {'mvp1': 'hub_cases', 'mvp2': 'hub_mvp2_cases'}
+_which = next((a for a in sys.argv[1:] if a in MODULES), 'mvp1')
+_mod = importlib.import_module(MODULES[_which])
+EPICS, KINDS, META = _mod.EPICS, _mod.KINDS, _mod.META
 
 TEMPLATE = ROOT / 'projects/takra-rerun/2026/07/reports/takra-rerun-mvp2-ui-test-cases-table.html'
-OUT_REL = 'projects/takra-hub/2026/08/reports/takra-hub-mvp1-ui-test-cases-table.html'
+OUT_REL = META['out_rel']
 OUT = ROOT / OUT_REL
-UID_START = 5001
-TITLE = '[MVP1] TAKRA Hub — MVP-1 UI Manual Test Cases'
+UID_START = META['uid_start']
+TITLE = META['title']
 BACK = 'https://wanlee-tankunnatam.github.io/qa-test-reports/?project=hub'
 
 OWNER_SEL = ('<span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="{fk}">'
@@ -42,6 +47,7 @@ EXTRA_CSS = """
 .kd-perm{color:#0f766e;background:#f0fdfa;border-color:#99f6e4}
 .kd-data{color:#1d4ed8;background:#eff6ff;border-color:#bfdbfe}
 .chk{margin-top:4px;padding:6px 8px;border-left:3px solid #16a34a;background:rgba(22,163,74,.07)}
+.noui{display:inline-block;margin-left:6px;padding:0 6px;border-radius:4px;font-size:9.5px;font-weight:700;vertical-align:middle;color:#991b1b;background:#fee2e2;border:1px solid #fca5a5;white-space:nowrap}
 """
 
 def esc(s: str) -> str:
@@ -76,9 +82,11 @@ def case_html(c, uid, epic_key, epic_title_short):
     lvl = c.get('level', 'ui')
     lv_html = ('<span class="lv lvl-e2e">E2E</span>' if lvl == 'e2e' else '<span class="lv lvl-ui">UI</span>')
     kind = c['kind']
-    head = f'''<tr class="trow" data-feat="{epic_key}" data-level="{lvl}" data-prio="{c['prio']}" data-kind="{kind}" onclick="tg(this)">
+    in_ui = c.get('ui', True)
+    noui = '' if in_ui else ' <span class="noui">⛔ ไม่พบใน UI</span>'
+    head = f'''<tr class="trow" data-feat="{epic_key}" data-level="{lvl}" data-prio="{c['prio']}" data-kind="{kind}" data-ui="{'yes' if in_ui else 'no'}" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">{esc(c['id'])}</td>
-  <td class="ctitle">{esc(c['title'])} {kind_tag(kind)}</td>
+  <td class="ctitle">{esc(c['title'])} {kind_tag(kind)}{noui}</td>
   <td class="lvl">{lv_html}</td>
   <td><span class="prio {PRIO_CLS[c['prio']]}">{c['prio']}</span></td>
   <td class="status" data-uid="{u}"><span class="stb pending">รอเทส</span></td>
@@ -94,6 +102,8 @@ def case_html(c, uid, epic_key, epic_title_short):
     if e2e:
         body.append(f'  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">{esc(e2e["summary"])}</div></div>')
         body.append(f'  <div class="sec"><h4>⏱ Run sheet</h4><div class="hint" style="font-size:12px">{esc(e2e["runsheet"])}</div></div>')
+    if not in_ui:
+        body.append('  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ไม่พบใน UI</b> ณ origin/develop 2026-08-19 (commit 27da4c0) — เคสเขียนตาม AC ในสเปกไว้ล่วงหน้า ชื่อปุ่ม/ข้อความอ้างจากเอกสาร อาจต่างจากของจริงเมื่อ build · ถ้ายังไม่มีหน้าจอให้บันทึกเป็น <b>BLOCKED</b> แล้วกลับมาปรับคำเมื่อ dev ส่งมอบ</div></div>')
     if c['pre']:
         body.append(f'  <div class="sec"><h4>Precondition</h4>{ul(c["pre"])}</div>')
     if c['data']:
@@ -126,14 +136,15 @@ def build():
     js = src[js_start:]
     js = js.replace("var GH_PATH   = 'projects/takra-rerun/2026/07/reports/takra-rerun-mvp2-ui-test-cases-table.html';",
                     f"var GH_PATH   = '{OUT_REL}';")
-    js = js.replace("a.download = 'takra-ai-mvp2-ui-test-cases.html';", "a.download = 'takra-hub-mvp1-ui-test-cases.html';")
+    js = js.replace("a.download = 'takra-ai-mvp2-ui-test-cases.html';", f"a.download = '{META['download']}';")
     # ตัวกรองประเภท (kind)
     js = js.replace("var filters = { feat: new Set(), level: new Set(), prio: new Set(), status: new Set() };",
-                    "var filters = { feat: new Set(), level: new Set(), prio: new Set(), status: new Set(), kind: new Set() };")
+                    "var filters = { feat: new Set(), level: new Set(), prio: new Set(), status: new Set(), kind: new Set(), ui: new Set() };")
     js = js.replace("    if (filters.prio.size  && !filters.prio.has(row.dataset.prio))   ok = false;",
                     "    if (filters.prio.size  && !filters.prio.has(row.dataset.prio))   ok = false;\n"
-                    "    if (filters.kind.size  && !filters.kind.has(row.dataset.kind))   ok = false;")
-    for needle in ("var GH_PATH   = '" + OUT_REL, "takra-hub-mvp1-ui-test-cases.html", "kind: new Set()", "filters.kind.has"):
+                    "    if (filters.kind.size  && !filters.kind.has(row.dataset.kind))   ok = false;\n"
+                    "    if (filters.ui.size    && !filters.ui.has(row.dataset.ui))       ok = false;")
+    for needle in ("var GH_PATH   = '" + OUT_REL, META['download'], "kind: new Set()", "filters.kind.has", "filters.ui.has"):
         assert needle in js, f'patch failed: {needle}'
 
     # เก็บ store-data เดิมถ้ามีไฟล์อยู่แล้ว
@@ -152,6 +163,7 @@ def build():
     chips = []
     total = 0
     e2e_n = 0
+    noui_n = 0
     for e in EPICS:
         n = sum(len(f['cases']) for f in e['feats'])
         chips.append(f'<button class="fchip" data-f="feat" data-v="{e["key"]}">{e["chip"]} ({n})</button>')
@@ -168,19 +180,30 @@ def build():
                 total += 1
                 counts[c['prio']] += 1
                 kind_counts[c['kind']] += 1
+                if not c.get('ui', True):
+                    noui_n += 1
                 if c.get('level') == 'e2e':
                     e2e_n += 1
     ui_n = total - e2e_n
     kind_chips = ''.join(f'<button class="fchip" data-f="kind" data-v="{k}" title="{esc(v[1])}">{v[0]} ({kind_counts[k]})</button>' for k, v in KINDS.items())
 
+    ui_row = ''
+    if noui_n:
+        ui_row = (f'''    <div class="row"><label>สถานะ UI</label>
+      <button class="fchip" data-f="ui" data-v="yes">✅ พร้อมเทส ({total - noui_n})</button>
+      <button class="fchip" data-f="ui" data-v="no">⛔ ไม่พบใน UI ({noui_n})</button>
+      <button class="clearbtn" data-clear="ui">✕</button>
+    </div>
+''')
+    noui_pill = f'<span class="pill">⛔ ไม่พบใน UI {noui_n} · พร้อมเทส {total - noui_n}</span>' if noui_n else ''
     header = f'''
 <header class="top">
-  <h1>🏢 {TITLE}</h1>
-  <div class="sub">เทส UI ด้วยมืออย่างเดียว · MVP-1 (Epic 1–4 + ส่วน UI ตาม PRD §5/§8) · Target: <b>TAKRA Hub Web (UAT)</b> · login ด้วยบัญชี UAT</div>
+  <h1>{META['emoji']} {TITLE}</h1>
+  <div class="sub">{META['sub']}</div>
   <div class="meta">
     <span class="pill">{ui_n} เคส + E2E {e2e_n} = {total}</span>
-    <span class="pill">{len(EPICS) - 1} กลุ่ม (A–H) + E2E</span>
-    <span class="pill">UI + E2E · manual</span>
+    <span class="pill">{META['groups_label']}</span>
+    <span class="pill">UI + E2E · manual</span>{noui_pill}
     <span class="pill">P0 {counts['P0']} · P1 {counts['P1']} · P2 {counts['P2']}</span>
     <span class="pill">ประเภท: Happy {kind_counts['happy']} · Negative {kind_counts['negative']} · Boundary {kind_counts['boundary']} · Validation {kind_counts['validation']} · Exception {kind_counts['exception']} · Permission {kind_counts['permission']} · Data {kind_counts['data']}</span>
   </div>
@@ -188,10 +211,7 @@ def build():
 
 <div class="wrap">
 
-  <div class="note-box">🖥️ <b>Test target:</b> เว็บ <b>TAKRA Hub</b> รุ่น UAT (uat-hub.takra.ai · branch <code>develop</code>) เปิดด้วยเบราว์เซอร์บนเดสก์ท็อป · บัญชี <b>UAT</b> ที่ต้องเตรียม: ลูกค้า (เจ้าของทีม) · UAT-B (สมาชิกทีม) · CS (role cs) · admin · อีเมลใหม่สำหรับเคสสมัคร · หน้าที่อ้างถึง: หน้าแรก · เข้าสู่ระบบ/สมัครสมาชิก · แดชบอร์ด · บริการ · ดาวน์โหลด · โปรไฟล์ · ตั้งค่าทีม · หน้าโอนเงิน (/checkout) · ตรวจสลิป (/cs/payments) · แพ็กเกจและราคา (/pricing)<br>
-  📎 <b>ที่มาของเคส:</b> <code>docs/epics.md</code> (Epic 1–4 · Story AC) + <code>docs/prd.md</code> §5/§8 + <code>_bmad-output/test-artifacts/case/*/ui.md</code> · คำ UI ลอกจาก <code>apps/web/src</code> (origin/develop 2026-08-18) — คัดเฉพาะข้อที่ <b>คนกดเองแล้วเห็นผลบนหน้าจอได้</b>; ข้อที่ต้องยิง API / เปิดฐานข้อมูล (JWT · verify API · audit log · trial_claim · affiliate event) <b>ไม่อยู่ในตั๋วนี้</b><br>
-  🏷️ <b>ประเภทเคส (กรองได้):</b> Happy Path (flow ปกติ) · Negative (ข้อมูล/action ผิด) · Boundary (min/max/ขอบ) · Validation (format/required/length) · Exception (API/network/server/timeout) · Permission (role ไหนทำได้) · Data (empty/duplicate/existing/non-existing)<br>
-  ⚠️ <b>นอกขอบเขต/ไม่พบใน UI:</b> Admin Console ปิดชั่วคราว (TRIPWIRE — มีเคส M1-H.1 ตรวจว่าปิดจริง) · Referral card ในโปรไฟล์ (Story 2.3) ถูก retire เป็น affiliate (#102) จึงไม่มีเคส · pre-fill ?ref (Story 1.7) ไม่พบใน UI → M1-B.12 ไว้ยืนยันกับ dev · ฟีเจอร์ MVP-2 (บัญชีพนักงาน · เอกสารกฎหมาย · QR/Omise · โปรโมชัน) ไม่อยู่ในรายงานนี้</div>
+  <div class="note-box">{META["note"]}</div>
 
   <div class="runsum">
     <h3>📊 สรุปผล Manual Test</h3>
@@ -231,7 +251,7 @@ def build():
       {kind_chips}
       <button class="clearbtn" data-clear="kind">✕</button>
     </div>
-    <div class="row"><label>Priority</label>
+{ui_row}    <div class="row"><label>Priority</label>
       <button class="fchip" data-f="prio" data-v="P0">P0</button>
       <button class="fchip" data-f="prio" data-v="P1">P1</button>
       <button class="fchip" data-f="prio" data-v="P2">P2</button>
@@ -259,14 +279,14 @@ def build():
   </div>
 
 </div>
-<footer>{TITLE} · {ui_n} UI + {e2e_n} E2E = {total} TCs · UI only (manual) · TAKRA Hub Web UAT (branch develop) · login UAT</footer>
+<footer>{TITLE} · {ui_n} UI + {e2e_n} E2E = {total} TCs · {META['footer']}</footer>
 
 '''
     out = (css + EXTRA_CSS + '</style>\n</head>\n<body>\n'
            f'<a id="hub-back-btn" href="{BACK}" title="กลับไปหน้ารวมรายงาน (Hub)" style="position:fixed;top:12px;right:14px;z-index:99999;display:inline-flex;align-items:center;gap:7px;padding:10px 18px;border-radius:999px;background:#ffffff;color:#1e3a8a;font-size:14px;font-weight:800;text-decoration:none;box-shadow:0 4px 16px rgba(0,0,0,.35);border:2px solid #1e3a8a;font-family:\'Segoe UI\',\'Sarabun\',system-ui,sans-serif">🏠 รายงานทั้งหมด</a>\n\n\n'
            f'<script id="store-data" type="application/json">\n{store}\n</script>\n'
            + header + '\n'.join(rows) + footer + js)
-    return out, dict(total=total, ui=ui_n, e2e=e2e_n, prio=counts, kind=kind_counts)
+    return out, dict(total=total, ui=ui_n, e2e=e2e_n, noui=noui_n, prio=counts, kind=kind_counts)
 
 if __name__ == '__main__':
     html_out, stats = build()
