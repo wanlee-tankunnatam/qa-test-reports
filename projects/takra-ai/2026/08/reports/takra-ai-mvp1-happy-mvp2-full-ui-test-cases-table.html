@@ -471,6 +471,14 @@ tr.featrow .ty{margin-left:3px}
   "tc-69": {
     "actual": "[2026-08-20 · AI-assisted UI check · env https://uat-live.takra.ai] — BLOCKED (รันจนจบไม่ได้)\n✅ ตรวจได้: แถบ \"ล้าสมัย (v2→v3)\" และปุ่ม \"อัปเดต snapshot\" แสดงอยู่ที่แถวสคริปต์ในฉากตาม Precondition และสถานะสคริปต์ในฉากคือ \"อนุมัติแล้ว\"\n❌ กดปุ่ม \"อัปเดต snapshot\" แล้วไม่สำเร็จ: ขึ้นข้อความ \"อัปเดต snapshot ไม่สำเร็จ — อัปเดต snapshot ได้เฉพาะสคริปต์ที่อนุมัติแล้ว (approved) เท่านั้น\"\n   สาเหตุที่น่าจะเป็น: การแก้ไขต้นฉบับใน TC-TS.2 ทำให้เวอร์ชันใหม่ (v3) กลับไปรอการอนุมัติ จึงยังดึงเข้าฉากไม่ได้ — ถ้าเป็นพฤติกรรมที่ออกแบบไว้ ก็ยังถือเป็นปัญหา UX เพราะ UI โชว์ปุ่มให้กดได้โดยไม่บอกล่วงหน้าว่าต้องอนุมัติเวอร์ชันใหม่ก่อน (ผู้ใช้รู้ก็ต่อเมื่อกดแล้วล้มเหลว) ควรขึ้นเป็นสถานะ \"รออนุมัติ v3\" หรือ disable ปุ่มพร้อมคำอธิบาย\n🚫 ตรวจต่อไม่ได้เพราะบล็อกซ้อน: จะอนุมัติ v3 ต้องเข้าหน้า \"คลังสคริปต์\" แต่หน้านี้โหลดไม่ขึ้นเป็นระยะ — เปิดแล้วค้างที่หน้าเปล่า/ตัวเลขสรุปเป็น 0 ทุกช่อง (\"รอรีวิว 0 · มีคำเสี่ยง 0 · ใช้งานในระบบ 0 · ฉบับร่าง 0\" + \"ไม่มีสคริปต์รอรีวิว — เคลียร์หมดแล้ว\") นานเกิน 40 วินาที ทั้งที่คลังมีสคริปต์ 122 รายการจริง (Studio ยังเห็นครบ)\n   หลักฐานระดับเครือข่าย: request /scripts?_rsc=… ตอบ HTTP 503 หลายครั้งติดกัน โดย UI ไม่แสดงข้อความ error ใดๆ ให้ผู้ใช้เห็น — ผู้ใช้จะเข้าใจผิดว่า \"ไม่มีสคริปต์ในระบบ\"\n   → ยังไม่ได้ตรวจ Expected ทั้ง 4 ข้อ (ข้อความ \"อัปเดต snapshot แล้ว\" · เนื้อหาในฉากเปลี่ยนเป็นเวอร์ชันล่าสุด · สถานะอนุมัติถูกรีเซ็ต · รายการ \"การอนุมัติสคริปต์\" ในส่วนตรวจก่อนไลฟ์)\nต้องรันซ้ำเมื่อ: (1) หน้าคลังสคริปต์โหลดได้เสถียร และ (2) อนุมัติ v3 ของสคริปต์ต้นฉบับแล้ว",
     "st": "block"
+  },
+  "tc-65": {
+    "actual": "[2026-08-20 · AI-assisted UI check · env https://uat-live.takra.ai · qa@takra.ai · workspace \"ทีมของ QA Tester\"]\nสคริปต์ที่ใช้ทดสอบ: \"สคริปต์ทดสอบ 18 — โปรโมชั่นสุดท้าย\" (สถานะ \"อนุมัติแล้ว\" · v1)\n✅ เปิด Studio ตาม Steps: เมนู \"แพลตฟอร์มไลฟ์\" → \"แดชบอร์ด\" → \"เริ่มไลฟ์ใหม่\" → เข้า Studio ชื่อ \"ไลฟ์ใหม่\" (ฉบับร่าง · บันทึกอัตโนมัติ) มีฉากที่ 1 พร้อมใช้\n✅ ที่แผงขวา ส่วน \"สคริปต์\" กด \"ผูกสคริปต์จากคลัง\" → หน้าต่าง \"ผูกสคริปต์เข้าฉาก\" แท็บ \"เลือกจากคลัง\" ค้นหาด้วยช่อง \"ค้นหาสคริปต์\" เจอสคริปต์ที่ต้องการ · ติ๊กเลือกแล้วตัวนับฉากเปลี่ยนเป็น \"ฉากที่ 1 · 1/3\"\n✅ ปิดหน้าต่างแล้วสคริปต์ปรากฏในรายการสคริปต์ของฉากจริง (แผงเปลี่ยนเป็น \"สคริปต์ (1)\") และชื่อสคริปต์ขึ้นบนการ์ดฉากในแถบซ้ายด้วย\n✅ กดขยายดูรายละเอียด เห็นบล็อกเนื้อหา + ข้อความกำกับ \"script จากคลังกลาง · แก้ไม่ได้ที่นี่\" ตรงตาม Expected ข้อ 2 ทุกตัวอักษร (แก้เนื้อหาในฉากไม่ได้ · ปุ่มที่มีคือ \"บันทึกเข้าคลัง\" และ \"ปลดออกจากฉาก\" เท่านั้น)\n✅ สลับไปแก้ต้นฉบับที่ฝั่งหลังบ้าน (คลังสคริปต์ → แก้ไข) แทรกข้อความ \"[แก้โดย QA 20 ส.ค. 2569 …]\" แล้วกด \"บันทึกการแก้ไข\" → ต้นฉบับขึ้นเป็น v2\n✅ กลับมาที่ Studio: เนื้อหาที่แสดงในฉากยังเป็นสำเนาเดิม ไม่มีข้อความที่เพิ่งแทรก → ไลฟ์เล่นจาก snapshot ไม่ใช่ master ตรงตาม Expected ข้อ 3\n✅ แถวสคริปต์ในฉากขึ้นแถบ \"ล้าสมัย (v1→v2)\" พร้อมปุ่ม \"อัปเดต snapshot\" (aria-label \"อัปเดต snapshot ของ สคริปต์ทดสอบ 18 — โปรโมชั่นสุดท้าย\") ตรงตาม Expected ข้อ 4\n⚠️ ข้อสังเกตนอก Expected — หน้าต่างผูกสคริปต์มีหมายเหตุท้ายกล่อง \"Studio เห็นเฉพาะ script ที่ approved · script ใหม่จากตรงนี้จะส่ง owner approve ก่อน\" · จำกัด 3 สคริปต์ต่อฉาก (ตัวนับ N/3)\n⚠️ การกด \"เริ่มไลฟ์ใหม่\" ทำให้ /live/studio เปิดเป็นโปรเจกต์ \"ไลฟ์ใหม่\" แทนโปรเจกต์เดิมที่ค้างอยู่ (ก่อนหน้านี้เปิดแล้วได้ \"E2E-FIXTURE\") — ควรตรวจว่าเป็น draft ร่วมของ workspace หรือไม่ เสี่ยงงานที่ยังไม่บันทึกหาย\n⚠️ ระหว่างทำเคสนี้ หน้า \"คลังสคริปต์\" โหลดไม่ขึ้นหลายครั้ง (ดูรายละเอียดในเคส TC-SB.2) จึงต้องเข้าหน้าแก้ไขต้นฉบับผ่าน URL ตรง — ไม่กระทบผลของเคสนี้",
+    "st": "pass"
+  },
+  "tc-66": {
+    "actual": "[2026-08-20 · AI-assisted UI check · env https://uat-live.takra.ai]\n✅ คอลัมน์ \"ใช้ในไลฟ์\" มีอยู่จริงในตารางคลังสคริปต์ (หัวตาราง \"สคริปต์ · ประเภท · ความยาว · ใช้ในไลฟ์ · อัปเดตล่าสุด\") และแสดงค่าเป็น \"ใช้ใน N ไลฟ์\" ตามจำนวนจริง — พบค่าที่ใช้งานจริงหลายแบบ เช่น \"ใช้ใน 5 ไลฟ์\" · \"ใช้ใน 4 ไลฟ์\" · \"ใช้ใน 1 ไลฟ์\" ตรงตาม Expected ข้อ 1\n✅ สคริปต์ที่ยังไม่ถูกผูกแสดงเป็น \"ยังไม่ผูกไลฟ์\" ตรงตาม Expected ข้อ 2 (เห็นในแถวของ \"QA Manual Script Verify TAKRA-586\" และ \"QA Risk Word Library Test\")\n❌ FAIL — Expected ข้อ 3 ไม่เป็นจริง: ผูกสคริปต์เดิมเข้าไลฟ์อีกรอบผ่าน Studio ตาม Steps แล้ว \"ตัวเลขไม่เพิ่มขึ้น\"\n   • \"สคริปต์ทดสอบ 18 — โปรโมชั่นสุดท้าย\" ก่อนผูก = ใช้ใน 2 ไลฟ์ → หลังผูกเข้าฉากสำเร็จและรอจนบันทึกอัตโนมัติทำงาน ยังคง = 2\n   • ทดสอบซ้ำกับ \"สคริปต์ทดสอบ 20 — สรุปปิดการขาย\" ก่อนผูก = ใช้ใน 5 ไลฟ์ → หลังผูก ยังคง = 5 (แผงในฉากขึ้น \"สคริปต์ (2)\" ยืนยันว่าผูกติดจริงทั้งคู่)\n   สาเหตุที่น่าจะเป็น: ไลฟ์ที่เปิดจาก \"เริ่มไลฟ์ใหม่\" เป็น draft ของ Studio ที่ยังไม่นับเป็น \"ไลฟ์\" — ตรวจแล้วโปรเจกต์ \"ไลฟ์ใหม่\" นี้ \"ไม่ปรากฏ\" ในเมนู \"ไลฟ์ของฉัน\" เลย\n   → ถ้าตั้งใจให้นับเฉพาะไลฟ์ที่ตั้งเวลา/บันทึกแล้ว ต้องแก้ Test Steps ของเคสนี้ให้เพิ่มขั้นตอนบันทึก/ตั้งเวลาไลฟ์ก่อน แต่ถ้าตั้งใจให้นับตั้งแต่ผูก = เป็นบั๊ก\n🚫 ตรวจไม่ได้ 1 ขั้น (Steps ข้อ 3): \"เปิดแผงรายละเอียดของสคริปต์นั้น แล้วดูค่าในช่อง 'ใช้ในไลฟ์'\" — เข้าไม่ถึงเพราะหน้า \"คลังสคริปต์\" โหลดไม่ขึ้นเป็นระยะ\n🐞 บั๊กที่เจอซ้ำ (ควรออก issue แยก · เป็นตัวบล็อกการทดสอบ): หน้า \"คลังสคริปต์\" โหลดสำเร็จประมาณ 1 ใน 3 ครั้ง — ที่เหลือค้างที่หน้าเปล่า หรือขึ้นตัวเลขสรุปเป็น 0 ทุกช่องพร้อมข้อความ \"ไม่มีสคริปต์รอรีวิว — เคลียร์หมดแล้ว\" นานเกิน 45 วินาที\n   หลักฐาน: เรียก API /scripts?limit=200 ในหน้าเดียวกันตอบ HTTP 200 พร้อมข้อมูล 34 รายการตามปกติ ขณะที่หน้าจอแสดง 0 → เป็นปัญหาฝั่งการเรนเดอร์หน้า (request /scripts?_rsc=… ตอบ 503 หลายครั้ง) และ UI ไม่แจ้ง error ใดๆ ทำให้ผู้ใช้เข้าใจผิดว่าคลังว่างเปล่า",
+    "st": "fail"
   }
 }
 </script>
@@ -501,15 +509,15 @@ tr.featrow .ty{margin-left:3px}
   <div class="runsum">
     <h3>📊 สรุปผล Manual Test</h3>
     <div class="sumchips">
-      <span class="cnt pass">PASS <b id="sum-pass">44</b></span>
-      <span class="cnt fail">FAIL <b id="sum-fail">10</b></span>
+      <span class="cnt pass">PASS <b id="sum-pass">45</b></span>
+      <span class="cnt fail">FAIL <b id="sum-fail">11</b></span>
       <span class="cnt hold">HOLD <b id="sum-hold">4</b></span>
       <span class="cnt block">BLOCKED <b id="sum-block">5</b></span>
       <span class="cnt skip">SKIP <b id="sum-skip">4</b></span>
-      <span class="cnt pending">รอเทส <b id="sum-pending">162</b></span>
+      <span class="cnt pending">รอเทส <b id="sum-pending">160</b></span>
     </div>
-    <div class="progress"><div id="sumbar" class="progressbar" style="width: 28%;"></div></div>
-    <div class="hint" id="sumpct" style="margin-top:5px">28% ทดสอบแล้ว (63/225) · ข้าม 4</div>
+    <div class="progress"><div id="sumbar" class="progressbar" style="width: 29%;"></div></div>
+    <div class="hint" id="sumpct" style="margin-top:5px">29% ทดสอบแล้ว (65/225) · ข้าม 4</div>
   </div>
 
   <div class="toolbar">
@@ -2640,7 +2648,7 @@ tr.featrow .ty{margin-left:3px}
   <td class="ctitle">ผูกสคริปต์จากคลังเข้าฉากใน Studio แล้วเล่นจากสำเนาที่แช่ไว้ <span class="ty ty-happy" title="Happy Path">✅ Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
-  <td class="status" data-uid="tc-65"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-65"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-65"></td>
 </tr>
 <tr class="detail"><td colspan="7">
@@ -2652,10 +2660,10 @@ tr.featrow .ty{margin-left:3px}
   <div class="sec"><h4>Test Data</h4><ul><li>สคริปต์ที่อนุมัติแล้ว 1 รายการ</li></ul></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>สคริปต์ถูกผูกเข้าฉากและแสดงในรายการสคริปต์ของฉาก</li><li>เมื่อขยายดู สคริปต์จากคลังมีข้อความกำกับ "script จากคลังกลาง · แก้ไม่ได้ที่นี่" (ไลฟ์เล่นจากสำเนา snapshot ไม่ใช่ master)</li><li>แก้ต้นฉบับในคลังแล้ว เนื้อหาในฉากยังเป็นสำเนาเดิม ไม่เปลี่ยนตามอัตโนมัติ</li><li>แถวสคริปต์ในฉากขึ้นแถบ "ล้าสมัย (vN→vN+1)" พร้อมปุ่ม "อัปเดต snapshot" เป็นทางอัปเดต</li><li>ที่มา: Epic 2 · Story 2.9 · FR71</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-65" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-65" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-65" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-65" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-65" data-st="block">BLOCKED</span>
@@ -2672,7 +2680,7 @@ tr.featrow .ty{margin-left:3px}
   <td class="ctitle">คลังสคริปต์แสดงจำนวนไลฟ์ที่ใช้สคริปต์นั้นอยู่ <span class="ty ty-happy" title="Happy Path">✅ Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-66"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-66"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-66"></td>
 </tr>
 <tr class="detail"><td colspan="7">
@@ -2683,11 +2691,11 @@ tr.featrow .ty{margin-left:3px}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังสคริปต์" ดูคอลัมน์ "ใช้ในไลฟ์" ของสคริปต์ที่เคยถูกผูกเข้าไลฟ์</li><li>เปิดแผงรายละเอียดของสคริปต์นั้น แล้วดูค่าในช่อง "ใช้ในไลฟ์"</li><li>ไปผูกสคริปต์เดียวกันเข้าไลฟ์อีกรอบผ่าน Studio (เมนู "แพลตฟอร์มไลฟ์" → "แดชบอร์ด" → "เริ่มไลฟ์ใหม่" → "ผูกสคริปต์จากคลัง") แล้วกลับมาดูตัวเลข</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>คอลัมน์ "ใช้ในไลฟ์" แสดง "ใช้ใน N ไลฟ์" ตามจำนวนไลฟ์ที่ผูกอยู่จริง</li><li>สคริปต์ที่ยังไม่ถูกผูกแสดงเป็น "ยังไม่ผูกไลฟ์"</li><li>หลังผูกเพิ่มอีกรอบ ตัวเลขเพิ่มขึ้นตามจริง</li><li>ที่มา: Epic 2 · Story 2.9 · FR71</li></ul></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-66" data-st="pass">PASS</span>
-    <span class="opt fail" data-uid="tc-66" data-st="fail">FAIL</span>
+    <span class="opt fail sel" data-uid="tc-66" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-66" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-66" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-66" data-st="skip">SKIP</span>
