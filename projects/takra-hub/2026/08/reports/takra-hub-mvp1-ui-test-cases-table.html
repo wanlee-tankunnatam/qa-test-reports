@@ -353,6 +353,30 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   "tc-5085": {
     "actual": "[ทดสอบ 19 ส.ค. 2569 · HUB-4GESKW2F] ❌ FAIL (ที่การแสดงผล error) ||| จำลอง API ล่มด้วยการ stub window.fetch ให้ reject เฉพาะ POST แล้วกรอกยอด 4900 (ขึ้น \"ตรงกัน ✓\") → กด \"ยืนยันการชำระเงิน\" → ไม่มี toast \"ยืนยันไม่สำเร็จ\" ตามสเปก แต่ทั้งหน้าถูกแทนที่ด้วยหน้า error boundary \"โหลดข้อมูลไม่สำเร็จ — เกิดข้อผิดพลาดในการเชื่อมต่อ อาจติดต่อ API ไม่ได้ชั่วคราว ลองใหม่อีกครั้ง\" + ปุ่ม \"ลองใหม่\" → CS เสียบริบทเคสทั้งหมด (ยอดที่กรอกไว้/โน้ต/ป้าย หายหมด ต้องเปิดเคสใหม่) ||| ที่ผ่าน: คืน API แล้วเปิดเคสเดิม สถานะยังเป็น \"รอตรวจสอบ\" ไม่เปลี่ยน และยืนยันใหม่ได้สำเร็จ ไม่มีรายการซ้ำ ||| อาการเดียวกับ M1-D.21 / M1-D.22 → น่าจะเป็น root cause เดียวกัน (error ของ server action ถูกโยนขึ้น error boundary แทนที่จะ catch มาแสดงเป็น toast)",
     "st": "fail"
+  },
+  "tc-5086": {
+    "st": "fail",
+    "actual": "ทดสอบ 20 ส.ค. 2569 · UAT · Chrome 151 / macOS (arm) · บัญชี QA (ทีมของ kachain bumrungta ครับ)\nUI ถูกต้องครบ: หัวข้อ \"ดาวน์โหลด Desktop App\" + คำอธิบายตรงตาม expected · การ์ด TAKRA Rerun ป้าย \"มีสิทธิ์\" (เขียว) · ปุ่มเริ่มต้นเป็น \"ดาวน์โหลด (macOS)\" ตรงกับ UA ของเครื่อง · ลิงก์ชี้ https://dl.takra.ai/rerun/uat/Takra-Rerun-arm64.dmg\nแต่ขั้นตอนสุดท้ายล้มเหลว: กดปุ่มแล้ว GET dl.takra.ai/rerun/uat/Takra-Rerun-arm64.dmg ตอบ HTTP 503 Service Unavailable ไม่มีไฟล์ถูกดาวน์โหลด และหน้าเว็บไม่แสดง error/toast ใด ๆ (ล้มเหลวแบบเงียบ) · ทำซ้ำได้ 3/3 ครั้ง · เกิดกับ insight/uat/Takra-Insight-arm64.dmg เช่นกัน\n=> FAIL ที่ AC1 (กดแล้วได้ไฟล์) · ดู BUG-2"
+  },
+  "tc-5087": {
+    "st": "fail",
+    "actual": "ทดสอบ 20 ส.ค. 2569 · UAT\nไม่พบการ์ดใดแสดงป้าย \"ล็อก\" หรือปุ่ม \"ปลดล็อก\" เลยบนหน้า /downloads\nบัญชีที่ใช้มีสิทธิ์ Rerun อยู่ จึงทดสอบผ่าน TAKRA Insight ที่ไม่มีสิทธิ์แทน (AC2 เดียวกัน): Insight สถานะ \"รอชำระเงิน\" · หมดอายุ 18 ก.ค. 2569 แต่การ์ดบน /downloads กลับแสดงป้าย \"มีสิทธิ์\" (เขียว) + ตัวสลับ platform + ปุ่มดาวน์โหลดที่กดได้\nขัดกับ /dashboard (รอชำระเงิน ไม่มีปุ่มดาวน์โหลด) และ /services (หมดอายุเมื่อ 18 ก.ค. 2569)\n=> FAIL ที่ AC2 · ดู BUG-1 · ควร retest ด้วยบัญชีที่ไม่มีสิทธิ์ Rerun ตาม precondition เดิมหลังแก้บั๊ก เพื่อยืนยันเส้นทาง \"ปลดล็อก → หน้าบริการ\""
+  },
+  "tc-5088": {
+    "st": "pass",
+    "actual": "ทดสอบ 20 ส.ค. 2569 · UAT · Chrome 151 / macOS\nตัวสลับแสดง macOS / Windows ตามไฟล์ที่มีจริง · กด \"Windows\" → ปุ่มเปลี่ยนเป็น \"ดาวน์โหลด (Windows)\" และลิงก์เปลี่ยนเป็น Takra-Insight-x64.exe / Takra-Rerun-x64.exe · สลับกลับ \"macOS\" ได้ถูกต้อง (กลับเป็น .dmg)\nการสลับบนการ์ดหนึ่งไม่กระทบอีกการ์ด (state แยกต่อการ์ด) ถูกต้องตาม download-card.tsx\nหมายเหตุ: ยังไม่ได้ยืนยันเงื่อนไข \"product ที่มีไฟล์เดียวไม่แสดงตัวสลับ\" เพราะ product ทั้งหมดใน UAT มี 2 platform"
+  },
+  "tc-5089": {
+    "st": "block",
+    "actual": "ทดสอบ 20 ส.ค. 2569 — BLOCKED: ไม่มีเครื่อง/เบราว์เซอร์ Windows และไม่สามารถ override User-Agent ได้จากฝั่ง client\nหน้า /downloads เป็น RSC/SSR (ข้อมูล render จากเซิร์ฟเวอร์) — ลอง override navigator.userAgent เป็น Windows NT 10.0 แล้ว re-navigate ผ่าน client router ค่าเริ่มต้นยังเป็น macOS เหมือนเดิม แสดงว่า platform detection ทำที่ฝั่งเซิร์ฟเวอร์จาก UA header\nหลักฐานสนับสนุนบางส่วน: UA macOS → ค่าเริ่มต้น macOS ถูกต้อง (AC3 ฝั่ง mac ผ่าน) และไฟล์ Windows (x64.exe) มีอยู่จริงใน manifest\nต้องการ: เครื่อง Windows จริง หรือ UA override ระดับ network/proxy"
+  },
+  "tc-5090": {
+    "st": "fail",
+    "actual": "ทดสอบ 20 ส.ค. 2569 · UAT\nTAKRA Insight หมดอายุ 18 ก.ค. 2569 — เกิน grace มากกว่า 1 เดือน ณ วันทดสอบ\n/dashboard แสดง \"หมดอายุ 18 ก.ค. 2569 · รอชำระเงิน — แนบสลิปเพื่อยืนยัน\" และไม่มีปุ่มดาวน์โหลดบนแถวนั้น (ขณะที่แถว Rerun มีปุ่ม)\n/services แสดง \"หมดอายุเมื่อ 18 ก.ค. 2569 · สั่งซื้อไว้แล้ว — โอนเงินและแนบสลิปเพื่อเปิดใช้งาน\"\nแต่ /downloads ยังแสดงการ์ด Insight ป้าย \"มีสิทธิ์\" + ปุ่มดาวน์โหลดใช้งานได้ ไม่กลับเป็น \"ล็อก\"\n=> FAIL · หน้า downloads น่าจะไม่ได้เรียก entitlement.resolve ตัวเดียวกับ dashboard/services · ดู BUG-1"
+  },
+  "tc-5091": {
+    "st": "block",
+    "actual": "ทดสอบ 20 ส.ค. 2569 — BLOCKED: จำลองตาม precondition ไม่ได้\nตรวจ Network ตลอดการโหลดหน้าและ client-side navigation แล้ว เบราว์เซอร์ไม่เคยเรียก /api/v1/downloads เลย — ข้อมูลถูกดึงฝั่งเซิร์ฟเวอร์ผ่าน RSC (GET /downloads?_rsc=...) การบล็อก request ใน DevTools จึงไม่มีผลต่อการ render\nข้อเสนอ: ปรับ precondition เป็น \"บล็อก /downloads?_rsc=*\" (จะได้ error ของ Next.js router ไม่ใช่ empty state ของหน้า) หรือใช้ fault injection ฝั่ง backend / รอช่วง API UAT ปิดปรับปรุง\nหมายเหตุเพิ่มเติม: พบ POST /monitoring ตอบ 503 ทุกครั้งที่โหลดหน้า (3 requests/โหลด) — เป็นคนละเรื่องกับเคสนี้ แต่ควรแจ้ง dev"
   }
 }
 </script>
