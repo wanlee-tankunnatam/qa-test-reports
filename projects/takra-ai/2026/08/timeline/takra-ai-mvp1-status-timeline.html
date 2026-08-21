@@ -193,6 +193,12 @@
     font-family: inherit; }
   .totop.show { display: block; }
   @media print { .qafilter, .totop { display: none !important; } }
+
+  /* ---- แผนภูมิความครอบคลุมของสคริปต์อัตโนมัติ (ตรวจสีด้วย validate_palette.js บนพื้นสว่าง ผ่านครบ) ---- */
+  .a-ui { background: #2563eb; }
+  .a-e2e { background: #c2410c; }
+  .nospec { display: inline-block; background: #fee2e2; color: var(--danger); font-size: 11.5px; font-weight: 700;
+    padding: 3px 10px; border-radius: 999px; }
 </style>
 </head>
 <body>
@@ -422,6 +428,21 @@
         <td>เขียวอยู่ — แต่ยังไม่มี nightly เดินต่อเนื่อง (Tier-2 ยังไม่ถูกตั้ง · ใบของ Berm)</td></tr>
     </tbody>
   </table></div>
+
+  <h4 style="font-size:13px;font-weight:800;margin:18px 0 2px">กราฟ — epic ไหนมีสคริปต์คลุมแล้วเท่าไร เหลือ epic ไหนยังไม่มี</h4>
+  <div class="scale">ความยาวแถบ = จำนวนเทสอัตโนมัติที่มีอยู่ในโค้ดจริง (เต็มความกว้าง = 53 เทส) · นับจาก <code>apps/web/tests</code> ของ repo takra-ai ณ 21 ส.ค. 2026</div>
+  <div class="plegend"><span><span class="k a-ui"></span>สคริปต์ UI</span><span><span class="k a-e2e"></span>สคริปต์ E2E</span><span><span class="nospec">ยังไม่มีสคริปต์</span></span></div>
+  <div class="pchart">
+      <div class="prow phead"><div>Epic</div><div>สคริปต์ที่มี</div><div class="ppct">เทส</div><div class="prest">แยกชั้น</div></div>
+      <div class="prow"><div class="pl">E1 · เข้าระบบ &amp; รากฐาน Workspace<small>19 ไฟล์ spec</small></div><div class="ptrack"><div class="pbar" style="width:77.4%" title="E1 · เข้าระบบ & รากฐาน Workspace — รวม 41 เทส (UI 30 · E2E 11)"><i class="a-ui" style="flex:30" title="สคริปต์ UI 30 เทส"></i><i class="a-e2e" style="flex:11" title="สคริปต์ E2E 11 เทส"></i></div></div><div class="ppct">41</div><div class="prest">UI 30 · E2E 11</div></div>
+      <div class="prow"><div class="pl">E2 · คลังของ Workspace<small>11 ไฟล์ spec</small></div><div class="ptrack"><div class="pbar" style="width:66.0%" title="E2 · คลังของ Workspace — รวม 35 เทส (UI 29 · E2E 6)"><i class="a-ui" style="flex:29" title="สคริปต์ UI 29 เทส"></i><i class="a-e2e" style="flex:6" title="สคริปต์ E2E 6 เทส"></i></div></div><div class="ppct">35</div><div class="prest">UI 29 · E2E 6</div></div>
+      <div class="prow"><div class="pl">E3 · สร้างไลฟ์ใน Studio<small>17 ไฟล์ spec</small></div><div class="ptrack"><div class="pbar" style="width:100.0%" title="E3 · สร้างไลฟ์ใน Studio — รวม 53 เทส (UI 43 · E2E 10)"><i class="a-ui" style="flex:43" title="สคริปต์ UI 43 เทส"></i><i class="a-e2e" style="flex:10" title="สคริปต์ E2E 10 เทส"></i></div></div><div class="ppct">53</div><div class="prest">UI 43 · E2E 10</div></div>
+      <div class="prow"><div class="pl">E4 · ออกอากาศ<small>ไม่มีไฟล์ spec เลย</small></div><div class="ptrack"><span class="nospec">ยังไม่มีสคริปต์</span></div><div class="ppct">0</div><div class="prest"><b>ทั้ง epic</b></div></div>
+      <div class="prow"><div class="pl">E5 · คอมเมนต์ + ตอบอัตโนมัติ<small>1 ไฟล์ spec</small></div><div class="ptrack"><div class="pbar" style="width:20.8%" title="E5 · คอมเมนต์ + ตอบอัตโนมัติ — รวม 11 เทส (UI 11 · E2E 0)"><i class="a-ui" style="flex:11" title="สคริปต์ UI 11 เทส"></i></div></div><div class="ppct">11</div><div class="prest">UI 11 · E2E 0</div></div>
+      <div class="prow"><div class="pl">E6 · AI ช่วยเขียน Script<small>2 ไฟล์ spec</small></div><div class="ptrack"><div class="pbar" style="width:13.2%" title="E6 · AI ช่วยเขียน Script — รวม 7 เทส (UI 4 · E2E 3)"><i class="a-ui" style="flex:4" title="สคริปต์ UI 4 เทส"></i><i class="a-e2e" style="flex:3" title="สคริปต์ E2E 3 เทส"></i></div></div><div class="ppct">7</div><div class="prest">UI 4 · E2E 3</div></div>
+      <div class="prow"><div class="pl">E7 · ความพร้อมขึ้น prod<small>ไม่มีไฟล์ spec (งาน CI/infra ไม่ใช่หน้าจอ)</small></div><div class="ptrack"><span class="nospec">ยังไม่มีสคริปต์</span></div><div class="ppct">0</div><div class="prest"><b>ทั้ง epic</b></div></div>
+  </div>
+  <p class="muted" style="font-size:12.5px">รวม <strong>147 เทส</strong> (UI 117 · E2E 30) จาก 50 ไฟล์ spec · <strong>epic ที่ยังไม่มีสคริปต์เลยคือ E4 ออกอากาศ</strong> (ต้องมี Avatar Engine จริงบน UAT ถึงจะเขียนได้) และ E7 ที่เป็นงาน CI/infra<br>ตัวเลขชุดนี้คือ<strong>เทสที่มีอยู่ในโค้ดวันนี้</strong> — คนละตัวกับ <strong>ผลรันรอบล่าสุด 122 เทส (109 pass · 13 skip)</strong> ในตารางด้านบน</p>
 
   <p><strong>หน้าที่มีสคริปต์คลุมแล้ว</strong> — <code>home-overview</code> (/home) · <code>members-1-6a</code> (/users) ·
   <code>risk-words-2-5</code> · <code>risk-words-141</code> · <code>risk-words-editor-sync-702</code> (/risk-words) ·
