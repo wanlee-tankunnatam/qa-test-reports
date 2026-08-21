@@ -20,7 +20,8 @@ qa-test-reports/
 │   └── <project>/
 │       ├── <YYYY>/<MM>/            ← ปี / เดือน ที่ออกรายงาน
 │       │   ├── reports/            ← ตาราง test cases (มีปุ่ม ☁️ เซฟผลขึ้น GitHub)
-│       │   └── summary/            ← สรุปผลการทดสอบ (static)
+│       │   ├── summary/            ← สรุปผลการทดสอบ (static)
+│       │   └── timeline/           ← แผนเดินงาน/สถานะรอบเดือน (static · ไม่ใช่ผลทดสอบ)
 │       ├── dod/mvp<N>/             ← Definition of Done checklist — แยกตาม MVP ไม่แบ่งเดือน
 │       └── archive/                ← รายงานรุ่นเก่าที่เลิกใช้แล้ว (ไม่แบ่งเดือน ไม่ลิงก์จาก hub)
 │
@@ -31,6 +32,7 @@ qa-test-reports/
 │                                       ที่อยู่นอก <YYYY>/<MM>)
 │
 └── tools/                          ← เครื่องมือที่รันในเครื่อง (ไม่ได้ deploy)
+    ├── project-paths.json          ← ทะเบียนกลาง: path repo โค้ด · Jira key/board · โฟลเดอร์รายงาน ของทุกโปรเจค
     ├── make-redirects.py           ← สร้าง redirect ของ URL เก่า
     ├── build/                      ← สคริปต์เติมเคส E2E เข้ารายงาน
     └── README.md                   ← QA dashboard (แยกขาด ไม่เกี่ยวกับเว็บนี้)
@@ -42,7 +44,7 @@ qa-test-reports/
 
 | ประเภท | จัดตาม | เพราะ |
 |---|---|---|
-| `reports/` · `summary/` | **ปี/เดือนที่ออกรายงาน** | ออกใหม่ได้เรื่อย ๆ ตามรอบทดสอบ |
+| `reports/` · `summary/` · `timeline/` | **ปี/เดือนที่ออกรายงาน** | ออกใหม่ได้เรื่อย ๆ ตามรอบทดสอบ |
 | `dod/` | **MVP** (`dod/mvp1/`, `dod/mvp2/`) | DoD ผูกกับ milestone ไม่ใช่เดือน — 1 MVP มีชุดเดียว ใช้ยาว |
 | `archive/` | ไม่จัด | ของเลิกใช้ ไม่ลิงก์จาก hub |
 
@@ -62,12 +64,13 @@ qa-test-reports/
 |---|---|
 | `project` | ชื่อโฟลเดอร์โปรเจคเป๊ะ ๆ — `takra-ai` / `takra-insight` / `takra-rerun` / `takra-hub` |
 | `N` | `0.5` `1` `2` … หรือช่วง `0.5-1` `1-2` สำหรับรายงานที่คร่อม MVP |
-| `kind` | `ui-test-cases-table` · `e2e-test-cases-table` · `full-test-cases-table` · `qa-summary` · `qa-dod-checklist` |
+| `kind` | `ui-test-cases-table` · `e2e-test-cases-table` · `full-test-cases-table` · `qa-summary` · `qa-dod-checklist` · `status-timeline` |
 | `platform` | `mac` / `windows` — ใส่เฉพาะรายงานที่แยกตาม OS |
 
 ตัวอย่าง:
 - `projects/takra-ai/2026/07/reports/takra-ai-mvp2-ui-test-cases-table.html`
 - `projects/takra-ai/dod/mvp2/takra-ai-mvp2-qa-dod-checklist.html`
+- `projects/takra-ai/2026/08/timeline/takra-ai-mvp1-2-status-timeline.html`
 
 > ⚠️ ไฟล์ตาราง test case **ต้องลงท้ายด้วย `-test-cases-table.html`** เสมอ
 > `index.html` ใช้ regex `/-test-cases-table[\w-]*\.html($|[?#])/` คัดว่าแถวไหนต้องไปดึง % มาแสดง
@@ -79,6 +82,7 @@ qa-test-reports/
 
 1. **วางไฟล์** ตามกฎตั้งชื่อข้างบน — โฟลเดอร์ที่ยังไม่มีสร้างใหม่ได้เลย
    - test case / summary → `projects/<project>/<YYYY>/<MM>/{reports,summary}/`
+   - timeline / แผนเดินงานรอบเดือน → `projects/<project>/<YYYY>/<MM>/timeline/`
    - DoD checklist → `projects/<project>/dod/mvp<N>/` (ไม่ต้องมีปี/เดือน)
 2. **ตั้ง `GH_PATH`** ในไฟล์ให้ตรงกับ path จริง — เฉพาะรายงานที่มีปุ่ม ☁️ เซฟ
    ```js
@@ -91,7 +95,8 @@ qa-test-reports/
    ```
    ใส่ค่าอื่น (เช่น `live`) hub จะ fallback ไป `rerun` เงียบ ๆ
 4. **เพิ่มแถวใน `index.html`** ในกลุ่มโปรเจคที่ถูก — URL ต้องใส่ **2 ที่**: `data-href` บน `<tr>` และ `href` บน `<a>`
-   อย่าลืมอัปเดตตัวเลข `<span class="count">N reports</span>` ของกลุ่มนั้นด้วย
+   อย่าลืมอัปเดตตัวเลข `<span class="count">N reports</span>` ของกลุ่มนั้น **และ `<span class="n">N</span>` ในเมนูซ้าย**
+   `data-type` ที่รับได้: `test` · `dod` · `summary` · `note` · `timeline` (แต่ละค่ามี chip ตัวกรอง + สี badge ของตัวเอง)
 5. **ตรวจก่อน push** — ดูหัวข้อถัดไป
 
 ---

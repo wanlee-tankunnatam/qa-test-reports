@@ -44,6 +44,19 @@ repo นี้เก็บรายงาน manual test case (UI) ของท�
 
 > ก่อนเริ่มทุกครั้ง: ยืนยันว่ากำลังทำ **โปรเจกต์ไหน** แล้วใช้ path จากแถวนั้น — อย่าเอา path ข้ามโปรเจกต์
 
+### ทะเบียนกลาง — path + Jira ของทุกโปรเจกต์ (ไม่ต้องแปะซ้ำทุกครั้ง)
+
+ค่าจริงเก็บเป็นไฟล์เดียวที่ [`tools/project-paths.json`](tools/project-paths.json) (แก้ที่นั่นที่เดียว · เครื่องมือ/สคริปต์อ่านไฟล์นี้ได้เลย)
+
+| โปรเจกต์ | repo โค้ด | Jira key | Jira board timeline | รายงานใน repo นี้ | hub |
+|---|---|---|---|---|---|
+| **takra-ai** | `/Users/ice/Documents/rf/takra-ai` | `TAKRA` | https://kitdi.atlassian.net/jira/software/projects/TAKRA/boards/1593/timeline | `projects/takra-ai/` | `?project=ai` |
+| **takra-rerun** | `/Users/ice/Documents/rf/takra-rerun` | `TAK` | https://kitdi.atlassian.net/jira/software/projects/TAK/boards/1661/timeline | `projects/takra-rerun/` | `?project=rerun` |
+| **takra-insight** | `/Users/ice/Documents/rf/takra-insight` | `TI` | https://kitdi.atlassian.net/jira/software/projects/TI/boards/1660/timeline | `projects/takra-insight/` | `?project=insight` |
+| **takra-hub** | `/Users/ice/Documents/rf/takra-hub` | `TKH` | https://kitdi.atlassian.net/jira/software/projects/TKH/boards/1733/timeline | `projects/takra-hub/` | `?project=hub` |
+
+> Jira เป็นลิงก์อ้างอิงสำหรับคน — ไม่มี API token ใน repo นี้ ถ้าต้องดึงสถานะใบงานให้ผู้ใช้ export/แปะข้อมูลมา
+
 ---
 
 ## ชั้น 3 — scope ราย task (ระบุทุกครั้ง ห้ามล้ำ)
