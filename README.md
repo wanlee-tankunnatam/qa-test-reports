@@ -75,7 +75,7 @@ qa-test-reports/
 ตัวอย่าง:
 - `projects/takra-ai/2026/07/reports/takra-ai-mvp2-ui-test-cases-table.html`
 - `projects/takra-ai/dod/mvp2/takra-ai-mvp2-qa-dod-checklist.html`
-- `projects/takra-ai/2026/08/timeline/takra-ai-mvp1-2-status-timeline.html`
+- `projects/takra-ai/2026/08/timeline/takra-ai-mvp1-status-timeline.html` · `…-mvp2-…` (แยกไฟล์ตามเฟส · path เดิม `-mvp1-2-` เหลือไว้เป็น redirect ไป MVP-1)
 
 > ⚠️ ไฟล์ตาราง test case **ต้องลงท้ายด้วย `-test-cases-table.html`** เสมอ
 > `index.html` ใช้ regex `/-test-cases-table[\w-]*\.html($|[?#])/` คัดว่าแถวไหนต้องไปดึง % มาแสดง

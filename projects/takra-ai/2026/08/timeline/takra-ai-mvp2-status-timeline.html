@@ -1,0 +1,1157 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>MVP-2 — Execution Timeline สิ้นเดือน ส.ค. 2026 · TAKRA AI</title>
+<style>
+  :root {
+    --saffron: #e8820c; --saffron-d: #c96a00; --ink: #1a1a2e; --muted: #5a6072;
+    --bg: #f7f8fb; --surface: #ffffff; --border: #e3e6ed; --ok: #16a34a; --warn: #d97706;
+    --skip: #6b7280; --accent: #2563eb; --purple: #7c3aed; --danger: #dc2626;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, "Segoe UI", "Noto Sans Thai", Tahoma, sans-serif;
+    background: var(--bg); color: var(--ink); line-height: 1.62; padding: 26px 16px; }
+  .slide { max-width: 1180px; margin: 0 auto 26px; background: var(--surface);
+    border: 1px solid var(--border); border-radius: 16px; padding: 34px 42px;
+    box-shadow: 0 4px 20px -8px rgba(26,26,46,.08); }
+  .cover { background: linear-gradient(135deg, #1a1a2e 0%, #2d2d52 100%); color: #fff; border: none; }
+  .cover h1 { font-size: 32px; font-weight: 800; letter-spacing: -.5px; }
+  .cover .sub { color: #c7cbe0; font-size: 16.5px; margin-top: 10px; max-width: 820px; }
+  .cover .chips { margin-top: 22px; display: flex; gap: 10px; flex-wrap: wrap; }
+  .cover .chip { background: rgba(232,130,12,.18); color: #ffce9e; padding: 6px 16px;
+    border-radius: 999px; font-size: 13px; font-weight: 600; }
+  .kicker { font-size: 12px; font-weight: 800; letter-spacing: 1.5px; color: var(--saffron);
+    text-transform: uppercase; margin-bottom: 6px; }
+  h2 { font-size: 22px; font-weight: 800; color: var(--ink); display: flex; align-items: center; gap: 12px; }
+  h2 .num { background: var(--saffron); color: #fff; width: 32px; height: 32px; border-radius: 9px;
+    display: grid; place-items: center; font-size: 15px; flex: none; }
+  h3 { font-size: 15px; font-weight: 700; margin: 22px 0 9px; color: var(--saffron-d); }
+  p { color: var(--muted); margin: 7px 0; font-size: 14px; }
+  .lead { font-size: 16px; color: var(--ink); }
+  .tw { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; margin: 13px 0; font-size: 13.5px; }
+  th, td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  th { background: #fafbfd; font-weight: 700; color: var(--ink); font-size: 12.5px; white-space: nowrap; }
+  td.muted { color: var(--muted); }
+  tr.weekend td { background: #fafbfd; color: var(--muted); font-style: italic; }
+  tr.milestone td { background: #fff8ed; }
+  .day { font-weight: 800; white-space: nowrap; }
+  .day small { display: block; font-weight: 500; color: var(--muted); font-size: 11.5px; }
+  .badge { display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: 11.5px; font-weight: 700; white-space: nowrap; }
+  .b-ok { background: #dcfce7; color: var(--ok); } .b-skip { background: #f1f1f3; color: var(--skip); }
+  .b-warn { background: #fef3c7; color: var(--warn); } .b-info { background: #dbeafe; color: var(--accent); }
+  .b-now { background: #ede9fe; color: var(--purple); } .b-danger { background: #fee2e2; color: var(--danger); }
+  .grid4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; margin: 18px 0; }
+  .stat { background: #fafbfd; border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; }
+  .stat .n { font-size: 29px; font-weight: 800; color: var(--saffron-d); }
+  .stat .l { font-size: 12.5px; color: var(--muted); margin-top: 2px; }
+  .note { background: #fff8ed; border: 1px solid #fde2bf; border-radius: 10px; padding: 13px 17px;
+    font-size: 13.5px; color: #7a4b00; margin: 15px 0; }
+  .ask { background: #eef4ff; border: 1px solid #c9ddff; border-radius: 10px; padding: 14px 18px;
+    font-size: 14px; color: #1e3a8a; margin: 15px 0; }
+  .warnbox { background: #fef2f2; border: 1px solid #fecaca; border-radius: 10px; padding: 14px 18px;
+    font-size: 14px; color: #991b1b; margin: 15px 0; }
+  code { background: #f1f3f8; padding: 2px 7px; border-radius: 5px; font-size: 12.5px;
+    font-family: "SF Mono", Menlo, monospace; color: var(--saffron-d); }
+  /* gantt */
+  table.gantt { font-size: 12.5px; table-layout: fixed; }
+  table.gantt th { text-align: center; font-size: 11.5px; padding: 8px 4px; }
+  table.gantt th.lane { text-align: left; width: 210px; }
+  table.gantt th.we, table.gantt td.we { background: #f4f5f9; }
+  table.gantt td { padding: 5px 4px; text-align: center; border-bottom: 1px solid var(--border); }
+  table.gantt td.lane { text-align: left; font-weight: 700; font-size: 12.5px; white-space: normal; }
+  table.gantt td.lane small { display:block; font-weight: 500; color: var(--muted); font-size: 11px; }
+  .bar { display: block; height: 22px; border-radius: 6px; line-height: 22px; font-size: 11px;
+    font-weight: 700; color: #fff; }
+  .bar-main { background: var(--saffron); }
+  .bar-cont { background: #f6d3a6; color: #8a5200; }
+  .bar-wait { background: #e8eaf1; color: var(--muted); }
+  .bar-ms   { background: var(--ok); }
+  .bar-risk { background: var(--danger); }
+  .bar-none { background: transparent; }
+  .legend { display: flex; gap: 16px; flex-wrap: wrap; margin: 12px 0 0; font-size: 12.5px; color: var(--muted); }
+  .legend span.k { display: inline-block; width: 26px; height: 12px; border-radius: 4px; vertical-align: -1px; margin-right: 6px; }
+  .ids { font-family: "SF Mono", Menlo, monospace; font-size: 11.5px; color: var(--saffron-d); line-height: 1.85; }
+  .toc { margin-top: 26px; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.16);
+    border-radius: 12px; padding: 18px 22px; }
+  .toc-h { font-size: 12px; font-weight: 800; letter-spacing: 1.2px; color: #ffce9e; text-transform: uppercase; margin-bottom: 10px; }
+  ol.toc-l { list-style: none; columns: 2; column-gap: 30px; margin: 0; }
+  ol.toc-l li { break-inside: avoid; padding: 3px 0; }
+  ol.toc-l a { color: #dfe3f2; text-decoration: none; font-size: 13.5px; }
+  ol.toc-l a:hover { color: #fff; text-decoration: underline; }
+  .toc .tn { display: inline-block; width: 22px; height: 22px; line-height: 22px; text-align: center;
+    background: rgba(232,130,12,.28); color: #ffce9e; border-radius: 6px; font-size: 11.5px; font-weight: 800; margin-right: 8px; }
+  .toc-f { margin-top: 14px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,.14);
+    font-size: 13px; color: #c7cbe0; }
+  .toc-f a { color: #ffce9e; font-weight: 700; }
+  @media (max-width: 720px) { ol.toc-l { columns: 1; } }
+  details.quiet { margin: 18px 0 4px; border-top: 1px solid var(--border); padding-top: 12px; }
+  details.quiet > summary { cursor: pointer; font-size: 13px; color: var(--muted); font-weight: 600;
+    list-style: none; padding: 4px 0; }
+  details.quiet > summary::-webkit-details-marker { display: none; }
+  details.quiet > summary::before { content: "▸ "; color: var(--muted); }
+  details.quiet[open] > summary::before { content: "▾ "; }
+  details.quiet > summary:hover { color: var(--ink); }
+  details.quiet table { font-size: 12.5px; }
+  details.quiet th, details.quiet td { padding: 7px 10px; }
+  details.quiet p { font-size: 13px; }
+  .quiet-note { background: #fafbfd; border: 1px solid var(--border); border-radius: 8px;
+    padding: 11px 15px; font-size: 12.5px; color: var(--muted); margin: 12px 0 2px; }
+  .quiet-note strong { color: var(--ink); font-weight: 600; }
+  .idlist { display:block; line-height: 2.1; font-size: 12px; }
+  a.tid { display: inline-block; font-family: "SF Mono", Menlo, monospace; font-size: 11.5px;
+    background: #fff3e2; color: var(--saffron-d); border: 1px solid #f6ddb9; border-radius: 5px;
+    padding: 1px 6px; margin: 1px 2px 1px 0; text-decoration: none; white-space: nowrap; }
+  a.tid:hover { background: var(--saffron); color: #fff; border-color: var(--saffron); }
+  tr.grp td { background: #fff8ed; font-size: 13px; }
+
+  /* ---- fixed left sidebar ---- */
+  body { padding: 0; }
+  main.page { padding: 26px 16px; max-width: none; }
+  nav.toc { position: fixed; top: 0; left: 0; bottom: 0; width: 238px; z-index: 50;
+    background: linear-gradient(160deg,#1a1a2e 0%,#252546 100%); color: #dfe3f2;
+    border: none; border-right: 1px solid rgba(255,255,255,.08); border-radius: 0;
+    padding: 20px 16px; overflow-y: auto; margin: 0; }
+  .toc-brand { font-size: 15px; font-weight: 800; color: #fff; letter-spacing: -.2px; margin-bottom: 2px; }
+  nav.toc .toc-h { font-size: 10.5px; letter-spacing: 1.4px; margin: 10px 0 8px; }
+  nav.toc ol.toc-l { columns: 1; }
+  nav.toc ol.toc-l li { padding: 1px 0; }
+  nav.toc ol.toc-l a { display: flex; align-items: flex-start; gap: 7px; font-size: 12.5px;
+    line-height: 1.45; padding: 6px 8px; border-radius: 7px; }
+  nav.toc ol.toc-l a:hover { background: rgba(255,255,255,.09); text-decoration: none; }
+  nav.toc .tn { flex: none; margin: 0; }
+  nav.toc .toc-f { font-size: 11.5px; }
+  .toc-sw { margin-top: 14px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,.14); }
+  .toc-sw a { display: block; text-align: center; background: rgba(232,130,12,.22); color: #ffce9e;
+    padding: 8px; border-radius: 8px; font-size: 12.5px; font-weight: 700; text-decoration: none; }
+  .toc-sw a:hover { background: var(--saffron); color: #fff; }
+  main.page > section, main.page > .foot { margin-left: auto; margin-right: auto; }
+  @media (max-width: 900px) {
+    nav.toc { position: static; width: auto; border-radius: 12px; margin: 12px; }
+    main.page { padding-top: 0; }
+  }
+  @media (min-width: 901px) { main.page { padding-left: 262px; } }
+  @media print { nav.toc { display: none; } main.page { padding-left: 16px; } }
+  .foot { text-align: center; color: var(--muted); font-size: 13px; padding: 18px; }
+  @media print { .slide { break-inside: avoid; box-shadow: none; } body { background: #fff; padding: 0; } }
+
+  /* ---- แผนภูมิความคืบหน้าการเทส (§6) — สีชุดสถานะ ตรวจด้วย validate_palette.js บนพื้นสว่างแล้วผ่านครบ ---- */
+  .pchart { margin: 6px 0 2px; }
+  .pchart h4 { font-size: 13px; font-weight: 800; color: var(--ink); margin: 16px 0 2px; }
+  .pchart .scale { font-size: 11.5px; color: var(--muted); margin-bottom: 9px; }
+  .plegend { display: flex; gap: 15px; flex-wrap: wrap; font-size: 12.5px; color: var(--muted); margin: 12px 0 4px; }
+  .plegend .k { display: inline-block; width: 22px; height: 11px; border-radius: 4px; vertical-align: -1px; margin-right: 6px; }
+  .prow { display: grid; grid-template-columns: 214px 1fr 46px 92px; align-items: center; gap: 10px; padding: 3px 0; }
+  .prow .pl { font-size: 12.5px; color: var(--ink); font-weight: 600; line-height: 1.35; }
+  .prow .pl small { display: block; font-weight: 500; color: var(--muted); font-size: 11px; }
+  .phead { font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); font-weight: 700; padding-bottom: 2px; }
+  .phead .ppct, .phead .prest { color: var(--muted); font-weight: 700; font-size: 10.5px; }
+  .pbar { display: flex; gap: 2px; height: 16px; }
+  .pbar i { display: block; height: 100%; border-radius: 4px; min-width: 3px;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .s-pass { background: #16a34a; }
+  .s-issue { background: #7c3aed; }
+  /* ไม่ผ่าน มีลายทแยงกำกับ — เขียว↔แดงเป็นคู่ที่คนตาบอดสีแดง-เขียวแยกไม่ออก สีอย่างเดียวจึงไม่พอ */
+  .s-fail { background-color: #dc2626;
+    background-image: repeating-linear-gradient(45deg, rgba(255,255,255,.55) 0 2px, transparent 2px 4.5px); }
+  .s-rest { background: #e3e6ed; }
+  .ppct { font-size: 12.5px; font-weight: 800; text-align: right; font-variant-numeric: tabular-nums; }
+  .prest { font-size: 11.5px; color: var(--muted); white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .prest b { color: var(--danger); font-weight: 800; }
+  @media (max-width: 760px) {
+    .prow { grid-template-columns: 1fr 46px 86px; grid-template-areas: "l l l" "b p r"; gap: 4px 8px; padding: 6px 0; }
+    .prow .pl { grid-area: l; } .prow .ptrack { grid-area: b; } .prow .ppct { grid-area: p; } .prow .prest { grid-area: r; }
+    .phead { display: none; }
+  }
+
+  /* ---- ตัวช่วยอ่านสำหรับ QA (จัดโครงใหม่ 21 ส.ค.) ---- */
+  .parthead { max-width: 1180px; margin: 34px auto 14px; padding: 0 42px; }
+  .parthead .pt { display: block; font-size: 19px; font-weight: 800; color: var(--ink); letter-spacing: -.3px; }
+  .parthead .pd { display: block; font-size: 13px; color: var(--muted); margin-top: 3px; }
+  .parthead::before { content: ""; display: block; height: 3px; width: 54px; background: var(--saffron); border-radius: 2px; margin-bottom: 10px; }
+  h2 .num { font-size: 14px; }
+  li.toc-part { font-size: 10.5px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase;
+    color: #ffce9e; margin: 14px 0 4px; padding: 0 8px; }
+  nav.toc ol.toc-l a.active { background: rgba(232,130,12,.22); color: #fff; }
+  nav.toc ol.toc-l a.active .tn { background: var(--saffron); color: #fff; }
+  .qafilter { width: 100%; margin-top: 14px; padding: 9px 10px; border-radius: 9px; cursor: pointer;
+    background: rgba(232,130,12,.16); color: #ffce9e; border: 1px solid rgba(232,130,12,.4);
+    font-family: inherit; font-size: 12.5px; font-weight: 700; }
+  .qafilter:hover { background: rgba(232,130,12,.3); color: #fff; }
+  .qafilter.on { background: var(--saffron); color: #fff; border-color: var(--saffron); }
+  body.qa-only tr[data-who="other"] { opacity: .34; }
+  body.qa-only tr[data-who="qa"] td:first-child { box-shadow: inset 3px 0 0 var(--saffron); }
+  /* อ่านง่ายขึ้น: ตัวหนังสือใหญ่ขึ้นเล็กน้อย + บรรทัดโปร่งขึ้น */
+  table { font-size: 13.8px; }
+  th, td { padding: 10px 12px; }
+  p { font-size: 14.5px; }
+  .totop { position: fixed; right: 14px; bottom: 16px; z-index: 60; display: none;
+    background: #fff; color: var(--ink); border: 1px solid var(--border); border-radius: 999px;
+    padding: 9px 15px; font-size: 12.5px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 14px rgba(26,26,46,.14);
+    font-family: inherit; }
+  .totop.show { display: block; }
+  @media print { .qafilter, .totop { display: none !important; } }
+</style>
+</head>
+<body>
+<nav class="toc">
+    <div class="toc-brand">takra-ai · MVP-2</div>
+    <div class="toc-h">สารบัญ · อ่านจากบนลงล่าง</div>
+    <ol class="toc-l">
+      <li class="toc-part">ส่วนที่ 1 · งานของ QA</li>
+      <li><a href="#qa"><span class="tn">1</span> สรุปสำหรับ QA — MVP-2 เดือนนี้ต้องทำอะไร</a></li>
+      <li><a href="#s6"><span class="tn">2</span> ใบของ QA + ผลเทสแมนนวลถึงไหนแล้ว</a></li>
+      <li><a href="#s5"><span class="tn">3</span> คิวรายวัน 21–31 ส.ค. — วันไหนทำอะไร</a></li>
+      <li><a href="#s7"><span class="tn">4</span> ใครวิ่งเส้นไหนพร้อมกัน (lane)</a></li>
+      <li class="toc-part">ส่วนที่ 2 · ทำไมงานถึงค้าง</li>
+      <li><a href="#s3"><span class="tn">5</span> งานค้างอยู่ที่ใคร — QA / Dev / คนอื่น</a></li>
+      <li><a href="#s4"><span class="tn">6</span> แต่ละ epic เหลืออะไร · ติดใบไหนอยู่</a></li>
+      <li><a href="#s0"><span class="tn">7</span> กระดาน Jira ตอนนี้ + คำว่า “เสร็จ” แปลว่าอะไร</a></li>
+      <li><a href="#s1"><span class="tn">8</span> เมนู × สิ้นเดือนนี้ต้องใช้ได้แค่ไหน</a></li>
+      <li><a href="#s2"><span class="tn">9</span> แต่ละ Epic คืออะไร (ภาษาคน)</a></li>
+      <li class="toc-part">ส่วนที่ 3 · ตัดสินใจ & ทะเบียน</li>
+      <li><a href="#s8"><span class="tn">10</span> จุดตัดสินใจที่ต้องเคาะก่อนสิ้นเดือน</a></li>
+      <li><a href="#s10"><span class="tn">11</span> สิ่งที่ปลดล็อกได้เยอะสุดถ้าทำเดือนนี้</a></li>
+      <li><a href="#s9"><span class="tn">12</span> ยืนยันว่าไม่อยู่ในเดือนนี้</a></li>
+      <li><a href="#s11"><span class="tn">13</span> ทะเบียนใบค้างของเฟสนี้ — รายใบ</a></li>
+    </ol>
+    <div class="toc-f">📌 เลขใบงานอยู่ที่ <a href="#s4">§6</a> (ย่อรายเอปิก) และ <a href="#s11">§13</a> (ทะเบียนเต็ม)</div>
+    <div class="toc-sw"><a href="takra-ai-mvp1-status-timeline.html">↔ ดูเฟส MVP-1</a></div>
+    <button class="qafilter" id="qaOnly" type="button">🧪 เน้นเฉพาะงานของ QA</button>
+  </nav>
+<main class="page">
+
+<section class="slide cover">
+  <div class="kicker" style="color:#ffce9e">Execution Timeline · 21–31 ส.ค. 2026</div>
+  <h1>takra-ai · MVP-2 — สิ้นเดือนนี้ถึงไหนแล้ว</h1>
+  <div class="sub"><strong>MVP-2</strong> · 9 epic · 47 ใบ — เฟสที่กำลังไล่ตามมา · 23 ใบยังไม่ถึงมือ QA · ของที่เทสได้ตอนนี้ติดบัญชี staff กับของที่ยังไม่ถูกสร้าง</div>
+  <div class="chips">
+    <span class="chip">9 epic · 47 ใบ</span>
+    <span class="chip">17 ใบรอ QA</span>
+    <span class="chip">23 ใบยังไม่ถึงมือ QA</span>
+    <span class="chip">จัดทำ 21 ส.ค. 2026 · QA (Ice)</span>
+    <span class="chip"><a href="takra-ai-mvp1-status-timeline.html" style="color:inherit">↔ ดูเฟส MVP-1</a></span>
+  </div>
+</section>
+
+<div class="parthead"><span class="pt">ส่วนที่ 1 · งานของ QA</span><span class="pd">สิ่งที่ Ice ต้องลงมือเอง — อ่าน 4 หัวข้อนี้ก็พอสำหรับงานประจำวัน</span></div>
+<section class="slide" id="qa">
+  <h2><span class="num">1</span>📋 สรุปสำหรับ QA — MVP-2 เดือนนี้ต้องทำอะไร</h2>
+  <p class="lead">MVP-2 <strong>ยังสร้างอยู่จริง</strong> — 23 ใบยังไม่ถึงมือ QA · ของที่ QA ทำได้ตอนนี้คือ
+  <strong>เก็บของที่ dev ส่งแล้ว</strong> กับ <strong>ปลดบัญชี staff ให้ได้</strong> เพราะมันกั้นอยู่ 2 epic เต็ม ๆ</p>
+
+  <div class="grid4">
+    <div class="stat"><div class="n">7</div><div class="l">วันทำงานที่เหลือ</div></div>
+    <div class="stat"><div class="n">17</div><div class="l">ใบ READY TO TEST ที่รอ QA</div></div>
+    <div class="stat"><div class="n">311</div><div class="l">เคสแมนนวลที่ยังไม่ได้แตะ (จาก 437)</div></div>
+    <div class="stat"><div class="n">47</div><div class="l">เคสที่เทสแล้ว<strong>ไม่ผ่าน</strong> (38 มาจาก RTMP ที่ยังไม่มีของ)</div></div>
+  </div>
+
+  <h3>▸ งานของ Ice ในเฟสนี้ — เรียงตามความด่วน</h3>
+  <div class="tw"><table>
+    <thead><tr><th>#</th><th>ทำอะไร</th><th>ใบ</th><th>เมื่อไหร่</th><th>ถ้าไม่ทำ</th></tr></thead>
+    <tbody>
+      <tr class="milestone"><td class="day">1</td>
+        <td><span class="badge b-danger">ด่วนสุด</span> <strong>ขอบัญชี platform-staff (no-2FA) จาก Ops</strong> — มี lead time</td>
+        <td><a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-526">TAKRA-526</a></td><td>วันนี้ ศ. 21</td><td>E8 อีก 11 TC + E11 ทั้ง 5 story ตายทั้งเดือน</td></tr>
+      <tr><td class="day">2</td>
+        <td><strong>เสนอ flip E16 → Done</strong> 4 ใบ (16.1 / 16.2 / 16.4 / 16.5 verify ครบแล้ว)</td>
+        <td><a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-414">TAKRA-414</a> <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-415">TAKRA-415</a> <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-417">TAKRA-417</a> <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-418">TAKRA-418</a></td><td>วันนี้ ศ. 21</td><td>E16 ค้างทั้งที่เทสจบแล้ว</td></tr>
+      <tr><td class="day">3</td>
+        <td><strong>เทส E8 ×11 TC</strong> แล้วต่อด้วย <strong>E11 ×5 story</strong> (impersonation = จุดเสี่ยงสูงสุด ต้องมี negative test ข้าม workspace)</td>
+        <td><a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-381">TAKRA-381</a> · <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-396">TAKRA-396</a>…<a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-400">TAKRA-400</a></td><td>จ. 24 – พฤ. 27</td><td>2 epic นี้ไม่มีใครยืนยันว่าใช้ได้จริง</td></tr>
+      <tr><td class="day">4</td>
+        <td><strong>ปิด manual E10 ที่ค้าง</strong> (ลบ / อัปโหลด / consent เต็มวง) — ต้องจองช่วงที่ workspace ว่าง</td>
+        <td class="muted">E10 · ฝั่ง QA</td><td>เมื่อจอง data window ได้</td><td>E10 ยังไม่มีผล manual ครบ</td></tr>
+      <tr><td class="day">5</td>
+        <td><strong>เคลียร์เคส RTMP 38 เคสที่ไม่ผ่าน</strong> — ต้องเคาะว่านับเป็น “ของยังไม่สร้าง” หรือตัดออกจากขอบเขตเดือนนี้</td>
+        <td><a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-474">TAKRA-474</a></td><td>ในที่ประชุมสัปดาห์นี้</td><td>ตัวเลข % ของ <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-474">TAKRA-474</a> ถูกกดโดยของที่ QA ทำต่อเองไม่ได้</td></tr>
+      <tr><td class="day">6</td>
+        <td><strong>เขียน/รัน E2E 8 ใบที่เหลือ</strong> ใต้ <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-487">TAKRA-487</a> (ปิดไปแล้ว 1 ใบ = Epic 11)</td>
+        <td><a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-515">TAKRA-515</a>…<a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-523">TAKRA-523</a></td><td>หลังของ dev เข้า</td><td>ชั้น E2E ของ MVP-2 ว่างทั้ง epic</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>▸ อะไรกั้น MVP-2 อยู่ — 3 อย่าง</h3>
+  <div class="tw"><table>
+    <thead><tr><th>ตัวกั้น</th><th>กั้นอะไรของ QA</th><th>ต้องไปตามใคร</th></tr></thead>
+    <tbody>
+      <tr><td><strong>บัญชี platform-staff</strong> <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-526">TAKRA-526</a></td>
+        <td>E8 อีก 11 TC · E11 ทั้ง 5 story (เข้าหน้า /ai-history และหลังบ้านไม่ได้เลย) — <strong>ปลดทีเดียวได้ 16 รายการ</strong></td>
+        <td>Ops — Ice เป็นคนขอ</td></tr>
+      <tr><td><strong>ของที่ยังไม่ถูกสร้าง</strong></td>
+        <td>RTMP 38 เคสไม่ผ่านเพราะยังไม่มีหน้าตั้งค่า (E14) · Billing รอ Hub API (E12) · tool-calling รอ Engine (E13)</td>
+        <td>Engine · Hub · ไม่ใช่ของในทีม</td></tr>
+      <tr><td><strong>dev ยังไม่ส่งของ</strong></td>
+        <td>ห้องคุมไลฟ์ 72 เคสยังเทสไม่ได้ (E9 ×6 ใบ In Progress/To Do) · E15 2 ใบ · E16.3 การแจ้งเตือน</td>
+        <td>Dev · Boat</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="ask"><strong>ประตูขึ้น prod ของ E10:</strong> <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-750">TAKRA-750</a> อัดเสียงยืนยันความยินยอม + <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-751">TAKRA-751</a> แบบฟอร์มหนังสือยินยอม ยัง In Progress —
+  ตอนนี้สิ่งที่กันลูกค้าจริงคือ<strong>จังหวะ deploy</strong> ไม่ใช่โค้ด (UAT มีคนใช้ self-service voice จริงแล้ว 8 เสียง)</div>
+
+  <p class="muted" style="font-size:13px">ผลเทส + กราฟ % ที่ <a href="#s6">§2</a> ·
+  วันไหนต้องทำอะไรที่ <a href="#s5">§3</a> · ใบไหนติดอะไรที่ <a href="#s4">§6</a> · รายชื่อใบทั้งหมดที่ <a href="#s11">§13</a></p>
+</section>
+<section class="slide" id="s6">
+  <h2><span class="num">2</span>🧪 ใบของ QA + ผลเทสแมนนวลถึงไหนแล้ว</h2>
+  <p class="lead"><strong>ใบ story อย่าง <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-52">TAKRA-52</a> ไม่ใช่ใบของ QA</strong> — assignee เป็นของ dev · QA ไม่ได้เป็นเจ้าของและไม่ใช่คนปิด · งานของ QA มีใบของตัวเองอยู่คนละต้นไม้</p>
+  <div class="note"><strong>โครงใบฝั่ง QA ของเฟสนี้</strong> (assignee = Wanlee T · Ice):<br>· <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-474">TAKRA-474</a> — Epic “ทดสอบ Manual MVP 2”<br>· <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-487">TAKRA-487</a> — Epic “QA - MVP 2 +” → 9 story <code>[Test] Epic 8-16</code> → subtask 3 ชั้น (Plan Test / Test Case / E2E)</div>
+<h3>▸ ใบ QA ที่ยังไม่เสร็จ — งานของ Ice จริงๆ</h3>
+  <div class="tw">
+  <table>
+    <thead><tr><th style="width:112px">ใบ</th><th>เรื่อง</th><th style="width:110px">สถานะ</th><th style="width:150px">หมายเหตุ</th></tr></thead>
+    <tbody>
+      <tr class="grp"><td colspan="4"><strong>ชั้น E2E ราย epic</strong> — subtask ใต้ <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-487">TAKRA-487</a> · Plan Test + Test Case ปิดครบ 9/9 แล้ว เหลือชั้นนี้</td></tr>
+      <tr><td><a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-515">TAKRA-515</a></td><td>[MVP2][E2E] — Epic 8: AIEventLog</td><td><span class="badge b-skip">To Do</span></td><td class="muted">ยังไม่ได้เขียน/รัน</td></tr>
+      <tr><td><a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-516">TAKRA-516</a></td><td>[MVP2][E2E] — Epic 9: Live Monitoring &amp; Recap</td><td><span class="badge b-skip">To Do</span></td><td class="muted">ยังไม่ได้เขียน/รัน</td></tr>
+      <tr><td><a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-517">TAKRA-517</a></td><td>[MVP2][E2E] — Epic 10: Avatar &amp; Voice</td><td><span class="badge b-skip">To Do</span></td><td class="muted">ยังไม่ได้เขียน/รัน</td></tr>
+      <tr><td><a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-518">TAKRA-518</a></td><td>[MVP2][E2E] — Epic 11: Ops &amp; Support</td><td><span class="badge b-ok">Done</span></td><td class="muted">ทำแล้ว</td></tr>
+      <tr><td><a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-519">TAKRA-519</a></td><td>[MVP2][E2E] — Epic 12: Billing</td><td><span class="badge b-skip">To Do</span></td><td class="muted">ยังไม่ได้เขียน/รัน</td></tr>
+      <tr><td><a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-520">TAKRA-520</a></td><td>[MVP2][E2E] — Epic 13: Auto-Reply</td><td><span class="badge b-skip">To Do</span></td><td class="muted">ยังไม่ได้เขียน/รัน</td></tr>
+      <tr><td><a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-521">TAKRA-521</a></td><td>[MVP2][E2E] — Epic 14: RTMP</td><td><span class="badge b-skip">To Do</span></td><td class="muted">ยังไม่ได้เขียน/รัน</td></tr>
+      <tr><td><a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-522">TAKRA-522</a></td><td>[MVP2][E2E] — Epic 15: Studio riders</td><td><span class="badge b-skip">To Do</span></td><td class="muted">ยังไม่ได้เขียน/รัน</td></tr>
+      <tr><td><a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-523">TAKRA-523</a></td><td>[MVP2][E2E] — Epic 16: Settings &amp; IA</td><td><span class="badge b-skip">To Do</span></td><td class="muted">ยังไม่ได้เขียน/รัน</td></tr>
+      <tr class="grp"><td colspan="4"><strong>ใบเดี่ยว</strong></td></tr>
+      
+      
+      
+      
+      <tr><td><a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-760">TAKRA-760</a></td><td>UAT /products/new: ปุ่ม &quot;เพิ่มสินค้า&quot; บนฟอร์มว่าง enabled แต่กดแล้วเงียบ (ไม่ม</td><td><span class="badge b-skip">To Do</span></td><td class="muted">Wuttichai W (No)</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="warnbox">
+    <strong>สองอย่างที่ผมเคยเขียนผิดในเอกสารนี้ และแก้แล้ว:</strong>
+    <br>· “บัญชี platform-staff — ไม่มีใบ” ⇒ <strong>มีใบอยู่แล้ว <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-526">TAKRA-526</a></strong> (ขอ test accounts 4 role no-2FA · To Do · เป็นใบของ Ice เอง)
+    <br>· “ปุ่มเพิ่มสินค้า — ยังไม่เปิดตั๋ว” ⇒ <strong>เปิดแล้ว <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-760">TAKRA-760</a></strong> อยู่ใต้ <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-474">TAKRA-474</a> · assign ให้ No แล้ว
+  </div>
+
+
+
+  <h3>▸ ใบ epic ทดสอบแมนนวลของ QA ตอนนี้ถึงไหน — <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-474">TAKRA-474</a></h3>
+  <p>ตารางข้างล่างคือ<strong>ผลเทสแมนนวลจริง</strong>
+  ที่บันทึกไว้ในรายงานเคสของ QA (<a href="https://wanlee-tankunnatam.github.io/qa-test-reports/?project=ai">qa-test-reports</a>) นับจากบล็อก <code>store-data</code> ของแต่ละไฟล์
+  ด้วยสูตรเดียวกับแถบ Status บนหน้า hub — <em>เทสแล้ว = ผ่าน + ไม่ผ่าน + พัก + บล็อก หารด้วยเคสที่ต้องเทส (ไม่นับเคสข้าม)</em> · ข้อมูล ณ 21 ส.ค. 2026</p>
+
+  <div class="tw">
+  <table>
+    <thead><tr><th>ใบ</th><th>ชุดเคสที่ใช้ตอบ</th><th>เคส</th><th>เทสแล้ว</th><th>ผ่าน</th><th>ไม่ผ่าน</th><th>พัก / บล็อก</th><th>ยังไม่เทส</th></tr></thead>
+    <tbody>
+      
+      
+      <tr class="milestone"><td class="day"><a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-474">TAKRA-474</a><small>ทดสอบ Manual MVP 2</small></td>
+        <td><a href="https://wanlee-tankunnatam.github.io/qa-test-reports/projects/takra-ai/2026/08/reports/takra-ai-mvp1-happy-mvp2-full-ui-test-cases-table.html">ชุด ส.ค. — MVP-2 ครบ 7 ประเภท</a></td>
+        <td>437</td><td><strong>126/437 · 29%</strong></td><td>79</td><td><span class="badge b-danger">47</span></td><td>0 / 0</td><td>311</td></tr>
+      <tr><td class="muted">↳ ชุดก่อนหน้า</td>
+        <td><a href="https://wanlee-tankunnatam.github.io/qa-test-reports/projects/takra-ai/2026/07/reports/takra-ai-mvp2-ui-test-cases-table.html">ชุด ก.ค. — MVP-2 UI 11 ขั้น</a></td>
+        <td>210</td><td><span class="badge b-skip">0/208 · 0%</span></td><td>0</td><td>0</td><td>0 / 0</td><td>208</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+
+  <h3>▸ กราฟ % — อะไรเทสไปแล้วเท่าไร เหลืออะไรอยู่</h3>
+  <p>ความยาวแถบ = <strong>จำนวนเคสที่ต้องเทส</strong> (ไม่นับเคสข้าม) · สีในแถบ = ผลที่บันทึกไว้จริง · ตัวเลขขวาสุดคือของที่<strong>ยังไม่ได้แตะ</strong> · ข้อมูลชุด ส.ค. 2026 ณ 21 ส.ค.</p>
+  <div class="plegend"><span><span class="k s-pass"></span>ผ่าน</span><span><span class="k s-fail"></span>ไม่ผ่าน (มีลายทแยง)</span><span><span class="k s-issue"></span>พัก / ติดบล็อก</span><span><span class="k s-rest"></span>ยังไม่เทส</span></div>
+  <div class="pchart">
+    <h4>ภาพรวมของใบนี้</h4>
+    <div class="scale">มาตราส่วน: เต็มความกว้าง = 437 เคส (ขนาดของชุด MVP-2 · ใช้สเกลเดียวกับไฟล์อีกเฟสเพื่อเทียบกันได้)</div>
+      <div class="prow phead"><div>กลุ่ม</div><div>สัดส่วนผลเทส</div><div class="ppct">เทสแล้ว</div><div class="prest">ยังไม่เทส</div></div>
+      <div class="prow"><div class="pl">TAKRA-474 · MVP-2<small>ทดสอบ Manual MVP 2 · 437 เคสที่ต้องเทส</small></div><div class="ptrack"><div class="pbar" style="width:100.0%" title="TAKRA-474 · MVP-2 — ต้องเทส 437 เคส · ผ่าน 79 · ไม่ผ่าน 47 · พัก/บล็อก 0 · ยังไม่เทส 311"><i class="s-pass" style="flex:79" title="ผ่าน 79 เคส (18%)"></i><i class="s-fail" style="flex:47" title="ไม่ผ่าน 47 เคส (11%)"></i><i class="s-rest" style="flex:311" title="ยังไม่เทส 311 เคส (71%)"></i></div></div><div class="ppct">29%</div><div class="prest">เหลือ <b>311</b></div></div>
+  </div>
+  <div class="pchart">
+    <h4>ราย epic — MVP-2 (ใต้ TAKRA-474)</h4>
+    <div class="scale">มาตราส่วน: เต็มความกว้าง = 93 เคส (epic ที่ใหญ่ที่สุดในชุด)</div>
+      <div class="prow phead"><div>กลุ่ม</div><div>สัดส่วนผลเทส</div><div class="ppct">เทสแล้ว</div><div class="prest">ยังไม่เทส</div></div>
+      <div class="prow"><div class="pl">1 · คลัง Avatar / Voice self-service<small>93 เคสที่ต้องเทส</small></div><div class="ptrack"><div class="pbar" style="width:100.0%" title="1 · คลัง Avatar / Voice self-service — ต้องเทส 93 เคส · ผ่าน 38 · ไม่ผ่าน 0 · พัก/บล็อก 0 · ยังไม่เทส 55"><i class="s-pass" style="flex:38" title="ผ่าน 38 เคส (41%)"></i><i class="s-rest" style="flex:55" title="ยังไม่เทส 55 เคส (59%)"></i></div></div><div class="ppct">41%</div><div class="prest">เหลือ <b>55</b></div></div>
+      <div class="prow"><div class="pl">2 · Studio &amp; Live-Creation riders<small>74 เคสที่ต้องเทส</small></div><div class="ptrack"><div class="pbar" style="width:79.6%" title="2 · Studio & Live-Creation riders — ต้องเทส 74 เคส · ผ่าน 30 · ไม่ผ่าน 9 · พัก/บล็อก 0 · ยังไม่เทส 35"><i class="s-pass" style="flex:30" title="ผ่าน 30 เคส (41%)"></i><i class="s-fail" style="flex:9" title="ไม่ผ่าน 9 เคส (12%)"></i><i class="s-rest" style="flex:35" title="ยังไม่เทส 35 เคส (47%)"></i></div></div><div class="ppct">53%</div><div class="prest">เหลือ <b>35</b></div></div>
+      <div class="prow"><div class="pl">3 · Multi-Platform RTMP<small>50 เคสที่ต้องเทส</small></div><div class="ptrack"><div class="pbar" style="width:53.8%" title="3 · Multi-Platform RTMP — ต้องเทส 50 เคส · ผ่าน 2 · ไม่ผ่าน 38 · พัก/บล็อก 0 · ยังไม่เทส 10"><i class="s-pass" style="flex:2" title="ผ่าน 2 เคส (4%)"></i><i class="s-fail" style="flex:38" title="ไม่ผ่าน 38 เคส (76%)"></i><i class="s-rest" style="flex:10" title="ยังไม่เทส 10 เคส (20%)"></i></div></div><div class="ppct">80%</div><div class="prest">เหลือ 10</div></div>
+      <div class="prow"><div class="pl">4 · ห้องคุมไลฟ์ · คนดู · Recap<small>72 เคสที่ต้องเทส</small></div><div class="ptrack"><div class="pbar" style="width:77.4%" title="4 · ห้องคุมไลฟ์ · คนดู · Recap — ต้องเทส 72 เคส · ผ่าน 0 · ไม่ผ่าน 0 · พัก/บล็อก 0 · ยังไม่เทส 72"><i class="s-rest" style="flex:72" title="ยังไม่เทส 72 เคส (100%)"></i></div></div><div class="ppct">0%</div><div class="prest">เหลือ <b>72</b></div></div>
+      <div class="prow"><div class="pl">5 · AIEventLog<small>40 เคสที่ต้องเทส</small></div><div class="ptrack"><div class="pbar" style="width:43.0%" title="5 · AIEventLog — ต้องเทส 40 เคส · ผ่าน 2 · ไม่ผ่าน 0 · พัก/บล็อก 0 · ยังไม่เทส 38"><i class="s-pass" style="flex:2" title="ผ่าน 2 เคส (5%)"></i><i class="s-rest" style="flex:38" title="ยังไม่เทส 38 เคส (95%)"></i></div></div><div class="ppct">5%</div><div class="prest">เหลือ <b>38</b></div></div>
+      <div class="prow"><div class="pl">6 · Billing / Usage<small>37 เคสที่ต้องเทส</small></div><div class="ptrack"><div class="pbar" style="width:39.8%" title="6 · Billing / Usage — ต้องเทส 37 เคส · ผ่าน 1 · ไม่ผ่าน 0 · พัก/บล็อก 0 · ยังไม่เทส 36"><i class="s-pass" style="flex:1" title="ผ่าน 1 เคส (3%)"></i><i class="s-rest" style="flex:36" title="ยังไม่เทส 36 เคส (97%)"></i></div></div><div class="ppct">3%</div><div class="prest">เหลือ <b>36</b></div></div>
+      <div class="prow"><div class="pl">7 · Settings &amp; Account IA<small>64 เคสที่ต้องเทส</small></div><div class="ptrack"><div class="pbar" style="width:68.8%" title="7 · Settings & Account IA — ต้องเทส 64 เคส · ผ่าน 6 · ไม่ผ่าน 0 · พัก/บล็อก 0 · ยังไม่เทส 58"><i class="s-pass" style="flex:6" title="ผ่าน 6 เคส (9%)"></i><i class="s-rest" style="flex:58" title="ยังไม่เทส 58 เคส (91%)"></i></div></div><div class="ppct">9%</div><div class="prest">เหลือ <b>58</b></div></div>
+      <div class="prow"><div class="pl">Full E2E Flow<small>7 เคสที่ต้องเทส</small></div><div class="ptrack"><div class="pbar" style="width:7.5%" title="Full E2E Flow — ต้องเทส 7 เคส · ผ่าน 0 · ไม่ผ่าน 0 · พัก/บล็อก 0 · ยังไม่เทส 7"><i class="s-rest" style="flex:7" title="ยังไม่เทส 7 เคส (100%)"></i></div></div><div class="ppct">0%</div><div class="prest">เหลือ 7</div></div>
+  </div>
+  <p class="muted" style="font-size:12.5px">อ่านกราฟนี้ยังไง: แถบที่<strong>เทาเกือบทั้งเส้น</strong> = ยังไม่เริ่มเทส (งานที่เหลือจริง) · แถบที่<strong>แดงเป็นก้อน</strong> = เทสแล้วแต่ของไม่ผ่าน (งานที่ต้องส่งกลับ dev) · แถบที่<strong>เขียวยาว</strong> = ปิดได้แล้ว เหลือแค่ไล่ปิดใบใน Jira<br>ตัวเลขดิบทั้งหมดอยู่ในตารางราย epic ด้านล่าง</p>
+
+  <div class="warnbox"><strong>อย่าเอาเลข 2 ชุดมาปนกัน</strong> — <a href="#s0">§7</a> ที่เขียนว่า <code>122 suite · 0 fail</code> คือ <strong>เทสอัตโนมัติของ MVP-1</strong> ส่วนตารางนี้คือ <strong>เทสแมนนวลของ MVP-2 บน UAT</strong> ซึ่งมี <strong>ไม่ผ่าน 47 เคส</strong> และ <strong>ยังไม่ได้แตะอีก 311 เคส</strong> — สองชุดนี้คนละเรื่องกัน</div>
+
+  <p><strong>ของเสียกองอยู่ที่ไหน (ชุด ส.ค.)</strong></p>
+    <p>· <strong>MVP-2 · RTMP หลายแพลตฟอร์ม — ไม่ผ่าน 38 จาก 50 เคส</strong> เหตุเดียวกันหมด: <em>ยังไม่มีหน้าตั้งค่าปลายทาง RTMP ในระบบเลย</em>
+  (ไล่ครบทั้ง /settings แล้ว) — คือของที่ยังไม่ถึงมือ QA ตาม Epic 14 <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-561">TAKRA-561</a>
+  <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-562">TAKRA-562</a> <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-563">TAKRA-563</a> ⇒ นับเป็น “ยังไม่ได้สร้าง” ไม่ใช่ “บั๊ก 38 ใบ”<br>· <strong>MVP-2 · Studio riders — ไม่ผ่าน 9</strong> แยกเป็น เป้ารายได้/ออเดอร์ 3 เคส (ปุ่ม “ตั้งรอบไลฟ์” พาไป Studio ไม่ใช่ฟอร์ม)
+  และร่างโปรเจกต์ 6 เคส (ร่างไม่โผล่ใน “โปรเจกต์ของฉัน” · เก็บได้ร่างเดียวต่อ workspace) — ผูกกับ Epic 15 <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-564">TAKRA-564</a><br>· <strong>ยังไม่แตะเลย 311 เคสฝั่ง MVP-2</strong> — ก้อนใหญ่สุดคือห้องคุมไลฟ์/คนดู/Recap 72 เคส · Settings &amp; IA 58 · AIEventLog 38 · Billing 36</p>
+
+  <details class="quiet">
+    <summary>ผลราย epic ของชุด ส.ค. ทั้ง 8 กลุ่ม (กดเพื่อดู)</summary>
+    <div class="tw">
+    <table>
+      <thead><tr><th>เฟส</th><th>ขั้น / epic</th><th>เคส</th><th>ผ่าน</th><th>ไม่ผ่าน</th><th>พัก</th><th>บล็อก</th><th>ข้าม</th><th>ยังไม่เทส</th></tr></thead>
+      <tbody>
+        
+        
+        
+        
+        
+        
+        
+        
+        <tr><td>MVP-2</td><td>1 · คลัง Avatar / Voice self-service</td><td>93</td><td>38</td><td>0</td><td>0</td><td>0</td><td>0</td><td>55</td></tr>
+        <tr><td>MVP-2</td><td>2 · Studio &amp; Live-Creation riders</td><td>74</td><td>30</td><td>9</td><td>0</td><td>0</td><td>0</td><td>35</td></tr>
+        <tr><td>MVP-2</td><td>3 · Multi-Platform RTMP</td><td>50</td><td>2</td><td>38</td><td>0</td><td>0</td><td>0</td><td>10</td></tr>
+        <tr><td>MVP-2</td><td>4 · ห้องคุมไลฟ์ · คนดู · Post-Live Recap</td><td>72</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>72</td></tr>
+        <tr><td>MVP-2</td><td>5 · AIEventLog</td><td>40</td><td>2</td><td>0</td><td>0</td><td>0</td><td>0</td><td>38</td></tr>
+        <tr><td>MVP-2</td><td>6 · Billing / Usage consumer-side</td><td>37</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>36</td></tr>
+        <tr><td>MVP-2</td><td>7 · Settings &amp; Account IA</td><td>64</td><td>6</td><td>0</td><td>0</td><td>0</td><td>0</td><td>58</td></tr>
+        <tr><td>MVP-2</td><td>Full E2E Flow</td><td>7</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>7</td></tr>
+        <tr class="grp"><td colspan="9">MVP-2 รวม 437 เคส · เทสแล้ว 126/437 (29%) · ผ่าน 79 · ไม่ผ่าน 47 · ยังไม่เทส 311</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="quiet-note">ผลชุด ส.ค. บันทึกไว้ 19–20 ส.ค. 2026 (กำกับในช่อง Actual ของแต่ละเคส) · ตัวเลขเปลี่ยนได้ทุกครั้งที่มีคนกดเซฟผลเพิ่ม — ดูค่าล่าสุดที่ <a href="https://wanlee-tankunnatam.github.io/qa-test-reports/?project=ai">คอลัมน์ Status ในหน้า hub</a></div>
+  </details>
+
+  <div class="ask"><strong>สิ่งที่ 2 ใบนี้ต้องการจากที่ประชุม:</strong> เคาะว่า “ไม่ผ่าน 38 เคสของ RTMP” จะถูกนับเป็น <em>ของยังไม่สร้าง</em> (ปิดใบเทสไม่ได้จนกว่า Epic 14 จะส่ง)
+  หรือให้ QA ตัดออกจากขอบเขตเดือนนี้ไปเลย — ตอนนี้มันกดตัวเลขความคืบหน้าของ <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-474">TAKRA-474</a> อยู่ทั้งที่ไม่ใช่ของที่ QA ทำต่อได้เอง</div>
+
+  <h3>▸ ใบ dev ที่ QA ต้องไปเทส — ไม่ใช่ใบของ QA</h3>
+  <p><strong>17 ใบ</strong> ที่อยู่สถานะ READY TO TEST คือ <strong>ของที่ต้องเทส</strong> ไม่ใช่ใบที่ QA ถือ · QA ทำได้แค่ <strong>เทสแล้วบันทึกผล + เสนอ flip</strong> ส่วนการปิดใบเป็นของเจ้าของใบหรือ PM<br><span class="muted">รายชื่อทุกใบ + สถานะ ดูที่ <a href="#s11">§13 ทะเบียนใบค้างทั้งหมด</a></span></p>
+</section>
+<section class="slide" id="s5">
+  <h2><span class="num">3</span>📅 คิวรายวัน 21–31 ส.ค. — วันไหนทำอะไร</h2>
+  <p class="lead"><strong>แถวที่ติด <span class="badge b-skip">ไม่ใช่ QA</span> = งานของคนอื่น</strong> — อยู่ในตารางไว้ให้เห็นว่าอะไรกั้นอะไร ไม่ใช่งานที่ Ice ลงมือ · สิ่งที่ QA ทำเองมีแค่ 5 อย่าง: ขอบัญชี staff · เทส E8/E11 เมื่อได้บัญชี · manual E10 ที่ค้าง · รัน release gate · ปิดใบตาม <a href="#s6">§2</a></p>
+  <div class="tw">
+  <table>
+    <thead><tr><th>วัน</th><th>ต้องเกิดอะไร</th><th>ใบงาน</th><th>เจ้าของ</th><th>ถ้าไม่เกิดวันนี้</th></tr></thead>
+    <tbody>
+      <tr data-who="qa" class="milestone"><td class="day" rowspan="2">ศ. 21 ส.ค.<small>วันนี้</small></td>
+        
+        <td><span class="badge b-danger">ด่วนสุด</span> ส่งคำขอ <strong>บัญชี platform-staff (no-2FA)</strong> ให้ Ops — มี lead time ต้องยิงวันนี้</td>
+        <td class="muted">—</td><td>Ice → Ops</td>
+        <td>E8 ×11 TC + E11 ×5 story ตายทั้งเดือน</td>
+      </tr>
+      <tr data-who="qa" class="milestone">
+        <td>เสนอ flip <strong>E16 → Done</strong> (16.1 / 16.2 / 16.4 / 16.5 verify ครบแล้ว)</td>
+        <td>TAKRA-414/415/417/418</td><td>Ice</td>
+        <td class="muted">—</td>
+      </tr>
+      <tr data-who="qa"><td class="day" rowspan="2">จ. 24 ส.ค.</td>
+        <td>ได้บัญชี staff → เริ่มยิง <strong>E8 ×11 TC</strong> ทันที</td>
+        <td>TAKRA-381</td><td>Ice</td><td>E8 ปิด epic ไม่ได้</td>
+      </tr>
+      <tr data-who="other">
+        <td>dev เริ่ม <strong>16.3 Notifications</strong> (SES ปลดล็อกแล้ว 20 ส.ค. · TAKRA-756 Done)</td>
+        <td>TAKRA-416</td><td class="muted">Boat <span class="badge b-skip">ไม่ใช่ QA</span></td><td>E16 ไม่ครบ epic</td>
+      </tr>
+      <tr data-who="qa"><td class="day" rowspan="3">อ. 25 ส.ค.</td>
+        
+        <td>E8 ×11 TC จบ → <strong>เสนอ flip E8 ทั้ง epic</strong></td>
+        <td>TAKRA-379-383 · 536 · 537</td><td>Ice</td><td class="muted">—</td>
+      </tr>
+      <tr data-who="qa">
+        <td>เริ่ม verify <strong>E11 ×5 story</strong> (Ops tool · Support dashboard · impersonation)</td>
+        <td>TAKRA-396-400</td><td>Ice + Tay/Dear</td><td>T0 backbone ไม่ครบ</td>
+      </tr>
+      <tr data-who="other">
+        <td>dev ปิด <strong>E15</strong> (inline clone Avatar + live targets revive)</td>
+        <td>TAKRA-412 / 413</td><td class="muted">Boat <span class="badge b-skip">ไม่ใช่ QA</span></td><td>E15 ค้างข้ามเดือน</td>
+      </tr>
+      <tr data-who="qa" class="milestone"><td class="day">พ. 26 ส.ค.</td>
+        <td>E11 verify ต่อ — <strong>impersonation = จุดเสี่ยงสูงสุด</strong> ต้องมี negative test ข้าม workspace</td>
+        <td>TAKRA-398</td><td>Ice + Berm</td><td class="muted">—</td>
+      </tr>
+      <tr data-who="qa" class="milestone"><td class="day">พฤ. 27 ส.ค.</td>
+        <td>E11 verify จบ → เสนอ flip</td>
+        <td>TAKRA-396-400</td><td>Ice</td><td class="muted">—</td>
+      </tr>
+      <tr data-who="other" class="milestone"><td class="day">ศ. 28 ส.ค.</td>
+        <td>ตัดสินใจ <strong>E10 Voice self-service</strong>: ปล่อยหรือไม่ปล่อย (ดู <a href="#s8">§10 จุดตัดสินใจ</a>)</td>
+        <td>TAKRA-750 / 751</td><td class="muted">BA + Boat <span class="badge b-skip">ไม่ใช่ QA</span></td><td class="muted">—</td>
+      </tr>
+      <tr class="weekend"><td class="day">ส–อา 29–30</td>
+        
+        <td colspan="4">เฝ้า nightly + เฝ้า prod หลัง deploy (soak รอบแรกของ pilot)</td>
+      </tr>
+      <tr data-who="qa" class="milestone"><td class="day">จ. 31 ส.ค.<small>สิ้นเดือน</small></td>
+        
+        <td>ปิดเดือน — <strong>sign-off release gate</strong> + สรุป MVP-2 QA DoD v1.2</td>
+        <td class="muted">—</td><td>Ice + P</td><td class="muted">—</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+<section class="slide" id="s7">
+  <h2><span class="num">4</span>🛤️ ใครวิ่งเส้นไหนพร้อมกัน (lane)</h2>
+  <div class="tw">
+  <table class="gantt">
+    <thead>
+      <tr>
+        <th class="lane">Track</th>
+        <th>ศ.<br>21</th><th class="we">ส.<br>22</th><th class="we">อา.<br>23</th>
+        <th>จ.<br>24</th><th>อ.<br>25</th><th>พ.<br>26</th><th>พฤ.<br>27</th><th>ศ.<br>28</th>
+        <th class="we">ส.<br>29</th><th class="we">อา.<br>30</th><th>จ.<br>31</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+      
+      
+      <tr data-who="qa">
+        <td class="lane">E8 verify<small>Ice · รอบัญชี staff</small></td>
+        <td><span class="bar bar-wait">ขอบัญชี</span></td>
+        <td class="we"></td><td class="we"></td>
+        <td><span class="bar bar-main">11 TC</span></td>
+        <td><span class="bar bar-ms">flip</span></td>
+        <td></td><td></td><td></td>
+        <td class="we"></td><td class="we"></td><td></td>
+      </tr>
+      <tr data-who="qa">
+        <td class="lane">E11 verify<small>Ice + Tay/Dear</small></td>
+        <td></td><td class="we"></td><td class="we"></td><td></td>
+        <td><span class="bar bar-main">Ops+Support</span></td>
+        <td><span class="bar bar-main">imperson.</span></td>
+        <td><span class="bar bar-ms">flip</span></td>
+        <td></td><td class="we"></td><td class="we"></td><td></td>
+      </tr>
+      <tr data-who="other">
+        <td class="lane">E16.3 Notifications<small>ไม่ใช่ QA · Boat · TAKRA-416</small></td>
+        <td></td><td class="we"></td><td class="we"></td>
+        <td><span class="bar bar-main">dev</span></td><td><span class="bar bar-main">dev</span></td>
+        <td><span class="bar bar-main">dev</span></td><td><span class="bar bar-main">dev</span></td>
+        <td><span class="bar bar-cont">RTT</span></td>
+        <td class="we"></td><td class="we"></td>
+        <td><span class="bar bar-wait">verify</span></td>
+      </tr>
+      <tr data-who="other">
+        <td class="lane">E15 riders<small>ไม่ใช่ QA · Boat · TAKRA-412/413</small></td>
+        <td><span class="bar bar-cont"></span></td>
+        <td class="we"></td><td class="we"></td>
+        <td><span class="bar bar-cont"></span></td>
+        <td><span class="bar bar-main">จบ dev</span></td>
+        <td><span class="bar bar-wait">verify</span></td>
+        <td><span class="bar bar-wait"></span></td>
+        <td></td><td class="we"></td><td class="we"></td><td></td>
+      </tr>
+      <tr data-who="other">
+        <td class="lane">E10 consent gate<small>ไม่ใช่ QA · Boat + BA · TAKRA-750/751</small></td>
+        <td><span class="bar bar-cont"></span></td>
+        <td class="we"></td><td class="we"></td>
+        <td><span class="bar bar-cont"></span></td><td><span class="bar bar-cont"></span></td>
+        <td><span class="bar bar-cont"></span></td><td><span class="bar bar-cont"></span></td>
+        <td><span class="bar bar-risk">ตัดสินใจ</span></td>
+        <td class="we"></td><td class="we"></td><td></td>
+      </tr>
+      <tr data-who="other">
+        <td class="lane">E9 Live Console<small>ไม่ใช่ QA · Boat · 9.0 / 9.3-9.7</small></td>
+        <td><span class="bar bar-cont"></span></td>
+        <td class="we"></td><td class="we"></td>
+        <td><span class="bar bar-cont"></span></td><td><span class="bar bar-cont"></span></td>
+        <td><span class="bar bar-cont"></span></td><td><span class="bar bar-cont"></span></td>
+        <td><span class="bar bar-cont"></span></td>
+        <td class="we"></td><td class="we"></td>
+        <td><span class="bar bar-risk">ไม่จบ</span></td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="legend">
+    <div><span class="k" style="background:var(--saffron)"></span>งานหลักของวันนั้น</div>
+    <div><span class="k" style="background:#f6d3a6"></span>เดินต่อเนื่อง / เฝ้าดู</div>
+    <div><span class="k" style="background:var(--ok)"></span>Milestone</div>
+    <div><span class="k" style="background:#e8eaf1"></span>รอคนอื่น</div>
+    <div><span class="k" style="background:var(--danger)"></span>จุดเสี่ยง / ไม่จบ</div>
+  </div>
+</section>
+
+<div class="parthead"><span class="pt">ส่วนที่ 2 · ทำไมงานถึงค้าง</span><span class="pd">ภาพกระดานและตัวกั้น — เปิดดูตอนต้องอธิบายให้คนอื่นฟัง</span></div>
+<section class="slide" id="s3">
+  <h2><span class="num">5</span>👥 งานค้างอยู่ที่ใคร — QA / Dev / คนอื่น</h2>
+  <p class="lead">กติกาอ่านสถานะ: <span class="badge b-warn">To Do / In Progress</span> = ลูกอยู่ที่ <strong>Dev</strong> ·
+    <span class="badge b-info">READY TO TEST</span> = dev ส่งของแล้ว ลูกอยู่ที่ <strong>QA</strong> ·
+    <span class="badge b-skip">⏭ blocked</span> = ลูกไม่ได้อยู่ที่ทั้งคู่ ต้องไปตามเจ้าของ blocker</p>
+  <div class="note">
+    <strong>การแบ่งงานเทสในทีมนี้:</strong> QA ออกแบบ test case ทุกชั้น · <strong>Dev เขียนสคริปต์ integration</strong> (co-located ตาม TDD) ·
+    <strong>QA เขียนสคริปต์ UI / E2E</strong> (Playwright) — เพราะฉะนั้น “integration แดง” = งาน dev ไม่ใช่งาน QA
+  </div>
+
+  <h3>▸ MVP-2 — สรุปหัวตาราง ใครถือลูกกี่ชิ้น</h3>
+  <div class="tw">
+  <table>
+    <thead><tr><th style="width:150px">เจ้าของ</th><th style="width:70px">ค้าง</th><th>รายการ</th><th>ปลดอะไรถ้าทำเสร็จ</th></tr></thead>
+    <tbody>
+      <tr><td><strong>QA (Ice)</strong></td><td><span class="badge b-info">5</span></td>
+        <td>เสนอ flip 5 ใบที่ verify แล้ว (385 · 414 · 415 · 417 · 418) · manual E10 ที่ค้าง + วาง data plan · รัน release gate 26 ส.ค. · ติดตาม <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-760">TAKRA-760</a> (P2 ยังไม่มีใบ) · ขอบัญชี staff จาก Ops</td>
+        <td>ปิด E16 ได้ทั้ง epic · gate เดินต่อไป go-live</td></tr>
+      <tr><td><strong>Dev (Boat)</strong></td><td><span class="badge b-warn">12</span></td>
+        <td>E9 ×6 (722 · 386 · 387 · 388 · 389 · 390) · E10 750/751 · E15 412/413 · E16 416 · E8 755</td>
+        <td>ห้องคุมไลฟ์ครบ · E10 ขึ้น prod ได้ · เมนูการแจ้งเตือนมีของ</td></tr>
+      <tr><td><strong>Dev (No)</strong></td><td><span class="badge b-warn">4 + 6</span></td>
+        <td>E12 ×4 (401 · 402 · 403 · 404) + <strong>ปิดใบ integration ที่ค้าง To Do ทั้งที่สคริปต์อยู่ใน repo แล้ว 6 ใบ</strong> (543 · 544 · 545 · 549 · 550 · 551)</td>
+        <td>กระดานตรงกับความจริง · E12 เดินได้เมื่อ Hub พร้อม</td></tr>
+      <tr class="milestone"><td><strong>Ops</strong></td><td><span class="badge b-danger">1</span></td>
+        <td><strong>บัญชี platform-staff (no-2FA)</strong></td>
+        <td><strong>ปลด 16 รายการพร้อมกัน</strong> — E8 อีก 11 TC + E11 ทั้ง 5 story · คุ้มที่สุดในกระดาน</td></tr>
+      <tr><td><strong>Infra (Berm / Yao)</strong></td><td><span class="badge b-danger">2</span></td>
+        <td>TAKRA-105 CI Tier-2 nightly (due 13 ส.ค. · ค้าง 8 วัน) · live infra บน UAT สำหรับ fullloop</td>
+        <td>เงื่อนไขสุดท้ายของ release gate · ปลด E9 5.12 + fullloop E4/E5</td></tr>
+      <tr><td><strong>PM (P)</strong></td><td><span class="badge b-danger">2</span></td>
+        <td>TAKRA-110 pilot provisioning + go-live checklist (due 20 ส.ค.) · ปิด Epic 7</td>
+        <td>MVP-1 ขึ้น prod จริง</td></tr>
+      <tr><td><strong>BA / Legal</strong></td><td><span class="badge b-warn">1</span></td>
+        <td>TAKRA-751 แบบฟอร์มหนังสือยินยอมใช้เสียง (ร่าง v0.1 ใช้ไปก่อนได้)</td>
+        <td>ประตู release ของ E10</td></tr>
+      <tr><td><strong>Hub team</strong></td><td><span class="badge b-skip">1</span></td>
+        <td>metering ingest API spec</td><td>E12 ทั้ง epic</td></tr>
+      <tr><td><strong>Engine team</strong></td><td><span class="badge b-skip">2</span></td>
+        <td>tool-calling + Rerun schema align (D7) · RTMP egress fan-out (D8)</td>
+        <td>E13 + E14 ทั้งสอง epic</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>▸ แยกราย epic — ฝั่ง Dev ทำถึงไหน / ฝั่ง QA ทำถึงไหน</h3>
+  <div class="tw">
+  <table>
+    <thead><tr>
+      <th style="width:52px">Epic</th>
+      <th style="width:210px">ฝั่ง Dev (โค้ด + integration script)</th>
+      <th style="width:210px">ฝั่ง QA (design + UI/E2E script + run)</th>
+      <th style="width:120px">ลูกอยู่ที่</th>
+      <th>ก้าวถัดไปคือใครทำอะไร</th>
+    </tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>E8</strong></td>
+        <td><span class="badge b-info">RTT 7 ใบ</span> ส่งครบแล้ว · ค้าง 755 (DSAR ผู้ชม) To Do · <strong>ใบ integration 543/544/545 ยัง To Do ทั้งที่ไฟล์ <code>ai-event-*.int-spec.ts</code> อยู่ใน repo แล้ว</strong></td>
+        <td>design 12 TC ครบ · script UI 1 ไฟล์ (<code>ai-history-8-3</code>) · <strong>รันได้ 1/12</strong> — อีก 11 เปิดหน้าไม่ได้</td>
+        <td><span class="badge b-danger">Ops</span></td>
+        <td>Ops ออกบัญชี staff → QA ยิง 11 TC รวดเดียว (1 วัน) → เสนอ flip ทั้ง epic</td>
+      </tr>
+      <tr>
+        <td><strong>E9</strong></td>
+        <td><span class="badge b-warn">ค้าง 6 ใบ</span> 722 (ดึงคอมเมนต์/ยอดคนดูเอง) + 386/387/388 In Progress · 389/390 ยังไม่เริ่ม · integration 546/547/548 To Do</td>
+        <td>design ~30 TC · <strong>script 11 TC เขียวแล้ว</strong> (รายการ session + สรุปหลังไลฟ์) · ส่วน SSE ⏭ ไม่มี live infra</td>
+        <td><span class="badge b-warn">Dev</span> + <span class="badge b-skip">Infra</span></td>
+        <td>QA ทำได้แค่ flip 385 (และ 384 ที่ตอนนี้ปลดแล้ว เพราะ TAKRA-524 ปิดไปแล้ว) · ที่เหลือรอ dev ส่งของ</td>
+      </tr>
+      <tr>
+        <td><strong>E10</strong></td>
+        <td>391/392 Done · 393/394/395/723 <span class="badge b-info">RTT</span> · <strong>750/751 In Progress = ประตูขึ้น prod</strong> · integration ~10 ไฟล์เขียวแล้ว (ใบ 549/550/551 ยังไม่ปิด)</td>
+        <td>design ~25 TC · script UI 6 เขียว · <strong>manual 8 TC PASS แล้ว</strong> · ค้าง delete/upload/consent เต็มวง (ws โดนใช้ชนกัน) · fullloop ยังไม่เขียน</td>
+        <td><span class="badge b-now">QA</span> + <span class="badge b-warn">Dev</span></td>
+        <td>QA จอง data window ให้จบ manual ที่เหลือ · Dev+BA ปิด 750/751 ก่อนถึงจะ deploy ได้</td>
+      </tr>
+      <tr>
+        <td><strong>E11</strong></td>
+        <td><span class="badge b-ok">Done ครบ 5 ใบ</span> · integration 552/553/554 Done</td>
+        <td>design ~15 TC · <strong>script 0 · run 0</strong> — เข้าหน้าไม่ได้เลย</td>
+        <td><span class="badge b-danger">Ops</span></td>
+        <td>บัญชีเดียวกับ E8 · ยังไม่มีใครยืนยันว่าของที่ dev ปิดไปแล้วใช้ได้จริง (impersonation = จุดเสี่ยงสูงสุด)</td>
+      </tr>
+      <tr>
+        <td><strong>E12</strong></td>
+        <td><span class="badge b-warn">401/403 In Progress · 402/404 To Do</span> · 402 ติด Hub</td>
+        <td>design แล้ว · ยังไม่มีของให้เทส</td>
+        <td><span class="badge b-warn">Dev</span> + <span class="badge b-skip">Hub</span></td>
+        <td>QA ไม่มีอะไรทำจนกว่าจะมี RTT ใบแรก</td>
+      </tr>
+      <tr>
+        <td><strong>E13</strong></td>
+        <td><span class="badge b-skip">To Do ทั้ง 3 ใบ</span> — รอ contract จาก Engine</td>
+        <td>design + contract spec แล้ว (red-first ยังเขียนไม่ได้เพราะไม่มี schema)</td>
+        <td><span class="badge b-skip">Engine</span></td>
+        <td>Berm ตาม Engine · ไม่ใช่งานค้างของ dev ในทีม</td>
+      </tr>
+      <tr>
+        <td><strong>E14</strong></td>
+        <td><span class="badge b-skip">To Do ทั้ง 4 ใบ</span></td>
+        <td>design แล้ว</td>
+        <td><span class="badge b-skip">Engine + Legal</span></td>
+        <td>ต้องเจรจา egress + ToS รายแพลตฟอร์มก่อน</td>
+      </tr>
+      <tr>
+        <td><strong>E15</strong></td>
+        <td><span class="badge b-warn">412/413 In Progress</span></td>
+        <td><strong>TAKRA-530 เทสครบวง PASS แล้ว</strong> (<code>live-edit-inplace-530.spec.ts</code>) · 412/413 รอของ</td>
+        <td><span class="badge b-warn">Dev</span></td>
+        <td>Dev ปิด 2 ใบ → QA เทสต่อได้ทันที (base spec มีแล้ว)</td>
+      </tr>
+      <tr>
+        <td><strong>E16</strong></td>
+        <td>414/415/417/418 <span class="badge b-info">RTT</span> · ค้างใบเดียว <strong>416 การแจ้งเตือน</strong> (SES ปลดแล้ว 20 ส.ค. — ไม่มี blocker เหลือ)</td>
+        <td><strong>automation เขียว + manual verify ครบ 4 ใบ</strong> — เทสจบแล้วจริงๆ</td>
+        <td><span class="badge b-now">QA</span> + <span class="badge b-warn">Dev</span></td>
+        <td><strong>QA เสนอ flip 4 ใบเป็น Done ได้เลยวันนี้</strong> · Dev เริ่ม 416</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  </section>
+<section class="slide" id="s4">
+  <h2><span class="num">6</span>🚧 แต่ละ epic เหลืออะไร · ติดใบไหนอยู่</h2>
+  <p class="lead">อ่านคอลัมน์ “ใบที่กั้นอยู่” เป็นหลัก — ถ้าช่องนั้นว่าง แปลว่า epic นั้นไม่มีอะไรขวาง เหลือแค่คนไปกดปิด</p>
+
+  <h3>▸ MVP-2</h3>
+  <div class="tw">
+  <table>
+    <thead><tr><th style="width:52px">Epic</th><th style="width:150px">เหลืออะไร</th><th style="width:230px">ใบที่กั้นอยู่</th><th>ชนิดของสิ่งที่ขวาง</th><th style="width:110px">ใครต้องขยับ</th></tr></thead>
+    <tbody>
+      <tr><td><strong>E8</strong><br><small>AIEventLog</small></td>
+        <td>เทส <strong>11/12 TC</strong><br><strong>7 ใบรอ flip</strong><br><a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-379">TAKRA-379</a> <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-380">TAKRA-380</a> <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-381">TAKRA-381</a> <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-382">TAKRA-382</a> <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-383">TAKRA-383</a> <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-536">TAKRA-536</a> <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-537">TAKRA-537</a></td>
+        <td><span class="badge b-danger">บัญชี platform-staff</span> <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-526">TAKRA-526</a> · <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-755">TAKRA-755</a> To Do (Boat)</td>
+        <td>เปิดหน้า <code>/ai-history</code> ฝั่ง staff ไม่ได้เลย · 755 = DSAR ของผู้ชม (ลบคอมเมนต์ + เส้นลบ 90 วัน) · ใบ integration 543/544/545 ยัง To Do ทั้งที่สคริปต์เขียวแล้ว</td>
+        <td><span class="badge b-danger">Ops</span></td></tr>
+      <tr><td><strong>E9</strong><br><small>ห้องคุมไลฟ์</small></td>
+        <td><strong>dev 6 ใบ</strong><br><a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-386">TAKRA-386</a> <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-387">TAKRA-387</a> <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-388">TAKRA-388</a> <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-389">TAKRA-389</a> <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-390">TAKRA-390</a> <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-722">TAKRA-722</a><br><small class="muted">flip ได้เลย: <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-384">TAKRA-384</a> <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-385">TAKRA-385</a></small></td>
+        <td><strong>722 · 386 · 387 · 388</strong> In Progress · <strong>389 · 390</strong> To Do</td>
+        <td>722 = ดึงคอมเมนต์/ยอดคนดูจาก TikTok เอง (เป็น prerequisite ของ 386/387/389/390) · fullloop ⏭ live infra · integration 546/547/548 ยังไม่เริ่ม</td>
+        <td><span class="badge b-warn">Dev (Boat)</span></td></tr>
+      <tr><td><strong>E10</strong><br><small>คลังเสียง/อวาตาร์</small></td>
+        <td><strong>flip ได้ 4 ใบ</strong><br><a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-393">TAKRA-393</a> <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-394">TAKRA-394</a> <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-395">TAKRA-395</a> <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-723">TAKRA-723</a><br><small class="muted">ประตู prod: <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-750">TAKRA-750</a> <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-751">TAKRA-751</a></small></td>
+        <td><strong>TAKRA-750</strong> · <strong>751</strong> In Progress</td>
+        <td>750 = อัดเสียงยืนยันความยินยอม · 751 = แบบฟอร์มหนังสือยินยอม · ฝั่ง QA: ลบ/อัปโหลด/consent เต็มวง ⏭ รอช่วงที่ workspace ว่าง (ตอนนี้โดนใช้ชนกัน) · fullloop automate ยังไม่เขียน</td>
+        <td><span class="badge b-warn">Dev + BA</span> · <span class="badge b-now">QA</span></td></tr>
+      <tr><td><strong>E11</strong><br><small>หลังบ้าน</small></td>
+        <td>เทส <strong>0/15 TC</strong><br><small class="muted">ใบ dev ปิดหมดแล้ว: <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-396">TAKRA-396</a> <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-397">TAKRA-397</a> <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-398">TAKRA-398</a> <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-399">TAKRA-399</a> <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-400">TAKRA-400</a></small></td>
+        <td><span class="badge b-danger">บัญชี platform-staff</span> <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-526">TAKRA-526</a></td>
+        <td>dev ปิดครบ 5 ใบไปแล้วโดยไม่มีใครยืนยัน — โดยเฉพาะ impersonation ที่เป็นจุดเสี่ยงสูงสุด ต้องมี negative test ข้าม workspace</td>
+        <td><span class="badge b-danger">Ops</span></td></tr>
+      <tr><td><strong>E12</strong><br><small>Billing</small></td>
+        <td><strong>dev 4 ใบ</strong><br><a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-401">TAKRA-401</a> <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-402">TAKRA-402</a> <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-403">TAKRA-403</a> <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-404">TAKRA-404</a></td>
+        <td><strong>401 · 403</strong> In Progress · <strong>402 · 404</strong> To Do · <span class="badge b-skip">Hub ingest API</span></td>
+        <td>402 (push ยอดไป Hub) รอ spec จาก Hub — อีก 3 ใบเดินได้เองไม่ต้องรอ</td>
+        <td><span class="badge b-warn">Dev (No)</span> + <span class="badge b-skip">Hub</span></td></tr>
+      <tr><td><strong>E13</strong><br><small>Tool-calling</small></td>
+        <td><strong>ยังไม่เริ่ม 3 ใบ</strong><br><a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-405">TAKRA-405</a> <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-406">TAKRA-406</a> <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-407">TAKRA-407</a></td>
+        <td><strong>405 · 406 · 407</strong> To Do · <span class="badge b-skip">Engine contract</span></td>
+        <td>406 = ยืนยัน schema tool-calling + align กับ Rerun — เป็นต้นน้ำของอีก 2 ใบ · ยังไม่ได้ contract จึงเขียน red-first ไม่ได้</td>
+        <td><span class="badge b-skip">Engine</span></td></tr>
+      <tr><td><strong>E14</strong><br><small>Multi-RTMP</small></td>
+        <td><strong>ยังไม่เริ่ม 4 ใบ</strong><br><a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-408">TAKRA-408</a> <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-409">TAKRA-409</a> <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-410">TAKRA-410</a> <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-411">TAKRA-411</a></td>
+        <td><strong>408 · 409 · 410 · 411</strong> To Do · <span class="badge b-skip">Engine egress + keys + ToS</span></td>
+        <td>409 (egress fan-out) = ความเสี่ยงสูงสุดของทั้ง MVP-2 · degrade ไม่ได้ · ต้องเจรจา Engine + ผ่าน ToS/AI-disclosure รายแพลตฟอร์มก่อน</td>
+        <td><span class="badge b-skip">Engine + Legal</span></td></tr>
+      <tr><td><strong>E15</strong><br><small>Studio riders</small></td>
+        <td><strong>dev 2 ใบ</strong><br><a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-412">TAKRA-412</a> <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-413">TAKRA-413</a></td>
+        <td><strong>412 · 413</strong> In Progress</td>
+        <td>ไม่มี dependency ภายนอก — จบเมื่อ dev จบ · QA มี base spec รออยู่แล้ว (530 เทสผ่านครบวงไปแล้ว)</td>
+        <td><span class="badge b-warn">Dev (Boat)</span></td></tr>
+      <tr><td><strong>E16</strong><br><small>ตั้งค่า/Usage</small></td>
+        <td><strong>flip 4 ใบ</strong><br><a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-414">TAKRA-414</a> <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-415">TAKRA-415</a> <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-417">TAKRA-417</a> <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-418">TAKRA-418</a><br><small class="muted">dev: <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-416">TAKRA-416</a></small></td>
+        <td><strong>TAKRA-416</strong> To Do (Boat) · <strong>767</strong> To Do <span class="badge b-skip">Low</span></td>
+        <td>416 = การแจ้งเตือน (SES ปลด blocker แล้ว 20 ส.ค. — ไม่มีอะไรขวางแล้ว) · 767 = ลิงก์ยกเลิกแจ้งเตือนตอบ 500 ถ้า workspace ถูกลบ · <strong>ส่วนที่เหลือ verify ครบ รอกดปิดอย่างเดียว</strong></td>
+        <td><span class="badge b-now">QA</span> + <span class="badge b-warn">Dev</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="warnbox">
+    <strong>2 ใบที่ไม่มีใครรับผิดชอบ — ต้องหาเจ้าภาพก่อนสิ้นเดือน:</strong>
+    <br><strong>TAKRA-660</strong> — ผลตรวจเครือข่ายขึ้น “✓ ผ่าน” ทั้งที่ผู้ใช้กดหยุดกลางคัน (ผลลวง · Epic 4)
+    <br><strong>TAKRA-664</strong> — ผูกสคริปต์เข้าไลฟ์ไม่สำเร็จทุกครั้ง เพราะสิทธิ์ (Epic 4)
+    <br>ทั้งคู่เป็นบั๊กที่ QA เจอแล้วเปิดใบไว้ แต่ยังไม่มี assignee ⇒ จะไม่มีใครหยิบเองโดยอัตโนมัติ
+  </div>
+
+  <div class="ask">
+    <strong>อ่านรวบยอด:</strong> จาก 16 epic มีแค่ <strong>3 กลุ่มเท่านั้นที่มีสิ่งกีดขวางจริง</strong> —
+    (1) บัญชี staff กั้น E8 + E11 · (2) live infra กั้น E4 + E5 fullloop + E9 · (3) ทีมนอกกั้น E12 (Hub) กับ E13/E14 (Engine)
+    <br>ที่เหลือ <strong>ไม่มีอะไรขวาง</strong> — เป็นงานที่รอคนในทีมขยับเท่านั้น
+  </div>
+</section>
+<section class="slide" id="s0">
+  <h2><span class="num">7</span>📊 กระดาน Jira ตอนนี้ + คำว่า “เสร็จ” แปลว่าอะไร</h2>
+  <div class="grid4">
+    <div class="stat"><div class="n">7</div><div class="l">วันทำงานเหลือ (ศ.21 · จ.24–ศ.28 · จ.31)</div></div>
+    <div class="stat"><div class="n">17</div><div class="l">ใบ READY TO TEST ที่ลูกอยู่ฝั่ง QA</div></div>
+    <div class="stat"><div class="n">23</div><div class="l">ใบที่ยังไม่ถึงมือ QA (In Progress + To Do)</div></div>
+    <div class="stat"><div class="n">7</div><div class="l">ใบที่ปิด (Done) แล้ว จาก 47 ใบ</div></div>
+  </div>
+
+  <h3>กระดานตอนนี้ — MVP-1 กับ MVP-2 อยู่คนละสภาพ</h3>
+  <div class="tw">
+  <table>
+    <thead><tr><th style="width:200px">เฟส</th><th>Done</th><th>READY TO TEST<br><small>= ค้างที่ QA</small></th><th>IN REVIEW / In Progress<br><small>= ค้างที่ Dev</small></th><th>To Do</th><th>รวม</th><th>อ่านว่าอะไร</th></tr></thead>
+    <tbody>
+      
+      <tr>
+        <td><strong>MVP-2</strong> · 9 epic</td>
+        <td><span class="badge b-ok">7</span></td>
+        <td><span class="badge b-now">17</span></td>
+        <td><span class="badge b-warn">10</span></td>
+        <td><span class="badge b-skip">13</span></td>
+        <td><strong>47</strong></td>
+        <td>ยังสร้างอยู่จริง — 23 ใบยังไม่ถึงมือ QA</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  </section>
+<section class="slide" id="s1">
+  <h2><span class="num">8</span>🧭 เมนู × สิ้นเดือนนี้ต้องใช้ได้แค่ไหน</h2>
+  <p class="lead">ชื่อเมนูทั้งหมดในตารางนี้ <strong>ตรงกับ i18n จริง</strong> (<code>src/i18n/locales/th/</code>) — คือสิ่งที่ลูกค้าเห็นและกดได้บนหน้าจอ ไม่ใช่ชื่อ epic หรือชื่อไฟล์</p>
+  <p class="muted" style="font-size:13px">คอลัมน์สถานะใช้คำตามบันไดใน §7 — <strong>automation เขียว</strong> = ชั้น 3 (สคริปต์ผ่าน ยังไม่ผ่านตาคน) · <strong>verify แล้ว</strong> = ชั้น 3+4 · <strong>⚪ ไม่มี spec</strong> = ยังไม่มีสคริปต์ไหนแตะหน้านั้นเลย</p>
+
+  <h3>▸ เมนูหลัก · หมวด “พื้นที่ทำงาน”</h3>
+  <div class="tw">
+  <table>
+    <thead><tr><th style="width:170px">เมนู</th><th>path</th><th>Epic</th><th>สิ้นเดือนนี้ต้องใช้ได้แค่ไหน</th><th>สถานะ</th><th>ติดอะไร</th></tr></thead>
+    <tbody>
+      
+      
+      <tr><td><strong>แพ็กเกจและการใช้งาน</strong></td><td><code>/settings#plan</code></td><td>E16 (16.2) + MVP-1 FR5</td>
+        <td>เห็นการใช้งานเดือนนี้ 3 แถบ + เปรียบเทียบแพ็กเกจ · Owner กับ Operator เห็นชุดเดียวกัน</td>
+        <td><span class="badge b-ok">🟢 verify แล้ว</span></td><td>cap/alert จริงต้องรอ E12 (ไม่ทันเดือนนี้)</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>▸ เมนูหลัก · หมวด “คลังข้อมูล”</h3>
+  <div class="tw">
+  <table>
+    <thead><tr><th style="width:170px">เมนู</th><th>path</th><th>Epic</th><th>สิ้นเดือนนี้ต้องใช้ได้แค่ไหน</th><th>สถานะ</th><th>ติดอะไร</th></tr></thead>
+    <tbody>
+      <tr><td><strong>คลังเสียง</strong></td><td><code>/voices</code></td><td><strong>E10</strong> + MVP-1 E2</td>
+        <td>ดู/แก้เสียงในคลังได้ · <strong>self-service โคลนเสียงยังไม่ควรถึงมือลูกค้า</strong></td>
+        <td><span class="badge b-warn">🟡 UAT เขียว</span></td>
+        <td><strong>ห้าม deploy prod ก่อน TAKRA-750 (อัดเสียงยินยอม) + 751 (แบบฟอร์ม) จบ</strong></td></tr>
+      <tr><td><strong>คลังอวาตาร์</strong></td><td><code>/avatars</code></td><td><strong>E10</strong> (10.1) + MVP-1 E2</td>
+        <td>เลือกจาก Persona Template → โคลนเข้า workspace → แก้ชื่อ/คาแรกเตอร์/โทนแบรนด์</td>
+        <td><span class="badge b-ok">🟢 dev Done</span></td><td class="muted">—</td></tr>
+      <tr><td><strong>คลังสินค้า</strong></td><td><code>/products</code></td><td>MVP-1 E2 + <strong>E16</strong> (16.4)</td>
+        <td>CRUD สินค้า + <strong>การ์ดคำเสี่ยงแยกตามหมวด</strong> ในหน้าสินค้า</td>
+        <td><span class="badge b-ok">🟢 verify แล้ว</span></td>
+        <td>ปุ่ม “เพิ่มสินค้า” ฟอร์มว่างกดแล้วเงียบ — <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-760">TAKRA-760</a> (P2 · assign No แล้ว)</td></tr>
+      
+      
+      <tr><td><strong>ตารางไลฟ์</strong></td><td><code>/schedule</code></td><td>MVP-1 E3 + <strong>E15</strong></td>
+        <td>ตั้งเวลาไลฟ์ · <strong>กลับมาแก้ไลฟ์ในที่เดิมได้ครบวง</strong> (TAKRA-530 ✅)</td>
+        <td><span class="badge b-warn">🟡 บางส่วน</span></td>
+        <td>15.2 live targets revive (TAKRA-413) ยัง In Progress</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>▸ เมนูหลัก · หมวด “ระบบไลฟ์” (<code>/live</code>)</h3>
+  <div class="tw">
+  <table>
+    <thead><tr><th style="width:170px">เมนู</th><th>path</th><th>Epic</th><th>สิ้นเดือนนี้ต้องใช้ได้แค่ไหน</th><th>สถานะ</th><th>ติดอะไร</th></tr></thead>
+    <tbody>
+      
+      
+      
+      <tr><td><strong>ห้องคุมไลฟ์</strong></td><td><code>/live/session</code></td><td><strong>E9</strong></td>
+        <td>สิ้นเดือนนี้ได้แค่ <strong>รายการ session + สรุปหลังไลฟ์</strong> — ยังไม่ได้ stat tiles / comment feed / แผงบล็อกคำเสี่ยงแบบ real-time</td>
+        <td><span class="badge b-warn">🟡 บางส่วน</span></td>
+        <td>9.0 ingestion + 9.3–9.5 ยัง In Progress · 9.6/9.7 ยังไม่เริ่ม · fullloop ต้องมี live infra</td></tr>
+      
+    </tbody>
+  </table>
+  </div>
+
+  <h3>▸ เมนู “ตั้งค่า” (<code>/settings</code>)</h3>
+  <div class="tw">
+  <table>
+    <thead><tr><th style="width:170px">เมนูย่อย</th><th>หมวด</th><th>Epic</th><th>สิ้นเดือนนี้ต้องใช้ได้แค่ไหน</th><th>สถานะ</th></tr></thead>
+    <tbody>
+      <tr><td><strong>โปรไฟล์</strong></td><td>บัญชีของฉัน</td><td><strong>E16</strong> (16.5)</td>
+        <td>อ่านอย่างเดียว + ลิงก์ไปแก้ที่ Hub/Zitadel · หมวด “ความปลอดภัย” ถูกย้ายออกแล้ว</td>
+        <td><span class="badge b-ok">🟢 verify แล้ว</span></td></tr>
+      <tr><td><strong>แพ็กเกจและการใช้งาน</strong></td><td>พื้นที่ทำงาน</td><td><strong>E16</strong> (16.2)</td>
+        <td>การใช้งานเดือนนี้ 3 แถบ + เปรียบเทียบแพ็กเกจ</td>
+        <td><span class="badge b-ok">🟢 verify แล้ว</span></td></tr>
+      <tr><td><strong>การเรียกเก็บเงิน</strong></td><td>พื้นที่ทำงาน</td><td><strong>E16</strong> · (E12 ตามมาทีหลัง)</td>
+        <td>บอกว่า “การเรียกเก็บเงินอยู่ที่ TAKRA Hub” + deep-link ออกไป</td>
+        <td><span class="badge b-ok">🟢 verify แล้ว</span></td></tr>
+      <tr><td><strong>ธีมและภาษา</strong></td><td>ทั่วไป</td><td><strong>E16</strong> (16.1)</td>
+        <td>สลับธีม/ภาษา · เมนูโชว์เฉพาะสิ่งที่ role นั้นทำได้</td>
+        <td><span class="badge b-ok">🟢 verify แล้ว</span></td></tr>
+      <tr><td><strong>การแจ้งเตือน</strong></td><td>ทั่วไป</td><td><strong>E16</strong> (16.3)</td>
+        <td>อีเมลแจ้งเตือนส่งออกได้จริง (SES) + in-app feed</td>
+        <td><span class="badge b-danger">🔴 ยังไม่เริ่ม dev</span></td></tr>
+      <tr><td><strong>ลบบัญชี</strong></td><td>ทั่วไป</td><td>MVP-1 E1 (DSAR) + <strong>E8</strong> (8.5)</td>
+        <td>ลบแล้วข้อมูลต้องหายทุกที่จริง (erasure cascade ครอบ voice/consent/log)</td>
+        <td><span class="badge b-ok">🟢 integration เขียว</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>▸ เมนูฝั่งเจ้าหน้าที่ TAKRA (ลูกค้าไม่เห็น)</h3>
+  <div class="tw">
+  <table>
+    <thead><tr><th style="width:170px">เมนู</th><th>path</th><th>Epic</th><th>สิ้นเดือนนี้ต้องใช้ได้แค่ไหน</th><th>สถานะ</th><th>ติดอะไร</th></tr></thead>
+    <tbody>
+      <tr><td><strong>ประวัติการทำงาน AI</strong></td><td><code>/ai-history</code></td><td><strong>E8</strong></td>
+        <td>เจ้าหน้าที่แพลตฟอร์มเปิดดู audit ของทุก action AI ได้ (กรอง/เจาะ/ค้นข้อความ) · คนนอกต้องโดนปิดประตู</td>
+        <td><span class="badge b-warn">🟡 1/12 TC</span></td>
+        <td><strong>รอบัญชี platform-staff (no-2FA)</strong> — ด่านเดียวที่ค้าง</td></tr>
+      <tr><td><strong>หลังบ้าน</strong></td><td>Hub</td><td><strong>E11</strong></td>
+        <td>Ops จ่ายอวาตาร์/เสียง · Support ดูข้อมูล workspace แบบอ่านอย่างเดียว · impersonation มี audit</td>
+        <td><span class="badge b-skip">⏭ verify ไม่ได้</span></td>
+        <td>dev Done ครบ 5 story แต่ <strong>ยังไม่มีใครยืนยันว่าใช้ได้</strong> — รอบัญชี staff เหมือนกัน</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+<section class="slide" id="s2">
+  <h2><span class="num">9</span>📚 แต่ละ Epic คืออะไร (ภาษาคน)</h2>
+  <h3>▸ MVP-2 — 9 epic (TAKRA-370 … 378)</h3>
+  <div class="tw">
+  <table>
+    <thead><tr><th style="width:56px">Epic</th><th style="width:110px">Jira</th><th>ชื่อ · ทำอะไร (ภาษาคน)</th><th>โผล่ที่เมนูไหน</th><th>สถานะ</th></tr></thead>
+    <tbody>
+      <tr><td><strong>E8</strong></td><td>TAKRA-370</td>
+        <td><strong>AIEventLog</strong> — สมุดบันทึกกลางว่า AI ทำอะไรไปบ้าง 11 ชนิดเหตุการณ์ (เจนสคริปต์ · ตอบคอมเมนต์ · ตรวจคำเสี่ยง · โคลนเสียง ฯลฯ) เก็บ input/output ไว้ 90 วัน ใช้ตอบ audit + PDPA</td>
+        <td>ประวัติการทำงาน AI · ลบบัญชี</td>
+        <td><span class="badge b-info">RTT ครบ 7 ใบ</span></td></tr>
+      <tr><td><strong>E9</strong></td><td>TAKRA-371</td>
+        <td><strong>ดูไลฟ์ + สรุปหลังไลฟ์ในระบบเรา</strong> — ไม่ต้องเปิด TikTok Studio: ระหว่างไลฟ์เห็นตัวเลข/คอมเมนต์/คำที่ถูกบล็อก · จบไลฟ์ได้สรุปใน 5 นาที · ดึงคอมเมนต์+ยอดคนดูจาก TikTok เอง (re-baseline 7 ส.ค. — ไม่รอ Insight app แล้ว)</td>
+        <td>ห้องคุมไลฟ์</td>
+        <td><span class="badge b-warn">2 RTT · 4 In Progress · 2 To Do</span></td></tr>
+      <tr><td><strong>E10</strong></td><td>TAKRA-372</td>
+        <td><strong>คลังอวาตาร์/เสียงแบบทำเองได้</strong> — Owner โคลนอวาตาร์ + อัปเสียง + โคลนเสียง + เพิกถอน/ลบ ≤7 วัน โดยไม่ต้องโทรหา Ops · มีด่าน PDPA บล็อกก่อนโคลน</td>
+        <td>คลังเสียง · คลังอวาตาร์</td>
+        <td><span class="badge b-danger">ห้ามขึ้น prod ก่อน 750/751</span></td></tr>
+      <tr><td><strong>E11</strong></td><td>TAKRA-373</td>
+        <td><strong>เครื่องมือฝั่งพนักงาน TAKRA</strong> — RBAC แยกระนาบจากลูกค้า · Ops จ่าย catalog · Support ดู workspace อ่านอย่างเดียว · impersonation ต่อ ticket ที่มี audit · escalate ไป AI Ops <em>(ย้ายเจ้าภาพไป TAKRA Hub แล้ว 2026-08-10)</em></td>
+        <td>หลังบ้าน</td>
+        <td><span class="badge b-skip">dev Done · verify ไม่ได้</span></td></tr>
+      <tr><td><strong>E12</strong></td><td>TAKRA-374</td>
+        <td><strong>นับการใช้งาน + เพดาน</strong> — วัด 3 อย่าง (ชั่วโมงอวาตาร์ · เครดิตสคริปต์ · คอมเมนต์ที่ดึง) ส่งยอดไป Hub · เตือนที่ 80% · ตัดงานใหม่ที่ 100% (แต่ไม่ฆ่าไลฟ์ที่ออกอยู่)</td>
+        <td>แพ็กเกจและการใช้งาน · การเรียกเก็บเงิน</td>
+        <td><span class="badge b-skip">รอ Hub API</span></td></tr>
+      <tr><td><strong>E13</strong></td><td>TAKRA-375</td>
+        <td><strong>ตอบคอมเมนต์แม่นขึ้นด้วย tool-calling</strong> — Engine ดึงข้อมูลสินค้า/ราคา/สต็อก/โปร/FAQ มาตอบ ให้เหมือนกับ Takra Rerun · ฝั่งเราส่ง context คำเสี่ยงไปให้ + log สิ่งที่มองเห็น</td>
+        <td>คำเสี่ยง (ทางอ้อม) · ห้องคุมไลฟ์</td>
+        <td><span class="badge b-skip">รอ Engine align</span></td></tr>
+      <tr><td><strong>E14</strong></td><td>TAKRA-376</td>
+        <td><strong>ออกหลายแพลตฟอร์มพร้อมกัน</strong> — ดัน RTMP ไป Facebook / Instagram / Shopee จากฝั่ง server · stream key เข้ารหัสรายworkspace · แพลตฟอร์มหนึ่งล่มต้องไม่ลากตัวอื่นตาย (TikTok ยังเป็น phone-as-camera)</td>
+        <td>ยังไม่มีเมนู</td>
+        <td><span class="badge b-skip">รอ Engine + Legal</span></td></tr>
+      <tr><td><strong>E15</strong></td><td>TAKRA-377</td>
+        <td><strong>ของเสริม Studio</strong> — สร้าง/โคลนอวาตาร์ได้จากใน Studio เลยไม่ต้องออกไปคลัง · เอาช่องทางออกอากาศกลับมาเป็น metadata + ก๊อปตอน Duplicate · แก้ไลฟ์ในที่เดิมได้ครบวง</td>
+        <td>ตารางไลฟ์ · เครื่องมือ</td>
+        <td><span class="badge b-warn">2 ใบ In Progress</span></td></tr>
+      <tr><td><strong>E16</strong></td><td>TAKRA-378</td>
+        <td><strong>จัดบ้านเมนูตั้งค่า + รวมหน้าการใช้งาน</strong> — โชว์เฉพาะสิ่งที่ role นั้นทำได้จริง (ที่ทำไม่ได้ = ซ่อน · ที่ปลดล็อกได้ = เทา+ทางไป) · Owner กับ Operator เห็น usage ชุดเดียวกัน · การ์ดคำเสี่ยงแยกหมวด · ต่อท่อการแจ้งเตือน</td>
+        <td>ตั้งค่า (ทุกเมนูย่อย) · คลังสินค้า</td>
+        <td><span class="badge b-ok">4/5 verify แล้ว</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  </section>
+
+<div class="parthead"><span class="pt">ส่วนที่ 3 · ตัดสินใจ & ทะเบียน</span><span class="pd">ของที่ต้องเอาเข้าที่ประชุม และรายชื่อใบงานไว้ค้นหา</span></div>
+<section class="slide" id="s8">
+  <h2><span class="num">10</span>⚖️ จุดตัดสินใจที่ต้องเคาะก่อนสิ้นเดือน</h2>
+  <div class="tw">
+  <table>
+    <thead><tr><th>เมื่อไหร่</th><th>ต้องเคาะอะไร</th><th>ทางเลือก</th><th>ผลที่ตามมา</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="day">จ. 24 ส.ค.</td>
+        <td>บัญชี platform-staff ยังไม่มา</td>
+        <td>(ก) เร่ง Ops &nbsp;·&nbsp; (ข) ยอมรับว่า E8 + E11 ปิดไม่ได้เดือนนี้</td>
+        <td>E8/E11 กลายเป็น “dev Done แต่ไม่มีใครยืนยันว่าใช้ได้” ข้ามเดือน</td>
+      </tr>
+      
+      <tr>
+        <td class="day">ศ. 28 ส.ค.</td>
+        <td>E10 Voice self-service จะปล่อยไหม</td>
+        <td>(ก) รอ TAKRA-750/751 จบก่อน &nbsp;·&nbsp; (ข) deploy พร้อม env switch ปิดหน้า self-service</td>
+        <td><strong>ตอนนี้กันด้วย “ประตู release” อย่างเดียว — ไม่มีสวิตช์ในโค้ด และงานสร้างสวิตช์ยังไม่มีใบไหนรับ</strong></td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="warnbox">
+    <strong>ความเสี่ยงที่ต้องพูดออกมาดังๆ:</strong> UAT มีคนใช้ self-service voice จริงแล้ว 8 เสียง (cloned 3 · revoked 4 · uploaded 1)
+    ส่วน prod ยังไม่ deploy Epic 10 (สคีมา prod = 0045 · <code>voice_instance_consents</code> มากับ 0048)
+    ⇒ สิ่งที่กันลูกค้าจริงอยู่คือจังหวะ deploy ไม่ใช่โค้ด — เป็นสิ่งที่ “ลืมง่ายที่สุดตอนเร่งปล่อยของ”
+  </div>
+</section>
+<section class="slide" id="s10">
+  <h2><span class="num">11</span>🔓 สิ่งที่ปลดล็อกได้เยอะสุดถ้าทำเดือนนี้</h2>
+  <div class="tw">
+  <table>
+    <thead><tr><th style="width:44px">#</th><th>ทำอะไร</th><th>ปลดอะไร</th><th>เจ้าของ</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>1</strong></td>
+        <td><strong>บัญชี platform-staff (no-2FA)</strong></td>
+        <td>ปลด E8 อีก 11 TC + E11 ทั้ง 5 story พร้อมกัน — คุ้มที่สุดในกระดาน</td>
+        <td>Ice ขอจาก Ops</td>
+      </tr>
+      
+      <tr>
+        <td><strong>3</strong></td>
+        <td><strong>ปิด TAKRA-750 / 751</strong></td>
+        <td>ปลดล็อก E10 ให้ deploy prod ได้จริง (ไม่ต้องพึ่งวินัยตอน deploy อย่างเดียว)</td>
+        <td>Boat + BA</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="ask">
+    <strong>ต้องขอมติจาก PM:</strong> ยืนยันว่า “สิ้นเดือน ส.ค.” = <strong>MVP-1 pilot go-live บน prod</strong> ใช่หรือไม่
+    — ถ้าใช่ ควรใส่ duedate 2026-08-28 ให้ TAKRA-47 / 110 / 105 ให้ตรงกัน เพราะตอนนี้ due ค้างที่ 20 ส.ค. และ 13 ส.ค.
+  </div>
+</section>
+<section class="slide" id="s9">
+  <h2><span class="num">12</span>🚫 ยืนยันว่าไม่อยู่ในเดือนนี้</h2>
+  <div class="tw">
+  <table>
+    <thead><tr><th>Epic</th><th>เนื้องาน</th><th>เร็วสุดที่เป็นไปได้</th><th>ติดอะไร · เจ้าของ blocker</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>E9</strong> Live Console เต็มรูป</td>
+        <td>stat tiles · comment feed · risk-block panel · Recap ≤5 นาที · viewer telemetry</td>
+        <td><span class="badge b-warn">ก.ย.</span></td>
+        <td>9.0 ingestion + 9.3–9.5 ยัง In Progress · 9.6/9.7 ยังไม่เริ่ม · fullloop ต้องมี live infra จริง</td>
+      </tr>
+      <tr>
+        <td><strong>E12</strong> Billing metering &amp; caps</td>
+        <td>มิเตอร์ 3 ตัว · push → Hub · cap soft/hard · usage alert</td>
+        <td><span class="badge b-skip">รอ Hub</span></td>
+        <td>Hub metering ingest API ยังไม่มี spec — <strong>Hub team</strong></td>
+      </tr>
+      <tr>
+        <td><strong>E13</strong> Tool-calling auto-reply</td>
+        <td>ตอบคอมเมนต์แม่นขึ้นด้วย tool-calling (สินค้า/ราคา/สต็อก/โปร/FAQ)</td>
+        <td><span class="badge b-skip">รอ Engine</span></td>
+        <td>TAKRA-405–407 To Do ทั้งชุด · contract ยัง align ไม่จบ — <strong>Engine team</strong></td>
+      </tr>
+      <tr>
+        <td><strong>E14</strong> Multi-platform RTMP</td>
+        <td>ออก FB / IG / Shopee พร้อมกัน + health รายแพลตฟอร์ม</td>
+        <td><span class="badge b-skip">รอ Engine + Legal</span></td>
+        <td>Engine RTMP egress + platform keys + ToS/AI-disclosure รายแพลตฟอร์ม</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+<section class="slide" id="s11">
+  <h2><span class="num">13</span>🗂️ ทะเบียนใบค้างของเฟสนี้ — รายใบ</h2>
+  <p class="lead">ทุกใบที่ยังไม่ Done ณ 21 ส.ค. 2026 · ดึงตรงจาก Jira · เรียงตาม epic → เลขใบ · <strong>แถวพื้นชมพู = ยังไม่มีคนรับ</strong></p>
+
+  <h3>▸ MVP-2 — ค้าง 60 ใบ</h3>
+  <div class="tw">
+  <table>
+    <thead><tr><th style="width:104px">ใบ</th><th>เรื่อง</th><th style="width:104px">สถานะ</th><th style="width:130px">ผู้รับผิดชอบ</th><th style="width:120px">ต้องทำอะไร</th></tr></thead>
+    <tbody>
+      <tr style="background:#fafbfd"><td colspan="5"><strong>E8 · AIEventLog</strong> — ค้าง 8 ใบ</td></tr>
+      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-379">TAKRA-379</a></td><td>8.1 AIEventLog durable write foundation (ai_event_log + AiEventLogger)</td><td><span class="badge b-now">RTT</span></td><td class="muted">Wuttichai W (No)</td><td class="muted">QA verify → flip</td></tr>
+      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-380">TAKRA-380</a></td><td>8.2 Route MVP-1 AI events into AIEventLog</td><td><span class="badge b-now">RTT</span></td><td class="muted">Wuttichai W (No)</td><td class="muted">QA verify → flip</td></tr>
+      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-381">TAKRA-381</a></td><td>8.3 AIEventLog Viewer UI - /ai-history (FR59)</td><td><span class="badge b-now">RTT</span></td><td class="muted">Wuttichai W (No)</td><td class="muted">QA verify → flip</td></tr>
+      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-382">TAKRA-382</a></td><td>8.4 Backfill + consolidate basic-log into AIEventLog (FR60)</td><td><span class="badge b-now">RTT</span></td><td class="muted">Wuttichai W (No)</td><td class="muted">QA verify → flip</td></tr>
+      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-383">TAKRA-383</a></td><td>8.5 Unified erasure cascade primitive (ErasureService, P2, DSAR side)</td><td><span class="badge b-now">RTT</span></td><td class="muted">Wuttichai W (No)</td><td class="muted">QA verify → flip</td></tr>
+      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-536">TAKRA-536</a></td><td>8.6 AIEventLog cutover — retire audit_log dual-write</td><td><span class="badge b-now">RTT</span></td><td class="muted">Wuttichai W (No)</td><td class="muted">QA verify → flip</td></tr>
+      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-537">TAKRA-537</a></td><td>8.7 AIEventLog free-text content search (/ai-history)</td><td><span class="badge b-now">RTT</span></td><td class="muted">Wuttichai W (No)</td><td class="muted">QA verify → flip</td></tr>
+      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-755">TAKRA-755</a></td><td>8.8 DSAR ของผู้ชม — ข้อจำกัดการลบข้อความคอมเมนต์ + ยืนเส้นลบ 90 วัน (PDPA)</td><td><span class="badge b-skip">To Do</span></td><td class="muted">Theerapat L (Boat)</td><td class="muted">ยังไม่เริ่ม</td></tr>
+      <tr style="background:#fafbfd"><td colspan="5"><strong>E9 · ห้องคุมไลฟ์</strong> — ค้าง 8 ใบ</td></tr>
+      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-384">TAKRA-384</a></td><td>9.1 SSE Live Console transport + reliability contract</td><td><span class="badge b-now">RTT</span></td><td class="muted">Theerapat L (Boat)</td><td class="muted">QA verify → flip</td></tr>
+      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-385">TAKRA-385</a></td><td>9.2 Live Console session list - /live/session (FR49)</td><td><span class="badge b-now">RTT</span></td><td class="muted">Theerapat L (Boat)</td><td class="muted">QA verify → flip</td></tr>
+      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-386">TAKRA-386</a></td><td>9.3 Live Control Room - real-time stat tiles (FR50)</td><td><span class="badge b-warn">In Progress</span></td><td class="muted">Theerapat L (Boat)</td><td class="muted">dev ทำต่อ</td></tr>
+      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-387">TAKRA-387</a></td><td>9.4 Live comment feed - operator transcript view (FR51)</td><td><span class="badge b-warn">In Progress</span></td><td class="muted">Theerapat L (Boat)</td><td class="muted">dev ทำต่อ</td></tr>
+      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-388">TAKRA-388</a></td><td>9.5 Live risk-block panel (FR52)</td><td><span class="badge b-warn">In Progress</span></td><td class="muted">Theerapat L (Boat)</td><td class="muted">dev ทำต่อ</td></tr>
+      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-389">TAKRA-389</a></td><td>9.6 Post-Live Recap - projection + generation &lt;=5 min (FR47)</td><td><span class="badge b-skip">To Do</span></td><td class="muted">Theerapat L (Boat)</td><td class="muted">ยังไม่เริ่ม</td></tr>
+      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-390">TAKRA-390</a></td><td>9.7 Viewer telemetry capture + surfacing (FR53)</td><td><span class="badge b-skip">To Do</span></td><td class="muted">Theerapat L (Boat)</td><td class="muted">ยังไม่เริ่ม</td></tr>
+      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-722">TAKRA-722</a></td><td>9.0 Server-side comment + viewer ingestion จาก TikTok (FR40/FR40a)</td><td><span class="badge b-warn">In Progress</span></td><td class="muted">Theerapat L (Boat)</td><td class="muted">dev ทำต่อ</td></tr>
+      <tr style="background:#fafbfd"><td colspan="5"><strong>E10 · คลังเสียง/อวาตาร์</strong> — ค้าง 6 ใบ</td></tr>
+      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-393">TAKRA-393</a></td><td>10.3 Self-service PDPA voice consent flow - blocking gate (FR10)</td><td><span class="badge b-now">RTT</span></td><td class="muted">Theerapat L (Boat)</td><td class="muted">QA verify → flip</td></tr>
+      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-394">TAKRA-394</a></td><td>10.4 VoiceCloneProvider port + ElevenLabs clone pipeline (FR9 clone)</td><td><span class="badge b-now">RTT</span></td><td class="muted">Wuttichai W (No)</td><td class="muted">QA verify → flip</td></tr>
+      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-395">TAKRA-395</a></td><td>10.5 Voice revoke consent + delete &lt;=7 days (FR11)</td><td><span class="badge b-now">RTT</span></td><td class="muted">Wuttichai W (No)</td><td class="muted">QA verify → flip</td></tr>
+      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-723">TAKRA-723</a></td><td>ต่อท่อ voice_instances เข้าเส้นทางออกอากาศ/TTS (ปิดช่องว่างหลัง 10.4)</td><td><span class="badge b-now">RTT</span></td><td class="muted">Wuttichai W (No)</td><td class="muted">QA verify → flip</td></tr>
+      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-750">TAKRA-750</a></td><td>10.6 Consent recording — อัดเสียงยืนยันความยินยอมก่อนโคลนเสียง (FR10)</td><td><span class="badge b-warn">In Progress</span></td><td class="muted">Theerapat L (Boat)</td><td class="muted">dev ทำต่อ</td></tr>
+      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-751">TAKRA-751</a></td><td>แบบฟอร์มหนังสือยินยอมใช้เสียงมาตรฐาน (voice consent waiver template) — ขอจากฝ่ายกฎหมาย</td><td><span class="badge b-warn">In Progress</span></td><td class="muted">Theerapat L (Boat)</td><td class="muted">dev ทำต่อ</td></tr>
+      <tr style="background:#fafbfd"><td colspan="5"><strong>E12 · Billing</strong> — ค้าง 4 ใบ</td></tr>
+      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-401">TAKRA-401</a></td><td>12.1 Usage metering - 3 meters into usage_meter (FR5a)</td><td><span class="badge b-warn">In Progress</span></td><td class="muted">Wuttichai W (No)</td><td class="muted">dev ทำต่อ</td></tr>
+      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-402">TAKRA-402</a></td><td>12.2 Push aggregated usage to Hub ingest (FR5a)</td><td><span class="badge b-skip">To Do</span></td><td class="muted">Wuttichai W (No)</td><td class="muted">ยังไม่เริ่ม</td></tr>
+      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-403">TAKRA-403</a></td><td>12.3 Cap enforcement - soft/hard (FR5b)</td><td><span class="badge b-warn">In Progress</span></td><td class="muted">Wuttichai W (No)</td><td class="muted">dev ทำต่อ</td></tr>
+      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-404">TAKRA-404</a></td><td>12.4 In-product Usage Alert + upgrade deep-link (FR5c/FR5d)</td><td><span class="badge b-skip">To Do</span></td><td class="muted">Wuttichai W (No)</td><td class="muted">ยังไม่เริ่ม</td></tr>
+      <tr style="background:#fafbfd"><td colspan="5"><strong>E13 · Tool-calling</strong> — ค้าง 3 ใบ</td></tr>
+      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-405">TAKRA-405</a></td><td>13.1 Send workspace risk-word context to Engine (FR73 mitigation)</td><td><span class="badge b-skip">To Do</span></td><td class="muted">Theerapat L (Boat)</td><td class="muted">ยังไม่เริ่ม</td></tr>
+      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-406">TAKRA-406</a></td><td>13.2 Confirm Engine tool-calling + Rerun schema align (contract)</td><td><span class="badge b-skip">To Do</span></td><td class="muted">Theerapat L (Boat)</td><td class="muted">ยังไม่เริ่ม</td></tr>
+      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-407">TAKRA-407</a></td><td>13.3 Log takra-ai-side observability for tool-calling replies (FR73d partial)</td><td><span class="badge b-skip">To Do</span></td><td class="muted">Theerapat L (Boat)</td><td class="muted">ยังไม่เริ่ม</td></tr>
+      <tr style="background:#fafbfd"><td colspan="5"><strong>E14 · Multi-RTMP</strong> — ค้าง 4 ใบ</td></tr>
+      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-408">TAKRA-408</a></td><td>14.1 RTMP target config + secrets custody (FR74)</td><td><span class="badge b-skip">To Do</span></td><td class="muted">Wuttichai W (No)</td><td class="muted">ยังไม่เริ่ม</td></tr>
+      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-409">TAKRA-409</a></td><td>14.2 Engine RTMP egress push + fan-out (FR74)</td><td><span class="badge b-skip">To Do</span></td><td class="muted">Wuttichai W (No)</td><td class="muted">ยังไม่เริ่ม</td></tr>
+      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-410">TAKRA-410</a></td><td>14.3 Per-platform health + independent failure (FR74, NFR-RTMP-HEALTH-01)</td><td><span class="badge b-skip">To Do</span></td><td class="muted">Wuttichai W (No)</td><td class="muted">ยังไม่เริ่ม</td></tr>
+      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-411">TAKRA-411</a></td><td>14.4 Multi-platform broadcast setup + status UI (FR74)</td><td><span class="badge b-skip">To Do</span></td><td class="muted">Theerapat L (Boat)</td><td class="muted">ยังไม่เริ่ม</td></tr>
+      <tr style="background:#fafbfd"><td colspan="5"><strong>E15 · Studio riders</strong> — ค้าง 2 ใบ</td></tr>
+      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-412">TAKRA-412</a></td><td>15.1 Studio inline clone Avatar (จาก Persona Template · avatar-only) (FR20)</td><td><span class="badge b-warn">In Progress</span></td><td class="muted">Theerapat L (Boat)</td><td class="muted">dev ทำต่อ</td></tr>
+      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-413">TAKRA-413</a></td><td>15.2 Live targets revive (FR16)</td><td><span class="badge b-warn">In Progress</span></td><td class="muted">Theerapat L (Boat)</td><td class="muted">dev ทำต่อ</td></tr>
+      <tr style="background:#fafbfd"><td colspan="5"><strong>E16 · ตั้งค่า/Usage</strong> — ค้าง 5 ใบ</td></tr>
+      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-414">TAKRA-414</a></td><td>16.1 Capability-based rendering foundation (UX-DR1)</td><td><span class="badge b-now">RTT</span></td><td class="muted">Sahachart T (GOLF)</td><td class="muted">QA verify → flip</td></tr>
+      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-415">TAKRA-415</a></td><td>16.2 Usage view unification - shared Owner + Operator (UX-DR2/UX-DR3)</td><td><span class="badge b-now">RTT</span></td><td class="muted">Sahachart T (GOLF)</td><td class="muted">QA verify → flip</td></tr>
+      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-416">TAKRA-416</a></td><td>16.3 Notifications delivery — email (SES) + in-app feed + persist (UX-DR6)</td><td><span class="badge b-skip">To Do</span></td><td class="muted">Theerapat L (Boat)</td><td class="muted">ยังไม่เริ่ม</td></tr>
+      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-417">TAKRA-417</a></td><td>16.4 Risk Word card split per-category (UX-DR8)</td><td><span class="badge b-now">RTT</span></td><td class="muted">Sahachart T (GOLF)</td><td class="muted">QA verify → flip</td></tr>
+      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-418">TAKRA-418</a></td><td>16.5 Profile read-only + Security removal to Hub/Zitadel deep-link (UX-DR4/UX-DR5)</td><td><span class="badge b-now">RTT</span></td><td class="muted">Sahachart T (GOLF)</td><td class="muted">QA verify → flip</td></tr>
+      <tr style="background:#fafbfd"><td colspan="5"><strong>ใบ integration (ไม่ผูก epic)</strong> — ค้าง 20 ใบ</td></tr>
+      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-543">TAKRA-543</a></td><td>[Integration] — ai-event-log-write (Epic 8 · Story 8.1+8.2)</td><td><span class="badge b-skip">To Do</span></td><td class="muted">Wuttichai W (No)</td><td class="muted">ยังไม่เริ่ม</td></tr>
+      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-544">TAKRA-544</a></td><td>[Integration] — ai-event-log-backfill (Epic 8 · Story 8.4)</td><td><span class="badge b-skip">To Do</span></td><td class="muted">Wuttichai W (No)</td><td class="muted">ยังไม่เริ่ม</td></tr>
+      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-545">TAKRA-545</a></td><td>[Integration] — erasure-cascade (Epic 8 · Story 8.5)</td><td><span class="badge b-skip">To Do</span></td><td class="muted">Wuttichai W (No)</td><td class="muted">ยังไม่เริ่ม</td></tr>
+      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-546">TAKRA-546</a></td><td>[Integration] — mvp2-live-console-sse (Epic 9 · Story 9.1)</td><td><span class="badge b-skip">To Do</span></td><td class="muted">Wuttichai W (No)</td><td class="muted">ยังไม่เริ่ม</td></tr>
+      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-547">TAKRA-547</a></td><td>[Integration] — mvp2-viewer-telemetry (Epic 9 · Story 9.7)</td><td><span class="badge b-skip">To Do</span></td><td class="muted">Wuttichai W (No)</td><td class="muted">ยังไม่เริ่ม</td></tr>
+      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-548">TAKRA-548</a></td><td>[Integration] — mvp2-post-live-recap (Epic 9 · Story 9.6)</td><td><span class="badge b-skip">To Do</span></td><td class="muted">Wuttichai W (No)</td><td class="muted">ยังไม่เริ่ม</td></tr>
+      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-549">TAKRA-549</a></td><td>[Integration] — mvp2-voice-clone-provider (Epic 10 · Story 10.4)</td><td><span class="badge b-skip">To Do</span></td><td class="muted">Wuttichai W (No)</td><td class="muted">ยังไม่เริ่ม</td></tr>
+      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-550">TAKRA-550</a></td><td>[Integration] — mvp2-voice-pdpa-consent (Epic 10 · Story 10.3)</td><td><span class="badge b-skip">To Do</span></td><td class="muted">Wuttichai W (No)</td><td class="muted">ยังไม่เริ่ม</td></tr>
+      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-551">TAKRA-551</a></td><td>[Integration] — mvp2-voice-revoke-delete (Epic 10 · Story 10.5)</td><td><span class="badge b-skip">To Do</span></td><td class="muted">Wuttichai W (No)</td><td class="muted">ยังไม่เริ่ม</td></tr>
+      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-555">TAKRA-555</a></td><td>[Integration] — mvp2-usage-metering (Epic 12 · Story 12.1)</td><td><span class="badge b-skip">To Do</span></td><td class="muted">Wuttichai W (No)</td><td class="muted">ยังไม่เริ่ม</td></tr>
+      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-556">TAKRA-556</a></td><td>[Integration] — ⛔ mvp2-hub-usage-push (Epic 12 · Story 12.2) — BLOCKED (Hub)</td><td><span class="badge b-skip">To Do</span></td><td class="muted">Wuttichai W (No)</td><td class="muted">ยังไม่เริ่ม</td></tr>
+      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-557">TAKRA-557</a></td><td>[Integration] — mvp2-cap-enforcement (Epic 12 · Story 12.3)</td><td><span class="badge b-skip">To Do</span></td><td class="muted">Wuttichai W (No)</td><td class="muted">ยังไม่เริ่ม</td></tr>
+      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-558">TAKRA-558</a></td><td>[Integration] — mvp2-riskword-to-engine (Epic 13 · Story 13.1)</td><td><span class="badge b-skip">To Do</span></td><td class="muted">Wuttichai W (No)</td><td class="muted">ยังไม่เริ่ม</td></tr>
+      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-559">TAKRA-559</a></td><td>[Integration] — ⛔ mvp2-engine-tool-calling-contract (Epic 13 · Story 13.2) — BLOCKED (Engine)</td><td><span class="badge b-skip">To Do</span></td><td class="muted">Wuttichai W (No)</td><td class="muted">ยังไม่เริ่ม</td></tr>
+      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-560">TAKRA-560</a></td><td>[Integration] — mvp2-tool-reply-observability (Epic 13 · Story 13.3)</td><td><span class="badge b-skip">To Do</span></td><td class="muted">Wuttichai W (No)</td><td class="muted">ยังไม่เริ่ม</td></tr>
+      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-561">TAKRA-561</a></td><td>[Integration] — mvp2-rtmp-target-config (Epic 14 · Story 14.1)</td><td><span class="badge b-skip">To Do</span></td><td class="muted">Wuttichai W (No)</td><td class="muted">ยังไม่เริ่ม</td></tr>
+      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-562">TAKRA-562</a></td><td>[Integration] — mvp2-rtmp-per-platform-health (Epic 14 · Story 14.3)</td><td><span class="badge b-skip">To Do</span></td><td class="muted">Wuttichai W (No)</td><td class="muted">ยังไม่เริ่ม</td></tr>
+      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-563">TAKRA-563</a></td><td>[Integration] — ⛔ mvp2-rtmp-egress-fanout (Epic 14 · Story 14.2) — BLOCKED (Engine)</td><td><span class="badge b-skip">To Do</span></td><td class="muted">Wuttichai W (No)</td><td class="muted">ยังไม่เริ่ม</td></tr>
+      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-564">TAKRA-564</a></td><td>[Integration] — mvp2-live-targets-revive 🟢 (Epic 15 · Story 15.2)</td><td><span class="badge b-skip">To Do</span></td><td class="muted">Wuttichai W (No)</td><td class="muted">ยังไม่เริ่ม</td></tr>
+      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-767">TAKRA-767</a></td><td>[takra-ai] ลิงก์ยกเลิกการแจ้งเตือนตอบ 500 ถ้า workspace ถูกลบไปแล้ว (โทเคนไม่มีวันหมดอายุ)</td><td><span class="badge b-skip">To Do</span></td><td class="muted">Theerapat L (Boat)</td><td class="muted">ยังไม่เริ่ม</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<div class="foot">
+  TAKRA AI · MVP-2 · QA (Ice) · จัดทำ 2026-08-21 · ข้อมูลสถานะจาก Jira project TAKRA + <code>MVP2-QA-DEFINITION-OF-DONE.md</code> v1.1 + <code>release/2026/08/release-2026-08-19-gate.md</code>
+</div>
+
+</main>
+<button class="totop" id="toTop" type="button" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ กลับขึ้นบน</button>
+<a id="hub-back-btn" href="https://wanlee-tankunnatam.github.io/qa-test-reports/timeline/?project=ai" title="กลับไปหน้ารวม Timeline" style="position:fixed;top:12px;right:14px;z-index:99999;display:inline-flex;align-items:center;gap:7px;padding:10px 18px;border-radius:999px;background:#ffffff;color:#1e3a8a;font-size:14px;font-weight:800;text-decoration:none;box-shadow:0 4px 16px rgba(0,0,0,.35);border:2px solid #1e3a8a;font-family:'Segoe UI','Sarabun',system-ui,sans-serif">🗓️ Timeline ทั้งหมด</a>
+<script>
+(function(){
+  // เน้นเฉพาะงานของ QA — หรี่แถวที่ติดป้าย "ไม่ใช่ QA" (ไม่ซ่อน เพราะตารางมี rowspan)
+  var btn = document.getElementById('qaOnly');
+  if (btn) btn.addEventListener('click', function(){
+    var on = document.body.classList.toggle('qa-only');
+    btn.classList.toggle('on', on);
+    btn.textContent = on ? '↺ แสดงทุกงาน' : '🧪 เน้นเฉพาะงานของ QA';
+  });
+
+  // สารบัญไฮไลต์หัวข้อที่กำลังอ่าน
+  var links = [].slice.call(document.querySelectorAll('nav.toc ol.toc-l a'));
+  var secs = links.map(function(a){ return document.querySelector(a.getAttribute('href')); });
+  function spy(){
+    var best = 0;
+    secs.forEach(function(sec, i){ if (sec && sec.getBoundingClientRect().top <= 120) best = i; });
+    links.forEach(function(a, i){ a.classList.toggle('active', i === best); });
+    var t = document.getElementById('toTop');
+    if (t) t.classList.toggle('show', window.scrollY > 700);
+  }
+  window.addEventListener('scroll', spy, {passive:true});
+  window.addEventListener('resize', spy);
+  spy();
+})();
+</script></body>
+</html>
