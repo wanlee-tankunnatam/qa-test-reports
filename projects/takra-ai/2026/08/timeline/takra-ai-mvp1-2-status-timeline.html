@@ -136,6 +136,35 @@
   @media print { nav.toc { display: none; } main.page { padding-left: 16px; } }
   .foot { text-align: center; color: var(--muted); font-size: 13px; padding: 18px; }
   @media print { .slide { break-inside: avoid; box-shadow: none; } body { background: #fff; padding: 0; } }
+
+  /* ---- แผนภูมิความคืบหน้าการเทส (§6) — สีชุดสถานะ ตรวจด้วย validate_palette.js บนพื้นสว่างแล้วผ่านครบ ---- */
+  .pchart { margin: 6px 0 2px; }
+  .pchart h4 { font-size: 13px; font-weight: 800; color: var(--ink); margin: 16px 0 2px; }
+  .pchart .scale { font-size: 11.5px; color: var(--muted); margin-bottom: 9px; }
+  .plegend { display: flex; gap: 15px; flex-wrap: wrap; font-size: 12.5px; color: var(--muted); margin: 12px 0 4px; }
+  .plegend .k { display: inline-block; width: 22px; height: 11px; border-radius: 4px; vertical-align: -1px; margin-right: 6px; }
+  .prow { display: grid; grid-template-columns: 214px 1fr 46px 92px; align-items: center; gap: 10px; padding: 3px 0; }
+  .prow .pl { font-size: 12.5px; color: var(--ink); font-weight: 600; line-height: 1.35; }
+  .prow .pl small { display: block; font-weight: 500; color: var(--muted); font-size: 11px; }
+  .phead { font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); font-weight: 700; padding-bottom: 2px; }
+  .phead .ppct, .phead .prest { color: var(--muted); font-weight: 700; font-size: 10.5px; }
+  .pbar { display: flex; gap: 2px; height: 16px; }
+  .pbar i { display: block; height: 100%; border-radius: 4px; min-width: 3px;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .s-pass { background: #16a34a; }
+  .s-issue { background: #7c3aed; }
+  /* ไม่ผ่าน มีลายทแยงกำกับ — เขียว↔แดงเป็นคู่ที่คนตาบอดสีแดง-เขียวแยกไม่ออก สีอย่างเดียวจึงไม่พอ */
+  .s-fail { background-color: #dc2626;
+    background-image: repeating-linear-gradient(45deg, rgba(255,255,255,.55) 0 2px, transparent 2px 4.5px); }
+  .s-rest { background: #e3e6ed; }
+  .ppct { font-size: 12.5px; font-weight: 800; text-align: right; font-variant-numeric: tabular-nums; }
+  .prest { font-size: 11.5px; color: var(--muted); white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .prest b { color: var(--danger); font-weight: 800; }
+  @media (max-width: 760px) {
+    .prow { grid-template-columns: 1fr 46px 86px; grid-template-areas: "l l l" "b p r"; gap: 4px 8px; padding: 6px 0; }
+    .prow .pl { grid-area: l; } .prow .ptrack { grid-area: b; } .prow .ppct { grid-area: p; } .prow .prest { grid-area: r; }
+    .phead { display: none; }
+  }
 </style>
 </head>
 <body>
@@ -939,6 +968,44 @@
     </tbody>
   </table>
   </div>
+
+
+  <h3>▸ กราฟ % — อะไรเทสไปแล้วเท่าไร เหลืออะไรอยู่</h3>
+  <p>ความยาวแถบ = <strong>จำนวนเคสที่ต้องเทส</strong> (ไม่นับเคสข้าม) · สีในแถบ = ผลที่บันทึกไว้จริง · ตัวเลขขวาสุดคือของที่<strong>ยังไม่ได้แตะ</strong> · ข้อมูลชุด ส.ค. 2026 ณ 21 ส.ค.</p>
+  <div class="plegend"><span><span class="k s-pass"></span>ผ่าน</span><span><span class="k s-fail"></span>ไม่ผ่าน (มีลายทแยง)</span><span><span class="k s-issue"></span>พัก / ติดบล็อก</span><span><span class="k s-rest"></span>ยังไม่เทส</span></div>
+  <div class="pchart">
+    <h4>ภาพรวมต่อใบ epic</h4>
+    <div class="scale">มาตราส่วนของกราฟนี้: เต็มความกว้าง = 437 เคส (ขนาดของ MVP-2)</div>
+      <div class="prow phead"><div>กลุ่ม</div><div>สัดส่วนผลเทส</div><div class="ppct">เทสแล้ว</div><div class="prest">ยังไม่เทส</div></div>
+      <div class="prow"><div class="pl">TAKRA-219 · MVP-1<small>ทดสอบแมนนัว MVP 1 · 137 เคสที่ต้องเทส (ข้าม 4)</small></div><div class="ptrack"><div class="pbar" style="width:31.4%" title="TAKRA-219 · MVP-1 — ต้องเทส 137 เคส · ผ่าน 80 · ไม่ผ่าน 23 · พัก/บล็อก 16 · ยังไม่เทส 18"><i class="s-pass" style="flex:80" title="ผ่าน 80 เคส (58%)"></i><i class="s-issue" style="flex:16" title="พัก/ติดบล็อก 16 เคส (12%)"></i><i class="s-fail" style="flex:23" title="ไม่ผ่าน 23 เคส (17%)"></i><i class="s-rest" style="flex:18" title="ยังไม่เทส 18 เคส (13%)"></i></div></div><div class="ppct">87%</div><div class="prest">เหลือ 18</div></div>
+      <div class="prow"><div class="pl">TAKRA-474 · MVP-2<small>ทดสอบ Manual MVP 2 · 437 เคสที่ต้องเทส</small></div><div class="ptrack"><div class="pbar" style="width:100.0%" title="TAKRA-474 · MVP-2 — ต้องเทส 437 เคส · ผ่าน 79 · ไม่ผ่าน 47 · พัก/บล็อก 0 · ยังไม่เทส 311"><i class="s-pass" style="flex:79" title="ผ่าน 79 เคส (18%)"></i><i class="s-fail" style="flex:47" title="ไม่ผ่าน 47 เคส (11%)"></i><i class="s-rest" style="flex:311" title="ยังไม่เทส 311 เคส (71%)"></i></div></div><div class="ppct">29%</div><div class="prest">เหลือ <b>311</b></div></div>
+  </div>
+  <div class="pchart">
+    <h4>ราย epic — MVP-1 (ใต้ TAKRA-219)</h4>
+    <div class="scale">มาตราส่วนของกราฟนี้: เต็มความกว้าง = 93 เคส (epic ที่ใหญ่ที่สุดในชุด)</div>
+      <div class="prow phead"><div>กลุ่ม</div><div>สัดส่วนผลเทส</div><div class="ppct">เทสแล้ว</div><div class="prest">ยังไม่เทส</div></div>
+      <div class="prow"><div class="pl">1 · เข้าระบบ &amp; รากฐาน Workspace<small>26 เคสที่ต้องเทส</small></div><div class="ptrack"><div class="pbar" style="width:28.0%" title="1 · เข้าระบบ & รากฐาน Workspace — ต้องเทส 26 เคส · ผ่าน 17 · ไม่ผ่าน 2 · พัก/บล็อก 7 · ยังไม่เทส 0"><i class="s-pass" style="flex:17" title="ผ่าน 17 เคส (65%)"></i><i class="s-issue" style="flex:7" title="พัก/ติดบล็อก 7 เคส (27%)"></i><i class="s-fail" style="flex:2" title="ไม่ผ่าน 2 เคส (8%)"></i></div></div><div class="ppct">100%</div><div class="prest">เทสครบ</div></div>
+      <div class="prow"><div class="pl">2 · คลังของ Workspace<small>39 เคสที่ต้องเทส</small></div><div class="ptrack"><div class="pbar" style="width:41.9%" title="2 · คลังของ Workspace — ต้องเทส 39 เคส · ผ่าน 28 · ไม่ผ่าน 9 · พัก/บล็อก 2 · ยังไม่เทส 0"><i class="s-pass" style="flex:28" title="ผ่าน 28 เคส (72%)"></i><i class="s-issue" style="flex:2" title="พัก/ติดบล็อก 2 เคส (5%)"></i><i class="s-fail" style="flex:9" title="ไม่ผ่าน 9 เคส (23%)"></i></div></div><div class="ppct">100%</div><div class="prest">เทสครบ</div></div>
+      <div class="prow"><div class="pl">3 · สร้างไลฟ์ใน Studio<small>39 เคสที่ต้องเทส</small></div><div class="ptrack"><div class="pbar" style="width:41.9%" title="3 · สร้างไลฟ์ใน Studio — ต้องเทส 39 เคส · ผ่าน 22 · ไม่ผ่าน 11 · พัก/บล็อก 6 · ยังไม่เทส 0"><i class="s-pass" style="flex:22" title="ผ่าน 22 เคส (56%)"></i><i class="s-issue" style="flex:6" title="พัก/ติดบล็อก 6 เคส (15%)"></i><i class="s-fail" style="flex:11" title="ไม่ผ่าน 11 เคส (28%)"></i></div></div><div class="ppct">100%</div><div class="prest">เทสครบ</div></div>
+      <div class="prow"><div class="pl">4 · ออกอากาศ<small>13 เคสที่ต้องเทส</small></div><div class="ptrack"><div class="pbar" style="width:14.0%" title="4 · ออกอากาศ — ต้องเทส 13 เคส · ผ่าน 4 · ไม่ผ่าน 0 · พัก/บล็อก 1 · ยังไม่เทส 8"><i class="s-pass" style="flex:4" title="ผ่าน 4 เคส (31%)"></i><i class="s-issue" style="flex:1" title="พัก/ติดบล็อก 1 เคส (8%)"></i><i class="s-rest" style="flex:8" title="ยังไม่เทส 8 เคส (62%)"></i></div></div><div class="ppct">38%</div><div class="prest">เหลือ 8</div></div>
+      <div class="prow"><div class="pl">5 · แจ้งเตือน operator &amp; risk-block<small>6 เคสที่ต้องเทส</small></div><div class="ptrack"><div class="pbar" style="width:6.5%" title="5 · แจ้งเตือน operator & risk-block — ต้องเทส 6 เคส · ผ่าน 0 · ไม่ผ่าน 0 · พัก/บล็อก 0 · ยังไม่เทส 6"><i class="s-rest" style="flex:6" title="ยังไม่เทส 6 เคส (100%)"></i></div></div><div class="ppct">0%</div><div class="prest">เหลือ 6</div></div>
+      <div class="prow"><div class="pl">6 · AI ช่วยเขียน Script<small>10 เคสที่ต้องเทส</small></div><div class="ptrack"><div class="pbar" style="width:10.8%" title="6 · AI ช่วยเขียน Script — ต้องเทส 10 เคส · ผ่าน 9 · ไม่ผ่าน 1 · พัก/บล็อก 0 · ยังไม่เทส 0"><i class="s-pass" style="flex:9" title="ผ่าน 9 เคส (90%)"></i><i class="s-fail" style="flex:1" title="ไม่ผ่าน 1 เคส (10%)"></i></div></div><div class="ppct">100%</div><div class="prest">เทสครบ</div></div>
+      <div class="prow"><div class="pl">Full E2E Flow<small>4 เคสที่ต้องเทส</small></div><div class="ptrack"><div class="pbar" style="width:4.3%" title="Full E2E Flow — ต้องเทส 4 เคส · ผ่าน 0 · ไม่ผ่าน 0 · พัก/บล็อก 0 · ยังไม่เทส 4"><i class="s-rest" style="flex:4" title="ยังไม่เทส 4 เคส (100%)"></i></div></div><div class="ppct">0%</div><div class="prest">เหลือ 4</div></div>
+  </div>
+  <div class="pchart">
+    <h4>ราย epic — MVP-2 (ใต้ TAKRA-474)</h4>
+    <div class="scale">มาตราส่วนเดียวกับกราฟบน: เต็มความกว้าง = 93 เคส</div>
+      <div class="prow phead"><div>กลุ่ม</div><div>สัดส่วนผลเทส</div><div class="ppct">เทสแล้ว</div><div class="prest">ยังไม่เทส</div></div>
+      <div class="prow"><div class="pl">1 · คลัง Avatar / Voice self-service<small>93 เคสที่ต้องเทส</small></div><div class="ptrack"><div class="pbar" style="width:100.0%" title="1 · คลัง Avatar / Voice self-service — ต้องเทส 93 เคส · ผ่าน 38 · ไม่ผ่าน 0 · พัก/บล็อก 0 · ยังไม่เทส 55"><i class="s-pass" style="flex:38" title="ผ่าน 38 เคส (41%)"></i><i class="s-rest" style="flex:55" title="ยังไม่เทส 55 เคส (59%)"></i></div></div><div class="ppct">41%</div><div class="prest">เหลือ <b>55</b></div></div>
+      <div class="prow"><div class="pl">2 · Studio &amp; Live-Creation riders<small>74 เคสที่ต้องเทส</small></div><div class="ptrack"><div class="pbar" style="width:79.6%" title="2 · Studio & Live-Creation riders — ต้องเทส 74 เคส · ผ่าน 30 · ไม่ผ่าน 9 · พัก/บล็อก 0 · ยังไม่เทส 35"><i class="s-pass" style="flex:30" title="ผ่าน 30 เคส (41%)"></i><i class="s-fail" style="flex:9" title="ไม่ผ่าน 9 เคส (12%)"></i><i class="s-rest" style="flex:35" title="ยังไม่เทส 35 เคส (47%)"></i></div></div><div class="ppct">53%</div><div class="prest">เหลือ <b>35</b></div></div>
+      <div class="prow"><div class="pl">3 · Multi-Platform RTMP<small>50 เคสที่ต้องเทส</small></div><div class="ptrack"><div class="pbar" style="width:53.8%" title="3 · Multi-Platform RTMP — ต้องเทส 50 เคส · ผ่าน 2 · ไม่ผ่าน 38 · พัก/บล็อก 0 · ยังไม่เทส 10"><i class="s-pass" style="flex:2" title="ผ่าน 2 เคส (4%)"></i><i class="s-fail" style="flex:38" title="ไม่ผ่าน 38 เคส (76%)"></i><i class="s-rest" style="flex:10" title="ยังไม่เทส 10 เคส (20%)"></i></div></div><div class="ppct">80%</div><div class="prest">เหลือ 10</div></div>
+      <div class="prow"><div class="pl">4 · ห้องคุมไลฟ์ · คนดู · Recap<small>72 เคสที่ต้องเทส</small></div><div class="ptrack"><div class="pbar" style="width:77.4%" title="4 · ห้องคุมไลฟ์ · คนดู · Recap — ต้องเทส 72 เคส · ผ่าน 0 · ไม่ผ่าน 0 · พัก/บล็อก 0 · ยังไม่เทส 72"><i class="s-rest" style="flex:72" title="ยังไม่เทส 72 เคส (100%)"></i></div></div><div class="ppct">0%</div><div class="prest">เหลือ <b>72</b></div></div>
+      <div class="prow"><div class="pl">5 · AIEventLog<small>40 เคสที่ต้องเทส</small></div><div class="ptrack"><div class="pbar" style="width:43.0%" title="5 · AIEventLog — ต้องเทส 40 เคส · ผ่าน 2 · ไม่ผ่าน 0 · พัก/บล็อก 0 · ยังไม่เทส 38"><i class="s-pass" style="flex:2" title="ผ่าน 2 เคส (5%)"></i><i class="s-rest" style="flex:38" title="ยังไม่เทส 38 เคส (95%)"></i></div></div><div class="ppct">5%</div><div class="prest">เหลือ <b>38</b></div></div>
+      <div class="prow"><div class="pl">6 · Billing / Usage<small>37 เคสที่ต้องเทส</small></div><div class="ptrack"><div class="pbar" style="width:39.8%" title="6 · Billing / Usage — ต้องเทส 37 เคส · ผ่าน 1 · ไม่ผ่าน 0 · พัก/บล็อก 0 · ยังไม่เทส 36"><i class="s-pass" style="flex:1" title="ผ่าน 1 เคส (3%)"></i><i class="s-rest" style="flex:36" title="ยังไม่เทส 36 เคส (97%)"></i></div></div><div class="ppct">3%</div><div class="prest">เหลือ <b>36</b></div></div>
+      <div class="prow"><div class="pl">7 · Settings &amp; Account IA<small>64 เคสที่ต้องเทส</small></div><div class="ptrack"><div class="pbar" style="width:68.8%" title="7 · Settings & Account IA — ต้องเทส 64 เคส · ผ่าน 6 · ไม่ผ่าน 0 · พัก/บล็อก 0 · ยังไม่เทส 58"><i class="s-pass" style="flex:6" title="ผ่าน 6 เคส (9%)"></i><i class="s-rest" style="flex:58" title="ยังไม่เทส 58 เคส (91%)"></i></div></div><div class="ppct">9%</div><div class="prest">เหลือ <b>58</b></div></div>
+      <div class="prow"><div class="pl">Full E2E Flow<small>7 เคสที่ต้องเทส</small></div><div class="ptrack"><div class="pbar" style="width:7.5%" title="Full E2E Flow — ต้องเทส 7 เคส · ผ่าน 0 · ไม่ผ่าน 0 · พัก/บล็อก 0 · ยังไม่เทส 7"><i class="s-rest" style="flex:7" title="ยังไม่เทส 7 เคส (100%)"></i></div></div><div class="ppct">0%</div><div class="prest">เหลือ 7</div></div>
+  </div>
+  <p class="muted" style="font-size:12.5px">อ่านกราฟนี้ยังไง: แถบที่<strong>เทาเกือบทั้งเส้น</strong> = ยังไม่เริ่มเทส (งานที่เหลือจริง) · แถบที่<strong>แดงเป็นก้อน</strong> = เทสแล้วแต่ของไม่ผ่าน (งานที่ต้องส่งกลับ dev) · แถบที่<strong>เขียวยาว</strong> = ปิดได้แล้ว เหลือแค่ไล่ปิดใบใน Jira<br>เคสข้าม 4 เคส (MVP-1) ไม่ถูกนับในกราฟ เพราะไม่ใช่ของที่ต้องเทสในรอบนี้ · ตัวเลขดิบทั้งหมดอยู่ในตารางราย epic ด้านล่าง</p>
 
   <div class="warnbox"><strong>อย่าเอาเลข 2 ชุดมาปนกัน</strong> — <a href="#s0">§0</a> ที่เขียนว่า <code>122 suite · 109 pass · 0 fail</code> คือ
   <strong>เทสอัตโนมัติ</strong> ส่วนตารางนี้คือ <strong>เทสแมนนวลด้วยมือบน UAT</strong> ซึ่งมี <strong>ไม่ผ่าน 70 เคส</strong> (MVP-1 23 + MVP-2 47)
