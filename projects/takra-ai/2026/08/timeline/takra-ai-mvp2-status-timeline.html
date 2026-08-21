@@ -584,7 +584,7 @@
 <section class="slide" id="s3">
   <h2><span class="num">5</span>👥 งานค้างอยู่ที่ใคร — QA / Dev / คนอื่น</h2>
   <p class="lead">กติกาอ่านสถานะ: <span class="badge b-warn">To Do / In Progress</span> = ลูกอยู่ที่ <strong>Dev</strong> ·
-    <span class="badge b-info">READY TO TEST</span> = dev ส่งของแล้ว ลูกอยู่ที่ <strong>QA</strong> ·
+    <span class="badge b-info">READY TO TEST</span> = dev ส่งของแล้ว <strong>รอการยืนยัน</strong> (ไม่ใช่คิวของ QA — ดู <a href="#qa">§1</a>) ·
     <span class="badge b-skip">⏭ blocked</span> = ลูกไม่ได้อยู่ที่ทั้งคู่ ต้องไปตามเจ้าของ blocker</p>
   <div class="note">
     <strong>การแบ่งงานเทสในทีมนี้:</strong> QA ออกแบบ test case ทุกชั้น · <strong>Dev เขียนสคริปต์ integration</strong> (co-located ตาม TDD) ·
@@ -596,9 +596,9 @@
   <table>
     <thead><tr><th style="width:150px">เจ้าของ</th><th style="width:70px">ค้าง</th><th>รายการ</th><th>ปลดอะไรถ้าทำเสร็จ</th></tr></thead>
     <tbody>
-      <tr><td><strong>QA (Ice)</strong></td><td><span class="badge b-info">5</span></td>
-        <td>ส่งหลักฐานผลเทสให้เจ้าของใบ flip 5 ใบ (385 · 414 · 415 · 417 · 418) · manual E10 ที่ค้าง + วาง data plan · รัน release gate 26 ส.ค. · ติดตาม <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-760">TAKRA-760</a> (P2 ยังไม่มีใบ) · ขอบัญชี staff จาก Ops</td>
-        <td>ปิด E16 ได้ทั้ง epic · gate เดินต่อไป go-live</td></tr>
+      <tr><td><strong>QA (Ice)</strong></td><td><span class="badge b-info">3</span></td>
+        <td>เขียนสคริปต์ E2E 8 ใบใต้ <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-487">TAKRA-487</a> · เขียน fullloop automate ของ E10 · contract spec ของ E13 (รอ schema จาก Engine)<br><span class="muted">ที่เคยอยู่ในช่องนี้แต่ไม่ใช่หน้าที่ QA — flip ใบ · รัน release gate · ขอบัญชี staff · ติดตาม <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-760">TAKRA-760</a> — ย้ายไป <a href="#qa">§1</a> แล้ว</span></td>
+        <td>ชั้น E2E ของ MVP-2 ครบทั้ง 9 epic</td></tr>
       <tr><td><strong>Dev (Boat)</strong></td><td><span class="badge b-warn">12</span></td>
         <td>E9 ×6 (722 · 386 · 387 · 388 · 389 · 390) · E10 750/751 · E15 412/413 · E16 416 · E8 755</td>
         <td>ห้องคุมไลฟ์ครบ · E10 ขึ้น prod ได้ · เมนูการแจ้งเตือนมีของ</td></tr>
@@ -642,21 +642,21 @@
         <td><span class="badge b-info">RTT 7 ใบ</span> ส่งครบแล้ว · ค้าง 755 (DSAR ผู้ชม) To Do · <strong>ใบ integration 543/544/545 ยัง To Do ทั้งที่ไฟล์ <code>ai-event-*.int-spec.ts</code> อยู่ใน repo แล้ว</strong></td>
         <td>design 12 TC ครบ · script UI 1 ไฟล์ (<code>ai-history-8-3</code>) · <strong>รันได้ 1/12</strong> — อีก 11 เปิดหน้าไม่ได้</td>
         <td><span class="badge b-danger">Ops</span></td>
-        <td>Ops ออกบัญชี staff → QA ยิง 11 TC รวดเดียว (1 วัน) → เสนอ flip ทั้ง epic</td>
+        <td>Ops ออกบัญชี staff → ทีมไล่รัน 11 TC ที่ QA เขียนไว้ → เจ้าของใบ flip ทั้ง epic</td>
       </tr>
       <tr>
         <td><strong>E9</strong></td>
         <td><span class="badge b-warn">ค้าง 6 ใบ</span> 722 (ดึงคอมเมนต์/ยอดคนดูเอง) + 386/387/388 In Progress · 389/390 ยังไม่เริ่ม · integration 546/547/548 To Do</td>
         <td>design ~30 TC · <strong>script 11 TC เขียวแล้ว</strong> (รายการ session + สรุปหลังไลฟ์) · ส่วน SSE ⏭ ไม่มี live infra</td>
         <td><span class="badge b-warn">Dev</span> + <span class="badge b-skip">Infra</span></td>
-        <td>QA ทำได้แค่ flip 385 (และ 384 ที่ตอนนี้ปลดแล้ว เพราะ TAKRA-524 ปิดไปแล้ว) · ที่เหลือรอ dev ส่งของ</td>
+        <td>ฝั่ง QA ไม่มีอะไรต้องเขียนเพิ่มตอนนี้ — 385 รอเจ้าของใบ flip (และ 384 ที่ตอนนี้ปลดแล้ว เพราะ TAKRA-524 ปิดไปแล้ว) · ที่เหลือรอ dev ส่งของ</td>
       </tr>
       <tr>
         <td><strong>E10</strong></td>
         <td>391/392 Done · 393/394/395/723 <span class="badge b-info">RTT</span> · <strong>750/751 In Progress = ประตูขึ้น prod</strong> · integration ~10 ไฟล์เขียวแล้ว (ใบ 549/550/551 ยังไม่ปิด)</td>
         <td>design ~25 TC · script UI 6 เขียว · <strong>manual 8 TC PASS แล้ว</strong> · ค้าง delete/upload/consent เต็มวง (ws โดนใช้ชนกัน) · fullloop ยังไม่เขียน</td>
         <td><span class="badge b-now">QA</span> + <span class="badge b-warn">Dev</span></td>
-        <td>QA จอง data window ให้จบ manual ที่เหลือ · Dev+BA ปิด 750/751 ก่อนถึงจะ deploy ได้</td>
+        <td>ต้องจอง data window ให้ไล่รัน manual ที่เหลือ (ไม่ใช่งาน QA) · QA เหลือเขียน fullloop automate · Dev+BA ปิด 750/751 ก่อนถึงจะ deploy ได้</td>
       </tr>
       <tr>
         <td><strong>E11</strong></td>
@@ -670,7 +670,7 @@
         <td><span class="badge b-warn">401/403 In Progress · 402/404 To Do</span> · 402 ติด Hub</td>
         <td>design แล้ว · ยังไม่มีของให้เทส</td>
         <td><span class="badge b-warn">Dev</span> + <span class="badge b-skip">Hub</span></td>
-        <td>QA ไม่มีอะไรทำจนกว่าจะมี RTT ใบแรก</td>
+        <td>QA เขียนเคสไว้แล้ว — รอของถึงจะเขียนสคริปต์ต่อได้</td>
       </tr>
       <tr>
         <td><strong>E13</strong></td>
@@ -691,20 +691,26 @@
         <td><span class="badge b-warn">412/413 In Progress</span></td>
         <td><strong>TAKRA-530 เทสครบวง PASS แล้ว</strong> (<code>live-edit-inplace-530.spec.ts</code>) · 412/413 รอของ</td>
         <td><span class="badge b-warn">Dev</span></td>
-        <td>Dev ปิด 2 ใบ → QA เทสต่อได้ทันที (base spec มีแล้ว)</td>
+        <td>Dev ปิด 2 ใบ → QA ต่อสคริปต์ได้ทันที (base spec มีแล้ว)</td>
       </tr>
       <tr>
         <td><strong>E16</strong></td>
         <td>414/415/417/418 <span class="badge b-info">RTT</span> · ค้างใบเดียว <strong>416 การแจ้งเตือน</strong> (SES ปลดแล้ว 20 ส.ค. — ไม่มี blocker เหลือ)</td>
         <td><strong>automation เขียว + manual verify ครบ 4 ใบ</strong> — เทสจบแล้วจริงๆ</td>
         <td><span class="badge b-now">QA</span> + <span class="badge b-warn">Dev</span></td>
-        <td><strong>QA เสนอ flip 4 ใบเป็น Done ได้เลยวันนี้</strong> · Dev เริ่ม 416</td>
+        <td><strong>เจ้าของใบ flip 4 ใบเป็น Done ได้เลย</strong> (QA ส่งหลักฐานให้แล้ว) · Dev เริ่ม 416</td>
       </tr>
     </tbody>
   </table>
   </div>
 
-  </section>
+  
+  <div class="warnbox">
+    <strong>ข้อสังเกตที่ต้องแก้เชิงกระดาน:</strong> ใบ <code>[MVP2][Integration]</code> 6 ใบ (543 · 544 · 545 · 549 · 550 · 551) ยังเป็น <em>To Do</em>
+    ทั้งที่สคริปต์อยู่ใน repo และเขียวใน CI แล้ว (ตรวจไฟล์จริง <code>apps/api/test/integration/</code> 21 ส.ค.) —
+    สคริปต์ integration เป็นของ dev ตามการแบ่งงานข้างบน ⇒ ควรให้ No ปิดใบให้ตรงความจริงก่อนสรุปเดือน
+  </div>
+</section>
 <section class="slide" id="s4">
   <h2><span class="num">6</span>🚧 แต่ละ epic เหลืออะไร · ติดใบไหนอยู่</h2>
   <p class="lead">อ่านคอลัมน์ “ใบที่กั้นอยู่” เป็นหลัก — ถ้าช่องนั้นว่าง แปลว่า epic นั้นไม่มีอะไรขวาง เหลือแค่คนไปกดปิด</p>
