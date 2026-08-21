@@ -234,31 +234,47 @@
 
   <div class="note"><strong>ขอบเขตงาน QA ในทีมนี้</strong> (ตามการแบ่งงานเทสในทีม): <strong>QA ออกแบบ test case ทุกชั้น (integration · e2e · ui)</strong> · <strong>เขียนสคริปต์ UI / E2E (Playwright)</strong> · <strong>เทสแมนนวลบน UAT</strong> · ส่วนสคริปต์ integration เป็นของ dev (co-located ตาม TDD)<br>⇒ ส่วน<strong>การปิดใบ/flip · รัน release gate + sign-off · ขอบัญชีจาก Ops · จัดคิวงานของ dev</strong> ไม่ใช่หน้าที่ QA — <strong>ตัดออกจากเอกสารนี้แล้ว</strong> (คิวงานของ dev/PM/Ops ไปดูที่กระดาน Jira)</div>
 
-  <h3>▸ งานของ QA ในเฟสนี้ — เขียนเคส · เขียนสคริปต์ · เทสแมนนวล</h3>
+  <div class="note"><strong>3 ชั้นเทส — QA ทำอะไรในแต่ละชั้น</strong><br>
+  · <strong>🌐 UI</strong> — QA ออกแบบเคส + เขียนสคริปต์ + <strong>เทสแมนนวลเอง</strong><br>
+  · <strong>🔄 E2E</strong> — QA ออกแบบเคส + เขียนสคริปต์ + รันเอง<br>
+  · <strong>🔗 Integration</strong> — QA <strong>ออกแบบเคส/contract spec เท่านั้น</strong> · สคริปต์เป็นของ dev (co-located ตาม TDD) ⇒ “integration แดง” = งาน dev</div>
+
+  <h3>▸ 🌐 ชั้น UI — เคส + สคริปต์ + เทสแมนนวล</h3>
   <div class="tw"><table>
-    <thead><tr><th>#</th><th>ทำอะไร</th><th>ใบ</th><th>สถานะตอนนี้</th></tr></thead>
+    <thead><tr><th>ทำอะไร</th><th>ใบ</th><th>สถานะตอนนี้</th></tr></thead>
     <tbody>
-      <tr class="milestone"><td class="day">1</td>
-        <td><strong>เทสแมนนวล E8 ×11 TC แล้วต่อด้วย E11 ×5 story</strong> — impersonation ต้องมี negative test ข้าม workspace</td>
-        <td><a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-381">TAKRA-381</a> · <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-396">TAKRA-396</a>…<a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-400">TAKRA-400</a></td><td>เปิดหน้าไม่ได้ — รอบัญชี platform-staff จาก Ops (<a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-526">TAKRA-526</a>)</td></tr>
-      <tr class="milestone"><td class="day">2</td>
-        <td><strong>ปิด manual E10 ที่ค้าง</strong> — ลบ / อัปโหลด / consent เต็มวง (ต้องจองช่วงที่ workspace ว่าง)</td>
-        <td class="muted">ชุดเคส E10</td><td>manual 8 TC PASS แล้ว · ที่เหลือรอ data window</td></tr>
-      <tr class="milestone"><td class="day">3</td>
-        <td><strong>ไล่เทสแมนนวลที่เหลืออีก 311 เคส</strong> — ห้องคุมไลฟ์ 72 · Settings &amp; IA 58 · AIEventLog 38 · Billing 36 · Avatar/Voice 55 · Studio riders 35</td>
+      <tr class="milestone"><td><strong>เทสแมนนวล E8 ×11 TC → ต่อด้วย E11 ×5 story</strong> — impersonation ต้องมี negative test ข้าม workspace</td>
+        <td><a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-381">TAKRA-381</a> · <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-396">TAKRA-396</a>…<a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-400">TAKRA-400</a></td><td>เปิดหน้าไม่ได้ — รอบัญชี platform-staff (<a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-526">TAKRA-526</a>)</td></tr>
+      <tr class="milestone"><td><strong>ปิด manual E10 ที่ค้าง</strong> — ลบ / อัปโหลด / consent เต็มวง</td>
+        <td class="muted">ชุดเคส E10</td><td>manual 8 TC PASS แล้ว · ที่เหลือรอจอง data window</td></tr>
+      <tr class="milestone"><td><strong>ไล่เทสแมนนวลที่เหลืออีก 304 เคส</strong> — ห้องคุมไลฟ์ 72 · Settings &amp; IA 58 · Avatar/Voice 55 · AIEventLog 38 · Billing 36 · Studio riders 35</td>
         <td class="muted">ดู <a href="#s6">§2</a></td><td>ทยอยได้ตามของที่ dev ส่ง</td></tr>
-      <tr><td class="day">4</td>
-        <td><strong>เขียนสคริปต์ E2E 8 ใบที่เหลือ</strong> ใต้ <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-487">TAKRA-487</a> — Plan Test + Test Case ปิดครบ 9/9 แล้ว</td>
-        <td><a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-515">TAKRA-515</a>…<a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-523">TAKRA-523</a></td><td>To Do ทั้ง 8 ใบ</td></tr>
-      <tr><td class="day">5</td>
-        <td><strong>เขียน fullloop automate ของ E10</strong> — ตอนนี้มีแต่ script UI 6 ตัว</td>
+      <tr><td><strong>เขียน fullloop automate ของ E10</strong> — ตอนนี้มีแต่ script UI 6 ตัว</td>
         <td class="muted">ชุดเคส E10</td><td>ยังไม่เขียน</td></tr>
-      <tr><td class="day">6</td>
-        <td><strong>เขียนเคส/สคริปต์ที่รอของอยู่</strong> — E9 SSE (รอ live infra) · E12 (รอ RTT ใบแรก) · E14 (รอหน้าตั้งค่า RTMP) · contract spec E13</td>
-        <td><a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-406">TAKRA-406</a> <span class="badge b-skip">รอ Engine</span></td><td>design เสร็จแล้วทุก epic</td></tr>
-      <tr><td class="day">7</td>
-        <td><strong>สรุปผลเคสที่รันไม่ได้/ไม่ผ่านส่งเจ้าของใบ</strong> — RTMP 38 (ยังไม่มีของ) · Studio riders 9</td>
+      <tr><td><strong>สรุป 47 เคสที่ไม่ผ่าน/รันไม่ได้ ส่งเจ้าของใบ</strong> — RTMP 38 (ยังไม่มีหน้าตั้งค่า) · Studio riders 9</td>
         <td class="muted">ดู <a href="#s6">§2</a></td><td>ผลบันทึกไว้ในรายงานแล้ว</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>▸ 🔄 ชั้น E2E — เคส + สคริปต์ + รันเอง</h3>
+  <div class="tw"><table>
+    <thead><tr><th>ทำอะไร</th><th>ใบ</th><th>สถานะตอนนี้</th></tr></thead>
+    <tbody>
+      <tr class="milestone"><td><strong>เขียนสคริปต์ E2E 8 ใบที่เหลือ</strong> ใต้ <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-487">TAKRA-487</a> (Epic 8 · 9 · 10 · 12 · 13 · 14 · 15 · 16)</td>
+        <td><a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-515">TAKRA-515</a>…<a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-523">TAKRA-523</a></td><td>To Do ทั้ง 8 ใบ · ปิดแล้ว 1 ใบ (Epic 11 = <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-518">TAKRA-518</a>)</td></tr>
+      <tr><td><strong>รันเคส Full E2E Flow 7 เคสของ MVP-2</strong></td>
+        <td class="muted">ชุดเคส MVP-2</td><td>ยังไม่รันสักเคส (0/7)</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>▸ 🔗 ชั้น Integration — QA ออกแบบเคส/contract spec เท่านั้น</h3>
+  <div class="tw"><table>
+    <thead><tr><th>ทำอะไร</th><th>ใครเขียนสคริปต์</th><th>สถานะตอนนี้</th></tr></thead>
+    <tbody>
+      <tr class="milestone"><td><strong>contract spec ของ E13 tool-calling</strong> — เขียน red-first ไม่ได้จนกว่า Engine ส่ง schema</td>
+        <td class="muted">QA เขียน spec · dev เขียนสคริปต์</td><td>รอ contract จาก Engine (<a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-406">TAKRA-406</a>)</td></tr>
+      <tr><td>เคส integration ของ Epic 8–16 — ออกแบบส่งให้ dev ครบแล้ว</td>
+        <td class="muted">dev · ใบสคริปต์ 20 ใบ (<a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-543">TAKRA-543</a>…<a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-564">TAKRA-564</a>)</td><td>ไม่มีงานค้างฝั่ง QA นอกจาก contract spec ข้างบน</td></tr>
     </tbody>
   </table></div>
 
@@ -303,6 +319,18 @@
   </div>
 
 
+
+
+  <h3>▸ แยกตามชั้นเทส — เคสไหนอยู่ชั้นไหน เทสไปแล้วแค่ไหน</h3>
+  <div class="tw"><table>
+    <thead><tr><th>ชั้น</th><th>เคส</th><th>ต้องเทส</th><th>เทสแล้ว</th><th>ผ่าน</th><th>ไม่ผ่าน</th><th>พัก / บล็อก</th><th>ยังไม่เทส</th><th>สคริปต์ใครเขียน</th></tr></thead>
+    <tbody>
+      <tr class="milestone"><td class="day">🌐 UI</td><td>430</td><td>430</td><td><strong>126 · 29%</strong></td><td>79</td>
+        <td><span class="badge b-danger">47</span></td><td>0 / 0</td><td><strong>304</strong></td><td class="muted">QA</td></tr>
+      <tr><td class="day">🔄 E2E</td><td>7</td><td>7</td><td><span class="badge b-skip">0 · 0%</span></td><td>0</td><td>0</td><td>0 / 0</td><td>7</td><td class="muted">QA · ค้าง 8 ใบใต้ TAKRA-487</td></tr>
+      <tr><td class="day">🔗 Integration</td><td colspan="7" class="muted">ไม่มีเคสอยู่ในชุด UI ชุดนี้ — QA ออกแบบเคส + contract spec · ใบสคริปต์ 20 ใบ (TAKRA-543…564) เป็นของ dev</td><td class="muted">dev</td></tr>
+    </tbody>
+  </table></div>
 
   <h3>▸ ผลเทสแมนนวลของ QA ตอนนี้ถึงไหน — <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-474">TAKRA-474</a></h3>
   <p>ตารางข้างล่างคือ<strong>ผลเทสแมนนวลจริง</strong>
