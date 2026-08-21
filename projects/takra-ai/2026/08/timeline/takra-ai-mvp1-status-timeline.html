@@ -200,8 +200,8 @@
     <div class="toc-brand">takra-ai · MVP-1</div>
     <div class="toc-h">สารบัญ · เฉพาะงานของ QA</div>
     <ol class="toc-l">
-      <li><a href="#qa"><span class="tn">1</span> งานของ QA — เดือนนี้ต้องเขียนอะไร</a></li>
-      <li><a href="#s6"><span class="tn">2</span> สถานะเคส + สคริปต์ที่ QA เขียนไว้</a></li>
+      <li><a href="#qa"><span class="tn">1</span> งานของ QA — เดือนนี้ต้องทำอะไร</a></li>
+      <li><a href="#s6"><span class="tn">2</span> ผลเทสแมนนวล + สถานะสคริปต์ของ QA</a></li>
       <li><a href="#s1"><span class="tn">3</span> หน้าจอที่ต้องเขียนเคสให้ — เมนูไหนพร้อมแค่ไหน</a></li>
       <li><a href="#s2"><span class="tn">4</span> แต่ละ Epic คืออะไร (ใช้ตอนออกแบบเคส)</a></li>
     </ol>
@@ -213,7 +213,7 @@
 <section class="slide cover">
   <div class="kicker" style="color:#ffce9e">Execution Timeline · 21–31 ส.ค. 2026</div>
   <h1>takra-ai · MVP-1 — สิ้นเดือนนี้ถึงไหนแล้ว</h1>
-  <div class="sub"><strong>เอกสารของ QA เท่านั้น</strong> — งานที่ QA ต้องลงมือ (เขียนเคส · เขียนสคริปต์ E2E/UI) และสถานะของเคส/สคริปต์ที่เขียนไว้แล้วในเฟส MVP-1 · คิวงานของ dev/PM/Ops ไม่ได้อยู่ในเอกสารนี้</div>
+  <div class="sub"><strong>เอกสารของ QA เท่านั้น</strong> — งานที่ QA ต้องลงมือ (เขียนเคส · เขียนสคริปต์ E2E/UI · เทสแมนนวล) และสถานะของเคส/สคริปต์ที่เขียนไว้แล้วในเฟส MVP-1 · คิวงานของ dev/PM/Ops ไม่ได้อยู่ในเอกสารนี้</div>
   <div class="chips">
     <span class="chip">MVP-1 · 7 epic</span>
     <span class="chip">137 เคสที่ QA เขียนไว้</span>
@@ -223,39 +223,42 @@
   </div>
 </section>
 <section class="slide" id="qa">
-  <h2><span class="num">1</span>📋 งานของ QA — เดือนนี้ต้องเขียนอะไร</h2>
-  <p class="lead">MVP-1 คือเฟสที่<strong>ต้องขึ้น prod ให้ได้เดือนนี้</strong> — dev ส่งของเกือบครบแล้ว คอขวดคือ<strong>การไล่ปิดใบ</strong>กับ<strong>release gate</strong> ซึ่ง<strong>ไม่ใช่งานของ QA</strong> — ไม่ได้อยู่ในเอกสารนี้ · ฝั่ง QA เหลืองานเขียนเคสกับเขียนสคริปต์ตามตารางข้างล่าง</p>
+  <h2><span class="num">1</span>📋 งานของ QA — เดือนนี้ต้องทำอะไร</h2>
+  <p class="lead">MVP-1 คือเฟสที่<strong>ต้องขึ้น prod ให้ได้เดือนนี้</strong> — dev ส่งของเกือบครบแล้ว คอขวดคือ<strong>การไล่ปิดใบ</strong>กับ<strong>release gate</strong> ซึ่ง<strong>ไม่ใช่งานของ QA</strong> — ไม่ได้อยู่ในเอกสารนี้ · ฝั่ง QA เหลืองานเทสแมนนวล เขียนเคส และเขียนสคริปต์ตามตารางข้างล่าง</p>
 
   <div class="grid4" style="grid-template-columns:repeat(3,1fr)">
     <div class="stat"><div class="n">7</div><div class="l">วันทำงานที่เหลือ</div></div>
-    <div class="stat"><div class="n">18</div><div class="l">เคสที่ QA เขียนไว้แต่ยังไม่มีใครรัน (จาก 137)</div></div>
+    <div class="stat"><div class="n">18</div><div class="l">เคสแมนนวลที่ QA ยังไม่ได้รัน (จาก 137)</div></div>
     <div class="stat"><div class="n">23</div><div class="l">เคสที่เทสแล้ว<strong>ไม่ผ่าน</strong> — ต้องส่งกลับ dev</div></div>
   </div>
 
-  <div class="note"><strong>ขอบเขตงาน QA ในทีมนี้</strong> (ตามการแบ่งงานเทสในทีม): <strong>QA ออกแบบ test case ทุกชั้น (integration · e2e · ui)</strong> และ <strong>เขียนสคริปต์ UI / E2E (Playwright)</strong> · ส่วนสคริปต์ integration เป็นของ dev (co-located ตาม TDD)<br>⇒ การ<strong>ไล่กดเทสด้วยมือ · ปิดใบ · รัน release gate · ขอบัญชีจาก Ops</strong> ไม่ใช่หน้าที่ QA — <strong>ตัดออกจากเอกสารนี้แล้ว</strong> (คิวงานของ dev/PM/Ops ไปดูที่กระดาน Jira)</div>
+  <div class="note"><strong>ขอบเขตงาน QA ในทีมนี้</strong> (ตามการแบ่งงานเทสในทีม): <strong>QA ออกแบบ test case ทุกชั้น (integration · e2e · ui)</strong> · <strong>เขียนสคริปต์ UI / E2E (Playwright)</strong> · <strong>เทสแมนนวลบน UAT</strong> · ส่วนสคริปต์ integration เป็นของ dev (co-located ตาม TDD)<br>⇒ ส่วน<strong>การปิดใบ/flip · รัน release gate + sign-off · ขอบัญชีจาก Ops · จัดคิวงานของ dev</strong> ไม่ใช่หน้าที่ QA — <strong>ตัดออกจากเอกสารนี้แล้ว</strong> (คิวงานของ dev/PM/Ops ไปดูที่กระดาน Jira)</div>
 
-  <h3>▸ งานของ QA ในเฟสนี้ — เขียนเคส + เขียนสคริปต์</h3>
+  <h3>▸ งานของ QA ในเฟสนี้ — เขียนเคส · เขียนสคริปต์ · เทสแมนนวล</h3>
   <div class="tw"><table>
     <thead><tr><th>#</th><th>ทำอะไร</th><th>ใบ</th><th>สถานะตอนนี้</th></tr></thead>
     <tbody>
       <tr class="milestone"><td class="day">1</td>
+        <td><strong>เทสแมนนวล 18 เคสที่ยังไม่ได้รัน</strong> — ออกอากาศ 8 · แจ้งเตือน operator 6 · Full E2E 4</td>
+        <td class="muted">E4 · E5 · E2E</td><td>รอ live infra บน UAT (Avatar Engine จริง)</td></tr>
+      <tr class="milestone"><td class="day">2</td>
+        <td><strong>สรุป 23 เคสที่เทสแล้วไม่ผ่านส่งเจ้าของใบ</strong> — Studio 11 · คลังของ 9 · ผู้ใช้และบทบาท 2 · สคริปต์ AI 1</td>
+        <td class="muted">ดู <a href="#s6">§2</a></td><td>ผลบันทึกไว้ในรายงานแล้ว รอส่งต่อ</td></tr>
+      <tr><td class="day">3</td>
         <td><strong>เขียน Test Script — Epic 1: Platform Foundation &amp; Workspace Onboarding</strong></td>
         <td><a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-223">TAKRA-223</a></td><td>To Do · ยังไม่เริ่ม</td></tr>
-      <tr><td class="day">2</td>
+      <tr><td class="day">4</td>
         <td><strong>re-design ชุดเคส TC-2.2-09..34</strong> (หน้าคลังเสียงเปลี่ยนไปจากตอนเขียน) + เติม error-path อีก 3 TC ของ E2</td>
         <td class="muted">ไม่ผูกใบ — งาน QA ล้วน</td><td>ค้างอยู่ฝั่ง QA</td></tr>
-      <tr><td class="day">3</td>
+      <tr><td class="day">5</td>
         <td><strong>เข้า PR ใบเทสต์ re-design + automate TC-6.3-11 (Pre-flight)</strong></td>
         <td><a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-766">TAKRA-766</a></td><td>To Do</td></tr>
-      <tr><td class="day">4</td>
+      <tr><td class="day">6</td>
         <td><strong>เขียนสคริปต์ Full E2E Flow 4 เคส</strong> — ยังไม่มีสคริปต์ไหนวิ่งครบลูป</td>
         <td class="muted">ชุดเคส MVP-1</td><td>ยังไม่เขียน</td></tr>
-      <tr><td class="day">5</td>
-        <td><strong>ดูแล suite ให้เขียว + ส่ง spec/storageState ให้ Tier-2 nightly</strong> (คนตั้ง workflow คือ Berm)</td>
-        <td><a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-105">TAKRA-105</a> <span class="badge b-skip">ใบของ Berm</span></td><td>122 เคส · 109 pass · 13 skip-มีเหตุผล</td></tr>
-      <tr><td class="day">6</td>
-        <td><strong>สรุป 23 เคสที่ไม่ผ่านส่งเจ้าของใบ</strong> — Studio 11 · คลังของ 9 · ผู้ใช้และบทบาท 2 · สคริปต์ AI 1</td>
-        <td class="muted">ดู <a href="#s6">§2</a></td><td>ผลอยู่ในรายงานแล้ว รอส่งต่อ</td></tr>
+      <tr><td class="day">7</td>
+        <td><strong>ดูแล suite ให้เขียว + ส่ง spec/storageState ให้ Tier-2 nightly</strong></td>
+        <td class="muted">สคริปต์ของ QA</td><td>122 เคส · 109 pass · 13 skip-มีเหตุผล</td></tr>
     </tbody>
   </table></div>
 
@@ -264,7 +267,7 @@
   <p class="muted" style="font-size:13px">สถานะเคส/สคริปต์ + กราฟ % ที่ <a href="#s6">§2</a> · หน้าจอที่ต้องเขียนเคสให้ที่ <a href="#s1">§3</a> · แต่ละ epic คืออะไรที่ <a href="#s2">§4</a></p>
 </section>
 <section class="slide" id="s6">
-  <h2><span class="num">2</span>🧪 สถานะเคส + สคริปต์ที่ QA เขียนไว้</h2>
+  <h2><span class="num">2</span>🧪 ผลเทสแมนนวล + สถานะสคริปต์ของ QA</h2>
   <p class="lead"><strong>ใบ story อย่าง <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-52">TAKRA-52</a> ไม่ใช่ใบของ QA</strong> — assignee เป็นของ dev · QA ไม่ได้เป็นเจ้าของและไม่ใช่คนปิด · งานของ QA มีใบของตัวเองอยู่คนละต้นไม้</p>
   <div class="note"><strong>โครงใบฝั่ง QA ของเฟสนี้</strong> (assignee = Wanlee T · Ice):<br>· <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-219">TAKRA-219</a> — Epic “ทดสอบแมนนัว MVP 1”<br>· <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-658">TAKRA-658</a> — Epic “[MVP1] QA - Test Automate”</div>
 <h3>▸ ใบ QA ที่ยังไม่เสร็จ — งานของ Ice จริงๆ</h3>
@@ -300,8 +303,8 @@
 
 
 
-  <h3>▸ ชุดเคสทดสอบแมนนวลที่ QA ออกแบบไว้ — ตอนนี้ถูกรันไปถึงไหน — <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-219">TAKRA-219</a></h3>
-  <p>ตัวเลขข้างล่างคือ<strong>สถานะของเคสที่ QA ออกแบบไว้</strong> — บอกว่าเคสถูกรันไปแล้วแค่ไหน (การไล่รันด้วยมือไม่ใช่หน้าที่ QA · ดู <a href="#qa">§1</a>) ตารางคือผลจริง
+  <h3>▸ ผลเทสแมนนวลของ QA ตอนนี้ถึงไหน — <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-219">TAKRA-219</a></h3>
+  <p>ตารางข้างล่างคือ<strong>ผลเทสแมนนวลจริง</strong>
   ที่บันทึกไว้ในรายงานเคสของ QA (<a href="https://wanlee-tankunnatam.github.io/qa-test-reports/?project=ai">qa-test-reports</a>) นับจากบล็อก <code>store-data</code> ของแต่ละไฟล์
   ด้วยสูตรเดียวกับแถบ Status บนหน้า hub — <em>เทสแล้ว = ผ่าน + ไม่ผ่าน + พัก + บล็อก หารด้วยเคสที่ต้องเทส (ไม่นับเคสข้าม)</em> · ข้อมูล ณ 21 ส.ค. 2026</p>
 
