@@ -239,44 +239,55 @@
 <div class="parthead"><span class="pt">ส่วนที่ 1 · งานของ QA</span><span class="pd">สิ่งที่ Ice ต้องลงมือเอง — อ่าน 4 หัวข้อนี้ก็พอสำหรับงานประจำวัน</span></div>
 <section class="slide" id="qa">
   <h2><span class="num">1</span>📋 สรุปสำหรับ QA — MVP-2 เดือนนี้ต้องทำอะไร</h2>
-  <p class="lead">MVP-2 <strong>ยังสร้างอยู่จริง</strong> — 23 ใบยังไม่ถึงมือ QA · ของที่ QA ทำได้ตอนนี้คือ
-  <strong>เก็บของที่ dev ส่งแล้ว</strong> กับ <strong>ปลดบัญชี staff ให้ได้</strong> เพราะมันกั้นอยู่ 2 epic เต็ม ๆ</p>
+  <p class="lead">MVP-2 <strong>ยังสร้างอยู่จริง</strong> — 23 ใบยังไม่ถึงมือทีมเทส · งานของ QA ตอนนี้คือ<strong>เขียนสคริปต์ E2E ที่ค้าง 8 ใบ</strong> กับเคสที่ยังต้องรอของ · ส่วนการไล่รันด้วยมือ · ปิดใบ · ขอบัญชี staff เป็นของคนอื่น (ดูตารางที่สอง)</p>
 
   <div class="grid4">
     <div class="stat"><div class="n">7</div><div class="l">วันทำงานที่เหลือ</div></div>
-    <div class="stat"><div class="n">17</div><div class="l">ใบ READY TO TEST ที่รอ QA</div></div>
-    <div class="stat"><div class="n">311</div><div class="l">เคสแมนนวลที่ยังไม่ได้แตะ (จาก 437)</div></div>
+    <div class="stat"><div class="n">17</div><div class="l">ใบ READY TO TEST ที่รอการยืนยัน (ไม่ใช่งาน QA)</div></div>
+    <div class="stat"><div class="n">311</div><div class="l">เคสที่ QA เขียนไว้แต่ยังไม่มีใครรัน (จาก 437)</div></div>
     <div class="stat"><div class="n">47</div><div class="l">เคสที่เทสแล้ว<strong>ไม่ผ่าน</strong> (38 มาจาก RTMP ที่ยังไม่มีของ)</div></div>
   </div>
 
-  <h3>▸ งานของ Ice ในเฟสนี้ — เรียงตามความด่วน</h3>
+  <div class="note"><strong>ขอบเขตงาน QA ในทีมนี้</strong> (ตามที่เอกสารนี้เขียนไว้เองใน <a href="#s3">§5</a>): <strong>QA ออกแบบ test case ทุกชั้น (integration · e2e · ui)</strong> และ <strong>เขียนสคริปต์ UI / E2E (Playwright)</strong> · ส่วนสคริปต์ integration เป็นของ dev (co-located ตาม TDD)<br>⇒ การ<strong>ไล่กดเทสด้วยมือ · ปิดใบ · รัน release gate · ขอบัญชีจาก Ops</strong> ไม่ใช่หน้าที่ QA — ย้ายไปไว้ในหัวข้อ “ไม่ใช่งาน QA” ด้านล่างแล้ว</div>
+
+  <h3>▸ งานของ QA ในเฟสนี้ — เขียนเคส + เขียนสคริปต์</h3>
   <div class="tw"><table>
-    <thead><tr><th>#</th><th>ทำอะไร</th><th>ใบ</th><th>เมื่อไหร่</th><th>ถ้าไม่ทำ</th></tr></thead>
+    <thead><tr><th>#</th><th>ทำอะไร</th><th>ใบ</th><th>สถานะตอนนี้</th></tr></thead>
     <tbody>
       <tr class="milestone"><td class="day">1</td>
-        <td><span class="badge b-danger">ด่วนสุด</span> <strong>ขอบัญชี platform-staff (no-2FA) จาก Ops</strong> — มี lead time</td>
-        <td><a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-526">TAKRA-526</a></td><td>วันนี้ ศ. 21</td><td>E8 อีก 11 TC + E11 ทั้ง 5 story ตายทั้งเดือน</td></tr>
+        <td><strong>เขียนสคริปต์ E2E 8 ใบที่เหลือ</strong> ใต้ <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-487">TAKRA-487</a> — Plan Test + Test Case ปิดครบ 9/9 แล้ว เหลือชั้น E2E</td>
+        <td><a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-515">TAKRA-515</a>…<a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-523">TAKRA-523</a> <span class="muted">(ปิดแล้ว 1 = Epic 11)</span></td><td>To Do ทั้ง 8 ใบ</td></tr>
       <tr><td class="day">2</td>
-        <td><strong>เสนอ flip E16 → Done</strong> 4 ใบ (16.1 / 16.2 / 16.4 / 16.5 verify ครบแล้ว)</td>
-        <td><a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-414">TAKRA-414</a> <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-415">TAKRA-415</a> <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-417">TAKRA-417</a> <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-418">TAKRA-418</a></td><td>วันนี้ ศ. 21</td><td>E16 ค้างทั้งที่เทสจบแล้ว</td></tr>
+        <td><strong>เขียน fullloop automate ของ E10</strong> (โคลน/อัปโหลด/เพิกถอนเสียง) — ตอนนี้มีแต่ script UI 6 ตัว</td>
+        <td class="muted">ชุดเคส E10</td><td>ยังไม่เขียน</td></tr>
       <tr><td class="day">3</td>
-        <td><strong>เทส E8 ×11 TC</strong> แล้วต่อด้วย <strong>E11 ×5 story</strong> (impersonation = จุดเสี่ยงสูงสุด ต้องมี negative test ข้าม workspace)</td>
-        <td><a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-381">TAKRA-381</a> · <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-396">TAKRA-396</a>…<a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-400">TAKRA-400</a></td><td>จ. 24 – พฤ. 27</td><td>2 epic นี้ไม่มีใครยืนยันว่าใช้ได้จริง</td></tr>
+        <td><strong>เขียนเคส/สคริปต์ที่รอของอยู่</strong> — E9 SSE (รอ live infra) · E12 (รอ RTT ใบแรก) · E14 (รอหน้าตั้งค่า RTMP)</td>
+        <td class="muted">design เสร็จแล้วทุก epic</td><td>รอของจาก dev / ทีมนอก</td></tr>
       <tr><td class="day">4</td>
-        <td><strong>ปิด manual E10 ที่ค้าง</strong> (ลบ / อัปโหลด / consent เต็มวง) — ต้องจองช่วงที่ workspace ว่าง</td>
-        <td class="muted">E10 · ฝั่ง QA</td><td>เมื่อจอง data window ได้</td><td>E10 ยังไม่มีผล manual ครบ</td></tr>
+        <td><strong>contract spec ของ E13 tool-calling</strong> — เขียน red-first ไม่ได้จนกว่า Engine ส่ง schema</td>
+        <td><a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-406">TAKRA-406</a> <span class="badge b-skip">ใบของ Engine</span></td><td>รอ contract</td></tr>
       <tr><td class="day">5</td>
-        <td><strong>เคลียร์เคส RTMP 38 เคสที่ไม่ผ่าน</strong> — ต้องเคาะว่านับเป็น “ของยังไม่สร้าง” หรือตัดออกจากขอบเขตเดือนนี้</td>
-        <td><a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-474">TAKRA-474</a></td><td>ในที่ประชุมสัปดาห์นี้</td><td>ตัวเลข % ของ <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-474">TAKRA-474</a> ถูกกดโดยของที่ QA ทำต่อเองไม่ได้</td></tr>
-      <tr><td class="day">6</td>
-        <td><strong>เขียน/รัน E2E 8 ใบที่เหลือ</strong> ใต้ <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-487">TAKRA-487</a> (ปิดไปแล้ว 1 ใบ = Epic 11)</td>
-        <td><a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-515">TAKRA-515</a>…<a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-523">TAKRA-523</a></td><td>หลังของ dev เข้า</td><td>ชั้น E2E ของ MVP-2 ว่างทั้ง epic</td></tr>
+        <td><strong>สรุปผลเคสที่รันไม่ได้/ไม่ผ่านส่งเจ้าของใบ</strong> — RTMP 38 (ไม่มีของ) · Studio riders 9 · /ai-history 11 TC (ไม่มีบัญชี)</td>
+        <td class="muted">ดู <a href="#s6">§2</a></td><td>ผลอยู่ในรายงานแล้ว</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>▸ ที่เอกสารเดิมนับเป็น “งานของ QA” — แต่ไม่ใช่หน้าที่ QA</h3>
+  <p>ยังต้องมีคนทำ และยังกั้นคิวของ QA อยู่ — แต่เจ้าของงานไม่ใช่ QA · เก็บไว้ตรงนี้เพื่อไม่ให้หายไปจากแผน</p>
+  <div class="tw"><table>
+    <thead><tr><th>งาน</th><th>เจ้าของจริง</th><th>QA เกี่ยวตรงไหน</th></tr></thead>
+    <tbody>
+      <tr><td><strong>ไล่กดเทสด้วยมือบน UAT</strong> — E8 ×11 TC · E11 ×5 story · manual E10 (ลบ/อัปโหลด/consent)</td><td>ทีมเจ้าของฟีเจอร์ / PM จัดคนรัน</td><td class="muted">QA ออกแบบเคสไว้ครบแล้ว (~52 TC) · ที่เข้าไม่ได้เพราะไม่มีบัญชี staff</td></tr>
+      <tr><td><strong>ขอ/จัดบัญชี platform-staff (no-2FA)</strong> <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-526">TAKRA-526</a></td><td>Ops</td><td class="muted">QA ระบุว่าสคริปต์ RBAC E2E ต้องใช้ 4 role — ตัวบัญชีเป็นของ Ops</td></tr>
+      <tr><td><strong>เสนอ flip / ปิดใบ</strong> — E16 4 ใบ (<a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-414">TAKRA-414</a> <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-415">TAKRA-415</a> <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-417">TAKRA-417</a> <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-418">TAKRA-418</a>) · E8 7 ใบ</td><td>เจ้าของใบ (Golf · Boat · No) หรือ PM</td><td class="muted">QA ให้หลักฐาน automation + ผลเคสประกอบ</td></tr>
+      <tr><td><strong>เคาะว่าเคส RTMP 38 เคสที่ไม่ผ่านนับยังไง</strong> (ยังไม่มีหน้าตั้งค่าในระบบ)</td><td>PM + Engine</td><td class="muted">QA รายงานว่าเคสรันไม่ได้เพราะยังไม่มีของ — ไม่ใช่คนตัดสินขอบเขต</td></tr>
+      <tr><td><strong>ประตูขึ้น prod ของ E10</strong> <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-750">TAKRA-750</a> <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-751">TAKRA-751</a></td><td>Dev · Boat + BA/Legal</td><td class="muted">—</td></tr>
     </tbody>
   </table></div>
 
   <h3>▸ อะไรกั้น MVP-2 อยู่ — 3 อย่าง</h3>
   <div class="tw"><table>
-    <thead><tr><th>ตัวกั้น</th><th>กั้นอะไรของ QA</th><th>ต้องไปตามใคร</th></tr></thead>
+    <thead><tr><th>ตัวกั้น</th><th>กั้นอะไร</th><th>ต้องไปตามใคร</th></tr></thead>
     <tbody>
       <tr><td><strong>บัญชี platform-staff</strong> <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-526">TAKRA-526</a></td>
         <td>E8 อีก 11 TC · E11 ทั้ง 5 story (เข้าหน้า /ai-history และหลังบ้านไม่ได้เลย) — <strong>ปลดทีเดียวได้ 16 รายการ</strong></td>
@@ -333,8 +344,8 @@
 
 
 
-  <h3>▸ ใบ epic ทดสอบแมนนวลของ QA ตอนนี้ถึงไหน — <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-474">TAKRA-474</a></h3>
-  <p>ตารางข้างล่างคือ<strong>ผลเทสแมนนวลจริง</strong>
+  <h3>▸ ชุดเคสทดสอบแมนนวลที่ QA ออกแบบไว้ — ตอนนี้ถูกรันไปถึงไหน — <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-474">TAKRA-474</a></h3>
+  <p>ตัวเลขข้างล่างคือ<strong>สถานะของเคสที่ QA ออกแบบไว้</strong> — บอกว่าเคสถูกรันไปแล้วแค่ไหน (การไล่รันด้วยมือไม่ใช่หน้าที่ QA · ดู <a href="#qa">§1</a>) ตารางคือผลจริง
   ที่บันทึกไว้ในรายงานเคสของ QA (<a href="https://wanlee-tankunnatam.github.io/qa-test-reports/?project=ai">qa-test-reports</a>) นับจากบล็อก <code>store-data</code> ของแต่ละไฟล์
   ด้วยสูตรเดียวกับแถบ Status บนหน้า hub — <em>เทสแล้ว = ผ่าน + ไม่ผ่าน + พัก + บล็อก หารด้วยเคสที่ต้องเทส (ไม่นับเคสข้าม)</em> · ข้อมูล ณ 21 ส.ค. 2026</p>
 
@@ -419,28 +430,28 @@
   <div class="ask"><strong>สิ่งที่ 2 ใบนี้ต้องการจากที่ประชุม:</strong> เคาะว่า “ไม่ผ่าน 38 เคสของ RTMP” จะถูกนับเป็น <em>ของยังไม่สร้าง</em> (ปิดใบเทสไม่ได้จนกว่า Epic 14 จะส่ง)
   หรือให้ QA ตัดออกจากขอบเขตเดือนนี้ไปเลย — ตอนนี้มันกดตัวเลขความคืบหน้าของ <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-474">TAKRA-474</a> อยู่ทั้งที่ไม่ใช่ของที่ QA ทำต่อได้เอง</div>
 
-  <h3>▸ ใบ dev ที่ QA ต้องไปเทส — ไม่ใช่ใบของ QA</h3>
-  <p><strong>17 ใบ</strong> ที่อยู่สถานะ READY TO TEST คือ <strong>ของที่ต้องเทส</strong> ไม่ใช่ใบที่ QA ถือ · QA ทำได้แค่ <strong>เทสแล้วบันทึกผล + เสนอ flip</strong> ส่วนการปิดใบเป็นของเจ้าของใบหรือ PM<br><span class="muted">รายชื่อทุกใบ + สถานะ ดูที่ <a href="#s11">§13 ทะเบียนใบค้างทั้งหมด</a></span></p>
+  <h3>▸ ใบ dev ที่รอการยืนยัน — ไม่ใช่ใบของ QA</h3>
+  <p><strong>17 ใบ</strong> ที่อยู่สถานะ READY TO TEST คือ <strong>ของที่ต้องเทส</strong> ไม่ใช่ใบที่ QA ถือ · QA ส่งมอบ<strong>เคสและสคริปต์</strong>ให้ · การไล่รันยืนยันและปิดใบเป็นของเจ้าของใบหรือ PM<br><span class="muted">รายชื่อทุกใบ + สถานะ ดูที่ <a href="#s11">§13 ทะเบียนใบค้างทั้งหมด</a></span></p>
 </section>
 <section class="slide" id="s5">
   <h2><span class="num">3</span>📅 คิวรายวัน 21–31 ส.ค. — วันไหนทำอะไร</h2>
-  <p class="lead"><strong>แถวที่ติด <span class="badge b-skip">ไม่ใช่ QA</span> = งานของคนอื่น</strong> — อยู่ในตารางไว้ให้เห็นว่าอะไรกั้นอะไร ไม่ใช่งานที่ Ice ลงมือ · สิ่งที่ QA ทำเองมีแค่ 5 อย่าง: ขอบัญชี staff · เทส E8/E11 เมื่อได้บัญชี · manual E10 ที่ค้าง · รัน release gate · ปิดใบตาม <a href="#s6">§2</a></p>
+  <p class="lead"><strong>ตารางนี้คือคิวของทั้งทีม ไม่ใช่คิวของ QA</strong> — งานที่เป็นของ QA จริงตามขอบเขตใน <a href="#qa">§1</a> คือ<strong>เขียนเคสกับเขียนสคริปต์</strong>เท่านั้น · กดปุ่ม <em>🧪 เน้นเฉพาะงานของ QA</em> ที่เมนูซ้ายเพื่อหรี่แถวที่ไม่ใช่ของ QA ลง</p>
   <div class="tw">
   <table>
     <thead><tr><th>วัน</th><th>ต้องเกิดอะไร</th><th>ใบงาน</th><th>เจ้าของ</th><th>ถ้าไม่เกิดวันนี้</th></tr></thead>
     <tbody>
-      <tr data-who="qa" class="milestone"><td class="day" rowspan="2">ศ. 21 ส.ค.<small>วันนี้</small></td>
+      <tr data-who="other" class="milestone"><td class="day" rowspan="2">ศ. 21 ส.ค.<small>วันนี้</small></td>
         
         <td><span class="badge b-danger">ด่วนสุด</span> ส่งคำขอ <strong>บัญชี platform-staff (no-2FA)</strong> ให้ Ops — มี lead time ต้องยิงวันนี้</td>
         <td class="muted">—</td><td>Ice → Ops</td>
         <td>E8 ×11 TC + E11 ×5 story ตายทั้งเดือน</td>
       </tr>
-      <tr data-who="qa" class="milestone">
+      <tr data-who="other" class="milestone">
         <td>เสนอ flip <strong>E16 → Done</strong> (16.1 / 16.2 / 16.4 / 16.5 verify ครบแล้ว)</td>
         <td>TAKRA-414/415/417/418</td><td>Ice</td>
         <td class="muted">—</td>
       </tr>
-      <tr data-who="qa"><td class="day" rowspan="2">จ. 24 ส.ค.</td>
+      <tr data-who="other"><td class="day" rowspan="2">จ. 24 ส.ค.</td>
         <td>ได้บัญชี staff → เริ่มยิง <strong>E8 ×11 TC</strong> ทันที</td>
         <td>TAKRA-381</td><td>Ice</td><td>E8 ปิด epic ไม่ได้</td>
       </tr>
@@ -448,12 +459,12 @@
         <td>dev เริ่ม <strong>16.3 Notifications</strong> (SES ปลดล็อกแล้ว 20 ส.ค. · TAKRA-756 Done)</td>
         <td>TAKRA-416</td><td class="muted">Boat <span class="badge b-skip">ไม่ใช่ QA</span></td><td>E16 ไม่ครบ epic</td>
       </tr>
-      <tr data-who="qa"><td class="day" rowspan="3">อ. 25 ส.ค.</td>
+      <tr data-who="other"><td class="day" rowspan="3">อ. 25 ส.ค.</td>
         
         <td>E8 ×11 TC จบ → <strong>เสนอ flip E8 ทั้ง epic</strong></td>
         <td>TAKRA-379-383 · 536 · 537</td><td>Ice</td><td class="muted">—</td>
       </tr>
-      <tr data-who="qa">
+      <tr data-who="other">
         <td>เริ่ม verify <strong>E11 ×5 story</strong> (Ops tool · Support dashboard · impersonation)</td>
         <td>TAKRA-396-400</td><td>Ice + Tay/Dear</td><td>T0 backbone ไม่ครบ</td>
       </tr>
@@ -461,11 +472,11 @@
         <td>dev ปิด <strong>E15</strong> (inline clone Avatar + live targets revive)</td>
         <td>TAKRA-412 / 413</td><td class="muted">Boat <span class="badge b-skip">ไม่ใช่ QA</span></td><td>E15 ค้างข้ามเดือน</td>
       </tr>
-      <tr data-who="qa" class="milestone"><td class="day">พ. 26 ส.ค.</td>
+      <tr data-who="other" class="milestone"><td class="day">พ. 26 ส.ค.</td>
         <td>E11 verify ต่อ — <strong>impersonation = จุดเสี่ยงสูงสุด</strong> ต้องมี negative test ข้าม workspace</td>
         <td>TAKRA-398</td><td>Ice + Berm</td><td class="muted">—</td>
       </tr>
-      <tr data-who="qa" class="milestone"><td class="day">พฤ. 27 ส.ค.</td>
+      <tr data-who="other" class="milestone"><td class="day">พฤ. 27 ส.ค.</td>
         <td>E11 verify จบ → เสนอ flip</td>
         <td>TAKRA-396-400</td><td>Ice</td><td class="muted">—</td>
       </tr>
@@ -477,7 +488,7 @@
         
         <td colspan="4">เฝ้า nightly + เฝ้า prod หลัง deploy (soak รอบแรกของ pilot)</td>
       </tr>
-      <tr data-who="qa" class="milestone"><td class="day">จ. 31 ส.ค.<small>สิ้นเดือน</small></td>
+      <tr data-who="other" class="milestone"><td class="day">จ. 31 ส.ค.<small>สิ้นเดือน</small></td>
         
         <td>ปิดเดือน — <strong>sign-off release gate</strong> + สรุป MVP-2 QA DoD v1.2</td>
         <td class="muted">—</td><td>Ice + P</td><td class="muted">—</td>
@@ -502,7 +513,7 @@
       
       
       
-      <tr data-who="qa">
+      <tr data-who="other">
         <td class="lane">E8 verify<small>Ice · รอบัญชี staff</small></td>
         <td><span class="bar bar-wait">ขอบัญชี</span></td>
         <td class="we"></td><td class="we"></td>
@@ -511,7 +522,7 @@
         <td></td><td></td><td></td>
         <td class="we"></td><td class="we"></td><td></td>
       </tr>
-      <tr data-who="qa">
+      <tr data-who="other">
         <td class="lane">E11 verify<small>Ice + Tay/Dear</small></td>
         <td></td><td class="we"></td><td class="we"></td><td></td>
         <td><span class="bar bar-main">Ops+Support</span></td>
@@ -586,7 +597,7 @@
     <thead><tr><th style="width:150px">เจ้าของ</th><th style="width:70px">ค้าง</th><th>รายการ</th><th>ปลดอะไรถ้าทำเสร็จ</th></tr></thead>
     <tbody>
       <tr><td><strong>QA (Ice)</strong></td><td><span class="badge b-info">5</span></td>
-        <td>เสนอ flip 5 ใบที่ verify แล้ว (385 · 414 · 415 · 417 · 418) · manual E10 ที่ค้าง + วาง data plan · รัน release gate 26 ส.ค. · ติดตาม <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-760">TAKRA-760</a> (P2 ยังไม่มีใบ) · ขอบัญชี staff จาก Ops</td>
+        <td>ส่งหลักฐานผลเทสให้เจ้าของใบ flip 5 ใบ (385 · 414 · 415 · 417 · 418) · manual E10 ที่ค้าง + วาง data plan · รัน release gate 26 ส.ค. · ติดตาม <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-760">TAKRA-760</a> (P2 ยังไม่มีใบ) · ขอบัญชี staff จาก Ops</td>
         <td>ปิด E16 ได้ทั้ง epic · gate เดินต่อไป go-live</td></tr>
       <tr><td><strong>Dev (Boat)</strong></td><td><span class="badge b-warn">12</span></td>
         <td>E9 ×6 (722 · 386 · 387 · 388 · 389 · 390) · E10 750/751 · E15 412/413 · E16 416 · E8 755</td>
@@ -1049,17 +1060,17 @@
     <thead><tr><th style="width:104px">ใบ</th><th>เรื่อง</th><th style="width:104px">สถานะ</th><th style="width:130px">ผู้รับผิดชอบ</th><th style="width:120px">ต้องทำอะไร</th></tr></thead>
     <tbody>
       <tr style="background:#fafbfd"><td colspan="5"><strong>E8 · AIEventLog</strong> — ค้าง 8 ใบ</td></tr>
-      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-379">TAKRA-379</a></td><td>8.1 AIEventLog durable write foundation (ai_event_log + AiEventLogger)</td><td><span class="badge b-now">RTT</span></td><td class="muted">Wuttichai W (No)</td><td class="muted">QA verify → flip</td></tr>
-      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-380">TAKRA-380</a></td><td>8.2 Route MVP-1 AI events into AIEventLog</td><td><span class="badge b-now">RTT</span></td><td class="muted">Wuttichai W (No)</td><td class="muted">QA verify → flip</td></tr>
-      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-381">TAKRA-381</a></td><td>8.3 AIEventLog Viewer UI - /ai-history (FR59)</td><td><span class="badge b-now">RTT</span></td><td class="muted">Wuttichai W (No)</td><td class="muted">QA verify → flip</td></tr>
-      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-382">TAKRA-382</a></td><td>8.4 Backfill + consolidate basic-log into AIEventLog (FR60)</td><td><span class="badge b-now">RTT</span></td><td class="muted">Wuttichai W (No)</td><td class="muted">QA verify → flip</td></tr>
-      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-383">TAKRA-383</a></td><td>8.5 Unified erasure cascade primitive (ErasureService, P2, DSAR side)</td><td><span class="badge b-now">RTT</span></td><td class="muted">Wuttichai W (No)</td><td class="muted">QA verify → flip</td></tr>
-      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-536">TAKRA-536</a></td><td>8.6 AIEventLog cutover — retire audit_log dual-write</td><td><span class="badge b-now">RTT</span></td><td class="muted">Wuttichai W (No)</td><td class="muted">QA verify → flip</td></tr>
-      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-537">TAKRA-537</a></td><td>8.7 AIEventLog free-text content search (/ai-history)</td><td><span class="badge b-now">RTT</span></td><td class="muted">Wuttichai W (No)</td><td class="muted">QA verify → flip</td></tr>
+      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-379">TAKRA-379</a></td><td>8.1 AIEventLog durable write foundation (ai_event_log + AiEventLogger)</td><td><span class="badge b-now">RTT</span></td><td class="muted">Wuttichai W (No)</td><td class="muted">รอยืนยัน → flip</td></tr>
+      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-380">TAKRA-380</a></td><td>8.2 Route MVP-1 AI events into AIEventLog</td><td><span class="badge b-now">RTT</span></td><td class="muted">Wuttichai W (No)</td><td class="muted">รอยืนยัน → flip</td></tr>
+      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-381">TAKRA-381</a></td><td>8.3 AIEventLog Viewer UI - /ai-history (FR59)</td><td><span class="badge b-now">RTT</span></td><td class="muted">Wuttichai W (No)</td><td class="muted">รอยืนยัน → flip</td></tr>
+      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-382">TAKRA-382</a></td><td>8.4 Backfill + consolidate basic-log into AIEventLog (FR60)</td><td><span class="badge b-now">RTT</span></td><td class="muted">Wuttichai W (No)</td><td class="muted">รอยืนยัน → flip</td></tr>
+      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-383">TAKRA-383</a></td><td>8.5 Unified erasure cascade primitive (ErasureService, P2, DSAR side)</td><td><span class="badge b-now">RTT</span></td><td class="muted">Wuttichai W (No)</td><td class="muted">รอยืนยัน → flip</td></tr>
+      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-536">TAKRA-536</a></td><td>8.6 AIEventLog cutover — retire audit_log dual-write</td><td><span class="badge b-now">RTT</span></td><td class="muted">Wuttichai W (No)</td><td class="muted">รอยืนยัน → flip</td></tr>
+      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-537">TAKRA-537</a></td><td>8.7 AIEventLog free-text content search (/ai-history)</td><td><span class="badge b-now">RTT</span></td><td class="muted">Wuttichai W (No)</td><td class="muted">รอยืนยัน → flip</td></tr>
       <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-755">TAKRA-755</a></td><td>8.8 DSAR ของผู้ชม — ข้อจำกัดการลบข้อความคอมเมนต์ + ยืนเส้นลบ 90 วัน (PDPA)</td><td><span class="badge b-skip">To Do</span></td><td class="muted">Theerapat L (Boat)</td><td class="muted">ยังไม่เริ่ม</td></tr>
       <tr style="background:#fafbfd"><td colspan="5"><strong>E9 · ห้องคุมไลฟ์</strong> — ค้าง 8 ใบ</td></tr>
-      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-384">TAKRA-384</a></td><td>9.1 SSE Live Console transport + reliability contract</td><td><span class="badge b-now">RTT</span></td><td class="muted">Theerapat L (Boat)</td><td class="muted">QA verify → flip</td></tr>
-      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-385">TAKRA-385</a></td><td>9.2 Live Console session list - /live/session (FR49)</td><td><span class="badge b-now">RTT</span></td><td class="muted">Theerapat L (Boat)</td><td class="muted">QA verify → flip</td></tr>
+      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-384">TAKRA-384</a></td><td>9.1 SSE Live Console transport + reliability contract</td><td><span class="badge b-now">RTT</span></td><td class="muted">Theerapat L (Boat)</td><td class="muted">รอยืนยัน → flip</td></tr>
+      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-385">TAKRA-385</a></td><td>9.2 Live Console session list - /live/session (FR49)</td><td><span class="badge b-now">RTT</span></td><td class="muted">Theerapat L (Boat)</td><td class="muted">รอยืนยัน → flip</td></tr>
       <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-386">TAKRA-386</a></td><td>9.3 Live Control Room - real-time stat tiles (FR50)</td><td><span class="badge b-warn">In Progress</span></td><td class="muted">Theerapat L (Boat)</td><td class="muted">dev ทำต่อ</td></tr>
       <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-387">TAKRA-387</a></td><td>9.4 Live comment feed - operator transcript view (FR51)</td><td><span class="badge b-warn">In Progress</span></td><td class="muted">Theerapat L (Boat)</td><td class="muted">dev ทำต่อ</td></tr>
       <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-388">TAKRA-388</a></td><td>9.5 Live risk-block panel (FR52)</td><td><span class="badge b-warn">In Progress</span></td><td class="muted">Theerapat L (Boat)</td><td class="muted">dev ทำต่อ</td></tr>
@@ -1067,10 +1078,10 @@
       <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-390">TAKRA-390</a></td><td>9.7 Viewer telemetry capture + surfacing (FR53)</td><td><span class="badge b-skip">To Do</span></td><td class="muted">Theerapat L (Boat)</td><td class="muted">ยังไม่เริ่ม</td></tr>
       <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-722">TAKRA-722</a></td><td>9.0 Server-side comment + viewer ingestion จาก TikTok (FR40/FR40a)</td><td><span class="badge b-warn">In Progress</span></td><td class="muted">Theerapat L (Boat)</td><td class="muted">dev ทำต่อ</td></tr>
       <tr style="background:#fafbfd"><td colspan="5"><strong>E10 · คลังเสียง/อวาตาร์</strong> — ค้าง 6 ใบ</td></tr>
-      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-393">TAKRA-393</a></td><td>10.3 Self-service PDPA voice consent flow - blocking gate (FR10)</td><td><span class="badge b-now">RTT</span></td><td class="muted">Theerapat L (Boat)</td><td class="muted">QA verify → flip</td></tr>
-      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-394">TAKRA-394</a></td><td>10.4 VoiceCloneProvider port + ElevenLabs clone pipeline (FR9 clone)</td><td><span class="badge b-now">RTT</span></td><td class="muted">Wuttichai W (No)</td><td class="muted">QA verify → flip</td></tr>
-      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-395">TAKRA-395</a></td><td>10.5 Voice revoke consent + delete &lt;=7 days (FR11)</td><td><span class="badge b-now">RTT</span></td><td class="muted">Wuttichai W (No)</td><td class="muted">QA verify → flip</td></tr>
-      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-723">TAKRA-723</a></td><td>ต่อท่อ voice_instances เข้าเส้นทางออกอากาศ/TTS (ปิดช่องว่างหลัง 10.4)</td><td><span class="badge b-now">RTT</span></td><td class="muted">Wuttichai W (No)</td><td class="muted">QA verify → flip</td></tr>
+      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-393">TAKRA-393</a></td><td>10.3 Self-service PDPA voice consent flow - blocking gate (FR10)</td><td><span class="badge b-now">RTT</span></td><td class="muted">Theerapat L (Boat)</td><td class="muted">รอยืนยัน → flip</td></tr>
+      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-394">TAKRA-394</a></td><td>10.4 VoiceCloneProvider port + ElevenLabs clone pipeline (FR9 clone)</td><td><span class="badge b-now">RTT</span></td><td class="muted">Wuttichai W (No)</td><td class="muted">รอยืนยัน → flip</td></tr>
+      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-395">TAKRA-395</a></td><td>10.5 Voice revoke consent + delete &lt;=7 days (FR11)</td><td><span class="badge b-now">RTT</span></td><td class="muted">Wuttichai W (No)</td><td class="muted">รอยืนยัน → flip</td></tr>
+      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-723">TAKRA-723</a></td><td>ต่อท่อ voice_instances เข้าเส้นทางออกอากาศ/TTS (ปิดช่องว่างหลัง 10.4)</td><td><span class="badge b-now">RTT</span></td><td class="muted">Wuttichai W (No)</td><td class="muted">รอยืนยัน → flip</td></tr>
       <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-750">TAKRA-750</a></td><td>10.6 Consent recording — อัดเสียงยืนยันความยินยอมก่อนโคลนเสียง (FR10)</td><td><span class="badge b-warn">In Progress</span></td><td class="muted">Theerapat L (Boat)</td><td class="muted">dev ทำต่อ</td></tr>
       <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-751">TAKRA-751</a></td><td>แบบฟอร์มหนังสือยินยอมใช้เสียงมาตรฐาน (voice consent waiver template) — ขอจากฝ่ายกฎหมาย</td><td><span class="badge b-warn">In Progress</span></td><td class="muted">Theerapat L (Boat)</td><td class="muted">dev ทำต่อ</td></tr>
       <tr style="background:#fafbfd"><td colspan="5"><strong>E12 · Billing</strong> — ค้าง 4 ใบ</td></tr>
@@ -1091,11 +1102,11 @@
       <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-412">TAKRA-412</a></td><td>15.1 Studio inline clone Avatar (จาก Persona Template · avatar-only) (FR20)</td><td><span class="badge b-warn">In Progress</span></td><td class="muted">Theerapat L (Boat)</td><td class="muted">dev ทำต่อ</td></tr>
       <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-413">TAKRA-413</a></td><td>15.2 Live targets revive (FR16)</td><td><span class="badge b-warn">In Progress</span></td><td class="muted">Theerapat L (Boat)</td><td class="muted">dev ทำต่อ</td></tr>
       <tr style="background:#fafbfd"><td colspan="5"><strong>E16 · ตั้งค่า/Usage</strong> — ค้าง 5 ใบ</td></tr>
-      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-414">TAKRA-414</a></td><td>16.1 Capability-based rendering foundation (UX-DR1)</td><td><span class="badge b-now">RTT</span></td><td class="muted">Sahachart T (GOLF)</td><td class="muted">QA verify → flip</td></tr>
-      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-415">TAKRA-415</a></td><td>16.2 Usage view unification - shared Owner + Operator (UX-DR2/UX-DR3)</td><td><span class="badge b-now">RTT</span></td><td class="muted">Sahachart T (GOLF)</td><td class="muted">QA verify → flip</td></tr>
+      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-414">TAKRA-414</a></td><td>16.1 Capability-based rendering foundation (UX-DR1)</td><td><span class="badge b-now">RTT</span></td><td class="muted">Sahachart T (GOLF)</td><td class="muted">รอยืนยัน → flip</td></tr>
+      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-415">TAKRA-415</a></td><td>16.2 Usage view unification - shared Owner + Operator (UX-DR2/UX-DR3)</td><td><span class="badge b-now">RTT</span></td><td class="muted">Sahachart T (GOLF)</td><td class="muted">รอยืนยัน → flip</td></tr>
       <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-416">TAKRA-416</a></td><td>16.3 Notifications delivery — email (SES) + in-app feed + persist (UX-DR6)</td><td><span class="badge b-skip">To Do</span></td><td class="muted">Theerapat L (Boat)</td><td class="muted">ยังไม่เริ่ม</td></tr>
-      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-417">TAKRA-417</a></td><td>16.4 Risk Word card split per-category (UX-DR8)</td><td><span class="badge b-now">RTT</span></td><td class="muted">Sahachart T (GOLF)</td><td class="muted">QA verify → flip</td></tr>
-      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-418">TAKRA-418</a></td><td>16.5 Profile read-only + Security removal to Hub/Zitadel deep-link (UX-DR4/UX-DR5)</td><td><span class="badge b-now">RTT</span></td><td class="muted">Sahachart T (GOLF)</td><td class="muted">QA verify → flip</td></tr>
+      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-417">TAKRA-417</a></td><td>16.4 Risk Word card split per-category (UX-DR8)</td><td><span class="badge b-now">RTT</span></td><td class="muted">Sahachart T (GOLF)</td><td class="muted">รอยืนยัน → flip</td></tr>
+      <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-418">TAKRA-418</a></td><td>16.5 Profile read-only + Security removal to Hub/Zitadel deep-link (UX-DR4/UX-DR5)</td><td><span class="badge b-now">RTT</span></td><td class="muted">Sahachart T (GOLF)</td><td class="muted">รอยืนยัน → flip</td></tr>
       <tr style="background:#fafbfd"><td colspan="5"><strong>ใบ integration (ไม่ผูก epic)</strong> — ค้าง 20 ใบ</td></tr>
       <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-543">TAKRA-543</a></td><td>[Integration] — ai-event-log-write (Epic 8 · Story 8.1+8.2)</td><td><span class="badge b-skip">To Do</span></td><td class="muted">Wuttichai W (No)</td><td class="muted">ยังไม่เริ่ม</td></tr>
       <tr><td><a href="https://kitdi.atlassian.net/browse/TAKRA-544">TAKRA-544</a></td><td>[Integration] — ai-event-log-backfill (Epic 8 · Story 8.4)</td><td><span class="badge b-skip">To Do</span></td><td class="muted">Wuttichai W (No)</td><td class="muted">ยังไม่เริ่ม</td></tr>
