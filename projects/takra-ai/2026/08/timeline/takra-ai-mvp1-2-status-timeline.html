@@ -914,6 +914,78 @@
   </div>
 
 
+
+  <h3>▸ 2 ใบ epic ทดสอบแมนนวลของ QA ตอนนี้ถึงไหน — <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-219">TAKRA-219</a> · <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-474">TAKRA-474</a></h3>
+  <p>ก่อนหน้านี้เอกสารนี้อ้าง 2 ใบนี้ไว้แค่ชื่อ epic ไม่มีตัวเลขความคืบหน้า · ตารางข้างล่างคือ<strong>ผลเทสแมนนวลจริง</strong>
+  ที่บันทึกไว้ในรายงานเคสของ QA (<a href="https://wanlee-tankunnatam.github.io/qa-test-reports/?project=ai">qa-test-reports</a>) นับจากบล็อก <code>store-data</code> ของแต่ละไฟล์
+  ด้วยสูตรเดียวกับแถบ Status บนหน้า hub — <em>เทสแล้ว = ผ่าน + ไม่ผ่าน + พัก + บล็อก หารด้วยเคสที่ต้องเทส (ไม่นับเคสข้าม)</em> · ข้อมูล ณ 21 ส.ค. 2026</p>
+
+  <div class="tw">
+  <table>
+    <thead><tr><th>ใบ</th><th>ชุดเคสที่ใช้ตอบ</th><th>เคส</th><th>เทสแล้ว</th><th>ผ่าน</th><th>ไม่ผ่าน</th><th>พัก / บล็อก</th><th>ยังไม่เทส</th></tr></thead>
+    <tbody>
+      <tr class="milestone"><td class="day"><a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-219">TAKRA-219</a><small>ทดสอบแมนนัว MVP 1</small></td>
+        <td><a href="https://wanlee-tankunnatam.github.io/qa-test-reports/projects/takra-ai/2026/08/reports/takra-ai-mvp1-happy-mvp2-full-ui-test-cases-table.html">ชุด ส.ค. — MVP-1 Happy Path (regression)</a></td>
+        <td>141</td><td><strong>119/137 · 87%</strong></td><td>80</td><td><span class="badge b-danger">23</span></td><td>8 / 8</td><td>18</td></tr>
+      <tr><td class="muted">↳ ชุดก่อนหน้า</td>
+        <td><a href="https://wanlee-tankunnatam.github.io/qa-test-reports/projects/takra-ai/2026/07/reports/takra-ai-mvp1-ui-test-cases-table.html">ชุด ก.ค. — MVP-1 UI เต็ม 6 ขั้น</a></td>
+        <td>261</td><td>238/238 · 100%</td><td>155</td><td><span class="badge b-warn">8</span></td><td>74 / 1</td><td>0</td></tr>
+      <tr class="milestone"><td class="day"><a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-474">TAKRA-474</a><small>ทดสอบ Manual MVP 2</small></td>
+        <td><a href="https://wanlee-tankunnatam.github.io/qa-test-reports/projects/takra-ai/2026/08/reports/takra-ai-mvp1-happy-mvp2-full-ui-test-cases-table.html">ชุด ส.ค. — MVP-2 ครบ 7 ประเภท</a></td>
+        <td>437</td><td><strong>126/437 · 29%</strong></td><td>79</td><td><span class="badge b-danger">47</span></td><td>0 / 0</td><td>311</td></tr>
+      <tr><td class="muted">↳ ชุดก่อนหน้า</td>
+        <td><a href="https://wanlee-tankunnatam.github.io/qa-test-reports/projects/takra-ai/2026/07/reports/takra-ai-mvp2-ui-test-cases-table.html">ชุด ก.ค. — MVP-2 UI 11 ขั้น</a></td>
+        <td>210</td><td><span class="badge b-skip">0/208 · 0%</span></td><td>0</td><td>0</td><td>0 / 0</td><td>208</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="warnbox"><strong>อย่าเอาเลข 2 ชุดมาปนกัน</strong> — <a href="#s0">§0</a> ที่เขียนว่า <code>122 suite · 109 pass · 0 fail</code> คือ
+  <strong>เทสอัตโนมัติ</strong> ส่วนตารางนี้คือ <strong>เทสแมนนวลด้วยมือบน UAT</strong> ซึ่งมี <strong>ไม่ผ่าน 70 เคส</strong> (MVP-1 23 + MVP-2 47)
+  ถ้ารายงานสิ้นเดือนหยิบไปแต่ “0 fail” จะถูกอ่านว่าไม่มีของเสีย ทั้งที่ยังมีของเสียค้างอยู่จริง 70 จุด</div>
+
+  <p><strong>ของเสียกองอยู่ที่ไหน (ชุด ส.ค.)</strong></p>
+  <p>· <strong>MVP-2 · RTMP หลายแพลตฟอร์ม — ไม่ผ่าน 38 จาก 50 เคส</strong> เหตุเดียวกันหมด: <em>ยังไม่มีหน้าตั้งค่าปลายทาง RTMP ในระบบเลย</em>
+  (ไล่ครบทั้ง /settings แล้ว) — คือของที่ยังไม่ถึงมือ QA ตาม Epic 14 <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-561">TAKRA-561</a>
+  <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-562">TAKRA-562</a> <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-563">TAKRA-563</a> ⇒ นับเป็น “ยังไม่ได้สร้าง” ไม่ใช่ “บั๊ก 38 ใบ”
+  <br>· <strong>MVP-2 · Studio riders — ไม่ผ่าน 9</strong> แยกเป็น เป้ารายได้/ออเดอร์ 3 เคส (ปุ่ม “ตั้งรอบไลฟ์” พาไป Studio ไม่ใช่ฟอร์ม)
+  และร่างโปรเจกต์ 6 เคส (ร่างไม่โผล่ใน “โปรเจกต์ของฉัน” · เก็บได้ร่างเดียวต่อ workspace) — ผูกกับ Epic 15 <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-564">TAKRA-564</a>
+  <br>· <strong>MVP-1 · ไม่ผ่าน 23</strong> เป็นของที่ dev ส่งแล้วแต่ไม่ตรงสเปก — Studio 11 (อวาตาร์/เสียงในฉาก · layer · เลือกสินค้า · ลากเรียงสคริปต์ · ตรวจก่อนไลฟ์)
+  · คลังของ 9 (ตัวกรองอวาตาร์/เสียง/สินค้า · สถิติคำเสี่ยง · allowlist · คลังสคริปต์เรนเดอร์พัง) · ผู้ใช้และบทบาท 2 (ไม่มีข้อมูล “เข้าใช้งานล่าสุด”) · สคริปต์ AI 1
+  <br>· <strong>ยังไม่แตะเลย 311 เคสฝั่ง MVP-2</strong> — ก้อนใหญ่สุดคือห้องคุมไลฟ์/คนดู/Recap 72 เคส · Settings &amp; IA 58 · AIEventLog 38 · Billing 36</p>
+
+  <details class="quiet">
+    <summary>ผลราย epic ของชุด ส.ค. ทั้ง 15 กลุ่ม (กดเพื่อดู)</summary>
+    <div class="tw">
+    <table>
+      <thead><tr><th>เฟส</th><th>ขั้น / epic</th><th>เคส</th><th>ผ่าน</th><th>ไม่ผ่าน</th><th>พัก</th><th>บล็อก</th><th>ข้าม</th><th>ยังไม่เทส</th></tr></thead>
+      <tbody>
+        <tr><td>MVP-1</td><td>1 · เข้าระบบ &amp; รากฐาน Workspace</td><td>29</td><td>17</td><td>2</td><td>3</td><td>4</td><td>3</td><td>0</td></tr>
+        <tr><td>MVP-1</td><td>2 · คลังของ Workspace</td><td>40</td><td>28</td><td>9</td><td>1</td><td>1</td><td>1</td><td>0</td></tr>
+        <tr><td>MVP-1</td><td>3 · สร้างไลฟ์ใน Studio</td><td>39</td><td>22</td><td>11</td><td>3</td><td>3</td><td>0</td><td>0</td></tr>
+        <tr><td>MVP-1</td><td>4 · ออกอากาศ</td><td>13</td><td>4</td><td>0</td><td>1</td><td>0</td><td>0</td><td>8</td></tr>
+        <tr><td>MVP-1</td><td>5 · แจ้งเตือน operator &amp; risk-block</td><td>6</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>6</td></tr>
+        <tr><td>MVP-1</td><td>6 · AI ช่วยเขียน Script</td><td>10</td><td>9</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+        <tr><td>MVP-1</td><td>Full E2E Flow</td><td>4</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>4</td></tr>
+        <tr class="grp"><td colspan="9">MVP-1 รวม 141 เคส · เทสแล้ว 119/137 (87%) · ผ่าน 80 · ไม่ผ่าน 23 · พัก 8 · บล็อก 8 · ข้าม 4 · ยังไม่เทส 18</td></tr>
+        <tr><td>MVP-2</td><td>1 · คลัง Avatar / Voice self-service</td><td>93</td><td>38</td><td>0</td><td>0</td><td>0</td><td>0</td><td>55</td></tr>
+        <tr><td>MVP-2</td><td>2 · Studio &amp; Live-Creation riders</td><td>74</td><td>30</td><td>9</td><td>0</td><td>0</td><td>0</td><td>35</td></tr>
+        <tr><td>MVP-2</td><td>3 · Multi-Platform RTMP</td><td>50</td><td>2</td><td>38</td><td>0</td><td>0</td><td>0</td><td>10</td></tr>
+        <tr><td>MVP-2</td><td>4 · ห้องคุมไลฟ์ · คนดู · Post-Live Recap</td><td>72</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>72</td></tr>
+        <tr><td>MVP-2</td><td>5 · AIEventLog</td><td>40</td><td>2</td><td>0</td><td>0</td><td>0</td><td>0</td><td>38</td></tr>
+        <tr><td>MVP-2</td><td>6 · Billing / Usage consumer-side</td><td>37</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>36</td></tr>
+        <tr><td>MVP-2</td><td>7 · Settings &amp; Account IA</td><td>64</td><td>6</td><td>0</td><td>0</td><td>0</td><td>0</td><td>58</td></tr>
+        <tr><td>MVP-2</td><td>Full E2E Flow</td><td>7</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>7</td></tr>
+        <tr class="grp"><td colspan="9">MVP-2 รวม 437 เคส · เทสแล้ว 126/437 (29%) · ผ่าน 79 · ไม่ผ่าน 47 · ยังไม่เทส 311</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="quiet-note">ผลชุด ส.ค. บันทึกไว้ 19–20 ส.ค. 2026 (กำกับในช่อง Actual ของแต่ละเคส) · ตัวเลขเปลี่ยนได้ทุกครั้งที่มีคนกดเซฟผลเพิ่ม — ดูค่าล่าสุดที่ <a href="https://wanlee-tankunnatam.github.io/qa-test-reports/?project=ai">คอลัมน์ Status ในหน้า hub</a></div>
+  </details>
+
+  <div class="ask"><strong>สิ่งที่ 2 ใบนี้ต้องการจากที่ประชุม:</strong> เคาะว่า “ไม่ผ่าน 38 เคสของ RTMP” จะถูกนับเป็น <em>ของยังไม่สร้าง</em> (ปิดใบเทสไม่ได้จนกว่า Epic 14 จะส่ง)
+  หรือให้ QA ตัดออกจากขอบเขตเดือนนี้ไปเลย — ตอนนี้มันกดตัวเลขความคืบหน้าของ <a class="tid" href="https://kitdi.atlassian.net/browse/TAKRA-474">TAKRA-474</a> อยู่ทั้งที่ไม่ใช่ของที่ QA ทำต่อได้เอง</div>
+
   <h3>▸ ใบ dev ที่ QA ต้องไปเทส — ไม่ใช่ใบของ QA</h3>
   <p>41 ใบ <code>[FS]</code>/<code>[FE]</code> ที่อยู่สถานะ READY TO TEST คือ <strong>ของที่ต้องเทส</strong> ไม่ใช่ใบที่ QA ถือ ·
   QA ทำได้แค่ <strong>เทสแล้วบันทึกผล + เสนอ flip</strong> ส่วนการปิดใบเป็นของเจ้าของใบ (Golf · Berm · No · Boat) หรือ PM
