@@ -1728,7 +1728,12 @@ tr.featrow .ty{margin-left:3px}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "ทีมงาน" ในแถบด้านซ้าย (หมวด "พื้นที่ทำงาน")</li><li>อ่านหัวข้อและคำอธิบายด้านบน แล้วดูตัวเลขสรุปจำนวนสมาชิกและคอลัมน์ของตาราง</li><li>กดที่แถวสมาชิกคนหนึ่งเพื่อเปิดแผงรายละเอียดด้านขวา แล้วไล่ดูข้อมูลแต่ละส่วนในแผง</li></ol></div>
   <div class="sec"><h4>Test Data</h4><ul><li>URL: https://uat-live.takra.ai/users</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>เห็นหัวข้อ "ผู้ใช้และบทบาท" พร้อมคำอธิบาย "จัดการผู้ใช้และบทบาทใน Workspace · MVP-1 รองรับ 2 บทบาท (Owner / Live Operator)"</li><li>มีตัวเลขสรุปจำนวนสมาชิกรูปแบบ "ทั้งหมด X คน" และปุ่ม "จัดการสมาชิกที่ TAKRA Hub" (การเพิ่ม/เชิญสมาชิกทำที่ Hub)</li><li>ตารางมีคอลัมน์ "ผู้ใช้" · "บทบาท" · "เข้าใช้งานล่าสุด"</li><li>กดแถวแล้วแผงด้านข้างเปิดขึ้น แสดงหัวข้อ "บทบาท" (ระดับใน workspace + บทบาทการใช้งาน) · สวิตช์ Script Approve · "การใช้งาน" · "เข้าใช้งานล่าสุด"</li><li>ที่มา: Epic 1 · Story 1.7 · FR3</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>เห็นหัวข้อ "ผู้ใช้และบทบาท" พร้อมคำอธิบาย "จัดการผู้ใช้และบทบาทใน Workspace · MVP-1 รองรับ 2 บทบาท (Owner / Live Operator)"</li>
+<li>มีตัวเลขสรุปจำนวนสมาชิกรูปแบบ "ทั้งหมด X คน" และปุ่ม "จัดการสมาชิกที่ TAKRA Hub" (การเพิ่ม/เชิญสมาชิกทำที่ Hub ไม่ได้ทำในแอปนี้)</li>
+<li>ตารางมี 2 คอลัมน์คือ "ผู้ใช้" และ "บทบาท" เท่านั้น — MVP-1 ยังไม่มีคอลัมน์เวลาเข้าใช้งาน</li>
+<li>ถ้ามีคำเชิญค้าง จะเห็นบรรทัด "มีคำเชิญค้างอยู่ X รายการ" พร้อม "ที่นั่ง X/Y" และลิงก์ "จัดการคำเชิญที่ TAKRA Hub"</li>
+<li>กดแถวแล้วแผงด้านข้างเปิดขึ้น แสดงหัวข้อ "บทบาท" ที่มี "ระดับใน workspace (จาก TAKRA Hub)" กำกับว่า "อ่านอย่างเดียว" และ "บทบาทการใช้งาน" · สวิตช์ "มอบสิทธิ์ Script Approve" · หัวข้อ "การใช้งาน" (เช่น "ชั่วโมงอวาตาร์")</li>
+<li>ที่มา: Epic 1 · Story 1.7 · FR3</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1746,7 +1751,7 @@ tr.featrow .ty{margin-left:3px}
 
 <tr class="trow" data-mvp="mvp1" data-feat="m1e1" data-type="happy" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-UR.2</td>
-  <td class="ctitle">ค้นหาและกรองสมาชิกตามบทบาทและช่วงเวลาเข้าใช้งาน <span class="ty ty-happy" title="Happy Path">✅ Happy Path</span></td>
+  <td class="ctitle">ค้นหาและกรองสมาชิกตามบทบาท แล้วล้างตัวกรองกลับมาดูทั้งหมด <span class="ty ty-happy" title="Happy Path">✅ Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
   <td class="status" data-uid="tc-16"><span class="stb pending">รอเทส</span></td>
@@ -1754,13 +1759,23 @@ tr.featrow .ty{margin-left:3px}
 </tr>
 <tr class="detail"><td colspan="7">
 <div class="card">
-  <div class="h-title">ค้นหาและกรองสมาชิกตามบทบาทและช่วงเวลาเข้าใช้งาน</div>
+  <div class="h-title">ค้นหาและกรองสมาชิกตามบทบาท แล้วล้างตัวกรองกลับมาดูทั้งหมด</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · users-roles · Epic 1 · Story 1.7 · ประเภท: <b>✅ Happy Path</b> · MVP-1</div>
   <div class="sec"><h4>Precondition</h4><ul><li>อยู่ที่หน้า "ทีมงาน" (เมนู "ทีมงาน") และมีสมาชิกหลายคนหลายบทบาท</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "ทีมงาน" ในแถบด้านซ้าย</li><li>พิมพ์ชื่อหรืออีเมลบางส่วนลงในช่องค้นหา "ค้นหาด้วยชื่อหรืออีเมล…" แล้วดูรายการที่เหลือ</li><li>เลือกตัวกรอง "บทบาท:" เป็นค่าใดค่าหนึ่ง และตัวกรอง "เข้าใช้งาน:" เป็น "7 วันล่าสุด" (เปิดดูตัวเลือก "ยังไม่เคย" ในรายการด้วย)</li><li>กดปุ่มกากบาทบนชิปตัวกรองทีละอันจนหมด แล้วสังเกตรายการ</li></ol></div>
-  <div class="sec"><h4>Test Data</h4><ul><li>ตัวกรองเข้าใช้งาน: ทั้งหมด / 24 ชม.ล่าสุด / 7 วันล่าสุด / 30 วันล่าสุด / ยังไม่เคย</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li>
+<li>ไปที่เมนู "ทีมงาน" ในแถบด้านซ้าย (หมวด "พื้นที่ทำงาน")</li>
+<li>พิมพ์ชื่อหรืออีเมลบางส่วนลงในช่อง "ค้นหาด้วยชื่อหรืออีเมล…" แล้วดูรายการที่เหลือ</li>
+<li>เปิดตัวกรอง "บทบาท:" แล้วเลือก "Live Operator" (ในรายการมี "ทั้งหมด" · "Owner" · "Live Operator")</li>
+<li>กดกากบาทบนชิปตัวกรองทีละอันจนหมด แล้วสังเกตรายชื่อที่กลับมา</li></ol></div>
+  <div class="sec"><h4>Test Data</h4><ul><li>คำค้น: ชื่อหรืออีเมลบางส่วนของสมาชิกใน workspace</li>
+<li>ตัวกรองบทบาท: ทั้งหมด / Owner / Live Operator</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>รายการถูกกรองตรงตามเงื่อนไขที่เลือกในทุกกรณี (คำค้น + บทบาท + ช่วงเวลาเข้าใช้งาน ทำงานร่วมกัน)</li><li>ตัวกรองที่ใช้อยู่แสดงเป็นชิปหลังคำว่า "กรอง:" พร้อมจำนวนคนที่เหลือ (รูปแบบ "X คน")</li><li>ตัวเลือก "ยังไม่เคย" มีคำกำกับ "เฉพาะ pending invites" (ใช้กับคำเชิญที่ยังไม่ตอบรับ)</li><li>ล้างตัวกรองครบแล้วรายชื่อกลับมาแสดงครบเหมือนเดิม</li><li>ที่มา: Epic 1 · Story 1.7</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ระหว่างพิมพ์คำค้น รายชื่อเหลือเฉพาะคนที่ชื่อหรืออีเมลตรงกับคำค้น</li>
+<li>เลือกบทบาทแล้วรายชื่อเหลือเฉพาะคนที่บทบาทตรง และทำงานร่วมกับคำค้นพร้อมกัน</li>
+<li>ตัวกรองที่ใช้อยู่แสดงเป็นชิปหลังคำว่า "กรอง:" โดยชิปคำค้นเขียนว่า ค้นหา "…" และมีจำนวนคนที่เหลือรูปแบบ "X คน"</li>
+<li>ถ้ากรองแล้วไม่เหลือใคร หน้าจะขึ้น "ไม่มีผู้ใช้ในตัวกรองนี้" พร้อมคำแนะนำ "ลองล้างตัวกรอง หรือเชิญผู้ใช้ใหม่"</li>
+<li>ล้างชิปครบแล้วรายชื่อกลับมาแสดงครบเหมือนเดิม</li>
+<li>ที่มา: Epic 1 · Story 1.7 · FR3</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -2333,10 +2348,18 @@ tr.featrow .ty{margin-left:3px}
   <div class="h-title">เปิดคลังเสียงแล้วเห็นเสียงที่ Ops จัดเตรียมพร้อมข้อความ PDPA</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · voice-library · Epic 2 · Story 2.2 · FR9 · ประเภท: <b>✅ Happy Path</b> · MVP-1</div>
   <div class="sec"><h4>Precondition</h4><ul><li>ล็อกอินเป็น Owner</li><li>workspace มี Voice Profile อย่างน้อย 1 รายการ</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังเสียง" ในแถบด้านซ้าย (หมวด "คลังข้อมูล")</li><li>อ่านหัวข้อหน้าและคำบรรยายใต้หัวข้อ</li><li>ดูหัวคอลัมน์ของตารางเสียงและข้อมูลในแต่ละแถว</li></ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li>
+<li>ไปที่เมนู "คลังเสียง" ในแถบด้านซ้าย (หมวด "คลังข้อมูล")</li>
+<li>อ่านหัวข้อหน้าและคำบรรยายใต้หัวข้อ แล้วเลื่อนลงไปที่หัวข้อย่อย "เสียงของระบบ"</li>
+<li>ดูหัวคอลัมน์ของตารางเสียงและข้อมูลในแต่ละแถว</li></ol></div>
   <div class="sec"><h4>Test Data</h4><ul><li>URL: https://uat-live.takra.ai/voices</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>เห็นหัวข้อ "คลังเสียง" พร้อมคำบรรยาย "เสียงพากย์สำเร็จรูปที่ทีม TAKRA Ops จัดเตรียมและดูแลให้ — พร้อมยินยอม PDPA"</li><li>ตารางแสดงชื่อเสียงแต่ละรายการ พร้อมคอลัมน์ "ลักษณะ" และ "อวาตาร์ที่ใช้"</li><li>มีปุ่ม "อัปเดตคลังเสียง" พร้อมเวลา "อัปเดตล่าสุด" แสดงอยู่ด้านบน</li><li>ที่มา: Epic 2 · Story 2.2 · FR9</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>เห็นหัวข้อ "คลังเสียง" พร้อมคำบรรยาย "เสียงทั้งหมดที่ workspace นี้ใช้ออกอากาศได้ — ทั้งเสียงที่คุณอัปโหลดเองและเสียงที่ทีม TAKRA Ops เตรียมให้"</li>
+<li>มีหัวข้อย่อย "เสียงของระบบ" พร้อมคำบรรยาย "เสียงพากย์สำเร็จรูปที่ทีม TAKRA Ops จัดเตรียมและดูแลให้ — พร้อมยินยอม PDPA"</li>
+<li>ตารางใต้หัวข้อนั้นมีคอลัมน์ "ชื่อเสียง" · "เพศ" · "ความยินยอม PDPA" · "อวาตาร์ที่ใช้"</li>
+<li>มีปุ่ม "อัปเดตคลังเสียง" พร้อมเวลา "อัปเดตล่าสุด" แสดงอยู่ด้านบน</li>
+<li>ถ้า Ops ยังไม่ได้จัดเตรียมเสียงให้ จะเห็น "ทีมงานกำลังเตรียมเสียงให้" พร้อมปุ่ม "ติดต่อทีม Ops" แทนตาราง</li>
+<li>ที่มา: Epic 2 · Story 2.2 · FR9</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -2354,7 +2377,7 @@ tr.featrow .ty{margin-left:3px}
 
 <tr class="trow" data-mvp="mvp1" data-feat="m1e2" data-type="happy" data-level="ui" data-prio="P1" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-V2.2</td>
-  <td class="ctitle">กรองเสียงตามลักษณะและภาษา แล้วล้างตัวกรองได้ <span class="ty ty-happy" title="Happy Path">✅ Happy Path</span></td>
+  <td class="ctitle">กรองเสียงตามเพศและภาษา แล้วล้างตัวกรองได้ <span class="ty ty-happy" title="Happy Path">✅ Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
   <td class="status" data-uid="tc-35"><span class="stb pending">รอเทส</span></td>
@@ -2362,12 +2385,20 @@ tr.featrow .ty{margin-left:3px}
 </tr>
 <tr class="detail"><td colspan="7">
 <div class="card">
-  <div class="h-title">กรองเสียงตามลักษณะและภาษา แล้วล้างตัวกรองได้</div>
+  <div class="h-title">กรองเสียงตามเพศและภาษา แล้วล้างตัวกรองได้</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · voice-library · Epic 2 · Story 2.2 · ประเภท: <b>✅ Happy Path</b> · MVP-1</div>
   <div class="sec"><h4>Precondition</h4><ul><li>อยู่ที่หน้า "คลังเสียง" (เมนู "คลังเสียง") ที่มีเสียงหลายรายการ</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังเสียง" แล้วรอจนรายการโหลดเสร็จ</li><li>เลือกตัวกรอง "ลักษณะ" ค่าใดค่าหนึ่ง แล้วเลือกตัวกรอง "ภาษา" เพิ่มอีกหนึ่งค่า</li><li>อ่านข้อความสรุปจำนวนใต้แถวตัวกรอง</li><li>กด "ล้างตัวกรอง" แล้วสังเกตรายการ</li></ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li>
+<li>ไปที่เมนู "คลังเสียง" แล้วเลื่อนลงไปที่หัวข้อย่อย "เสียงของระบบ" รอจนรายการโหลดเสร็จ</li>
+<li>เลือกตัวกรอง "เพศ" ค่าใดค่าหนึ่ง (มี "ทั้งหมด" · "หญิง" · "ชาย" · "กลาง" · "ไม่ระบุ") แล้วเลือกตัวกรอง "ภาษา" เพิ่มอีกหนึ่งค่า</li>
+<li>อ่านข้อความสรุปจำนวนใต้แถวตัวกรอง</li>
+<li>กด "ล้างตัวกรอง" แล้วสังเกตรายการ</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ตารางกรองเหลือเฉพาะเสียงที่ตรงทั้งสองเงื่อนไขพร้อมกัน</li><li>เห็นข้อความสรุป "แสดง X จาก Y เสียง" พร้อมลิงก์ "ล้างตัวกรอง"</li><li>หลังล้างตัวกรอง รายการเสียงกลับมาแสดงครบเท่าเดิม</li><li>ที่มา: Epic 2 · Story 2.2</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ตารางกรองเหลือเฉพาะเสียงที่ตรงทั้งสองเงื่อนไขพร้อมกัน</li>
+<li>เห็นข้อความสรุป "แสดง X จาก Y เสียง" พร้อมลิงก์ "ล้างตัวกรอง"</li>
+<li>ถ้าไม่มีเสียงตรงเงื่อนไข จะเห็น "ไม่พบเสียงตามตัวกรอง" พร้อมคำแนะนำ "ลองปรับหรือล้างตัวกรองเพื่อดูเสียงทั้งหมด"</li>
+<li>หลังล้างตัวกรอง รายการเสียงกลับมาแสดงครบเท่าเดิม</li>
+<li>ที่มา: Epic 2 · Story 2.2</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
     <div class="sec"><h4>Status</h4><div class="statusrow">
