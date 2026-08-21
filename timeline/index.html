@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TAKRA QA — Timeline Hub</title>
+<style>
+  :root{
+    --bg:#f5f6f8; --panel:#ffffff; --panel-2:#fbfcfd; --border:#e4e7eb; --row-h:#f2f4f8;
+    --text:#1a1f26; --muted:#6b7280; --faint:#9aa1ab;
+    --accent:#4f46e5; --accent-soft:#eef0fe;
+    --test:#2563eb; --test-bg:#eaf1fe;
+    --dod:#c2700a; --dod-bg:#fdf1df;
+    --summary:#059669; --summary-bg:#e5f6ee;
+    --note:#64748b; --note-bg:#eef1f5;
+    --timeline:#0e7490; --timeline-bg:#e0f4f9;
+    --new:#e11d48; --new-bg:#fde7ec;
+    /* สีสถานะของแถบ Status — ตรวจด้วย validate_palette.js บนพื้นสว่างแล้วผ่านครบ
+       (ลำดับในแถบ: ผ่าน → พัก/บล็อก → ไม่ผ่าน) */
+    --st-pass:#16a34a; --st-issue:#7c3aed; --st-fail:#dc2626; --issue-bg:#f1ebfe;
+    --shadow:0 1px 2px rgba(16,24,40,.06),0 1px 3px rgba(16,24,40,.04);
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --bg:#0e1116; --panel:#161b22; --panel-2:#1b2230; --border:#2a313c; --row-h:#1c2431;
+      --text:#e6e9ee; --muted:#9aa4b2; --faint:#6b7480;
+      --accent:#8b93ff; --accent-soft:#20233a;
+      --test:#6ea8fe; --test-bg:#17233b; --dod:#f0b35b; --dod-bg:#332614;
+      --summary:#4ecb96; --summary-bg:#122c22; --note:#94a3b8; --note-bg:#1c2431;
+      --timeline:#5fd0e8; --timeline-bg:#10333d;
+      --new:#fb7185; --new-bg:#3a1622;
+      /* ชุดของโหมดมืด เลือกแยกและตรวจกับพื้นมืดโดยเฉพาะ ไม่ใช่พลิกจากชุดสว่าง */
+      --st-pass:#059669; --st-issue:#8b5cf6; --st-fail:#ef4444; --issue-bg:#241c3a;
+      --shadow:0 1px 2px rgba(0,0,0,.4);
+    }
+  }
+  :root[data-theme="light"]{
+    --bg:#f5f6f8; --panel:#ffffff; --panel-2:#fbfcfd; --border:#e4e7eb; --row-h:#f2f4f8;
+    --text:#1a1f26; --muted:#6b7280; --faint:#9aa1ab; --accent:#4f46e5; --accent-soft:#eef0fe;
+    --test:#2563eb; --test-bg:#eaf1fe; --dod:#c2700a; --dod-bg:#fdf1df;
+    --summary:#059669; --summary-bg:#e5f6ee; --note:#64748b; --note-bg:#eef1f5;
+    --timeline:#0e7490; --timeline-bg:#e0f4f9;
+    --new:#e11d48; --new-bg:#fde7ec; --shadow:0 1px 2px rgba(16,24,40,.06),0 1px 3px rgba(16,24,40,.04);
+    --st-pass:#16a34a; --st-issue:#7c3aed; --st-fail:#dc2626; --issue-bg:#f1ebfe;
+  }
+  :root[data-theme="dark"]{
+    --bg:#0e1116; --panel:#161b22; --panel-2:#1b2230; --border:#2a313c; --row-h:#1c2431;
+    --text:#e6e9ee; --muted:#9aa4b2; --faint:#6b7480; --accent:#8b93ff; --accent-soft:#20233a;
+    --test:#6ea8fe; --test-bg:#17233b; --dod:#f0b35b; --dod-bg:#332614;
+    --summary:#4ecb96; --summary-bg:#122c22; --note:#94a3b8; --note-bg:#1c2431;
+    --timeline:#5fd0e8; --timeline-bg:#10333d;
+    --new:#fb7185; --new-bg:#3a1622; --shadow:0 1px 2px rgba(0,0,0,.4);
+    --st-pass:#059669; --st-issue:#8b5cf6; --st-fail:#ef4444; --issue-bg:#241c3a;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{background:var(--bg); color:var(--text); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans Thai",Roboto,Helvetica,Arial,sans-serif; line-height:1.5; -webkit-font-smoothing:antialiased}
+  a{color:inherit}
+
+  .layout{max-width:1280px; margin:0 auto; display:grid; grid-template-columns:230px 1fr; gap:26px; padding:22px 22px 60px}
+
+  /* ---------- Sidebar ---------- */
+  aside{position:sticky; top:22px; align-self:start; height:calc(100vh - 44px); display:flex; flex-direction:column}
+  .brand{display:flex; align-items:center; gap:9px; padding:4px 8px 14px; border-bottom:1px solid var(--border); margin-bottom:12px}
+  .brand .logo{font-size:1.4rem}
+  .brand .txt b{display:block; font-size:.98rem; letter-spacing:-.01em}
+  .brand .txt span{font-size:.72rem; color:var(--faint)}
+  nav{display:flex; flex-direction:column; gap:3px; overflow-y:auto; flex:1}
+  .nav-label{font-size:.68rem; text-transform:uppercase; letter-spacing:.08em; color:var(--faint); padding:8px 10px 4px; font-weight:700}
+  .nav-item{display:flex; align-items:center; gap:10px; padding:9px 11px; border-radius:10px; cursor:pointer; color:var(--muted); font-size:.9rem; font-weight:600; border:1px solid transparent; user-select:none}
+  .nav-item .emoji{font-size:1.05rem; width:20px; text-align:center}
+  .nav-item .name{flex:1}
+  .nav-item .n{font-size:.72rem; color:var(--faint); background:var(--panel-2); border:1px solid var(--border); border-radius:999px; padding:1px 8px; font-weight:700}
+  .nav-item:hover{background:var(--panel); color:var(--text)}
+  .nav-item.active{background:var(--accent-soft); color:var(--text); border-color:var(--accent)}
+  .nav-item.active .n{color:var(--accent); border-color:var(--accent)}
+  .side-foot{padding:12px 10px 0; border-top:1px solid var(--border); margin-top:10px; font-size:.76rem; color:var(--muted)}
+  .side-foot a{color:var(--accent); text-decoration:none}
+  .side-foot a:hover{text-decoration:underline}
+  .theme-btn{margin-top:8px; width:100%; border:1px solid var(--border); background:var(--panel); color:var(--text); border-radius:10px; padding:8px; cursor:pointer; font-size:.83rem}
+  .theme-btn:hover{border-color:var(--accent)}
+
+  /* ---------- Main ---------- */
+  main{min-width:0}
+  .topbar{display:flex; align-items:baseline; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-bottom:14px}
+  .topbar h1{font-size:1.5rem; margin:0; letter-spacing:-.02em}
+  .topbar .sub{color:var(--muted); font-size:.9rem}
+
+  .controls{position:sticky; top:0; z-index:5; background:var(--bg); padding:10px 0 12px; margin-bottom:8px; display:flex; gap:12px; align-items:center; flex-wrap:wrap}
+  .search{flex:1 1 240px; position:relative; min-width:190px}
+  .search input{width:100%; padding:10px 12px 10px 36px; border-radius:10px; border:1px solid var(--border); background:var(--panel); color:var(--text); font-size:.95rem; box-shadow:var(--shadow)}
+  .search input:focus{outline:none; border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft)}
+  .search svg{position:absolute; left:11px; top:50%; transform:translateY(-50%); color:var(--faint)}
+  .chips{display:flex; gap:8px; flex-wrap:wrap}
+  .chip{border:1px solid var(--border); background:var(--panel); color:var(--muted); padding:8px 13px; border-radius:999px; cursor:pointer; font-size:.84rem; font-weight:600; display:inline-flex; align-items:center; gap:7px; box-shadow:var(--shadow); user-select:none}
+  .chip .dot{width:8px; height:8px; border-radius:50%}
+  .chip:hover{border-color:var(--accent)}
+  .chip.active{background:var(--accent-soft); border-color:var(--accent); color:var(--text)}
+  .daterange{display:flex; align-items:center; gap:7px; font-size:.84rem; color:var(--muted)}
+  .daterange input[type="date"]{border:1px solid var(--border); background:var(--panel); color:var(--text); border-radius:9px; padding:7px 9px; font-size:.84rem; box-shadow:var(--shadow); font-family:inherit; color-scheme:light dark}
+  :root[data-theme="dark"] .daterange input[type="date"]{color-scheme:dark}
+  :root[data-theme="light"] .daterange input[type="date"]{color-scheme:light}
+  .daterange input[type="date"]:focus{outline:none; border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft)}
+  .daterange .clr{border:1px solid var(--border); background:var(--panel); color:var(--muted); border-radius:9px; padding:7px 10px; cursor:pointer; font-size:.8rem}
+  .daterange .clr:hover{border-color:var(--accent); color:var(--text)}
+
+  .group{margin-top:24px; scroll-margin-top:70px}
+  .group:first-of-type{margin-top:6px}
+  .group-head{display:flex; align-items:center; gap:10px; margin:0 0 10px}
+  .group-head .emoji{font-size:1.3rem}
+  .group-head h2{font-size:1.08rem; margin:0; letter-spacing:-.01em}
+  .group-head .count{font-size:.71rem; color:var(--muted); background:var(--panel); border:1px solid var(--border); padding:2px 9px; border-radius:999px; font-weight:700}
+  .group-head .rule{flex:1; height:1px; background:var(--border)}
+
+  /* ---------- Table ---------- */
+  .tblwrap{background:var(--panel); border:1px solid var(--border); border-radius:12px; overflow:hidden; box-shadow:var(--shadow)}
+  table.tbl{width:100%; border-collapse:collapse; font-size:.9rem}
+  table.tbl thead th{
+    text-align:left; font-size:.68rem; text-transform:uppercase; letter-spacing:.06em; font-weight:700;
+    color:var(--faint); padding:9px 14px; background:var(--panel-2); border-bottom:1px solid var(--border); white-space:nowrap;
+  }
+  table.tbl tbody tr{border-bottom:1px solid var(--border); cursor:pointer; transition:background .1s}
+  table.tbl tbody tr:last-child{border-bottom:none}
+  table.tbl tbody tr:hover{background:var(--row-h)}
+  table.tbl td{padding:11px 14px; vertical-align:middle}
+  td.c-report{border-left:3px solid var(--edge,transparent)}
+  tr[data-type="test"]{--edge:var(--test)}
+  tr[data-type="dod"]{--edge:var(--dod)}
+  tr[data-type="summary"]{--edge:var(--summary)}
+  tr[data-type="note"]{--edge:var(--note)}
+  tr[data-type="timeline"]{--edge:var(--timeline)}
+  .rlink{font-weight:650; text-decoration:none; letter-spacing:-.01em; display:inline-flex; align-items:center; gap:8px; flex-wrap:wrap}
+  .rlink:hover{color:var(--accent); text-decoration:underline}
+  .rdesc{font-size:.78rem; color:var(--muted); margin-top:2px}
+  .c-type{width:1%; white-space:nowrap}
+  .c-date{width:1%; white-space:nowrap; color:var(--faint); font-size:.82rem; font-variant-numeric:tabular-nums}
+  .badge{font-size:.68rem; font-weight:700; letter-spacing:.03em; text-transform:uppercase; padding:3px 8px; border-radius:6px; white-space:nowrap}
+  .badge.test{color:var(--test); background:var(--test-bg)}
+  .badge.dod{color:var(--dod); background:var(--dod-bg)}
+  .badge.summary{color:var(--summary); background:var(--summary-bg)}
+  .badge.note{color:var(--note); background:var(--note-bg)}
+  .badge.timeline{color:var(--timeline); background:var(--timeline-bg)}
+  .pill-new{font-size:.63rem; font-weight:800; letter-spacing:.04em; color:var(--new); background:var(--new-bg); padding:2px 7px; border-radius:999px; text-transform:uppercase}
+  .flag{font-size:.65rem; color:var(--dod); background:var(--dod-bg); padding:2px 7px; border-radius:6px; font-weight:600; white-space:nowrap}
+  .arrow{color:var(--faint); font-size:.9rem}
+  table.tbl tbody tr:hover .arrow{color:var(--accent)}
+
+  .empty{display:none; text-align:center; color:var(--muted); padding:54px 0; font-size:.95rem}
+  .empty.show{display:block}
+
+  /* ---------- Responsive ---------- */
+  @media (max-width:820px){
+    .layout{grid-template-columns:1fr; gap:14px; padding:16px 16px 48px}
+    aside{position:static; height:auto}
+    .brand{border-bottom:none; padding-bottom:8px; margin-bottom:6px}
+    nav{flex-direction:row; overflow-x:auto; gap:8px; padding-bottom:4px}
+    .nav-label{display:none}
+    .nav-item{flex:0 0 auto; white-space:nowrap}
+    .side-foot{display:none}
+    .tblwrap{overflow-x:auto}
+    .rdesc{display:none}
+  }
+  @media (max-width:520px){ .topbar h1{font-size:1.28rem} }
+
+  /* ---------- Timeline hub ---------- */
+  .jira{display:flex; align-items:center; gap:9px; flex-wrap:wrap; margin:0 0 10px; font-size:.76rem; color:var(--faint)}
+  .jira a{display:inline-flex; align-items:center; gap:7px; text-decoration:none; color:var(--timeline); background:var(--timeline-bg); padding:5px 11px; border-radius:999px; font-weight:700; font-size:.76rem; border:1px solid transparent}
+  .jira a:hover{border-color:var(--timeline)}
+  .c-period{width:1%; white-space:nowrap; color:var(--muted); font-size:.82rem}
+  tr.none{cursor:default}
+  tr.none:hover{background:transparent}
+  tr.none td{color:var(--faint); font-size:.85rem; font-style:italic}
+  .nav-link{display:flex; align-items:center; gap:10px; padding:9px 11px; margin-top:6px; border-radius:10px; color:var(--muted); font-size:.86rem; font-weight:600; text-decoration:none; border:1px dashed var(--border)}
+  .nav-link:hover{border-color:var(--accent); color:var(--text)}
+</style>
+</head>
+<body>
+
+<div class="layout">
+
+  <!-- ================= Sidebar ================= -->
+  <aside>
+    <div class="brand">
+      <span class="logo">🗓️</span>
+      <span class="txt"><b>QA Timeline</b><span>TAKRA · แผนเดินงาน</span></span>
+    </div>
+    <nav id="nav">
+      <div class="nav-label">โปรเจค</div>
+      <div class="nav-item" data-project="rerun"><span class="emoji">🎬</span><span class="name">TAKRA Rerun</span><span class="n">0</span></div>
+      <div class="nav-item active" data-project="ai"><span class="emoji">🤖</span><span class="name">TAKRA AI · Live</span><span class="n">1</span></div>
+      <div class="nav-item" data-project="insight"><span class="emoji">🐘</span><span class="name">TAKRA Insight</span><span class="n">0</span></div>
+      <div class="nav-item" data-project="hub"><span class="emoji">🏢</span><span class="name">TAKRA Hub</span><span class="n">0</span></div>
+    </nav>
+    <a class="nav-link" href="../">🧪 รายงานผลทดสอบ (Reports Hub) ↗</a>
+    <div class="side-foot">
+      อัปเดต 2026-08-21 · <a href="https://github.com/wanlee-tankunnatam/qa-test-reports" target="_blank" rel="noopener">GitHub repo ↗</a>
+      <button class="theme-btn" id="themeBtn">🌓 สลับธีม</button>
+    </div>
+  </aside>
+
+  <!-- ================= Main ================= -->
+  <main>
+    <div class="topbar">
+      <h1>Timeline Hub</h1>
+      <span class="sub">แผนเดินงาน · สถานะรอบเดือน — คนละหน้ากับรายงานผลทดสอบ</span>
+    </div>
+
+    <div class="controls">
+      <label class="search">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        <input id="q" type="search" placeholder="ค้นหาทุกโปรเจค… (เช่น ส.ค., mvp-2, epic)" autocomplete="off">
+      </label>
+    </div>
+
+    <div id="content">
+
+      <section class="group" data-project="rerun" id="sec-rerun">
+        <div class="group-head"><span class="emoji">🎬</span><h2>TAKRA Rerun</h2><span class="count">0 timeline</span><span class="rule"></span></div>
+        <div class="jira">แผนตัวจริงบน Jira: <a href="https://kitdi.atlassian.net/jira/software/projects/TAK/boards/1661/timeline" target="_blank" rel="noopener">📋 TAK board timeline ↗</a></div>
+        <div class="tblwrap"><table class="tbl">
+          <thead><tr><th>เอกสาร</th><th>ช่วงเวลา</th><th>จัดทำ</th></tr></thead>
+          <tbody>
+            <tr class="none" data-title="takra-rerun ยังไม่มี timeline"><td colspan="3">ยังไม่มีเอกสาร timeline ในโปรเจคนี้ — ดูแผนตัวจริงได้ที่ Jira board ด้านบน</td></tr>
+          </tbody>
+        </table></div>
+      </section>
+
+      <section class="group" data-project="ai" id="sec-ai">
+        <div class="group-head"><span class="emoji">🤖</span><h2>TAKRA AI · Live</h2><span class="count">1 timeline</span><span class="rule"></span></div>
+        <div class="jira">แผนตัวจริงบน Jira: <a href="https://kitdi.atlassian.net/jira/software/projects/TAKRA/boards/1593/timeline" target="_blank" rel="noopener">📋 TAKRA board timeline ↗</a></div>
+        <div class="tblwrap"><table class="tbl">
+          <thead><tr><th>เอกสาร</th><th>ช่วงเวลา</th><th>จัดทำ</th></tr></thead>
+          <tbody>
+            <tr data-title="mvp-1+2 mvp1 mvp2 execution timeline แผนงาน สถานะสิ้นเดือน gantt jira epic takra ai" data-href="https://wanlee-tankunnatam.github.io/qa-test-reports/projects/takra-ai/2026/08/timeline/takra-ai-mvp1-2-status-timeline.html">
+              <td class="c-report"><a class="rlink" href="https://wanlee-tankunnatam.github.io/qa-test-reports/projects/takra-ai/2026/08/timeline/takra-ai-mvp1-2-status-timeline.html">[MVP1+2] Execution Timeline — สถานะสิ้นเดือน ส.ค. 2026</a><div class="rdesc">แผนเดินงาน 7 วันทำงานสุดท้ายของเดือน · สถานะราย epic · งานค้างแยก QA/Dev · จุดตัดสินใจก่อนสิ้นเดือน</div></td>
+              <td class="c-period">21–31 ส.ค. 2026</td>
+              <td class="c-date">2026-08-21 <span class="arrow">↗</span></td>
+            </tr>
+          </tbody>
+        </table></div>
+      </section>
+
+      <section class="group" data-project="insight" id="sec-insight">
+        <div class="group-head"><span class="emoji">🐘</span><h2>TAKRA Insight</h2><span class="count">0 timeline</span><span class="rule"></span></div>
+        <div class="jira">แผนตัวจริงบน Jira: <a href="https://kitdi.atlassian.net/jira/software/projects/TI/boards/1660/timeline" target="_blank" rel="noopener">📋 TI board timeline ↗</a></div>
+        <div class="tblwrap"><table class="tbl">
+          <thead><tr><th>เอกสาร</th><th>ช่วงเวลา</th><th>จัดทำ</th></tr></thead>
+          <tbody>
+            <tr class="none" data-title="takra-insight ยังไม่มี timeline"><td colspan="3">ยังไม่มีเอกสาร timeline ในโปรเจคนี้ — ดูแผนตัวจริงได้ที่ Jira board ด้านบน</td></tr>
+          </tbody>
+        </table></div>
+      </section>
+
+      <section class="group" data-project="hub" id="sec-hub">
+        <div class="group-head"><span class="emoji">🏢</span><h2>TAKRA Hub</h2><span class="count">0 timeline</span><span class="rule"></span></div>
+        <div class="jira">แผนตัวจริงบน Jira: <a href="https://kitdi.atlassian.net/jira/software/projects/TKH/boards/1733/timeline" target="_blank" rel="noopener">📋 TKH board timeline ↗</a></div>
+        <div class="tblwrap"><table class="tbl">
+          <thead><tr><th>เอกสาร</th><th>ช่วงเวลา</th><th>จัดทำ</th></tr></thead>
+          <tbody>
+            <tr class="none" data-title="takra-hub ยังไม่มี timeline"><td colspan="3">ยังไม่มีเอกสาร timeline ในโปรเจคนี้ — ดูแผนตัวจริงได้ที่ Jira board ด้านบน</td></tr>
+          </tbody>
+        </table></div>
+      </section>
+
+    </div>
+
+    <div class="empty" id="empty">ไม่พบเอกสารที่ตรงกับการค้นหา</div>
+  </main>
+</div>
+
+<script>
+(function(){
+  var q = document.getElementById('q');
+  var navItems = [].slice.call(document.querySelectorAll('.nav-item'));
+  var rows = [].slice.call(document.querySelectorAll('table.tbl tbody tr'));
+  var groups = [].slice.call(document.querySelectorAll('.group'));
+  var empty = document.getElementById('empty');
+  var projectFilter = 'ai';   // ทีละโปรเจค — ตั้งต้นที่โปรเจคที่มี timeline ล่าสุด
+
+  function setNavActive(){
+    navItems.forEach(function(x){ x.classList.toggle('active', x.getAttribute('data-project') === projectFilter); });
+  }
+  function apply(){
+    var term = (q.value || '').trim().toLowerCase();
+    var searching = term.length > 0;   // ค้นหา = ข้ามทุกโปรเจค · ไม่ค้นหา = ดูทีละโปรเจค
+    var shown = 0;
+    rows.forEach(function(r){
+      var proj = r.closest('.group').getAttribute('data-project');
+      var projOk = searching ? true : (proj === projectFilter);
+      var text = (r.getAttribute('data-title') || '') + ' ' + r.textContent.toLowerCase();
+      var ok = projOk && (!term || text.indexOf(term) !== -1);
+      r.style.display = ok ? '' : 'none';
+      if(ok && !r.classList.contains('none')) shown++;
+    });
+    groups.forEach(function(g){
+      if(!searching && g.getAttribute('data-project') !== projectFilter){ g.style.display = 'none'; return; }
+      var visible = g.querySelectorAll('tbody tr:not([style*="display: none"])').length;
+      g.style.display = visible ? '' : 'none';
+    });
+    empty.classList.toggle('show', shown === 0);
+  }
+
+  var VALID = navItems.map(function(x){ return x.getAttribute('data-project'); });
+  function selectProject(proj, opts){
+    opts = opts || {};
+    if(VALID.indexOf(proj) === -1) proj = 'ai';
+    projectFilter = proj;
+    q.value = '';
+    setNavActive();
+    apply();
+    if(opts.scroll !== false) window.scrollTo({top:0, behavior:'smooth'});
+    try {
+      if(opts.push) history.pushState({project:proj}, '', '?project=' + proj);
+      else if(opts.replace) history.replaceState({project:proj}, '', '?project=' + proj);
+    } catch(e){}
+  }
+
+  q.addEventListener('input', apply);
+  navItems.forEach(function(it){
+    it.addEventListener('click', function(){ selectProject(it.getAttribute('data-project'), {push:true}); });
+  });
+  window.addEventListener('popstate', function(e){
+    var p = (e.state && e.state.project) || (new URLSearchParams(location.search)).get('project') || 'ai';
+    selectProject(p, {scroll:false});
+  });
+
+  rows.forEach(function(r){
+    r.addEventListener('click', function(e){
+      if(e.target.closest('a')) return;
+      var href = r.getAttribute('data-href');
+      if(href) window.location.href = href;
+    });
+  });
+
+  // ธีมใช้คีย์เดียวกับ Reports Hub — สลับที่หน้าไหนก็ติดทั้งสองหน้า
+  var root = document.documentElement, tb = document.getElementById('themeBtn'), saved=null;
+  try { saved = localStorage.getItem('qa-hub-theme'); } catch(e){}
+  if(saved){ root.setAttribute('data-theme', saved); }
+  tb.addEventListener('click', function(){
+    var cur = root.getAttribute('data-theme');
+    if(!cur){ cur = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'; }
+    var next = cur === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('qa-hub-theme', next); } catch(e){}
+  });
+
+  var initial = (new URLSearchParams(location.search)).get('project');
+  if(initial && VALID.indexOf(initial) !== -1){ selectProject(initial, {scroll:false, replace:true}); }
+  else { selectProject('ai', {scroll:false}); }
+})();
+</script>
+</body>
+</html>

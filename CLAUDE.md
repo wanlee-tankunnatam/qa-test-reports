@@ -57,6 +57,8 @@ repo นี้เก็บรายงาน manual test case (UI) ของท�
 
 > Jira เป็นลิงก์อ้างอิงสำหรับคน — ไม่มี API token ใน repo นี้ ถ้าต้องดึงสถานะใบงานให้ผู้ใช้ export/แปะข้อมูลมา
 
+**2 index แยกกัน:** รายงานผลทดสอบ = `index.html` (`/?project=<id>`) · เอกสาร timeline/แผนเดินงาน = `timeline/index.html` (`/timeline/?project=<id>`) — เอกสาร timeline ไม่ต้องใส่ในหน้ารายงาน
+
 ---
 
 ## ชั้น 3 — scope ราย task (ระบุทุกครั้ง ห้ามล้ำ)

@@ -7,13 +7,18 @@
 หน้า hub (`index.html`) รวมรายงานทุกโปรเจคไว้ที่เดียว — ค้นหาได้ กรองตามประเภท/ช่วงวันที่ได้
 และมีคอลัมน์ **Status** ที่ดึง % ความคืบหน้าจากตัวรายงานแต่ละไฟล์มาแสดงแบบสด
 
+**Timeline แยกอีก index หนึ่ง** → https://wanlee-tankunnatam.github.io/qa-test-reports/timeline/
+(`timeline/index.html`) — เอกสารแผนเดินงาน/สถานะรอบเดือน + ลิงก์ Jira board timeline รายโปรเจค
+ไม่ปนกับรายงานผลทดสอบ · สองหน้าลิงก์หากันผ่านเมนูซ้าย
+
 ---
 
 ## โครงสร้าง repo
 
 ```
 qa-test-reports/
-├── index.html                      ← หน้า hub (entry point ของ GitHub Pages — ห้ามย้าย)
+├── index.html                      ← หน้า hub รายงานผลทดสอบ (entry point ของ GitHub Pages — ห้ามย้าย)
+├── timeline/index.html             ← หน้า hub Timeline (แผนเดินงาน) — คนละ index กับด้านบน ห้ามย้าย
 ├── README.md                       ← ไฟล์นี้
 │
 ├── projects/                       ← รายงานจริงทั้งหมด
@@ -21,7 +26,7 @@ qa-test-reports/
 │       ├── <YYYY>/<MM>/            ← ปี / เดือน ที่ออกรายงาน
 │       │   ├── reports/            ← ตาราง test cases (มีปุ่ม ☁️ เซฟผลขึ้น GitHub)
 │       │   ├── summary/            ← สรุปผลการทดสอบ (static)
-│       │   └── timeline/           ← แผนเดินงาน/สถานะรอบเดือน (static · ไม่ใช่ผลทดสอบ)
+│       │   └── timeline/           ← แผนเดินงาน/สถานะรอบเดือน (static · ไม่ใช่ผลทดสอบ · ลิสต์ที่ timeline/index.html)
 │       ├── dod/mvp<N>/             ← Definition of Done checklist — แยกตาม MVP ไม่แบ่งเดือน
 │       └── archive/                ← รายงานรุ่นเก่าที่เลิกใช้แล้ว (ไม่แบ่งเดือน ไม่ลิงก์จาก hub)
 │
@@ -91,12 +96,14 @@ qa-test-reports/
    ค่านี้คือ path ที่ปุ่มเซฟจะเขียนกลับผ่าน GitHub API ถ้าไม่ตรง = เซฟไปผิดที่
 3. **ตั้ง back-link** ให้ตรงโปรเจค — `?project=` รับได้แค่ `rerun` · `ai` · `insight` · `hub` · `notes`
    ```html
-   <a href="https://wanlee-tankunnatam.github.io/qa-test-reports/?project=ai">
+   <a href="https://wanlee-tankunnatam.github.io/qa-test-reports/?project=ai">           <!-- รายงานผลทดสอบ -->
+   <a href="https://wanlee-tankunnatam.github.io/qa-test-reports/timeline/?project=ai">  <!-- เอกสาร timeline -->
    ```
-   ใส่ค่าอื่น (เช่น `live`) hub จะ fallback ไป `rerun` เงียบ ๆ
-4. **เพิ่มแถวใน `index.html`** ในกลุ่มโปรเจคที่ถูก — URL ต้องใส่ **2 ที่**: `data-href` บน `<tr>` และ `href` บน `<a>`
-   อย่าลืมอัปเดตตัวเลข `<span class="count">N reports</span>` ของกลุ่มนั้น **และ `<span class="n">N</span>` ในเมนูซ้าย**
-   `data-type` ที่รับได้: `test` · `dod` · `summary` · `note` · `timeline` (แต่ละค่ามี chip ตัวกรอง + สี badge ของตัวเอง)
+   ใส่ค่าอื่น (เช่น `live`) hub จะ fallback ไป `rerun` เงียบ ๆ (หน้า timeline fallback ไป `ai`)
+4. **เพิ่มแถวในหน้า index ที่ถูกหน้า** — URL ต้องใส่ **2 ที่**: `data-href` บน `<tr>` และ `href` บน `<a>`
+   อย่าลืมอัปเดตตัวเลข `<span class="count">N …</span>` ของกลุ่มนั้น **และ `<span class="n">N</span>` ในเมนูซ้าย**
+   - รายงานผลทดสอบ → `index.html` · `data-type` ที่รับได้: `test` · `dod` · `summary` · `note`
+   - เอกสาร timeline → `timeline/index.html` (ไม่มี `data-type` · คอลัมน์เป็น เอกสาร/ช่วงเวลา/จัดทำ)
 5. **ตรวจก่อน push** — ดูหัวข้อถัดไป
 
 ---
