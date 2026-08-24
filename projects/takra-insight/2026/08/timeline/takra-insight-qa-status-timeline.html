@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>TAKRA Insight — สถานะงาน QA · ส.ค. 2026</title>
+<style>
+  :root {
+    --saffron: #e8820c; --saffron-d: #c96a00; --ink: #1a1a2e; --muted: #5a6072;
+    --bg: #f7f8fb; --surface: #ffffff; --border: #e3e6ed; --ok: #16a34a; --warn: #d97706;
+    --skip: #6b7280; --accent: #2563eb; --purple: #7c3aed; --danger: #dc2626;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, "Segoe UI", "Noto Sans Thai", Tahoma, sans-serif;
+    background: var(--bg); color: var(--ink); line-height: 1.62; padding: 26px 16px; }
+  .slide { max-width: 1180px; margin: 0 auto 26px; background: var(--surface);
+    border: 1px solid var(--border); border-radius: 16px; padding: 34px 42px;
+    box-shadow: 0 4px 20px -8px rgba(26,26,46,.08); }
+  .cover { background: linear-gradient(135deg, #1a1a2e 0%, #2d2d52 100%); color: #fff; border: none; }
+  .cover h1 { font-size: 32px; font-weight: 800; letter-spacing: -.5px; }
+  .cover .sub { color: #c7cbe0; font-size: 16.5px; margin-top: 10px; max-width: 820px; }
+  .cover .chips { margin-top: 22px; display: flex; gap: 10px; flex-wrap: wrap; }
+  .cover .chip { background: rgba(232,130,12,.18); color: #ffce9e; padding: 6px 16px;
+    border-radius: 999px; font-size: 13px; font-weight: 600; }
+  .kicker { font-size: 12px; font-weight: 800; letter-spacing: 1.5px; color: var(--saffron);
+    text-transform: uppercase; margin-bottom: 6px; }
+  h2 { font-size: 22px; font-weight: 800; color: var(--ink); display: flex; align-items: center; gap: 12px; }
+  h2 .num { background: var(--saffron); color: #fff; width: 32px; height: 32px; border-radius: 9px;
+    display: grid; place-items: center; font-size: 15px; flex: none; }
+  h3 { font-size: 15px; font-weight: 700; margin: 22px 0 9px; color: var(--saffron-d); }
+  p { color: var(--muted); margin: 7px 0; font-size: 14px; }
+  .lead { font-size: 16px; color: var(--ink); }
+  .tw { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; margin: 13px 0; font-size: 13.5px; }
+  th, td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  th { background: #fafbfd; font-weight: 700; color: var(--ink); font-size: 12.5px; white-space: nowrap; }
+  td.muted { color: var(--muted); }
+  tr.weekend td { background: #fafbfd; color: var(--muted); font-style: italic; }
+  tr.milestone td { background: #fff8ed; }
+  .day { font-weight: 800; white-space: nowrap; }
+  .day small { display: block; font-weight: 500; color: var(--muted); font-size: 11.5px; }
+  .badge { display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: 11.5px; font-weight: 700; white-space: nowrap; }
+  .b-ok { background: #dcfce7; color: var(--ok); } .b-skip { background: #f1f1f3; color: var(--skip); }
+  .b-warn { background: #fef3c7; color: var(--warn); } .b-info { background: #dbeafe; color: var(--accent); }
+  .b-now { background: #ede9fe; color: var(--purple); } .b-danger { background: #fee2e2; color: var(--danger); }
+  .grid4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; margin: 18px 0; }
+  .stat { background: #fafbfd; border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; }
+  .stat .n { font-size: 29px; font-weight: 800; color: var(--saffron-d); }
+  .stat .l { font-size: 12.5px; color: var(--muted); margin-top: 2px; }
+  .note { background: #fff8ed; border: 1px solid #fde2bf; border-radius: 10px; padding: 13px 17px;
+    font-size: 13.5px; color: #7a4b00; margin: 15px 0; }
+  .ask { background: #eef4ff; border: 1px solid #c9ddff; border-radius: 10px; padding: 14px 18px;
+    font-size: 14px; color: #1e3a8a; margin: 15px 0; }
+  .warnbox { background: #fef2f2; border: 1px solid #fecaca; border-radius: 10px; padding: 14px 18px;
+    font-size: 14px; color: #991b1b; margin: 15px 0; }
+  code { background: #f1f3f8; padding: 2px 7px; border-radius: 5px; font-size: 12.5px;
+    font-family: "SF Mono", Menlo, monospace; color: var(--saffron-d); }
+  /* gantt */
+  table.gantt { font-size: 12.5px; table-layout: fixed; }
+  table.gantt th { text-align: center; font-size: 11.5px; padding: 8px 4px; }
+  table.gantt th.lane { text-align: left; width: 210px; }
+  table.gantt th.we, table.gantt td.we { background: #f4f5f9; }
+  table.gantt td { padding: 5px 4px; text-align: center; border-bottom: 1px solid var(--border); }
+  table.gantt td.lane { text-align: left; font-weight: 700; font-size: 12.5px; white-space: normal; }
+  table.gantt td.lane small { display:block; font-weight: 500; color: var(--muted); font-size: 11px; }
+  .bar { display: block; height: 22px; border-radius: 6px; line-height: 22px; font-size: 11px;
+    font-weight: 700; color: #fff; }
+  .bar-main { background: var(--saffron); }
+  .bar-cont { background: #f6d3a6; color: #8a5200; }
+  .bar-wait { background: #e8eaf1; color: var(--muted); }
+  .bar-ms   { background: var(--ok); }
+  .bar-risk { background: var(--danger); }
+  .bar-none { background: transparent; }
+  .legend { display: flex; gap: 16px; flex-wrap: wrap; margin: 12px 0 0; font-size: 12.5px; color: var(--muted); }
+  .legend span.k { display: inline-block; width: 26px; height: 12px; border-radius: 4px; vertical-align: -1px; margin-right: 6px; }
+  .ids { font-family: "SF Mono", Menlo, monospace; font-size: 11.5px; color: var(--saffron-d); line-height: 1.85; }
+  .toc { margin-top: 26px; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.16);
+    border-radius: 12px; padding: 18px 22px; }
+  .toc-h { font-size: 12px; font-weight: 800; letter-spacing: 1.2px; color: #ffce9e; text-transform: uppercase; margin-bottom: 10px; }
+  ol.toc-l { list-style: none; columns: 2; column-gap: 30px; margin: 0; }
+  ol.toc-l li { break-inside: avoid; padding: 3px 0; }
+  ol.toc-l a { color: #dfe3f2; text-decoration: none; font-size: 13.5px; }
+  ol.toc-l a:hover { color: #fff; text-decoration: underline; }
+  .toc .tn { display: inline-block; width: 22px; height: 22px; line-height: 22px; text-align: center;
+    background: rgba(232,130,12,.28); color: #ffce9e; border-radius: 6px; font-size: 11.5px; font-weight: 800; margin-right: 8px; }
+  .toc-f { margin-top: 14px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,.14);
+    font-size: 13px; color: #c7cbe0; }
+  .toc-f a { color: #ffce9e; font-weight: 700; }
+  @media (max-width: 720px) { ol.toc-l { columns: 1; } }
+  details.quiet { margin: 18px 0 4px; border-top: 1px solid var(--border); padding-top: 12px; }
+  details.quiet > summary { cursor: pointer; font-size: 13px; color: var(--muted); font-weight: 600;
+    list-style: none; padding: 4px 0; }
+  details.quiet > summary::-webkit-details-marker { display: none; }
+  details.quiet > summary::before { content: "▸ "; color: var(--muted); }
+  details.quiet[open] > summary::before { content: "▾ "; }
+  details.quiet > summary:hover { color: var(--ink); }
+  details.quiet table { font-size: 12.5px; }
+  details.quiet th, details.quiet td { padding: 7px 10px; }
+  details.quiet p { font-size: 13px; }
+  .quiet-note { background: #fafbfd; border: 1px solid var(--border); border-radius: 8px;
+    padding: 11px 15px; font-size: 12.5px; color: var(--muted); margin: 12px 0 2px; }
+  .quiet-note strong { color: var(--ink); font-weight: 600; }
+  .idlist { display:block; line-height: 2.1; font-size: 12px; }
+  a.tid { display: inline-block; font-family: "SF Mono", Menlo, monospace; font-size: 11.5px;
+    background: #fff3e2; color: var(--saffron-d); border: 1px solid #f6ddb9; border-radius: 5px;
+    padding: 1px 6px; margin: 1px 2px 1px 0; text-decoration: none; white-space: nowrap; }
+  a.tid:hover { background: var(--saffron); color: #fff; border-color: var(--saffron); }
+  tr.grp td { background: #fff8ed; font-size: 13px; }
+
+  /* ---- fixed left sidebar ---- */
+  body { padding: 0; }
+  main.page { padding: 26px 16px; max-width: none; }
+  nav.toc { position: fixed; top: 0; left: 0; bottom: 0; width: 238px; z-index: 50;
+    background: linear-gradient(160deg,#1a1a2e 0%,#252546 100%); color: #dfe3f2;
+    border: none; border-right: 1px solid rgba(255,255,255,.08); border-radius: 0;
+    padding: 20px 16px; overflow-y: auto; margin: 0; }
+  .toc-brand { font-size: 15px; font-weight: 800; color: #fff; letter-spacing: -.2px; margin-bottom: 2px; }
+  nav.toc .toc-h { font-size: 10.5px; letter-spacing: 1.4px; margin: 10px 0 8px; }
+  nav.toc ol.toc-l { columns: 1; }
+  nav.toc ol.toc-l li { padding: 1px 0; }
+  nav.toc ol.toc-l a { display: flex; align-items: flex-start; gap: 7px; font-size: 12.5px;
+    line-height: 1.45; padding: 6px 8px; border-radius: 7px; }
+  nav.toc ol.toc-l a:hover { background: rgba(255,255,255,.09); text-decoration: none; }
+  nav.toc .tn { flex: none; margin: 0; }
+  nav.toc .toc-f { font-size: 11.5px; }
+  .toc-sw { margin-top: 14px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,.14); }
+  .toc-sw a { display: block; text-align: center; background: rgba(232,130,12,.22); color: #ffce9e;
+    padding: 8px; border-radius: 8px; font-size: 12.5px; font-weight: 700; text-decoration: none; }
+  .toc-sw a:hover { background: var(--saffron); color: #fff; }
+  main.page > section, main.page > .foot { margin-left: auto; margin-right: auto; }
+  @media (max-width: 900px) {
+    nav.toc { position: static; width: auto; border-radius: 12px; margin: 12px; }
+    main.page { padding-top: 0; }
+  }
+  @media (min-width: 901px) { main.page { padding-left: 262px; } }
+  @media print { nav.toc { display: none; } main.page { padding-left: 16px; } }
+  .foot { text-align: center; color: var(--muted); font-size: 13px; padding: 18px; }
+  @media print { .slide { break-inside: avoid; box-shadow: none; } body { background: #fff; padding: 0; } }
+
+  /* ---- แผนภูมิความคืบหน้าการเทส (§6) — สีชุดสถานะ ตรวจด้วย validate_palette.js บนพื้นสว่างแล้วผ่านครบ ---- */
+  .pchart { margin: 6px 0 2px; }
+  .pchart h4 { font-size: 13px; font-weight: 800; color: var(--ink); margin: 16px 0 2px; }
+  .pchart .scale { font-size: 11.5px; color: var(--muted); margin-bottom: 9px; }
+  .plegend { display: flex; gap: 15px; flex-wrap: wrap; font-size: 12.5px; color: var(--muted); margin: 12px 0 4px; }
+  .plegend .k { display: inline-block; width: 22px; height: 11px; border-radius: 4px; vertical-align: -1px; margin-right: 6px; }
+  .prow { display: grid; grid-template-columns: 214px 1fr 46px 92px; align-items: center; gap: 10px; padding: 3px 0; }
+  .prow .pl { font-size: 12.5px; color: var(--ink); font-weight: 600; line-height: 1.35; }
+  .prow .pl small { display: block; font-weight: 500; color: var(--muted); font-size: 11px; }
+  .phead { font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); font-weight: 700; padding-bottom: 2px; }
+  .phead .ppct, .phead .prest { color: var(--muted); font-weight: 700; font-size: 10.5px; }
+  .pbar { display: flex; gap: 2px; height: 16px; }
+  .pbar i { display: block; height: 100%; border-radius: 4px; min-width: 3px;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .s-pass { background: #16a34a; }
+  .s-issue { background: #7c3aed; }
+  /* ไม่ผ่าน มีลายทแยงกำกับ — เขียว↔แดงเป็นคู่ที่คนตาบอดสีแดง-เขียวแยกไม่ออก สีอย่างเดียวจึงไม่พอ */
+  .s-fail { background-color: #dc2626;
+    background-image: repeating-linear-gradient(45deg, rgba(255,255,255,.55) 0 2px, transparent 2px 4.5px); }
+  .s-rest { background: #e3e6ed; }
+  .ppct { font-size: 12.5px; font-weight: 800; text-align: right; font-variant-numeric: tabular-nums; }
+  .prest { font-size: 11.5px; color: var(--muted); white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .prest b { color: var(--danger); font-weight: 800; }
+  @media (max-width: 760px) {
+    .prow { grid-template-columns: 1fr 46px 86px; grid-template-areas: "l l l" "b p r"; gap: 4px 8px; padding: 6px 0; }
+    .prow .pl { grid-area: l; } .prow .ptrack { grid-area: b; } .prow .ppct { grid-area: p; } .prow .prest { grid-area: r; }
+    .phead { display: none; }
+  }
+
+  /* ---- ตัวช่วยอ่านสำหรับ QA (จัดโครงใหม่ 21 ส.ค.) ---- */
+  .parthead { max-width: 1180px; margin: 34px auto 14px; padding: 0 42px; }
+  .parthead .pt { display: block; font-size: 19px; font-weight: 800; color: var(--ink); letter-spacing: -.3px; }
+  .parthead .pd { display: block; font-size: 13px; color: var(--muted); margin-top: 3px; }
+  .parthead::before { content: ""; display: block; height: 3px; width: 54px; background: var(--saffron); border-radius: 2px; margin-bottom: 10px; }
+  h2 .num { font-size: 14px; }
+  li.toc-part { font-size: 10.5px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase;
+    color: #ffce9e; margin: 14px 0 4px; padding: 0 8px; }
+  nav.toc ol.toc-l a.active { background: rgba(232,130,12,.22); color: #fff; }
+  nav.toc ol.toc-l a.active .tn { background: var(--saffron); color: #fff; }
+  .qafilter { width: 100%; margin-top: 14px; padding: 9px 10px; border-radius: 9px; cursor: pointer;
+    background: rgba(232,130,12,.16); color: #ffce9e; border: 1px solid rgba(232,130,12,.4);
+    font-family: inherit; font-size: 12.5px; font-weight: 700; }
+  .qafilter:hover { background: rgba(232,130,12,.3); color: #fff; }
+  .qafilter.on { background: var(--saffron); color: #fff; border-color: var(--saffron); }
+  body.qa-only tr[data-who="other"] { opacity: .34; }
+  body.qa-only tr[data-who="qa"] td:first-child { box-shadow: inset 3px 0 0 var(--saffron); }
+  /* อ่านง่ายขึ้น: ตัวหนังสือใหญ่ขึ้นเล็กน้อย + บรรทัดโปร่งขึ้น */
+  table { font-size: 13.8px; }
+  th, td { padding: 10px 12px; }
+  p { font-size: 14.5px; }
+  .totop { position: fixed; right: 14px; bottom: 16px; z-index: 60; display: none;
+    background: #fff; color: var(--ink); border: 1px solid var(--border); border-radius: 999px;
+    padding: 9px 15px; font-size: 12.5px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 14px rgba(26,26,46,.14);
+    font-family: inherit; }
+  .totop.show { display: block; }
+  @media print { .qafilter, .totop { display: none !important; } }
+
+  /* ---- แผนภูมิความครอบคลุมของสคริปต์อัตโนมัติ (ตรวจสีด้วย validate_palette.js บนพื้นสว่าง ผ่านครบ) ---- */
+  .a-ui { background: #2563eb; }
+  .a-e2e { background: #c2410c; }
+  .nospec { display: inline-block; background: #fee2e2; color: var(--danger); font-size: 11.5px; font-weight: 700;
+    padding: 3px 10px; border-radius: 999px; }
+</style>
+</head>
+<body>
+<nav class="toc">
+    <div class="toc-brand">takra-insight</div>
+    <div class="toc-h">สารบัญ · เฉพาะงานของ QA</div>
+    <ol class="toc-l">
+      <li><a href="#qa"><span class="tn">1</span> งานของ QA — ต้องทำอะไรต่อ</a></li>
+      <li><a href="#res"><span class="tn">2</span> ผลเทส — แมนนวล vs automate</a></li>
+      <li><a href="#bugs"><span class="tn">3</span> บั๊กที่ QA เจอ — ต้องตาม dev</a></li>
+    </ol>
+    <div class="toc-f">📌 เอกสารนี้เก็บเฉพาะสิ่งที่ QA ต้องใช้ทำงานของตัวเอง — คิวงานของ dev/PM/Ops ไม่ได้อยู่ในนี้</div>
+  </nav>
+<main class="page">
+
+<section class="slide cover">
+  <div class="kicker" style="color:#ffce9e">QA Status · ณ 24 ส.ค. 2026</div>
+  <h1>takra-insight — งาน QA ถึงไหนแล้ว</h1>
+  <div class="sub"><strong>เอกสารของ QA เท่านั้น</strong> — งานที่ QA ต้องลงมือ (เขียนเคส · เขียนสคริปต์ E2E/UI · เทสแมนนวล) และสถานะของเคสที่เขียนไว้แล้ว · คิวงานของ dev/PM/Ops ไม่ได้อยู่ในเอกสารนี้</div>
+  <div class="chips">
+    <span class="chip">MVP-0.5-1 · 69 เคส × 2 OS</span>
+    <span class="chip">MVP-1 160 + MVP-2 164 เคส ยังไม่เริ่ม</span>
+    <span class="chip"><a href="https://wanlee-tankunnatam.github.io/qa-test-reports/projects/takra-insight/2026/07/reports/takra-insight-mvp0.5-1-ui-test-cases-table-windows.html" style="color:inherit">📋 เปิดรายงานเคสจริง</a></span>
+    <span class="chip">จัดทำ 24 ส.ค. 2026 · QA (Ice)</span>
+  </div>
+</section>
+
+<section class="slide" id="qa">
+  <h2><span class="num">1</span>📋 งานของ QA — ต้องทำอะไรต่อ</h2>
+  <p class="lead">ชุดที่เดินแล้วคือ <strong>MVP-0.5-1 UI</strong> (แยกผล macOS / Windows) เทสไปเกือบครบทั้งสองฝั่ง · ส่วน <strong>MVP-1 (160 เคส) และ MVP-2 (164 เคส) ยังไม่ได้บันทึกผลสักเคส</strong> — ก้อนงานจริงของโปรเจกต์นี้อยู่ตรงนั้น</p>
+  <div class="grid4">
+    <div class="stat"><div class="n">92%</div><div class="l">เทสไปแล้ว 48 จาก 52 เคสที่ต้องเทส</div></div>
+    <div class="stat"><div class="n">4</div><div class="l">เคสที่<strong>ยังไม่มีใครรัน</strong> (ชุดหลัก)</div></div>
+    <div class="stat"><div class="n">3</div><div class="l">เคสที่เทสแล้ว<strong>ไม่ผ่าน</strong> (ชุดหลัก)</div></div>
+    <div class="stat"><div class="n">6</div><div class="l">เคสที่<strong>บล็อก/พัก</strong> ในชุดหลัก</div></div>
+  </div>
+  <div class="note"><strong>ขอบเขตงาน QA ในทีมนี้</strong> (ตามการแบ่งงานเทสในทีม): <strong>QA ออกแบบ test case ทุกชั้น (integration · e2e · ui)</strong> ·
+  <strong>เขียนสคริปต์ UI / E2E</strong> · <strong>เทสแมนนวลบน UAT</strong> · ส่วนสคริปต์ integration เป็นของ dev (co-located ตาม TDD)<br>
+  ⇒ ส่วน<strong>การปิดใบ/flip · รัน release gate · ขอบัญชีจาก Ops · จัดคิวงานของ dev</strong> ไม่ใช่หน้าที่ QA — ไม่ได้อยู่ในเอกสารนี้</div>
+
+  <h3>▸ งานของ QA ในโปรเจกต์นี้</h3>
+  <div class="tw"><table>
+    <thead><tr><th>ทำอะไร</th><th>ดูที่ไหน</th><th>สถานะตอนนี้</th></tr></thead>
+    <tbody>
+      <tr class="milestone"><td><strong>เทสแมนนวลที่เหลืออีก 4 เคส</strong> — ที่เหลือของชุด MVP-0.5-1 ทั้งสอง OS</td><td class="muted">ดู <a href="#res">§2</a></td><td>ยังไม่มีใครรัน</td></tr>
+      <tr class="milestone"><td><strong>สรุป 3 เคสที่ไม่ผ่านส่งเจ้าของใบ</strong> — 3 เคสยังไม่มีเลขใบผูกไว้</td><td class="muted">ดู <a href="#bugs">§3</a></td><td>ผลบันทึกไว้ในรายงานแล้ว</td></tr>
+      <tr><td><strong>เคลียร์เคสที่พักไว้ 6 เคส</strong> — กลับไปสรุปว่าผ่านหรือไม่ผ่าน</td><td class="muted">ดู <a href="#res">§2</a></td><td>ค้างอยู่ฝั่ง QA</td></tr>
+      <tr class="milestone"><td><strong>เริ่มชุด MVP-1 · 160 เคส และ MVP-2 · 164 เคส</strong> — รวม 324 เคสที่ยังไม่มีการบันทึกผลเลย</td><td class="muted"><a href="https://wanlee-tankunnatam.github.io/qa-test-reports/projects/takra-insight/2026/07/reports/takra-insight-mvp1-ui-test-cases-table.html">MVP-1</a> · <a href="https://wanlee-tankunnatam.github.io/qa-test-reports/projects/takra-insight/2026/07/reports/takra-insight-mvp2-ui-test-cases-table.html">MVP-2</a></td><td>0% ทั้งสองชุด</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section class="slide" id="res">
+  <h2><span class="num">2</span>🧪 ผลเทส — แมนนวล vs automate</h2>
+  <div class="note"><strong>ผลเทสทุกตัวเลขในหัวข้อนี้มาจากรายงานเคสจริง</strong> — <a href="https://wanlee-tankunnatam.github.io/qa-test-reports/projects/takra-insight/2026/07/reports/takra-insight-mvp0.5-1-ui-test-cases-table-windows.html"><strong>เปิดรายงานหลักของโปรเจกต์นี้</strong></a> ·
+  ในนั้นดู Steps / Expected / Actual รายเคสได้ครบ และเป็นที่เดียวที่บันทึกผลเทส</div>
+
+  <h3>▸ 🖐 เทสแมนนวล — ชุดเคสทั้งหมดของโปรเจกต์</h3>
+  <div class="tw"><table>
+    <thead><tr><th>ชุดเคส</th><th>เคส</th><th>เทสแล้ว</th><th>ผ่าน</th><th>ไม่ผ่าน</th><th>พัก / บล็อก</th><th>ยังไม่เทส</th></tr></thead>
+    <tbody>
+      <tr class="milestone"><td class="day"><a href="https://wanlee-tankunnatam.github.io/qa-test-reports/projects/takra-insight/2026/07/reports/takra-insight-mvp0.5-1-ui-test-cases-table-windows.html">MVP-0.5-1 UI · 🪟 Windows</a><small>ชุดหลัก</small></td><td>69</td><td><strong>48/52 · 92%</strong></td><td>39</td><td><span class="badge b-danger">3</span></td><td>6 / 0</td><td>4</td></tr>
+      <tr><td class="day"><a href="https://wanlee-tankunnatam.github.io/qa-test-reports/projects/takra-insight/2026/07/reports/takra-insight-mvp0.5-1-ui-test-cases-table-mac.html">MVP-0.5-1 UI · 🍎 macOS</a><small>เคสชุดเดียวกัน แยกผลคนละ OS</small></td><td>69</td><td><strong>46/51 · 90%</strong></td><td>39</td><td><span class="badge b-danger">2</span></td><td>5 / 0</td><td>5</td></tr>
+      <tr><td class="day"><a href="https://wanlee-tankunnatam.github.io/qa-test-reports/projects/takra-insight/2026/07/reports/takra-insight-mvp1-ui-test-cases-table.html">MVP-1 UI</a><small>ยังไม่เริ่มบันทึกผล</small></td><td>160</td><td><span class="badge b-skip">0/160 · 0%</span></td><td>0</td><td>0</td><td>0 / 0</td><td>160</td></tr>
+      <tr><td class="day"><a href="https://wanlee-tankunnatam.github.io/qa-test-reports/projects/takra-insight/2026/07/reports/takra-insight-mvp2-ui-test-cases-table.html">MVP-2 UI</a><small>ยังไม่เริ่มบันทึกผล</small></td><td>164</td><td><span class="badge b-skip">0/164 · 0%</span></td><td>0</td><td>0</td><td>0 / 0</td><td>164</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>▸ กราฟ % — อะไรเทสไปแล้วเท่าไร เหลืออะไรอยู่</h3>
+  <p>ความยาวแถบ = จำนวนเคสที่ต้องเทส (ไม่นับเคสข้าม) · สีในแถบ = ผลที่บันทึกไว้จริง · ตัวเลขขวาสุดคือของที่<strong>ยังไม่ได้แตะ</strong></p>
+  <div class="plegend"><span><span class="k s-pass"></span>ผ่าน</span><span><span class="k s-fail"></span>ไม่ผ่าน (มีลายทแยง)</span><span><span class="k s-issue"></span>พัก / ติดบล็อก</span><span><span class="k s-rest"></span>ยังไม่เทส</span></div>
+  <div class="pchart">
+    <h4>ราย epic / กลุ่มเคส — ชุด MVP-0.5-1 · Windows</h4>
+    <div class="scale">มาตราส่วน: เต็มความกว้าง = กลุ่มที่ใหญ่ที่สุดในชุด · ข้อมูลจาก ชุด MVP-0.5-1 · Windows</div>
+      <div class="prow phead"><div>กลุ่ม</div><div>สัดส่วนผลเทส</div><div class="ppct">เทสแล้ว</div><div class="prest">ยังไม่เทส</div></div>
+      <div class="prow"><div class="pl">🚪 [0.5] Login &amp; Entitlement gate<small>2 เคสที่ต้องเทส</small></div><div class="ptrack"><div class="pbar" style="width:25.0%" title="🚪 [0.5] Login &amp; Entitlement gate — ต้องเทส 2 เคส · ผ่าน 2 · ไม่ผ่าน 0 · พัก/บล็อก 0 · ยังไม่เทส 0"><i class="s-pass" style="flex:2" title="ผ่าน 2 เคส"></i></div></div><div class="ppct">100%</div><div class="prest">เทสครบ</div></div>
+      <div class="prow"><div class="pl">📥 [0.5] Live Pairing &amp; Comment Capture<small>4 เคสที่ต้องเทส</small></div><div class="ptrack"><div class="pbar" style="width:50.0%" title="📥 [0.5] Live Pairing &amp; Comment Capture — ต้องเทส 4 เคส · ผ่าน 3 · ไม่ผ่าน 0 · พัก/บล็อก 1 · ยังไม่เทส 0"><i class="s-pass" style="flex:3" title="ผ่าน 3 เคส"></i><i class="s-issue" style="flex:1" title="พัก/ติดบล็อก 1 เคส"></i></div></div><div class="ppct">100%</div><div class="prest">เทสครบ</div></div>
+      <div class="prow"><div class="pl">⚡ [0.5] Real-time HUD — Emotion · Health · KPI<small>8 เคสที่ต้องเทส</small></div><div class="ptrack"><div class="pbar" style="width:100.0%" title="⚡ [0.5] Real-time HUD — Emotion · Health · KPI — ต้องเทส 8 เคส · ผ่าน 5 · ไม่ผ่าน 0 · พัก/บล็อก 3 · ยังไม่เทส 0"><i class="s-pass" style="flex:5" title="ผ่าน 5 เคส"></i><i class="s-issue" style="flex:3" title="พัก/ติดบล็อก 3 เคส"></i></div></div><div class="ppct">100%</div><div class="prest">เทสครบ</div></div>
+      <div class="prow"><div class="pl">🔐 [M1] Dual Consent · Revoke · Anxious-mode<small>6 เคสที่ต้องเทส</small></div><div class="ptrack"><div class="pbar" style="width:75.0%" title="🔐 [M1] Dual Consent · Revoke · Anxious-mode — ต้องเทส 6 เคส · ผ่าน 6 · ไม่ผ่าน 0 · พัก/บล็อก 0 · ยังไม่เทส 0"><i class="s-pass" style="flex:6" title="ผ่าน 6 เคส"></i></div></div><div class="ppct">100%</div><div class="prest">เทสครบ</div></div>
+      <div class="prow"><div class="pl">🛡️ [M1] Zero-biometric attestation &amp; Data-subject Erasure<small>4 เคสที่ต้องเทส</small></div><div class="ptrack"><div class="pbar" style="width:50.0%" title="🛡️ [M1] Zero-biometric attestation &amp; Data-subject Erasure — ต้องเทส 4 เคส · ผ่าน 4 · ไม่ผ่าน 0 · พัก/บล็อก 0 · ยังไม่เทส 0"><i class="s-pass" style="flex:4" title="ผ่าน 4 เคส"></i></div></div><div class="ppct">100%</div><div class="prest">เทสครบ</div></div>
+      <div class="prow"><div class="pl">🧠 [M1] Thai NLP — Comment Intent &amp; Risk<small>4 เคสที่ต้องเทส</small></div><div class="ptrack"><div class="pbar" style="width:50.0%" title="🧠 [M1] Thai NLP — Comment Intent &amp; Risk — ต้องเทส 4 เคส · ผ่าน 4 · ไม่ผ่าน 0 · พัก/บล็อก 0 · ยังไม่เทส 0"><i class="s-pass" style="flex:4" title="ผ่าน 4 เคส"></i></div></div><div class="ppct">100%</div><div class="prest">เทสครบ</div></div>
+      <div class="prow"><div class="pl">☁️ [M1] Cloud Sync · Offline Buffer · Resume<small>5 เคสที่ต้องเทส</small></div><div class="ptrack"><div class="pbar" style="width:62.5%" title="☁️ [M1] Cloud Sync · Offline Buffer · Resume — ต้องเทส 5 เคส · ผ่าน 3 · ไม่ผ่าน 1 · พัก/บล็อก 1 · ยังไม่เทส 0"><i class="s-pass" style="flex:3" title="ผ่าน 3 เคส"></i><i class="s-issue" style="flex:1" title="พัก/ติดบล็อก 1 เคส"></i><i class="s-fail" style="flex:1" title="ไม่ผ่าน 1 เคส"></i></div></div><div class="ppct">100%</div><div class="prest">เทสครบ</div></div>
+      <div class="prow"><div class="pl">🧬 [M1] Longitudinal Coaching — Baseline / Drift / Pattern<small>8 เคสที่ต้องเทส</small></div><div class="ptrack"><div class="pbar" style="width:100.0%" title="🧬 [M1] Longitudinal Coaching — Baseline / Drift / Pattern — ต้องเทส 8 เคส · ผ่าน 7 · ไม่ผ่าน 0 · พัก/บล็อก 1 · ยังไม่เทส 0"><i class="s-pass" style="flex:7" title="ผ่าน 7 เคส"></i><i class="s-issue" style="flex:1" title="พัก/ติดบล็อก 1 เคส"></i></div></div><div class="ppct">100%</div><div class="prest">เทสครบ</div></div>
+      <div class="prow"><div class="pl">👥 [M1] Workspace · Multi-Seat · RBAC · Tier<small>1 เคสที่ต้องเทส</small></div><div class="ptrack"><div class="pbar" style="width:12.5%" title="👥 [M1] Workspace · Multi-Seat · RBAC · Tier — ต้องเทส 1 เคส · ผ่าน 1 · ไม่ผ่าน 0 · พัก/บล็อก 0 · ยังไม่เทส 0"><i class="s-pass" style="flex:1" title="ผ่าน 1 เคส"></i></div></div><div class="ppct">100%</div><div class="prest">เทสครบ</div></div>
+      <div class="prow"><div class="pl">📌 [M1] Channel Watchlist &amp; History<small>6 เคสที่ต้องเทส</small></div><div class="ptrack"><div class="pbar" style="width:75.0%" title="📌 [M1] Channel Watchlist &amp; History — ต้องเทส 6 เคส · ผ่าน 4 · ไม่ผ่าน 2 · พัก/บล็อก 0 · ยังไม่เทส 0"><i class="s-pass" style="flex:4" title="ผ่าน 4 เคส"></i><i class="s-fail" style="flex:2" title="ไม่ผ่าน 2 เคส"></i></div></div><div class="ppct">100%</div><div class="prest">เทสครบ</div></div>
+      <div class="prow"><div class="pl">🔄 Full E2E Flow — วิ่งครบลูปตั้งแต่ต้นจนจบ · 🪟 Windows<small>4 เคสที่ต้องเทส</small></div><div class="ptrack"><div class="pbar" style="width:50.0%" title="🔄 Full E2E Flow — วิ่งครบลูปตั้งแต่ต้นจนจบ · 🪟 Windows — ต้องเทส 4 เคส · ผ่าน 0 · ไม่ผ่าน 0 · พัก/บล็อก 0 · ยังไม่เทส 4"><i class="s-rest" style="flex:4" title="ยังไม่เทส 4 เคส"></i></div></div><div class="ppct">0%</div><div class="prest">เหลือ 4</div></div>
+  </div>
+
+  <h3>▸ 🤖 Automate — สคริปต์ที่รันเอง (คนละชุดกับแมนนวล)</h3>
+  <div class="warnbox"><strong>ยังไม่มีสคริปต์ UI / E2E ของ QA ในโปรเจกต์นี้เลย</strong> —
+  ไล่ทั้ง repo takra-insight แล้วพบ spec 60 ไฟล์ (613 เทส) แต่<strong>ทั้งหมดเป็น unit/service test ฝั่ง backend</strong>
+  (<code>apps/backend/src/**</code>) ซึ่งตามการแบ่งงานเป็นของ dev · ฝั่ง <code>apps/web</code> ไม่มีไฟล์ spec สักไฟล์
+  ⇒ ทุกอย่างที่เทสตอนนี้เป็นแมนนวลล้วน</div>
+</section>
+
+<section class="slide" id="bugs">
+  <h2><span class="num">3</span>🐞 บั๊กที่ QA เจอ — ต้องตาม dev</h2>
+  <p class="lead">เคสที่เทสแล้ว<strong>ไม่ผ่าน</strong> 3 เคส — 3 เคสยังไม่มีเลขใบผูกไว้ (ไม่มีใครเห็นในกระดาน) ·
+  ช่อง <strong>ใบ</strong> คือเลขใบที่ผลเทสอ้างถึง</p>
+  <div class="tw"><table>
+    <thead><tr><th style="width:104px">เคส</th><th>อาการที่เจอ</th><th style="width:118px">ใบ</th><th style="width:150px">สถานะ</th></tr></thead>
+    <tbody>
+      <tr class="grp"><td colspan="4"><strong>☁️ [M1] Cloud Sync · Offline Buffer · Resume</strong> — 1 เคส</td></tr>
+      <tr><td class="day">TC-M1-SYNC.1</td><td>ไม่มีป้ายบอก ว่ากำลังออฟไลน์และข้อมูลถูกเก็บในเครื่องก่อน</td><td><span class="badge b-danger">ยังไม่เปิดใบ</span></td><td><small class="muted">ไม่มีใครเห็นในกระดาน</small></td></tr>
+      <tr class="grp"><td colspan="4"><strong>📌 [M1] Channel Watchlist &amp; History</strong> — 2 เคส</td></tr>
+      <tr><td class="day">TC-M1-WL.2</td><td>—</td><td><span class="badge b-danger">ยังไม่เปิดใบ</span></td><td><small class="muted">ไม่มีใครเห็นในกระดาน</small></td></tr>
+      <tr><td class="day">TC-M1-WL.3</td><td>—</td><td><span class="badge b-danger">ยังไม่เปิดใบ</span></td><td><small class="muted">ไม่มีใครเห็นในกระดาน</small></td></tr>
+    </tbody>
+  </table></div>
+  <div class="ask"><strong>สิ่งที่ต้องทำต่อ:</strong> เปิด/ผูกใบให้ครบ 3 เคสที่ยังไม่มีใบ แล้วส่งให้เจ้าของใบ ·
+  เคสที่<strong>บล็อก</strong>ควรระบุให้ชัดว่าติดอะไร จะได้ไม่ถูกอ่านว่าเป็นบั๊กของทีมเรา</div>
+</section>
+
+<div class="foot">TAKRA Insight · QA (Ice) · จัดทำ 2026-08-24 · ข้อมูลผลเทสจากรายงานเคสใน qa-test-reports</div>
+
+</main>
+<a id="hub-back-btn" href="https://wanlee-tankunnatam.github.io/qa-test-reports/timeline/?project=insight" title="กลับไปหน้ารวม Timeline" style="position:fixed;top:12px;right:14px;z-index:99999;display:inline-flex;align-items:center;gap:7px;padding:10px 18px;border-radius:999px;background:#ffffff;color:#1e3a8a;font-size:14px;font-weight:800;text-decoration:none;box-shadow:0 4px 16px rgba(0,0,0,.35);border:2px solid #1e3a8a;font-family:'Segoe UI','Sarabun',system-ui,sans-serif">🗓️ Timeline ทั้งหมด</a>
+</body>
+</html>
