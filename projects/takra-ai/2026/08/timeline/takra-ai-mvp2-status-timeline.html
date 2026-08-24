@@ -204,6 +204,7 @@
       <li><a href="#s6"><span class="tn">2</span> ผลเทสแมนนวล + สถานะสคริปต์ของ QA</a></li>
       <li><a href="#s1"><span class="tn">3</span> หน้าจอที่ต้องเขียนเคสให้ — เมนูไหนพร้อมแค่ไหน</a></li>
       <li><a href="#s2"><span class="tn">4</span> แต่ละ Epic คืออะไร (ใช้ตอนออกแบบเคส)</a></li>
+      <li><a href="#hub"><span class="tn">5</span> ฝั่ง TAKRA Hub — ของที่เคส MVP-2 ต้องพึ่ง</a></li>
     </ol>
     <div class="toc-f">📌 เอกสารนี้เก็บเฉพาะสิ่งที่ QA ต้องใช้ทำงานของตัวเอง — คิวงานของ dev/PM/Ops ไม่ได้อยู่ในนี้</div>
     <div class="toc-sw"><a href="takra-ai-mvp1-status-timeline.html">↔ ดูเฟส MVP-1</a></div>
@@ -575,6 +576,49 @@
   </div>
 
   </section>
+<section class="slide" id="hub">
+  <h2><span class="num">5</span>🏢 ฝั่ง TAKRA Hub — ของที่เคส MVP-2 ต้องพึ่ง</h2>
+  <p class="lead">หลาย flow ของ takra-ai วิ่งผ่าน Hub (ล็อกอิน · สมาชิก/ที่นั่ง · แพ็กเกจ · การเรียกเก็บเงิน) —
+  ถ้าฝั่งนั้นยังไม่นิ่ง เคสของเราก็รันไม่จบ · ตัวเลขข้างล่างมาจาก
+  <a href="https://wanlee-tankunnatam.github.io/qa-test-reports/projects/takra-hub/2026/08/reports/takra-hub-mvp1-ui-test-cases-table.html"><strong>รายงาน TAKRA Hub — MVP-1 UI Manual Test Cases</strong></a> (110 เคส · เทสครบแล้วทุกเคส)</p>
+
+  <div class="grid4" style="grid-template-columns:repeat(4,1fr)">
+    <div class="stat"><div class="n">55%</div><div class="l">ผ่านจริง 60 จาก 110 เคส</div></div>
+    <div class="stat"><div class="n">27</div><div class="l">เคสที่ <strong>บล็อก</strong> — เทสต่อไม่ได้</div></div>
+    <div class="stat"><div class="n">14</div><div class="l">เคสที่ <strong>ไม่ผ่าน</strong></div></div>
+    <div class="stat"><div class="n">9</div><div class="l">เคสที่พักไว้</div></div>
+  </div>
+
+  <div class="tw"><table>
+    <thead><tr><th>ส่วนของ Hub</th><th>เคส</th><th>ผ่าน</th><th>ไม่ผ่าน</th><th>บล็อก</th><th>พัก</th><th>กระทบเคส MVP-2 ของเราตรงไหน</th></tr></thead>
+    <tbody>
+      <tr class="milestone"><td class="day">A · เข้าสู่ระบบ / ออกจากระบบ</td><td>15</td><td>4</td><td>1</td>
+        <td><span class="badge b-danger">9</span></td><td>1</td>
+        <td><strong>ทุกเคสของเราเริ่มด้วยล็อกอินผ่าน Hub (Zitadel SSO)</strong> — ด่านนี้บล็อกเยอะสุดในรายงาน</td></tr>
+      <tr class="milestone"><td class="day">G · ทีม &amp; สมาชิก · ที่นั่ง</td><td>14</td><td>4</td><td>0</td>
+        <td><span class="badge b-danger">6</span></td><td>4</td>
+        <td>หน้า “ทีมงาน” ของเราโชว์ “ที่นั่ง X/Y” · ปุ่ม “จัดการสมาชิกที่ TAKRA Hub” · “จัดการคำเชิญที่ TAKRA Hub” — ข้อมูลมาจากฝั่งนี้ทั้งหมด</td></tr>
+      <tr><td class="day">C · โปรไฟล์ &amp; My Subscriptions</td><td>12</td><td>9</td><td>1</td><td>2</td><td>0</td>
+        <td>E16 (16.5) “โปรไฟล์” อ่านอย่างเดียว + deep-link ไปแก้ที่ Hub · การ์ด “TAKRA AI” (ทดลองใช้ / Scale) คือ entitlement ที่ workspace เราใช้เข้าแอป</td></tr>
+      <tr><td class="day">D + E · สั่งซื้อ/สลิป + CS Console</td><td>40</td><td>33</td><td>5</td><td>0</td><td>2</td>
+        <td>เมนู “การเรียกเก็บเงิน” ของเราบอกว่า “อยู่ที่ TAKRA Hub” แล้ว deep-link ออกไปเส้นนี้ (E16)</td></tr>
+      <tr><td class="day">B · สมัครสมาชิก &amp; Onboarding</td><td>18</td><td>7</td><td>4</td>
+        <td><span class="badge b-danger">6</span></td><td>1</td>
+        <td>เส้นทางของบัญชีใหม่ก่อนจะเข้ามาถึง takra-ai (ยอมรับข้อกำหนด · ยืนยันอีเมล)</td></tr>
+      <tr><td class="day">F · ดาวน์โหลด Desktop App</td><td>6</td><td>1</td><td>3</td><td>2</td><td>0</td>
+        <td class="muted">ไม่กระทบ takra-ai (เราเป็น Web)</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="warnbox"><strong>E12 (นับการใช้งาน → ส่งยอดไป Hub) ยังไม่มีอะไรให้เทสฝั่ง Hub เลย</strong> —
+  ค้นทั้งรายงาน Hub MVP-1 แล้วไม่มีเคสเรื่อง metering / usage ingest สักเคส (ค้นคำว่า <code>metering</code> · <code>ingest</code> = 0)
+  ⇒ ยืนยันว่าที่ TAKRA-402 กับ TAKRA-556 ค้างอยู่ ไม่ใช่เพราะฝั่งเรา แต่เพราะ<strong>ฝั่ง Hub ยังไม่ได้สร้างของ</strong></div>
+
+  <div class="ask"><strong>สิ่งที่ QA เราทำได้กับข้อมูลชุดนี้:</strong> เวลาเคส MVP-2 รันไม่จบเพราะติดล็อกอิน · ที่นั่ง · แพ็กเกจ
+  ให้เช็กก่อนว่าเคสฝั่ง Hub ที่คุมเรื่องนั้นอยู่สถานะอะไร — ถ้าฝั่งนั้น <em>บล็อก</em> อยู่แล้ว เคสของเราควรบันทึกเป็น <strong>BLOCKED</strong> พร้อมอ้างเคสของ Hub
+  ไม่ใช่ <strong>FAIL</strong> (จะได้ไม่ถูกอ่านว่าเป็นบั๊กของ takra-ai)</div>
+</section>
+
 <div class="foot">
   TAKRA AI · MVP-2 · QA (Ice) · จัดทำ 2026-08-21 · ข้อมูลสถานะจาก Jira project TAKRA + <code>MVP2-QA-DEFINITION-OF-DONE.md</code> v1.1 + <code>release/2026/08/release-2026-08-19-gate.md</code>
 </div>
