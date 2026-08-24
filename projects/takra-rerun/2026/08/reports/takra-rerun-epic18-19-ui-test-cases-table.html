@@ -1,0 +1,1259 @@
+<!DOCTYPE html>
+<html lang="th"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>[MVP2] TAKRA Rerun — Epic 18 + 19 UI Manual Test Cases</title>
+<style>
+:root{
+  --bg:#f5f6f8;--card:#fff;--card2:#f0f2f5;--line:#dce0e7;
+  --txt:#1f2430;--muted:#6b7280;--accent:#2563eb;
+  --p0:#dc2626;--p1:#ea7a18;--p2:#2563eb;--p3:#94a3b8;
+  --pass:#16a34a;--fail:#dc2626;--hold:#d97706;--skip:#9ca3af;--block:#7c3aed;
+  --lv-ui:#db2777;--lv-e2e:#ea580c;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--txt);font-family:"Segoe UI","Sarabun",system-ui,sans-serif;line-height:1.5;font-size:13px}
+a{color:var(--accent)}
+header.top{padding:20px 28px 14px;border-bottom:1px solid var(--line);background:linear-gradient(135deg,#1e3a8a,#2563eb);color:#fff}
+header.top h1{margin:0 0 4px;font-size:20px}
+header.top .sub{font-size:12.5px;opacity:.88}
+header.top .meta{margin-top:10px;display:flex;flex-wrap:wrap;gap:8px}
+.pill{display:inline-block;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:600;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.35);color:#fff}
+.wrap{padding:16px 22px 80px;max-width:1280px;margin:0 auto}
+.counts{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 12px}
+.cnt{font-size:12px;font-weight:700;padding:5px 12px;border-radius:8px;border:1px solid var(--line);background:#fff}
+.cnt b{font-size:14px}
+.cnt.pass{color:var(--pass);border-color:#bbf7d0}.cnt.fail{color:var(--fail);border-color:#fecaca}
+.cnt.hold{color:var(--hold);border-color:#fde68a}.cnt.block{color:var(--block);border-color:#e9d5ff}
+.cnt.pending{color:var(--muted)}.cnt.skip{color:var(--skip)}
+.runsum{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin:0 0 14px}
+.runsum h3{margin:0 0 8px;font-size:13px}
+.sumchips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px}
+.progress{height:10px;background:var(--card2);border-radius:6px;overflow:hidden;border:1px solid var(--line)}
+.progressbar{height:100%;background:var(--pass);width:0;transition:width .3s}
+.hint{color:var(--muted);font-size:12px}
+.toolbar{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;margin:0 0 12px}
+.btn{font-size:12px;font-weight:600;padding:5px 12px;border-radius:7px;border:1px solid var(--line);background:#fff;color:var(--txt);cursor:pointer}
+.btn:hover{border-color:var(--accent);color:var(--accent)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.btn.primary:hover{opacity:.88}
+.filters{background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:0 0 14px}
+.filters .row{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:3px 0}
+.filters label{font-size:11px;font-weight:700;color:var(--muted);min-width:60px}
+.fchip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:3px 11px;font-size:11.5px;cursor:pointer;color:var(--txt)}
+.fchip:hover{border-color:var(--accent);color:var(--accent)}
+.fchip.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.clearbtn{font-size:11px;padding:3px 10px;border:1px solid var(--line);border-radius:6px;background:#fff;color:var(--muted);cursor:pointer;margin-left:4px}
+.clearbtn:hover{color:var(--fail);border-color:var(--fail)}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:#fff}
+table.tc{border-collapse:collapse;width:100%;min-width:900px;background:#fff}
+table.tc th,table.tc td{padding:8px 10px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+table.tc thead th{position:sticky;top:0;background:var(--card2);color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.4px;z-index:3;border-bottom:2px solid var(--line)}
+tr.epicrow td{background:#1e3a8a;color:#fff;font-weight:700;font-size:13px;padding:9px 12px}
+tr.epicrow .rp{font-weight:400;font-size:11px;opacity:.75;margin-left:6px}
+tr.featrow td{background:#eaf1fb;color:#1d4ed8;font-weight:700;font-size:12px}
+tr.featrow .rp{font-weight:500;font-size:11px;color:#3b6fc4;margin-left:8px}
+tr.trow{cursor:pointer}tr.trow:hover{background:#f7f9fc}tr.trow.open{background:#eef4fe}
+.tog{display:inline-block;width:14px;color:var(--muted);transition:transform .15s;font-size:11px}
+tr.trow.open .tog{transform:rotate(90deg);color:var(--accent)}
+.cid{font-family:monospace;font-size:10px;color:var(--muted);white-space:nowrap}
+td.jira{white-space:nowrap}td.jira a{font-family:monospace;font-size:10.5px;font-weight:700;color:var(--accent);text-decoration:none}td.jira a:hover{text-decoration:underline}
+.ctitle{font-weight:600;font-size:12.5px;max-width:400px}
+td.lvl{white-space:nowrap}
+.lv{font-size:10px;font-weight:700;padding:2px 7px;border-radius:5px;border:1px solid;background:#fff;display:inline-block;vertical-align:middle}
+.lv.lvl-ui{color:var(--lv-ui);border-color:var(--lv-ui)}
+.lv.lvl-e2e{color:var(--lv-e2e);border-color:var(--lv-e2e)}
+.ac{font-size:10px;color:var(--muted);font-family:monospace;margin-left:4px}
+.prio{font-weight:800;font-size:10px;padding:3px 7px;border-radius:5px;color:#fff;display:inline-block;white-space:nowrap}
+.p0{background:var(--p0)}.p1{background:var(--p1)}.p2{background:var(--p2)}
+td.status{white-space:nowrap}
+.stb{font-weight:700;font-size:10px;padding:3px 8px;border-radius:5px;display:inline-block}
+.stb.pending{background:#fff;border:1px solid var(--line);color:var(--muted)}
+.stb.pass{background:var(--pass);color:#fff}.stb.fail{background:var(--fail);color:#fff}
+.stb.hold{background:var(--hold);color:#fff}.stb.block{background:var(--block);color:#fff}
+.stb.skip{background:var(--skip);color:#fff}
+tr.detail{display:none}tr.detail.show{display:table-row}
+tr.detail>td{background:#fafbfc;padding:0;border-bottom:2px solid var(--line)}
+.card{padding:16px 20px}
+.card .h-title{font-size:14px;font-weight:700;margin:0 0 3px}
+.card .h-prio{font-size:12px;color:var(--muted);margin:0 0 12px}
+.card .sec{margin:0 0 12px}.card .sec:last-child{margin-bottom:0}
+.card .sec h4{margin:0 0 5px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.3px;color:#374151}
+.card .sec ol,.card .sec ul{margin:0;padding-left:18px}
+.card .sec li{margin:2px 0;font-size:12.5px}
+.card .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:760px){.card .grid{grid-template-columns:1fr}}
+.actualbox{display:block;width:100%;box-sizing:border-box;background:#fff;border:1px dashed var(--line);border-radius:7px;padding:7px 11px;color:var(--txt);font:inherit;font-size:12px;line-height:1.55;min-height:78px;resize:vertical}
+.actualbox::placeholder{color:var(--muted);font-style:italic}
+.actualbox:focus{outline:none;border-style:solid;border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,99,235,.13)}
+.actualbox.filled{border-style:solid;border-color:var(--accent)}
+.statusrow{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.opt{font-size:11px;font-weight:700;padding:4px 11px;border-radius:6px;border:1px solid var(--line);background:#fff;color:var(--muted);cursor:pointer}
+.opt:hover{opacity:.8}
+.opt.pass{border-color:var(--pass)}.opt.fail{border-color:var(--fail)}
+.opt.hold{border-color:var(--hold)}.opt.block{border-color:var(--block)}.opt.skip{border-color:var(--skip)}
+.opt.sel.pass{background:var(--pass);color:#fff}
+.opt.sel.fail{background:var(--fail);color:#fff}
+.opt.sel.hold{background:var(--hold);color:#fff}
+.opt.sel.block{background:var(--block);color:#fff}
+.opt.sel.skip{background:var(--skip);color:#fff}
+tr.trow.hide,tr.detail.hide{display:none!important}
+tr.epicrow.hide,tr.featrow.hide{display:none!important}
+.note-box{background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:8px 12px;font-size:12px;color:#92400e;margin:0 0 12px}
+footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
+@media print{.tablewrap{overflow:visible}table.tc{min-width:0}tr.detail{display:table-row!important}.toolbar,.filters,.runsum{display:none}}
+/* Jira per-case links */
+.jira-sec .jira-list{display:flex;flex-direction:column;gap:4px;margin-bottom:6px}
+.jira-item{display:flex;align-items:center;gap:8px;font-size:12px}
+.jira-item a{color:var(--accent);text-decoration:none;font-family:monospace;font-weight:700}
+.jira-item a:hover{text-decoration:underline}
+.jira-del{cursor:pointer;color:var(--fail);font-weight:700;font-size:11px;user-select:none}
+.jira-add{display:flex;gap:6px}
+.jira-input{flex:1;min-width:0;padding:5px 8px;border:1px solid var(--line);border-radius:6px;font-size:12px;font-family:inherit;background:#fff;color:var(--txt)}
+.jira-btn{white-space:nowrap}
+.edge-badge{display:inline-block;margin-left:6px;padding:0 6px;border-radius:4px;font-size:9.5px;font-weight:700;color:#92400e;background:#fef3c7;border:1px solid #fde68a;vertical-align:middle}
+.jira-cell{white-space:normal}
+.jira-chip{display:inline-block;margin:1px 3px 1px 0;padding:1px 6px;border:1px solid var(--line);border-radius:5px;font-family:monospace;font-size:10.5px;font-weight:700;color:var(--accent);text-decoration:none;background:var(--card2)}
+.jira-chip:hover{text-decoration:underline}
+/* Epic assignee + section color */
+.epic-owner-wrap{margin-left:12px;font-weight:400;font-size:11px}
+.feat-owner{font-size:11px;padding:2px 6px;border:1px solid var(--line);border-radius:5px;background:#fff;color:var(--txt);cursor:pointer}
+tr.featrow.owner-ice td{background:#60a5fa;border-left:4px solid #1d4ed8}
+tr.featrow.owner-moss td{background:#a78bfa;border-left:4px solid #6d28d9}
+tr.sec-ice>td:first-child{box-shadow:inset 5px 0 0 #2563eb}
+tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
+.feat-owner.owner-ice{border-color:#2563eb;color:#2563eb;font-weight:700}
+.feat-owner.owner-moss{border-color:#7c3aed;color:#7c3aed;font-weight:700}
+</style>
+<style type="text/css">
+    @font-face {
+      font-family: 'Work Sans';
+      font-style: normal;
+      font-display: swap;
+      font-weight: 100 900;
+      src: url('chrome-extension://lknmjhcajhfbbglglccadlfdjbaiifig/fonts/work-sans-latin-wght-normal.woff2') format('woff2');
+    }
+  </style><style type="text/css">
+    @font-face {
+      font-family: 'Work Sans';
+      font-style: normal;
+      font-display: swap;
+      font-weight: 100 900;
+      src: url('chrome-extension://lknmjhcajhfbbglglccadlfdjbaiifig/fonts/work-sans-latin-wght-normal.woff2') format('woff2');
+    }
+  </style><style type="text/css">
+    @font-face {
+      font-family: 'Work Sans';
+      font-style: normal;
+      font-display: swap;
+      font-weight: 100 900;
+      src: url('chrome-extension://lknmjhcajhfbbglglccadlfdjbaiifig/fonts/work-sans-latin-wght-normal.woff2') format('woff2');
+    }
+  </style></head>
+<body>
+<a id="hub-back-btn" href="https://wanlee-tankunnatam.github.io/qa-test-reports/?project=rerun" title="กลับไปหน้ารวมรายงาน (Hub)" style="position:fixed;top:12px;right:14px;z-index:99999;display:inline-flex;align-items:center;gap:7px;padding:10px 18px;border-radius:999px;background:#ffffff;color:#1e3a8a;font-size:14px;font-weight:800;text-decoration:none;box-shadow:0 4px 16px rgba(0,0,0,.35);border:2px solid #1e3a8a;font-family:'Segoe UI','Sarabun',system-ui,sans-serif">🏠 รายงานทั้งหมด</a>
+
+
+<script id="store-data" type="application/json">
+{}
+</script>
+
+<header class="top">
+  <h1>🎬 [MVP2] TAKRA Rerun — Epic 18 + 19 UI Manual Test Cases</h1>
+  <div class="sub">เทส UI ด้วยมืออย่างเดียว · <b>Epic 18 — ต่อกลับอัตโนมัติเมื่อสัญญาณหลุด</b> + <b>Epic 19 Story 19.1 — แจ้งที่มาคลิปตอนอัปโหลด</b> · Target: <b>แอปเดสก์ท็อป Takra Rerun</b> · login ด้วยบัญชี UAT</div>
+  <div class="meta">
+    <span class="pill">18 เคส (E18 10 · E19 8)</span>
+    <span class="pill">MVP-2 · Epic 18 · Epic 19</span>
+    <span class="pill">UI · manual</span>
+    <span class="pill">P0 12 · P1 6</span>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="note-box">🖥️ <b>Test target:</b> แอปเดสก์ท็อป <b>Takra Rerun</b> ที่ build จาก branch <code>develop</code> · login ด้วยบัญชี <b>UAT</b> · หน้าที่ใช้: <b>บัญชีไลฟ์</b> (การ์ดบัญชี · ปุ่ม "สถานะ") · <b>คลังวิดีโอ</b> (ปุ่ม "อัปโหลดวิดีโอ") · <b>ระบบ &amp; ตั้งค่า</b><br>
+  📎 <b>ที่มาของเคส:</b> เขียนจาก <b>UI จริงที่ผู้ใช้กดเองได้</b> ใน <code>web/src</code> (คำบนหน้าจอลอกจากโค้ดตรงๆ) + AC ใน <code>_bmad-output/planning-artifacts/epics-mvp2.md</code> (Epic 18 Story 18.1–18.2 · Epic 19 Story 19.1)<br>
+  ⚠️ <b>ที่ยังไม่มีเคสในตั๋วนี้:</b> Epic 19 Story <b>19.2–19.6 (พรางวิดีโอ · FR-MC1…MC10 · seed · ปรับความแรงตามที่มา)</b> — ตรวจโค้ด UI เมื่อ <b>24 ส.ค. 2026</b> แล้ว <b>ไม่พบหน้าจอ/ตัวเลือกพรางวิดีโอในแอปเลย</b> (ไม่มีคำว่า "พราง"/camouflage ใน <code>web/src</code> นอกจากคอมเมนต์) · ผู้ใช้จึงยังกดใช้งานไม่ได้ → ยังเขียนเคส UI ไม่ได้ ต้องรอ UI ออกก่อน · ส่วนการวัดผลด้วยเครื่องมือ (pHash · SSIM · LUFS · encoder fingerprint) ไม่ใช่งานของตั๋วนี้อยู่แล้ว</div>
+
+  <div class="runsum">
+    <h3>📊 สรุปผล Manual Test</h3>
+    <div class="sumchips">
+      <span class="cnt pass">PASS <b id="sum-pass">0</b></span>
+      <span class="cnt fail">FAIL <b id="sum-fail">0</b></span>
+      <span class="cnt hold">HOLD <b id="sum-hold">0</b></span>
+      <span class="cnt block">BLOCKED <b id="sum-block">0</b></span>
+      <span class="cnt skip">SKIP <b id="sum-skip">0</b></span>
+      <span class="cnt pending">รอเทส <b id="sum-pending">18</b></span>
+    </div>
+    <div class="progress"><div id="sumbar" class="progressbar" style="width: 0%;"></div></div>
+    <div class="hint" id="sumpct" style="margin-top:5px">0% ทดสอบแล้ว (0/18)</div>
+  </div>
+
+  <div class="toolbar">
+    <button class="btn" onclick="toggleAll(true)">▸ กางทั้งหมด</button>
+    <button class="btn" onclick="toggleAll(false)">▾ ยุบทั้งหมด</button>
+    <span class="hint">💡 คลิกแถว → ดู Steps / Expected (UI only)</span>
+    <span style="margin-left:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+      <span id="save-status" class="hint" style="white-space: nowrap; color: var(--hold);">● ยังไม่ได้บันทึก</span>
+      <label class="hint" style="display:flex;gap:4px;align-items:center;white-space:nowrap;cursor:pointer" title="บันทึกขึ้น GitHub อัตโนมัติหลังหยุดแก้ ~5 วินาที"><input type="checkbox" id="chk-autosave" checked=""> auto-save</label>
+      <button class="btn" id="btn-token" title="ใส่/เปลี่ยน GitHub token (ถ้าเซฟไม่ขึ้น/token เสีย กดอันนี้)">🔑 Token</button>
+      <button class="btn" id="btn-refresh" title="ดึงผลล่าสุดจาก GitHub มา merge (ไม่ต้อง reload)">🔄 ดึงล่าสุด</button>
+      <button class="btn primary" id="btn-publish" style="">☁️ บันทึกขึ้น GitHub</button>
+      <button class="btn" id="btn-save-file" title="ดาวน์โหลด HTML ไว้ใช้ offline">💾 ดาวน์โหลด</button>
+      <button class="btn" style="color:var(--fail)" id="btn-reset">🗑 ล้างผล</button>
+    </span>
+  </div>
+
+  <div class="filters">
+    <div class="row"><label>Epic</label>
+      <button class="fchip" data-f="feat" data-v="epic18">🔌 E18 · ต่อกลับอัตโนมัติ (10)</button>
+      <button class="fchip" data-f="feat" data-v="epic19m4">📼 E19 · แจ้งที่มาคลิป (8)</button>
+      <button class="clearbtn" data-clear="feat">✕</button>
+    </div>
+    <div class="row"><label>Priority</label>
+      <button class="fchip" data-f="prio" data-v="P0">P0</button>
+      <button class="fchip" data-f="prio" data-v="P1">P1</button>
+      <button class="clearbtn" data-clear="prio">✕</button>
+    </div>
+    <div class="row"><label>สถานะ</label>
+      <button class="fchip" data-f="status" data-v="pass">✅ PASS</button>
+      <button class="fchip" data-f="status" data-v="fail">❌ FAIL</button>
+      <button class="fchip" data-f="status" data-v="hold">⏸ HOLD</button>
+      <button class="fchip" data-f="status" data-v="block">🚫 BLOCKED</button>
+      <button class="fchip" data-f="status" data-v="skip">⏭ SKIP</button>
+      <button class="fchip" data-f="status" data-v="pending">⏳ รอเทส</button>
+      <button class="clearbtn" data-clear="status">✕</button>
+    </div>
+  </div>
+
+  <div class="tablewrap">
+  <table class="tc" id="main-table">
+    <thead><tr><th style="width:22px"></th><th style="width:130px">TC ID</th><th>Test Case</th><th style="width:74px">Level</th><th style="width:55px">Pri</th><th style="width:80px">Status</th><th style="width:120px">Jira</th></tr></thead>
+    <tbody>
+
+<!-- 🔌 ขั้นที่ 1 · สัญญาณหลุด → ต่อกลับเอง (Epic 18 · FR-X1/FR-X2) -->
+<tr class="epicrow" data-epic="epic18"><td colspan="7">🔌 ขั้นที่ 1 · สัญญาณหลุด → ต่อกลับเอง (Epic 18 · FR-X1/FR-X2) <span class="rp">(10 เคส)</span></td></tr>
+<tr class="featrow" data-featkey="auto-reconnect"><td colspan="7">📁 auto-reconnect <span class="rp"><span class="lv lvl-ui">🌐 10</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="auto-reconnect"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow" data-feat="epic18" data-level="ui" data-prio="P0" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-X.1</td>
+  <td class="ctitle">เน็ตหลุดชั่วครู่ระหว่างไลฟ์ การ์ดบัญชีต้องขึ้น "กำลังเชื่อมต่อใหม่…" ไม่ใช่ขึ้นว่าผิดพลาด</td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-1801"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-1801"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">เน็ตหลุดชั่วครู่ระหว่างไลฟ์ การ์ดบัญชีต้องขึ้น "กำลังเชื่อมต่อใหม่…" ไม่ใช่ขึ้นว่าผิดพลาด</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · auto-reconnect · ขั้นที่ 1 · Epic 18</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอปเดสก์ท็อป Takra Rerun แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>มีบัญชี TikTok เชื่อมไว้อย่างน้อย 1 บัญชี · สถานะบัญชีปกติ (คุกกี้ยังไม่หมดอายุ)</li><li>มีคลิปในคลังวิดีโอที่เลือกไว้กับบัญชีนั้นแล้ว พร้อมกดเริ่มไลฟ์ได้</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป Takra Rerun แล้วล็อกอินด้วยบัญชี UAT</li><li>ไปที่เมนู "บัญชีไลฟ์" แล้วกด "เริ่มไลฟ์" ที่การ์ดบัญชีทดสอบ จนป้ายสถานะบนการ์ดขึ้น "ออกอากาศอยู่"</li><li>ปิด Wi-Fi ของเครื่อง (หรือถอดสาย LAN) ทิ้งไว้ประมาณ 10–15 วินาที แล้วเปิดกลับ</li><li>จ้องการ์ดบัญชีเดิมในหน้า "บัญชีไลฟ์" ระหว่างที่เน็ตหลุด แล้วสังเกตป้ายสถานะกับปุ่มบนการ์ด</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>บัญชี UAT ที่กำลังไลฟ์อยู่ 1 บัญชี</li></ul></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ป้ายสถานะบนการ์ดเปลี่ยนเป็น "กำลังเชื่อมต่อใหม่…" (ป้ายสีเหลืองอำพัน) — ไม่ใช่ "ผิดพลาด" และไม่ใช่ "ยังไม่ไลฟ์"</li><li>ปุ่ม "หยุด" ยังอยู่บนการ์ดและกดได้ · ไม่มีปุ่ม "เริ่มไลฟ์" โผล่มาแทน (ระบบยังถือว่ายังไลฟ์อยู่)</li><li>ไม่มีการ์ด/ไลฟ์ใหม่เพิ่มขึ้นมา — ยังเป็นรอบไลฟ์เดิม</li><li>ที่มา: Epic 18 · Story 18.1 · FR-X1</li></ul></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-1801" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-1801" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-1801" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-1801" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-1801" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-1801"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-1801" placeholder="วางลิงก์ Jira หรือพิมพ์ TAK-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-1801">+ เพิ่มลิงก์</button></div>
+  </div>
+</div></td></tr>
+<tr class="trow" data-feat="epic18" data-level="ui" data-prio="P0" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-X.2</td>
+  <td class="ctitle">หน้า "สถานะ" ต้องขึ้นแถบเตือนว่ากำลังต่อกลับ พร้อมนับครั้งและเวลาที่หลุด</td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-1802"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-1802"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">หน้า "สถานะ" ต้องขึ้นแถบเตือนว่ากำลังต่อกลับ พร้อมนับครั้งและเวลาที่หลุด</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · auto-reconnect · ขั้นที่ 1 · Epic 18</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอปเดสก์ท็อป Takra Rerun แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>มีบัญชี TikTok เชื่อมไว้อย่างน้อย 1 บัญชี · สถานะบัญชีปกติ (คุกกี้ยังไม่หมดอายุ)</li><li>มีคลิปในคลังวิดีโอที่เลือกไว้กับบัญชีนั้นแล้ว พร้อมกดเริ่มไลฟ์ได้</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป Takra Rerun แล้วล็อกอินด้วยบัญชี UAT</li><li>ไปที่เมนู "บัญชีไลฟ์" แล้วเริ่มไลฟ์บัญชีทดสอบจนป้ายขึ้น "ออกอากาศอยู่"</li><li>กดปุ่ม "สถานะ" บนการ์ดบัญชีนั้น เพื่อเปิดหน้ารายละเอียดของรอบไลฟ์</li><li>ปิด Wi-Fi ของเครื่องทิ้งไว้ประมาณ 20–30 วินาที</li><li>อ่านแถบสีเหลืองที่ขึ้นด้านบนของหน้า และดูว่าปุ่มหยุดยังอยู่ไหม</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ตัดเน็ต 20–30 วินาที (ยังไม่เกินเพดานเวลาต่อกลับ ~3 นาที)</li></ul></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>มีแถบสีเหลืองขึ้นเหนือรายละเอียด ข้อความ "⚠️ การเชื่อมต่อขาดหาย — กำลังเชื่อมต่อใหม่… ลองครั้งที่ N" โดยเลข N เพิ่มขึ้นตามจำนวนครั้งที่ระบบลองต่อใหม่</li><li>ต่อท้ายด้วย "· หลุดมาแล้ว M:SS" ที่เดินเวลาขึ้นเรื่อยๆ ทุกวินาที</li><li>บรรทัดถัดมาเขียนว่า "ไลฟ์บน TikTok ยังเปิดอยู่ ระบบจะพยายามต่อกลับอัตโนมัติ (สูงสุด ~3 นาที)"</li><li>ปุ่ม "หยุดไลฟ์" ยังอยู่และกดได้ตามปกติระหว่างที่กำลังต่อกลับ</li><li>ที่มา: Epic 18 · Story 18.2 · FR-X2</li></ul></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-1802" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-1802" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-1802" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-1802" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-1802" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-1802"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-1802" placeholder="วางลิงก์ Jira หรือพิมพ์ TAK-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-1802">+ เพิ่มลิงก์</button></div>
+  </div>
+</div></td></tr>
+<tr class="trow" data-feat="epic18" data-level="ui" data-prio="P0" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-X.3</td>
+  <td class="ctitle">ต่อกลับสำเร็จ ต้องขึ้นข้อความบอกว่ากลับมาแล้ว และยังเป็นห้องเดิม</td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-1803"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-1803"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ต่อกลับสำเร็จ ต้องขึ้นข้อความบอกว่ากลับมาแล้ว และยังเป็นห้องเดิม</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · auto-reconnect · ขั้นที่ 1 · Epic 18</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอปเดสก์ท็อป Takra Rerun แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>มีบัญชี TikTok เชื่อมไว้อย่างน้อย 1 บัญชี · สถานะบัญชีปกติ (คุกกี้ยังไม่หมดอายุ)</li><li>มีคลิปในคลังวิดีโอที่เลือกไว้กับบัญชีนั้นแล้ว พร้อมกดเริ่มไลฟ์ได้</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป Takra Rerun แล้วล็อกอินด้วยบัญชี UAT</li><li>ไปที่เมนู "บัญชีไลฟ์" เริ่มไลฟ์ แล้วกดปุ่ม "สถานะ" เพื่อเปิดหน้ารายละเอียดของรอบไลฟ์</li><li>จดค่า "Room ID" ที่แสดงอยู่ไว้ก่อน</li><li>ปิด Wi-Fi ประมาณ 15 วินาที แล้วเปิดกลับ รอจนแถบสีเหลืองหายไป</li><li>สังเกตข้อความแจ้งเตือนที่เด้งขึ้น ป้ายสถานะ และค่า "Room ID" หลังกลับมา</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>จด Room ID ก่อนตัดเน็ต ไว้เทียบหลังต่อกลับ</li></ul></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>มีข้อความแจ้งเตือนเด้งขึ้นว่า "✅ เชื่อมต่อกลับสำเร็จ" พร้อมคำอธิบาย "ไลฟ์เดินต่อแล้ว"</li><li>แถบสีเหลือง "กำลังเชื่อมต่อใหม่…" หายไป และป้ายสถานะกลับเป็น "ออกอากาศอยู่"</li><li>ค่า "Room ID" เท่าเดิมกับที่จดไว้ — ระบบต่อกลับในห้องเดิม ไม่ได้เปิดห้องใหม่</li><li>ที่มา: Epic 18 · Story 18.2 · FR-X2</li></ul></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-1803" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-1803" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-1803" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-1803" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-1803" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-1803"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-1803" placeholder="วางลิงก์ Jira หรือพิมพ์ TAK-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-1803">+ เพิ่มลิงก์</button></div>
+  </div>
+</div></td></tr>
+<tr class="trow" data-feat="epic18" data-level="ui" data-prio="P0" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-X.4</td>
+  <td class="ctitle">"บันทึกเหตุการณ์" ต้องบันทึกทั้งตอนหลุดและตอนต่อกลับได้</td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-1804"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-1804"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">"บันทึกเหตุการณ์" ต้องบันทึกทั้งตอนหลุดและตอนต่อกลับได้</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · auto-reconnect · ขั้นที่ 1 · Epic 18</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอปเดสก์ท็อป Takra Rerun แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>มีบัญชี TikTok เชื่อมไว้อย่างน้อย 1 บัญชี · สถานะบัญชีปกติ (คุกกี้ยังไม่หมดอายุ)</li><li>มีคลิปในคลังวิดีโอที่เลือกไว้กับบัญชีนั้นแล้ว พร้อมกดเริ่มไลฟ์ได้</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป Takra Rerun แล้วล็อกอินด้วยบัญชี UAT</li><li>ไปที่เมนู "บัญชีไลฟ์" เริ่มไลฟ์ แล้วกดปุ่ม "สถานะ" เพื่อเปิดหน้ารายละเอียดของรอบไลฟ์</li><li>ปิด Wi-Fi ประมาณ 15 วินาที แล้วเปิดกลับ รอจนไลฟ์กลับมาปกติ</li><li>เลื่อนหน้าลงไปที่หัวข้อ "บันทึกเหตุการณ์" แล้วอ่านแถวล่าสุด พร้อมเทียบกับแถวสถิติด้านบนของหน้า</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ตัดเน็ต 1 รอบ ~15 วินาที</li></ul></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ใน "บันทึกเหตุการณ์" มีแถวใหม่ว่า "ffmpeg รีสตาร์ท N/M" (N = ครั้งที่ · M = เพดานที่ระบบยอมให้ลอง) พร้อมเวลาที่เกิด ตอนที่หลุด</li><li>เมื่อกลับมาได้ มีแถวถัดมาว่า "เชื่อมต่อกลับสำเร็จ — ไลฟ์เดินต่อ"</li><li>แถวสถิติด้านบน "FFmpeg รีสตาร์ท" เปลี่ยนจาก 0 เป็น N/M ตรงกับที่เห็นในบันทึกเหตุการณ์</li><li>ที่มา: Epic 18 · Story 18.1 · FR-X1</li></ul></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-1804" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-1804" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-1804" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-1804" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-1804" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-1804"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-1804" placeholder="วางลิงก์ Jira หรือพิมพ์ TAK-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-1804">+ เพิ่มลิงก์</button></div>
+  </div>
+</div></td></tr>
+<tr class="trow" data-feat="epic18" data-level="ui" data-prio="P0" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-X.5</td>
+  <td class="ctitle">กดหยุดไลฟ์เอง ระบบต้องไม่ไปต่อกลับให้</td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-1805"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-1805"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">กดหยุดไลฟ์เอง ระบบต้องไม่ไปต่อกลับให้</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · auto-reconnect · ขั้นที่ 1 · Epic 18</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอปเดสก์ท็อป Takra Rerun แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>มีบัญชี TikTok เชื่อมไว้อย่างน้อย 1 บัญชี · สถานะบัญชีปกติ (คุกกี้ยังไม่หมดอายุ)</li><li>มีคลิปในคลังวิดีโอที่เลือกไว้กับบัญชีนั้นแล้ว พร้อมกดเริ่มไลฟ์ได้</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป Takra Rerun แล้วล็อกอินด้วยบัญชี UAT</li><li>ไปที่เมนู "บัญชีไลฟ์" เริ่มไลฟ์บัญชีทดสอบจนป้ายขึ้น "ออกอากาศอยู่" แล้วกดปุ่ม "สถานะ" เปิดหน้ารายละเอียดไว้</li><li>กดปุ่ม "หยุดไลฟ์" แล้วยืนยันในกล่อง "หยุดไลฟ์" ที่ถามว่า "คุณต้องการหยุดไลฟ์ใช่หรือไม่? การไลฟ์จะถูกปิดทันที"</li><li>เฝ้าดูหน้าจอต่ออีก 1–2 นาที แล้วสังเกตว่ามีแถบสีเหลืองต่อกลับขึ้นมาหรือไม่ และบันทึกเหตุการณ์เขียนว่าอะไร</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>หยุดไลฟ์เองจากปุ่มในแอป (ไม่ได้ตัดเน็ต)</li></ul></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ป้ายบนการ์ดไล่จาก "กำลังหยุด…" ไปเป็น "ยังไม่ไลฟ์" และปุ่มกลับเป็น "เริ่มไลฟ์"</li><li>ไม่มีแถบสีเหลือง "กำลังเชื่อมต่อใหม่…" ขึ้นมาเลย และไม่มีข้อความ "เชื่อมต่อกลับสำเร็จ"</li><li>ใน "บันทึกเหตุการณ์" ขึ้นแถว "session.state → หยุดแล้ว" เป็นแถวสุดท้าย</li><li>ที่มา: Epic 18 · Story 18.1 (user-stop ต้องไม่ auto-reconnect)</li></ul></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-1805" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-1805" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-1805" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-1805" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-1805" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-1805"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-1805" placeholder="วางลิงก์ Jira หรือพิมพ์ TAK-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-1805">+ เพิ่มลิงก์</button></div>
+  </div>
+</div></td></tr>
+<tr class="trow" data-feat="epic18" data-level="ui" data-prio="P0" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-X.6</td>
+  <td class="ctitle">คุกกี้หมดอายุกลางไลฟ์ ต้องบอกให้ไปล็อกอินใหม่ ไม่ใช่วนต่อกลับไม่จบ</td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-1806"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-1806"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">คุกกี้หมดอายุกลางไลฟ์ ต้องบอกให้ไปล็อกอินใหม่ ไม่ใช่วนต่อกลับไม่จบ</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · auto-reconnect · ขั้นที่ 1 · Epic 18</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอปเดสก์ท็อป Takra Rerun แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>มีบัญชี TikTok เชื่อมไว้อย่างน้อย 1 บัญชี · สถานะบัญชีปกติ (คุกกี้ยังไม่หมดอายุ)</li><li>มีคลิปในคลังวิดีโอที่เลือกไว้กับบัญชีนั้นแล้ว พร้อมกดเริ่มไลฟ์ได้</li><li>เตรียมบัญชีที่คุกกี้ TikTok หมดอายุ/ถูกเพิกถอนระหว่างไลฟ์ (ออกจากระบบ TikTok ฝั่งเว็บเพื่อทำให้คุกกี้ใช้ไม่ได้)</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป Takra Rerun แล้วล็อกอินด้วยบัญชี UAT</li><li>ไปที่เมนู "บัญชีไลฟ์" เริ่มไลฟ์ด้วยบัญชีทดสอบ แล้วกดปุ่ม "สถานะ" เปิดหน้ารายละเอียดไว้</li><li>ทำให้คุกกี้ของบัญชีนั้นใช้ไม่ได้ระหว่างที่ยังไลฟ์อยู่ แล้วรอจนระบบรู้ตัว</li><li>อ่านป้ายสถานะบนการ์ด · กล่องข้อความในหน้ารายละเอียด · และดูว่าการ์ดเปลี่ยนเป็นแบบไหนหลังไลฟ์จบ</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>บัญชีที่คุกกี้หมดอายุระหว่างไลฟ์</li></ul></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ป้ายบนการ์ดขึ้น "คุกกี้หมดอายุ" (ป้ายแดง) ไม่ใช่ "กำลังเชื่อมต่อใหม่…"</li><li>หน้ารายละเอียดขึ้นกล่องแดงบอกรหัสข้อผิดพลาดและคำอธิบายว่าเกิดอะไรขึ้น</li><li>ระบบไม่วนพยายามต่อกลับซ้ำไปเรื่อยๆ — ไม่มีแถบเหลืองเด้งขึ้นมาใหม่</li><li>เมื่อรอบไลฟ์จบลง การ์ดของบัญชีนั้นเปลี่ยนเป็นการ์ดขอบแดงพร้อมปุ่ม "เข้าสู่ระบบอีกครั้ง" ให้กดแก้ได้ทันที</li><li>ที่มา: Epic 18 · Story 18.1 (terminal → surface error ไม่ reconnect)</li></ul></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-1806" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-1806" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-1806" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-1806" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-1806" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-1806"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-1806" placeholder="วางลิงก์ Jira หรือพิมพ์ TAK-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-1806">+ เพิ่มลิงก์</button></div>
+  </div>
+</div></td></tr>
+<tr class="trow" data-feat="epic18" data-level="ui" data-prio="P0" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-X.7</td>
+  <td class="ctitle">เน็ตหลุดยาวจนเกินเวลาที่ระบบยอมลอง ต้องจบเป็นข้อผิดพลาดที่อ่านรู้เรื่อง</td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-1807"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-1807"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">เน็ตหลุดยาวจนเกินเวลาที่ระบบยอมลอง ต้องจบเป็นข้อผิดพลาดที่อ่านรู้เรื่อง</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · auto-reconnect · ขั้นที่ 1 · Epic 18</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอปเดสก์ท็อป Takra Rerun แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>มีบัญชี TikTok เชื่อมไว้อย่างน้อย 1 บัญชี · สถานะบัญชีปกติ (คุกกี้ยังไม่หมดอายุ)</li><li>มีคลิปในคลังวิดีโอที่เลือกไว้กับบัญชีนั้นแล้ว พร้อมกดเริ่มไลฟ์ได้</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป Takra Rerun แล้วล็อกอินด้วยบัญชี UAT</li><li>ไปที่เมนู "บัญชีไลฟ์" เริ่มไลฟ์ แล้วกดปุ่ม "สถานะ" เปิดหน้ารายละเอียดไว้</li><li>ปิด Wi-Fi ของเครื่องทิ้งไว้ยาวเกิน 3 นาที (เกินเพดานที่ระบบพยายามต่อกลับ) แล้วค่อยเปิดกลับ</li><li>อ่านหน้ารายละเอียดและการ์ดบัญชีหลังจากนั้น</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ตัดเน็ตยาวเกิน 3 นาที</li></ul></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>แถบเหลือง "กำลังเชื่อมต่อใหม่…" หยุดนับและหายไป — ระบบเลิกลองต่อเมื่อครบเพดาน</li><li>ป้ายบนการ์ดเปลี่ยนเป็น "การเชื่อมต่อขาดหาย" (ป้ายแดง)</li><li>หน้ารายละเอียดขึ้นกล่องแดงพร้อมรหัสข้อผิดพลาดและคำอธิบาย ไม่ค้างเงียบให้เดาเอง</li><li>ปุ่มบนการ์ดกลับเป็น "เริ่มไลฟ์" ให้เริ่มรอบใหม่ได้</li><li>ที่มา: Epic 18 · Story 18.2 · FR-X2 (เกิน cap → error)</li></ul></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-1807" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-1807" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-1807" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-1807" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-1807" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-1807"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-1807" placeholder="วางลิงก์ Jira หรือพิมพ์ TAK-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-1807">+ เพิ่มลิงก์</button></div>
+  </div>
+</div></td></tr>
+<tr class="trow" data-feat="epic18" data-level="ui" data-prio="P1" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-X.8</td>
+  <td class="ctitle">ต่อกลับแล้ว การปักสินค้าและแชทต้องเดินต่อ ไม่รีเซ็ต</td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-1808"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-1808"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ต่อกลับแล้ว การปักสินค้าและแชทต้องเดินต่อ ไม่รีเซ็ต</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · auto-reconnect · ขั้นที่ 1 · Epic 18</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอปเดสก์ท็อป Takra Rerun แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>มีบัญชี TikTok เชื่อมไว้อย่างน้อย 1 บัญชี · สถานะบัญชีปกติ (คุกกี้ยังไม่หมดอายุ)</li><li>มีคลิปในคลังวิดีโอที่เลือกไว้กับบัญชีนั้นแล้ว พร้อมกดเริ่มไลฟ์ได้</li><li>ตั้งตารางปักสินค้าไว้กับบัญชีที่ใช้ทดสอบ และมีสินค้าในตะกร้าของไลฟ์นั้น</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป Takra Rerun แล้วล็อกอินด้วยบัญชี UAT</li><li>ไปที่เมนู "บัญชีไลฟ์" เริ่มไลฟ์บัญชีที่ตั้งตารางปักไว้ แล้วกดปุ่ม "สถานะ" เปิดหน้ารายละเอียด</li><li>จดค่าแถว "ปักตะกร้า" (เช่น 2/8) ไว้ก่อน แล้วปิด Wi-Fi ประมาณ 15 วินาที แล้วเปิดกลับ</li><li>รอจนขึ้น "✅ เชื่อมต่อกลับสำเร็จ" แล้วดูแถว "ปักตะกร้า" กับรายการแชทและสินค้าในหน้าเดิม</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ไลฟ์ที่มีตารางปักสินค้าอย่างน้อย 3 รายการ</li></ul></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>แถว "ปักตะกร้า" ยังนับต่อจากเลขเดิม ไม่ย้อนกลับไปเริ่มที่ 0</li><li>รายการสินค้าและกล่องแชทยังอัปเดตต่อหลังต่อกลับ ไม่ค้างนิ่ง</li><li>ที่มา: Epic 18 · Story 18.2 (ต่อกลับในห้องเดิม ของเดิมเดินต่อ)</li></ul></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-1808" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-1808" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-1808" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-1808" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-1808" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-1808"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-1808" placeholder="วางลิงก์ Jira หรือพิมพ์ TAK-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-1808">+ เพิ่มลิงก์</button></div>
+  </div>
+</div></td></tr>
+<tr class="trow" data-feat="epic18" data-level="ui" data-prio="P1" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-X.9</td>
+  <td class="ctitle">เน็ตหลุดๆ ติดๆ หลายรอบ สถานะต้องไม่กระพริบสลับไปมา</td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-1809"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-1809"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">เน็ตหลุดๆ ติดๆ หลายรอบ สถานะต้องไม่กระพริบสลับไปมา</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · auto-reconnect · ขั้นที่ 1 · Epic 18</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอปเดสก์ท็อป Takra Rerun แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>มีบัญชี TikTok เชื่อมไว้อย่างน้อย 1 บัญชี · สถานะบัญชีปกติ (คุกกี้ยังไม่หมดอายุ)</li><li>มีคลิปในคลังวิดีโอที่เลือกไว้กับบัญชีนั้นแล้ว พร้อมกดเริ่มไลฟ์ได้</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป Takra Rerun แล้วล็อกอินด้วยบัญชี UAT</li><li>ไปที่เมนู "บัญชีไลฟ์" เริ่มไลฟ์ แล้วกดปุ่ม "สถานะ" เปิดหน้ารายละเอียดไว้</li><li>ปิด-เปิด Wi-Fi สลับกันรอบละประมาณ 5–10 วินาที ติดกัน 3 รอบ</li><li>เฝ้าดูเลข "ลองครั้งที่ N" ในแถบเหลือง ป้ายสถานะบนการ์ด และข้อความแจ้งเตือนที่เด้งขึ้น</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ตัด-ต่อเน็ต 3 รอบ รอบละ 5–10 วินาที</li></ul></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>เลข "ลองครั้งที่ N" เดินขึ้นเรื่อยๆ ในรอบที่ยังหลุดอยู่ ไม่กระโดดกลับไปเริ่มใหม่ทุกครั้งที่เน็ตกระตุก</li><li>ป้ายสถานะไม่กระพริบสลับระหว่าง "ออกอากาศอยู่" กับ "ผิดพลาด" — อยู่ที่ "กำลังเชื่อมต่อใหม่…" จนกว่าจะจบรอบ</li><li>ข้อความ "✅ เชื่อมต่อกลับสำเร็จ" ขึ้นเมื่อกลับมาได้จริง ไม่เด้งรัวซ้ำๆ</li><li>ที่มา: Epic 18 · Story 18.2 · NFR-M10 (คุมจังหวะการต่อกลับ)</li></ul></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-1809" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-1809" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-1809" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-1809" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-1809" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-1809"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-1809" placeholder="วางลิงก์ Jira หรือพิมพ์ TAK-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-1809">+ เพิ่มลิงก์</button></div>
+  </div>
+</div></td></tr>
+<tr class="trow" data-feat="epic18" data-level="ui" data-prio="P1" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-X.10</td>
+  <td class="ctitle">ออกจากหน้า "สถานะ" แล้วกลับเข้ามาใหม่ตอนที่ยังหลุดอยู่ ต้องยังบอกว่ากำลังต่อกลับ</td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-1810"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-1810"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ออกจากหน้า "สถานะ" แล้วกลับเข้ามาใหม่ตอนที่ยังหลุดอยู่ ต้องยังบอกว่ากำลังต่อกลับ</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · auto-reconnect · ขั้นที่ 1 · Epic 18</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอปเดสก์ท็อป Takra Rerun แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>มีบัญชี TikTok เชื่อมไว้อย่างน้อย 1 บัญชี · สถานะบัญชีปกติ (คุกกี้ยังไม่หมดอายุ)</li><li>มีคลิปในคลังวิดีโอที่เลือกไว้กับบัญชีนั้นแล้ว พร้อมกดเริ่มไลฟ์ได้</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป Takra Rerun แล้วล็อกอินด้วยบัญชี UAT</li><li>ไปที่เมนู "บัญชีไลฟ์" เริ่มไลฟ์ แล้วกดปุ่ม "สถานะ" เปิดหน้ารายละเอียดไว้</li><li>ปิด Wi-Fi ทิ้งไว้ แล้วระหว่างที่แถบเหลืองยังขึ้นอยู่ กดกลับไปเมนู "บัญชีไลฟ์"</li><li>กดปุ่ม "สถานะ" เข้าหน้ารายละเอียดของไลฟ์เดิมอีกครั้ง แล้วดูว่าหน้าจอบอกสถานะอะไร</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ตัดเน็ตค้างไว้ระหว่างสลับหน้า</li></ul></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>การ์ดในหน้า "บัญชีไลฟ์" ยังขึ้นป้าย "กำลังเชื่อมต่อใหม่…" ระหว่างที่ยังหลุด</li><li>เมื่อเข้าหน้ารายละเอียดใหม่ แถบเหลือง "การเชื่อมต่อขาดหาย — กำลังเชื่อมต่อใหม่…" ยังอยู่ พร้อมจำนวนครั้งล่าสุด</li><li>ไม่กลับไปแสดงว่า "ออกอากาศอยู่" เฉยๆ ทั้งที่ยังต่อกลับไม่สำเร็จ</li><li>ที่มา: Epic 18 · Story 18.2 · FR-X2</li></ul></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-1810" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-1810" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-1810" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-1810" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-1810" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-1810"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-1810" placeholder="วางลิงก์ Jira หรือพิมพ์ TAK-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-1810">+ เพิ่มลิงก์</button></div>
+  </div>
+</div></td></tr>
+
+<!-- 📼 ขั้นที่ 2 · แจ้งที่มาคลิปตอนอัปโหลด (Epic 19 · Story 19.1 · FR-M4) -->
+<tr class="epicrow" data-epic="epic19m4"><td colspan="7">📼 ขั้นที่ 2 · แจ้งที่มาคลิปตอนอัปโหลด (Epic 19 · Story 19.1 · FR-M4) <span class="rp">(8 เคส)</span></td></tr>
+<tr class="featrow" data-featkey="originality-declaration"><td colspan="7">📁 originality-declaration <span class="rp"><span class="lv lvl-ui">🌐 8</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="originality-declaration"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow" data-feat="epic19m4" data-level="ui" data-prio="P0" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-M4.1</td>
+  <td class="ctitle">เปิดกล่องอัปโหลด ต้องเจอหัวข้อ "ที่มาของคลิป" ที่ยังไม่ได้เลือกไว้ให้</td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-1811"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-1811"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">เปิดกล่องอัปโหลด ต้องเจอหัวข้อ "ที่มาของคลิป" ที่ยังไม่ได้เลือกไว้ให้</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · originality-declaration · ขั้นที่ 2 · Epic 19</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอปเดสก์ท็อป Takra Rerun แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>มีไฟล์ .mp4 ขนาดเล็กเก็บไว้ในเครื่องสำหรับทดสอบอัปโหลด</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป Takra Rerun แล้วล็อกอินด้วยบัญชี UAT</li><li>ไปที่เมนู "คลังวิดีโอ" แล้วอยู่ที่แท็บ "คลังวิดีโอ"</li><li>กดปุ่ม "อัปโหลดวิดีโอ"</li><li>อ่านหัวข้อและตัวเลือกทั้งหมดในกล่อง "อัปโหลดวิดีโอ" ที่เปิดขึ้น</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ยังไม่ต้องเลือกไฟล์ใดๆ</li></ul></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>กล่อง "อัปโหลดวิดีโอ" มีหัวข้อ "ที่มาของคลิป" ติดเครื่องหมาย * (บังคับเลือก) พร้อมคำอธิบายว่า "ระบุที่มาเพื่อเก็บเป็นหลักฐาน (ตามนโยบายเนื้อหาต้นฉบับของ TikTok)"</li><li>มีให้เลือก 3 แบบ: "คลิปของฉัน (เคยไลฟ์แล้ว)" · "คลิปของฉัน (ผลิตเอง ยังไม่เคยไลฟ์)" · "คลิปจากแหล่งอื่น"</li><li>ยังไม่มีตัวเลือกไหนถูกเลือกไว้ล่วงหน้า — ผู้ใช้ต้องเลือกเอง</li><li>ที่มา: Epic 19 · Story 19.1 · FR-M4</li></ul></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-1811" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-1811" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-1811" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-1811" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-1811" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-1811"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-1811" placeholder="วางลิงก์ Jira หรือพิมพ์ TAK-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-1811">+ เพิ่มลิงก์</button></div>
+  </div>
+</div></td></tr>
+<tr class="trow" data-feat="epic19m4" data-level="ui" data-prio="P0" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-M4.2</td>
+  <td class="ctitle">ยังไม่ระบุที่มา ต้องเลือกไฟล์เพื่ออัปโหลดไม่ได้เลย</td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-1812"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-1812"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ยังไม่ระบุที่มา ต้องเลือกไฟล์เพื่ออัปโหลดไม่ได้เลย</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · originality-declaration · ขั้นที่ 2 · Epic 19</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอปเดสก์ท็อป Takra Rerun แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>มีไฟล์ .mp4 ขนาดเล็กเก็บไว้ในเครื่องสำหรับทดสอบอัปโหลด</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป Takra Rerun แล้วล็อกอินด้วยบัญชี UAT</li><li>ไปที่เมนู "คลังวิดีโอ" แล้วกดปุ่ม "อัปโหลดวิดีโอ"</li><li>ยังไม่เลือกที่มาของคลิป แล้วลองกดที่ช่อง "ลากไฟล์ .mp4 มาวางที่นี่ หรือคลิกเพื่อเลือกไฟล์"</li><li>สังเกตว่ามีหน้าต่างเลือกไฟล์เปิดขึ้นหรือไม่ และมีข้อความอะไรบอกไว้ใต้ช่องนั้น</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ไม่เลือกที่มาของคลิป</li></ul></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>กดที่ช่องลากไฟล์แล้วไม่มีหน้าต่างเลือกไฟล์เปิดขึ้น — ช่องนั้นถูกล็อกไว้ (จางลงและกดไม่ติด)</li><li>ใต้ช่องลากไฟล์มีข้อความบอกว่า "เลือกที่มาของคลิปก่อน จึงจะเลือกไฟล์เพื่ออัปโหลดได้"</li><li>ไม่มีการอัปโหลดเกิดขึ้นเลย และไม่มีแถบความคืบหน้าขึ้นมา</li><li>ที่มา: Epic 19 · Story 19.1 · FR-M4 (ไม่ระบุที่มา = อัปโหลดไม่ได้)</li></ul></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-1812" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-1812" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-1812" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-1812" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-1812" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-1812"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-1812" placeholder="วางลิงก์ Jira หรือพิมพ์ TAK-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-1812">+ เพิ่มลิงก์</button></div>
+  </div>
+</div></td></tr>
+<tr class="trow" data-feat="epic19m4" data-level="ui" data-prio="P0" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-M4.3</td>
+  <td class="ctitle">ระบุที่มาแล้วอัปโหลดไฟล์ .mp4 สำเร็จ และคลิปขึ้นในคลังวิดีโอ</td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-1813"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-1813"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ระบุที่มาแล้วอัปโหลดไฟล์ .mp4 สำเร็จ และคลิปขึ้นในคลังวิดีโอ</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · originality-declaration · ขั้นที่ 2 · Epic 19</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอปเดสก์ท็อป Takra Rerun แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>มีไฟล์ .mp4 ขนาดเล็กเก็บไว้ในเครื่องสำหรับทดสอบอัปโหลด</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป Takra Rerun แล้วล็อกอินด้วยบัญชี UAT</li><li>ไปที่เมนู "คลังวิดีโอ" แล้วกดปุ่ม "อัปโหลดวิดีโอ"</li><li>เลือกที่มา "คลิปของฉัน (เคยไลฟ์แล้ว)" แล้วกดที่ช่องลากไฟล์เพื่อเลือกไฟล์ .mp4 ที่เตรียมไว้</li><li>รอจนอัปโหลดเสร็จ แล้วดูข้อความที่ขึ้นและรายการในหน้า "คลังวิดีโอ"</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ไฟล์ .mp4 ขนาดเล็ก 1 ไฟล์</li></ul></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>พอเลือกที่มาแล้ว ช่องลากไฟล์ใช้งานได้ทันที และเลือกไฟล์ได้</li><li>ระหว่างอัปโหลดมีแถบความคืบหน้าและข้อความ "กำลังอัปโหลด {ชื่อไฟล์} … n%" ที่เดินขึ้นจนถึง 100%</li><li>เสร็จแล้วมีข้อความแจ้ง "อัปโหลดสำเร็จ" และกล่องปิดเอง</li><li>คลิปที่เพิ่งอัปโหลดปรากฏในรายการของหน้า "คลังวิดีโอ"</li><li>ที่มา: Epic 19 · Story 19.1 · FR-M4</li></ul></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-1813" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-1813" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-1813" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-1813" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-1813" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-1813"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-1813" placeholder="วางลิงก์ Jira หรือพิมพ์ TAK-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-1813">+ เพิ่มลิงก์</button></div>
+  </div>
+</div></td></tr>
+<tr class="trow" data-feat="epic19m4" data-level="ui" data-prio="P1" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-M4.4</td>
+  <td class="ctitle">ลากไฟล์มาวางแทนการกดเลือก ก็ยังต้องระบุที่มาก่อนเหมือนกัน</td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-1814"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-1814"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ลากไฟล์มาวางแทนการกดเลือก ก็ยังต้องระบุที่มาก่อนเหมือนกัน</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · originality-declaration · ขั้นที่ 2 · Epic 19</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอปเดสก์ท็อป Takra Rerun แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>มีไฟล์ .mp4 ขนาดเล็กเก็บไว้ในเครื่องสำหรับทดสอบอัปโหลด</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป Takra Rerun แล้วล็อกอินด้วยบัญชี UAT</li><li>ไปที่เมนู "คลังวิดีโอ" แล้วกดปุ่ม "อัปโหลดวิดีโอ"</li><li>ยังไม่เลือกที่มา แล้วลากไฟล์ .mp4 จากเครื่องมาวางที่ช่อง "ลากไฟล์ .mp4 มาวางที่นี่ หรือคลิกเพื่อเลือกไฟล์"</li><li>จากนั้นเลือกที่มา "คลิปจากแหล่งอื่น" แล้วลากไฟล์เดิมมาวางซ้ำอีกครั้ง แล้วสังเกตผลทั้งสองรอบ</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ไฟล์ .mp4 ขนาดเล็ก 1 ไฟล์</li></ul></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>รอบแรก (ยังไม่เลือกที่มา): วางไฟล์แล้วไม่มีอะไรเกิดขึ้น ไม่มีการอัปโหลดและไม่มีแถบความคืบหน้า</li><li>รอบที่สอง (เลือกที่มาแล้ว): วางไฟล์แล้วอัปโหลดเริ่มทันที และจบด้วยข้อความ "อัปโหลดสำเร็จ"</li><li>ที่มา: Epic 19 · Story 19.1 · FR-M4</li></ul></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-1814" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-1814" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-1814" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-1814" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-1814" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-1814"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-1814" placeholder="วางลิงก์ Jira หรือพิมพ์ TAK-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-1814">+ เพิ่มลิงก์</button></div>
+  </div>
+</div></td></tr>
+<tr class="trow" data-feat="epic19m4" data-level="ui" data-prio="P1" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-M4.5</td>
+  <td class="ctitle">เปลี่ยนที่มาก่อนเลือกไฟล์ได้ และค่าที่ใช้จริงคือค่าล่าสุด</td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-1815"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-1815"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">เปลี่ยนที่มาก่อนเลือกไฟล์ได้ และค่าที่ใช้จริงคือค่าล่าสุด</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · originality-declaration · ขั้นที่ 2 · Epic 19</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอปเดสก์ท็อป Takra Rerun แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>มีไฟล์ .mp4 ขนาดเล็กเก็บไว้ในเครื่องสำหรับทดสอบอัปโหลด</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป Takra Rerun แล้วล็อกอินด้วยบัญชี UAT</li><li>ไปที่เมนู "คลังวิดีโอ" แล้วกดปุ่ม "อัปโหลดวิดีโอ"</li><li>เลือกที่มา "คลิปจากแหล่งอื่น" ก่อน แล้วเปลี่ยนใจกดเลือก "คลิปของฉัน (ผลิตเอง ยังไม่เคยไลฟ์)" แทน</li><li>เลือกไฟล์ .mp4 เพื่ออัปโหลด แล้วสังเกตว่าตัวเลือกไหนถูกเลือกอยู่ตอนกดอัปโหลดและอัปโหลดผ่านหรือไม่</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ไฟล์ .mp4 ขนาดเล็ก 1 ไฟล์</li></ul></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>เปลี่ยนตัวเลือกที่มาไป-มาได้อิสระตราบใดที่ยังไม่ได้เลือกไฟล์ และเลือกได้ครั้งละหนึ่งข้อเท่านั้น</li><li>ตอนอัปโหลด ตัวเลือกที่ถูกเลือกอยู่คือ "คลิปของฉัน (ผลิตเอง ยังไม่เคยไลฟ์)" (ข้อที่เลือกล่าสุด)</li><li>อัปโหลดผ่านและขึ้น "อัปโหลดสำเร็จ" ตามปกติ</li><li>ที่มา: Epic 19 · Story 19.1 · FR-M4</li></ul></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-1815" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-1815" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-1815" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-1815" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-1815" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-1815"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-1815" placeholder="วางลิงก์ Jira หรือพิมพ์ TAK-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-1815">+ เพิ่มลิงก์</button></div>
+  </div>
+</div></td></tr>
+<tr class="trow" data-feat="epic19m4" data-level="ui" data-prio="P0" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-M4.6</td>
+  <td class="ctitle">เปิดกล่องอัปโหลดใหม่ ต้องระบุที่มาใหม่ทุกครั้ง ไม่จำค่าเดิมให้</td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-1816"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-1816"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">เปิดกล่องอัปโหลดใหม่ ต้องระบุที่มาใหม่ทุกครั้ง ไม่จำค่าเดิมให้</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · originality-declaration · ขั้นที่ 2 · Epic 19</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอปเดสก์ท็อป Takra Rerun แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>มีไฟล์ .mp4 ขนาดเล็กเก็บไว้ในเครื่องสำหรับทดสอบอัปโหลด</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป Takra Rerun แล้วล็อกอินด้วยบัญชี UAT</li><li>ไปที่เมนู "คลังวิดีโอ" กดปุ่ม "อัปโหลดวิดีโอ" แล้วเลือกที่มา "คลิปของฉัน (เคยไลฟ์แล้ว)"</li><li>ปิดกล่องทิ้งโดยยังไม่อัปโหลด แล้วกดปุ่ม "อัปโหลดวิดีโอ" เปิดขึ้นมาใหม่</li><li>ดูว่าตัวเลือกที่มาถูกจำค่าเดิมไว้หรือถูกล้างให้เลือกใหม่</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ไม่ต้องเลือกไฟล์</li></ul></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>กล่องที่เปิดใหม่ไม่มีตัวเลือกที่มาข้อไหนถูกเลือกไว้ — ต้องเลือกใหม่ทุกครั้งก่อนอัปโหลด</li><li>ช่องลากไฟล์ยังถูกล็อกอยู่จนกว่าจะเลือกที่มาใหม่ พร้อมข้อความ "เลือกที่มาของคลิปก่อน จึงจะเลือกไฟล์เพื่ออัปโหลดได้"</li><li>ที่มา: Epic 19 · Story 19.1 · FR-M4 (ทุกการอัปโหลดต้องมีการแจ้งที่มาของตัวเอง)</li></ul></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-1816" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-1816" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-1816" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-1816" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-1816" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-1816"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-1816" placeholder="วางลิงก์ Jira หรือพิมพ์ TAK-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-1816">+ เพิ่มลิงก์</button></div>
+  </div>
+</div></td></tr>
+<tr class="trow" data-feat="epic19m4" data-level="ui" data-prio="P0" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-M4.7</td>
+  <td class="ctitle">ที่มาที่แจ้งไปแล้ว ต้องไม่มีที่ให้แก้ย้อนหลังในแอป</td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-1817"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-1817"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ที่มาที่แจ้งไปแล้ว ต้องไม่มีที่ให้แก้ย้อนหลังในแอป</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · originality-declaration · ขั้นที่ 2 · Epic 19</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอปเดสก์ท็อป Takra Rerun แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>มีไฟล์ .mp4 ขนาดเล็กเก็บไว้ในเครื่องสำหรับทดสอบอัปโหลด</li><li>อัปโหลดคลิปโดยระบุที่มาไปแล้วอย่างน้อย 1 คลิป</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป Takra Rerun แล้วล็อกอินด้วยบัญชี UAT</li><li>ไปที่เมนู "คลังวิดีโอ" แล้วหาคลิปที่เพิ่งอัปโหลดไปในรายการ</li><li>เปิดดูรายละเอียด/เมนูของคลิปนั้นทุกปุ่มที่มี แล้วมองหาช่องหรือปุ่มสำหรับแก้ "ที่มาของคลิป"</li><li>ตรวจซ้ำที่แท็บ "วิดีโอ" ในกล่องตั้งค่าของบัญชี (เมนู "บัญชีไลฟ์" → ปุ่มรูปเฟือง "ตั้งค่าบัญชี" → แท็บ "วิดีโอ") ว่ามีที่แก้ที่มาหรือไม่</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>คลิปที่อัปโหลดแล้ว 1 คลิป</li></ul></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ไม่มีปุ่มหรือช่องใดในแอปที่แก้ "ที่มาของคลิป" ของคลิปที่อัปโหลดไปแล้วได้</li><li>ที่มาที่แจ้งตอนอัปโหลดจึงเปลี่ยนย้อนหลังไม่ได้จากหน้าจอผู้ใช้</li><li>หมายเหตุ: รายการในคลังวิดีโอไม่ได้แสดงค่าที่มาที่เคยเลือกไว้ (ไม่พบใน UI) — ตรวจได้เพียงว่าไม่มีช่องทางแก้</li><li>ที่มา: Epic 19 · Story 19.1 · FR-M4 (append-only ห้ามแก้ย้อนหลัง)</li></ul></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-1817" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-1817" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-1817" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-1817" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-1817" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-1817"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-1817" placeholder="วางลิงก์ Jira หรือพิมพ์ TAK-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-1817">+ เพิ่มลิงก์</button></div>
+  </div>
+</div></td></tr>
+<tr class="trow" data-feat="epic19m4" data-level="ui" data-prio="P1" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-M4.8</td>
+  <td class="ctitle">อัปโหลดจากแท็บ "วิดีโอ" ของบัญชี ก็ต้องระบุที่มาเหมือนกัน</td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-1818"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-1818"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">อัปโหลดจากแท็บ "วิดีโอ" ของบัญชี ก็ต้องระบุที่มาเหมือนกัน</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · originality-declaration · ขั้นที่ 2 · Epic 19</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอปเดสก์ท็อป Takra Rerun แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>มีไฟล์ .mp4 ขนาดเล็กเก็บไว้ในเครื่องสำหรับทดสอบอัปโหลด</li><li>มีบัญชี TikTok เชื่อมไว้อย่างน้อย 1 บัญชี</li></ul></div><div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป Takra Rerun แล้วล็อกอินด้วยบัญชี UAT</li><li>ไปที่เมนู "บัญชีไลฟ์" แล้วกดปุ่มรูปเฟือง "ตั้งค่าบัญชี" บนการ์ดบัญชีทดสอบ</li><li>ในกล่องตั้งค่า เลือกแท็บ "วิดีโอ" แล้วกดปุ่ม "อัปโหลดวิดีโอ"</li><li>ลองกดที่ช่องลากไฟล์ก่อนเลือกที่มา แล้วค่อยเลือกที่มา "คลิปของฉัน (เคยไลฟ์แล้ว)" และอัปโหลดไฟล์ .mp4</li></ol></div><div class="sec"><h4>Test Data</h4><ul><li>ไฟล์ .mp4 ขนาดเล็ก 1 ไฟล์</li></ul></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>กล่อง "อัปโหลดวิดีโอ" ที่เปิดจากแท็บ "วิดีโอ" มีหัวข้อ "ที่มาของคลิป" บังคับเลือกเหมือนกับที่เปิดจากหน้า "คลังวิดีโอ"</li><li>ก่อนเลือกที่มา ช่องลากไฟล์ยังถูกล็อก · เลือกที่มาแล้วจึงอัปโหลดได้และขึ้น "อัปโหลดสำเร็จ"</li><li>คลิปที่อัปโหลดขึ้นในรายการวิดีโอของ workspace ให้เลือกไปใช้ไลฟ์ได้</li><li>ที่มา: Epic 19 · Story 19.1 · FR-M4</li></ul></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-1818" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-1818" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-1818" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-1818" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-1818" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-1818"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-1818" placeholder="วางลิงก์ Jira หรือพิมพ์ TAK-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-1818">+ เพิ่มลิงก์</button></div>
+  </div>
+</div></td></tr>
+</tbody>
+  </table>
+  </div>
+
+</div>
+<footer>[MVP2] TAKRA Rerun — Epic 18 + 19 UI Manual Test Cases · 18 เคส · UI only (manual) · แอปเดสก์ท็อป Takra Rerun · login UAT</footer>
+
+<script>
+// ── Load store from embedded JSON ──
+var storeEl = document.getElementById('store-data');
+var store = {};
+try { store = JSON.parse(storeEl.textContent || '{}'); } catch(_) {}
+
+var SMAP = {
+  pass:  ['pass',  'PASS'],
+  fail:  ['fail',  'FAIL'],
+  hold:  ['hold',  'HOLD'],
+  block: ['block', 'BLOCKED'],
+  skip:  ['skip',  'SKIP'],
+};
+
+// Restore saved statuses
+Object.keys(store).forEach(function(uid) {
+  var st = store[uid] && store[uid].st;
+  if (!st || !SMAP[st]) return;
+  // badge
+  var rowStatus = document.querySelector('tr.trow td.status[data-uid="' + uid + '"]');
+  if (rowStatus) {
+    var stb = rowStatus.querySelector('.stb');
+    if (stb) { stb.className = 'stb ' + SMAP[st][0]; stb.textContent = SMAP[st][1]; }
+  }
+  // opt button
+  var opt = document.querySelector('.opt[data-uid="' + uid + '"][data-st="' + st + '"]');
+  if (opt) opt.classList.add('sel');
+  // also restore actual result text
+  if (store[uid].actual) {
+    var boxes = document.querySelectorAll('tr.detail');
+    boxes.forEach(function(d) {
+      var badge = d.querySelector('.opt[data-uid="' + uid + '"]');
+      if (!badge) return;
+      var box = d.querySelector('.actualbox');
+      if (box) { box.value = store[uid].actual; box.classList.add('filled'); }
+    });
+  }
+});
+
+// ── Toggle row expand ──
+function tg(row) {
+  var detail = row.nextElementSibling;
+  var isOpen = row.classList.contains('open');
+  row.classList.toggle('open', !isOpen);
+  if (detail && detail.classList.contains('detail')) {
+    detail.classList.toggle('show', !isOpen);
+  }
+}
+function toggleAll(open) {
+  document.querySelectorAll('tr.trow').forEach(function(r) {
+    if (r.classList.contains('hide')) return;
+    r.classList.toggle('open', open);
+    var d = r.nextElementSibling;
+    if (d && d.classList.contains('detail')) d.classList.toggle('show', open);
+  });
+}
+
+// ── Save store back into the embedded script tag ──
+function save() {
+  storeEl.textContent = '\n' + JSON.stringify(store, null, 2).replace(/</g, '\\u003c') + '\n';
+}
+
+// ── Status opt buttons ──
+document.querySelectorAll('.opt').forEach(function(o) {
+  o.addEventListener('click', function(e) {
+    e.stopPropagation();
+    var uid = o.dataset.uid, st = o.dataset.st;
+    var allOpts = document.querySelectorAll('.opt[data-uid="' + uid + '"]');
+    var alreadySel = o.classList.contains('sel');
+    allOpts.forEach(function(x) { x.classList.remove('sel'); });
+    store[uid] = store[uid] || {};
+    if (alreadySel) {
+      delete store[uid].st;
+    } else {
+      o.classList.add('sel');
+      store[uid].st = st;
+    }
+    var rowStatus = document.querySelector('tr.trow td.status[data-uid="' + uid + '"]');
+    if (rowStatus) {
+      var stb = rowStatus.querySelector('.stb');
+      if (stb) {
+        if (!alreadySel && SMAP[st]) { stb.className = 'stb ' + SMAP[st][0]; stb.textContent = SMAP[st][1]; }
+        else { stb.className = 'stb pending'; stb.textContent = 'รอเทส'; }
+      }
+    }
+    save();
+    applyFilters();   // re-filter (recounts too) so an active สถานะ filter updates live
+    markDirty();
+  });
+});
+
+// ── Actual result editable on blur ──
+document.querySelectorAll('.actualbox').forEach(function(box) {
+  // a <textarea> — clicking/typing must not bubble up to the row toggle
+  box.addEventListener('click', function(ev) { ev.stopPropagation(); });
+  box.addEventListener('input', function() { box.classList.toggle('filled', box.value.trim() !== ''); });
+  box.addEventListener('blur', function() {
+    // find uid from nearest .opt
+    var opts = box.closest('tr.detail').querySelectorAll('.opt');
+    if (!opts.length) return;
+    var uid = opts[0].dataset.uid;
+    var txt = box.value.trim();
+    var prev = (store[uid] && store[uid].actual) || '';
+    if (txt === prev) return;   // nothing typed → don't dirty the file
+    store[uid] = store[uid] || {};
+    if (txt) { store[uid].actual = txt; }
+    else { delete store[uid].actual; if (!Object.keys(store[uid]).length) delete store[uid]; }
+    save();
+    markDirty();
+  });
+});
+
+// ── Filters ──
+var filters = { feat: new Set(), level: new Set(), prio: new Set(), status: new Set() };
+document.querySelectorAll('.fchip').forEach(function(c) {
+  c.addEventListener('click', function() {
+    var f = c.dataset.f, v = c.dataset.v;
+    if (filters[f].has(v)) { filters[f].delete(v); c.classList.remove('active'); }
+    else { filters[f].add(v); c.classList.add('active'); }
+    applyFilters();
+  });
+});
+document.querySelectorAll('.clearbtn').forEach(function(b) {
+  b.addEventListener('click', function() {
+    var key = b.dataset.clear;
+    filters[key].clear();
+    document.querySelectorAll('.fchip[data-f="' + key + '"]').forEach(function(c) { c.classList.remove('active'); });
+    applyFilters();
+  });
+});
+function applyFilters() {
+  document.querySelectorAll('tr.trow').forEach(function(row) {
+    var ok = true;
+    if (filters.feat.size  && !filters.feat.has(row.dataset.feat))   ok = false;
+    if (filters.level.size && !filters.level.has(row.dataset.level)) ok = false;
+    if (filters.prio.size  && !filters.prio.has(row.dataset.prio))   ok = false;
+    if (filters.status.size) {
+      var stb = row.querySelector('td.status .stb');
+      var scls = stb ? stb.className.replace('stb', '').trim().split(' ')[0] : 'pending';
+      if (!filters.status.has(scls)) ok = false;
+    }
+    row.classList.toggle('hide', !ok);
+    var d = row.nextElementSibling;
+    if (d && d.classList.contains('detail')) d.classList.toggle('hide', !ok);
+  });
+  document.querySelectorAll('tr.featrow').forEach(function(fr) {
+    var n = fr.nextElementSibling, any = false;
+    while (n && !n.classList.contains('featrow') && !n.classList.contains('epicrow')) {
+      if (n.classList.contains('trow') && !n.classList.contains('hide')) { any = true; break; }
+      n = n.nextElementSibling;
+    }
+    fr.classList.toggle('hide', !any);
+  });
+  document.querySelectorAll('tr.epicrow').forEach(function(er) {
+    var n = er.nextElementSibling, any = false;
+    while (n && !n.classList.contains('epicrow')) {
+      if (n.classList.contains('trow') && !n.classList.contains('hide')) { any = true; break; }
+      n = n.nextElementSibling;
+    }
+    er.classList.toggle('hide', !any);
+  });
+  recount();
+}
+
+function recount() {
+  var c = { pass:0, fail:0, hold:0, block:0, skip:0, pending:0 };
+  document.querySelectorAll('tr.trow').forEach(function(row) {
+    var stb = row.querySelector('td.status .stb');
+    if (!stb) return;
+    var cls = stb.className.replace('stb','').trim().split(' ')[0];
+    if (c.hasOwnProperty(cls)) c[cls]++; else c.pending++;
+  });
+  var total    = c.pass + c.fail + c.hold + c.block + c.skip + c.pending;
+  var done     = c.pass + c.fail + c.hold + c.block;
+  var testable = total - c.skip;               // SKIP = ตั้งใจข้าม ไม่นับเป็นเป้าที่ต้องทดสอบ
+  var pct      = testable ? Math.round(done / testable * 100) : 0;
+  ['pass','fail','hold','block','skip'].forEach(function(k) {
+    var e = document.getElementById('sum-'+k); if (e) e.textContent = c[k];
+    var h = document.getElementById('hdr-'+k); if (h) h.textContent = c[k];
+  });
+  var ep = document.getElementById('sum-pending'); if (ep) ep.textContent = c.pending;
+  var hp = document.getElementById('hdr-pending'); if (hp) hp.textContent = c.pending;
+  var bar = document.getElementById('sumbar'); if (bar) bar.style.width = pct + '%';
+  var pctEl = document.getElementById('sumpct');
+  if (pctEl) pctEl.textContent = pct + '% ทดสอบแล้ว (' + done + '/' + testable + ')' + (c.skip ? ' · ข้าม ' + c.skip : '');
+}
+
+// ── GitHub publish config ──
+var GH_OWNER  = 'wanlee-tankunnatam';
+var GH_REPO   = 'qa-test-reports';
+var GH_PATH   = 'projects/takra-rerun/2026/08/reports/takra-rerun-epic18-19-ui-test-cases-table.html';
+var GH_BRANCH = 'master';
+var GH_API    = 'https://api.github.com/repos/' + GH_OWNER + '/' + GH_REPO + '/contents/' + GH_PATH;
+
+// ── Save state (dirty tracking + auto-publish) ──
+var dirty = false;
+var autoTimer = null;
+var publishing = false;
+
+function ghToken() {
+  var t = localStorage.getItem('gh_pat');
+  if (!t) {
+    t = prompt(
+      'ใส่ GitHub Personal Access Token (ใส่ครั้งเดียว จำไว้ในเบราว์เซอร์นี้)\n\n' +
+      'สร้าง token:\n' +
+      'github.com → Settings → Developer settings →\n' +
+      'Personal access tokens → Tokens (classic) → Generate new token (classic)\n' +
+      '→ ติ๊ก scope: repo  (หรือ public_repo เพราะ repo นี้ public)\n\n' +
+      'หรือ Fine-grained token: เลือก repo "qa-test-reports" →\n' +
+      'Permissions → Contents = Read and write'
+    );
+    if (t) localStorage.setItem('gh_pat', t.trim());
+  }
+  return t ? t.trim() : null;
+}
+function clearToken() { localStorage.removeItem('gh_pat'); }
+
+async function publishToGH(auto) {
+  if (publishing) return;
+  var btn = document.getElementById('btn-publish');
+  var token = auto ? localStorage.getItem('gh_pat') : ghToken();
+  if (!token) return;          // auto-save stays quiet until a token exists
+  publishing = true;
+  if (autoTimer) { clearTimeout(autoTimer); autoTimer = null; }
+
+  btn.disabled = true;
+  btn.textContent = '⏳ กำลังบันทึก…';
+  save();
+
+  var API = 'https://api.github.com/repos/' + GH_OWNER + '/' + GH_REPO + '/contents/' + GH_PATH;
+
+  // Serialize the page with the button forced to its idle/enabled state, so the
+  // committed file is never frozen mid-save (otherwise reopening it shows a
+  // permanently-disabled "⏳ กำลังบันทึก…" button).
+  function buildEncoded() {
+    var dis = btn.disabled, txt = btn.textContent;
+    btn.disabled = false;
+    btn.textContent = '☁️ บันทึกขึ้น GitHub';
+    var html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+    btn.disabled = dis;
+    btn.textContent = txt;
+    return btoa(unescape(encodeURIComponent(html)));
+  }
+
+  // Fetch current remote file (sha + content), bypassing any cache.
+  async function fetchRemote() {
+    var r = await fetch(
+      API + '?ref=' + GH_BRANCH + '&t=' + Date.now(),
+      { cache: 'no-store', headers: { Authorization: 'token ' + token, Accept: 'application/vnd.github+json' } }
+    );
+    if (!r.ok) {
+      if (r.status === 401) { localStorage.removeItem('gh_pat'); }
+      throw new Error('ดึงไฟล์ไม่ได้ (HTTP ' + r.status + ') — ตรวจ token หรือ branch');
+    }
+    return r.json();
+  }
+
+  // Merge statuses that exist on the remote copy but NOT locally, so a
+  // teammate's concurrent edit is not silently overwritten (local always wins
+  // for keys we changed; we only add keys we don't have).
+  function mergeRemote(remote) {
+    try {
+      var remoteHtml = decodeURIComponent(escape(atob((remote.content || '').replace(/\s/g, ''))));
+      var m = remoteHtml.match(/<script id="store-data"[^>]*>([\s\S]*?)<\/script>/);
+      if (!m) return;
+      var rs = JSON.parse((m[1] || '{}').trim() || '{}');
+      var added = 0;
+      Object.keys(rs).forEach(function(uid) {
+        if (uid in store) return;
+        store[uid] = rs[uid];
+        added++;
+        var st = rs[uid] && rs[uid].st;
+        if (st && SMAP[st]) {
+          var cell = document.querySelector('tr.trow td.status[data-uid="' + uid + '"] .stb');
+          if (cell) { cell.className = 'stb ' + SMAP[st][0]; cell.textContent = SMAP[st][1]; }
+          var opt = document.querySelector('.opt[data-uid="' + uid + '"][data-st="' + st + '"]');
+          if (opt) opt.classList.add('sel');
+        }
+      });
+      if (added) { save(); recount(); }
+    } catch (_) {}
+  }
+
+  // Commit content = the LATEST remote file with ONLY its store-data block
+  // swapped for our (merged) results. This makes auto-save a results-only
+  // overlay: a stale tab can never overwrite the repo's structure/layout —
+  // it always publishes on top of whatever structure is currently on GitHub.
+  function buildFromRemote(remote) {
+    try {
+      var remoteHtml = decodeURIComponent(escape(atob((remote.content || '').replace(/\s/g, ''))));
+      if (!/<script id="store-data"[^>]*>[\s\S]*?<\/script>/.test(remoteHtml)) return buildEncoded();
+      var json = '\n' + JSON.stringify(store, null, 2).replace(/</g, '\\u003c') + '\n';
+      var replaced = remoteHtml.replace(
+        /(<script id="store-data"[^>]*>)[\s\S]*?(<\/script>)/,
+        function(_m, o, c) { return o + json + c; }
+      );
+      return btoa(unescape(encodeURIComponent(replaced)));
+    } catch (_) {
+      return buildEncoded();   // fallback: serialize local DOM
+    }
+  }
+
+  async function commit(remote) {
+    var ts = new Date().toISOString().slice(0, 16).replace('T', ' ');
+    return fetch(API, {
+      method: 'PUT',
+      headers: { Authorization: 'token ' + token, Accept: 'application/vnd.github+json', 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        message: 'chore(qa): update test results ' + ts,
+        content: buildFromRemote(remote),
+        sha: remote.sha,
+        branch: GH_BRANCH
+      })
+    });
+  }
+
+  try {
+    var r2, lastErr;
+    // Up to 4 attempts. Re-fetch the SHA and merge remote statuses each time;
+    // a stale SHA returns 409/422 ("does not match …") which we retry.
+    for (var attempt = 0; attempt < 4; attempt++) {
+      var remote = await fetchRemote();
+      mergeRemote(remote);
+      r2 = await commit(remote);
+      if (r2.ok) break;
+      if (r2.status === 409 || r2.status === 422) {
+        lastErr = 'SHA ชนกัน (HTTP ' + r2.status + ')';
+        await new Promise(function(res) { setTimeout(res, 400 * (attempt + 1)); });
+        continue;
+      }
+      // Bad/expired token or insufficient scope — drop it so the next attempt re-prompts.
+      if (r2.status === 401 || r2.status === 403) {
+        clearToken();
+        var pe = await r2.json().catch(function() { return {}; });
+        throw new Error(
+          (pe.message || 'HTTP ' + r2.status) +
+          '\n\n→ Token สิทธิ์ไม่พอ/หมดอายุ ลบให้แล้ว ครั้งหน้าจะถามใหม่\n' +
+          '   ใช้ classic token scope "repo" (หรือ public_repo) หรือ fine-grained ที่ให้ Contents = Read and write กับ repo นี้'
+        );
+      }
+      var e = await r2.json();
+      throw new Error(e.message || 'HTTP ' + r2.status);
+    }
+    if (!r2.ok) {
+      throw new Error((lastErr || 'conflict') + ' — มีการแก้ไฟล์พร้อมกัน ลองกดบันทึกอีกครั้ง หรือ refresh หน้าก่อนบันทึก');
+    }
+
+    dirty = false;
+    publishing = false;
+    btn.textContent = '✅ บันทึกแล้ว!';
+    btn.style.background = 'var(--pass)';
+    setTimeout(function() {
+      btn.style.background = '';
+      btn.disabled = false;
+      updateIndicator();
+    }, 3000);
+  } catch (err) {
+    publishing = false;
+    if (!auto) alert('❌ บันทึกไม่สำเร็จ: ' + err.message);
+    btn.disabled = false;
+    updateIndicator();
+  }
+}
+
+document.getElementById('btn-publish').addEventListener('click', function() { publishToGH(false); });
+
+// ── Dirty tracking / unsaved indicator ──
+function autoOn() {
+  var c = document.getElementById('chk-autosave');
+  return c ? c.checked : false;
+}
+function updateIndicator() {
+  var s = document.getElementById('save-status');
+  var b = document.getElementById('btn-publish');
+  if (dirty) {
+    if (s) { s.textContent = '● ยังไม่ได้บันทึก'; s.style.color = 'var(--hold)'; }
+    if (b && !b.disabled && b.textContent.indexOf('✅') < 0) b.textContent = '☁️ บันทึกขึ้น GitHub *';
+  } else {
+    if (s) { s.textContent = '✓ ตรงกับ GitHub'; s.style.color = 'var(--muted)'; }
+    if (b && !b.disabled && b.textContent.indexOf('✅') < 0) b.textContent = '☁️ บันทึกขึ้น GitHub';
+  }
+}
+function markDirty() {
+  dirty = true;
+  updateIndicator();
+  // Auto-publish after the user stops editing — only once a token exists,
+  // so we never interrupt with a token prompt mid-edit.
+  if (autoOn() && localStorage.getItem('gh_pat')) {
+    if (autoTimer) clearTimeout(autoTimer);
+    autoTimer = setTimeout(function() { autoTimer = null; publishToGH(true); }, 5000);
+  }
+}
+window.addEventListener('beforeunload', function(e) {
+  if (dirty) { e.preventDefault(); e.returnValue = 'มีงานที่ยังไม่ได้บันทึกขึ้น GitHub'; return e.returnValue; }
+});
+
+// ── Re-render every badge from the store (used after pulling remote) ──
+function applyAllStatuses() {
+  document.querySelectorAll('.opt.sel').forEach(function(o) { o.classList.remove('sel'); });
+  document.querySelectorAll('tr.trow td.status .stb').forEach(function(s) {
+    s.className = 'stb pending'; s.textContent = 'รอเทส';
+  });
+  Object.keys(store).forEach(function(uid) {
+    var st = store[uid] && store[uid].st;
+    if (st && SMAP[st]) {
+      var cell = document.querySelector('tr.trow td.status[data-uid="' + uid + '"] .stb');
+      if (cell) { cell.className = 'stb ' + SMAP[st][0]; cell.textContent = SMAP[st][1]; }
+      var opt = document.querySelector('.opt[data-uid="' + uid + '"][data-st="' + st + '"]');
+      if (opt) opt.classList.add('sel');
+    }
+    if (store[uid] && store[uid].actual) {
+      document.querySelectorAll('tr.detail').forEach(function(d) {
+        if (!d.querySelector('.opt[data-uid="' + uid + '"]')) return;
+        var box = d.querySelector('.actualbox');
+        if (box) { box.value = store[uid].actual; box.classList.toggle('filled', !!store[uid].actual); }
+      });
+    }
+  });
+}
+
+// ── Pull latest results from GitHub (remote wins on overlap; keeps local-only) ──
+async function pullLatest() {
+  var rbtn = document.getElementById('btn-refresh');
+  if (dirty && !confirm('มีงานที่ยังไม่ได้บันทึก — การดึงล่าสุดจะใช้สถานะจาก GitHub ทับเฉพาะรายการที่ซ้ำกัน ต้องการต่อ?')) return;
+  if (rbtn) { rbtn.disabled = true; rbtn.textContent = '⏳ กำลังดึง…'; }
+  try {
+    var token = localStorage.getItem('gh_pat');
+    var html;
+    if (token) {
+      var r = await fetch(GH_API + '?ref=' + GH_BRANCH + '&t=' + Date.now(),
+        { cache: 'no-store', headers: { Authorization: 'token ' + token, Accept: 'application/vnd.github+json' } });
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      html = decodeURIComponent(escape(atob(((await r.json()).content || '').replace(/\s/g, ''))));
+    } else {
+      var rr = await fetch('https://raw.githubusercontent.com/' + GH_OWNER + '/' + GH_REPO + '/' + GH_BRANCH + '/' + GH_PATH + '?t=' + Date.now(),
+        { cache: 'no-store' });
+      if (!rr.ok) throw new Error('HTTP ' + rr.status);
+      html = await rr.text();
+    }
+    var m = html.match(/<script id="store-data"[^>]*>([\s\S]*?)<\/script>/);
+    var rs = m ? JSON.parse((m[1] || '{}').trim() || '{}') : {};
+    Object.keys(rs).forEach(function(uid) { store[uid] = rs[uid]; });
+    save();
+    applyAllStatuses();
+    recount();
+    dirty = false;
+    updateIndicator();
+    if (rbtn) { rbtn.textContent = '✅ ดึงแล้ว'; setTimeout(function() { rbtn.textContent = '🔄 ดึงล่าสุด'; rbtn.disabled = false; }, 2000); }
+  } catch (err) {
+    alert('❌ ดึงล่าสุดไม่สำเร็จ: ' + err.message);
+    if (rbtn) { rbtn.textContent = '🔄 ดึงล่าสุด'; rbtn.disabled = false; }
+  }
+}
+document.getElementById('btn-refresh').addEventListener('click', pullLatest);
+
+// ── Set / change GitHub token (one click to escape a bad/expired token) ──
+document.getElementById('btn-token').addEventListener('click', function() {
+  clearToken();
+  var t = ghToken();   // prompts for a fresh token
+  if (t) {
+    alert('บันทึก token แล้ว ✅\nลองกดเปลี่ยนสถานะ TC สัก 1 อัน — ปุ่มควรเด้ง "✅ บันทึกแล้ว!" ใน ~5 วิ');
+    updateIndicator();
+  }
+});
+
+// ── Download file (offline backup) ──
+document.getElementById('btn-save-file').addEventListener('click', function() {
+  save();
+  var html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+  var blob = new Blob([html], { type: 'text/html; charset=utf-8' });
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'takra-rerun-epic18-19-ui-test-cases.html';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(a.href);
+});
+
+document.getElementById('btn-reset').addEventListener('click', function() {
+  if (!confirm('ล้างผลทดสอบทั้งหมด?')) return;
+  store = {};
+  save();
+  dirty = false;
+  location.reload();
+});
+
+// Footer date
+var gd = document.getElementById('gen-date');
+if (gd) gd.textContent = document.lastModified || '';
+
+recount();
+updateIndicator();
+
+// Jira / Bug links (per test case · multiple)
+function jiraLabel(u){var m=String(u).match(/([A-Za-z]+-\d+)/);return m?m[1].toUpperCase():u;}
+function normJira(u){u=(u||'').trim();if(!u)return'';if(!/^https?:\/\//i.test(u)){var m=u.match(/^[A-Za-z]+-\d+$/);if(m)return'https://kitdi.atlassian.net/browse/'+u.toUpperCase();}return u;}
+function renderJira(uid){var box=document.querySelector('.jira-list[data-uid="'+uid+'"]');if(!box)return;var arr=(store[uid]&&store[uid].jira)||[];box.innerHTML='';arr.forEach(function(url,i){var row=document.createElement('div');row.className='jira-item';var a=document.createElement('a');a.href=url;a.target='_blank';a.rel='noopener';a.textContent=jiraLabel(url);var del=document.createElement('span');del.className='jira-del';del.textContent='✕';del.title='ลบลิงก์';del.addEventListener('click',function(){store[uid].jira.splice(i,1);if(!store[uid].jira.length)delete store[uid].jira;save();markDirty();renderJira(uid);});row.appendChild(a);row.appendChild(del);box.appendChild(row);});var cell=document.querySelector('td.jira-cell[data-uid="'+uid+'"]');if(cell){cell.innerHTML='';arr.forEach(function(url){var a2=document.createElement('a');a2.href=url;a2.target='_blank';a2.rel='noopener';a2.className='jira-chip';a2.textContent=jiraLabel(url);a2.addEventListener('click',function(e){e.stopPropagation();});cell.appendChild(a2);});}}
+function addJira(uid,val){var url=normJira(val);if(!url)return;store[uid]=store[uid]||{};store[uid].jira=store[uid].jira||[];store[uid].jira.push(url);save();markDirty();renderJira(uid);}
+document.querySelectorAll('.jira-btn').forEach(function(b){b.addEventListener('click',function(e){e.stopPropagation();var u=b.dataset.uid;var inp=document.querySelector('.jira-input[data-uid="'+u+'"]');addJira(u,inp.value);inp.value='';});});
+document.querySelectorAll('.jira-input').forEach(function(inp){inp.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();addJira(inp.dataset.uid,inp.value);inp.value='';}});inp.addEventListener('click',function(e){e.stopPropagation();});});
+document.querySelectorAll('.jira-list').forEach(function(box){renderJira(box.dataset.uid);});
+function applyFeatColor(e,owner){var cls=owner==='Wanlee T (Ice)'?'owner-ice':(owner==='Kachain B (Moss)'?'owner-moss':'');var er=document.querySelector('tr.featrow[data-featkey="'+e+'"]');if(!er)return;er.classList.remove('owner-ice','owner-moss');if(cls)er.classList.add(cls);var s=er.querySelector('.feat-owner');if(s){s.classList.remove('owner-ice','owner-moss');if(cls)s.classList.add(cls);}var n=er.nextElementSibling;while(n&&!n.classList.contains('featrow')&&!n.classList.contains('epicrow')){n.classList.remove('sec-ice','sec-moss');if(cls)n.classList.add(cls==='owner-ice'?'sec-ice':'sec-moss');n=n.nextElementSibling;}}
+document.querySelectorAll('.feat-owner').forEach(function(sel){var e=sel.dataset.featkey,k='feat-'+e;var cur=(store[k]&&store[k].owner)||'';sel.value=cur;applyFeatColor(e,cur);sel.addEventListener('click',function(ev){ev.stopPropagation();});sel.addEventListener('change',function(){var v=sel.value;if(v){store[k]=store[k]||{};store[k].owner=v;}else if(store[k]){delete store[k].owner;if(!Object.keys(store[k]).length)delete store[k];}save();markDirty();applyFeatColor(e,v);});});
+</script>
+
+
+<tldx-lmi-shadow-root></tldx-lmi-shadow-root><div id="tldx-toast-container"></div><tldx-lmi-shadow-root></tldx-lmi-shadow-root><div id="tldx-toast-container"></div><tldx-lmi-shadow-root></tldx-lmi-shadow-root><div id="tldx-toast-container"></div></body></html>
