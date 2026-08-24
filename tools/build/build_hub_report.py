@@ -19,7 +19,8 @@ import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
-MODULES = {'mvp1': 'hub_cases', 'mvp2': 'hub_mvp2_cases', 'mvp2rbac': 'hub_mvp2_rbac_cases'}
+MODULES = {'mvp1': 'hub_cases', 'mvp2': 'hub_mvp2_cases', 'mvp2rbac': 'hub_mvp2_rbac_cases',
+           'aitickets': 'ai_tickets_cases'}
 _which = next((a for a in sys.argv[1:] if a in MODULES), 'mvp1')
 _mod = importlib.import_module(MODULES[_which])
 EPICS, KINDS, META = _mod.EPICS, _mod.KINDS, _mod.META
@@ -29,7 +30,8 @@ OUT_REL = META['out_rel']
 OUT = ROOT / OUT_REL
 UID_START = META['uid_start']
 TITLE = META['title']
-BACK = 'https://wanlee-tankunnatam.github.io/qa-test-reports/?project=hub'
+# ปุ่ม "รายงานทั้งหมด" — ตั้งต่อรายงานได้ผ่าน META['back'] (ค่าเริ่มต้น = hub)
+BACK = META.get('back', 'https://wanlee-tankunnatam.github.io/qa-test-reports/?project=hub')
 
 OWNER_SEL = ('<span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="{fk}">'
              '<option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span>')
