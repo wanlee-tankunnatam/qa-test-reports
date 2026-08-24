@@ -18,12 +18,13 @@ META = dict(
     title='[MVP2] TAKRA Hub — RBAC/ABAC + Aff Account UI Manual Test Cases',
     emoji='🛡️', uid_start=7501, download='takra-hub-mvp2-rbac-affiliate-ui-test-cases.html',
     sub='เทส UI ด้วยมืออย่างเดียว · MVP-2 <b>Epic 1 สิทธิ์การเข้าถึงที่ตรวจสอบย้อนหลังได้ (RBAC/ABAC)</b> + <b>Aff Account</b> · Target: <b>TAKRA Hub Web (UAT)</b> · login ด้วยบัญชี UAT',
-    groups_label='6 กลุ่ม (A–D · L · F–G) + E2E',
+    groups_label='6 กลุ่ม (A–D · L · F–G) + E2E · ทุกเคสทำเองได้บน UI',
     note=('🖥️ <b>Test target:</b> เว็บ <b>TAKRA Hub</b> รุ่น UAT (uat-hub.takra.ai · branch <code>develop</code>) · บัญชี UAT ที่ต้องเตรียม: <b>admin</b> (superuser) · <b>compliance</b> · <b>cs</b> ×2 (คนหนึ่งอยู่ทีมเดียวกับลูกค้า) · <b>finance</b> · <b>marketing</b> · ลูกค้าทั่วไป · ผู้แนะนำที่อนุมัติแล้ว · อีเมลใหม่<br>'
           '📎 <b>ที่มาของเคส:</b> <code>docs/epics-mvp2.md</code> Epic 1 (Story 1.1–1.9) + <code>docs/rbac-abac-spec.md</code> (§2 · §5 · §8) + <code>docs/mvp2-scope-draft.md</code> §1 + <code>docs/affiliate-payment-v2-plan.md</code> + UI จริงบน <code>apps/web/src</code> (origin/develop 2026-08-24) — คัดเฉพาะข้อที่คนกดเองแล้วเห็นผลบนจอได้<br>'
           '🏷️ <b>ประเภทเคส (กรองได้):</b> Happy Path · Negative · Boundary · Validation · Exception · Permission · Data<br>'
           '✅ <b>ลง develop แล้ว:</b> console บัญชีพนักงาน (/staff) · หน้าจอตามสิทธิ์ + 403 · <b>บันทึกการตัดสินสิทธิ์ (/authz-log)</b> · เอกสารกฎหมาย (/legal-admin) · ABAC ห้ามอนุมัติรายการของตัวเอง · การ์ดโปรแกรมผู้แนะนำบนโปรไฟล์<br>'
-          '⚠️ เคสที่ติดป้าย ⛔ ไม่พบใน UI (ปรับวัน/ยกเลิก subscription · จำกัดช่องทาง export · สายงานผู้แนะนำ) ให้ลงผล <b>BLOCKED</b> ไม่ใช่ FAIL — จุดตรวจยังไม่มีบนหน้าเว็บ Hub'),
+          '✅ <b>กติกาของรายงานนี้:</b> ทุกเคสออกแบบจาก <b>UI จริงที่ผู้ใช้กดเองได้</b> เท่านั้น — ไม่มีเคสที่ต้องให้ dev เซ็ตข้อมูล/แก้ค่าคอนฟิก ไม่ใช้ DevTools และไม่มีเคสที่ไม่มีหน้าจอ<br>'
+          '🚫 <b>สิ่งที่ตัดออกโดยตั้งใจ:</b> ปรับวัน/ยกเลิก subscription และการจำกัดช่องทาง export (หน้า Admin ยังปิด) · สายงานแม่ทีมของผู้แนะนำ (อยู่นอกเว็บ Hub) · สถานะบัญชีผู้แนะนำที่ผิดปกติและการยิงยอดที่ล้มเหลว (สร้างเองจาก UI ไม่ได้) ⇒ ส่วนเหล่านี้ต้องพิสูจน์ด้วยเทสฝั่งระบบ ไม่ใช่ manual UI'),
     footer='UI only (manual) · TAKRA Hub Web UAT (branch develop) · MVP-2 · Epic 1 RBAC/ABAC + Aff Account',
 )
 

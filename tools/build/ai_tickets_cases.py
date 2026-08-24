@@ -19,12 +19,13 @@ META = dict(
     download='takra-ai-tickets-412-413-416-327-767-755-ui-test-cases.html',
     back='https://wanlee-tankunnatam.github.io/qa-test-reports/?project=ai',
     sub='เทส UI ด้วยมืออย่างเดียว · เจาะ 6 ใบงาน: <b>TAKRA-412 · 413 · 416 · 327 · 767 · 755</b> · Target: <b>TAKRA AI Web (UAT)</b> · login ด้วยบัญชี UAT',
-    groups_label='6 กลุ่ม (1 กลุ่ม = 1 ใบงาน) + E2E',
+    groups_label='6 กลุ่ม (1 กลุ่ม = 1 ใบงาน) + E2E · ทุกเคสทำเองได้บน UI',
     note=('🖥️ <b>Test target:</b> เว็บ <b>TAKRA AI</b> รุ่น UAT · บัญชี UAT ที่ต้องเตรียม: เจ้าของ workspace · สมาชิกที่ไม่ใช่เจ้าของ · บัญชีที่เข้าห้องคุมไลฟ์ได้ (operator) · เจ้าหน้าที่แพลตฟอร์ม · workspace ใหม่ที่ยังไม่มีข้อมูล<br>'
           '📎 <b>ที่มาของเคส:</b> commit จริงของทั้ง 6 ใบบน <code>origin/develop</code> + <code>_bmad-output/planning-artifacts/epics-mvp2.md</code> + <code>_bmad-output/test-artifacts/case/notifications-delivery/ui.md</code> + UI จริงบน <code>apps/web/src</code> · คำ UI ลอกจาก <code>apps/web/src/i18n/locales/th/*.ts</code><br>'
           '🏷️ <b>ประเภทเคส (กรองได้):</b> Happy Path · Negative · Boundary · Validation · Exception · Permission · Data<br>'
           '🎫 <b>ใบงานในรายงานนี้:</b> <b>TAKRA-412</b> Studio โคลนอวาตาร์ในตัว + ผูก persona เข้าไลฟ์จริง · <b>TAKRA-413</b> ตั้งเป้ารายได้/ออเดอร์ต่อรอบ + โชว์ใน Recap · <b>TAKRA-416</b> แจ้งเตือนทางอีเมล (SES) + กระดิ่งจริง · <b>TAKRA-327</b> ฟอร์มสินค้า/สคริปต์แสดง error รายช่อง · <b>TAKRA-767</b> ลิงก์ยกเลิกแจ้งเตือนของ workspace ที่ถูกลบ · <b>TAKRA-755</b> เส้นลบ 90 วัน + ข้อจำกัด DSAR<br>'
-          '⚠️ เคสที่ติดป้าย ⛔ ไม่พบใน UI (อีเมลจริงถึงกล่องจดหมาย · การลบอัตโนมัติ 90 วัน · DSAR รายบุคคล) ให้ลงผล <b>BLOCKED</b> ไม่ใช่ FAIL — จุดตรวจยังไม่มีบนหน้าจอ'),
+          '✅ <b>กติกาของรายงานนี้:</b> ทุกเคสออกแบบจาก <b>UI จริงที่ผู้ใช้กดเองได้</b> เท่านั้น — ไม่มีเคสที่ต้องให้ dev เซ็ตข้อมูล/แก้ค่าคอนฟิก ไม่ใช้ DevTools และไม่มีเคสที่ไม่มีหน้าจอ<br>'
+          '🚫 <b>สิ่งที่ตัดออกโดยตั้งใจ:</b> อีเมลถึงกล่องจดหมายจริง (ยังส่งไม่ได้ · TAKRA-756) · การลบข้อมูลอัตโนมัติ 90 วันและ DSAR รายบุคคล (ไม่มีหน้าจอ) · ลิงก์ยกเลิกของ workspace ที่ถูกลบ (สร้างเองจาก UI ไม่ได้ — ตรวจที่พฤติกรรมของหน้าแทน) ⇒ ส่วนเหล่านี้ต้องพิสูจน์ด้วยเทสฝั่งระบบ ไม่ใช่ manual UI'),
     footer='UI only (manual) · TAKRA AI Web UAT · 6 ใบงาน MVP-2',
 )
 
