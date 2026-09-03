@@ -1320,7 +1320,8 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     "st": "hold"
   },
   "tc-240": {
-    "st": "hold"
+    "st": "pass",
+    "actual": "3 ก.ย. 2026 — เดิน UI จริงบน UAT (Playwright ช่วยกด · workspace ทีมของ QA Tester): เห็น 3 รายการ เริ่ม Live · ปิด Live · คำเสี่ยงถูกพูด คอลัมน์ อีเมล/ในแอป สวิตช์สลับได้จริง · UI ต่างจากเคสเดิมเพราะ TAKRA-416 (ตัด 'AI หยุดเอง' · Push→ในแอป) — อัปเดตเคสตามแล้ว และย้ายการตรวจ AI ขัดข้องไปไว้ใน TC-RA.2 · หลักฐาน: takra-ai/_bmad-output/test-artifacts/execution/takra45-rounds-1-2/ra3-01,ra3-02"
   },
   "tc-241": {
     "st": "hold"
@@ -8753,10 +8754,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="h-title">[MVP1] ระบบกรองคำเสี่ยงขัดข้อง แล้ว Owner เห็นการแจ้งเตือน ไม่เงียบ</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · risk-owner-alert · Epic 5 · Story 5.7 · FR44 (fail-closed alert)</div>
   <div class="sec"><h4>Precondition</h4><ul><li>อยู่ในห้องคุมไลฟ์ระหว่างออกอากาศ</li><li>สามารถจำลองระบบกรองคำเสี่ยงขัดข้องได้ (ให้ทีมช่วย)</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "แพลตฟอร์มไลฟ์" ในแถบด้านซ้าย แล้วกดปุ่ม "เปลี่ยนแพลตฟอร์ม" ในกล่องยืนยัน</li><li>ไปที่เมนู "ห้องคุมไลฟ์" แล้วเปิดห้องคุมของไลฟ์ที่กำลังออกอากาศ</li><li>ให้ทีมระบบจำลองให้ระบบกรองคำเสี่ยงขัดข้อง (เช่น หยุด service กรองคำเสี่ยงชั่วคราว)</li><li>สังเกตแถบแจ้งเตือนที่ขึ้นด้านบนของห้องคุม แล้วอ่านข้อความ</li></ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "แพลตฟอร์มไลฟ์" ในแถบด้านซ้าย แล้วกดปุ่ม "เปลี่ยนแพลตฟอร์ม" ในกล่องยืนยัน</li><li>ไปที่เมนู "ห้องคุมไลฟ์" แล้วเปิดห้องคุมของไลฟ์ที่กำลังออกอากาศ</li><li>ให้ทีมระบบจำลองให้ระบบกรองคำเสี่ยงขัดข้อง (เช่น หยุด service กรองคำเสี่ยงชั่วคราว)</li><li>สังเกตแถบแจ้งเตือนที่ขึ้นด้านบนของห้องคุม แล้วอ่านข้อความ</li><li>ให้ทีมระบบจำลองให้ AI/อวาตาร์หยุดทำงานหรือขัดข้องระหว่างไลฟ์ แล้วสังเกตการแจ้งเตือนในห้องคุมอีกครั้ง</li></ol></div>
   <div class="sec"><h4>Test Data</h4><ul><li>พฤติกรรมตาม PRD: fail-closed · SSE alert.high ให้ Owner</li></ul></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>เห็นแถบแจ้งเตือนสีแดงข้อความ "ระบบกรองคำเสี่ยงขัดข้อง — ทีมงานควรตรวจสอบ" ด้านบนของห้องคุม</li><li>การแจ้งเตือนเด่นชัดพอให้ Owner รู้ตัวทันที ไม่เกิดแบบเงียบ</li><li>ห้องคุมยังใช้งานต่อได้ ไลฟ์ไม่หลุดจากการแจ้งเตือน</li><li>ที่มา: Epic 5 · Story 5.7 · FR44 (circuit เปิด → Owner เห็น alert.high ไม่เงียบ)</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>เห็นแถบแจ้งเตือนสีแดงข้อความ "ระบบกรองคำเสี่ยงขัดข้อง — ทีมงานควรตรวจสอบ" ด้านบนของห้องคุม</li><li>การแจ้งเตือนเด่นชัดพอให้ Owner รู้ตัวทันที ไม่เกิดแบบเงียบ</li><li>ห้องคุมยังใช้งานต่อได้ ไลฟ์ไม่หลุดจากการแจ้งเตือน</li><li>เหตุการณ์ AI หยุดเอง / ขัดข้อง มีแจ้งเตือนเด่นชัดในห้องคุมเช่นกัน — ช่องทางอีเมลของเหตุการณ์นี้ถูกตัดออกตาม TAKRA-416 จึงตรวจที่ห้องคุมแทน</li><li>ที่มา: Epic 5 · Story 5.7 · FR44 (circuit เปิด → Owner เห็น alert.high ไม่เงียบ · ครอบ AI ขัดข้องด้วย)</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -8774,19 +8775,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 <tr class="trow" data-feat="epic5" data-level="ui" data-prio="P2" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-RA.3</td>
-  <td class="ctitle">[MVP1] ตั้งค่าให้รับการแจ้งเตือนเหตุการณ์คำเสี่ยง/AI ขัดข้องผ่านอีเมล</td>
+  <td class="ctitle">[MVP1] ตั้งค่าให้รับการแจ้งเตือนเหตุการณ์ระหว่างไลฟ์ (เริ่ม/ปิด Live · คำเสี่ยงถูกพูด)</td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p2">P2</span></td>
   <td class="status" data-uid="tc-240"><span class="stb hold">HOLD</span></td>
   <td class="jira-cell" data-uid="tc-240"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">[MVP1] ตั้งค่าให้รับการแจ้งเตือนเหตุการณ์คำเสี่ยง/AI ขัดข้องผ่านอีเมล</div>
+  <div class="h-title">[MVP1] ตั้งค่าให้รับการแจ้งเตือนเหตุการณ์ระหว่างไลฟ์ (เริ่ม/ปิด Live · คำเสี่ยงถูกพูด)</div>
   <div class="h-prio">Priority: <b>P2</b> · UI · risk-owner-alert · Epic 5 · Story 5.7 (settings notifications)</div>
   <div class="sec"><h4>Precondition</h4><ul><li>อยู่ที่หน้า "ตั้งค่าบัญชี" (เมนูโปรไฟล์ เลือก "ตั้งค่าบัญชี") ส่วนการแจ้งเตือน (บัญชี)</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>กดเมนูโปรไฟล์มุมขวาบน แล้วเลือก "ตั้งค่าบัญชี"</li><li>เลือกหมวด "การแจ้งเตือน" ในแถบหมวดของหน้าตั้งค่า</li><li>ดูกลุ่ม "Live Operation" แล้วอ่านรายการและคำอธิบายของแต่ละรายการ</li><li>สลับสวิตช์คอลัมน์ "อีเมล" ของรายการ "คำเสี่ยงถูกพูด" และ "AI หยุดเอง / ขัดข้อง" แล้วสังเกตสถานะสวิตช์</li></ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner — ถ้า workspace มุมซ้ายบนไม่ใช่ของตัวเอง ให้กด "สลับ Workspace" เลือก workspace ที่เป็นเจ้าของก่อน</li><li>กดเมนูโปรไฟล์มุมขวาบน แล้วเลือก "ตั้งค่าบัญชี"</li><li>เลือกหมวด "การแจ้งเตือน" ในแถบหมวดของหน้าตั้งค่า แล้วอ่านรายการเหตุการณ์และคำอธิบายของแต่ละรายการ</li><li>สลับสวิตช์คอลัมน์ "อีเมล" และ "ในแอป" ของรายการ "คำเสี่ยงถูกพูด" แล้วสังเกตสถานะสวิตช์</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>มีกลุ่ม "Live Operation" คำบรรยาย "เหตุการณ์ระหว่างไลฟ์" พร้อมคอลัมน์ "เหตุการณ์" / "อีเมล" / Push</li><li>มีรายการ "คำเสี่ยงถูกพูด" (คำอธิบาย "ตรวจพบคำต้องห้ามระหว่างไลฟ์") และ "AI หยุดเอง / ขัดข้อง" (คำอธิบาย "อวาตาร์หยุดพูด หรือพบความผิดพลาดของ AI")</li><li>สวิตช์ช่องอีเมลของทั้งสองรายการสลับเปิด/ปิดได้ทันที</li><li>ที่มา: Epic 5 · Story 5.7</li></ul></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>หัวข้อ "การแจ้งเตือน" คำบรรยาย "เลือกเหตุการณ์ที่อยากรับและช่องทางที่อยากให้ส่งถึง" พร้อมคอลัมน์ "เหตุการณ์" / "อีเมล" / "ในแอป"</li><li>มีรายการ "เริ่ม Live" (คำอธิบาย "แจ้งเมื่อตารางไลฟ์เริ่มออกอากาศ") · "ปิด Live" ("สรุปยอดและผลหลังจบไลฟ์") · "คำเสี่ยงถูกพูด" ("สรุปจำนวนคำต้องห้ามที่บล็อกไว้ ส่งให้เมื่อไลฟ์จบ")</li><li>สวิตช์แต่ละช่องสลับเปิด/ปิดได้ทันที และมีปุ่ม "บันทึก" ให้ยืนยันการแก้</li><li>ไม่มีรายการ "AI หยุดเอง / ขัดข้อง" แล้ว (ตัดออกตาม TAKRA-416 — การแจ้ง AI ขัดข้องย้ายไปตรวจที่ alert ห้องคุมไลฟ์ ดู TC-RA.2)</li><li>ที่มา: Epic 5 · Story 5.7 · ปรับตาม TAKRA-416</li></ul></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
