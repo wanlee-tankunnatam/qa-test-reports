@@ -48,6 +48,7 @@ def rep(old, new):
 # token setup panel under the progress bar
 rep("""    <div class="bar" aria-hidden="true"><i id="bar"></i></div>
   </header>""", """    <div class="bar" aria-hidden="true"><i id="bar"></i></div>
+    <p class="syncerr" id="syncErr" hidden></p>
     <div class="ghsetup" id="ghSetup" hidden>
       <p>ใส่ GitHub token ครั้งเดียวต่อเครื่อง เพื่อให้การติ๊ก/เพิ่ม/แก้ บันทึกขึ้น state.json ให้ทุกคนเห็น (ถ้าได้ลิงก์ที่มี #token= มาแล้ว หน้านี้จะจำให้เอง)</p>
       <div class="ghrow">
@@ -58,6 +59,8 @@ rep("""    <div class="bar" aria-hidden="true"><i id="bar"></i></div>
   </header>""")
 rep("""  .bar > i { display: block; height: 100%; width: 0; background: var(--accent); border-radius: 3px; transition: width .35s ease; }""",
     """  .bar > i { display: block; height: 100%; width: 0; background: var(--accent); border-radius: 3px; transition: width .35s ease; }
+  .syncerr { margin: 10px 0 0; font-size: 13px; color: var(--warn); }
+  .syncerr[hidden] { display: none; }
   .ghsetup { margin-top: 12px; padding: 12px; border: 1px dashed var(--accent); border-radius: 12px; background: var(--accent-soft); }
   .ghsetup p { margin: 0 0 8px; font-size: 13px; color: var(--text); }
   .ghrow { display: flex; gap: 8px; }
@@ -74,6 +77,18 @@ s = s[:start] + """  // ---------- shared state = state.json in the GitHub repo 
   let token = "", etag = null, version = -1;
   const EMPTY = () => ({ version: 0, [COLL]: {}, [COLL_EXTRA]: {}, [COLL_EDITS]: {}, [COLL_REMOVED]: {} });
   saveLocal = function () {};            // no per-device copy: GitHub is the only source of truth
+  function showErr(msg) {
+    const el = $("syncErr");
+    if (!msg) { el.hidden = true; el.textContent = ""; return; }
+    el.hidden = false; el.textContent = msg + " (" + new Date().toLocaleTimeString("th-TH", { hour: "2-digit", minute: "2-digit", second: "2-digit" }) + ")";
+  }
+  function explainStatus(status, ctx) {
+    if (status === 401) return "GitHub ปฏิเสธ token (401) token ผิดหรือหมดอายุ";
+    if (status === 403) return "GitHub ปฏิเสธ (403) token ไม่มีสิทธิ์เขียน หรือเรียกเกินโควตา";
+    if (status === 404 && token) return "token นี้เข้าถึง repo ไม่ได้ (404) ต้องเลือก repo qa-test-reports และให้สิทธิ์ Contents: Read and write";
+    if (status === 409 || status === 422) return "ไฟล์เปลี่ยนระหว่างบันทึก (" + status + ") ลองใหม่";
+    return "GitHub ตอบ " + status + " ตอน" + ctx;
+  }
 
   function loadToken() {
     const m = location.hash.match(/[#&]token=([^&]+)/);
@@ -94,7 +109,7 @@ s = s[:start] + """  // ---------- shared state = state.json in the GitHub repo 
   async function ghGet(useEtag) {
     const r = await fetch(`${GH_API}?ref=${GH.branch}`, { headers: ghHeaders(useEtag && etag ? { "If-None-Match": etag } : {}), cache: "no-store" });
     if (r.status === 304) return null;
-    if (r.status === 401 || r.status === 403) { const e = new Error("auth " + r.status); e.code = r.status; throw e; }
+    if (r.status === 401 || r.status === 403 || (r.status === 404 && token)) { const e = new Error("auth " + r.status); e.code = r.status; throw e; }
     if (r.status === 404) return { json: EMPTY(), sha: null, etag: null };
     if (!r.ok) throw new Error("GET " + r.status);
     const j = await r.json();
@@ -114,9 +129,11 @@ s = s[:start] + """  // ---------- shared state = state.json in the GitHub repo 
     rebuild(); render();
   }
   async function commitOps(ops) {
-    if (!token) { $("ghSetup").hidden = false; toast("ใส่ GitHub token ก่อน ถึงจะบันทึกให้ทุกคนเห็นได้"); throw new Error("no token"); }
+    if (!token) { $("ghSetup").hidden = false; showErr("ยังไม่มี token บนเครื่องนี้ การติ๊กจึงไม่ถูกบันทึก"); toast("ใส่ GitHub token ก่อน ถึงจะบันทึกให้ทุกคนเห็นได้"); throw new Error("no token"); }
     for (let attempt = 0; attempt < 6; attempt++) {
-      const cur = await ghGet(false);
+      let cur;
+      try { cur = await ghGet(false); }
+      catch (e) { $("ghSetup").hidden = false; showErr(explainStatus(e.code || 0, "อ่านไฟล์")); toast("บันทึกไม่สำเร็จ ดูข้อความสีส้มด้านบน"); throw e; }
       const data = cur.json;
       ops.forEach(o => { const c = data[o.coll] || (data[o.coll] = {}); if (o.op === "set") c[o.id] = o.data; else delete c[o.id]; });
       data.version = (data.version || 0) + 1;
@@ -125,9 +142,10 @@ s = s[:start] + """  // ---------- shared state = state.json in the GitHub repo 
       if (cur.sha) body.sha = cur.sha;
       const r = await fetch(GH_API, { method: "PUT", headers: ghHeaders({ "Content-Type": "application/json" }), body: JSON.stringify(body) });
       if (r.status === 409 || r.status === 422) { await new Promise(res => setTimeout(res, 300 + Math.random() * 900)); continue; }
-      if (r.status === 401 || r.status === 403) { $("ghSetup").hidden = false; toast("token ใช้ไม่ได้หรือหมดอายุ ใส่ใหม่"); throw new Error("auth " + r.status); }
-      if (!r.ok) { toast("บันทึกขึ้น GitHub ไม่สำเร็จ (" + r.status + ")"); throw new Error("PUT " + r.status); }
+      if (r.status === 401 || r.status === 403 || r.status === 404) { $("ghSetup").hidden = false; showErr(explainStatus(r.status, "บันทึก")); toast("บันทึกไม่สำเร็จ ดูข้อความสีส้มด้านบน"); throw new Error("auth " + r.status); }
+      if (!r.ok) { showErr(explainStatus(r.status, "บันทึก")); toast("บันทึกขึ้น GitHub ไม่สำเร็จ (" + r.status + ")"); throw new Error("PUT " + r.status); }
       etag = null;
+      showErr("");
       applyRemote(data);
       return;
     }
@@ -144,20 +162,22 @@ s = s[:start] + """  // ---------- shared state = state.json in the GitHub repo 
         const got = await ghGet(true);
         if (got) { etag = got.etag; applyRemote(got.json); }
         setSync("shared", token ? "ซิงค์ผ่าน GitHub · ทุกคนเห็นชุดเดียวกัน" : "อ่านอย่างเดียว · ใส่ token เพื่อบันทึก");
+        if (token && $("syncErr").textContent.startsWith("token") ) showErr("");
       } catch (e) {
-        if (e.code === 401) { $("ghSetup").hidden = false; setSync("local", "token ใช้ไม่ได้ · ใส่ใหม่"); }
-        else if (e.code === 403) setSync("local", token ? "GitHub ปฏิเสธ (สิทธิ์/จำนวนครั้ง)" : "อ่านเกินโควตา · ใส่ token");
+        if (e.code === 401 || e.code === 404) { $("ghSetup").hidden = false; setSync("local", "token ใช้ไม่ได้ · ใส่ใหม่"); showErr(explainStatus(e.code, "อ่านไฟล์")); }
+        else if (e.code === 403) { setSync("local", token ? "GitHub ปฏิเสธ (สิทธิ์/จำนวนครั้ง)" : "อ่านเกินโควตา · ใส่ token"); showErr(explainStatus(403, "อ่านไฟล์")); }
         else setSync("local", "ต่อ GitHub ไม่ได้ · กำลังลองใหม่");
       }
-      await new Promise(res => setTimeout(res, 4000));
+      // without a token GitHub allows only 60 reads/hour per IP, so poll slowly until one is set
+      await new Promise(res => setTimeout(res, token ? 4000 : 60000));
     }
   }
   $("ghSave").addEventListener("click", () => {
     const v = $("ghToken").value.trim();
     if (!v) return;
     try { localStorage.setItem(TOKEN_KEY, v); } catch {}
-    token = v; $("ghToken").value = ""; $("ghSetup").hidden = true; etag = null;
-    toast("บันทึก token แล้ว");
+    token = v; $("ghToken").value = ""; $("ghSetup").hidden = true; etag = null; showErr("");
+    toast("บันทึก token แล้ว กำลังตรวจสอบ…");
   });
 
   loadToken();

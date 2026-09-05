@@ -388,6 +388,7 @@
   <footer class="foot">
     <p>ข้อมูลจากไฟล์ลงทะเบียน export วันที่ 5 ก.ย. 2569 · นับเฉพาะคนที่เลือก “Exclusive Networking Night” และชำระเงินแล้ว · คนที่มาเป็นคู่แต่ไม่มีเบอร์ตัวเอง จะแสดงเบอร์ของผู้ซื้อแทน</p>
     <div class="btns">
+      <button class="reset quiet" id="exportBtn" type="button">คัดลอกข้อมูลทั้งหมด (JSON)</button>
       <button class="reset quiet" id="restore" hidden>คืนรายชื่อที่ลบ</button>
       <button class="reset" id="reset">ล้างการติ๊กทั้งหมด</button>
     </div>
@@ -733,6 +734,25 @@
   }));
   document.getElementById("reset").addEventListener("click", resetAll);
   document.getElementById("restore").addEventListener("click", restoreAll);
+  document.getElementById("exportBtn").addEventListener("click", async () => {
+    const checkins = {};
+    Object.keys(state).forEach(id => { checkins[id] = { in: true, at: state[id].at }; });
+    const extraMap = {};
+    extras.forEach(e => { const c = Object.assign({}, e); delete c.n; delete c.extra; delete c.mainCheckin; extraMap[e.id] = c; });
+    const dump = { version: 0, exportedAt: new Date().toISOString(),
+                   [COLL]: checkins, [COLL_EXTRA]: extraMap, [COLL_EDITS]: overrides, [COLL_REMOVED]: removed };
+    const text = JSON.stringify(dump, null, 2);
+    let ok = false;
+    try { await navigator.clipboard.writeText(text); ok = true; } catch {}
+    if (!ok) {
+      try {
+        const ta = document.createElement("textarea");
+        ta.value = text; ta.setAttribute("readonly", ""); ta.style.position = "fixed"; ta.style.opacity = "0";
+        document.body.appendChild(ta); ta.select(); ok = document.execCommand("copy"); ta.remove();
+      } catch {}
+    }
+    toast(ok ? `คัดลอกข้อมูลแล้ว (${Object.keys(checkins).length} ติ๊ก, ${extras.length} เพิ่ม, ${Object.keys(overrides).length} แก้)` : "คัดลอกไม่สำเร็จ");
+  });
 
   const dlg = document.getElementById("addDlg");
   const addForm = document.getElementById("addForm");
