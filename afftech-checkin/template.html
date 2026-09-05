@@ -1,0 +1,830 @@
+<title>AFFTECH #2 Networking Night</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kanit:wght@500;600;700&family=Sarabun:wght@400;500;600&display=swap">
+<style>
+  :root {
+    --bg: #F7F1E8;
+    --surface: #FFFFFF;
+    --surface-2: #EFE6D9;
+    --text: #1F1915;
+    --muted: #776A5D;
+    --line: #E3D9CB;
+    --accent: #C26F17;
+    --accent-ink: #FFFFFF;
+    --accent-soft: #F9E6CF;
+    --ok: #2C7A4B;
+    --ok-soft: #DCF0E3;
+    --warn: #A8481A;
+    --warn-soft: #F9E1D4;
+    --shadow: 0 1px 2px rgba(60, 40, 20, .06), 0 8px 24px -12px rgba(60, 40, 20, .18);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #14100D;
+      --surface: #1E1814;
+      --surface-2: #2A221C;
+      --text: #F4ECE0;
+      --muted: #A3927F;
+      --line: #352C24;
+      --accent: #F2A542;
+      --accent-ink: #1A1208;
+      --accent-soft: #3B2A13;
+      --ok: #7ED6A0;
+      --ok-soft: #1A3526;
+      --warn: #F29A6C;
+      --warn-soft: #3E2318;
+      --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 8px 24px -12px rgba(0, 0, 0, .6);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #14100D;
+    --surface: #1E1814;
+    --surface-2: #2A221C;
+    --text: #F4ECE0;
+    --muted: #A3927F;
+    --line: #352C24;
+    --accent: #F2A542;
+    --accent-ink: #1A1208;
+    --accent-soft: #3B2A13;
+    --ok: #7ED6A0;
+    --ok-soft: #1A3526;
+    --warn: #F29A6C;
+    --warn-soft: #3E2318;
+    --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 8px 24px -12px rgba(0, 0, 0, .6);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Sarabun", "Noto Sans Thai", "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.45;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 680px; margin: 0 auto; padding: 0 16px 80px; }
+
+  /* ---------- header ---------- */
+  .head {
+    position: sticky; top: 0; z-index: 5;
+    background: var(--bg);
+    padding: 18px 0 12px;
+    border-bottom: 1px solid var(--line);
+  }
+  .eyebrow {
+    font-family: "Kanit", "Sarabun", sans-serif;
+    font-weight: 600; font-size: 12px; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--accent); margin: 0 0 2px;
+  }
+  h1 {
+    font-family: "Kanit", "Sarabun", sans-serif;
+    font-weight: 700; font-size: clamp(22px, 5vw, 28px); line-height: 1.15;
+    margin: 0; text-wrap: balance;
+  }
+  .sub { color: var(--muted); font-size: 14px; margin: 4px 0 0; }
+  .sub .date { color: var(--text); font-weight: 600; font-variant-numeric: tabular-nums; }
+  .tally {
+    display: flex; align-items: flex-end; justify-content: space-between; gap: 16px;
+    margin-top: 14px;
+  }
+  .count {
+    font-family: "Kanit", sans-serif; font-weight: 600; font-size: 40px; line-height: 1;
+    font-variant-numeric: tabular-nums; letter-spacing: -.01em;
+  }
+  .count small { font-size: 18px; color: var(--muted); font-weight: 500; }
+  .count-label { font-size: 13px; color: var(--muted); margin-top: 2px; }
+  .count-label b { font-weight: 500; color: var(--accent); }
+  .sync {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 12px; color: var(--muted); padding: 6px 10px;
+    border: 1px solid var(--line); border-radius: 999px; background: var(--surface);
+    white-space: nowrap;
+  }
+  .sync .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--muted); }
+  .sync[data-mode="shared"] .dot { background: var(--ok); }
+  .sync[data-mode="local"] .dot { background: var(--warn); }
+  .bar { height: 6px; border-radius: 3px; background: var(--surface-2); margin-top: 12px; overflow: hidden; }
+  .bar > i { display: block; height: 100%; width: 0; background: var(--accent); border-radius: 3px; transition: width .35s ease; }
+
+  /* ---------- controls ---------- */
+  .controls { display: flex; flex-direction: column; gap: 10px; padding: 12px 0 6px; }
+  .search {
+    display: flex; align-items: center; gap: 10px;
+    background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+    padding: 0 12px; height: 46px;
+  }
+  .search svg { flex: none; color: var(--muted); }
+  .search input {
+    flex: 1; min-width: 0; border: 0; outline: 0; background: transparent;
+    font: inherit; font-size: 16px; color: var(--text);
+  }
+  .search input::placeholder { color: var(--muted); }
+  .search:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+  .chips { display: flex; gap: 8px; flex-wrap: wrap; }
+  .chip {
+    font: inherit; font-size: 14px; font-weight: 500; cursor: pointer;
+    padding: 7px 12px; border-radius: 999px;
+    border: 1px solid var(--line); background: var(--surface); color: var(--text);
+  }
+  .chip b { font-weight: 600; font-variant-numeric: tabular-nums; color: var(--muted); margin-left: 4px; }
+  .chip[aria-pressed="true"] { background: var(--text); color: var(--bg); border-color: var(--text); }
+  .chip[aria-pressed="true"] b { color: inherit; opacity: .7; }
+  .chip:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .titlebar { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+  .titles { min-width: 0; }
+  .addbar {
+    display: inline-flex; align-items: center; justify-content: center; gap: 6px; flex: none;
+    height: 40px; padding: 0 14px; cursor: pointer; margin-top: 2px; white-space: nowrap;
+    font-family: "Kanit", "Sarabun", sans-serif; font-weight: 600; font-size: 16px;
+    color: var(--accent); background: var(--accent-soft);
+    border: 1px solid var(--accent); border-radius: 12px;
+  }
+  .addbar:hover { background: var(--accent); color: var(--accent-ink); }
+  .addbar:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  /* ---------- add dialog ---------- */
+  dialog {
+    border: 0; padding: 0; border-radius: 16px;
+    background: var(--surface); color: var(--text);
+    width: min(92vw, 420px); box-shadow: var(--shadow);
+  }
+  dialog::backdrop { background: rgba(20, 16, 13, .55); }
+  .form { padding: 20px; display: flex; flex-direction: column; gap: 12px; }
+  .form h2 { font-family: "Kanit", "Sarabun", sans-serif; font-weight: 600; font-size: 20px; margin: 0; }
+  .form .hint { font-size: 13px; color: var(--muted); margin: -6px 0 0; }
+  .form h2[hidden] + .hint { margin-top: 0; }
+  .field { display: flex; flex-direction: column; gap: 4px; }
+  .field span { font-size: 12.5px; font-weight: 500; color: var(--muted); }
+  .field input {
+    font: inherit; font-size: 16px; padding: 10px 12px;
+    border: 1px solid var(--line); border-radius: 10px;
+    background: var(--bg); color: var(--text);
+  }
+  .field input:focus { outline: 0; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 4px; }
+  .btn {
+    font: inherit; font-size: 15px; font-weight: 500; cursor: pointer;
+    padding: 10px 16px; border-radius: 10px;
+    border: 1px solid var(--line); background: var(--surface); color: var(--text);
+  }
+  .btn.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); font-weight: 600; }
+  .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .err { font-size: 13px; color: var(--warn); margin: 0; }
+  .err:empty { display: none; }
+
+  .ibtn {
+    font: inherit; line-height: 1; cursor: pointer;
+    width: 30px; height: 30px; border-radius: 50%;
+    border: 1px solid var(--line); background: var(--surface); color: var(--muted);
+    display: grid; place-items: center; padding: 0;
+  }
+  .ibtn svg { width: 14px; height: 14px; }
+  .ibtn:hover { color: var(--accent); border-color: var(--accent); }
+  .ibtn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .tag.extra { background: var(--surface-2); color: var(--muted); }
+  .btn.danger { color: var(--warn); }
+  .btn.danger.fill { background: var(--warn); color: #fff; border-color: var(--warn); font-weight: 600; }
+  .btn.danger:hover { border-color: var(--warn); }
+  .actions .spacer { flex: 1; }
+  .btn[hidden] { display: none; }
+
+  /* ---------- list ---------- */
+  .list { list-style: none; margin: 8px 0 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+  .row {
+    display: grid; grid-template-columns: 24px 44px 1fr auto; align-items: start; gap: 10px;
+    background: var(--surface); border: 1px solid var(--line); border-radius: 14px;
+    padding: 12px 12px 12px 10px; cursor: pointer; user-select: none;
+    transition: background .15s ease, border-color .15s ease;
+  }
+  .row:hover { border-color: var(--accent); }
+  .row:focus-within { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .row[data-in="1"] { background: var(--ok-soft); border-color: transparent; }
+  .num {
+    font-family: "Kanit", sans-serif; font-weight: 500; font-size: 13px; color: var(--muted);
+    font-variant-numeric: tabular-nums; text-align: right; margin-top: 4px;
+  }
+  .tick { position: relative; width: 44px; height: 44px; display: grid; place-items: center; margin-top: -10px; }
+  .tick input { position: absolute; inset: 0; opacity: 0; margin: 0; cursor: pointer; }
+  .box {
+    width: 30px; height: 30px; border-radius: 50%;
+    border: 2px solid var(--muted); background: transparent;
+    display: grid; place-items: center; transition: all .15s ease;
+  }
+  .box svg { width: 16px; height: 16px; opacity: 0; transform: scale(.6); transition: all .15s ease; color: var(--accent-ink); }
+  .row[data-in="1"] .box { background: var(--ok); border-color: var(--ok); }
+  .row[data-in="1"] .box svg { opacity: 1; transform: scale(1); color: #fff; }
+  .who { min-width: 0; }
+  .nick {
+    font-family: "Kanit", "Sarabun", sans-serif; font-weight: 600; font-size: 19px; line-height: 1.2;
+    display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  }
+  .facts {
+    margin: 6px 0 0; display: grid; grid-template-columns: max-content 1fr;
+    column-gap: 10px; row-gap: 5px; align-items: center;
+  }
+  .facts dt { font-size: 12px; font-weight: 500; color: var(--muted); white-space: nowrap; }
+  .facts dd { margin: 0; min-width: 0; }
+  .full { color: var(--text); font-size: 14px; overflow-wrap: anywhere; }
+  .namewrap { max-width: 100%; }
+  .namewrap .full { padding: 3px 8px; display: inline-flex; align-items: center; white-space: normal; }
+  .namewrap .copy { padding: 0 7px; }
+  .namewrap .copy svg { width: 12px; height: 12px; }
+  .code {
+    font-family: "Kanit", sans-serif; font-weight: 500; font-size: 12px; letter-spacing: .04em;
+    color: var(--muted); background: var(--surface-2); padding: 1px 6px; border-radius: 5px;
+    white-space: nowrap;
+  }
+  .codewrap .code { background: transparent; padding: 3px 8px; display: inline-flex; align-items: center; }
+  .codewrap .copy { padding: 0 7px; }
+  .codewrap .copy svg { width: 12px; height: 12px; }
+  .tag {
+    font-family: "Sarabun", sans-serif; font-weight: 500; font-size: 11.5px; line-height: 1;
+    padding: 4px 7px; border-radius: 6px; background: var(--accent-soft); color: var(--accent);
+    white-space: nowrap;
+  }
+  .tag.warn { background: var(--warn-soft); color: var(--warn); }
+  .contact { display: flex; align-items: flex-start; align-self: start; }
+  .contact .meta { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+  .meta .btns { display: flex; gap: 6px; }
+  .ibtn.del:hover { color: var(--warn); border-color: var(--warn); }
+  .foot .btns { display: flex; gap: 8px; flex-wrap: wrap; }
+  .reset.quiet { color: var(--muted); }
+  .reset.quiet:hover { border-color: var(--muted); }
+  .reset[hidden] { display: none; }
+
+  .phonewrap { display: inline-flex; align-items: stretch; background: var(--surface-2); border-radius: 8px; overflow: hidden; }
+  .phonewrap .phone { background: transparent; border-radius: 0; }
+  .phonewrap .copy {
+    width: auto; height: auto; border: 0; border-radius: 0; padding: 0 9px;
+    border-left: 1px solid var(--line); background: transparent; color: var(--muted);
+  }
+  .phonewrap .copy:hover { color: var(--accent); background: var(--accent-soft); }
+  .phonewrap .copy:focus-visible { outline-offset: -2px; }
+  .phonewrap .copy.done { color: var(--ok); background: var(--ok-soft); }
+  .toast {
+    position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%) translateY(8px);
+    background: var(--text); color: var(--bg); font-size: 14px; font-weight: 500;
+    padding: 10px 16px; border-radius: 999px; box-shadow: var(--shadow);
+    opacity: 0; pointer-events: none; transition: opacity .2s ease, transform .2s ease; z-index: 20;
+    font-variant-numeric: tabular-nums; white-space: nowrap;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  .phone {
+    font-family: "Kanit", sans-serif; font-weight: 500; font-size: 14px;
+    font-variant-numeric: tabular-nums; letter-spacing: .01em;
+    color: var(--text); text-decoration: none;
+    padding: 5px 10px; border-radius: 8px; background: var(--surface-2);
+    white-space: nowrap;
+  }
+  .phone:hover { color: var(--accent); }
+  .phone.buyer { font-size: 13px; }
+  .phone.buyer::before { content: "ผู้ซื้อ "; font-family: "Sarabun", sans-serif; font-weight: 400; color: var(--muted); }
+  .phone.none { color: var(--muted); }
+  .time { font-size: 12px; color: var(--ok); font-variant-numeric: tabular-nums; font-weight: 600; }
+  .row[data-in="0"] .time { display: none; }
+  .empty { text-align: center; color: var(--muted); padding: 40px 0; }
+
+  /* ---------- footer ---------- */
+  .foot {
+    margin-top: 28px; padding-top: 14px; border-top: 1px solid var(--line);
+    display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap;
+    font-size: 13px; color: var(--muted);
+  }
+  .foot p { margin: 0; max-width: 46ch; }
+  .reset {
+    font: inherit; font-size: 13px; cursor: pointer;
+    background: transparent; color: var(--warn);
+    border: 1px solid var(--line); border-radius: 8px; padding: 7px 12px;
+  }
+  .reset:hover { border-color: var(--warn); }
+  .reset:focus-visible { outline: 2px solid var(--warn); outline-offset: 2px; }
+
+  @media (max-width: 460px) {
+    .row { grid-template-columns: 20px 40px 1fr auto; gap: 8px; padding-right: 10px; }
+    .num { font-size: 12px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition: none !important; }
+  }
+</style>
+
+<div class="wrap">
+  <header class="head">
+    <div class="titlebar">
+      <div class="titles">
+        <p class="eyebrow">AFFTECH #2 — Out of the Cave</p>
+        <h1>Exclusive Networking Night</h1>
+        <p class="sub"><time class="date" datetime="2026-09-05">เสาร์ 5 กันยายน 2569</time></p>
+      </div>
+      <button class="addbar" id="addBtn" type="button" aria-label="เพิ่มรายชื่อ">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+        <span>เพิ่มรายชื่อ</span>
+      </button>
+    </div>
+    <div class="tally">
+      <div>
+        <div class="count"><span id="nIn">0</span> <small>/ <span id="nAll">0</span> คน</small></div>
+        <div class="count-label">เข้างานแล้ว <b id="extraNote"></b></div>
+      </div>
+      <span class="sync" id="sync" data-mode="init"><span class="dot"></span><span id="syncText">กำลังเชื่อมต่อ…</span></span>
+    </div>
+    <div class="bar" aria-hidden="true"><i id="bar"></i></div>
+  </header>
+
+  <section class="controls">
+    <label class="search">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="q" type="search" placeholder="ค้นหาชื่อเล่น ชื่อจริง เบอร์โทร หรือรหัส REG" autocomplete="off" aria-label="ค้นหา">
+    </label>
+    <div class="chips" role="group" aria-label="กรอง">
+      <button class="chip" data-f="all" aria-pressed="true">ทั้งหมด<b id="cAll"></b></button>
+      <button class="chip" data-f="out" aria-pressed="false">ยังไม่มา<b id="cOut"></b></button>
+      <button class="chip" data-f="in" aria-pressed="false">มาแล้ว<b id="cIn"></b></button>
+    </div>
+  </section>
+
+  <ul class="list" id="list"></ul>
+  <div class="empty" id="empty" hidden>ไม่พบรายชื่อที่ตรงกับคำค้น</div>
+
+  <dialog id="addDlg" aria-labelledby="addTitle">
+    <form class="form" id="addForm" novalidate>
+      <h2 id="addTitle">เพิ่มรายชื่อหน้างาน</h2>
+      <p class="hint" id="addHint">สำหรับคนที่มาแต่ไม่อยู่ในรายชื่อลงทะเบียน</p>
+      <label class="field"><span>รหัสลงทะเบียน</span><input name="reg" autocomplete="off" placeholder="ถ้ามี เช่น REG-XXXXXX"></label>
+      <label class="field"><span>ชื่อเล่น</span><input name="nick" autocomplete="off" placeholder="เช่น บอส"></label>
+      <div class="two">
+        <label class="field"><span>ชื่อจริง</span><input name="first" autocomplete="off"></label>
+        <label class="field"><span>นามสกุล</span><input name="last" autocomplete="off"></label>
+      </div>
+      <label class="field"><span>เบอร์โทร</span><input name="phone" type="tel" inputmode="tel" autocomplete="off" placeholder="08x-xxx-xxxx"></label>
+      <label class="field"><span>หมายเหตุ (ถ้ามี)</span><input name="tag" autocomplete="off" placeholder="เช่น แขกพี่ทัช, มากับ ก็อต"></label>
+      <p class="err" id="addErr"></p>
+      <div class="actions">
+        <button class="btn danger" type="button" id="dlgDelete" hidden>ลบรายชื่อ</button>
+        <button class="btn danger" type="button" id="dlgRevert" hidden>คืนค่าจากไฟล์ลงทะเบียน</button>
+        <span class="spacer"></span>
+        <button class="btn" type="button" id="addCancel">ยกเลิก</button>
+        <button class="btn primary" type="submit" id="dlgSubmit">เพิ่มรายชื่อ</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="confirmDlg" aria-labelledby="confirmTitle">
+    <div class="form">
+      <h2 id="confirmTitle">ยืนยัน</h2>
+      <p class="hint" id="confirmMsg"></p>
+      <div class="actions">
+        <span class="spacer"></span>
+        <button class="btn" type="button" id="confirmNo">ยกเลิก</button>
+        <button class="btn danger fill" type="button" id="confirmYes">ยืนยัน</button>
+      </div>
+    </div>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <footer class="foot">
+    <p>ข้อมูลจากไฟล์ลงทะเบียน export วันที่ 5 ก.ย. 2569 · นับเฉพาะคนที่เลือก “Exclusive Networking Night” และชำระเงินแล้ว · คนที่มาเป็นคู่แต่ไม่มีเบอร์ตัวเอง จะแสดงเบอร์ของผู้ซื้อแทน</p>
+    <div class="btns">
+      <button class="reset quiet" id="restore" hidden>คืนรายชื่อที่ลบ</button>
+      <button class="reset" id="reset">ล้างการติ๊กทั้งหมด</button>
+    </div>
+  </footer>
+</div>
+
+<script>
+  const BASE = __DATA__;
+  const KEY = "afftech2-networking-night-checkin";
+  const KEY_EXTRA = KEY + "-extra";
+  const COLL = "networking_checkins";
+  const COLL_EXTRA = "networking_extra";
+  const KEY_EDITS = KEY + "-edits";
+  const COLL_EDITS = "networking_edits";
+  const KEY_REMOVED = KEY + "-removed";
+  const COLL_REMOVED = "networking_removed";
+
+  let state = {};        // id -> { at: ISO }
+  let extras = [];       // walk-ins added at the door
+  let overrides = {};    // REG id -> edited fields for people from the registration file
+  let removed = {};      // REG id -> true when a registered person was removed from the list
+  let PEOPLE = BASE;
+  let filter = "all";
+  let query = "";
+  let db = null;
+
+  // ---------- storage ----------
+  function loadLocal() {
+    try { state = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch { state = {}; }
+    try { extras = JSON.parse(localStorage.getItem(KEY_EXTRA) || "[]") || []; } catch { extras = []; }
+    try { overrides = JSON.parse(localStorage.getItem(KEY_EDITS) || "{}") || {}; } catch { overrides = {}; }
+    try { removed = JSON.parse(localStorage.getItem(KEY_REMOVED) || "{}") || {}; } catch { removed = {}; }
+    rebuild();
+  }
+  function saveLocal() {
+    try { localStorage.setItem(KEY, JSON.stringify(state)); } catch {}
+    try { localStorage.setItem(KEY_EXTRA, JSON.stringify(extras)); } catch {}
+    try { localStorage.setItem(KEY_EDITS, JSON.stringify(overrides)); } catch {}
+    try { localStorage.setItem(KEY_REMOVED, JSON.stringify(removed)); } catch {}
+  }
+  const EDITABLE = ["nick", "first", "last", "phone", "phoneRaw", "tag", "reg"];
+  const codeOf = p => p.extra ? (p.reg || "") : (p.reg || p.id);
+  function rebuild() {
+    extras.sort((a, b) => (a.addedAt || "").localeCompare(b.addedAt || ""));
+    const base = BASE.filter(p => !removed[p.id]).map(p => {
+      const o = overrides[p.id];
+      if (!o) return p;
+      const q = Object.assign({}, p);
+      EDITABLE.forEach(k => { if (k in o) q[k] = o[k]; });
+      q.edited = true;
+      return q;
+    });
+    const byId = Object.fromEntries(base.map(p => [p.id, p]));
+    base.forEach(p => {
+      if (!p.companionOf || !byId[p.companionOf]) return;
+      const b = byId[p.companionOf];
+      p.buyerNick = b.nick || b.first; p.buyerPhone = b.phone; p.buyerPhoneRaw = b.phoneRaw;
+    });
+    const all = base.concat(extras.map(e => Object.assign({}, e, { extra: true, mainCheckin: true })));
+    const keyOf = p => (p.nick || p.first || "").trim();
+    const isThai = s => /^[\u0E00-\u0E7F]/.test(s);
+    all.sort((a, b) => {
+      const ka = keyOf(a), kb = keyOf(b);
+      const ga = isThai(ka) ? 0 : 1, gb = isThai(kb) ? 0 : 1;
+      if (ga !== gb) return ga - gb;
+      return ka.localeCompare(kb, "th") || (a.first || "").localeCompare(b.first || "", "th") || (a.last || "").localeCompare(b.last || "", "th");
+    });
+    all.forEach((p, i) => { p.n = i + 1; });
+    PEOPLE = all;
+  }
+
+  // ---------- in-page confirm (window.confirm is blocked inside the artifact frame) ----------
+  function askConfirm(msg, okLabel) {
+    return new Promise(resolve => {
+      const d = document.getElementById("confirmDlg");
+      const yes = document.getElementById("confirmYes"), no = document.getElementById("confirmNo");
+      document.getElementById("confirmMsg").textContent = msg;
+      yes.textContent = okLabel || "ยืนยัน";
+      let settled = false;
+      const done = v => {
+        if (settled) return; settled = true;
+        yes.removeEventListener("click", onYes); no.removeEventListener("click", onNo); d.removeEventListener("close", onClose);
+        if (d.open) d.close();
+        resolve(v);
+      };
+      const onYes = () => done(true), onNo = () => done(false), onClose = () => done(false);
+      yes.addEventListener("click", onYes); no.addEventListener("click", onNo); d.addEventListener("close", onClose);
+      d.showModal(); no.focus();
+    });
+  }
+
+  // ---------- walk-ins ----------
+  function normPhone(v) {
+    let d = (v || "").replace(/\D/g, "");
+    if (d.startsWith("66") && d.length === 11) d = "0" + d.slice(2);
+    const shown = d.length === 10 ? d.slice(0, 3) + "-" + d.slice(3, 6) + "-" + d.slice(6) : d;
+    return { phone: shown, phoneRaw: d };
+  }
+  async function addPerson(f) {
+    const id = "X-" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+    const person = Object.assign({ id, companionOf: "", addedAt: new Date().toISOString() }, fieldsFrom(f));
+    extras.push(person);
+    rebuild();
+    render();
+    if (db) {
+      try { await db.collection(COLL_EXTRA).doc(id).set(person); } catch (e) { console.warn("db add failed", e); }
+    } else {
+      saveLocal();
+    }
+  }
+  function fieldsFrom(f) {
+    const ph = normPhone(f.phone);
+    return { nick: f.nick.trim(), first: f.first.trim(), last: f.last.trim(),
+             phone: ph.phone, phoneRaw: ph.phoneRaw, tag: f.tag.trim(), reg: (f.reg || "").trim() };
+  }
+  async function savePerson(id, f) {
+    const p = PEOPLE.find(x => x.id === id);
+    if (!p) return;
+    const fields = fieldsFrom(f);
+    if (p.extra) {
+      const idx = extras.findIndex(x => x.id === id);
+      if (idx < 0) return;
+      extras[idx] = Object.assign({}, extras[idx], fields, { editedAt: new Date().toISOString() });
+      rebuild(); render();
+      if (db) { try { await db.collection(COLL_EXTRA).doc(id).set(extras[idx]); } catch (e) { console.warn("db edit failed", e); } }
+      else saveLocal();
+      return;
+    }
+    const orig = BASE.find(x => x.id === id);
+    if (fields.reg === orig.id) fields.reg = "";
+    const same = EDITABLE.every(k => (fields[k] || "") === (orig[k] || ""));
+    if (same) return revertPerson(id);
+    overrides[id] = Object.assign({}, fields, { editedAt: new Date().toISOString() });
+    rebuild(); render();
+    if (db) { try { await db.collection(COLL_EDITS).doc(id).set(overrides[id]); } catch (e) { console.warn("db edit failed", e); } }
+    else saveLocal();
+  }
+  async function revertPerson(id) {
+    if (!overrides[id]) return;
+    delete overrides[id];
+    rebuild(); render();
+    if (db) { try { await db.collection(COLL_EDITS).doc(id).delete(); } catch (e) { console.warn("db revert failed", e); } }
+    else saveLocal();
+  }
+  async function removePerson(id) {
+    const p = PEOPLE.find(x => x.id === id);
+    if (!p) return;
+    if (!p.extra) {
+      if (!(await askConfirm("ลบ " + (p.nick || p.first) + " ออกจากรายชื่อ? คืนค่าได้จากปุ่มท้ายหน้า", "ลบ"))) return;
+      removed[id] = true;
+      delete state[id];
+      rebuild(); render();
+      if (db) {
+        try {
+          await db.collection(COLL_REMOVED).doc(id).set({ removed: true, at: new Date().toISOString() });
+          await db.collection(COLL).doc(id).delete();
+        } catch (e) { console.warn("db remove failed", e); }
+      } else saveLocal();
+      return;
+    }
+    if (!(await askConfirm("ลบรายชื่อ " + (p.nick || p.first) + " ที่เพิ่มหน้างาน?", "ลบ"))) return;
+    extras = extras.filter(x => x.id !== id);
+    delete state[id];
+    rebuild();
+    render();
+    if (db) {
+      try {
+        await db.collection(COLL_EXTRA).doc(id).delete();
+        await db.collection(COLL).doc(id).delete();
+      } catch (e) { console.warn("db remove failed", e); }
+    } else {
+      saveLocal();
+    }
+  }
+
+  async function setChecked(id, on) {
+    const at = new Date().toISOString();
+    if (on) state[id] = { at }; else delete state[id];
+    render();
+    if (db) {
+      try {
+        if (on) await db.collection(COLL).doc(id).set({ in: true, at });
+        else await db.collection(COLL).doc(id).delete();
+      } catch (e) { console.warn("db write failed", e); }
+    } else {
+      saveLocal();
+    }
+  }
+
+  async function resetAll() {
+    if (!(await askConfirm("ล้างการติ๊กทั้งหมด " + Object.keys(state).length + " คน?", "ล้างทั้งหมด"))) return;
+    const ids = Object.keys(state);
+    state = {};
+    render();
+    if (db) {
+      for (const id of ids) { try { await db.collection(COLL).doc(id).delete(); } catch (e) { console.warn(e); } }
+    } else {
+      saveLocal();
+    }
+  }
+
+  async function restoreAll() {
+    const ids = Object.keys(removed);
+    if (!ids.length) return;
+    if (!(await askConfirm("คืนรายชื่อที่ลบไป " + ids.length + " คน?", "คืนค่า"))) return;
+    removed = {};
+    rebuild(); render();
+    if (db) { for (const id of ids) { try { await db.collection(COLL_REMOVED).doc(id).delete(); } catch (e) { console.warn(e); } } }
+    else saveLocal();
+  }
+
+  // ---------- helpers ----------
+  const norm = s => (s || "").toString().toLowerCase().replace(/[\s\-()]/g, "");
+  function matches(p) {
+    if (!query) return true;
+    const hay = norm([p.nick, p.first, p.last, p.phone, p.tag, p.companionOf ? p.buyerNick : "", codeOf(p)].join(" "));
+    return hay.includes(query);
+  }
+  function fmtTime(iso) {
+    try { return new Date(iso).toLocaleTimeString("th-TH", { hour: "2-digit", minute: "2-digit" }); } catch { return ""; }
+  }
+  function esc(s) { return (s || "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])); }
+
+  // ---------- render ----------
+  function render() {
+    const total = PEOPLE.length;
+    const inCount = PEOPLE.filter(p => state[p.id]).length;
+    document.getElementById("nIn").textContent = inCount;
+    document.getElementById("nAll").textContent = total;
+    document.getElementById("cAll").textContent = total;
+    document.getElementById("cIn").textContent = inCount;
+    document.getElementById("cOut").textContent = total - inCount;
+    document.getElementById("bar").style.width = (total ? (inCount / total) * 100 : 0) + "%";
+    const nRemoved = Object.keys(removed).length;
+    const parts = [];
+    if (extras.length || nRemoved) parts.push(`ลงทะเบียน ${BASE.length - nRemoved}`);
+    if (extras.length) parts.push(`เพิ่มหน้างาน ${extras.length}`);
+    if (nRemoved) parts.push(`ลบออก ${nRemoved}`);
+    document.getElementById("extraNote").textContent = parts.length ? "· " + parts.join(" · ") : "";
+    const rb = document.getElementById("restore");
+    rb.hidden = !nRemoved;
+    rb.textContent = `คืนรายชื่อที่ลบ (${nRemoved})`;
+
+    const list = document.getElementById("list");
+    const shown = PEOPLE.filter(p => {
+      const isIn = !!state[p.id];
+      if (filter === "in" && !isIn) return false;
+      if (filter === "out" && isIn) return false;
+      return matches(p);
+    });
+    document.getElementById("empty").hidden = shown.length > 0;
+
+    list.innerHTML = shown.map(p => {
+      const isIn = !!state[p.id];
+      const code = codeOf(p);
+      const fullName = [p.first, p.last].filter(Boolean).join(" ");
+      const tags = [];
+      if (p.tag) tags.push(`<span class="tag">${esc(p.tag)}</span>`);
+      if (p.companionOf) tags.push(`<span class="tag">มากับ ${esc(p.buyerNick)}</span>`);
+      if (p.edited) tags.push(`<span class="tag extra">แก้ไขแล้ว</span>`);
+      if (!p.mainCheckin) tags.push(`<span class="tag warn">ยังไม่เช็คอินงานหลัก</span>`);
+      const copyBtn = (raw, shown) => `<button class="ibtn copy" type="button" data-copy="${esc(raw)}" data-shown="${esc(shown)}" aria-label="คัดลอก ${esc(shown)}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></button>`;
+      let phone;
+      if (p.phone) phone = `<span class="phonewrap"><a class="phone" href="tel:${esc(p.phoneRaw)}">${esc(p.phone)}</a>${copyBtn(p.phoneRaw, p.phone)}</span>`;
+      else if (p.buyerPhone) phone = `<span class="phonewrap"><a class="phone buyer" href="tel:${esc(p.buyerPhoneRaw)}">${esc(p.buyerPhone)}</a>${copyBtn(p.buyerPhoneRaw, p.buyerPhone)}</span>`;
+      else phone = `<span class="phone none">ไม่มีเบอร์</span>`;
+      return `
+        <li class="row" data-id="${esc(p.id)}" data-in="${isIn ? 1 : 0}">
+          <span class="num">${p.n}</span>
+          <span class="tick">
+            <input type="checkbox" ${isIn ? "checked" : ""} aria-label="เช็คอิน ${esc(p.nick || p.first)}">
+            <span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+          </span>
+          <div class="who">
+            <div class="nick">${esc(p.nick || p.first)}${tags.join("")}</div>
+            <dl class="facts">
+              <dt>ชื่อ</dt><dd>${fullName ? `<span class="phonewrap namewrap"><span class="full">${esc(fullName)}</span>${copyBtn(fullName, fullName)}</span>` : `<span class="full">—</span>`}</dd>
+              ${code ? `<dt>รหัสลงทะเบียน</dt><dd><span class="phonewrap codewrap"><span class="code">${esc(code)}</span>${copyBtn(code, code)}</span></dd>` : ""}
+              <dt>เบอร์โทร</dt><dd>${phone}</dd>
+            </dl>
+          </div>
+          <div class="contact">
+            <div class="meta">
+              <div class="btns">
+                <button class="ibtn edit" type="button" aria-label="แก้ไขข้อมูล ${esc(p.nick || p.first)}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></button>
+                <button class="ibtn del" type="button" aria-label="ลบ ${esc(p.nick || p.first)}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/></svg></button>
+              </div>
+              <span class="time">เข้า ${isIn ? fmtTime(state[p.id].at) : ""}</span>
+            </div>
+          </div>
+        </li>`;
+    }).join("");
+  }
+
+  // ---------- copy ----------
+  let toastTimer = null;
+  function toast(msg) {
+    const t = document.getElementById("toast");
+    t.textContent = msg; t.classList.add("show");
+    clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove("show"), 1600);
+  }
+  async function copyPhone(btn) {
+    const text = btn.dataset.copy, shown = btn.dataset.shown;
+    let ok = false;
+    try { await navigator.clipboard.writeText(text); ok = true; } catch {}
+    if (!ok) {
+      try {
+        const ta = document.createElement("textarea");
+        ta.value = text; ta.setAttribute("readonly", ""); ta.style.position = "fixed"; ta.style.opacity = "0";
+        document.body.appendChild(ta); ta.select(); ok = document.execCommand("copy"); ta.remove();
+      } catch {}
+    }
+    if (ok) {
+      btn.classList.add("done"); setTimeout(() => btn.classList.remove("done"), 1600);
+      toast("คัดลอก " + shown + " แล้ว");
+    } else {
+      toast("คัดลอกไม่สำเร็จ กดค้างที่เบอร์เพื่อคัดลอกเอง");
+    }
+  }
+
+  // ---------- events ----------
+  document.getElementById("list").addEventListener("click", e => {
+    if (e.target.closest("a")) return;              // phone link: let it dial
+    const row = e.target.closest(".row"); if (!row) return;
+    if (e.target.closest(".edit")) { openDialog("edit", row.dataset.id); return; }
+    if (e.target.closest(".del")) { removePerson(row.dataset.id); return; }
+    const cp = e.target.closest(".copy");
+    if (cp) { copyPhone(cp); return; }
+    if (e.target.tagName === "INPUT") return;       // handled by change
+    e.preventDefault();
+    setChecked(row.dataset.id, row.dataset.in !== "1");
+  });
+  document.getElementById("list").addEventListener("change", e => {
+    if (e.target.tagName !== "INPUT") return;
+    const row = e.target.closest(".row");
+    setChecked(row.dataset.id, e.target.checked);
+  });
+  document.getElementById("q").addEventListener("input", e => { query = norm(e.target.value); render(); });
+  document.querySelectorAll(".chip").forEach(b => b.addEventListener("click", () => {
+    filter = b.dataset.f;
+    document.querySelectorAll(".chip").forEach(x => x.setAttribute("aria-pressed", x === b ? "true" : "false"));
+    render();
+  }));
+  document.getElementById("reset").addEventListener("click", resetAll);
+  document.getElementById("restore").addEventListener("click", restoreAll);
+
+  const dlg = document.getElementById("addDlg");
+  const addForm = document.getElementById("addForm");
+  const $ = id => document.getElementById(id);
+  const scopeNote = () => db ? "ทีมทุกคนจะเห็นการเปลี่ยนแปลง" : "บันทึกไว้ในเครื่องนี้";
+  function openDialog(mode, id) {
+    addForm.reset(); $("addErr").textContent = "";
+    dlg.dataset.mode = mode; dlg.dataset.id = id || "";
+    const p = id ? PEOPLE.find(x => x.id === id) : null;
+    if (mode === "edit" && p) {
+      $("addTitle").hidden = true;
+      $("addHint").textContent = (p.extra ? "รายชื่อที่เพิ่มหน้างาน" : "จากไฟล์ลงทะเบียน") + " · " + scopeNote();
+      $("dlgSubmit").textContent = "บันทึก";
+      $("dlgDelete").hidden = true;
+      $("dlgRevert").hidden = !(p.edited);
+      addForm.elements.reg.value = codeOf(p);
+      addForm.elements.nick.value = p.nick || "";
+      addForm.elements.first.value = p.first || "";
+      addForm.elements.last.value = p.last || "";
+      addForm.elements.phone.value = p.phone || "";
+      addForm.elements.tag.value = p.tag || "";
+    } else {
+      $("addTitle").hidden = false; $("addTitle").textContent = "เพิ่มรายชื่อหน้างาน";
+      $("addHint").textContent = "สำหรับคนที่มาแต่ไม่อยู่ในรายชื่อลงทะเบียน · " + scopeNote();
+      $("dlgSubmit").textContent = "เพิ่มรายชื่อ";
+      $("dlgDelete").hidden = true; $("dlgRevert").hidden = true;
+    }
+    dlg.showModal(); addForm.elements.nick.focus();
+  }
+  $("addBtn").addEventListener("click", () => openDialog("add"));
+  $("addCancel").addEventListener("click", () => dlg.close());
+  $("dlgDelete").addEventListener("click", () => { const id = dlg.dataset.id; dlg.close(); removePerson(id); });
+  $("dlgRevert").addEventListener("click", () => { const id = dlg.dataset.id; dlg.close(); revertPerson(id); });
+  addForm.addEventListener("submit", e => {
+    e.preventDefault();
+    const f = Object.fromEntries(new FormData(addForm).entries());
+    if (!f.nick.trim() && !f.first.trim()) {
+      $("addErr").textContent = "ใส่ชื่อเล่นหรือชื่อจริงอย่างน้อยหนึ่งอย่าง";
+      return;
+    }
+    if (dlg.dataset.mode === "edit") savePerson(dlg.dataset.id, f); else addPerson(f);
+    dlg.close();
+  });
+
+  // ---------- boot ----------
+  function setSync(mode, text) {
+    const el = document.getElementById("sync");
+    el.dataset.mode = mode;
+    document.getElementById("syncText").textContent = text;
+  }
+
+  loadLocal();
+  render();
+
+  (async () => {
+    let ns = null;
+    try {
+      if (window.claude && typeof window.claude.use === "function") ns = await window.claude.use("db");
+    } catch (e) { ns = null; }
+    if (!ns) { setSync("local", "บันทึกในเครื่องนี้"); return; }
+    db = ns;
+    db.collection(COLL_REMOVED).onSnapshot(snap => {
+      const next = {};
+      snap.docs.forEach(d => { if (d.exists) next[d.id] = true; });
+      removed = next;
+      rebuild(); saveLocal(); render();
+    }, err => console.warn("removed subscription ended", err));
+    db.collection(COLL_EDITS).onSnapshot(snap => {
+      const next = {};
+      snap.docs.forEach(d => { if (d.exists) next[d.id] = d.data() || {}; });
+      overrides = next;
+      rebuild();
+      saveLocal();
+      render();
+    }, err => console.warn("edits subscription ended", err));
+    db.collection(COLL_EXTRA).onSnapshot(snap => {
+      extras = snap.docs.filter(d => d.exists).map(d => Object.assign({ id: d.id }, d.data() || {}));
+      rebuild();
+      saveLocal();
+      render();
+    }, err => console.warn("extra subscription ended", err));
+    db.collection(COLL).onSnapshot(snap => {
+      const next = {};
+      snap.docs.forEach(d => { if (d.exists) { const b = d.data() || {}; if (b.in) next[d.id] = { at: b.at || new Date().toISOString() }; } });
+      state = next;
+      saveLocal();
+      render();
+      setSync("shared", snap.metadata.fromCache ? "ซิงค์กับทีม (กำลังโหลด)" : "ซิงค์กับทีมแบบเรียลไทม์");
+    }, err => {
+      console.warn("db subscription ended", err);
+      db = null;
+      setSync("local", "ซิงค์หลุด · บันทึกในเครื่องนี้");
+    });
+  })();
+</script>
