@@ -166,6 +166,14 @@
     width: min(92vw, 420px); box-shadow: var(--shadow);
   }
   dialog::backdrop { background: rgba(20, 16, 13, .55); }
+  dialog.wide { width: min(94vw, 600px); }
+  .exportbtns { display: flex; gap: 8px; flex-wrap: wrap; }
+  .exportbox {
+    width: 100%; height: min(42vh, 360px); resize: vertical;
+    font: inherit; font-size: 13px; line-height: 1.5; padding: 10px 12px;
+    border: 1px solid var(--line); border-radius: 10px; background: var(--bg); color: var(--text);
+    white-space: pre; overflow: auto;
+  }
   .form { padding: 20px; display: flex; flex-direction: column; gap: 12px; }
   .form h2 { font-family: "Kanit", "Sarabun", sans-serif; font-weight: 600; font-size: 20px; margin: 0; }
   .form .hint { font-size: 13px; color: var(--muted); margin: -6px 0 0; }
@@ -397,6 +405,21 @@
     </form>
   </dialog>
 
+  <dialog id="exportDlg" class="wide" aria-labelledby="exportTitle">
+    <div class="form">
+      <h2 id="exportTitle">ส่งออกรายชื่อ</h2>
+      <p class="hint" id="exportSummary"></p>
+      <div class="exportbtns">
+        <button class="btn primary" id="exCsv" type="button">คัดลอก CSV</button>
+        <button class="btn" id="exText" type="button">คัดลอกข้อความ (ส่ง LINE)</button>
+        <button class="btn" id="exJson" type="button">คัดลอก JSON</button>
+        <button class="btn" id="exDownload" type="button" hidden>ดาวน์โหลด CSV</button>
+      </div>
+      <textarea class="exportbox" id="exportBox" readonly aria-label="ข้อมูลที่จะส่งออก"></textarea>
+      <div class="actions"><span class="spacer"></span><button class="btn" type="button" id="exportClose">ปิด</button></div>
+    </div>
+  </dialog>
+
   <dialog id="confirmDlg" aria-labelledby="confirmTitle">
     <div class="form">
       <h2 id="confirmTitle">ยืนยัน</h2>
@@ -414,7 +437,7 @@
   <footer class="foot">
     <p>ข้อมูลจากไฟล์ลงทะเบียน export วันที่ 5 ก.ย. 2569 · นับเฉพาะคนที่เลือก “Exclusive Networking Night” และชำระเงินแล้ว · คนที่มาเป็นคู่แต่ไม่มีเบอร์ตัวเอง จะแสดงเบอร์ของผู้ซื้อแทน</p>
     <div class="btns">
-      <button class="reset quiet" id="exportBtn" type="button">คัดลอกข้อมูลทั้งหมด (JSON)</button>
+      <button class="reset quiet" id="exportBtn" type="button">ส่งออกรายชื่อ</button>
       <button class="reset quiet" id="restore" hidden>คืนรายชื่อที่ลบ</button>
       <button class="reset" id="reset">ล้างการติ๊กทั้งหมด</button>
     </div>
@@ -760,24 +783,68 @@
   }));
   document.getElementById("reset").addEventListener("click", resetAll);
   document.getElementById("restore").addEventListener("click", restoreAll);
-  document.getElementById("exportBtn").addEventListener("click", async () => {
+  // ---------- export ----------
+  const CAN_DOWNLOAD = true;
+  async function copyText(text) {
+    try { await navigator.clipboard.writeText(text); return true; } catch {}
+    try {
+      const ta = document.createElement("textarea");
+      ta.value = text; ta.setAttribute("readonly", ""); ta.style.position = "fixed"; ta.style.opacity = "0";
+      document.body.appendChild(ta); ta.select(); const ok = document.execCommand("copy"); ta.remove(); return ok;
+    } catch { return false; }
+  }
+  const pad2 = n => String(n).padStart(2, "0");
+  function fmtStamp(iso) {
+    const d = new Date(iso); if (isNaN(d)) return "";
+    return `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())} ${pad2(d.getHours())}:${pad2(d.getMinutes())}`;
+  }
+  function exportRows() {
+    return PEOPLE.map(p => {
+      const s = state[p.id];
+      return { n: p.n, in: !!s, at: s ? s.at : "", nick: p.nick || "", first: p.first || "", last: p.last || "",
+               code: codeOf(p), phone: p.phone || (p.buyerPhone ? "ผู้ซื้อ " + p.buyerPhone : ""), tag: p.tag || "",
+               src: p.extra ? "เพิ่มหน้างาน" : "ลงทะเบียน", companion: p.companionOf ? "มากับ " + (p.buyerNick || "") : "" };
+    });
+  }
+  function exportCsv() {
+    const q = v => { v = String(v ?? ""); return /[",\n]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; };
+    const head = ["ลำดับ", "สถานะ", "เวลาเข้า", "ชื่อเล่น", "ชื่อ", "นามสกุล", "รหัสลงทะเบียน", "เบอร์โทร", "หมายเหตุ", "ที่มา"];
+    const lines = exportRows().map(r => [r.n, r.in ? "มาแล้ว" : "ยังไม่มา", r.in ? fmtStamp(r.at) : "", r.nick, r.first, r.last, r.code, r.phone,
+                                         [r.tag, r.companion].filter(Boolean).join(" · "), r.src].map(q).join(","));
+    return "\ufeff" + [head.join(","), ...lines].join("\n");
+  }
+  function exportText() {
+    const rows = exportRows();
+    const nIn = rows.filter(r => r.in).length;
+    const line = r => `${r.in ? "✅" : "⬜"} ${r.n}. ${r.nick || r.first}${r.first ? " — " + [r.first, r.last].filter(Boolean).join(" ") : ""}${r.in ? " · " + fmtTime(r.at) : ""}`;
+    return [`Exclusive Networking Night · เสาร์ 5 ก.ย. 2569`, `มาแล้ว ${nIn} / ${rows.length} คน`, ""].concat(rows.map(line)).join("\n");
+  }
+  function exportJson() {
     const checkins = {};
     Object.keys(state).forEach(id => { checkins[id] = { in: true, at: state[id].at }; });
     const extraMap = {};
     extras.forEach(e => { const c = Object.assign({}, e); delete c.n; delete c.extra; delete c.mainCheckin; extraMap[e.id] = c; });
-    const dump = { version: 0, exportedAt: new Date().toISOString(),
-                   [COLL]: checkins, [COLL_EXTRA]: extraMap, [COLL_EDITS]: overrides, [COLL_REMOVED]: removed };
-    const text = JSON.stringify(dump, null, 2);
-    let ok = false;
-    try { await navigator.clipboard.writeText(text); ok = true; } catch {}
-    if (!ok) {
-      try {
-        const ta = document.createElement("textarea");
-        ta.value = text; ta.setAttribute("readonly", ""); ta.style.position = "fixed"; ta.style.opacity = "0";
-        document.body.appendChild(ta); ta.select(); ok = document.execCommand("copy"); ta.remove();
-      } catch {}
-    }
-    toast(ok ? `คัดลอกข้อมูลแล้ว (${Object.keys(checkins).length} ติ๊ก, ${extras.length} เพิ่ม, ${Object.keys(overrides).length} แก้)` : "คัดลอกไม่สำเร็จ");
+    return JSON.stringify({ version: 0, exportedAt: new Date().toISOString(),
+                            [COLL]: checkins, [COLL_EXTRA]: extraMap, [COLL_EDITS]: overrides, [COLL_REMOVED]: removed }, null, 2);
+  }
+  const exDlg = document.getElementById("exportDlg");
+  document.getElementById("exportBtn").addEventListener("click", () => {
+    const rows = exportRows(), nIn = rows.filter(r => r.in).length;
+    document.getElementById("exportSummary").textContent = `มาแล้ว ${nIn} / ${rows.length} คน · ${extras.length} คนเพิ่มหน้างาน · ข้อมูลตามที่เห็นบนหน้านี้ตอนนี้`;
+    document.getElementById("exportBox").value = exportText();
+    document.getElementById("exDownload").hidden = !CAN_DOWNLOAD;
+    exDlg.showModal();
+  });
+  document.getElementById("exportClose").addEventListener("click", () => exDlg.close());
+  document.getElementById("exCsv").addEventListener("click", async () => { toast((await copyText(exportCsv())) ? "คัดลอก CSV แล้ว วางใน Excel หรือ Google Sheets ได้เลย" : "คัดลอกไม่สำเร็จ"); });
+  document.getElementById("exText").addEventListener("click", async () => { toast((await copyText(exportText())) ? "คัดลอกข้อความแล้ว" : "คัดลอกไม่สำเร็จ"); });
+  document.getElementById("exJson").addEventListener("click", async () => { toast((await copyText(exportJson())) ? "คัดลอก JSON แล้ว" : "คัดลอกไม่สำเร็จ"); });
+  document.getElementById("exDownload").addEventListener("click", () => {
+    const blob = new Blob([exportCsv()], { type: "text/csv;charset=utf-8" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob); a.download = "networking-night-checkin.csv";
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 2000);
   });
 
   const dlg = document.getElementById("addDlg");

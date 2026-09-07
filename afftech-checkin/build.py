@@ -186,7 +186,7 @@ s = s[:start] + """  // ---------- shared state = state.json in the GitHub repo 
   pollLoop();
 """ + s[end:]
 assert "window.claude" not in s
-s = s.replace("__GH__", json.dumps(GH))
+s = s.replace("__GH__", json.dumps(GH)).replace("__CAN_DOWNLOAD__", "true")
 assert s.count("__DATA__") == 1
 s = s.replace("__DATA__", json.dumps(final, ensure_ascii=False))
 
