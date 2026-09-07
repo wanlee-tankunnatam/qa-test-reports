@@ -1,3 +1,4 @@
+<meta charset="utf-8">
 <title>AFFTECH #2 Networking Night</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kanit:wght@500;600;700&family=Sarabun:wght@400;500;600&display=swap">
@@ -420,6 +421,7 @@
 
 <script>
   const BASE = __DATA__;
+  const SEED = __SEED__;          // check-ins baked in at build time (used once, when this browser has no data yet)
   const KEY = "afftech2-networking-night-checkin";
   const KEY_EXTRA = KEY + "-extra";
   const COLL = "networking_checkins";
@@ -440,6 +442,11 @@
 
   // ---------- storage ----------
   function loadLocal() {
+    try {
+      if (!localStorage.getItem(KEY) && !localStorage.getItem(KEY + "-seeded") && Object.keys(SEED).length) {
+        localStorage.setItem(KEY, JSON.stringify(SEED)); localStorage.setItem(KEY + "-seeded", "1");
+      }
+    } catch {}
     try { state = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch { state = {}; }
     try { extras = JSON.parse(localStorage.getItem(KEY_EXTRA) || "[]") || []; } catch { extras = []; }
     try { overrides = JSON.parse(localStorage.getItem(KEY_EDITS) || "{}") || {}; } catch { overrides = {}; }
@@ -470,7 +477,8 @@
       const b = byId[p.companionOf];
       p.buyerNick = b.nick || b.first; p.buyerPhone = b.phone; p.buyerPhoneRaw = b.phoneRaw;
     });
-    const all = base.concat(extras.map(e => Object.assign({}, e, { extra: true, mainCheckin: true })));
+    const baked = new Set(BASE.map(p => p.id));
+    const all = base.concat(extras.filter(e => !baked.has(e.id)).map(e => Object.assign({}, e, { extra: true, mainCheckin: true })));
     const keyOf = p => (p.nick || p.first || "").trim();
     const isThai = s => /^[\u0E00-\u0E7F]/.test(s);
     all.sort((a, b) => {

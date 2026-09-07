@@ -1,42 +1,13 @@
 """Build index.html: roster from the registration CSV + template.html, shared state in state.json via the GitHub API."""
-import csv, json, re, pathlib
+import json, pathlib
 
 HERE = pathlib.Path(__file__).parent
 SRC = "/Users/ice/Downloads/registrations-afftech-2-out-of-the-cave-2026-09-05.csv"
 GH = {"owner": "wanlee-tankunnatam", "repo": "qa-test-reports", "branch": "master", "path": "afftech-checkin/state.json"}
 
-# ---------- roster from CSV (embedded in the page, never modified at runtime) ----------
-with open(SRC, encoding="utf-8-sig") as fh:
-    rows = list(csv.DictReader(fh))
-net = [r for r in rows if (r.get("กิจกรรมเสริม") or "") == "Exclusive Networking Night" and r.get("สถานะชำระเงิน") == "paid"]
-def digits(s):
-    d = re.sub(r"\D", "", s or "")
-    if d.startswith("66") and len(d) == 11: d = "0" + d[2:]
-    return d
-def fmt(d): return f"{d[:3]}-{d[3:6]}-{d[6:]}" if len(d) == 10 else d
-def split_note(s):
-    m = re.search(r"\s*\(\s*([^)]*?)\s*\)\s*", s or "")
-    if not m: return (s or "").strip(), ""
-    return (s[:m.start()] + s[m.end():]).strip(), m.group(1).strip()
-people, order = {}, []
-for r in net:
-    rid = r["รหัสลงทะเบียน"]
-    first, n1 = split_note(r["ชื่อ"]); last, n3 = split_note(r["นามสกุล"]); nick, n2 = split_note(r["ชื่อเล่น"])
-    d = digits(r["เบอร์โทร"])
-    m = re.match(r"ออเดอร์ (REG-\w+) \(\d+ ใบ\) — ผู้ซื้อ:", r["หมายเหตุ"] or "")
-    people[rid] = dict(id=rid, nick=nick, first=first, last=last, phone=fmt(d) if d else "", phoneRaw=d,
-                       tag=n1 or n2 or n3, companionOf=m.group(1) if m else "", mainCheckin=(r["เช็คอิน"] == "เช็คอินแล้ว"))
-    order.append(rid)
-final = []
-for rid in order:
-    p = people[rid]
-    if p["companionOf"]: continue
-    final.append(p)
-    for c in (people[x] for x in order if people[x]["companionOf"] == rid):
-        c["buyerNick"] = p["nick"] or p["first"]; c["buyerPhone"] = p["phone"]; c["buyerPhoneRaw"] = p["phoneRaw"]
-        final.append(c)
-for i, p in enumerate(final, 1): p["n"] = i
-assert len(final) == 30, len(final)
+# ---------- roster: 30 from the CSV + walk-ins from extras.json ----------
+from roster import build_roster
+final, seed = build_roster(HERE / "extras.json")
 
 # ---------- transform template ----------
 s = (HERE / "template.html").read_text(encoding="utf-8")
@@ -186,7 +157,7 @@ s = s[:start] + """  // ---------- shared state = state.json in the GitHub repo 
   pollLoop();
 """ + s[end:]
 assert "window.claude" not in s
-s = s.replace("__GH__", json.dumps(GH)).replace("__CAN_DOWNLOAD__", "true")
+s = s.replace("__GH__", json.dumps(GH)).replace("__CAN_DOWNLOAD__", "true").replace("__SEED__", "{}")
 assert s.count("__DATA__") == 1
 s = s.replace("__DATA__", json.dumps(final, ensure_ascii=False))
 
@@ -205,4 +176,4 @@ html = """<!doctype html>
 html = html.replace("</style>\n\n<div class=\"wrap\">", "</style>\n</head>\n<body>\n\n<div class=\"wrap\">", 1)
 assert html.count("</head>") == 1 and "<body>" in html
 (HERE / "index.html").write_text(html, encoding="utf-8")
-print("built index.html —", len(final), "people")
+print("built index.html —", len(final), "people (walk-ins baked in from extras.json)")
