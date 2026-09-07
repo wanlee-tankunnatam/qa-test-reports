@@ -55,9 +55,9 @@ repo นี้เก็บรายงาน manual test case (UI) ของท�
 | **takra-rerun** | `/Users/ice/Documents/rf/takra-rerun` | `TAK` | https://kitdi.atlassian.net/jira/software/projects/TAK/boards/1661/timeline | `projects/takra-rerun/` | `?project=rerun` |
 | **takra-insight** | `/Users/ice/Documents/rf/takra-insight` | `TI` | https://kitdi.atlassian.net/jira/software/projects/TI/boards/1660/timeline | `projects/takra-insight/` | `?project=insight` |
 | **takra-hub** | `/Users/ice/Documents/rf/takra-hub` | `TKH` | https://kitdi.atlassian.net/jira/software/projects/TKH/boards/1733/timeline | `projects/takra-hub/` | `?project=hub` |
-| **takra-clip** | `/Users/ice/Documents/rf/takra-clip-main` | `ACL` | https://kitdi.atlassian.net/jira/software/projects/ACL/list | `projects/takra-clip/` — *ยังไม่มีรายงาน* | *ยังไม่ขึ้น hub* |
+| **takra-clip** | `/Users/ice/Documents/rf/takra-clip-main` | `ACL` | https://kitdi.atlassian.net/jira/software/projects/ACL/list | `projects/takra-clip/` | `?project=clip` |
 
-> **takra-clip** เพิ่งเข้าทะเบียน (7 ก.ย. 2026) — ยังไม่มีรายงานเทสใน repo นี้ จึง**ยังไม่มีกลุ่มใน `index.html`** และ `?project=clip` ยังใช้ไม่ได้ · พอมีรายงานชุดแรกค่อยเพิ่มกลุ่ม + ตัวนับตาม checklist ใน README
+> **takra-clip** เข้าทะเบียน 7 ก.ย. 2026 · รายงานชุดแรกคือ Back Office UI 70 เคส (`tools/build/clip_bo_cases.py` → `python3 tools/build/build_hub_report.py clipbo`) — แก้เคสที่ไฟล์ cases แล้ว build ใหม่ อย่าแก้ HTML ตรง ๆ
 >
 > Jira เป็นลิงก์อ้างอิงสำหรับคน — ไม่มี API token ใน repo นี้ ถ้าต้องดึงสถานะใบงานให้ผู้ใช้ export/แปะข้อมูลมา
 

@@ -43,7 +43,7 @@ qa-test-reports/
     └── README.md                   ← QA dashboard (แยกขาด ไม่เกี่ยวกับเว็บนี้)
 ```
 
-โปรเจคปัจจุบัน: `takra-ai` · `takra-insight` · `takra-rerun` · `takra-hub` · `takra-clip` *(อยู่ในทะเบียนแล้ว ยังไม่มีรายงาน)*
+โปรเจคปัจจุบัน: `takra-ai` · `takra-insight` · `takra-rerun` · `takra-hub` · `takra-clip`
 
 ### แกนของแต่ละประเภทไม่เหมือนกัน
 
@@ -145,6 +145,19 @@ python3 tools/build/build_hub_report.py           # เขียนทับไ�
 
 > แก้เคส = แก้ที่ `hub_cases.py` แล้ว build ใหม่ · อย่าแก้ HTML ตรง ๆ (จะหายตอน build รอบหน้า) ·
 > uid เริ่ม `tc-5001` เรียงตามลำดับเคส — **แทรกเคสกลางลิสต์จะเลื่อน uid ของเคสถัดไป** ถ้ามีผลเทสบันทึกแล้วให้เพิ่มท้ายกลุ่มแทน
+
+### รายงาน TAKRA Clip (Back Office) — สร้างจากสคริปต์เหมือนกัน
+
+`projects/takra-clip/2026/09/reports/takra-clip-bo-ui-test-cases-table.html` generate จาก
+[`tools/build/clip_bo_cases.py`](tools/build/clip_bo_cases.py) ด้วย builder ตัวเดียวกับ hub:
+
+```bash
+python3 tools/build/build_hub_report.py clipbo --check   # นับเคส/ตรวจ ไม่เขียน
+python3 tools/build/build_hub_report.py clipbo           # เขียนทับไฟล์ (คงผลเทสเดิมไว้)
+```
+
+> เคสครอบเฉพาะหน้าที่มีคอมโพเนนต์จริงใน BO แล้ว (11 กลุ่ม A–K · 70 เคส) · คำ UI ลอกจาก
+> `apps/takra-clip-backoffice/src/i18n/messages.ts` + `src/pages/*.text.ts` · uid เริ่ม `tc-7001`
 
 ## ตรวจความถูกต้องก่อน push
 
