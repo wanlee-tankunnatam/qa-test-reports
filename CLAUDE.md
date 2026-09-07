@@ -41,6 +41,7 @@ repo นี้เก็บรายงาน manual test case (UI) ของท�
 | **takra-rerun** | `/Users/ice/Documents/rf/takra-rerun` | `web/src` | **ฝังไทยในโค้ด** — grep คำใน `web/src/features/**` (ไม่มี i18n) | `epics.md` · `epics-mvp2.md` · `prd.md` |
 | **takra-insight** | `/Users/ice/Documents/rf/takra-insight` | `apps/web/src` | **ฝังไทยในโค้ด** — grep คำใน `apps/web/src/**` (ไม่มี i18n) | `epics.md` · `epics-th.md` · `prd.md` · `prd-th.md` (มีเวอร์ชันไทย) |
 | **takra-hub** | `/Users/ice/Documents/rf/takra-hub` (local develop ตามหลัง origin มาก — อ่านจาก `origin/develop` ผ่าน worktree/`git show`) | `apps/web/src` | **ฝังไทยในโค้ด** — grep คำใน `apps/web/src/**` (ไม่มี i18n) | ⚠️ อยู่ที่ `docs/` ไม่ใช่ `_bmad-output/planning-artifacts/` — `docs/epics.md` (MVP-1 Epic 1–4) · `docs/epics-mvp2.md` · `docs/prd.md` · เคส UI เดิม `_bmad-output/test-artifacts/case/*/ui.md` · รายงาน generate จาก `tools/build/hub_cases.py` (ดู README) |
+| **takra-clip** | `/Users/ice/Documents/rf/takra-clip-main` (repo ของกลาง — โค้ดจริงเป็น submodule ใต้ `apps/`: `takra-clip-service` Go+Postgres · `takra-clip-backoffice` Vue 3 · `takra-clip-extension` · ต้อง `git submodule update --init --recursive` ก่อน) | `apps/takra-clip-backoffice/src` | **i18n** — `apps/takra-clip-backoffice/src/i18n/messages.ts` (`export const th` · ห้ามใช้ข้อความเป็น key ใช้ path เช่น `nav.dashboard`) · แบบ UI ก่อนมีโค้ดอยู่ที่ `design/*.dc.html` (30 ไฟล์) | ⚠️ อยู่ที่ `docs/` — `docs/planning-artifacts/prd/full.md` · `docs/planning-artifacts/architecture/index.md` · `docs/planning-artifacts/flow-01..03` · `docs/epic/ep-01..05` · `docs/implementation-artifacts/` · `docs/test-artifacts/` · `docs/api/index.md` |
 
 > ก่อนเริ่มทุกครั้ง: ยืนยันว่ากำลังทำ **โปรเจกต์ไหน** แล้วใช้ path จากแถวนั้น — อย่าเอา path ข้ามโปรเจกต์
 
@@ -54,7 +55,10 @@ repo นี้เก็บรายงาน manual test case (UI) ของท�
 | **takra-rerun** | `/Users/ice/Documents/rf/takra-rerun` | `TAK` | https://kitdi.atlassian.net/jira/software/projects/TAK/boards/1661/timeline | `projects/takra-rerun/` | `?project=rerun` |
 | **takra-insight** | `/Users/ice/Documents/rf/takra-insight` | `TI` | https://kitdi.atlassian.net/jira/software/projects/TI/boards/1660/timeline | `projects/takra-insight/` | `?project=insight` |
 | **takra-hub** | `/Users/ice/Documents/rf/takra-hub` | `TKH` | https://kitdi.atlassian.net/jira/software/projects/TKH/boards/1733/timeline | `projects/takra-hub/` | `?project=hub` |
+| **takra-clip** | `/Users/ice/Documents/rf/takra-clip-main` | `ACL` | https://kitdi.atlassian.net/jira/software/projects/ACL/list | `projects/takra-clip/` — *ยังไม่มีรายงาน* | *ยังไม่ขึ้น hub* |
 
+> **takra-clip** เพิ่งเข้าทะเบียน (7 ก.ย. 2026) — ยังไม่มีรายงานเทสใน repo นี้ จึง**ยังไม่มีกลุ่มใน `index.html`** และ `?project=clip` ยังใช้ไม่ได้ · พอมีรายงานชุดแรกค่อยเพิ่มกลุ่ม + ตัวนับตาม checklist ใน README
+>
 > Jira เป็นลิงก์อ้างอิงสำหรับคน — ไม่มี API token ใน repo นี้ ถ้าต้องดึงสถานะใบงานให้ผู้ใช้ export/แปะข้อมูลมา
 
 **2 index แยกกัน:** รายงานผลทดสอบ = `index.html` (`/?project=<id>`) · เอกสาร timeline/แผนเดินงาน = `timeline/index.html` (`/timeline/?project=<id>`) — เอกสาร timeline ไม่ต้องใส่ในหน้ารายงาน

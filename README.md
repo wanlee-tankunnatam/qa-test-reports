@@ -43,7 +43,7 @@ qa-test-reports/
     └── README.md                   ← QA dashboard (แยกขาด ไม่เกี่ยวกับเว็บนี้)
 ```
 
-โปรเจคปัจจุบัน: `takra-ai` · `takra-insight` · `takra-rerun` · `takra-hub`
+โปรเจคปัจจุบัน: `takra-ai` · `takra-insight` · `takra-rerun` · `takra-hub` · `takra-clip` *(อยู่ในทะเบียนแล้ว ยังไม่มีรายงาน)*
 
 ### แกนของแต่ละประเภทไม่เหมือนกัน
 
