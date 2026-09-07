@@ -42,6 +42,7 @@ repo นี้เก็บรายงาน manual test case (UI) ของท�
 | **takra-insight** | `/Users/ice/Documents/rf/takra-insight` | `apps/web/src` | **ฝังไทยในโค้ด** — grep คำใน `apps/web/src/**` (ไม่มี i18n) | `epics.md` · `epics-th.md` · `prd.md` · `prd-th.md` (มีเวอร์ชันไทย) |
 | **takra-hub** | `/Users/ice/Documents/rf/takra-hub` (local develop ตามหลัง origin มาก — อ่านจาก `origin/develop` ผ่าน worktree/`git show`) | `apps/web/src` | **ฝังไทยในโค้ด** — grep คำใน `apps/web/src/**` (ไม่มี i18n) | ⚠️ อยู่ที่ `docs/` ไม่ใช่ `_bmad-output/planning-artifacts/` — `docs/epics.md` (MVP-1 Epic 1–4) · `docs/epics-mvp2.md` · `docs/prd.md` · เคส UI เดิม `_bmad-output/test-artifacts/case/*/ui.md` · รายงาน generate จาก `tools/build/hub_cases.py` (ดู README) |
 | **takra-clip** | `/Users/ice/Documents/rf/takra-clip-main` (repo ของกลาง — โค้ดจริงเป็น submodule ใต้ `apps/`: `takra-clip-service` Go+Postgres · `takra-clip-backoffice` Vue 3 · `takra-clip-extension` · ต้อง `git submodule update --init --recursive` ก่อน) | `apps/takra-clip-backoffice/src` | **i18n** — `apps/takra-clip-backoffice/src/i18n/messages.ts` (`export const th` · ห้ามใช้ข้อความเป็น key ใช้ path เช่น `nav.dashboard`) · แบบ UI ก่อนมีโค้ดอยู่ที่ `design/*.dc.html` (30 ไฟล์) | ⚠️ อยู่ที่ `docs/` — `docs/planning-artifacts/prd/full.md` · `docs/planning-artifacts/architecture/index.md` · `docs/planning-artifacts/flow-01..03` · `docs/epic/ep-01..05` · `docs/implementation-artifacts/` · `docs/test-artifacts/` · `docs/api/index.md` |
+| **takra-farm** (TAKRA Post) | `/Users/ice/Documents/rf/takra-farm` (แอปเดสก์ท็อป Tauri 2 · Rust + Vue 3 · ต้องมี `adb` บน PATH) | `src` (Vue 3 + Naive UI) · `src-tauri` (Rust) | **i18n** — `src/i18n/locales/th-TH.yml` (คู่กับ `en.yml`) | ⚠️ อยู่ที่ `docs/` — `docs/prd.md` (Brownfield PRD) · `AUTO-SCHEDULE-SPEC.md` · `CONTENT-DISPATCH.md` · `CONTENT-STUDIO-PRD.md` · `TIKTOK-QUEUE-SYSTEM.md` · `LICENSING.md` |
 
 > ก่อนเริ่มทุกครั้ง: ยืนยันว่ากำลังทำ **โปรเจกต์ไหน** แล้วใช้ path จากแถวนั้น — อย่าเอา path ข้ามโปรเจกต์
 
@@ -56,7 +57,10 @@ repo นี้เก็บรายงาน manual test case (UI) ของท�
 | **takra-insight** | `/Users/ice/Documents/rf/takra-insight` | `TI` | https://kitdi.atlassian.net/jira/software/projects/TI/boards/1660/timeline | `projects/takra-insight/` | `?project=insight` |
 | **takra-hub** | `/Users/ice/Documents/rf/takra-hub` | `TKH` | https://kitdi.atlassian.net/jira/software/projects/TKH/boards/1733/timeline | `projects/takra-hub/` | `?project=hub` |
 | **takra-clip** | `/Users/ice/Documents/rf/takra-clip-main` | `ACL` | https://kitdi.atlassian.net/jira/software/projects/ACL/list | `projects/takra-clip/` | `?project=clip` |
+| **takra-farm** | `/Users/ice/Documents/rf/takra-farm` | *ยังไม่พบใน repo* | — | `projects/takra-farm/` | `?project=farm` |
 
+> **takra-farm** เข้าทะเบียน 7 ก.ย. 2026 · รายงานชุดแรก Desktop UI 62 เคส (`tools/build/farm_cases.py` → `python3 tools/build/build_hub_report.py farm`)
+>
 > **takra-clip** เข้าทะเบียน 7 ก.ย. 2026 · รายงานชุดแรกคือ Back Office UI 70 เคส (`tools/build/clip_bo_cases.py` → `python3 tools/build/build_hub_report.py clipbo`) — แก้เคสที่ไฟล์ cases แล้ว build ใหม่ อย่าแก้ HTML ตรง ๆ
 >
 > Jira เป็นลิงก์อ้างอิงสำหรับคน — ไม่มี API token ใน repo นี้ ถ้าต้องดึงสถานะใบงานให้ผู้ใช้ export/แปะข้อมูลมา

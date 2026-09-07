@@ -43,7 +43,7 @@ qa-test-reports/
     └── README.md                   ← QA dashboard (แยกขาด ไม่เกี่ยวกับเว็บนี้)
 ```
 
-โปรเจคปัจจุบัน: `takra-ai` · `takra-insight` · `takra-rerun` · `takra-hub` · `takra-clip`
+โปรเจคปัจจุบัน: `takra-ai` · `takra-insight` · `takra-rerun` · `takra-hub` · `takra-clip` · `takra-farm`
 
 ### แกนของแต่ละประเภทไม่เหมือนกัน
 
@@ -155,6 +155,15 @@ python3 tools/build/build_hub_report.py           # เขียนทับไ�
 python3 tools/build/build_hub_report.py clipbo --check   # นับเคส/ตรวจ ไม่เขียน
 python3 tools/build/build_hub_report.py clipbo           # เขียนทับไฟล์ (คงผลเทสเดิมไว้)
 ```
+
+รายงานของ **takra-farm** (TAKRA Post — แอปเดสก์ท็อป) ใช้ builder ตัวเดียวกัน:
+
+```bash
+python3 tools/build/build_hub_report.py farm --check
+python3 tools/build/build_hub_report.py farm
+```
+
+> เคสอยู่ที่ [`tools/build/farm_cases.py`](tools/build/farm_cases.py) · คำ UI ลอกจาก `src/i18n/locales/th-TH.yml` · uid เริ่ม `tc-8001`
 
 > เคสครอบเฉพาะหน้าที่มีคอมโพเนนต์จริงใน BO แล้ว (11 กลุ่ม A–K · 70 เคส) · คำ UI ลอกจาก
 > `apps/takra-clip-backoffice/src/i18n/messages.ts` + `src/pages/*.text.ts` · uid เริ่ม `tc-7001`
