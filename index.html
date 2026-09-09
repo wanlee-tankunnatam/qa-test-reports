@@ -526,7 +526,7 @@
   var dclr = document.getElementById('dclr');
   var empty = document.getElementById('empty');
   var typeFilter = 'test';
-  var projectFilter = 'rerun';   // one project at a time; default = newest project
+  var projectFilter = 'rerun';   // ตั้งค่าจริงด้านล่าง = โปรเจกต์ที่มีรายงานใหม่สุด
 
   function rowDate(r){
     var c = r.querySelector('.c-date');
@@ -534,6 +534,40 @@
     var m = c.textContent.match(/\d{4}-\d{2}-\d{2}/);
     return m ? m[0] : '';
   }
+  // ── เรียง "ใหม่ล่าสุดขึ้นก่อน" ให้เองตอนโหลด (อ่านวันที่จากคอลัมน์ UPDATED) ──
+  // ทำที่ JS เพื่อไม่ต้องมาไล่จัดลำดับใน HTML ทุกครั้งที่เพิ่มรายงาน
+  function groupDate(g){
+    return [].slice.call(g.querySelectorAll('tbody tr')).reduce(function(mx, r){
+      var d = rowDate(r); return d > mx ? d : mx;
+    }, '');
+  }
+  groups.forEach(function(g){
+    var tb = g.querySelector('tbody');
+    if(!tb) return;
+    [].slice.call(tb.querySelectorAll('tr'))
+      .sort(function(a, b){ return rowDate(b).localeCompare(rowDate(a)); })
+      .forEach(function(tr){ tb.appendChild(tr); });
+  });
+  // เรียงกลุ่มบนหน้า + เมนูซ้ายตามรายงานใหม่สุดของแต่ละโปรเจกต์ ("Supporting Notes" อยู่ท้ายเสมอ)
+  var order = {};
+  groups.forEach(function(g){ order[g.getAttribute('data-project')] = groupDate(g); });
+  function byNewest(a, b){
+    if(a === 'notes') return 1;
+    if(b === 'notes') return -1;
+    return (order[b] || '').localeCompare(order[a] || '');
+  }
+  groups.slice().sort(function(a, b){
+    return byNewest(a.getAttribute('data-project'), b.getAttribute('data-project'));
+  }).forEach(function(g){ g.parentNode.appendChild(g); });
+  navItems.slice().sort(function(a, b){
+    return byNewest(a.getAttribute('data-project'), b.getAttribute('data-project'));
+  }).forEach(function(it){ it.parentNode.appendChild(it); });
+  // ค่าเริ่มต้น = โปรเจกต์ที่มีรายงานใหม่สุด (ไม่นับ Supporting Notes)
+  var DEFAULT_PROJECT = navItems.map(function(x){ return x.getAttribute('data-project'); })
+    .filter(function(pj){ return pj !== 'notes'; })
+    .sort(byNewest)[0] || 'rerun';
+  projectFilter = DEFAULT_PROJECT;
+
   function projectHasType(proj, type){
     return rows.some(function(r){
       return r.closest('.group').getAttribute('data-project') === proj
@@ -575,7 +609,7 @@
   var VALID = navItems.map(function(x){ return x.getAttribute('data-project'); });
   function selectProject(proj, opts){
     opts = opts || {};
-    if(VALID.indexOf(proj) === -1) proj = 'rerun';
+    if(VALID.indexOf(proj) === -1) proj = DEFAULT_PROJECT;
     projectFilter = proj;
     q.value = '';                                              // leave global-search mode
     typeFilter = projectHasType(proj, 'test') ? 'test' : 'all';  // focus Test Cases when the project has any
@@ -636,7 +670,7 @@
   if(initial && VALID.indexOf(initial) !== -1){
     selectProject(initial, {scroll:false, replace:true});   // deep-link: keep the ?project= in the URL
   } else {
-    selectProject('rerun', {scroll:false});                 // default project, leave URL clean
+    selectProject(DEFAULT_PROJECT, {scroll:false});         // ค่าเริ่มต้น = โปรเจกต์ที่มีรายงานใหม่สุด, ไม่ใส่ ?project= ใน URL
   }
 })();
 </script>
