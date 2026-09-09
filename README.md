@@ -177,6 +177,15 @@ python3 tools/build/build_hub_report.py lrready --check
 python3 tools/build/build_hub_report.py lrready
 ```
 
+รายงาน **คุณภาพของ takra-rerun** ("ไลฟ์รีรันได้อย่างมีประสิทธิภาพ"):
+
+```bash
+python3 tools/build/build_hub_report.py rerunquality --check
+python3 tools/build/build_hub_report.py rerunquality
+```
+
+> เคสอยู่ที่ [`tools/build/rerun_quality_cases.py`](tools/build/rerun_quality_cases.py) · uid เริ่ม `tc-4101` · เนื้อเคสลอกจากต้นฉบับ `rerun-efficiency-quality-plan.html` (QA · 2026-09-09) · ผูกกับเกณฑ์ปิด Q1–Q10 ในแผน
+
 > เคสอยู่ที่ [`tools/build/insight_live_readiness_cases.py`](tools/build/insight_live_readiness_cases.py) · uid เริ่ม `tc-2201` · เนื้อเคสลอกจากต้นฉบับ `live-readiness-test-cases.html` (QA · 2026-09-09) คู่กับ `live-readiness-test-plan.html`
 
 > เคสอยู่ที่ [`tools/build/insight_mvp2_e46_cases.py`](tools/build/insight_mvp2_e46_cases.py) · uid เริ่ม `tc-2101` · ทั้งชุดเป็นเคส **รอรับของ** (Epic 4 ยังไม่มีหน้าจอ · Epic 6 ถูกซ่อนด้วยแฟลก `SHOW_BLOCKED = false`)
