@@ -59,6 +59,8 @@ repo นี้เก็บรายงาน manual test case (UI) ของท�
 | **takra-clip** | `/Users/ice/Documents/rf/takra-clip-main` | `ACL` | https://kitdi.atlassian.net/jira/software/projects/ACL/list | `projects/takra-clip/` | `?project=clip` |
 | **takra-farm** | `/Users/ice/Documents/rf/takra-farm` | *ยังไม่พบใน repo* | — | `projects/takra-farm/` | `?project=farm` |
 
+> **takra-ai คุณภาพไลฟ์รีรัน** (9 ก.ย. 2026) — 15 เคส 3 รอบ อยู่ที่ `tools/build/ai_quality_cases.py` → `python3 tools/build/build_hub_report.py aiquality`
+>
 > **takra-rerun คุณภาพ/ประสิทธิภาพการไลฟ์รีรัน** (9 ก.ย. 2026) — 14 เคส 3 รอบ อยู่ที่ `tools/build/rerun_quality_cases.py` → `python3 tools/build/build_hub_report.py rerunquality`
 >
 > **takra-insight Live Readiness** (9 ก.ย. 2026) — เคสคุณภาพข้าม epic 33 เคส 8 มิติ อยู่ที่ `tools/build/insight_live_readiness_cases.py` → `python3 tools/build/build_hub_report.py lrready`
