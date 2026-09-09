@@ -1,0 +1,1803 @@
+<!DOCTYPE html>
+<html lang="th"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>[คุณภาพ] TAKRA Insight — Live Readiness · ความพร้อมใช้บนไลฟ์จริง</title>
+<style>
+:root{
+  --bg:#f5f6f8;--card:#fff;--card2:#f0f2f5;--line:#dce0e7;
+  --txt:#1f2430;--muted:#6b7280;--accent:#2563eb;
+  --p0:#dc2626;--p1:#ea7a18;--p2:#2563eb;--p3:#94a3b8;
+  --pass:#16a34a;--fail:#dc2626;--hold:#d97706;--skip:#9ca3af;--block:#7c3aed;
+  --lv-ui:#db2777;--lv-e2e:#ea580c;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--txt);font-family:"Segoe UI","Sarabun",system-ui,sans-serif;line-height:1.5;font-size:13px}
+a{color:var(--accent)}
+header.top{padding:20px 28px 14px;border-bottom:1px solid var(--line);background:linear-gradient(135deg,#1e3a8a,#2563eb);color:#fff}
+header.top h1{margin:0 0 4px;font-size:20px}
+header.top .sub{font-size:12.5px;opacity:.88}
+header.top .meta{margin-top:10px;display:flex;flex-wrap:wrap;gap:8px}
+.pill{display:inline-block;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:600;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.35);color:#fff}
+.wrap{padding:16px 22px 80px;max-width:1280px;margin:0 auto}
+.counts{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 12px}
+.cnt{font-size:12px;font-weight:700;padding:5px 12px;border-radius:8px;border:1px solid var(--line);background:#fff}
+.cnt b{font-size:14px}
+.cnt.pass{color:var(--pass);border-color:#bbf7d0}.cnt.fail{color:var(--fail);border-color:#fecaca}
+.cnt.hold{color:var(--hold);border-color:#fde68a}.cnt.block{color:var(--block);border-color:#e9d5ff}
+.cnt.pending{color:var(--muted)}.cnt.skip{color:var(--skip)}
+.runsum{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin:0 0 14px}
+.runsum h3{margin:0 0 8px;font-size:13px}
+.sumchips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px}
+.progress{height:10px;background:var(--card2);border-radius:6px;overflow:hidden;border:1px solid var(--line)}
+.progressbar{height:100%;background:var(--pass);width:0;transition:width .3s}
+.hint{color:var(--muted);font-size:12px}
+.toolbar{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;margin:0 0 12px}
+.btn{font-size:12px;font-weight:600;padding:5px 12px;border-radius:7px;border:1px solid var(--line);background:#fff;color:var(--txt);cursor:pointer}
+.btn:hover{border-color:var(--accent);color:var(--accent)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.btn.primary:hover{opacity:.88}
+.filters{background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:0 0 14px}
+.filters .row{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:3px 0}
+.filters label{font-size:11px;font-weight:700;color:var(--muted);min-width:60px}
+.fchip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:3px 11px;font-size:11.5px;cursor:pointer;color:var(--txt)}
+.fchip:hover{border-color:var(--accent);color:var(--accent)}
+.fchip.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.clearbtn{font-size:11px;padding:3px 10px;border:1px solid var(--line);border-radius:6px;background:#fff;color:var(--muted);cursor:pointer;margin-left:4px}
+.clearbtn:hover{color:var(--fail);border-color:var(--fail)}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:#fff}
+table.tc{border-collapse:collapse;width:100%;min-width:900px;background:#fff}
+table.tc th,table.tc td{padding:8px 10px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+table.tc thead th{position:sticky;top:0;background:var(--card2);color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.4px;z-index:3;border-bottom:2px solid var(--line)}
+tr.epicrow td{background:#1e3a8a;color:#fff;font-weight:700;font-size:13px;padding:9px 12px}
+tr.epicrow .rp{font-weight:400;font-size:11px;opacity:.75;margin-left:6px}
+tr.featrow td{background:#eaf1fb;color:#1d4ed8;font-weight:700;font-size:12px}
+tr.featrow .rp{font-weight:500;font-size:11px;color:#3b6fc4;margin-left:8px}
+tr.trow{cursor:pointer}tr.trow:hover{background:#f7f9fc}tr.trow.open{background:#eef4fe}
+.tog{display:inline-block;width:14px;color:var(--muted);transition:transform .15s;font-size:11px}
+tr.trow.open .tog{transform:rotate(90deg);color:var(--accent)}
+.cid{font-family:monospace;font-size:10px;color:var(--muted);white-space:nowrap}
+td.jira{white-space:nowrap}td.jira a{font-family:monospace;font-size:10.5px;font-weight:700;color:var(--accent);text-decoration:none}td.jira a:hover{text-decoration:underline}
+.ctitle{font-weight:600;font-size:12.5px;max-width:400px}
+td.lvl{white-space:nowrap}
+.lv{font-size:10px;font-weight:700;padding:2px 7px;border-radius:5px;border:1px solid;background:#fff;display:inline-block;vertical-align:middle}
+.lv.lvl-ui{color:var(--lv-ui);border-color:var(--lv-ui)}
+.lv.lvl-e2e{color:var(--lv-e2e);border-color:var(--lv-e2e)}
+.ac{font-size:10px;color:var(--muted);font-family:monospace;margin-left:4px}
+.prio{font-weight:800;font-size:10px;padding:3px 7px;border-radius:5px;color:#fff;display:inline-block;white-space:nowrap}
+.p0{background:var(--p0)}.p1{background:var(--p1)}.p2{background:var(--p2)}
+td.status{white-space:nowrap}
+.stb{font-weight:700;font-size:10px;padding:3px 8px;border-radius:5px;display:inline-block}
+.stb.pending{background:#fff;border:1px solid var(--line);color:var(--muted)}
+.stb.pass{background:var(--pass);color:#fff}.stb.fail{background:var(--fail);color:#fff}
+.stb.hold{background:var(--hold);color:#fff}.stb.block{background:var(--block);color:#fff}
+.stb.skip{background:var(--skip);color:#fff}
+tr.detail{display:none}tr.detail.show{display:table-row}
+tr.detail>td{background:#fafbfc;padding:0;border-bottom:2px solid var(--line)}
+.card{padding:16px 20px}
+.card .h-title{font-size:14px;font-weight:700;margin:0 0 3px}
+.card .h-prio{font-size:12px;color:var(--muted);margin:0 0 12px}
+.card .sec{margin:0 0 12px}.card .sec:last-child{margin-bottom:0}
+.card .sec h4{margin:0 0 5px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.3px;color:#374151}
+.card .sec ol,.card .sec ul{margin:0;padding-left:18px}
+.card .sec li{margin:2px 0;font-size:12.5px}
+.card .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:760px){.card .grid{grid-template-columns:1fr}}
+.actualbox{display:block;width:100%;box-sizing:border-box;background:#fff;border:1px dashed var(--line);border-radius:7px;padding:7px 11px;color:var(--txt);font:inherit;font-size:12px;line-height:1.55;min-height:78px;resize:vertical}
+.actualbox::placeholder{color:var(--muted);font-style:italic}
+.actualbox:focus{outline:none;border-style:solid;border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,99,235,.13)}
+.actualbox.filled{border-style:solid;border-color:var(--accent)}
+.statusrow{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.opt{font-size:11px;font-weight:700;padding:4px 11px;border-radius:6px;border:1px solid var(--line);background:#fff;color:var(--muted);cursor:pointer}
+.opt:hover{opacity:.8}
+.opt.pass{border-color:var(--pass)}.opt.fail{border-color:var(--fail)}
+.opt.hold{border-color:var(--hold)}.opt.block{border-color:var(--block)}.opt.skip{border-color:var(--skip)}
+.opt.sel.pass{background:var(--pass);color:#fff}
+.opt.sel.fail{background:var(--fail);color:#fff}
+.opt.sel.hold{background:var(--hold);color:#fff}
+.opt.sel.block{background:var(--block);color:#fff}
+.opt.sel.skip{background:var(--skip);color:#fff}
+tr.trow.hide,tr.detail.hide{display:none!important}
+tr.epicrow.hide,tr.featrow.hide{display:none!important}
+.note-box{background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:8px 12px;font-size:12px;color:#92400e;margin:0 0 12px}
+footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
+@media print{.tablewrap{overflow:visible}table.tc{min-width:0}tr.detail{display:table-row!important}.toolbar,.filters,.runsum{display:none}}
+/* Jira per-case links */
+.jira-sec .jira-list{display:flex;flex-direction:column;gap:4px;margin-bottom:6px}
+.jira-item{display:flex;align-items:center;gap:8px;font-size:12px}
+.jira-item a{color:var(--accent);text-decoration:none;font-family:monospace;font-weight:700}
+.jira-item a:hover{text-decoration:underline}
+.jira-del{cursor:pointer;color:var(--fail);font-weight:700;font-size:11px;user-select:none}
+.jira-add{display:flex;gap:6px}
+.jira-input{flex:1;min-width:0;padding:5px 8px;border:1px solid var(--line);border-radius:6px;font-size:12px;font-family:inherit;background:#fff;color:var(--txt)}
+.jira-btn{white-space:nowrap}
+.edge-badge{display:inline-block;margin-left:6px;padding:0 6px;border-radius:4px;font-size:9.5px;font-weight:700;color:#92400e;background:#fef3c7;border:1px solid #fde68a;vertical-align:middle}
+.jira-cell{white-space:normal}
+.jira-chip{display:inline-block;margin:1px 3px 1px 0;padding:1px 6px;border:1px solid var(--line);border-radius:5px;font-family:monospace;font-size:10.5px;font-weight:700;color:var(--accent);text-decoration:none;background:var(--card2)}
+.jira-chip:hover{text-decoration:underline}
+/* Epic assignee + section color */
+.epic-owner-wrap{margin-left:12px;font-weight:400;font-size:11px}
+.feat-owner{font-size:11px;padding:2px 6px;border:1px solid var(--line);border-radius:5px;background:#fff;color:var(--txt);cursor:pointer}
+tr.featrow.owner-ice td{background:#60a5fa;border-left:4px solid #1d4ed8}
+tr.featrow.owner-moss td{background:#a78bfa;border-left:4px solid #6d28d9}
+tr.sec-ice>td:first-child{box-shadow:inset 5px 0 0 #2563eb}
+tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
+.feat-owner.owner-ice{border-color:#2563eb;color:#2563eb;font-weight:700}
+.feat-owner.owner-moss{border-color:#7c3aed;color:#7c3aed;font-weight:700}
+
+/* ประเภทเคส (kind) */
+.kd{display:inline-block;margin-left:6px;padding:0 6px;border-radius:4px;font-size:9.5px;font-weight:700;vertical-align:middle;border:1px solid;white-space:nowrap}
+.kd-happy{color:#15803d;background:#f0fdf4;border-color:#bbf7d0}
+.kd-neg{color:#b91c1c;background:#fef2f2;border-color:#fecaca}
+.kd-bnd{color:#b45309;background:#fffbeb;border-color:#fde68a}
+.kd-val{color:#6d28d9;background:#f5f3ff;border-color:#ddd6fe}
+.kd-exc{color:#be123c;background:#fff1f2;border-color:#fecdd3}
+.kd-perm{color:#0f766e;background:#f0fdfa;border-color:#99f6e4}
+.kd-data{color:#1d4ed8;background:#eff6ff;border-color:#bfdbfe}
+.chk{margin-top:4px;padding:6px 8px;border-left:3px solid #16a34a;background:rgba(22,163,74,.07)}
+.noui{display:inline-block;margin-left:6px;padding:0 6px;border-radius:4px;font-size:9.5px;font-weight:700;vertical-align:middle;color:#991b1b;background:#fee2e2;border:1px solid #fca5a5;white-space:nowrap}
+</style>
+</head>
+<body>
+<a id="hub-back-btn" href="https://wanlee-tankunnatam.github.io/qa-test-reports/?project=insight" title="กลับไปหน้ารวมรายงาน (Hub)" style="position:fixed;top:12px;right:14px;z-index:99999;display:inline-flex;align-items:center;gap:7px;padding:10px 18px;border-radius:999px;background:#ffffff;color:#1e3a8a;font-size:14px;font-weight:800;text-decoration:none;box-shadow:0 4px 16px rgba(0,0,0,.35);border:2px solid #1e3a8a;font-family:'Segoe UI','Sarabun',system-ui,sans-serif">🏠 รายงานทั้งหมด</a>
+
+
+<script id="store-data" type="application/json">
+{}
+</script>
+
+<header class="top">
+  <h1>🎯 [คุณภาพ] TAKRA Insight — Live Readiness · ความพร้อมใช้บนไลฟ์จริง</h1>
+  <div class="sub">เทสความพร้อมใช้บนไลฟ์จริง (cross-cutting ไม่ผูก epic เดียว) · 33 เคส ใน 8 มิติ · Target: แอปเดสก์ท็อป TAKRA Insight (packaged build)</div>
+  <div class="meta">
+    <span class="pill">29 เคส + E2E 4 = 33</span>
+    <span class="pill">8 มิติ (D1–D8)</span>
+    <span class="pill">UI + E2E · manual</span>
+    <span class="pill">P0 18 · P1 14 · P2 1</span>
+    <span class="pill">ประเภท: Happy 7 · Negative 4 · Boundary 5 · Exception 7 · Permission 1 · Data 9</span>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="note-box">🖥️ <b>Test target:</b> แอปเดสก์ท็อป <b>TAKRA Insight</b> — ต้องใช้ <b>packaged build ที่ติดตั้งจริง</b> ไม่ใช่ engine จาก <code>.venv</code> · เข้าสู่ระบบด้วยบัญชีที่มีสิทธิ์ (entitled) · ต้องมีร้านที่<b>ไลฟ์อยู่จริง</b> และบัญชี TikTok ที่ 2 ไว้ยิง gift/like/follow<br>📎 <b>ที่มา:</b> <code>live-readiness-test-cases.html</code> (QA · Ice · 2026-09-09) คู่กับ <code>live-readiness-test-plan.html</code> — แผนข้าม epic ตอบคำถามเดียว: "ผู้ใช้เปิด Takra Insight แล้วรันไลฟ์จริงได้ครบ ทน และเชื่อถือได้ไหม" · วัดกับ develop @ <code>b82bb4f</code> (2026-09-08)<br>📐 <b>8 มิติ:</b> D1 เริ่มไลฟ์ · D2 คอมเมนต์ครบ/สด/ไม่ซ้ำ · D3 สัญญาณอื่น (gift · like · follow · share · shopping) · D4 อารมณ์และ HUD · D5 แจ้งเตือน · D6 ทนทาน (resilience) · D7 ทนเวลาและโหลด (soak) · D8 จบไลฟ์และรายงาน<br>🧪 <b>ประเภทการทดสอบ:</b> <b>Manual</b> = คนทำบนช่องจริง · <b>Measure</b> = คนทำ + <u>เก็บตัวเลขจริง</u> ลง Actual (ไม่ใช่แค่ผ่าน/ตก) · <b>Automated</b> = ใช้ script ที่มีอยู่ (ติดป้าย E2E)<br>⚠️ <b>เกณฑ์ตัวเลขบางข้อยังเป็นค่าเสนอ รอ PM/ทีมเคาะ</b> (เขียนกำกับไว้ใน Expected ของเคสนั้น) — ถ้ายังไม่เคาะ ให้บันทึกค่าที่วัดได้ไว้ก่อน อย่าตัดสินผ่าน/ตกเอง</div>
+
+  <div class="runsum">
+    <h3>📊 สรุปผล Manual Test</h3>
+    <div class="sumchips">
+      <span class="cnt pass">PASS <b id="sum-pass">0</b></span>
+      <span class="cnt fail">FAIL <b id="sum-fail">0</b></span>
+      <span class="cnt hold">HOLD <b id="sum-hold">0</b></span>
+      <span class="cnt block">BLOCKED <b id="sum-block">0</b></span>
+      <span class="cnt skip">SKIP <b id="sum-skip">0</b></span>
+      <span class="cnt pending">รอเทส <b id="sum-pending">33</b></span>
+    </div>
+    <div class="progress"><div id="sumbar" class="progressbar" style="width:0%"></div></div>
+    <div class="hint" id="sumpct" style="margin-top:5px">0% ทดสอบแล้ว (0/33)</div>
+  </div>
+
+  <div class="toolbar">
+    <button class="btn" onclick="toggleAll(true)">▸ กางทั้งหมด</button>
+    <button class="btn" onclick="toggleAll(false)">▾ ยุบทั้งหมด</button>
+    <span class="hint">💡 คลิกแถว → ดู Steps / Expected (UI only)</span>
+    <span style="margin-left:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+      <span id="save-status" class="hint" style="white-space: nowrap; color: var(--muted);">✓ ตรงกับ GitHub</span>
+      <label class="hint" style="display:flex;gap:4px;align-items:center;white-space:nowrap;cursor:pointer" title="บันทึกขึ้น GitHub อัตโนมัติหลังหยุดแก้ ~5 วินาที"><input type="checkbox" id="chk-autosave" checked=""> auto-save</label>
+      <button class="btn" id="btn-token" title="ใส่/เปลี่ยน GitHub token (ถ้าเซฟไม่ขึ้น/token เสีย กดอันนี้)">🔑 Token</button>
+      <button class="btn" id="btn-refresh" title="ดึงผลล่าสุดจาก GitHub มา merge (ไม่ต้อง reload)">🔄 ดึงล่าสุด</button>
+      <button class="btn primary" id="btn-publish" style="">☁️ บันทึกขึ้น GitHub</button>
+      <button class="btn" id="btn-save-file" title="ดาวน์โหลด HTML ไว้ใช้ offline">💾 ดาวน์โหลด</button>
+      <button class="btn" style="color:var(--fail)" id="btn-reset">🗑 ล้างผล</button>
+    </span>
+  </div>
+
+  <div class="filters">
+    <div class="row"><label>กลุ่ม</label>
+      <button class="fchip" data-f="feat" data-v="lrD1">D1 · เริ่มไลฟ์ (3)</button><button class="fchip" data-f="feat" data-v="lrD2">D2 · คอมเมนต์ครบ สด ไม่ซ้ำ (5)</button><button class="fchip" data-f="feat" data-v="lrD3">D3 · สัญญาณอื่น (gift · like · follow · share · shopping) (3)</button><button class="fchip" data-f="feat" data-v="lrD4">D4 · อารมณ์และ HUD (6)</button><button class="fchip" data-f="feat" data-v="lrD5">D5 · แจ้งเตือน (alert) (3)</button><button class="fchip" data-f="feat" data-v="lrD6">D6 · ทนทาน (resilience) (6)</button><button class="fchip" data-f="feat" data-v="lrD7">D7 · ทนเวลาและโหลด (soak) (4)</button><button class="fchip" data-f="feat" data-v="lrD8">D8 · จบไลฟ์และรายงาน (3)</button>
+      <button class="clearbtn" data-clear="feat">✕</button>
+    </div>
+    <div class="row"><label>ประเภท</label>
+      <button class="fchip" data-f="kind" data-v="happy" title="flow ปกติบนไลฟ์จริง">Happy Path (7)</button><button class="fchip" data-f="kind" data-v="negative" title="ข้อมูลผิด / สิ่งที่ต้องไม่เกิด">Negative (4)</button><button class="fchip" data-f="kind" data-v="boundary" title="เกณฑ์ตัวเลข · โหลดหนัก · ขอบของทรัพยากร">Boundary/Edge (5)</button><button class="fchip" data-f="kind" data-v="exception" title="เน็ตหลุด · session ขาด · process ตาย · ปิดแอปกลางคัน">Exception/Error (7)</button><button class="fchip" data-f="kind" data-v="permission" title="สิทธิ์ / ต้อง login / ต้องติดตามช่องก่อน">Permission (1)</button><button class="fchip" data-f="kind" data-v="data" title="ครบถ้วน · ไม่ซ้ำ · ตรงกันระหว่าง UI กับ DB">Data (9)</button>
+      <button class="clearbtn" data-clear="kind">✕</button>
+    </div>
+    <div class="row"><label>Priority</label>
+      <button class="fchip" data-f="prio" data-v="P0">P0</button>
+      <button class="fchip" data-f="prio" data-v="P1">P1</button>
+      <button class="fchip" data-f="prio" data-v="P2">P2</button>
+      <button class="clearbtn" data-clear="prio">✕</button>
+    </div>
+    <div class="row"><label>สถานะ</label>
+      <button class="fchip" data-f="status" data-v="pass">✅ PASS</button>
+      <button class="fchip" data-f="status" data-v="fail">❌ FAIL</button>
+      <button class="fchip" data-f="status" data-v="hold">⏸ HOLD</button>
+      <button class="fchip" data-f="status" data-v="block">🚫 BLOCKED</button>
+      <button class="fchip" data-f="status" data-v="skip">⏭ SKIP</button>
+      <button class="fchip" data-f="status" data-v="pending">⏳ รอเทส</button>
+      <button class="clearbtn" data-clear="status">✕</button>
+    </div>
+  </div>
+
+  <div class="tablewrap">
+  <table class="tc" id="main-table">
+    <thead><tr><th style="width:22px"></th><th style="width:130px">TC ID</th><th>Test Case</th><th style="width:74px">Level</th><th style="width:55px">Pri</th><th style="width:80px">Status</th><th style="width:120px">Jira</th></tr></thead>
+    <tbody>
+
+<!-- lrD1 -->
+<tr class="epicrow" data-epic="lrD1"><td colspan="7">▶️ D1 · เริ่มไลฟ์ <span class="rp">(3 เคส)</span></td></tr>
+<tr class="featrow" data-featkey="lr-d1"><td colspan="7">📁 เริ่มไลฟ์ <span class="rp"><span class="lv lvl-ui">🌐 3</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="lr-d1"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow" data-feat="lrD1" data-level="ui" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-LR-D1-POS-01</td>
+  <td class="ctitle">TAKRA Insight วาง URL ร้านที่ไลฟ์อยู่แล้วต้องเห็นวิดีโอและคอมเมนต์แรกภายในเวลาที่กำหนด <span class="kd kd-happy">Happy Path</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-2201"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2201"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">TAKRA Insight วาง URL ร้านที่ไลฟ์อยู่แล้วต้องเห็นวิดีโอและคอมเมนต์แรกภายในเวลาที่กำหนด</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติบนไลฟ์จริง)</span> · D1 · เริ่มไลฟ์</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>ร้านในลิสต์ไลฟ์อยู่จริง (probe แล้ว)</li><li>ใช้ packaged build ที่ติดตั้งจริง ไม่ใช่ engine จาก .venv</li><li>เตรียมนาฬิกาจับเวลา / ใช้ log [live-real] จาก spec</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Insight (App) แล้ว Login ด้วยบัญชีที่มีสิทธิ์ใช้งาน (entitled)</li><li>ไปที่ หน้าหลัก → กด วิเคราะห์ไลฟ์ใหม่ → วาง URL ของร้าน แล้วเริ่มจับเวลาทันทีที่กด เปิดดูไลฟ์</li><li>บันทึกเวลาที่วิดีโอเริ่มเล่น (เฟรมแรกปรากฏ ไม่มี spinner กำลังโหลดวิดีโอ)</li><li>บันทึกเวลาที่คอมเมนต์แรกปรากฏบนแผงคอมเมนต์</li><li>เปิด traka.db ด้วย sqlite3 อ่าน ingest_time ของ engagement แถวแรกของ session เทียบเวลาเริ่ม</li><li>ทำซ้ำ 3 รอบ (ร้านเดิมหรือร้านถัดไปในลิสต์) แล้วบันทึกค่าทุกรอบ</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>วิดีโอเริ่มเล่นภายใน ≤ 15 วินาที (ค่าเสนอ · รอ PM เคาะ) ทั้ง 3 รอบ</li><li>คอมเมนต์แรกปรากฏภายใน ≤ 30 วินาที สำหรับร้านที่มีคอมเมนต์อยู่แล้ว</li><li>ไม่มีข้อความ error หรือ spinner ค้างระหว่างรอ</li><li>ค่าที่วัดถูกบันทึกเป็นตัวเลขจริงในรายงาน ไม่ใช่ "ผ่าน/ตก" ลอย ๆ</li></ul><div class="hint" style="margin-top:6px">ประเภท: Measure — คนทำ + เก็บตัวเลข · ที่มา: live-readiness-test-cases.html (QA · 2026-09-09) · แผนคู่: live-readiness-test-plan.html · วัดกับ develop @ b82bb4f</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2201" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2201" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2201" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2201" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2201" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2201"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2201" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2201">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="lrD1" data-level="ui" data-prio="P1" data-kind="negative" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-LR-D1-NEG-01</td>
+  <td class="ctitle">TAKRA Insight วาง URL ร้านที่ไม่ได้ไลฟ์หรือ URL ผิด ระบบต้องบอกผู้ใช้ ไม่หมุนค้าง <span class="kd kd-neg">Negative</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-2202"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2202"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">TAKRA Insight วาง URL ร้านที่ไม่ได้ไลฟ์หรือ URL ผิด ระบบต้องบอกผู้ใช้ ไม่หมุนค้าง</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Negative</b> <span class="hint">(ข้อมูลผิด / สิ่งที่ต้องไม่เกิด)</span> · D1 · เริ่มไลฟ์</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>มี URL ร้านที่ไม่ได้ไลฟ์ 1 ร้าน และ URL ที่ไม่ใช่ TikTok live 1 อัน</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Insight (App) แล้ว Login ด้วยบัญชีที่มีสิทธิ์ใช้งาน (entitled)</li><li>ไปที่ หน้าหลัก → วิเคราะห์ไลฟ์ใหม่ → วาง URL ร้านที่ไม่ได้ไลฟ์ → เปิดดูไลฟ์</li><li>สังเกตข้อความและปุ่มที่ระบบแสดงภายใน 30 วินาที</li><li>กดย้อนกลับ แล้ววาง URL ที่ผิดรูปแบบ (เช่น หน้า for-you หรือลิงก์ที่ไม่ใช่ /live) → เปิดดูไลฟ์</li><li>สังเกตข้อความที่ระบบแสดง</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ระบบแสดงข้อความชัดเจนว่า ร้านนี้ไม่ได้ไลฟ์อยู่ หรือ URL ไม่ถูกต้อง ภายใน 30 วินาที</li><li>ไม่มี spinner กำลังโหลดวิดีโอ หมุนค้างเกิน 30 วินาที</li><li>มีปุ่มให้ลองใหม่/กลับหน้าหลัก และไม่มี session ถูกสร้างค้างในหน้า เซสชัน</li><li>ไม่มีข้อความเชิงเทคนิค (error code, stack trace, null) โผล่บนหน้าจอ</li></ul><div class="hint" style="margin-top:6px">ประเภท: Manual — คนทำบนช่องจริง · ที่มา: live-readiness-test-cases.html (QA · 2026-09-09) · แผนคู่: live-readiness-test-plan.html · วัดกับ develop @ b82bb4f</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2202" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2202" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2202" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2202" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2202" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2202"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2202" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2202">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="lrD1" data-level="ui" data-prio="P0" data-kind="permission" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-LR-D1-NEG-02</td>
+  <td class="ctitle">TAKRA Insight ยังไม่ Login TikTok หรือยังไม่ติดตามช่อง ระบบต้องบังคับให้ทำก่อนเริ่ม monitor <span class="kd kd-perm">Permission</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-2203"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2203"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">TAKRA Insight ยังไม่ Login TikTok หรือยังไม่ติดตามช่อง ระบบต้องบังคับให้ทำก่อนเริ่ม monitor</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Permission</b> <span class="hint">(สิทธิ์ / ต้อง login / ต้องติดตามช่องก่อน)</span> · D1 · เริ่มไลฟ์</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เบราว์เซอร์ในตัวยังไม่มี session TikTok (ล้าง cookie ของ webview ก่อน)</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Insight (App) แล้ว Login ด้วยบัญชีที่มีสิทธิ์ใช้งาน (entitled)</li><li>ไปที่ หน้าหลัก → วิเคราะห์ไลฟ์ใหม่ → วาง URL ร้านที่ไลฟ์อยู่ → เปิดดูไลฟ์</li><li>สังเกตว่าระบบพาไปหน้า Login TikTok หรือแสดงคำแนะนำให้ Login ก่อนหรือไม่</li><li>Login TikTok แต่ยังไม่กดติดตามช่อง แล้วสังเกตสถานะ</li><li>กด ติดตาม ช่องแล้วสังเกตว่าคอมเมนต์เริ่มไหลหรือไม่</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ก่อน Login: ระบบไม่เริ่ม session และแจ้งชัดว่าต้อง Login TikTok ก่อน</li><li>หลัง Login แต่ยังไม่ติดตาม: ระบบแจ้งให้ ติดตามช่อง ก่อน ไม่ปล่อยให้ monitor ครึ่งเดียว (วิดีโอมีแต่คอมเมนต์ 0 โดยไม่บอก)</li><li>หลังติดตาม: คอมเมนต์เริ่มไหลภายใน 30 วินาที</li><li>ไม่มีกรณีที่ผู้ใช้ต้องเดาเองว่าทำไมคอมเมนต์เป็น 0</li></ul><div class="hint" style="margin-top:6px">ประเภท: Manual — คนทำบนช่องจริง · ที่มา: live-readiness-test-cases.html (QA · 2026-09-09) · แผนคู่: live-readiness-test-plan.html · วัดกับ develop @ b82bb4f</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2203" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2203" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2203" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2203" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2203" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2203"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2203" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2203">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+
+<!-- lrD2 -->
+<tr class="epicrow" data-epic="lrD2"><td colspan="7">💬 D2 · คอมเมนต์ครบ สด ไม่ซ้ำ <span class="rp">(5 เคส)</span></td></tr>
+<tr class="featrow" data-featkey="lr-d2"><td colspan="7">📁 คอมเมนต์ครบ สด ไม่ซ้ำ <span class="rp"><span class="lv lvl-ui">🌐 4</span> <span class="lv lvl-e2e">🔄 1</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="lr-d2"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow" data-feat="lrD2" data-level="ui" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-LR-D2-POS-01</td>
+  <td class="ctitle">TAKRA Insight คอมเมนต์สดต้องมาถึงระบบภายใน p95 &lt; 2 วินาที และไม่ซ้ำ (sentinel จากบัญชีที่ 2) <span class="kd kd-happy">Happy Path</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-2204"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2204"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">TAKRA Insight คอมเมนต์สดต้องมาถึงระบบภายใน p95 &lt; 2 วินาที และไม่ซ้ำ (sentinel จากบัญชีที่ 2)</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติบนไลฟ์จริง)</span> · D2 · คอมเมนต์ครบ สด ไม่ซ้ำ</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>ร้านที่มีผู้ชม ≥ 20 คนและคอมเมนต์ไหลต่อเนื่อง</li><li>บัญชี TikTok ที่ 2 บนมือถือ พร้อมพิมพ์ข้อความ sentinel</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Insight (App) แล้ว Login ด้วยบัญชีที่มีสิทธิ์ใช้งาน (entitled)</li><li>ไปที่ หน้าหลัก → กด วิเคราะห์ไลฟ์ใหม่ → วาง URL ของร้านที่กำลังไลฟ์อยู่ (ร้านในลิสต์ที่กำหนด · ตรวจด้วย probe ก่อนว่าไลฟ์จริง)</li><li>Login TikTok ในเบราว์เซอร์ในตัวและ ติดตามช่อง ตามที่ระบบบังคับ แล้วกด เปิดดูไลฟ์</li><li>รอจนวิดีโอเล่นและมีคอมเมนต์ไหลเข้ามาบนแผงด้านขวา</li><li>ให้บัญชีที่ 2 พิมพ์คอมเมนต์ sentinel รูปแบบ QA-{เวลา hh:mm:ss} จำนวน 5 ข้อความ ห่างกันข้อความละ 1 นาที บันทึกเวลาที่กดส่งจากนาฬิกาเดียวกัน</li><li>ปล่อย monitor ครบ 10 นาที (spec live-real-monitor จับค่าให้ทุก 30 วินาที)</li><li>อ่าน ingest_time ของ sentinel แต่ละตัวจาก traka.db เทียบเวลาที่กดส่ง</li><li>นับ dupGroups (ข้อความเดียวกัน ผู้ใช้เดียวกัน เวลาเดียวกัน ที่มีมากกว่า 1 แถว)</li><li>กด หยุด แล้วอ่านค่า FINAL ของ spec</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>sentinel มาถึง 5/5 และ latency p95 &lt; 2 วินาที (NFR1.2)</li><li>dupGroups = 0 ตลอด 10 นาที</li><li>จำนวนคอมเมนต์บน UI = จำนวนใน DB ณ เวลาเดียวกัน (ต่างกันได้ไม่เกินข้อความที่กำลังไหลเข้า)</li><li>session finalize สำเร็จ มี ended_at</li></ul><div class="hint" style="margin-top:6px">ประเภท: Measure — คนทำ + เก็บตัวเลข · ที่มา: live-readiness-test-cases.html (QA · 2026-09-09) · แผนคู่: live-readiness-test-plan.html · วัดกับ develop @ b82bb4f</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2204" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2204" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2204" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2204" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2204" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2204"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2204" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2204">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="lrD2" data-level="ui" data-prio="P0" data-kind="data" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-LR-D2-POS-02</td>
+  <td class="ctitle">TAKRA Insight ความครบถ้วนของคอมเมนต์ต้อง ≥ 99% เทียบกับที่เห็นบนหน้าจอ TikTok จริง <span class="kd kd-data">Data</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-2205"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2205"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">TAKRA Insight ความครบถ้วนของคอมเมนต์ต้อง ≥ 99% เทียบกับที่เห็นบนหน้าจอ TikTok จริง</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Data</b> <span class="hint">(ครบถ้วน · ไม่ซ้ำ · ตรงกันระหว่าง UI กับ DB)</span> · D2 · คอมเมนต์ครบ สด ไม่ซ้ำ</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>บันทึกหน้าจอ (screen record) ของ TikTok live บนมือถือหรือเบราว์เซอร์อีกจอควบคู่กันได้</li><li>ร้านที่คอมเมนต์ไหล 10–40 ข้อความ/นาที</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Insight (App) แล้ว Login ด้วยบัญชีที่มีสิทธิ์ใช้งาน (entitled)</li><li>ไปที่ หน้าหลัก → กด วิเคราะห์ไลฟ์ใหม่ → วาง URL ของร้านที่กำลังไลฟ์อยู่ (ร้านในลิสต์ที่กำหนด · ตรวจด้วย probe ก่อนว่าไลฟ์จริง)</li><li>Login TikTok ในเบราว์เซอร์ในตัวและ ติดตามช่อง ตามที่ระบบบังคับ แล้วกด เปิดดูไลฟ์</li><li>รอจนวิดีโอเล่นและมีคอมเมนต์ไหลเข้ามาบนแผงด้านขวา</li><li>เริ่มบันทึกหน้าจอ TikTok live (จอที่ 2) พร้อมกับเวลาเริ่ม monitor ในแอป</li><li>ปล่อยไป 5 นาที แล้วหยุดทั้งสองฝั่งพร้อมกัน</li><li>นับคอมเมนต์จากวิดีโอที่บันทึก (ทีละข้อความ) ในช่วง 5 นาทีนั้น = N_seen</li><li>นับคอมเมนต์ใน traka.db ของ session ในช่วงเวลาเดียวกัน (ไม่นับ history ก่อนเริ่ม) = N_db</li><li>คำนวณ completeness = N_db / N_seen และบันทึกรายการที่หายไป (ถ้ามี) พร้อมข้อความและเวลา</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>completeness ≥ 99% ในสภาพปกติ (NFR2.2) · ≥ 95% ถ้ามีหลักฐานว่า TikTok throttle</li><li>ข้อความที่หาย (ถ้ามี) ถูกระบุเป็นรายการชัดเจน เพื่อส่ง DEV วิเคราะห์ชนิด message</li><li>ไม่มีข้อความใน DB ที่ไม่เคยปรากฏบนหน้าจอ (ไม่มี phantom)</li></ul><div class="hint" style="margin-top:6px">ประเภท: Measure — คนทำ + เก็บตัวเลข · ที่มา: live-readiness-test-cases.html (QA · 2026-09-09) · แผนคู่: live-readiness-test-plan.html · วัดกับ develop @ b82bb4f</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2205" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2205" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2205" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2205" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2205" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2205"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2205" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2205">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="lrD2" data-level="ui" data-prio="P0" data-kind="data" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-LR-D2-POS-03</td>
+  <td class="ctitle">TAKRA Insight เริ่ม monitor ร้านที่มีคอมเมนต์ค้าง (history replay) ต้องไม่บันทึกซ้ำ 2 เท่า <span class="kd kd-data">Data</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-2206"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2206"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">TAKRA Insight เริ่ม monitor ร้านที่มีคอมเมนต์ค้าง (history replay) ต้องไม่บันทึกซ้ำ 2 เท่า</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Data</b> <span class="hint">(ครบถ้วน · ไม่ซ้ำ · ตรงกันระหว่าง UI กับ DB)</span> · D2 · คอมเมนต์ครบ สด ไม่ซ้ำ</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>ร้านที่ไลฟ์มาแล้วสักพักและมีคอมเมนต์เก่าปรากฏตอนเข้าห้อง (history)</li><li>เกี่ยวข้อง TI-381</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Insight (App) แล้ว Login ด้วยบัญชีที่มีสิทธิ์ใช้งาน (entitled)</li><li>ไปที่ หน้าหลัก → กด วิเคราะห์ไลฟ์ใหม่ → วาง URL ของร้านที่กำลังไลฟ์อยู่ (ร้านในลิสต์ที่กำหนด · ตรวจด้วย probe ก่อนว่าไลฟ์จริง)</li><li>Login TikTok ในเบราว์เซอร์ในตัวและ ติดตามช่อง ตามที่ระบบบังคับ แล้วกด เปิดดูไลฟ์</li><li>ทันทีที่เข้าห้อง สังเกตว่ามีคอมเมนต์เก่าไหลเข้ามาเป็นชุด (replay) หรือไม่ บันทึกจำนวนที่เห็น</li><li>ปล่อย 3 นาที แล้วกด หยุด</li><li>ใน traka.db นับแถวของ session แยกเป็น history (ingest_time ≤ start+30s) และ live</li><li>ตรวจ dupGroups ในส่วน history: ข้อความเดียวกัน ผู้ใช้เดียวกัน เวลาเดียวกัน มีกี่แถว</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>จำนวน history ใน DB = จำนวนที่เห็นตอนเข้าห้อง (ไม่ใช่ 2 เท่า)</li><li>dupGroups = 0 ทั้งส่วน history และ live</li><li>ตัวเลข คอมเมนต์รวม ในรายงานหลังไลฟ์ตรงกับ DB</li></ul><div class="hint" style="margin-top:6px">ประเภท: Manual — คนทำบนช่องจริง · ที่มา: live-readiness-test-cases.html (QA · 2026-09-09) · แผนคู่: live-readiness-test-plan.html · วัดกับ develop @ b82bb4f</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2206" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2206" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2206" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2206" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2206" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2206"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2206" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2206">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="lrD2" data-level="e2e" data-prio="P1" data-kind="data" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-LR-D2-EDGE-01</td>
+  <td class="ctitle">TAKRA Insight คอมเมนต์ซ้ำข้อความจากคนเดียวกันภายใน 1 วินาที (เช่น +1 / จอง) ต้องแสดงครบบน UI <span class="kd kd-data">Data</span></td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-2207"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2207"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">TAKRA Insight คอมเมนต์ซ้ำข้อความจากคนเดียวกันภายใน 1 วินาที (เช่น +1 / จอง) ต้องแสดงครบบน UI</div>
+  <div class="h-prio">Priority: <b>P1</b> · E2E · ประเภท: <b>Data</b> <span class="hint">(ครบถ้วน · ไม่ซ้ำ · ตรงกันระหว่าง UI กับ DB)</span> · D2 · คอมเมนต์ครบ สด ไม่ซ้ำ</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>repo develop ล่าสุด · Node 22</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิด terminal ที่ apps/desktop/desktop</li><li>รัน node --test src/renderer/src/stores/sessionsLiveStore.d11-dedupe.test.js</li><li>อ่านผล pass/fail</li><li>(เสริม live) ให้บัญชีที่ 2 พิมพ์ +1 3 ครั้งติดกันเร็วที่สุด แล้วนับบนแผงคอมเมนต์</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>unit test ผ่านทั้งหมด (คีย์ de-dupe ใช้ msgId ไม่ใช่ข้อความ+วินาที)</li><li>บน live: +1 ทั้ง 3 ข้อความปรากฏบน UI และมี 3 แถวใน DB</li></ul><div class="hint" style="margin-top:6px">ประเภท: Automated — ใช้ script ที่มีอยู่ · ที่มา: live-readiness-test-cases.html (QA · 2026-09-09) · แผนคู่: live-readiness-test-plan.html · วัดกับ develop @ b82bb4f</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2207" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2207" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2207" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2207" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2207" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2207"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2207" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2207">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="lrD2" data-level="ui" data-prio="P1" data-kind="boundary" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-LR-D2-EDGE-02</td>
+  <td class="ctitle">TAKRA Insight ร้านที่คอมเมนต์ถล่ม (≥ 30 ข้อความ/นาที) แผงคอมเมนต์ต้องไม่ค้างและ auto-scroll ทำงาน <span class="kd kd-bnd">Boundary/Edge</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-2208"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2208"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">TAKRA Insight ร้านที่คอมเมนต์ถล่ม (≥ 30 ข้อความ/นาที) แผงคอมเมนต์ต้องไม่ค้างและ auto-scroll ทำงาน</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Boundary/Edge</b> <span class="hint">(เกณฑ์ตัวเลข · โหลดหนัก · ขอบของทรัพยากร)</span> · D2 · คอมเมนต์ครบ สด ไม่ซ้ำ</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>ร้านใหญ่ที่คอมเมนต์ไหลเร็ว (ผู้ชมหลักร้อยขึ้นไป)</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Insight (App) แล้ว Login ด้วยบัญชีที่มีสิทธิ์ใช้งาน (entitled)</li><li>ไปที่ หน้าหลัก → กด วิเคราะห์ไลฟ์ใหม่ → วาง URL ของร้านที่กำลังไลฟ์อยู่ (ร้านในลิสต์ที่กำหนด · ตรวจด้วย probe ก่อนว่าไลฟ์จริง)</li><li>Login TikTok ในเบราว์เซอร์ในตัวและ ติดตามช่อง ตามที่ระบบบังคับ แล้วกด เปิดดูไลฟ์</li><li>รอจนวิดีโอเล่นและมีคอมเมนต์ไหลเข้ามาบนแผงด้านขวา</li><li>ปล่อยแผงคอมเมนต์อยู่ที่ตำแหน่งล่างสุด สังเกต 2 นาทีว่าเลื่อนตามข้อความใหม่หรือไม่</li><li>เลื่อนแผงขึ้นไปอ่านข้อความเก่า แล้วสังเกตว่าระบบหยุด auto-scroll ให้หรือไม่ และมีตัวบอกว่ามีข้อความใหม่หรือไม่</li><li>กดกลับลงล่างสุด สังเกตว่ากลับมา auto-scroll</li><li>สังเกตความลื่นของวิดีโอและ CPU ของแอป (Activity Monitor) ตลอด 5 นาที</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>อยู่ล่างสุด: แผงเลื่อนตามข้อความใหม่ตลอด ไม่กระตุก ไม่ค้าง</li><li>เลื่อนขึ้นอ่าน: ระบบไม่ดึงกลับลงล่างเอง และมีตัวบอกจำนวนข้อความใหม่ (หรือเทียบเท่า)</li><li>วิดีโอไม่กระตุกจากโหลดคอมเมนต์ · CPU ของแอปไม่พุ่งค้าง</li><li>ไม่มีข้อความหายจาก UI เมื่อเทียบกับ DB หลังหยุด</li></ul><div class="hint" style="margin-top:6px">ประเภท: Manual — คนทำบนช่องจริง · ที่มา: live-readiness-test-cases.html (QA · 2026-09-09) · แผนคู่: live-readiness-test-plan.html · วัดกับ develop @ b82bb4f</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2208" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2208" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2208" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2208" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2208" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2208"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2208" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2208">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+
+<!-- lrD3 -->
+<tr class="epicrow" data-epic="lrD3"><td colspan="7">🎁 D3 · สัญญาณอื่น (gift · like · follow · share · shopping) <span class="rp">(3 เคส)</span></td></tr>
+<tr class="featrow" data-featkey="lr-d3"><td colspan="7">📁 สัญญาณอื่น (gift · like · follow · share · shopping) <span class="rp"><span class="lv lvl-ui">🌐 2</span> <span class="lv lvl-e2e">🔄 1</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="lr-d3"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow" data-feat="lrD3" data-level="ui" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-LR-D3-POS-01</td>
+  <td class="ctitle">TAKRA Insight ส่ง gift จริงจากบัญชีที่ 2 ต้องปรากฏใน UI และ DB ภายใน 5 วินาที <span class="kd kd-happy">Happy Path</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-2209"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2209"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">TAKRA Insight ส่ง gift จริงจากบัญชีที่ 2 ต้องปรากฏใน UI และ DB ภายใน 5 วินาที</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติบนไลฟ์จริง)</span> · D3 · สัญญาณอื่น (gift</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>บัญชีที่ 2 มีเหรียญ TikTok ขั้นต่ำสำหรับ gift ราคาถูกสุด 1 ชิ้น</li><li>ยังไม่เคยพิสูจน์ gift ได้ในทุกรอบก่อนหน้า</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Insight (App) แล้ว Login ด้วยบัญชีที่มีสิทธิ์ใช้งาน (entitled)</li><li>ไปที่ หน้าหลัก → กด วิเคราะห์ไลฟ์ใหม่ → วาง URL ของร้านที่กำลังไลฟ์อยู่ (ร้านในลิสต์ที่กำหนด · ตรวจด้วย probe ก่อนว่าไลฟ์จริง)</li><li>Login TikTok ในเบราว์เซอร์ในตัวและ ติดตามช่อง ตามที่ระบบบังคับ แล้วกด เปิดดูไลฟ์</li><li>รอจนวิดีโอเล่นและมีคอมเมนต์ไหลเข้ามาบนแผงด้านขวา</li><li>ให้บัญชีที่ 2 ส่ง gift ราคาถูกสุด 1 ชิ้น บันทึกเวลาที่กดส่ง</li><li>สังเกตแผง/ตัวนับ gift ในแอปภายใน 5 วินาที</li><li>หลังหยุด อ่าน traka.db หา event ชนิด gift ของ session พร้อม ingest_time และมูลค่าเหรียญ</li><li>เปิดรายงานหลังไลฟ์ดูว่านับ gift รวมถูก</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>gift ปรากฏใน UI ภายใน ≤ 5 วินาที พร้อมชื่อผู้ส่ง</li><li>DB มี event gift 1 แถว ชนิดถูกต้อง มูลค่าเหรียญตรง</li><li>รายงานหลังไลฟ์นับ gift = 1 (ไม่ซ้ำ ไม่หาย)</li></ul><div class="hint" style="margin-top:6px">ประเภท: Manual — คนทำบนช่องจริง · ที่มา: live-readiness-test-cases.html (QA · 2026-09-09) · แผนคู่: live-readiness-test-plan.html · วัดกับ develop @ b82bb4f</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2209" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2209" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2209" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2209" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2209" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2209"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2209" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2209">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="lrD3" data-level="ui" data-prio="P1" data-kind="data" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-LR-D3-POS-02</td>
+  <td class="ctitle">TAKRA Insight like / follow / share จากบัญชีที่ 2 ต้องถูกนับครบทุกชนิด <span class="kd kd-data">Data</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-2210"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2210"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">TAKRA Insight like / follow / share จากบัญชีที่ 2 ต้องถูกนับครบทุกชนิด</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Data</b> <span class="hint">(ครบถ้วน · ไม่ซ้ำ · ตรงกันระหว่าง UI กับ DB)</span> · D3 · สัญญาณอื่น (gift</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>บัญชีที่ 2 ยังไม่ได้ติดตามร้านที่จะทดสอบ</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Insight (App) แล้ว Login ด้วยบัญชีที่มีสิทธิ์ใช้งาน (entitled)</li><li>ไปที่ หน้าหลัก → กด วิเคราะห์ไลฟ์ใหม่ → วาง URL ของร้านที่กำลังไลฟ์อยู่ (ร้านในลิสต์ที่กำหนด · ตรวจด้วย probe ก่อนว่าไลฟ์จริง)</li><li>Login TikTok ในเบราว์เซอร์ในตัวและ ติดตามช่อง ตามที่ระบบบังคับ แล้วกด เปิดดูไลฟ์</li><li>รอจนวิดีโอเล่นและมีคอมเมนต์ไหลเข้ามาบนแผงด้านขวา</li><li>ให้บัญชีที่ 2 กด like รัว 10 ครั้ง บันทึกเวลา</li><li>ให้บัญชีที่ 2 กด ติดตาม ร้าน บันทึกเวลา</li><li>ให้บัญชีที่ 2 กด แชร์ ไลฟ์ (ไปยังแอปใดก็ได้) บันทึกเวลา</li><li>สังเกตตัวนับในแอปหลังแต่ละ action และหลังหยุดตรวจ DB แยกตามชนิด event</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>like ถูกนับเพิ่ม (TikTok รวม batch ได้ จำนวนอาจไม่ตรง 10 แต่ต้อง &gt; 0 และเวลาใกล้เคียง)</li><li>follow ปรากฏเป็น event 1 รายการพร้อมชื่อบัญชีที่ 2</li><li>share ปรากฏเป็น event (ถ้า TikTok ส่งสัญญาณ) หรือถูกบันทึกว่า ยังไม่รองรับ ในรายงาน ไม่เงียบหาย</li><li>ทุก event มี ingest_time ภายใน 5 วินาทีจากเวลาที่กด</li></ul><div class="hint" style="margin-top:6px">ประเภท: Manual — คนทำบนช่องจริง · ที่มา: live-readiness-test-cases.html (QA · 2026-09-09) · แผนคู่: live-readiness-test-plan.html · วัดกับ develop @ b82bb4f</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2210" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2210" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2210" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2210" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2210" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2210"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2210" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2210">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="lrD3" data-level="e2e" data-prio="P1" data-kind="data" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-LR-D3-POS-03</td>
+  <td class="ctitle">TAKRA Insight ข้อความ shopping (สินค้า/ตะกร้า) จากไลฟ์ต้องถึง UI/DB ไม่ถูกทิ้ง <span class="kd kd-data">Data</span></td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-2211"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2211"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">TAKRA Insight ข้อความ shopping (สินค้า/ตะกร้า) จากไลฟ์ต้องถึง UI/DB ไม่ถูกทิ้ง</div>
+  <div class="h-prio">Priority: <b>P1</b> · E2E · ประเภท: <b>Data</b> <span class="hint">(ครบถ้วน · ไม่ซ้ำ · ตรงกันระหว่าง UI กับ DB)</span> · D3 · สัญญาณอื่น (gift</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>repo develop ล่าสุด</li><li>ร้านที่ pin สินค้าในไลฟ์ (สำหรับส่วน live)</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>รัน node --test src/main/lib/webcast-unhandled-type-wiring.test.js src/main/lib/engagement-normalizer.test.js ที่ apps/desktop/desktop</li><li>อ่านผล</li><li>(live) เข้าร้านที่มีสินค้า pin → รอให้ร้าน pin/เปลี่ยนสินค้า → ตรวจ traka.db ว่ามี event ชนิด shopping</li><li>ตรวจ log ของแอปว่า Webcast type ที่ไม่รู้จักถูก log/นับ ไม่ถูกทิ้งเงียบ</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>unit ผ่านทั้งหมด</li><li>บน live: event shopping ถูกบันทึกเมื่อร้าน pin สินค้า</li><li>Webcast type ใหม่ที่ไม่รู้จักปรากฏใน log พร้อมชื่อ type (นับได้) ไม่หายเงียบ</li></ul><div class="hint" style="margin-top:6px">ประเภท: Automated — ใช้ script ที่มีอยู่ · ที่มา: live-readiness-test-cases.html (QA · 2026-09-09) · แผนคู่: live-readiness-test-plan.html · วัดกับ develop @ b82bb4f</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2211" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2211" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2211" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2211" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2211" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2211"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2211" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2211">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+
+<!-- lrD4 -->
+<tr class="epicrow" data-epic="lrD4"><td colspan="7">😊 D4 · อารมณ์และ HUD <span class="rp">(6 เคส)</span></td></tr>
+<tr class="featrow" data-featkey="lr-d4"><td colspan="7">📁 อารมณ์และ HUD <span class="rp"><span class="lv lvl-ui">🌐 5</span> <span class="lv lvl-e2e">🔄 1</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="lr-d4"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow" data-feat="lrD4" data-level="ui" data-prio="P0" data-kind="boundary" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-LR-D4-POS-01</td>
+  <td class="ctitle">TAKRA Insight อัตราเฟรมและ latency ของการอ่านอารมณ์บนไลฟ์จริงต้องอยู่ในเกณฑ์ (packaged build) <span class="kd kd-bnd">Boundary/Edge</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-2212"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2212"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">TAKRA Insight อัตราเฟรมและ latency ของการอ่านอารมณ์บนไลฟ์จริงต้องอยู่ในเกณฑ์ (packaged build)</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Boundary/Edge</b> <span class="hint">(เกณฑ์ตัวเลข · โหลดหนัก · ขอบของทรัพยากร)</span> · D4 · อารมณ์และ HUD</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>packaged build ที่มี models ครบ (ตรวจ /health ว่า ready:true และ device ไม่เป็น null)</li><li>ให้ capture consent แล้ว</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Insight (App) แล้ว Login ด้วยบัญชีที่มีสิทธิ์ใช้งาน (entitled)</li><li>ไปที่ หน้าหลัก → กด วิเคราะห์ไลฟ์ใหม่ → วาง URL ของร้านที่กำลังไลฟ์อยู่ (ร้านในลิสต์ที่กำหนด · ตรวจด้วย probe ก่อนว่าไลฟ์จริง)</li><li>Login TikTok ในเบราว์เซอร์ในตัวและ ติดตามช่อง ตามที่ระบบบังคับ แล้วกด เปิดดูไลฟ์</li><li>รอจนวิดีโอเล่นและมีคอมเมนต์ไหลเข้ามาบนแผงด้านขวา</li><li>เปิด http://127.0.0.1:8765/health บันทึกค่า capacity ทุก 1 นาที เป็นเวลา 10 นาที</li><li>หลังหยุด นับ face_frames ของ session ใน traka.db หาร 600 วินาที = fps เฉลี่ย</li><li>อ่าน latency ต่อเฟรม (ถ้า engine รายงาน) หรือวัดจาก timestamp ระหว่างเฟรม</li><li>บันทึกรุ่นเครื่อง (CPU/GPU/RAM) คู่กับผล</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>face fps ≥ เกณฑ์ที่เคาะ (PRD บอก 30 fps · วัดจริงเคยได้ 7.6 fps · ต้องเคาะ envelope ก่อน)</li><li>inference latency p95 &lt; 200 ms ต่อเฟรม (NFR1.4)</li><li>header หน้าไลฟ์แสดง AI · {device} เป็นชื่อ device จริง ไม่ใช่ AI · null</li><li>fps ไม่ตกลงเรื่อย ๆ ตามเวลา (เทียบนาทีที่ 1 กับนาทีที่ 10)</li></ul><div class="hint" style="margin-top:6px">ประเภท: Measure — คนทำ + เก็บตัวเลข · ที่มา: live-readiness-test-cases.html (QA · 2026-09-09) · แผนคู่: live-readiness-test-plan.html · วัดกับ develop @ b82bb4f</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2212" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2212" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2212" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2212" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2212" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2212"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2212" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2212">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="lrD4" data-level="e2e" data-prio="P0" data-kind="negative" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-LR-D4-NEG-01</td>
+  <td class="ctitle">TAKRA Insight หน้าที่ไม่ใช่ host (ป้าย สัตว์ กราฟิก คนดู) ต้องไม่ถูกอ่านอารมณ์ <span class="kd kd-neg">Negative</span></td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-2213"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2213"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">TAKRA Insight หน้าที่ไม่ใช่ host (ป้าย สัตว์ กราฟิก คนดู) ต้องไม่ถูกอ่านอารมณ์</div>
+  <div class="h-prio">Priority: <b>P0</b> · E2E · ประเภท: <b>Negative</b> <span class="hint">(ข้อมูลผิด / สิ่งที่ต้องไม่เกิด)</span> · D4 · อารมณ์และ HUD</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>.venv (python 3.11) ที่ apps/desktop</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>รัน LHM_DATA_DIR=$(mktemp -d) .venv/bin/python test_ti439_host_lock_pipeline.py</li><li>รัน LHM_DATA_DIR=$(mktemp -d) .venv/bin/python test_ti440_face_capture.py</li><li>รัน .venv/bin/python test_host_lock.py และ test_face_track.py</li><li>อ่านผลแต่ละไฟล์</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ทุกไฟล์ขึ้น ALL PASS</li><li>เฟรมที่ไม่มีหน้า host ที่ล็อกไว้ให้อารมณ์ = ไม่มี (ไม่ใช่ neutral ปลอม)</li><li>track ของ host ไม่สลับไปคนที่ bbox ใหญ่กว่า</li></ul><div class="hint" style="margin-top:6px">ประเภท: Automated — ใช้ script ที่มีอยู่ · ที่มา: live-readiness-test-cases.html (QA · 2026-09-09) · แผนคู่: live-readiness-test-plan.html · วัดกับ develop @ b82bb4f</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2213" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2213" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2213" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2213" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2213" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2213"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2213" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2213">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="lrD4" data-level="ui" data-prio="P1" data-kind="data" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-LR-D4-POS-02</td>
+  <td class="ctitle">TAKRA Insight วัดความแม่นของการอ่านอารมณ์ด้วยชุดภาพเฉลย (golden set) ต่อ label <span class="kd kd-data">Data</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-2214"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2214"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">TAKRA Insight วัดความแม่นของการอ่านอารมณ์ด้วยชุดภาพเฉลย (golden set) ต่อ label</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Data</b> <span class="hint">(ครบถ้วน · ไม่ซ้ำ · ตรงกันระหว่าง UI กับ DB)</span> · D4 · อารมณ์และ HUD</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>golden set: ภาพหน้าสังเคราะห์/licensed ติดป้าย happy · neutral · sad อย่างน้อยป้ายละ 10 ภาพ + negative 10 ภาพ + face-tiny (&lt; 60 px)</li><li>เก็บนอก repo ตามข้อกำหนด PDPA · เกณฑ์ผ่านเคาะกับ DEV/PM แล้ว</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เตรียม runner (script ฝั่งเทส) ที่ป้อนภาพเข้า detect/classify ของ server.py ผ่าน .venv</li><li>รัน runner กับทั้งชุด บันทึก label ที่ได้และ bbox ต่อภาพ</li><li>คำนวณ precision/recall ต่อ label และ IoU ของ bbox กับ ground-truth</li><li>ตรวจว่า negative ได้ 0 bbox และ face-tiny ถูกตัดทิ้ง</li><li>map raw label → Ekman-7 ผ่าน emotionTaxonomy แล้วตรวจว่าไม่มี raw label รั่ว</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>precision/recall ต่อ label ≥ เกณฑ์ที่เคาะ (รอบแรกรายงานตัวเลขจริง)</li><li>IoU ≥ 0.5 ทุกภาพที่มีหน้าเดียว</li><li>negative: 0 bbox ทุกภาพ · face-tiny: 0 bbox</li><li>label บน HUD เป็น Ekman-7 เท่านั้น</li></ul><div class="hint" style="margin-top:6px">ประเภท: Measure — คนทำ + เก็บตัวเลข · ที่มา: live-readiness-test-cases.html (QA · 2026-09-09) · แผนคู่: live-readiness-test-plan.html · วัดกับ develop @ b82bb4f</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2214" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2214" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2214" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2214" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2214" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2214"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2214" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2214">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="lrD4" data-level="ui" data-prio="P1" data-kind="data" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-LR-D4-POS-03</td>
+  <td class="ctitle">TAKRA Insight คลิปเดียวกันรัน 2 รอบต้องได้ผลอารมณ์เท่ากัน (determinism) <span class="kd kd-data">Data</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-2215"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2215"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">TAKRA Insight คลิปเดียวกันรัน 2 รอบต้องได้ผลอารมณ์เท่ากัน (determinism)</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Data</b> <span class="hint">(ครบถ้วน · ไม่ซ้ำ · ตรงกันระหว่าง UI กับ DB)</span> · D4 · อารมณ์และ HUD</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>คลิปไลฟ์สั้น 3 คลิป (30–60 วินาที) ที่มี consent หรือเป็น synthetic</li><li>engine packaged</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>ป้อนคลิปที่ 1 ผ่าน frame source ของ engine (โหมด replay/fixture) จนจบ → export ผลอารมณ์ต่อเฟรมเป็นไฟล์ A</li><li>รันคลิปเดิมซ้ำ → export เป็นไฟล์ B</li><li>diff A กับ B (label · confidence · bbox)</li><li>ทำซ้ำกับคลิปที่ 2 และ 3</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>A = B ทุกเฟรม (หรือต่างกันเฉพาะ confidence ทศนิยมตำแหน่งท้าย ตามที่เคาะ)</li><li>จำนวนเฟรมที่ประมวลผลเท่ากันทั้ง 2 รอบ</li><li>ถ้าไม่เท่า → เปิด finding เพราะวัดความแม่นต่อไม่ได้</li></ul><div class="hint" style="margin-top:6px">ประเภท: Measure — คนทำ + เก็บตัวเลข · ที่มา: live-readiness-test-cases.html (QA · 2026-09-09) · แผนคู่: live-readiness-test-plan.html · วัดกับ develop @ b82bb4f</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2215" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2215" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2215" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2215" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2215" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2215"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2215" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2215">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="lrD4" data-level="ui" data-prio="P0" data-kind="negative" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-LR-D4-POS-04</td>
+  <td class="ctitle">TAKRA Insight HUD overlay ต้องมองไม่เห็นจากฝั่งผู้ชม (บัญชีที่ 2 ดูสตรีมบนมือถือ) <span class="kd kd-neg">Negative</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-2216"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2216"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">TAKRA Insight HUD overlay ต้องมองไม่เห็นจากฝั่งผู้ชม (บัญชีที่ 2 ดูสตรีมบนมือถือ)</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Negative</b> <span class="hint">(ข้อมูลผิด / สิ่งที่ต้องไม่เกิด)</span> · D4 · อารมณ์และ HUD</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>host ทดสอบไลฟ์เองจากบัญชี QA (หรือร้านที่ยินยอม) โดยเปิดแอปและ HUD ค้างบนจอ</li><li>บัญชีที่ 2 ดูไลฟ์นั้นบนมือถือ</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เริ่มไลฟ์จากบัญชี QA โดยแชร์จอ/กล้องตามที่ผู้ใช้จริงทำ แล้วเปิด TAKRA Insight monitor ไลฟ์ตัวเอง</li><li>ให้ HUD (คะแนน Live Health · อารมณ์ · alert) ปรากฏบนจอ host ชัดเจน</li><li>บัญชีที่ 2 ดูไลฟ์บนมือถือ 5 นาที บันทึกหน้าจอ</li><li>ลองย้าย HUD ไปจอที่ 2 (multi-monitor) แล้วดูซ้ำ</li><li>ตรวจวิดีโอที่บันทึกจากมือถือทีละช่วง</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ผู้ชมไม่เห็น HUD ตัวเลข หรือ alert ใด ๆ ในสตรีม (FR25)</li><li>ย้ายจอแล้วยังไม่เห็น</li><li>ถ้าเห็นแม้แต่บางส่วน → Bug P0</li></ul><div class="hint" style="margin-top:6px">ประเภท: Manual — คนทำบนช่องจริง · ที่มา: live-readiness-test-cases.html (QA · 2026-09-09) · แผนคู่: live-readiness-test-plan.html · วัดกับ develop @ b82bb4f</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2216" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2216" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2216" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2216" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2216" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2216"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2216" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2216">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="lrD4" data-level="ui" data-prio="P2" data-kind="happy" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-LR-D4-POS-05</td>
+  <td class="ctitle">TAKRA Insight HUD อารมณ์ตอบสนองต่อสีหน้า host ที่เห็นด้วยตาภายใน 3 วินาที (sanity) <span class="kd kd-happy">Happy Path</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p2">P2</span></td>
+  <td class="status" data-uid="tc-2217"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2217"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">TAKRA Insight HUD อารมณ์ตอบสนองต่อสีหน้า host ที่เห็นด้วยตาภายใน 3 วินาที (sanity)</div>
+  <div class="h-prio">Priority: <b>P2</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติบนไลฟ์จริง)</span> · D4 · อารมณ์และ HUD</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>ร้านที่เห็นหน้า host ชัดตลอด</li><li>ให้ capture consent แล้ว</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Insight (App) แล้ว Login ด้วยบัญชีที่มีสิทธิ์ใช้งาน (entitled)</li><li>ไปที่ หน้าหลัก → กด วิเคราะห์ไลฟ์ใหม่ → วาง URL ของร้านที่กำลังไลฟ์อยู่ (ร้านในลิสต์ที่กำหนด · ตรวจด้วย probe ก่อนว่าไลฟ์จริง)</li><li>Login TikTok ในเบราว์เซอร์ในตัวและ ติดตามช่อง ตามที่ระบบบังคับ แล้วกด เปิดดูไลฟ์</li><li>รอจนวิดีโอเล่นและมีคอมเมนต์ไหลเข้ามาบนแผงด้านขวา</li><li>บันทึกหน้าจอแอปพร้อมวิดีโอไลฟ์ 5 นาที</li><li>ดูย้อนหลัง หาช่วงที่ host ยิ้มชัด / หน้านิ่ง / หัวเราะ อย่างน้อยอย่างละ 3 ช่วง</li><li>จดเวลาที่สีหน้าเปลี่ยนกับเวลาที่ label บน HUD เปลี่ยน</li><li>จดกรณีที่ HUD ขึ้น Concerned/Sad ทั้งที่ host พูดปกติ</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>HUD เปลี่ยนตามภายใน ≤ 3 วินาทีในช่วงที่ชัดเจน (อย่างน้อย 7/9 ช่วง)</li><li>ไม่มี Sad/Concerned ค้างขณะ host พูดปกติ (อาการ TI-440)</li><li>ใช้เป็น sanity ประกอบ ไม่ใช่ pass/fail หลัก</li></ul><div class="hint" style="margin-top:6px">ประเภท: Manual — คนทำบนช่องจริง · ที่มา: live-readiness-test-cases.html (QA · 2026-09-09) · แผนคู่: live-readiness-test-plan.html · วัดกับ develop @ b82bb4f</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2217" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2217" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2217" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2217" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2217" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2217"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2217" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2217">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+
+<!-- lrD5 -->
+<tr class="epicrow" data-epic="lrD5"><td colspan="7">🔔 D5 · แจ้งเตือน (alert) <span class="rp">(3 เคส)</span></td></tr>
+<tr class="featrow" data-featkey="lr-d5"><td colspan="7">📁 แจ้งเตือน (alert) <span class="rp"><span class="lv lvl-ui">🌐 3</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="lr-d5"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow" data-feat="lrD5" data-level="ui" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-LR-D5-POS-01</td>
+  <td class="ctitle">TAKRA Insight คอมเมนต์คัดค้านราคาซ้ำ ๆ ต้องทำให้ alert ราคาขึ้นภายใน 5 วินาที <span class="kd kd-happy">Happy Path</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-2218"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2218"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">TAKRA Insight คอมเมนต์คัดค้านราคาซ้ำ ๆ ต้องทำให้ alert ราคาขึ้นภายใน 5 วินาที</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติบนไลฟ์จริง)</span> · D5 · แจ้งเตือน (alert)</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>บัญชีที่ 2 พร้อมพิมพ์</li><li>alert เปิดใช้งาน (engine alerts:true)</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Insight (App) แล้ว Login ด้วยบัญชีที่มีสิทธิ์ใช้งาน (entitled)</li><li>ไปที่ หน้าหลัก → กด วิเคราะห์ไลฟ์ใหม่ → วาง URL ของร้านที่กำลังไลฟ์อยู่ (ร้านในลิสต์ที่กำหนด · ตรวจด้วย probe ก่อนว่าไลฟ์จริง)</li><li>Login TikTok ในเบราว์เซอร์ในตัวและ ติดตามช่อง ตามที่ระบบบังคับ แล้วกด เปิดดูไลฟ์</li><li>รอจนวิดีโอเล่นและมีคอมเมนต์ไหลเข้ามาบนแผงด้านขวา</li><li>ให้บัญชีที่ 2 พิมพ์ แพงไป / ลดได้ไหม / แพงจัง ติดกัน 3 ข้อความภายใน 30 วินาที บันทึกเวลาข้อความสุดท้าย</li><li>สังเกตว่า alert ราคาปรากฏบน HUD เมื่อไร บันทึกเวลา</li><li>ตรวจ DB/log ว่า alert ถูกบันทึกพร้อม timestamp</li><li>ทำซ้ำ 3 รอบห่างกันรอบละ 3 นาที</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>alert ปรากฏภายใน p95 &lt; 5 วินาที จากข้อความที่ครบเกณฑ์ (NFR1.1)</li><li>alert บอกเหตุผลอ่านเข้าใจ (เช่น มีคอมเมนต์เรื่องราคา 3 ข้อความ)</li><li>ไม่ขึ้น alert ซ้ำสำหรับ cluster เดียวกัน</li></ul><div class="hint" style="margin-top:6px">ประเภท: Measure — คนทำ + เก็บตัวเลข · ที่มา: live-readiness-test-cases.html (QA · 2026-09-09) · แผนคู่: live-readiness-test-plan.html · วัดกับ develop @ b82bb4f</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2218" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2218" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2218" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2218" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2218" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2218"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2218" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2218">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="lrD5" data-level="ui" data-prio="P1" data-kind="happy" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-LR-D5-POS-02</td>
+  <td class="ctitle">TAKRA Insight กด ack / snooze / suppress บน alert แล้วต้องบันทึก disposition และพฤติกรรมตรงตามปุ่ม <span class="kd kd-happy">Happy Path</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-2219"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2219"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">TAKRA Insight กด ack / snooze / suppress บน alert แล้วต้องบันทึก disposition และพฤติกรรมตรงตามปุ่ม</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติบนไลฟ์จริง)</span> · D5 · แจ้งเตือน (alert)</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>มี alert ปรากฏอย่างน้อย 3 ครั้ง (ใช้ D5-POS-01 กระตุ้น)</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เมื่อ alert ที่ 1 ขึ้น กด รับทราบ (ack) สังเกตว่า alert หายและไม่กลับมา</li><li>เมื่อ alert ที่ 2 ขึ้น กด เลื่อน (snooze) สังเกตว่าหายไปและกลับมาหลังครบเวลา snooze</li><li>เมื่อ alert ที่ 3 ขึ้น กด ปิดชนิดนี้ (suppress) แล้วกระตุ้น cluster เดิมอีกครั้ง</li><li>หลังหยุด อ่านตาราง alert disposition ใน traka.db</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ack: หายทันที ไม่กลับมา · บันทึก disposition = ack</li><li>snooze: กลับมาหลังครบเวลาที่กำหนด · บันทึก snooze พร้อมเวลา</li><li>suppress: alert ชนิดเดิมไม่ขึ้นอีกใน session นี้ · บันทึก suppress</li><li>ทุก action ใช้คลิกเดียว (FR26)</li></ul><div class="hint" style="margin-top:6px">ประเภท: Manual — คนทำบนช่องจริง · ที่มา: live-readiness-test-cases.html (QA · 2026-09-09) · แผนคู่: live-readiness-test-plan.html · วัดกับ develop @ b82bb4f</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2219" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2219" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2219" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2219" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2219" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2219"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2219" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2219">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="lrD5" data-level="ui" data-prio="P1" data-kind="negative" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-LR-D5-NEG-01</td>
+  <td class="ctitle">TAKRA Insight คอมเมนต์ทั่วไป 10 นาทีต้องไม่มี alert หลอน (false alarm) <span class="kd kd-neg">Negative</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-2220"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2220"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">TAKRA Insight คอมเมนต์ทั่วไป 10 นาทีต้องไม่มี alert หลอน (false alarm)</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Negative</b> <span class="hint">(ข้อมูลผิด / สิ่งที่ต้องไม่เกิด)</span> · D5 · แจ้งเตือน (alert)</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>ร้านที่คอมเมนต์เป็นคำทักทาย/ถามทั่วไป ไม่มีเรื่องราคา</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Insight (App) แล้ว Login ด้วยบัญชีที่มีสิทธิ์ใช้งาน (entitled)</li><li>ไปที่ หน้าหลัก → กด วิเคราะห์ไลฟ์ใหม่ → วาง URL ของร้านที่กำลังไลฟ์อยู่ (ร้านในลิสต์ที่กำหนด · ตรวจด้วย probe ก่อนว่าไลฟ์จริง)</li><li>Login TikTok ในเบราว์เซอร์ในตัวและ ติดตามช่อง ตามที่ระบบบังคับ แล้วกด เปิดดูไลฟ์</li><li>รอจนวิดีโอเล่นและมีคอมเมนต์ไหลเข้ามาบนแผงด้านขวา</li><li>ปล่อย monitor 10 นาทีโดยไม่ให้บัญชีที่ 2 พิมพ์อะไร</li><li>นับ alert ที่ขึ้นทั้งหมด พร้อมข้อความที่กระตุ้น</li><li>สำหรับแต่ละ alert ตัดสินว่าสมเหตุสมผลหรือไม่ (มีคอมเมนต์ที่ตรงชนิดจริง)</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>alert ที่ไม่มีคอมเมนต์รองรับ = 0</li><li>alert ที่ขึ้นทุกตัวชี้ไปที่คอมเมนต์จริงที่เข้าเกณฑ์</li><li>ถ้ามี false alarm → บันทึกข้อความและส่ง DEV ปรับ threshold</li></ul><div class="hint" style="margin-top:6px">ประเภท: Manual — คนทำบนช่องจริง · ที่มา: live-readiness-test-cases.html (QA · 2026-09-09) · แผนคู่: live-readiness-test-plan.html · วัดกับ develop @ b82bb4f</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2220" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2220" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2220" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2220" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2220" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2220"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2220" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2220">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+
+<!-- lrD6 -->
+<tr class="epicrow" data-epic="lrD6"><td colspan="7">🧯 D6 · ทนทาน (resilience) <span class="rp">(6 เคส)</span></td></tr>
+<tr class="featrow" data-featkey="lr-d6"><td colspan="7">📁 ทนทาน (resilience) <span class="rp"><span class="lv lvl-ui">🌐 6</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="lr-d6"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow" data-feat="lrD6" data-level="ui" data-prio="P0" data-kind="exception" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-LR-D6-NEG-01</td>
+  <td class="ctitle">TAKRA Insight เน็ตหลุด 60 วินาทีกลางไลฟ์ ระบบต้องแจ้งผู้ใช้ กลับมาแล้วไหลต่อ และข้อมูลใน buffer ไม่หาย <span class="kd kd-exc">Exception/Error</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-2221"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2221"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">TAKRA Insight เน็ตหลุด 60 วินาทีกลางไลฟ์ ระบบต้องแจ้งผู้ใช้ กลับมาแล้วไหลต่อ และข้อมูลใน buffer ไม่หาย</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Exception/Error</b> <span class="hint">(เน็ตหลุด · session ขาด · process ตาย · ปิดแอปกลางคัน)</span> · D6 · ทนทาน (resilience)</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>Login TikTok ในเบราว์เซอร์ในตัวด้วยมือแล้ว (จำเป็นสำหรับทุกเคสในกลุ่มนี้)</li><li>ร้านที่ไลฟ์ยาว ≥ 30 นาที</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Insight (App) แล้ว Login ด้วยบัญชีที่มีสิทธิ์ใช้งาน (entitled)</li><li>ไปที่ หน้าหลัก → กด วิเคราะห์ไลฟ์ใหม่ → วาง URL ของร้านที่กำลังไลฟ์อยู่ (ร้านในลิสต์ที่กำหนด · ตรวจด้วย probe ก่อนว่าไลฟ์จริง)</li><li>Login TikTok ในเบราว์เซอร์ในตัวและ ติดตามช่อง ตามที่ระบบบังคับ แล้วกด เปิดดูไลฟ์</li><li>รอจนวิดีโอเล่นและมีคอมเมนต์ไหลเข้ามาบนแผงด้านขวา</li><li>monitor ไป 3 นาที บันทึกจำนวนคอมเมนต์ใน DB (N1)</li><li>ปิด Wi-Fi ของเครื่อง บันทึกเวลา แล้วสังเกตหน้าจอภายใน 30 วินาที</li><li>รอ 60 วินาที แล้วเปิด Wi-Fi บันทึกเวลา</li><li>สังเกตว่าวิดีโอและคอมเมนต์กลับมาไหลเมื่อไร</li><li>monitor ต่ออีก 3 นาที กด หยุด แล้วอ่าน DB: N2 และตรวจว่าแถวก่อนเน็ตหลุด (N1) ยังอยู่ครบ</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ภายใน 30 วินาทีหลังเน็ตหลุด มีแบนเนอร์บอกว่า ขาดการเชื่อมต่อ (ไม่เงียบ)</li><li>หลังเน็ตกลับ วิดีโอ+คอมเมนต์ไหลต่อเองภายใน 30 วินาที โดยไม่ต้องกดอะไร</li><li>N1 แถวเดิมยังอยู่ครบ · session เดิมไม่ถูกปิดหรือสร้างใหม่ซ้อน</li><li>finalize สำเร็จ</li></ul><div class="hint" style="margin-top:6px">ประเภท: Manual — คนทำบนช่องจริง · ที่มา: live-readiness-test-cases.html (QA · 2026-09-09) · แผนคู่: live-readiness-test-plan.html · วัดกับ develop @ b82bb4f</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2221" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2221" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2221" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2221" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2221" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2221"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2221" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2221">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="lrD6" data-level="ui" data-prio="P0" data-kind="exception" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-LR-D6-NEG-02</td>
+  <td class="ctitle">TAKRA Insight TikTok session ขาดกลางทาง วิดีโอยังเล่นแต่คอมเมนต์หยุด ระบบต้องขึ้นแบนเนอร์ภายใน 30 วินาที <span class="kd kd-exc">Exception/Error</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-2222"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2222"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">TAKRA Insight TikTok session ขาดกลางทาง วิดีโอยังเล่นแต่คอมเมนต์หยุด ระบบต้องขึ้นแบนเนอร์ภายใน 30 วินาที</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Exception/Error</b> <span class="hint">(เน็ตหลุด · session ขาด · process ตาย · ปิดแอปกลางคัน)</span> · D6 · ทนทาน (resilience)</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>Login TikTok ในเบราว์เซอร์ในตัวด้วยมือแล้ว (จำเป็นสำหรับทุกเคสในกลุ่มนี้)</li><li>ร้านที่ไลฟ์ยาว ≥ 30 นาที</li><li>เกี่ยวข้อง TI-383</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Insight (App) แล้ว Login ด้วยบัญชีที่มีสิทธิ์ใช้งาน (entitled)</li><li>ไปที่ หน้าหลัก → กด วิเคราะห์ไลฟ์ใหม่ → วาง URL ของร้านที่กำลังไลฟ์อยู่ (ร้านในลิสต์ที่กำหนด · ตรวจด้วย probe ก่อนว่าไลฟ์จริง)</li><li>Login TikTok ในเบราว์เซอร์ในตัวและ ติดตามช่อง ตามที่ระบบบังคับ แล้วกด เปิดดูไลฟ์</li><li>รอจนวิดีโอเล่นและมีคอมเมนต์ไหลเข้ามาบนแผงด้านขวา</li><li>monitor ไป 3 นาที</li><li>เปิด DevTools ของ webview (หรือเมนูล้าง cookie ที่แอปมี) แล้วลบ cookie sessionid ของ tiktok.com บันทึกเวลา</li><li>สังเกตว่าวิดีโอยังเล่นอยู่ และคอมเมนต์หยุดไหลหรือไม่</li><li>จับเวลาจนกว่าจะมีแบนเนอร์/ข้อความแจ้งเรื่องคอมเมนต์</li><li>ทำตามที่แบนเนอร์แนะนำ (Login ใหม่) แล้วสังเกตว่าคอมเมนต์กลับมา</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>แบนเนอร์ ไม่ได้รับคอมเมนต์ / session TikTok หมดอายุ ขึ้นภายใน ≤ 30 วินาที หลังคอมเมนต์หยุด</li><li>แบนเนอร์บอกวิธีแก้ (Login ใหม่) ไม่ใช่แค่บอกว่าผิดพลาด</li><li>หลัง Login ใหม่ คอมเมนต์ไหลต่อใน session เดิม</li><li>รายงานหลังไลฟ์ระบุช่วงที่ขาดคอมเมนต์ (หรืออย่างน้อยไม่แสดงว่าปกติ)</li></ul><div class="hint" style="margin-top:6px">ประเภท: Manual — คนทำบนช่องจริง · ที่มา: live-readiness-test-cases.html (QA · 2026-09-09) · แผนคู่: live-readiness-test-plan.html · วัดกับ develop @ b82bb4f</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2222" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2222" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2222" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2222" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2222" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2222"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2222" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2222">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="lrD6" data-level="ui" data-prio="P0" data-kind="exception" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-LR-D6-NEG-03</td>
+  <td class="ctitle">TAKRA Insight เปลี่ยนหน้า webview ไป URL ที่ไม่มี channel ขณะ session เปิด ระบบต้อง auto-stop และ heartbeat ไม่ค้าง <span class="kd kd-exc">Exception/Error</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-2223"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2223"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">TAKRA Insight เปลี่ยนหน้า webview ไป URL ที่ไม่มี channel ขณะ session เปิด ระบบต้อง auto-stop และ heartbeat ไม่ค้าง</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Exception/Error</b> <span class="hint">(เน็ตหลุด · session ขาด · process ตาย · ปิดแอปกลางคัน)</span> · D6 · ทนทาน (resilience)</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>Login TikTok ในเบราว์เซอร์ในตัวด้วยมือแล้ว (จำเป็นสำหรับทุกเคสในกลุ่มนี้)</li><li>ร้านที่ไลฟ์ยาว ≥ 30 นาที</li><li>เกี่ยวข้อง TI-384</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Insight (App) แล้ว Login ด้วยบัญชีที่มีสิทธิ์ใช้งาน (entitled)</li><li>ไปที่ หน้าหลัก → กด วิเคราะห์ไลฟ์ใหม่ → วาง URL ของร้านที่กำลังไลฟ์อยู่ (ร้านในลิสต์ที่กำหนด · ตรวจด้วย probe ก่อนว่าไลฟ์จริง)</li><li>Login TikTok ในเบราว์เซอร์ในตัวและ ติดตามช่อง ตามที่ระบบบังคับ แล้วกด เปิดดูไลฟ์</li><li>รอจนวิดีโอเล่นและมีคอมเมนต์ไหลเข้ามาบนแผงด้านขวา</li><li>monitor ไป 2 นาที</li><li>ในเบราว์เซอร์ในตัว กดไปหน้า For You หรือหน้าแรก TikTok (ออกจากห้องไลฟ์) บันทึกเวลา</li><li>สังเกตสถานะ session บนแอป (REC · ตัวนับ · แบนเนอร์) ภายใน 30 วินาที</li><li>ไปที่หน้า เซสชัน ดูว่า session นี้ปิดแล้วหรือยังค้าง</li><li>ตรวจ ended_at ใน traka.db และ log heartbeat</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ระบบตรวจพบว่าออกจากห้องและหยุด session เองภายใน 30 วินาที พร้อมข้อความบอกผู้ใช้</li><li>ended_at ถูกเขียน · ไม่มี heartbeat ค้างใน log</li><li>ผู้ใช้กลับเข้าห้องเดิมได้และเริ่ม session ใหม่ได้ปกติ</li><li>ไม่มี session ค้างสถานะกำลังบันทึกในหน้า เซสชัน</li></ul><div class="hint" style="margin-top:6px">ประเภท: Manual — คนทำบนช่องจริง · ที่มา: live-readiness-test-cases.html (QA · 2026-09-09) · แผนคู่: live-readiness-test-plan.html · วัดกับ develop @ b82bb4f</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2223" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2223" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2223" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2223" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2223" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2223"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2223" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2223">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="lrD6" data-level="ui" data-prio="P0" data-kind="exception" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-LR-D6-NEG-04</td>
+  <td class="ctitle">TAKRA Insight engine ตายกลางไลฟ์ (kill -9) วิดีโอ/คอมเมนต์ต้องไหลต่อ มีแบนเนอร์ และ engine กลับมาเอง <span class="kd kd-exc">Exception/Error</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-2224"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2224"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">TAKRA Insight engine ตายกลางไลฟ์ (kill -9) วิดีโอ/คอมเมนต์ต้องไหลต่อ มีแบนเนอร์ และ engine กลับมาเอง</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Exception/Error</b> <span class="hint">(เน็ตหลุด · session ขาด · process ตาย · ปิดแอปกลางคัน)</span> · D6 · ทนทาน (resilience)</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>Login TikTok ในเบราว์เซอร์ในตัวด้วยมือแล้ว (จำเป็นสำหรับทุกเคสในกลุ่มนี้)</li><li>ร้านที่ไลฟ์ยาว ≥ 30 นาที</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Insight (App) แล้ว Login ด้วยบัญชีที่มีสิทธิ์ใช้งาน (entitled)</li><li>ไปที่ หน้าหลัก → กด วิเคราะห์ไลฟ์ใหม่ → วาง URL ของร้านที่กำลังไลฟ์อยู่ (ร้านในลิสต์ที่กำหนด · ตรวจด้วย probe ก่อนว่าไลฟ์จริง)</li><li>Login TikTok ในเบราว์เซอร์ในตัวและ ติดตามช่อง ตามที่ระบบบังคับ แล้วกด เปิดดูไลฟ์</li><li>รอจนวิดีโอเล่นและมีคอมเมนต์ไหลเข้ามาบนแผงด้านขวา</li><li>หา PID ของ engine: lsof -nP -iTCP:8765 -sTCP:LISTEN</li><li>monitor ไป 2 นาที แล้วรัน kill -9 &lt;PID&gt; บันทึกเวลา</li><li>สังเกตภายใน 10 วินาที: วิดีโอ คอมเมนต์ แบนเนอร์สถานะ engine ค่า AI · บน header</li><li>รอ 60 วินาที สังเกตว่า engine ถูก spawn ใหม่และแบนเนอร์หายหรือไม่ (ตรวจ /health)</li><li>หลังหยุด ตรวจว่า face frames หลัง engine กลับมาถูกบันทึกต่อ และ engagement ระหว่างที่ engine ตายไม่หาย</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>วิดีโอและคอมเมนต์บน UI ไหลต่อ (NFR2.3 desktop ต้องทำงานเมื่อ backend ไม่พร้อม)</li><li>แบนเนอร์ ระบบวิเคราะห์บนเครื่องขัดข้อง ขึ้นภายใน 10 วินาที · header ไม่แสดง AI · null</li><li>engine กลับมาเองภายใน 60 วินาที ไม่ต้องรีสตาร์ตแอป</li><li>engagement ที่เกิดระหว่าง engine ตายถูก buffer และเขียนลง DB หลังกลับมา (0 แถวหาย)</li></ul><div class="hint" style="margin-top:6px">ประเภท: Manual — คนทำบนช่องจริง · ที่มา: live-readiness-test-cases.html (QA · 2026-09-09) · แผนคู่: live-readiness-test-plan.html · วัดกับ develop @ b82bb4f</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2224" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2224" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2224" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2224" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2224" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2224"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2224" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2224">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="lrD6" data-level="ui" data-prio="P1" data-kind="exception" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-LR-D6-NEG-05</td>
+  <td class="ctitle">TAKRA Insight ร้านจบไลฟ์เอง แอปต้องรู้ว่าจบ ปิด session และสรุปได้ <span class="kd kd-exc">Exception/Error</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-2225"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2225"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">TAKRA Insight ร้านจบไลฟ์เอง แอปต้องรู้ว่าจบ ปิด session และสรุปได้</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Exception/Error</b> <span class="hint">(เน็ตหลุด · session ขาด · process ตาย · ปิดแอปกลางคัน)</span> · D6 · ทนทาน (resilience)</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>Login TikTok ในเบราว์เซอร์ในตัวด้วยมือแล้ว (จำเป็นสำหรับทุกเคสในกลุ่มนี้)</li><li>ร้านที่ไลฟ์ยาว ≥ 30 นาที</li><li>ร้านที่ใกล้จบไลฟ์ (ดูจากพฤติกรรม host) · เกี่ยวข้อง TI-458</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Insight (App) แล้ว Login ด้วยบัญชีที่มีสิทธิ์ใช้งาน (entitled)</li><li>ไปที่ หน้าหลัก → กด วิเคราะห์ไลฟ์ใหม่ → วาง URL ของร้านที่กำลังไลฟ์อยู่ (ร้านในลิสต์ที่กำหนด · ตรวจด้วย probe ก่อนว่าไลฟ์จริง)</li><li>Login TikTok ในเบราว์เซอร์ในตัวและ ติดตามช่อง ตามที่ระบบบังคับ แล้วกด เปิดดูไลฟ์</li><li>รอจนวิดีโอเล่นและมีคอมเมนต์ไหลเข้ามาบนแผงด้านขวา</li><li>monitor จนกว่าร้านจะกดจบไลฟ์ บันทึกเวลาที่ TikTok แสดงว่าไลฟ์จบ</li><li>สังเกตแอปภายใน 60 วินาที: ข้อความ สถานะ REC ตัวนับ</li><li>ตรวจหน้า เซสชัน และ ended_at</li><li>เปิดรายงานหลังไลฟ์</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>แอปแสดงว่า ไลฟ์จบแล้ว ภายใน 60 วินาที และหยุด session เอง</li><li>ended_at ถูกเขียน · รายงานเปิดได้ ตัวเลขครบ</li><li>ไม่มี spinner ค้างหรือ session สถานะกำลังบันทึกค้าง</li></ul><div class="hint" style="margin-top:6px">ประเภท: Manual — คนทำบนช่องจริง · ที่มา: live-readiness-test-cases.html (QA · 2026-09-09) · แผนคู่: live-readiness-test-plan.html · วัดกับ develop @ b82bb4f</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2225" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2225" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2225" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2225" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2225" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2225"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2225" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2225">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="lrD6" data-level="ui" data-prio="P1" data-kind="exception" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-LR-D6-EDGE-01</td>
+  <td class="ctitle">TAKRA Insight ปิดแอปด้วย ⌘Q ขณะ monitor ต้อง teardown ภายใน 10 วินาที และเปิดใหม่ไม่มี session ค้าง <span class="kd kd-exc">Exception/Error</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-2226"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2226"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">TAKRA Insight ปิดแอปด้วย ⌘Q ขณะ monitor ต้อง teardown ภายใน 10 วินาที และเปิดใหม่ไม่มี session ค้าง</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Exception/Error</b> <span class="hint">(เน็ตหลุด · session ขาด · process ตาย · ปิดแอปกลางคัน)</span> · D6 · ทนทาน (resilience)</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>Login TikTok ในเบราว์เซอร์ในตัวด้วยมือแล้ว (จำเป็นสำหรับทุกเคสในกลุ่มนี้)</li><li>ร้านที่ไลฟ์ยาว ≥ 30 นาที</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Insight (App) แล้ว Login ด้วยบัญชีที่มีสิทธิ์ใช้งาน (entitled)</li><li>ไปที่ หน้าหลัก → กด วิเคราะห์ไลฟ์ใหม่ → วาง URL ของร้านที่กำลังไลฟ์อยู่ (ร้านในลิสต์ที่กำหนด · ตรวจด้วย probe ก่อนว่าไลฟ์จริง)</li><li>Login TikTok ในเบราว์เซอร์ในตัวและ ติดตามช่อง ตามที่ระบบบังคับ แล้วกด เปิดดูไลฟ์</li><li>รอจนวิดีโอเล่นและมีคอมเมนต์ไหลเข้ามาบนแผงด้านขวา</li><li>monitor ไป 2 นาที แล้วกด ⌘Q บันทึกเวลา</li><li>จับเวลาจนหน้าต่างปิดและ process หายจาก Activity Monitor (รวม engine)</li><li>รัน lsof -nP -iTCP:8765 ตรวจว่าไม่มี process ค้าง</li><li>เปิดแอปใหม่ ไปที่หน้า เซสชัน ดู session ล่าสุด</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>แอปปิดสนิทภายใน ≤ 10 วินาที (เคยพบ 90 วินาทีใน r013)</li><li>ไม่มี engine หรือ ffmpeg ค้างหลังปิด</li><li>session ล่าสุดมี ended_at และเปิดรายงานได้ ไม่ค้างสถานะกำลังบันทึก</li></ul><div class="hint" style="margin-top:6px">ประเภท: Manual — คนทำบนช่องจริง · ที่มา: live-readiness-test-cases.html (QA · 2026-09-09) · แผนคู่: live-readiness-test-plan.html · วัดกับ develop @ b82bb4f</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2226" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2226" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2226" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2226" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2226" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2226"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2226" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2226">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+
+<!-- lrD7 -->
+<tr class="epicrow" data-epic="lrD7"><td colspan="7">⏳ D7 · ทนเวลาและโหลด (soak) <span class="rp">(4 เคส)</span></td></tr>
+<tr class="featrow" data-featkey="lr-d7"><td colspan="7">📁 ทนเวลาและโหลด (soak) <span class="rp"><span class="lv lvl-ui">🌐 4</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="lr-d7"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow" data-feat="lrD7" data-level="ui" data-prio="P0" data-kind="boundary" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-LR-D7-POS-01</td>
+  <td class="ctitle">TAKRA Insight monitor ร้านจริงต่อเนื่อง 120 นาที RAM ต้องไม่เกิน 2 GB และไม่โตต่อเนื่อง <span class="kd kd-bnd">Boundary/Edge</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-2227"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2227"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">TAKRA Insight monitor ร้านจริงต่อเนื่อง 120 นาที RAM ต้องไม่เกิน 2 GB และไม่โตต่อเนื่อง</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Boundary/Edge</b> <span class="hint">(เกณฑ์ตัวเลข · โหลดหนัก · ขอบของทรัพยากร)</span> · D7 · ทนเวลาและโหลด (soak)</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>ร้านที่ไลฟ์ยาว ≥ 2 ชั่วโมง (ช่วงเย็น)</li><li>เครื่องว่าง ผ่าน bench_guard · sampler script ที่เก็บ /health capacity + ps -o rss ทุก 5 นาที</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Insight (App) แล้ว Login ด้วยบัญชีที่มีสิทธิ์ใช้งาน (entitled)</li><li>ไปที่ หน้าหลัก → กด วิเคราะห์ไลฟ์ใหม่ → วาง URL ของร้านที่กำลังไลฟ์อยู่ (ร้านในลิสต์ที่กำหนด · ตรวจด้วย probe ก่อนว่าไลฟ์จริง)</li><li>Login TikTok ในเบราว์เซอร์ในตัวและ ติดตามช่อง ตามที่ระบบบังคับ แล้วกด เปิดดูไลฟ์</li><li>รอจนวิดีโอเล่นและมีคอมเมนต์ไหลเข้ามาบนแผงด้านขวา</li><li>เริ่ม sampler พร้อมเวลาเริ่ม monitor</li><li>ปล่อย 120 นาที ไม่แตะเครื่อง (ยกเว้นดูว่ายังไหล)</li><li>ทุก 30 นาที บันทึก screenshot ของแอปและจำนวนคอมเมนต์</li><li>กด หยุด แล้วเก็บ CSV ของ sampler และ FINAL จาก spec</li><li>วาดกราฟ RAM / CPU / GPU / fps ตามเวลา</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>RSS ของ engine + แอป &lt; 2 GB peak ตลอด 120 นาที (NFR1.7)</li><li>RAM ที่นาที 120 ไม่เกิน RAM ที่นาที 30 บวก 10 % (ไม่มี leak)</li><li>fps และ comment latency ที่ชั่วโมงที่ 2 ไม่แย่กว่าชั่วโมงแรกอย่างมีนัย</li><li>ไม่มี crash แบนเนอร์ค้าง หรือ session ขาดโดยไม่มีสาเหตุภายนอก</li></ul><div class="hint" style="margin-top:6px">ประเภท: Measure — คนทำ + เก็บตัวเลข · ที่มา: live-readiness-test-cases.html (QA · 2026-09-09) · แผนคู่: live-readiness-test-plan.html · วัดกับ develop @ b82bb4f</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2227" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2227" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2227" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2227" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2227" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2227"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2227" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2227">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="lrD7" data-level="ui" data-prio="P0" data-kind="data" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-LR-D7-POS-02</td>
+  <td class="ctitle">TAKRA Insight monitor 2 ร้านพร้อมกัน 30 นาที ข้อมูลต้องไม่ปนกันและปิดแอปได้ภายใน 10 วินาที <span class="kd kd-data">Data</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-2228"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2228"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">TAKRA Insight monitor 2 ร้านพร้อมกัน 30 นาที ข้อมูลต้องไม่ปนกันและปิดแอปได้ภายใน 10 วินาที</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Data</b> <span class="hint">(ครบถ้วน · ไม่ซ้ำ · ตรงกันระหว่าง UI กับ DB)</span> · D7 · ทนเวลาและโหลด (soak)</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>multi-session เปิดใช้งาน (flag ตรงกันทั้ง main และ engine)</li><li>ร้าน 2 ร้านไลฟ์อยู่พร้อมกัน</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดร้าน A ตามขั้นตอนเริ่ม monitor</li><li>เปิดร้าน B ใน session ที่ 2 (ตามที่ UI รองรับ)</li><li>ปล่อย 30 นาที สังเกตว่าทั้งสองห้องมีวิดีโอและคอมเมนต์ไหล</li><li>ให้บัญชีที่ 2 พิมพ์ sentinel ที่ร้าน A เท่านั้น 3 ข้อความ</li><li>กด หยุด ทั้งสอง แล้วตรวจ DB ของแต่ละ session · จากนั้นกด ⌘Q จับเวลา</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>sentinel ของร้าน A อยู่เฉพาะ session A (0 แถวใน B)</li><li>ทั้ง 2 session มี face frames และ engagement ต่อเนื่อง ไม่มีห้องไหน frame = 0</li><li>RAM รวม &lt; 2 GB ต่อ session (NFR1.7)</li><li>⌘Q ปิดสนิทภายใน ≤ 10 วินาที</li></ul><div class="hint" style="margin-top:6px">ประเภท: Measure — คนทำ + เก็บตัวเลข · ที่มา: live-readiness-test-cases.html (QA · 2026-09-09) · แผนคู่: live-readiness-test-plan.html · วัดกับ develop @ b82bb4f</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2228" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2228" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2228" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2228" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2228" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2228"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2228" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2228">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="lrD7" data-level="ui" data-prio="P1" data-kind="boundary" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-LR-D7-NEG-01</td>
+  <td class="ctitle">TAKRA Insight เมื่อ RAM ว่างในเครื่องลดลง governor ต้องลดโหลดเองก่อนถึงพื้น 1,500 MB โดยไม่ค้าง <span class="kd kd-bnd">Boundary/Edge</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-2229"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2229"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">TAKRA Insight เมื่อ RAM ว่างในเครื่องลดลง governor ต้องลดโหลดเองก่อนถึงพื้น 1,500 MB โดยไม่ค้าง</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Boundary/Edge</b> <span class="hint">(เกณฑ์ตัวเลข · โหลดหนัก · ขอบของทรัพยากร)</span> · D7 · ทนเวลาและโหลด (soak)</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>scripts/mem_floor_probe.py และ .venv</li><li>เครื่องที่ยอมให้ RAM ถูกกด (ไม่ใช่เครื่องทำงานหลัก)</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Insight (App) แล้ว Login ด้วยบัญชีที่มีสิทธิ์ใช้งาน (entitled)</li><li>ไปที่ หน้าหลัก → กด วิเคราะห์ไลฟ์ใหม่ → วาง URL ของร้านที่กำลังไลฟ์อยู่ (ร้านในลิสต์ที่กำหนด · ตรวจด้วย probe ก่อนว่าไลฟ์จริง)</li><li>Login TikTok ในเบราว์เซอร์ในตัวและ ติดตามช่อง ตามที่ระบบบังคับ แล้วกด เปิดดูไลฟ์</li><li>รอจนวิดีโอเล่นและมีคอมเมนต์ไหลเข้ามาบนแผงด้านขวา</li><li>รัน mem_floor_probe.py ตามค่า default (--stop-available-mb 1500) เพื่อค่อย ๆ จอง RAM</li><li>สังเกต /health capacity และค่า governor บนแอปทุก 1 นาที</li><li>บันทึกจุดที่ fps เริ่มลด และจุดที่ probe หยุด</li><li>หลัง probe คืน RAM สังเกตว่า fps กลับมา</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>governor ลด fps/โหลดเองก่อนถึง floor · แอปไม่ค้าง ไม่ crash</li><li>probe หยุดที่เงื่อนไขแรก (knee หรือ floor) ไม่จองจนเครื่องแฮงก์</li><li>หลังคืน RAM ระบบกลับสู่ค่าปกติเองภายใน 2 นาที</li></ul><div class="hint" style="margin-top:6px">ประเภท: Measure — คนทำ + เก็บตัวเลข · ที่มา: live-readiness-test-cases.html (QA · 2026-09-09) · แผนคู่: live-readiness-test-plan.html · วัดกับ develop @ b82bb4f</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2229" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2229" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2229" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2229" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2229" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2229"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2229" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2229">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="lrD7" data-level="ui" data-prio="P1" data-kind="boundary" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-LR-D7-NEG-02</td>
+  <td class="ctitle">TAKRA Insight เครื่องยุ่ง (OBS + Chrome 20 แท็บ) ระหว่างไลฟ์ คอมเมนต์ยังต้องมาถึงภายใน p95 &lt; 2 วินาที <span class="kd kd-bnd">Boundary/Edge</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-2230"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2230"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">TAKRA Insight เครื่องยุ่ง (OBS + Chrome 20 แท็บ) ระหว่างไลฟ์ คอมเมนต์ยังต้องมาถึงภายใน p95 &lt; 2 วินาที</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Boundary/Edge</b> <span class="hint">(เกณฑ์ตัวเลข · โหลดหนัก · ขอบของทรัพยากร)</span> · D7 · ทนเวลาและโหลด (soak)</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>OBS หรือโปรแกรมสตรีมที่ host ใช้จริง</li><li>บัญชีที่ 2 พร้อมส่ง sentinel</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Insight (App) แล้ว Login ด้วยบัญชีที่มีสิทธิ์ใช้งาน (entitled)</li><li>ไปที่ หน้าหลัก → กด วิเคราะห์ไลฟ์ใหม่ → วาง URL ของร้านที่กำลังไลฟ์อยู่ (ร้านในลิสต์ที่กำหนด · ตรวจด้วย probe ก่อนว่าไลฟ์จริง)</li><li>Login TikTok ในเบราว์เซอร์ในตัวและ ติดตามช่อง ตามที่ระบบบังคับ แล้วกด เปิดดูไลฟ์</li><li>รอจนวิดีโอเล่นและมีคอมเมนต์ไหลเข้ามาบนแผงด้านขวา</li><li>เปิด OBS ให้ encode อยู่ (preview หรือ record) และเปิด Chrome 20 แท็บที่มีวิดีโอเล่น</li><li>ให้บัญชีที่ 2 ส่ง sentinel 5 ข้อความห่างกัน 1 นาที</li><li>อ่าน latency จาก ingest_time เทียบเวลาส่ง</li><li>บันทึก CPU/GPU รวมของเครื่องระหว่างทดสอบ</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>sentinel 5/5 · latency p95 &lt; 2 วินาที แม้เครื่องยุ่ง</li><li>วิดีโอในแอปยังเล่น ไม่ค้าง</li><li>ถ้า governor ลด fps ให้ระบุในรายงาน (ยอมรับได้ · คอมเมนต์ต้องไม่ช้า)</li></ul><div class="hint" style="margin-top:6px">ประเภท: Measure — คนทำ + เก็บตัวเลข · ที่มา: live-readiness-test-cases.html (QA · 2026-09-09) · แผนคู่: live-readiness-test-plan.html · วัดกับ develop @ b82bb4f</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2230" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2230" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2230" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2230" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2230" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2230"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2230" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2230">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+
+<!-- lrD8 -->
+<tr class="epicrow" data-epic="lrD8"><td colspan="7">🏁 D8 · จบไลฟ์และรายงาน <span class="rp">(3 เคส)</span></td></tr>
+<tr class="featrow" data-featkey="lr-d8"><td colspan="7">📁 จบไลฟ์และรายงาน <span class="rp"><span class="lv lvl-ui">🌐 2</span> <span class="lv lvl-e2e">🔄 1</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="lr-d8"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow" data-feat="lrD8" data-level="ui" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-LR-D8-POS-01</td>
+  <td class="ctitle">TAKRA Insight กดหยุดแล้ว session ต้อง finalize ภายใน 60 วินาที และเปิดรายงานได้ <span class="kd kd-happy">Happy Path</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-2231"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2231"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">TAKRA Insight กดหยุดแล้ว session ต้อง finalize ภายใน 60 วินาที และเปิดรายงานได้</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติบนไลฟ์จริง)</span> · D8 · จบไลฟ์และรายงาน</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>session ที่ monitor มาแล้ว ≥ 10 นาที</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>ขณะ monitor กด หยุด บันทึกเวลา</li><li>จับเวลาจนแอปพาไปหน้ารายงาน/แสดงว่าสรุปเสร็จ</li><li>ตรวจ ended_at ของ session ใน traka.db</li><li>เปิดหน้า เซสชัน → เลือก session นี้ → ดูว่ารายงานโหลดครบทุกส่วน (สรุป · อารมณ์ · คอมเมนต์ · KPI)</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>finalize สำเร็จภายใน ≤ 60 วินาที · ended_at ถูกเขียน</li><li>รายงานเปิดได้ครบทุกส่วน ไม่มีส่วนไหนแสดง null/undefined/—ที่ควรมีค่า</li><li>ทำซ้ำ 3 session สำเร็จ 3/3</li></ul><div class="hint" style="margin-top:6px">ประเภท: Measure — คนทำ + เก็บตัวเลข · ที่มา: live-readiness-test-cases.html (QA · 2026-09-09) · แผนคู่: live-readiness-test-plan.html · วัดกับ develop @ b82bb4f</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2231" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2231" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2231" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2231" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2231" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2231"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2231" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2231">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="lrD8" data-level="ui" data-prio="P0" data-kind="data" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-LR-D8-POS-02</td>
+  <td class="ctitle">TAKRA Insight ตัวเลขในรายงานหลังไลฟ์ (คอมเมนต์รวม · like · peak) ต้องตรงกับ DB และที่นับจากหน้าจอ <span class="kd kd-data">Data</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-2232"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2232"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">TAKRA Insight ตัวเลขในรายงานหลังไลฟ์ (คอมเมนต์รวม · like · peak) ต้องตรงกับ DB และที่นับจากหน้าจอ</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Data</b> <span class="hint">(ครบถ้วน · ไม่ซ้ำ · ตรงกันระหว่าง UI กับ DB)</span> · D8 · จบไลฟ์และรายงาน</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>session จาก D2-POS-02 ที่มีการนับจากหน้าจอแล้ว (N_seen)</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดรายงานของ session นั้น จดค่า คอมเมนต์รวม · like · ผู้ชมสูงสุด · gift</li><li>อ่านค่าเดียวกันจาก traka.db (นับแถวตามชนิด event)</li><li>เทียบกับ N_seen และตัวเลขที่ TikTok แสดงตอนไลฟ์ (screenshot)</li><li>ทำตาราง 3 คอลัมน์: รายงาน · DB · หน้าจอ</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>รายงาน = DB ทุกค่า (ต่างได้เฉพาะที่มีนิยามชัด เช่น history ไม่นับ)</li><li>รายงาน ≈ หน้าจอ ภายใน ±1 % สำหรับคอมเมนต์ · like ต่างได้ตาม batch ของ TikTok แต่ต้องไม่เกินจริง 2 เท่า (อาการ TI-381)</li><li>ค่าที่ต่างถูกอธิบายได้ ไม่ใช่ปล่อยผ่าน</li></ul><div class="hint" style="margin-top:6px">ประเภท: Manual — คนทำบนช่องจริง · ที่มา: live-readiness-test-cases.html (QA · 2026-09-09) · แผนคู่: live-readiness-test-plan.html · วัดกับ develop @ b82bb4f</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2232" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2232" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2232" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2232" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2232" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2232"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2232" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2232">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="lrD8" data-level="e2e" data-prio="P1" data-kind="exception" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-LR-D8-EDGE-01</td>
+  <td class="ctitle">TAKRA Insight finalize เมื่อไม่มี player หรือ session ไม่ได้เปิด player ต้องไม่ล้ม <span class="kd kd-exc">Exception/Error</span></td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-2233"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2233"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">TAKRA Insight finalize เมื่อไม่มี player หรือ session ไม่ได้เปิด player ต้องไม่ล้ม</div>
+  <div class="h-prio">Priority: <b>P1</b> · E2E · ประเภท: <b>Exception/Error</b> <span class="hint">(เน็ตหลุด · session ขาด · process ตาย · ปิดแอปกลางคัน)</span> · D8 · จบไลฟ์และรายงาน</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>.venv ที่ apps/desktop</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>รัน LHM_DATA_DIR=$(mktemp -d) .venv/bin/python test_ti313_finalize_no_player.py</li><li>รัน LHM_DATA_DIR=$(mktemp -d) .venv/bin/python test_sessions_list.py</li><li>อ่านผล</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ทั้งสองไฟล์ ALL PASS</li><li>session ที่ไม่มี player ยังได้ ended_at และปรากฏในรายการ session</li></ul><div class="hint" style="margin-top:6px">ประเภท: Automated — ใช้ script ที่มีอยู่ · ที่มา: live-readiness-test-cases.html (QA · 2026-09-09) · แผนคู่: live-readiness-test-plan.html · วัดกับ develop @ b82bb4f</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2233" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2233" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2233" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2233" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2233" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2233"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2233" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2233">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+</tbody>
+  </table>
+  </div>
+
+</div>
+<footer>[คุณภาพ] TAKRA Insight — Live Readiness · ความพร้อมใช้บนไลฟ์จริง · 29 UI + 4 E2E = 33 TCs · Live Readiness (cross-cutting) · TAKRA Insight desktop</footer>
+
+<script>
+// ── Load store from embedded JSON ──
+var storeEl = document.getElementById('store-data');
+var store = {};
+try { store = JSON.parse(storeEl.textContent || '{}'); } catch(_) {}
+
+var SMAP = {
+  pass:  ['pass',  'PASS'],
+  fail:  ['fail',  'FAIL'],
+  hold:  ['hold',  'HOLD'],
+  block: ['block', 'BLOCKED'],
+  skip:  ['skip',  'SKIP'],
+};
+
+// Restore saved statuses
+Object.keys(store).forEach(function(uid) {
+  var st = store[uid] && store[uid].st;
+  if (!st || !SMAP[st]) return;
+  // badge
+  var rowStatus = document.querySelector('tr.trow td.status[data-uid="' + uid + '"]');
+  if (rowStatus) {
+    var stb = rowStatus.querySelector('.stb');
+    if (stb) { stb.className = 'stb ' + SMAP[st][0]; stb.textContent = SMAP[st][1]; }
+  }
+  // opt button
+  var opt = document.querySelector('.opt[data-uid="' + uid + '"][data-st="' + st + '"]');
+  if (opt) opt.classList.add('sel');
+  // also restore actual result text
+  if (store[uid].actual) {
+    var boxes = document.querySelectorAll('tr.detail');
+    boxes.forEach(function(d) {
+      var badge = d.querySelector('.opt[data-uid="' + uid + '"]');
+      if (!badge) return;
+      var box = d.querySelector('.actualbox');
+      if (box) { box.value = store[uid].actual; box.classList.add('filled'); }
+    });
+  }
+});
+
+// ── Toggle row expand ──
+function tg(row) {
+  var detail = row.nextElementSibling;
+  var isOpen = row.classList.contains('open');
+  row.classList.toggle('open', !isOpen);
+  if (detail && detail.classList.contains('detail')) {
+    detail.classList.toggle('show', !isOpen);
+  }
+}
+function toggleAll(open) {
+  document.querySelectorAll('tr.trow').forEach(function(r) {
+    if (r.classList.contains('hide')) return;
+    r.classList.toggle('open', open);
+    var d = r.nextElementSibling;
+    if (d && d.classList.contains('detail')) d.classList.toggle('show', open);
+  });
+}
+
+// ── Save store back into the embedded script tag ──
+function save() {
+  storeEl.textContent = '\n' + JSON.stringify(store, null, 2).replace(/</g, '\\u003c') + '\n';
+}
+
+// ── Status opt buttons ──
+document.querySelectorAll('.opt').forEach(function(o) {
+  o.addEventListener('click', function(e) {
+    e.stopPropagation();
+    var uid = o.dataset.uid, st = o.dataset.st;
+    var allOpts = document.querySelectorAll('.opt[data-uid="' + uid + '"]');
+    var alreadySel = o.classList.contains('sel');
+    allOpts.forEach(function(x) { x.classList.remove('sel'); });
+    store[uid] = store[uid] || {};
+    if (alreadySel) {
+      delete store[uid].st;
+    } else {
+      o.classList.add('sel');
+      store[uid].st = st;
+    }
+    var rowStatus = document.querySelector('tr.trow td.status[data-uid="' + uid + '"]');
+    if (rowStatus) {
+      var stb = rowStatus.querySelector('.stb');
+      if (stb) {
+        if (!alreadySel && SMAP[st]) { stb.className = 'stb ' + SMAP[st][0]; stb.textContent = SMAP[st][1]; }
+        else { stb.className = 'stb pending'; stb.textContent = 'รอเทส'; }
+      }
+    }
+    save();
+    applyFilters();   // re-filter (recounts too) so an active สถานะ filter updates live
+    markDirty();
+  });
+});
+
+// ── Actual result editable on blur ──
+document.querySelectorAll('.actualbox').forEach(function(box) {
+  // a <textarea> — clicking/typing must not bubble up to the row toggle
+  box.addEventListener('click', function(ev) { ev.stopPropagation(); });
+  box.addEventListener('input', function() { box.classList.toggle('filled', box.value.trim() !== ''); });
+  box.addEventListener('blur', function() {
+    // find uid from nearest .opt
+    var opts = box.closest('tr.detail').querySelectorAll('.opt');
+    if (!opts.length) return;
+    var uid = opts[0].dataset.uid;
+    var txt = box.value.trim();
+    var prev = (store[uid] && store[uid].actual) || '';
+    if (txt === prev) return;   // nothing typed → don't dirty the file
+    store[uid] = store[uid] || {};
+    if (txt) { store[uid].actual = txt; }
+    else { delete store[uid].actual; if (!Object.keys(store[uid]).length) delete store[uid]; }
+    save();
+    markDirty();
+  });
+});
+
+// ── Filters ──
+var filters = { feat: new Set(), level: new Set(), prio: new Set(), status: new Set(), kind: new Set(), ui: new Set() };
+document.querySelectorAll('.fchip').forEach(function(c) {
+  c.addEventListener('click', function() {
+    var f = c.dataset.f, v = c.dataset.v;
+    if (filters[f].has(v)) { filters[f].delete(v); c.classList.remove('active'); }
+    else { filters[f].add(v); c.classList.add('active'); }
+    applyFilters();
+  });
+});
+document.querySelectorAll('.clearbtn').forEach(function(b) {
+  b.addEventListener('click', function() {
+    var key = b.dataset.clear;
+    filters[key].clear();
+    document.querySelectorAll('.fchip[data-f="' + key + '"]').forEach(function(c) { c.classList.remove('active'); });
+    applyFilters();
+  });
+});
+function applyFilters() {
+  document.querySelectorAll('tr.trow').forEach(function(row) {
+    var ok = true;
+    if (filters.feat.size  && !filters.feat.has(row.dataset.feat))   ok = false;
+    if (filters.level.size && !filters.level.has(row.dataset.level)) ok = false;
+    if (filters.prio.size  && !filters.prio.has(row.dataset.prio))   ok = false;
+    if (filters.kind.size  && !filters.kind.has(row.dataset.kind))   ok = false;
+    if (filters.ui.size    && !filters.ui.has(row.dataset.ui))       ok = false;
+    if (filters.status.size) {
+      var stb = row.querySelector('td.status .stb');
+      var scls = stb ? stb.className.replace('stb', '').trim().split(' ')[0] : 'pending';
+      if (!filters.status.has(scls)) ok = false;
+    }
+    row.classList.toggle('hide', !ok);
+    var d = row.nextElementSibling;
+    if (d && d.classList.contains('detail')) d.classList.toggle('hide', !ok);
+  });
+  document.querySelectorAll('tr.featrow').forEach(function(fr) {
+    var n = fr.nextElementSibling, any = false;
+    while (n && !n.classList.contains('featrow') && !n.classList.contains('epicrow')) {
+      if (n.classList.contains('trow') && !n.classList.contains('hide')) { any = true; break; }
+      n = n.nextElementSibling;
+    }
+    fr.classList.toggle('hide', !any);
+  });
+  document.querySelectorAll('tr.epicrow').forEach(function(er) {
+    var n = er.nextElementSibling, any = false;
+    while (n && !n.classList.contains('epicrow')) {
+      if (n.classList.contains('trow') && !n.classList.contains('hide')) { any = true; break; }
+      n = n.nextElementSibling;
+    }
+    er.classList.toggle('hide', !any);
+  });
+  recount();
+}
+
+function recount() {
+  var c = { pass:0, fail:0, hold:0, block:0, skip:0, pending:0 };
+  document.querySelectorAll('tr.trow').forEach(function(row) {
+    var stb = row.querySelector('td.status .stb');
+    if (!stb) return;
+    var cls = stb.className.replace('stb','').trim().split(' ')[0];
+    if (c.hasOwnProperty(cls)) c[cls]++; else c.pending++;
+  });
+  var total    = c.pass + c.fail + c.hold + c.block + c.skip + c.pending;
+  var done     = c.pass + c.fail + c.hold + c.block;
+  var testable = total - c.skip;               // SKIP = ตั้งใจข้าม ไม่นับเป็นเป้าที่ต้องทดสอบ
+  var pct      = testable ? Math.round(done / testable * 100) : 0;
+  ['pass','fail','hold','block','skip'].forEach(function(k) {
+    var e = document.getElementById('sum-'+k); if (e) e.textContent = c[k];
+    var h = document.getElementById('hdr-'+k); if (h) h.textContent = c[k];
+  });
+  var ep = document.getElementById('sum-pending'); if (ep) ep.textContent = c.pending;
+  var hp = document.getElementById('hdr-pending'); if (hp) hp.textContent = c.pending;
+  var bar = document.getElementById('sumbar'); if (bar) bar.style.width = pct + '%';
+  var pctEl = document.getElementById('sumpct');
+  if (pctEl) pctEl.textContent = pct + '% ทดสอบแล้ว (' + done + '/' + testable + ')' + (c.skip ? ' · ข้าม ' + c.skip : '');
+}
+
+// ── GitHub publish config ──
+var GH_OWNER  = 'wanlee-tankunnatam';
+var GH_REPO   = 'qa-test-reports';
+var GH_PATH   = 'projects/takra-insight/2026/09/reports/takra-insight-live-readiness-test-cases-table.html';
+var GH_BRANCH = 'master';
+var GH_API    = 'https://api.github.com/repos/' + GH_OWNER + '/' + GH_REPO + '/contents/' + GH_PATH;
+
+// ── Save state (dirty tracking + auto-publish) ──
+var dirty = false;
+var autoTimer = null;
+var publishing = false;
+
+function ghToken() {
+  var t = localStorage.getItem('gh_pat');
+  if (!t) {
+    t = prompt(
+      'ใส่ GitHub Personal Access Token (ใส่ครั้งเดียว จำไว้ในเบราว์เซอร์นี้)\n\n' +
+      'สร้าง token:\n' +
+      'github.com → Settings → Developer settings →\n' +
+      'Personal access tokens → Tokens (classic) → Generate new token (classic)\n' +
+      '→ ติ๊ก scope: repo  (หรือ public_repo เพราะ repo นี้ public)\n\n' +
+      'หรือ Fine-grained token: เลือก repo "qa-test-reports" →\n' +
+      'Permissions → Contents = Read and write'
+    );
+    if (t) localStorage.setItem('gh_pat', t.trim());
+  }
+  return t ? t.trim() : null;
+}
+function clearToken() { localStorage.removeItem('gh_pat'); }
+
+async function publishToGH(auto) {
+  if (publishing) return;
+  var btn = document.getElementById('btn-publish');
+  var token = auto ? localStorage.getItem('gh_pat') : ghToken();
+  if (!token) return;          // auto-save stays quiet until a token exists
+  publishing = true;
+  if (autoTimer) { clearTimeout(autoTimer); autoTimer = null; }
+
+  btn.disabled = true;
+  btn.textContent = '⏳ กำลังบันทึก…';
+  save();
+
+  var API = 'https://api.github.com/repos/' + GH_OWNER + '/' + GH_REPO + '/contents/' + GH_PATH;
+
+  // Serialize the page with the button forced to its idle/enabled state, so the
+  // committed file is never frozen mid-save (otherwise reopening it shows a
+  // permanently-disabled "⏳ กำลังบันทึก…" button).
+  function buildEncoded() {
+    var dis = btn.disabled, txt = btn.textContent;
+    btn.disabled = false;
+    btn.textContent = '☁️ บันทึกขึ้น GitHub';
+    var html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+    btn.disabled = dis;
+    btn.textContent = txt;
+    return btoa(unescape(encodeURIComponent(html)));
+  }
+
+  // Fetch current remote file (sha + content), bypassing any cache.
+  async function fetchRemote() {
+    var r = await fetch(
+      API + '?ref=' + GH_BRANCH + '&t=' + Date.now(),
+      { cache: 'no-store', headers: { Authorization: 'token ' + token, Accept: 'application/vnd.github+json' } }
+    );
+    if (!r.ok) {
+      if (r.status === 401) { localStorage.removeItem('gh_pat'); }
+      throw new Error('ดึงไฟล์ไม่ได้ (HTTP ' + r.status + ') — ตรวจ token หรือ branch');
+    }
+    return r.json();
+  }
+
+  // Merge statuses that exist on the remote copy but NOT locally, so a
+  // teammate's concurrent edit is not silently overwritten (local always wins
+  // for keys we changed; we only add keys we don't have).
+  function mergeRemote(remote) {
+    try {
+      var remoteHtml = decodeURIComponent(escape(atob((remote.content || '').replace(/\s/g, ''))));
+      var m = remoteHtml.match(/<script id="store-data"[^>]*>([\s\S]*?)<\/script>/);
+      if (!m) return;
+      var rs = JSON.parse((m[1] || '{}').trim() || '{}');
+      var added = 0;
+      Object.keys(rs).forEach(function(uid) {
+        if (uid in store) return;
+        store[uid] = rs[uid];
+        added++;
+        var st = rs[uid] && rs[uid].st;
+        if (st && SMAP[st]) {
+          var cell = document.querySelector('tr.trow td.status[data-uid="' + uid + '"] .stb');
+          if (cell) { cell.className = 'stb ' + SMAP[st][0]; cell.textContent = SMAP[st][1]; }
+          var opt = document.querySelector('.opt[data-uid="' + uid + '"][data-st="' + st + '"]');
+          if (opt) opt.classList.add('sel');
+        }
+      });
+      if (added) { save(); recount(); }
+    } catch (_) {}
+  }
+
+  // Commit content = the LATEST remote file with ONLY its store-data block
+  // swapped for our (merged) results. This makes auto-save a results-only
+  // overlay: a stale tab can never overwrite the repo's structure/layout —
+  // it always publishes on top of whatever structure is currently on GitHub.
+  function buildFromRemote(remote) {
+    try {
+      var remoteHtml = decodeURIComponent(escape(atob((remote.content || '').replace(/\s/g, ''))));
+      if (!/<script id="store-data"[^>]*>[\s\S]*?<\/script>/.test(remoteHtml)) return buildEncoded();
+      var json = '\n' + JSON.stringify(store, null, 2).replace(/</g, '\\u003c') + '\n';
+      var replaced = remoteHtml.replace(
+        /(<script id="store-data"[^>]*>)[\s\S]*?(<\/script>)/,
+        function(_m, o, c) { return o + json + c; }
+      );
+      return btoa(unescape(encodeURIComponent(replaced)));
+    } catch (_) {
+      return buildEncoded();   // fallback: serialize local DOM
+    }
+  }
+
+  async function commit(remote) {
+    var ts = new Date().toISOString().slice(0, 16).replace('T', ' ');
+    return fetch(API, {
+      method: 'PUT',
+      headers: { Authorization: 'token ' + token, Accept: 'application/vnd.github+json', 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        message: 'chore(qa): update test results ' + ts,
+        content: buildFromRemote(remote),
+        sha: remote.sha,
+        branch: GH_BRANCH
+      })
+    });
+  }
+
+  try {
+    var r2, lastErr;
+    // Up to 4 attempts. Re-fetch the SHA and merge remote statuses each time;
+    // a stale SHA returns 409/422 ("does not match …") which we retry.
+    for (var attempt = 0; attempt < 4; attempt++) {
+      var remote = await fetchRemote();
+      mergeRemote(remote);
+      r2 = await commit(remote);
+      if (r2.ok) break;
+      if (r2.status === 409 || r2.status === 422) {
+        lastErr = 'SHA ชนกัน (HTTP ' + r2.status + ')';
+        await new Promise(function(res) { setTimeout(res, 400 * (attempt + 1)); });
+        continue;
+      }
+      // Bad/expired token or insufficient scope — drop it so the next attempt re-prompts.
+      if (r2.status === 401 || r2.status === 403) {
+        clearToken();
+        var pe = await r2.json().catch(function() { return {}; });
+        throw new Error(
+          (pe.message || 'HTTP ' + r2.status) +
+          '\n\n→ Token สิทธิ์ไม่พอ/หมดอายุ ลบให้แล้ว ครั้งหน้าจะถามใหม่\n' +
+          '   ใช้ classic token scope "repo" (หรือ public_repo) หรือ fine-grained ที่ให้ Contents = Read and write กับ repo นี้'
+        );
+      }
+      var e = await r2.json();
+      throw new Error(e.message || 'HTTP ' + r2.status);
+    }
+    if (!r2.ok) {
+      throw new Error((lastErr || 'conflict') + ' — มีการแก้ไฟล์พร้อมกัน ลองกดบันทึกอีกครั้ง หรือ refresh หน้าก่อนบันทึก');
+    }
+
+    dirty = false;
+    publishing = false;
+    btn.textContent = '✅ บันทึกแล้ว!';
+    btn.style.background = 'var(--pass)';
+    setTimeout(function() {
+      btn.style.background = '';
+      btn.disabled = false;
+      updateIndicator();
+    }, 3000);
+  } catch (err) {
+    publishing = false;
+    if (!auto) alert('❌ บันทึกไม่สำเร็จ: ' + err.message);
+    btn.disabled = false;
+    updateIndicator();
+  }
+}
+
+document.getElementById('btn-publish').addEventListener('click', function() { publishToGH(false); });
+
+// ── Dirty tracking / unsaved indicator ──
+function autoOn() {
+  var c = document.getElementById('chk-autosave');
+  return c ? c.checked : false;
+}
+function updateIndicator() {
+  var s = document.getElementById('save-status');
+  var b = document.getElementById('btn-publish');
+  if (dirty) {
+    if (s) { s.textContent = '● ยังไม่ได้บันทึก'; s.style.color = 'var(--hold)'; }
+    if (b && !b.disabled && b.textContent.indexOf('✅') < 0) b.textContent = '☁️ บันทึกขึ้น GitHub *';
+  } else {
+    if (s) { s.textContent = '✓ ตรงกับ GitHub'; s.style.color = 'var(--muted)'; }
+    if (b && !b.disabled && b.textContent.indexOf('✅') < 0) b.textContent = '☁️ บันทึกขึ้น GitHub';
+  }
+}
+function markDirty() {
+  dirty = true;
+  updateIndicator();
+  // Auto-publish after the user stops editing — only once a token exists,
+  // so we never interrupt with a token prompt mid-edit.
+  if (autoOn() && localStorage.getItem('gh_pat')) {
+    if (autoTimer) clearTimeout(autoTimer);
+    autoTimer = setTimeout(function() { autoTimer = null; publishToGH(true); }, 5000);
+  }
+}
+window.addEventListener('beforeunload', function(e) {
+  if (dirty) { e.preventDefault(); e.returnValue = 'มีงานที่ยังไม่ได้บันทึกขึ้น GitHub'; return e.returnValue; }
+});
+
+// ── Re-render every badge from the store (used after pulling remote) ──
+function applyAllStatuses() {
+  document.querySelectorAll('.opt.sel').forEach(function(o) { o.classList.remove('sel'); });
+  document.querySelectorAll('tr.trow td.status .stb').forEach(function(s) {
+    s.className = 'stb pending'; s.textContent = 'รอเทส';
+  });
+  Object.keys(store).forEach(function(uid) {
+    var st = store[uid] && store[uid].st;
+    if (st && SMAP[st]) {
+      var cell = document.querySelector('tr.trow td.status[data-uid="' + uid + '"] .stb');
+      if (cell) { cell.className = 'stb ' + SMAP[st][0]; cell.textContent = SMAP[st][1]; }
+      var opt = document.querySelector('.opt[data-uid="' + uid + '"][data-st="' + st + '"]');
+      if (opt) opt.classList.add('sel');
+    }
+    if (store[uid] && store[uid].actual) {
+      document.querySelectorAll('tr.detail').forEach(function(d) {
+        if (!d.querySelector('.opt[data-uid="' + uid + '"]')) return;
+        var box = d.querySelector('.actualbox');
+        if (box) { box.value = store[uid].actual; box.classList.toggle('filled', !!store[uid].actual); }
+      });
+    }
+  });
+}
+
+// ── Pull latest results from GitHub (remote wins on overlap; keeps local-only) ──
+async function pullLatest() {
+  var rbtn = document.getElementById('btn-refresh');
+  if (dirty && !confirm('มีงานที่ยังไม่ได้บันทึก — การดึงล่าสุดจะใช้สถานะจาก GitHub ทับเฉพาะรายการที่ซ้ำกัน ต้องการต่อ?')) return;
+  if (rbtn) { rbtn.disabled = true; rbtn.textContent = '⏳ กำลังดึง…'; }
+  try {
+    var token = localStorage.getItem('gh_pat');
+    var html;
+    if (token) {
+      var r = await fetch(GH_API + '?ref=' + GH_BRANCH + '&t=' + Date.now(),
+        { cache: 'no-store', headers: { Authorization: 'token ' + token, Accept: 'application/vnd.github+json' } });
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      html = decodeURIComponent(escape(atob(((await r.json()).content || '').replace(/\s/g, ''))));
+    } else {
+      var rr = await fetch('https://raw.githubusercontent.com/' + GH_OWNER + '/' + GH_REPO + '/' + GH_BRANCH + '/' + GH_PATH + '?t=' + Date.now(),
+        { cache: 'no-store' });
+      if (!rr.ok) throw new Error('HTTP ' + rr.status);
+      html = await rr.text();
+    }
+    var m = html.match(/<script id="store-data"[^>]*>([\s\S]*?)<\/script>/);
+    var rs = m ? JSON.parse((m[1] || '{}').trim() || '{}') : {};
+    Object.keys(rs).forEach(function(uid) { store[uid] = rs[uid]; });
+    save();
+    applyAllStatuses();
+    recount();
+    dirty = false;
+    updateIndicator();
+    if (rbtn) { rbtn.textContent = '✅ ดึงแล้ว'; setTimeout(function() { rbtn.textContent = '🔄 ดึงล่าสุด'; rbtn.disabled = false; }, 2000); }
+  } catch (err) {
+    alert('❌ ดึงล่าสุดไม่สำเร็จ: ' + err.message);
+    if (rbtn) { rbtn.textContent = '🔄 ดึงล่าสุด'; rbtn.disabled = false; }
+  }
+}
+document.getElementById('btn-refresh').addEventListener('click', pullLatest);
+
+// ── Set / change GitHub token (one click to escape a bad/expired token) ──
+document.getElementById('btn-token').addEventListener('click', function() {
+  clearToken();
+  var t = ghToken();   // prompts for a fresh token
+  if (t) {
+    alert('บันทึก token แล้ว ✅\nลองกดเปลี่ยนสถานะ TC สัก 1 อัน — ปุ่มควรเด้ง "✅ บันทึกแล้ว!" ใน ~5 วิ');
+    updateIndicator();
+  }
+});
+
+// ── Download file (offline backup) ──
+document.getElementById('btn-save-file').addEventListener('click', function() {
+  save();
+  var html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+  var blob = new Blob([html], { type: 'text/html; charset=utf-8' });
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'takra-insight-live-readiness-test-cases.html';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(a.href);
+});
+
+document.getElementById('btn-reset').addEventListener('click', function() {
+  if (!confirm('ล้างผลทดสอบทั้งหมด?')) return;
+  store = {};
+  save();
+  dirty = false;
+  location.reload();
+});
+
+// Set TC-AD.1 default to BLOCKED
+(function() {
+  if (!store['tc-29'] || !store['tc-29'].st) {
+    store['tc-29'] = { st: 'block' };
+    save();
+  }
+})();
+
+// Footer date
+var gd = document.getElementById('gen-date');
+if (gd) gd.textContent = document.lastModified || '';
+
+recount();
+updateIndicator();
+
+// Jira / Bug links (per test case · multiple)
+function jiraLabel(u){var m=String(u).match(/([A-Za-z]+-\d+)/);return m?m[1].toUpperCase():u;}
+function normJira(u){u=(u||'').trim();if(!u)return'';if(!/^https?:\/\//i.test(u)){var m=u.match(/^[A-Za-z]+-\d+$/);if(m)return'https://kitdi.atlassian.net/browse/'+u.toUpperCase();}return u;}
+function renderJira(uid){var box=document.querySelector('.jira-list[data-uid="'+uid+'"]');if(!box)return;var arr=(store[uid]&&store[uid].jira)||[];box.innerHTML='';arr.forEach(function(url,i){var row=document.createElement('div');row.className='jira-item';var a=document.createElement('a');a.href=url;a.target='_blank';a.rel='noopener';a.textContent=jiraLabel(url);var del=document.createElement('span');del.className='jira-del';del.textContent='✕';del.title='ลบลิงก์';del.addEventListener('click',function(){store[uid].jira.splice(i,1);if(!store[uid].jira.length)delete store[uid].jira;save();markDirty();renderJira(uid);});row.appendChild(a);row.appendChild(del);box.appendChild(row);});var cell=document.querySelector('td.jira-cell[data-uid="'+uid+'"]');if(cell){cell.innerHTML='';arr.forEach(function(url){var a2=document.createElement('a');a2.href=url;a2.target='_blank';a2.rel='noopener';a2.className='jira-chip';a2.textContent=jiraLabel(url);a2.addEventListener('click',function(e){e.stopPropagation();});cell.appendChild(a2);});}}
+function addJira(uid,val){var url=normJira(val);if(!url)return;store[uid]=store[uid]||{};store[uid].jira=store[uid].jira||[];store[uid].jira.push(url);save();markDirty();renderJira(uid);}
+document.querySelectorAll('.jira-btn').forEach(function(b){b.addEventListener('click',function(e){e.stopPropagation();var u=b.dataset.uid;var inp=document.querySelector('.jira-input[data-uid="'+u+'"]');addJira(u,inp.value);inp.value='';});});
+document.querySelectorAll('.jira-input').forEach(function(inp){inp.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();addJira(inp.dataset.uid,inp.value);inp.value='';}});inp.addEventListener('click',function(e){e.stopPropagation();});});
+document.querySelectorAll('.jira-list').forEach(function(box){renderJira(box.dataset.uid);});
+function applyFeatColor(e,owner){var cls=owner==='Wanlee T (Ice)'?'owner-ice':(owner==='Kachain B (Moss)'?'owner-moss':'');var er=document.querySelector('tr.featrow[data-featkey="'+e+'"]');if(!er)return;er.classList.remove('owner-ice','owner-moss');if(cls)er.classList.add(cls);var s=er.querySelector('.feat-owner');if(s){s.classList.remove('owner-ice','owner-moss');if(cls)s.classList.add(cls);}var n=er.nextElementSibling;while(n&&!n.classList.contains('featrow')&&!n.classList.contains('epicrow')){n.classList.remove('sec-ice','sec-moss');if(cls)n.classList.add(cls==='owner-ice'?'sec-ice':'sec-moss');n=n.nextElementSibling;}}
+document.querySelectorAll('.feat-owner').forEach(function(sel){var e=sel.dataset.featkey,k='feat-'+e;var cur=(store[k]&&store[k].owner)||'';sel.value=cur;applyFeatColor(e,cur);sel.addEventListener('click',function(ev){ev.stopPropagation();});sel.addEventListener('change',function(){var v=sel.value;if(v){store[k]=store[k]||{};store[k].owner=v;}else if(store[k]){delete store[k].owner;if(!Object.keys(store[k]).length)delete store[k];}save();markDirty();applyFeatColor(e,v);});});
+</script>
+
+
+</body></html>

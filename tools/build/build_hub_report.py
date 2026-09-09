@@ -9,6 +9,7 @@ harness (CSS + JS ปุ่ม ☁️ เซฟ/ตัวกรอง/Jira/owner
 ข้อมูลเคส: mvp1 = hub_cases.py · mvp2 = hub_mvp2_cases.py · mvp2rbac = hub_mvp2_rbac_cases.py (Epic 1 RBAC/ABAC + Aff Account)
       clipbo = clip_bo_cases.py (TAKRA Clip · Back Office EP-02) · farm = farm_cases.py (TAKRA Post · takra-farm)
       insighte46 = insight_mvp2_e46_cases.py (TAKRA Insight · MVP-2 Epic 4 เครดิต AI + Epic 6 AI Insights)
+      lrready = insight_live_readiness_cases.py (TAKRA Insight · Live Readiness คุณภาพบนไลฟ์จริง)
       (แต่ละไฟล์มี META บอก path/ชื่อ/uid เริ่ม)
 สถานะผลเทสเดิมในไฟล์ปลายทาง (<script id="store-data">) จะถูกคงไว้ถ้ามีอยู่แล้ว
 """
@@ -23,7 +24,8 @@ ROOT = pathlib.Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 MODULES = {'mvp1': 'hub_cases', 'mvp2': 'hub_mvp2_cases', 'mvp2rbac': 'hub_mvp2_rbac_cases',
            'aitickets': 'ai_tickets_cases', 'clipbo': 'clip_bo_cases', 'farm': 'farm_cases',
-           'insighte46': 'insight_mvp2_e46_cases'}
+           'insighte46': 'insight_mvp2_e46_cases',
+           'lrready': 'insight_live_readiness_cases'}
 _which = next((a for a in sys.argv[1:] if a in MODULES), 'mvp1')
 _mod = importlib.import_module(MODULES[_which])
 EPICS, KINDS, META = _mod.EPICS, _mod.KINDS, _mod.META
@@ -193,6 +195,7 @@ def build():
                 if c.get('level') == 'e2e':
                     e2e_n += 1
     ui_n = total - e2e_n
+    kind_pill = ' · '.join(f'{k.capitalize()} {kind_counts[k]}' for k in KINDS)
     kind_chips = ''.join(f'<button class="fchip" data-f="kind" data-v="{k}" title="{esc(v[1])}">{v[0]} ({kind_counts[k]})</button>' for k, v in KINDS.items())
 
     ui_row = ''
@@ -213,7 +216,7 @@ def build():
     <span class="pill">{META['groups_label']}</span>
     <span class="pill">UI + E2E · manual</span>{noui_pill}
     <span class="pill">P0 {counts['P0']} · P1 {counts['P1']} · P2 {counts['P2']}</span>
-    <span class="pill">ประเภท: Happy {kind_counts['happy']} · Negative {kind_counts['negative']} · Boundary {kind_counts['boundary']} · Validation {kind_counts['validation']} · Exception {kind_counts['exception']} · Permission {kind_counts['permission']} · Data {kind_counts['data']}</span>
+    <span class="pill">ประเภท: {kind_pill}</span>
   </div>
 </header>
 

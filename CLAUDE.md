@@ -59,6 +59,8 @@ repo นี้เก็บรายงาน manual test case (UI) ของท�
 | **takra-clip** | `/Users/ice/Documents/rf/takra-clip-main` | `ACL` | https://kitdi.atlassian.net/jira/software/projects/ACL/list | `projects/takra-clip/` | `?project=clip` |
 | **takra-farm** | `/Users/ice/Documents/rf/takra-farm` | *ยังไม่พบใน repo* | — | `projects/takra-farm/` | `?project=farm` |
 
+> **takra-insight Live Readiness** (9 ก.ย. 2026) — เคสคุณภาพข้าม epic 33 เคส 8 มิติ อยู่ที่ `tools/build/insight_live_readiness_cases.py` → `python3 tools/build/build_hub_report.py lrready`
+>
 > **takra-insight MVP-2 Epic 4 + Epic 6** (9 ก.ย. 2026) — เคสอยู่ที่ `tools/build/insight_mvp2_e46_cases.py` → `python3 tools/build/build_hub_report.py insighte46` (แก้ที่ไฟล์ cases แล้ว build ใหม่ อย่าแก้ HTML ตรง ๆ)
 >
 > **takra-farm** เข้าทะเบียน 7 ก.ย. 2026 · รายงานชุดแรก Desktop UI 59 เคส (ยังไม่รวม license — ยังไม่มีในรอบนี้) (`tools/build/farm_cases.py` → `python3 tools/build/build_hub_report.py farm`)
