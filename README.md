@@ -163,6 +163,15 @@ python3 tools/build/build_hub_report.py farm --check
 python3 tools/build/build_hub_report.py farm
 ```
 
+รายงาน **takra-insight MVP-2 Epic 4 (เครดิต AI) + Epic 6 (AI Insights & Narrative)** ก็ใช้ builder ตัวเดียวกัน:
+
+```bash
+python3 tools/build/build_hub_report.py insighte46 --check
+python3 tools/build/build_hub_report.py insighte46
+```
+
+> เคสอยู่ที่ [`tools/build/insight_mvp2_e46_cases.py`](tools/build/insight_mvp2_e46_cases.py) · uid เริ่ม `tc-2101` · ทั้งชุดเป็นเคส **รอรับของ** (Epic 4 ยังไม่มีหน้าจอ · Epic 6 ถูกซ่อนด้วยแฟลก `SHOW_BLOCKED = false`)
+
 > เคสอยู่ที่ [`tools/build/farm_cases.py`](tools/build/farm_cases.py) · คำ UI ลอกจาก `src/i18n/locales/th-TH.yml` · uid เริ่ม `tc-8001`
 
 > เคสครอบเฉพาะหน้าที่มีคอมโพเนนต์จริงใน BO แล้ว (11 กลุ่ม A–K · 70 เคส) · คำ UI ลอกจาก

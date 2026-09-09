@@ -1,0 +1,2304 @@
+<!DOCTYPE html>
+<html lang="th"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>[MVP2] TAKRA Insight — Epic 4 เครดิต AI + Epic 6 AI Insights · UI Manual Test Cases</title>
+<style>
+:root{
+  --bg:#f5f6f8;--card:#fff;--card2:#f0f2f5;--line:#dce0e7;
+  --txt:#1f2430;--muted:#6b7280;--accent:#2563eb;
+  --p0:#dc2626;--p1:#ea7a18;--p2:#2563eb;--p3:#94a3b8;
+  --pass:#16a34a;--fail:#dc2626;--hold:#d97706;--skip:#9ca3af;--block:#7c3aed;
+  --lv-ui:#db2777;--lv-e2e:#ea580c;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--txt);font-family:"Segoe UI","Sarabun",system-ui,sans-serif;line-height:1.5;font-size:13px}
+a{color:var(--accent)}
+header.top{padding:20px 28px 14px;border-bottom:1px solid var(--line);background:linear-gradient(135deg,#1e3a8a,#2563eb);color:#fff}
+header.top h1{margin:0 0 4px;font-size:20px}
+header.top .sub{font-size:12.5px;opacity:.88}
+header.top .meta{margin-top:10px;display:flex;flex-wrap:wrap;gap:8px}
+.pill{display:inline-block;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:600;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.35);color:#fff}
+.wrap{padding:16px 22px 80px;max-width:1280px;margin:0 auto}
+.counts{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 12px}
+.cnt{font-size:12px;font-weight:700;padding:5px 12px;border-radius:8px;border:1px solid var(--line);background:#fff}
+.cnt b{font-size:14px}
+.cnt.pass{color:var(--pass);border-color:#bbf7d0}.cnt.fail{color:var(--fail);border-color:#fecaca}
+.cnt.hold{color:var(--hold);border-color:#fde68a}.cnt.block{color:var(--block);border-color:#e9d5ff}
+.cnt.pending{color:var(--muted)}.cnt.skip{color:var(--skip)}
+.runsum{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin:0 0 14px}
+.runsum h3{margin:0 0 8px;font-size:13px}
+.sumchips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px}
+.progress{height:10px;background:var(--card2);border-radius:6px;overflow:hidden;border:1px solid var(--line)}
+.progressbar{height:100%;background:var(--pass);width:0;transition:width .3s}
+.hint{color:var(--muted);font-size:12px}
+.toolbar{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;margin:0 0 12px}
+.btn{font-size:12px;font-weight:600;padding:5px 12px;border-radius:7px;border:1px solid var(--line);background:#fff;color:var(--txt);cursor:pointer}
+.btn:hover{border-color:var(--accent);color:var(--accent)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.btn.primary:hover{opacity:.88}
+.filters{background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:0 0 14px}
+.filters .row{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:3px 0}
+.filters label{font-size:11px;font-weight:700;color:var(--muted);min-width:60px}
+.fchip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:3px 11px;font-size:11.5px;cursor:pointer;color:var(--txt)}
+.fchip:hover{border-color:var(--accent);color:var(--accent)}
+.fchip.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.clearbtn{font-size:11px;padding:3px 10px;border:1px solid var(--line);border-radius:6px;background:#fff;color:var(--muted);cursor:pointer;margin-left:4px}
+.clearbtn:hover{color:var(--fail);border-color:var(--fail)}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:#fff}
+table.tc{border-collapse:collapse;width:100%;min-width:900px;background:#fff}
+table.tc th,table.tc td{padding:8px 10px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+table.tc thead th{position:sticky;top:0;background:var(--card2);color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.4px;z-index:3;border-bottom:2px solid var(--line)}
+tr.epicrow td{background:#1e3a8a;color:#fff;font-weight:700;font-size:13px;padding:9px 12px}
+tr.epicrow .rp{font-weight:400;font-size:11px;opacity:.75;margin-left:6px}
+tr.featrow td{background:#eaf1fb;color:#1d4ed8;font-weight:700;font-size:12px}
+tr.featrow .rp{font-weight:500;font-size:11px;color:#3b6fc4;margin-left:8px}
+tr.trow{cursor:pointer}tr.trow:hover{background:#f7f9fc}tr.trow.open{background:#eef4fe}
+.tog{display:inline-block;width:14px;color:var(--muted);transition:transform .15s;font-size:11px}
+tr.trow.open .tog{transform:rotate(90deg);color:var(--accent)}
+.cid{font-family:monospace;font-size:10px;color:var(--muted);white-space:nowrap}
+td.jira{white-space:nowrap}td.jira a{font-family:monospace;font-size:10.5px;font-weight:700;color:var(--accent);text-decoration:none}td.jira a:hover{text-decoration:underline}
+.ctitle{font-weight:600;font-size:12.5px;max-width:400px}
+td.lvl{white-space:nowrap}
+.lv{font-size:10px;font-weight:700;padding:2px 7px;border-radius:5px;border:1px solid;background:#fff;display:inline-block;vertical-align:middle}
+.lv.lvl-ui{color:var(--lv-ui);border-color:var(--lv-ui)}
+.lv.lvl-e2e{color:var(--lv-e2e);border-color:var(--lv-e2e)}
+.ac{font-size:10px;color:var(--muted);font-family:monospace;margin-left:4px}
+.prio{font-weight:800;font-size:10px;padding:3px 7px;border-radius:5px;color:#fff;display:inline-block;white-space:nowrap}
+.p0{background:var(--p0)}.p1{background:var(--p1)}.p2{background:var(--p2)}
+td.status{white-space:nowrap}
+.stb{font-weight:700;font-size:10px;padding:3px 8px;border-radius:5px;display:inline-block}
+.stb.pending{background:#fff;border:1px solid var(--line);color:var(--muted)}
+.stb.pass{background:var(--pass);color:#fff}.stb.fail{background:var(--fail);color:#fff}
+.stb.hold{background:var(--hold);color:#fff}.stb.block{background:var(--block);color:#fff}
+.stb.skip{background:var(--skip);color:#fff}
+tr.detail{display:none}tr.detail.show{display:table-row}
+tr.detail>td{background:#fafbfc;padding:0;border-bottom:2px solid var(--line)}
+.card{padding:16px 20px}
+.card .h-title{font-size:14px;font-weight:700;margin:0 0 3px}
+.card .h-prio{font-size:12px;color:var(--muted);margin:0 0 12px}
+.card .sec{margin:0 0 12px}.card .sec:last-child{margin-bottom:0}
+.card .sec h4{margin:0 0 5px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.3px;color:#374151}
+.card .sec ol,.card .sec ul{margin:0;padding-left:18px}
+.card .sec li{margin:2px 0;font-size:12.5px}
+.card .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:760px){.card .grid{grid-template-columns:1fr}}
+.actualbox{display:block;width:100%;box-sizing:border-box;background:#fff;border:1px dashed var(--line);border-radius:7px;padding:7px 11px;color:var(--txt);font:inherit;font-size:12px;line-height:1.55;min-height:78px;resize:vertical}
+.actualbox::placeholder{color:var(--muted);font-style:italic}
+.actualbox:focus{outline:none;border-style:solid;border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,99,235,.13)}
+.actualbox.filled{border-style:solid;border-color:var(--accent)}
+.statusrow{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.opt{font-size:11px;font-weight:700;padding:4px 11px;border-radius:6px;border:1px solid var(--line);background:#fff;color:var(--muted);cursor:pointer}
+.opt:hover{opacity:.8}
+.opt.pass{border-color:var(--pass)}.opt.fail{border-color:var(--fail)}
+.opt.hold{border-color:var(--hold)}.opt.block{border-color:var(--block)}.opt.skip{border-color:var(--skip)}
+.opt.sel.pass{background:var(--pass);color:#fff}
+.opt.sel.fail{background:var(--fail);color:#fff}
+.opt.sel.hold{background:var(--hold);color:#fff}
+.opt.sel.block{background:var(--block);color:#fff}
+.opt.sel.skip{background:var(--skip);color:#fff}
+tr.trow.hide,tr.detail.hide{display:none!important}
+tr.epicrow.hide,tr.featrow.hide{display:none!important}
+.note-box{background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:8px 12px;font-size:12px;color:#92400e;margin:0 0 12px}
+footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
+@media print{.tablewrap{overflow:visible}table.tc{min-width:0}tr.detail{display:table-row!important}.toolbar,.filters,.runsum{display:none}}
+/* Jira per-case links */
+.jira-sec .jira-list{display:flex;flex-direction:column;gap:4px;margin-bottom:6px}
+.jira-item{display:flex;align-items:center;gap:8px;font-size:12px}
+.jira-item a{color:var(--accent);text-decoration:none;font-family:monospace;font-weight:700}
+.jira-item a:hover{text-decoration:underline}
+.jira-del{cursor:pointer;color:var(--fail);font-weight:700;font-size:11px;user-select:none}
+.jira-add{display:flex;gap:6px}
+.jira-input{flex:1;min-width:0;padding:5px 8px;border:1px solid var(--line);border-radius:6px;font-size:12px;font-family:inherit;background:#fff;color:var(--txt)}
+.jira-btn{white-space:nowrap}
+.edge-badge{display:inline-block;margin-left:6px;padding:0 6px;border-radius:4px;font-size:9.5px;font-weight:700;color:#92400e;background:#fef3c7;border:1px solid #fde68a;vertical-align:middle}
+.jira-cell{white-space:normal}
+.jira-chip{display:inline-block;margin:1px 3px 1px 0;padding:1px 6px;border:1px solid var(--line);border-radius:5px;font-family:monospace;font-size:10.5px;font-weight:700;color:var(--accent);text-decoration:none;background:var(--card2)}
+.jira-chip:hover{text-decoration:underline}
+/* Epic assignee + section color */
+.epic-owner-wrap{margin-left:12px;font-weight:400;font-size:11px}
+.feat-owner{font-size:11px;padding:2px 6px;border:1px solid var(--line);border-radius:5px;background:#fff;color:var(--txt);cursor:pointer}
+tr.featrow.owner-ice td{background:#60a5fa;border-left:4px solid #1d4ed8}
+tr.featrow.owner-moss td{background:#a78bfa;border-left:4px solid #6d28d9}
+tr.sec-ice>td:first-child{box-shadow:inset 5px 0 0 #2563eb}
+tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
+.feat-owner.owner-ice{border-color:#2563eb;color:#2563eb;font-weight:700}
+.feat-owner.owner-moss{border-color:#7c3aed;color:#7c3aed;font-weight:700}
+
+/* ประเภทเคส (kind) */
+.kd{display:inline-block;margin-left:6px;padding:0 6px;border-radius:4px;font-size:9.5px;font-weight:700;vertical-align:middle;border:1px solid;white-space:nowrap}
+.kd-happy{color:#15803d;background:#f0fdf4;border-color:#bbf7d0}
+.kd-neg{color:#b91c1c;background:#fef2f2;border-color:#fecaca}
+.kd-bnd{color:#b45309;background:#fffbeb;border-color:#fde68a}
+.kd-val{color:#6d28d9;background:#f5f3ff;border-color:#ddd6fe}
+.kd-exc{color:#be123c;background:#fff1f2;border-color:#fecdd3}
+.kd-perm{color:#0f766e;background:#f0fdfa;border-color:#99f6e4}
+.kd-data{color:#1d4ed8;background:#eff6ff;border-color:#bfdbfe}
+.chk{margin-top:4px;padding:6px 8px;border-left:3px solid #16a34a;background:rgba(22,163,74,.07)}
+.noui{display:inline-block;margin-left:6px;padding:0 6px;border-radius:4px;font-size:9.5px;font-weight:700;vertical-align:middle;color:#991b1b;background:#fee2e2;border:1px solid #fca5a5;white-space:nowrap}
+</style>
+</head>
+<body>
+<a id="hub-back-btn" href="https://wanlee-tankunnatam.github.io/qa-test-reports/?project=insight" title="กลับไปหน้ารวมรายงาน (Hub)" style="position:fixed;top:12px;right:14px;z-index:99999;display:inline-flex;align-items:center;gap:7px;padding:10px 18px;border-radius:999px;background:#ffffff;color:#1e3a8a;font-size:14px;font-weight:800;text-decoration:none;box-shadow:0 4px 16px rgba(0,0,0,.35);border:2px solid #1e3a8a;font-family:'Segoe UI','Sarabun',system-ui,sans-serif">🏠 รายงานทั้งหมด</a>
+
+
+<script id="store-data" type="application/json">
+{}
+</script>
+
+<header class="top">
+  <h1>🔎 [MVP2] TAKRA Insight — Epic 4 เครดิต AI + Epic 6 AI Insights · UI Manual Test Cases</h1>
+  <div class="sub">เทส UI ด้วยมืออย่างเดียว · MVP-2 Epic 4 (เครดิต AI · FR105–FR108) + Epic 6 (AI Insights & Narrative · FR96–FR99) · Target: แอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT)</div>
+  <div class="meta">
+    <span class="pill">49 เคส + E2E 0 = 49</span>
+    <span class="pill">8 กลุ่ม (A–H)</span>
+    <span class="pill">UI + E2E · manual</span><span class="pill">⛔ ไม่พบใน UI 49 · พร้อมเทส 0</span>
+    <span class="pill">P0 21 · P1 22 · P2 6</span>
+    <span class="pill">ประเภท: Happy 15 · Negative 3 · Boundary 5 · Validation 7 · Exception 2 · Permission 4 · Data 13</span>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="note-box">🖥️ <b>Test target:</b> แอปเดสก์ท็อป <b>TAKRA Insight</b> บิลด์ UAT · เข้าสู่ระบบด้วยบัญชี UAT · ต้องมีเซสชันที่บันทึกจบแล้วอย่างน้อย 1 รายการไว้ดูหน้ารายงาน<br>📎 <b>ที่มาของเคส:</b> <code>_bmad-output/planning-artifacts/epics-mvp2.md</code> (Epic 4 Story 4.1–4.5 · Epic 6 Story 6.1–6.4) + <code>prd.md</code> (FR96–FR99 · FR105–FR108 · NFR1.10) + <code>m2-cutscope-checklist.md</code><br>⛔ <b>สถานะ ณ วันเขียน (ตรวจโค้ด origin/develop 2026-09-08 · f61ed9e): ทั้ง 2 Epic ยังกดใช้จริงไม่ได้</b> — <b>Epic 4</b> ไม่มีหน้าจอในแอปเลย (ไม่มีหน้า settings/billing ใน <code>pages/</code>) · <b>Epic 6</b> โค้ดหน้าจอมีแล้ว (การ์ด "สรุปโดย AI · 150 credits" + ส่วน "AI Insights · สิ่งที่เรียนรู้ได้") แต่ถูกซ่อนทั้งก้อนด้วยแฟลก <code>SHOW_BLOCKED = false</code> (<code>renderer/src/blocked.js</code>) และตัวเลขยังเป็นข้อมูลตัวอย่าง (ป้าย "ตัวอย่าง")<br>🧪 <b>วิธีใช้รายงานนี้:</b> เป็นชุดเคสรอรับของ — ตอนนี้บันทึกเป็น <b>BLOCKED</b> ได้เลย · เมื่อ dev เปิดแฟลก/ส่งหน้าจอแล้วค่อยรันจริงและปรับคำบนปุ่มให้ตรงของจริง<br>🏷️ <b>คำ UI ในเคส:</b> Epic 6 ลอกคำไทยจริงจาก <code>i18n/th.js</code> ของแอป · Epic 4 ยังไม่มีคำในแอป จึงลอกจากแบบ UI <code>_bmad-output/ui-mockups/</code> (ภาษาอังกฤษ — ต้องยืนยันคำไทยตอนส่งมอบ)<br>⚠️ <b>หมายเหตุ scope:</b> Story 6.4 (Anomaly Alerts · FR99) ถูกเลื่อนไป <b>M3</b> ตาม <code>m2-cutscope-checklist.md</code> — กลุ่ม H จึงเป็นเคสสำรองไว้ก่อน ไม่ใช่ของที่ต้องส่งใน M2 · การ์ดชนิด QUICK WIN / OPPORTUNITY / PREDICTION ก็เลื่อนไป M3 เช่นกัน</div>
+
+  <div class="runsum">
+    <h3>📊 สรุปผล Manual Test</h3>
+    <div class="sumchips">
+      <span class="cnt pass">PASS <b id="sum-pass">0</b></span>
+      <span class="cnt fail">FAIL <b id="sum-fail">0</b></span>
+      <span class="cnt hold">HOLD <b id="sum-hold">0</b></span>
+      <span class="cnt block">BLOCKED <b id="sum-block">0</b></span>
+      <span class="cnt skip">SKIP <b id="sum-skip">0</b></span>
+      <span class="cnt pending">รอเทส <b id="sum-pending">49</b></span>
+    </div>
+    <div class="progress"><div id="sumbar" class="progressbar" style="width:0%"></div></div>
+    <div class="hint" id="sumpct" style="margin-top:5px">0% ทดสอบแล้ว (0/49)</div>
+  </div>
+
+  <div class="toolbar">
+    <button class="btn" onclick="toggleAll(true)">▸ กางทั้งหมด</button>
+    <button class="btn" onclick="toggleAll(false)">▾ ยุบทั้งหมด</button>
+    <span class="hint">💡 คลิกแถว → ดู Steps / Expected (UI only)</span>
+    <span style="margin-left:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+      <span id="save-status" class="hint" style="white-space: nowrap; color: var(--muted);">✓ ตรงกับ GitHub</span>
+      <label class="hint" style="display:flex;gap:4px;align-items:center;white-space:nowrap;cursor:pointer" title="บันทึกขึ้น GitHub อัตโนมัติหลังหยุดแก้ ~5 วินาที"><input type="checkbox" id="chk-autosave" checked=""> auto-save</label>
+      <button class="btn" id="btn-token" title="ใส่/เปลี่ยน GitHub token (ถ้าเซฟไม่ขึ้น/token เสีย กดอันนี้)">🔑 Token</button>
+      <button class="btn" id="btn-refresh" title="ดึงผลล่าสุดจาก GitHub มา merge (ไม่ต้อง reload)">🔄 ดึงล่าสุด</button>
+      <button class="btn primary" id="btn-publish" style="">☁️ บันทึกขึ้น GitHub</button>
+      <button class="btn" id="btn-save-file" title="ดาวน์โหลด HTML ไว้ใช้ offline">💾 ดาวน์โหลด</button>
+      <button class="btn" style="color:var(--fail)" id="btn-reset">🗑 ล้างผล</button>
+    </span>
+  </div>
+
+  <div class="filters">
+    <div class="row"><label>กลุ่ม</label>
+      <button class="fchip" data-f="feat" data-v="inA">A · ยอดเครดิต (7)</button><button class="fchip" data-f="feat" data-v="inB">B · หักเครดิต (6)</button><button class="fchip" data-f="feat" data-v="inC">C · เครดิตหมด (7)</button><button class="fchip" data-f="feat" data-v="inD">D · ต่อรอบบิล (4)</button><button class="fchip" data-f="feat" data-v="inE">E · AI Coach Bar (5)</button><button class="fchip" data-f="feat" data-v="inF">F · สรุปเรื่องเล่า AI (8)</button><button class="fchip" data-f="feat" data-v="inG">G · การ์ด Insight (8)</button><button class="fchip" data-f="feat" data-v="inH">H · Anomaly (M3) (4)</button>
+      <button class="clearbtn" data-clear="feat">✕</button>
+    </div>
+    <div class="row"><label>ประเภท</label>
+      <button class="fchip" data-f="kind" data-v="happy" title="flow ปกติ">Happy Path (15)</button><button class="fchip" data-f="kind" data-v="negative" title="ข้อมูลผิด / action ผิด">Negative (3)</button><button class="fchip" data-f="kind" data-v="boundary" title="min / max / ก่อน-ตรง-เกินขอบ">Boundary/Edge (5)</button><button class="fchip" data-f="kind" data-v="validation" title="format · required · ความถูกต้องของค่าที่แสดง">Validation (7)</button><button class="fchip" data-f="kind" data-v="exception" title="บริการล่ม · เน็ตหลุด · สร้างไม่สำเร็จ">Exception/Error (2)</button><button class="fchip" data-f="kind" data-v="permission" title="tier / สิทธิ์ / โหมดที่จำกัดการทำงาน">Permission (4)</button><button class="fchip" data-f="kind" data-v="data" title="empty · ค่าตรงกับแหล่งข้อมูล · ซ้ำ · ไม่มีข้อมูล">Data (13)</button>
+      <button class="clearbtn" data-clear="kind">✕</button>
+    </div>
+    <div class="row"><label>สถานะ UI</label>
+      <button class="fchip" data-f="ui" data-v="yes">✅ พร้อมเทส (0)</button>
+      <button class="fchip" data-f="ui" data-v="no">⛔ ไม่พบใน UI (49)</button>
+      <button class="clearbtn" data-clear="ui">✕</button>
+    </div>
+    <div class="row"><label>Priority</label>
+      <button class="fchip" data-f="prio" data-v="P0">P0</button>
+      <button class="fchip" data-f="prio" data-v="P1">P1</button>
+      <button class="fchip" data-f="prio" data-v="P2">P2</button>
+      <button class="clearbtn" data-clear="prio">✕</button>
+    </div>
+    <div class="row"><label>สถานะ</label>
+      <button class="fchip" data-f="status" data-v="pass">✅ PASS</button>
+      <button class="fchip" data-f="status" data-v="fail">❌ FAIL</button>
+      <button class="fchip" data-f="status" data-v="hold">⏸ HOLD</button>
+      <button class="fchip" data-f="status" data-v="block">🚫 BLOCKED</button>
+      <button class="fchip" data-f="status" data-v="skip">⏭ SKIP</button>
+      <button class="fchip" data-f="status" data-v="pending">⏳ รอเทส</button>
+      <button class="clearbtn" data-clear="status">✕</button>
+    </div>
+  </div>
+
+  <div class="tablewrap">
+  <table class="tc" id="main-table">
+    <thead><tr><th style="width:22px"></th><th style="width:130px">TC ID</th><th>Test Case</th><th style="width:74px">Level</th><th style="width:55px">Pri</th><th style="width:80px">Status</th><th style="width:120px">Jira</th></tr></thead>
+    <tbody>
+
+<!-- inA -->
+<tr class="epicrow" data-epic="inA"><td colspan="7">💳 A · ยอดเครดิตคงเหลือ &amp; การใช้งาน · Epic 4 · Story 4.3 (FR106 · UX-DR10) <span class="rp">(7 เคส)</span></td></tr>
+<tr class="featrow" data-featkey="in-balance"><td colspan="7">📁 หน้าเครดิต AI ในตั้งค่าเวิร์กสเปซ <span class="rp"><span class="lv lvl-ui">🌐 7</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="in-balance"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow" data-feat="inA" data-level="ui" data-prio="P0" data-kind="happy" data-ui="no" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-BAL.1</td>
+  <td class="ctitle">เปิดหน้าเครดิต AI แล้วเห็นยอดใช้ไป ยอดคงเหลือ และวันรีเซ็ต <span class="kd kd-happy">Happy Path</span> <span class="noui">⛔ ไม่พบใน UI</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-2101"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2101"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">เปิดหน้าเครดิต AI แล้วเห็นยอดใช้ไป ยอดคงเหลือ และวันรีเซ็ต</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · A · ยอดเครดิตคงเหลือ &amp; การใช้งาน</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังกดใช้ไม่ได้</b> ณ origin/develop 2026-09-08 (f61ed9e) — Epic 4 ยังไม่มีหน้าจอ · Epic 6 ถูกซ่อนด้วยแฟลก <code>SHOW_BLOCKED = false</code> เคสนี้เขียนล่วงหน้าจาก AC ในสเปก + แบบ UI ชื่อปุ่ม/ข้อความอาจต่างจากของจริงตอนส่งมอบ · ถ้ายังไม่มีหน้าจอให้บันทึกเป็น <b>BLOCKED</b> แล้วกลับมาปรับคำเมื่อ dev ส่งของ</div></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>เปิดเมนูโปรไฟล์ที่มุมขวาบน แล้วเข้าหน้าตั้งค่าเวิร์กสเปซ</li><li>เลือกหัวข้อเครดิต AI ("AI Insight credits" ตามแบบ UI)</li><li>อ่านตัวเลขบนการ์ดยอดคงเหลือ</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>เห็นยอดคงเหลือของเดือนนี้ พร้อมบอกว่าเป็นกี่เครดิตจากโควตาทั้งหมด (เช่น 6,612 จาก 15,000)</li><li>เห็นยอดที่ใช้ไปเดือนนี้พร้อมเปอร์เซ็นต์</li><li>เห็นวันที่โควตาจะรีเซ็ตรอบถัดไป และจำนวนวันที่เหลือ</li><li>ตัวเลขทั้งสามสอดคล้องกัน (ใช้ไป + คงเหลือ = โควตาทั้งหมด)</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 4 · Story 4.3 · FR106 · UX-DR10 · แบบ UI: ui-mockups/shared-screens/credit-balance.html</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2101" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2101" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2101" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2101" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2101" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2101"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2101" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2101">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="inA" data-level="ui" data-prio="P1" data-kind="validation" data-ui="no" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-BAL.2</td>
+  <td class="ctitle">แถบความคืบหน้าการใช้เครดิตตรงกับตัวเลขที่แสดง <span class="kd kd-val">Validation</span> <span class="noui">⛔ ไม่พบใน UI</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-2102"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2102"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">แถบความคืบหน้าการใช้เครดิตตรงกับตัวเลขที่แสดง</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Validation</b> <span class="hint">(format · required · ความถูกต้องของค่าที่แสดง)</span> · A · ยอดเครดิตคงเหลือ &amp; การใช้งาน</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังกดใช้ไม่ได้</b> ณ origin/develop 2026-09-08 (f61ed9e) — Epic 4 ยังไม่มีหน้าจอ · Epic 6 ถูกซ่อนด้วยแฟลก <code>SHOW_BLOCKED = false</code> เคสนี้เขียนล่วงหน้าจาก AC ในสเปก + แบบ UI ชื่อปุ่ม/ข้อความอาจต่างจากของจริงตอนส่งมอบ · ถ้ายังไม่มีหน้าจอให้บันทึกเป็น <b>BLOCKED</b> แล้วกลับมาปรับคำเมื่อ dev ส่งของ</div></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>เข้าหน้าตั้งค่าเวิร์กสเปซ → หัวข้อเครดิต AI</li><li>เทียบความยาวแถบความคืบหน้ากับเปอร์เซ็นต์ที่เขียนไว้ข้างๆ</li><li>สังเกตว่าแถบเปลี่ยนสีหรือไม่เมื่อใช้เกินครึ่งโควตา</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>แถบความคืบหน้าเต็มตามสัดส่วนที่ใช้จริง (เช่น เขียน 56% แถบต้องอยู่ราวครึ่ง)</li><li>ตัวเลขที่เขียนกับแถบเป็นชุดเดียวกัน ไม่ขัดกัน</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 4 · Story 4.3 · UX-DR10 (balance card + usage progress bar)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2102" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2102" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2102" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2102" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2102" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2102"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2102" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2102">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="inA" data-level="ui" data-prio="P1" data-kind="happy" data-ui="no" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-BAL.3</td>
+  <td class="ctitle">ตารางอัตราค่าเครดิตต่อชิ้นงาน AI แสดงครบทุกชนิด <span class="kd kd-happy">Happy Path</span> <span class="noui">⛔ ไม่พบใน UI</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-2103"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2103"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ตารางอัตราค่าเครดิตต่อชิ้นงาน AI แสดงครบทุกชนิด</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · A · ยอดเครดิตคงเหลือ &amp; การใช้งาน</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังกดใช้ไม่ได้</b> ณ origin/develop 2026-09-08 (f61ed9e) — Epic 4 ยังไม่มีหน้าจอ · Epic 6 ถูกซ่อนด้วยแฟลก <code>SHOW_BLOCKED = false</code> เคสนี้เขียนล่วงหน้าจาก AC ในสเปก + แบบ UI ชื่อปุ่ม/ข้อความอาจต่างจากของจริงตอนส่งมอบ · ถ้ายังไม่มีหน้าจอให้บันทึกเป็น <b>BLOCKED</b> แล้วกลับมาปรับคำเมื่อ dev ส่งของ</div></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>เข้าหน้าตั้งค่าเวิร์กสเปซ → หัวข้อเครดิต AI</li><li>เลื่อนลงไปที่ตารางอัตราค่าเครดิตต่อชิ้นงาน ("Credit cost per feature")</li><li>อ่านรายการและราคาต่อชิ้น</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>เห็นอัตราของชิ้นงานที่ระบบคิดเงินครบตามสเปก — สรุปเรื่องเล่า AI · การ์ด Insight · Product-Emotion Map · Pattern Detection · สรุปรายสัปดาห์</li><li>ราคาต่อชิ้นเป็นตัวเลขเครดิตที่อ่านเข้าใจได้ ไม่ใช่ช่องว่าง</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 4 · Story 4.3 · FR105 (ชิ้นงานที่ถูกมิเตอร์) · UX-DR10 (per-artifact meter table)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2103" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2103" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2103" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2103" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2103" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2103"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2103" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2103">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="inA" data-level="ui" data-prio="P1" data-kind="data" data-ui="no" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-BAL.4</td>
+  <td class="ctitle">รายการใช้เครดิตล่าสุดบอกเวลา ฟีเจอร์ บริบท และจำนวนเครดิต <span class="kd kd-data">Data</span> <span class="noui">⛔ ไม่พบใน UI</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-2104"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2104"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">รายการใช้เครดิตล่าสุดบอกเวลา ฟีเจอร์ บริบท และจำนวนเครดิต</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Data</b> <span class="hint">(empty · ค่าตรงกับแหล่งข้อมูล · ซ้ำ · ไม่มีข้อมูล)</span> · A · ยอดเครดิตคงเหลือ &amp; การใช้งาน</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังกดใช้ไม่ได้</b> ณ origin/develop 2026-09-08 (f61ed9e) — Epic 4 ยังไม่มีหน้าจอ · Epic 6 ถูกซ่อนด้วยแฟลก <code>SHOW_BLOCKED = false</code> เคสนี้เขียนล่วงหน้าจาก AC ในสเปก + แบบ UI ชื่อปุ่ม/ข้อความอาจต่างจากของจริงตอนส่งมอบ · ถ้ายังไม่มีหน้าจอให้บันทึกเป็น <b>BLOCKED</b> แล้วกลับมาปรับคำเมื่อ dev ส่งของ</div></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>สร้างชิ้นงาน AI 1 ครั้งจากหน้ารายงานเซสชัน (เช่น กดสร้างสรุปโดย AI)</li><li>กลับไปที่หน้าตั้งค่าเวิร์กสเปซ → หัวข้อเครดิต AI</li><li>ดูรายการใช้เครดิตล่าสุด ("Recent consumption") แถวบนสุด</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>รายการที่เพิ่งสร้างขึ้นเป็นแถวบนสุด (ใหม่สุดอยู่บน)</li><li>แต่ละแถวบอกครบ: เวลา · ชื่อฟีเจอร์ · บริบท (ไลฟ์/ช่วงเวลาที่เกี่ยว) · จำนวนเครดิตที่หัก</li><li>จำนวนเครดิตในแถวตรงกับอัตราในตารางค่าเครดิตต่อชิ้นงาน</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 4 · Story 4.2 (transaction logged) · Story 4.3 · FR105/FR106</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2104" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2104" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2104" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2104" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2104" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2104"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2104" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2104">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="inA" data-level="ui" data-prio="P0" data-kind="data" data-ui="no" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-BAL.5</td>
+  <td class="ctitle">เวิร์กสเปซใหม่ที่ยังไม่เคยใช้ AI ต้องแสดงยอดเต็มและรายการว่าง <span class="kd kd-data">Data</span> <span class="noui">⛔ ไม่พบใน UI</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-2105"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2105"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">เวิร์กสเปซใหม่ที่ยังไม่เคยใช้ AI ต้องแสดงยอดเต็มและรายการว่าง</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Data</b> <span class="hint">(empty · ค่าตรงกับแหล่งข้อมูล · ซ้ำ · ไม่มีข้อมูล)</span> · A · ยอดเครดิตคงเหลือ &amp; การใช้งาน</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังกดใช้ไม่ได้</b> ณ origin/develop 2026-09-08 (f61ed9e) — Epic 4 ยังไม่มีหน้าจอ · Epic 6 ถูกซ่อนด้วยแฟลก <code>SHOW_BLOCKED = false</code> เคสนี้เขียนล่วงหน้าจาก AC ในสเปก + แบบ UI ชื่อปุ่ม/ข้อความอาจต่างจากของจริงตอนส่งมอบ · ถ้ายังไม่มีหน้าจอให้บันทึกเป็น <b>BLOCKED</b> แล้วกลับมาปรับคำเมื่อ dev ส่งของ</div></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT ของเวิร์กสเปซที่เพิ่งเปิดใหม่ (ยังไม่เคยสร้างชิ้นงาน AI)</li><li>เข้าหน้าตั้งค่าเวิร์กสเปซ → หัวข้อเครดิต AI</li><li>อ่านยอดใช้ไป ยอดคงเหลือ และรายการใช้เครดิตล่าสุด</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ยอดใช้ไป = 0 และยอดคงเหลือ = โควตาเต็มของแพ็กเกจนั้น</li><li>รายการใช้เครดิตล่าสุดขึ้นข้อความว่ายังไม่มีรายการ ไม่ใช่ตารางเปล่าหรือข้อมูลตัวอย่าง</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 4 · Story 4.3 · FR106</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2105" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2105" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2105" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2105" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2105" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2105"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2105" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2105">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="inA" data-level="ui" data-prio="P0" data-kind="data" data-ui="no" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-BAL.6</td>
+  <td class="ctitle">โควตาที่แสดงตรงกับ tier ที่ได้รับจาก Takra Hub <span class="kd kd-data">Data</span> <span class="noui">⛔ ไม่พบใน UI</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-2106"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2106"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">โควตาที่แสดงตรงกับ tier ที่ได้รับจาก Takra Hub</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Data</b> <span class="hint">(empty · ค่าตรงกับแหล่งข้อมูล · ซ้ำ · ไม่มีข้อมูล)</span> · A · ยอดเครดิตคงเหลือ &amp; การใช้งาน</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังกดใช้ไม่ได้</b> ณ origin/develop 2026-09-08 (f61ed9e) — Epic 4 ยังไม่มีหน้าจอ · Epic 6 ถูกซ่อนด้วยแฟลก <code>SHOW_BLOCKED = false</code> เคสนี้เขียนล่วงหน้าจาก AC ในสเปก + แบบ UI ชื่อปุ่ม/ข้อความอาจต่างจากของจริงตอนส่งมอบ · ถ้ายังไม่มีหน้าจอให้บันทึกเป็น <b>BLOCKED</b> แล้วกลับมาปรับคำเมื่อ dev ส่งของ</div></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT ด้วยบัญชีของเวิร์กสเปซที่รู้ tier แน่ชัด</li><li>เข้าหน้าตั้งค่าเวิร์กสเปซ → หัวข้อแพ็กเกจ/การเรียกเก็บเงิน อ่านชื่อ tier ที่ระบบแสดง</li><li>เข้าหัวข้อเครดิต AI แล้วเทียบโควตาทั้งหมดกับ tier นั้น</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ชื่อ tier ที่แสดงตรงกับสิทธิ์จริงที่ได้จาก Takra Hub</li><li>โควตาเครดิตตรงตามชั้น — Starter 5,000 · Pro 15,000 · Enterprise 50,000 เครดิต/เดือน</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 4 · Story 4.2 · FR105 (allotment 5K/15K/50K จาก Hub entitlement FR59)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2106" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2106" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2106" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2106" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2106" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2106"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2106" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2106">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="inA" data-level="ui" data-prio="P1" data-kind="permission" data-ui="no" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-BAL.7</td>
+  <td class="ctitle">บัญชี Free ที่ไม่มีสิทธิ์ AI ต้องบอกให้อัปเกรด ไม่ใช่โชว์ยอด 0 เฉยๆ <span class="kd kd-perm">Permission</span> <span class="noui">⛔ ไม่พบใน UI</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-2107"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2107"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">บัญชี Free ที่ไม่มีสิทธิ์ AI ต้องบอกให้อัปเกรด ไม่ใช่โชว์ยอด 0 เฉยๆ</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Permission</b> <span class="hint">(tier / สิทธิ์ / โหมดที่จำกัดการทำงาน)</span> · A · ยอดเครดิตคงเหลือ &amp; การใช้งาน</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังกดใช้ไม่ได้</b> ณ origin/develop 2026-09-08 (f61ed9e) — Epic 4 ยังไม่มีหน้าจอ · Epic 6 ถูกซ่อนด้วยแฟลก <code>SHOW_BLOCKED = false</code> เคสนี้เขียนล่วงหน้าจาก AC ในสเปก + แบบ UI ชื่อปุ่ม/ข้อความอาจต่างจากของจริงตอนส่งมอบ · ถ้ายังไม่มีหน้าจอให้บันทึกเป็น <b>BLOCKED</b> แล้วกลับมาปรับคำเมื่อ dev ส่งของ</div></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT ระดับ Free</li><li>เข้าหน้าตั้งค่าเวิร์กสเปซ → หัวข้อเครดิต AI</li><li>อ่านข้อความบนหน้าและปุ่มที่ให้กด</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ระบบบอกชัดว่าแพ็กเกจนี้ยังไม่มีเครดิต AI ให้ใช้</li><li>มีทางไปอัปเกรดแพ็กเกจ (ปุ่ม/ลิงก์เปรียบเทียบแพ็กเกจ)</li><li>ไม่แสดงยอดคงเหลือปลอมหรือปล่อยหน้าว่างโดยไม่อธิบาย</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 4 · Story 4.3 · แบบ UI: ui-mockups/shared-screens/pricing.html (Free = ไม่มี AI insights)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2107" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2107" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2107" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2107" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2107" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2107"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2107" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2107">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+
+<!-- inB -->
+<tr class="epicrow" data-epic="inB"><td colspan="7">🧮 B · หักเครดิตต่อชิ้นงาน AI · Epic 4 · Story 4.1–4.2 (FR105) <span class="rp">(6 เคส)</span></td></tr>
+<tr class="featrow" data-featkey="in-meter"><td colspan="7">📁 มิเตอร์ผ่าน LLM proxy <span class="rp"><span class="lv lvl-ui">🌐 6</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="in-meter"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow" data-feat="inB" data-level="ui" data-prio="P0" data-kind="happy" data-ui="no" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-MET.1</td>
+  <td class="ctitle">สร้างชิ้นงาน AI 1 ครั้งแล้วยอดคงเหลือลดตามอัตราที่ประกาศ <span class="kd kd-happy">Happy Path</span> <span class="noui">⛔ ไม่พบใน UI</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-2108"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2108"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">สร้างชิ้นงาน AI 1 ครั้งแล้วยอดคงเหลือลดตามอัตราที่ประกาศ</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · B · หักเครดิตต่อชิ้นงาน AI</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังกดใช้ไม่ได้</b> ณ origin/develop 2026-09-08 (f61ed9e) — Epic 4 ยังไม่มีหน้าจอ · Epic 6 ถูกซ่อนด้วยแฟลก <code>SHOW_BLOCKED = false</code> เคสนี้เขียนล่วงหน้าจาก AC ในสเปก + แบบ UI ชื่อปุ่ม/ข้อความอาจต่างจากของจริงตอนส่งมอบ · ถ้ายังไม่มีหน้าจอให้บันทึกเป็น <b>BLOCKED</b> แล้วกลับมาปรับคำเมื่อ dev ส่งของ</div></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>จดยอดเครดิตคงเหลือปัจจุบันจากหน้าตั้งค่าเวิร์กสเปซ → หัวข้อเครดิต AI</li><li>ไปที่เมนู "เซสชัน" แล้วเปิดไลฟ์ที่บันทึกจบแล้ว 1 รายการ</li><li>กดสร้างสรุปโดย AI แล้วรอจนได้ข้อความ</li><li>กลับไปดูยอดคงเหลืออีกครั้งแล้วเทียบกับที่จดไว้</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ยอดคงเหลือลดลงเท่ากับอัตราของชิ้นงานนั้นพอดี ไม่มากไม่น้อยกว่านั้น</li><li>มีรายการใหม่ 1 แถวในรายการใช้เครดิตล่าสุด</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 4 · Story 4.2 · FR105 (หักเครดิต + บันทึกรายการ)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2108" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2108" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2108" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2108" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2108" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2108"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2108" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2108">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="inB" data-level="ui" data-prio="P0" data-kind="data" data-ui="no" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-MET.2</td>
+  <td class="ctitle">กด "สร้างใหม่" ซ้ำ ต้องหักเครดิตเพิ่มอีกครั้ง ไม่ใช่ฟรี <span class="kd kd-data">Data</span> <span class="noui">⛔ ไม่พบใน UI</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-2109"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2109"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">กด "สร้างใหม่" ซ้ำ ต้องหักเครดิตเพิ่มอีกครั้ง ไม่ใช่ฟรี</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Data</b> <span class="hint">(empty · ค่าตรงกับแหล่งข้อมูล · ซ้ำ · ไม่มีข้อมูล)</span> · B · หักเครดิตต่อชิ้นงาน AI</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังกดใช้ไม่ได้</b> ณ origin/develop 2026-09-08 (f61ed9e) — Epic 4 ยังไม่มีหน้าจอ · Epic 6 ถูกซ่อนด้วยแฟลก <code>SHOW_BLOCKED = false</code> เคสนี้เขียนล่วงหน้าจาก AC ในสเปก + แบบ UI ชื่อปุ่ม/ข้อความอาจต่างจากของจริงตอนส่งมอบ · ถ้ายังไม่มีหน้าจอให้บันทึกเป็น <b>BLOCKED</b> แล้วกลับมาปรับคำเมื่อ dev ส่งของ</div></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT แล้วไปที่เมนู "เซสชัน" แล้วเปิดไลฟ์ที่บันทึกจบแล้ว 1 รายการ</li><li>กดสร้างสรุปโดย AI 1 ครั้ง แล้วจดยอดคงเหลือ</li><li>กดปุ่ม "สร้างใหม่" บนการ์ดเดิมอีก 1 ครั้ง</li><li>ไปดูยอดคงเหลือและรายการใช้เครดิตล่าสุด</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ยอดคงเหลือลดลงอีกครั้งตามอัตราเดิม</li><li>รายการใช้เครดิตมี 2 แถวแยกกัน (ไม่รวบเป็นแถวเดียว)</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 4 · Story 4.2 · FR105 · UX-DR8 (regenerate)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2109" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2109" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2109" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2109" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2109" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2109"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2109" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2109">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="inB" data-level="ui" data-prio="P1" data-kind="validation" data-ui="no" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-MET.3</td>
+  <td class="ctitle">ป้ายราคาเครดิตบนการ์ดต้องบอกก่อนกด และตรงกับที่หักจริง <span class="kd kd-val">Validation</span> <span class="noui">⛔ ไม่พบใน UI</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-2110"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2110"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ป้ายราคาเครดิตบนการ์ดต้องบอกก่อนกด และตรงกับที่หักจริง</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Validation</b> <span class="hint">(format · required · ความถูกต้องของค่าที่แสดง)</span> · B · หักเครดิตต่อชิ้นงาน AI</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังกดใช้ไม่ได้</b> ณ origin/develop 2026-09-08 (f61ed9e) — Epic 4 ยังไม่มีหน้าจอ · Epic 6 ถูกซ่อนด้วยแฟลก <code>SHOW_BLOCKED = false</code> เคสนี้เขียนล่วงหน้าจาก AC ในสเปก + แบบ UI ชื่อปุ่ม/ข้อความอาจต่างจากของจริงตอนส่งมอบ · ถ้ายังไม่มีหน้าจอให้บันทึกเป็น <b>BLOCKED</b> แล้วกลับมาปรับคำเมื่อ dev ส่งของ</div></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT แล้วไปที่เมนู "เซสชัน" แล้วเปิดไลฟ์ที่บันทึกจบแล้ว 1 รายการ</li><li>อ่านป้ายบนหัวการ์ดสรุป AI — ในแอปเขียนว่า "สรุปโดย AI · 150 credits" และในหน้าบทพูดเขียน "สรุปบทพูดโดย AI · 80 credits"</li><li>กดสร้าง 1 ครั้ง แล้วเทียบจำนวนเครดิตที่หักจริงกับตัวเลขบนป้าย</li><li>เทียบตัวเลขบนป้ายกับตารางอัตราค่าเครดิตในหน้าตั้งค่า</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ตัวเลขบนป้ายบอกราคาก่อนผู้ใช้กด</li><li>จำนวนที่หักจริงเท่ากับตัวเลขบนป้าย</li><li>ตัวเลขบนป้าย · ที่หักจริง · ตารางอัตราในหน้าตั้งค่า ต้องเป็นชุดเดียวกันทั้งสามที่</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 4 · Story 4.2/4.3 · FR105/FR106 · คำ UI: i18n th.js sessionDetail.aiSummary.label / transcript.aiLabel</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2110" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2110" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2110" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2110" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2110" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2110"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2110" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2110">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="inB" data-level="ui" data-prio="P0" data-kind="exception" data-ui="no" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-MET.4</td>
+  <td class="ctitle">บริการ AI ล่ม ต้องขึ้นข้อความผิดพลาดที่อ่านรู้เรื่อง และไม่หักเครดิต <span class="kd kd-exc">Exception/Error</span> <span class="noui">⛔ ไม่พบใน UI</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-2111"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2111"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">บริการ AI ล่ม ต้องขึ้นข้อความผิดพลาดที่อ่านรู้เรื่อง และไม่หักเครดิต</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Exception/Error</b> <span class="hint">(บริการล่ม · เน็ตหลุด · สร้างไม่สำเร็จ)</span> · B · หักเครดิตต่อชิ้นงาน AI</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังกดใช้ไม่ได้</b> ณ origin/develop 2026-09-08 (f61ed9e) — Epic 4 ยังไม่มีหน้าจอ · Epic 6 ถูกซ่อนด้วยแฟลก <code>SHOW_BLOCKED = false</code> เคสนี้เขียนล่วงหน้าจาก AC ในสเปก + แบบ UI ชื่อปุ่ม/ข้อความอาจต่างจากของจริงตอนส่งมอบ · ถ้ายังไม่มีหน้าจอให้บันทึกเป็น <b>BLOCKED</b> แล้วกลับมาปรับคำเมื่อ dev ส่งของ</div></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT แล้วไปที่เมนู "เซสชัน" แล้วเปิดไลฟ์ที่บันทึกจบแล้ว 1 รายการ</li><li>จดยอดเครดิตคงเหลือไว้ก่อน</li><li>ให้ทีมปิดบริการ AI ฝั่งเซิร์ฟเวอร์ (หรือใช้บิลด์ที่ตั้งค่าให้เรียกไม่สำเร็จ) แล้วกดสร้างสรุปโดย AI</li><li>อ่านข้อความบนหน้าจอ แล้วกลับไปดูยอดคงเหลือ</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ขึ้นข้อความบอกว่าสร้างไม่สำเร็จ พร้อมทางลองใหม่ — ไม่ค้างอยู่ที่สถานะกำลังสร้างไปเรื่อยๆ</li><li>ไม่มีข้อความสรุปที่ขาดครึ่งหรือเพี้ยนแสดงบนการ์ด</li><li>ยอดเครดิตคงเหลือเท่าเดิม (ไม่หักเมื่อสร้างไม่สำเร็จ)</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 4 · Story 4.1 (proxy ไม่พร้อม → typed error + loading/failure UX)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2111" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2111" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2111" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2111" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2111" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2111"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2111" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2111">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="inB" data-level="ui" data-prio="P1" data-kind="exception" data-ui="no" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-MET.5</td>
+  <td class="ctitle">เน็ตหลุดกลางคันระหว่างสร้าง ต้องจบสถานะให้ผู้ใช้ ไม่ค้างหมุน <span class="kd kd-exc">Exception/Error</span> <span class="noui">⛔ ไม่พบใน UI</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-2112"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2112"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">เน็ตหลุดกลางคันระหว่างสร้าง ต้องจบสถานะให้ผู้ใช้ ไม่ค้างหมุน</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Exception/Error</b> <span class="hint">(บริการล่ม · เน็ตหลุด · สร้างไม่สำเร็จ)</span> · B · หักเครดิตต่อชิ้นงาน AI</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังกดใช้ไม่ได้</b> ณ origin/develop 2026-09-08 (f61ed9e) — Epic 4 ยังไม่มีหน้าจอ · Epic 6 ถูกซ่อนด้วยแฟลก <code>SHOW_BLOCKED = false</code> เคสนี้เขียนล่วงหน้าจาก AC ในสเปก + แบบ UI ชื่อปุ่ม/ข้อความอาจต่างจากของจริงตอนส่งมอบ · ถ้ายังไม่มีหน้าจอให้บันทึกเป็น <b>BLOCKED</b> แล้วกลับมาปรับคำเมื่อ dev ส่งของ</div></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT แล้วไปที่เมนู "เซสชัน" แล้วเปิดไลฟ์ที่บันทึกจบแล้ว 1 รายการ</li><li>กดสร้างสรุปโดย AI แล้วตัดการเชื่อมต่ออินเทอร์เน็ตทันทีระหว่างขึ้นสถานะ "กำลังสร้าง…"</li><li>รอจนระบบตอบกลับ แล้วอ่านหน้าจอ</li><li>ต่ออินเทอร์เน็ตกลับแล้วกดสร้างใหม่อีกครั้ง</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>สถานะกำลังสร้างจบลงภายในเวลาที่ยอมรับได้ พร้อมข้อความว่าทำไม่สำเร็จ</li><li>ปุ่มกลับมากดได้อีกครั้งหลังเน็ตกลับมา และสร้างสำเร็จตามปกติ</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 4 · Story 4.1 · NFR1.10 (async + loading state)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2112" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2112" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2112" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2112" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2112" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2112"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2112" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2112">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="inB" data-level="ui" data-prio="P1" data-kind="data" data-ui="no" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-MET.6</td>
+  <td class="ctitle">ผู้ใช้หลายคนในเวิร์กสเปซเดียวกันหักจากยอดก้อนเดียว <span class="kd kd-data">Data</span> <span class="noui">⛔ ไม่พบใน UI</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-2113"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2113"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ผู้ใช้หลายคนในเวิร์กสเปซเดียวกันหักจากยอดก้อนเดียว</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Data</b> <span class="hint">(empty · ค่าตรงกับแหล่งข้อมูล · ซ้ำ · ไม่มีข้อมูล)</span> · B · หักเครดิตต่อชิ้นงาน AI</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังกดใช้ไม่ได้</b> ณ origin/develop 2026-09-08 (f61ed9e) — Epic 4 ยังไม่มีหน้าจอ · Epic 6 ถูกซ่อนด้วยแฟลก <code>SHOW_BLOCKED = false</code> เคสนี้เขียนล่วงหน้าจาก AC ในสเปก + แบบ UI ชื่อปุ่ม/ข้อความอาจต่างจากของจริงตอนส่งมอบ · ถ้ายังไม่มีหน้าจอให้บันทึกเป็น <b>BLOCKED</b> แล้วกลับมาปรับคำเมื่อ dev ส่งของ</div></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT บนเครื่องที่ 1 และให้ผู้ใช้อีกคนในเวิร์กสเปซเดียวกันเข้าสู่ระบบบนเครื่องที่ 2</li><li>จดยอดคงเหลือของเวิร์กสเปซจากเครื่องที่ 1</li><li>ให้เครื่องที่ 2 สร้างชิ้นงาน AI 1 ครั้ง</li><li>รีเฟรชหน้าเครดิตบนเครื่องที่ 1 แล้วอ่านยอด</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ยอดคงเหลือบนเครื่องที่ 1 ลดลงตามที่เครื่องที่ 2 ใช้ไป (ยอดเป็นของเวิร์กสเปซ ไม่ใช่รายคน)</li><li>รายการใช้เครดิตล่าสุดแสดงรายการของอีกเครื่องด้วย</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 4 · Story 4.2 (deduct จาก tenant balance)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2113" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2113" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2113" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2113" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2113" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2113"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2113" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2113">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+
+<!-- inC -->
+<tr class="epicrow" data-epic="inC"><td colspan="7">🪫 C · เครดิตหมด — ลดระดับอย่างนุ่มนวล &amp; ซื้อเพิ่ม · Epic 4 · Story 4.4 (FR107) <span class="rp">(7 เคส)</span></td></tr>
+<tr class="featrow" data-featkey="in-zero"><td colspan="7">📁 soft-degrade + ซื้อ overage <span class="rp"><span class="lv lvl-ui">🌐 7</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="in-zero"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow" data-feat="inC" data-level="ui" data-prio="P0" data-kind="happy" data-ui="no" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-ZERO.1</td>
+  <td class="ctitle">เครดิตเหลือ 0 การ์ด AI ที่สร้างไว้แล้วต้องยังอ่านได้ <span class="kd kd-happy">Happy Path</span> <span class="noui">⛔ ไม่พบใน UI</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-2114"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2114"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">เครดิตเหลือ 0 การ์ด AI ที่สร้างไว้แล้วต้องยังอ่านได้</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · C · เครดิตหมด — ลดระดับอย่างนุ่มนวล &amp; ซื้อเพิ่ม</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังกดใช้ไม่ได้</b> ณ origin/develop 2026-09-08 (f61ed9e) — Epic 4 ยังไม่มีหน้าจอ · Epic 6 ถูกซ่อนด้วยแฟลก <code>SHOW_BLOCKED = false</code> เคสนี้เขียนล่วงหน้าจาก AC ในสเปก + แบบ UI ชื่อปุ่ม/ข้อความอาจต่างจากของจริงตอนส่งมอบ · ถ้ายังไม่มีหน้าจอให้บันทึกเป็น <b>BLOCKED</b> แล้วกลับมาปรับคำเมื่อ dev ส่งของ</div></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT ด้วยบัญชี UAT ที่เครดิตถูกใช้จนเหลือ 0</li><li>ไปที่เมนู "เซสชัน" แล้วเปิดไลฟ์ที่บันทึกจบแล้ว 1 รายการ ซึ่งเคยสร้างสรุป AI ไว้แล้ว</li><li>อ่านการ์ดสรุป AI และการ์ด Insight ที่มีอยู่เดิม</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ข้อความ AI ที่เคยสร้างไว้ยังแสดงครบเหมือนเดิม</li><li>ไม่มีการลบ ซ่อน หรือเบลอเนื้อหาเก่าเพราะเครดิตหมด</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 4 · Story 4.4 · FR107 (pre-generated cards remain visible)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2114" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2114" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2114" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2114" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2114" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2114"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2114" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2114">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="inC" data-level="ui" data-prio="P0" data-kind="happy" data-ui="no" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-ZERO.2</td>
+  <td class="ctitle">กดสร้างใหม่ตอนเครดิต 0 ต้องได้คำชวนเติมเครดิต ไม่ใช่ error ดิบ <span class="kd kd-happy">Happy Path</span> <span class="noui">⛔ ไม่พบใน UI</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-2115"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2115"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">กดสร้างใหม่ตอนเครดิต 0 ต้องได้คำชวนเติมเครดิต ไม่ใช่ error ดิบ</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · C · เครดิตหมด — ลดระดับอย่างนุ่มนวล &amp; ซื้อเพิ่ม</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังกดใช้ไม่ได้</b> ณ origin/develop 2026-09-08 (f61ed9e) — Epic 4 ยังไม่มีหน้าจอ · Epic 6 ถูกซ่อนด้วยแฟลก <code>SHOW_BLOCKED = false</code> เคสนี้เขียนล่วงหน้าจาก AC ในสเปก + แบบ UI ชื่อปุ่ม/ข้อความอาจต่างจากของจริงตอนส่งมอบ · ถ้ายังไม่มีหน้าจอให้บันทึกเป็น <b>BLOCKED</b> แล้วกลับมาปรับคำเมื่อ dev ส่งของ</div></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT ด้วยบัญชี UAT ที่เครดิตเหลือ 0</li><li>ไปที่เมนู "เซสชัน" แล้วเปิดไลฟ์ที่บันทึกจบแล้ว 1 รายการ</li><li>กดสร้างสรุปโดย AI (หรือปุ่ม "สร้างใหม่")</li><li>อ่านสิ่งที่ขึ้นบนหน้าจอ</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ขึ้นข้อความบอกว่าเครดิตหมด พร้อมทางเลือกซื้อเครดิตเพิ่มหรืออัปเกรดแพ็กเกจ</li><li>ไม่ขึ้นข้อความ error ทางเทคนิคหรือหน้าจอค้าง</li><li>การ์ดเดิมยังอยู่ที่เดิม ไม่ถูกล้างทิ้ง</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 4 · Story 4.4 · FR107 (upgrade/overage prompt) · UX-DR10 (soft-degrade warning state)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2115" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2115" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2115" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2115" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2115" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2115"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2115" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2115">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="inC" data-level="ui" data-prio="P0" data-kind="permission" data-ui="no" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-ZERO.3</td>
+  <td class="ctitle">ส่วนที่ไม่ใช่ AI ต้องใช้งานได้ปกติแม้เครดิตหมด <span class="kd kd-perm">Permission</span> <span class="noui">⛔ ไม่พบใน UI</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-2116"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2116"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ส่วนที่ไม่ใช่ AI ต้องใช้งานได้ปกติแม้เครดิตหมด</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Permission</b> <span class="hint">(tier / สิทธิ์ / โหมดที่จำกัดการทำงาน)</span> · C · เครดิตหมด — ลดระดับอย่างนุ่มนวล &amp; ซื้อเพิ่ม</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังกดใช้ไม่ได้</b> ณ origin/develop 2026-09-08 (f61ed9e) — Epic 4 ยังไม่มีหน้าจอ · Epic 6 ถูกซ่อนด้วยแฟลก <code>SHOW_BLOCKED = false</code> เคสนี้เขียนล่วงหน้าจาก AC ในสเปก + แบบ UI ชื่อปุ่ม/ข้อความอาจต่างจากของจริงตอนส่งมอบ · ถ้ายังไม่มีหน้าจอให้บันทึกเป็น <b>BLOCKED</b> แล้วกลับมาปรับคำเมื่อ dev ส่งของ</div></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT ด้วยบัญชี UAT ที่เครดิตเหลือ 0</li><li>เปิดหน้ารายงานเซสชันแล้วดูตัวชี้วัดหลัก ไทม์ไลน์ และส่วนคอมเมนต์</li><li>เริ่มติดตามไลฟ์ 1 รายการเพื่อดู HUD แบบเรียลไทม์</li><li>สังเกตว่าส่วนเหล่านี้ทำงานครบหรือไม่</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ตัวเลข ไทม์ไลน์ คอมเมนต์ และ HUD เรียลไทม์ยังทำงานปกติ</li><li>มีเพียงการสร้างชิ้นงาน AI ใหม่เท่านั้นที่ถูกจำกัด</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 4 · Story 4.4 · FR107 (non-AI surfaces keep working)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2116" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2116" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2116" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2116" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2116" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2116"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2116" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2116">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="inC" data-level="ui" data-prio="P0" data-kind="happy" data-ui="no" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-ZERO.4</td>
+  <td class="ctitle">ซื้อเครดิตเพิ่มแล้วยอดเพิ่มขึ้นและสร้าง AI ต่อได้ทันที <span class="kd kd-happy">Happy Path</span> <span class="noui">⛔ ไม่พบใน UI</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-2117"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2117"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ซื้อเครดิตเพิ่มแล้วยอดเพิ่มขึ้นและสร้าง AI ต่อได้ทันที</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · C · เครดิตหมด — ลดระดับอย่างนุ่มนวล &amp; ซื้อเพิ่ม</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังกดใช้ไม่ได้</b> ณ origin/develop 2026-09-08 (f61ed9e) — Epic 4 ยังไม่มีหน้าจอ · Epic 6 ถูกซ่อนด้วยแฟลก <code>SHOW_BLOCKED = false</code> เคสนี้เขียนล่วงหน้าจาก AC ในสเปก + แบบ UI ชื่อปุ่ม/ข้อความอาจต่างจากของจริงตอนส่งมอบ · ถ้ายังไม่มีหน้าจอให้บันทึกเป็น <b>BLOCKED</b> แล้วกลับมาปรับคำเมื่อ dev ส่งของ</div></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT ด้วยบัญชี UAT ที่เครดิตเหลือ 0</li><li>จากคำชวนเติมเครดิต เลือกแพ็กเครดิตเพิ่ม 1 แพ็ก แล้วทำตามขั้นตอนจนจบ</li><li>กลับไปดูยอดคงเหลือในหน้าเครดิต AI</li><li>กลับไปที่หน้ารายงานเซสชันแล้วกดสร้างสรุปโดย AI อีกครั้ง</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ยอดคงเหลือเพิ่มขึ้นเท่ากับจำนวนเครดิตของแพ็กที่ซื้อ</li><li>สร้างชิ้นงาน AI ได้สำเร็จ และเครดิตถูกหักจากยอดใหม่</li><li>มีรายการการซื้อปรากฏให้ตรวจสอบย้อนหลังได้</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 4 · Story 4.4 (purchase overage → balance topped up) · แบบ UI: credit-balance.html ("Buy overage credits")</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2117" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2117" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2117" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2117" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2117" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2117"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2117" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2117">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="inC" data-level="ui" data-prio="P1" data-kind="boundary" data-ui="no" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-ZERO.5</td>
+  <td class="ctitle">เครดิตเหลือน้อยกว่าราคาชิ้นงาน ต้องกันไว้ก่อนกด <span class="kd kd-bnd">Boundary/Edge</span> <span class="noui">⛔ ไม่พบใน UI</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-2118"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2118"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">เครดิตเหลือน้อยกว่าราคาชิ้นงาน ต้องกันไว้ก่อนกด</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Boundary/Edge</b> <span class="hint">(min / max / ก่อน-ตรง-เกินขอบ)</span> · C · เครดิตหมด — ลดระดับอย่างนุ่มนวล &amp; ซื้อเพิ่ม</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังกดใช้ไม่ได้</b> ณ origin/develop 2026-09-08 (f61ed9e) — Epic 4 ยังไม่มีหน้าจอ · Epic 6 ถูกซ่อนด้วยแฟลก <code>SHOW_BLOCKED = false</code> เคสนี้เขียนล่วงหน้าจาก AC ในสเปก + แบบ UI ชื่อปุ่ม/ข้อความอาจต่างจากของจริงตอนส่งมอบ · ถ้ายังไม่มีหน้าจอให้บันทึกเป็น <b>BLOCKED</b> แล้วกลับมาปรับคำเมื่อ dev ส่งของ</div></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT ด้วยบัญชี UAT ที่ปรับยอดเครดิตให้เหลือน้อยกว่าราคาชิ้นงาน 1 ชิ้น (เช่น เหลือ 50 แต่สรุป AI ราคา 150)</li><li>ไปที่เมนู "เซสชัน" แล้วเปิดไลฟ์ที่บันทึกจบแล้ว 1 รายการ</li><li>สังเกตปุ่มสร้างสรุปโดย AI ก่อนกด</li><li>ลองกดปุ่มแล้วอ่านผล</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ระบบบอกล่วงหน้าว่าเครดิตไม่พอสำหรับชิ้นงานนี้ (ปุ่มถูกปิดหรือมีข้อความเตือน)</li><li>ถ้ากดได้ ต้องไม่หักเครดิตบางส่วนแล้วสร้างไม่สำเร็จ — ยอดต้องคงเดิม</li><li>มีทางไปซื้อเครดิตเพิ่มจากจุดนั้น</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 4 · Story 4.4 · FR107</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2118" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2118" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2118" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2118" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2118" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2118"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2118" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2118">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="inC" data-level="ui" data-prio="P1" data-kind="negative" data-ui="no" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-ZERO.6</td>
+  <td class="ctitle">ยกเลิกกลางทางระหว่างซื้อเครดิตเพิ่ม ยอดต้องไม่เปลี่ยน <span class="kd kd-neg">Negative</span> <span class="noui">⛔ ไม่พบใน UI</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-2119"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2119"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ยกเลิกกลางทางระหว่างซื้อเครดิตเพิ่ม ยอดต้องไม่เปลี่ยน</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Negative</b> <span class="hint">(ข้อมูลผิด / action ผิด)</span> · C · เครดิตหมด — ลดระดับอย่างนุ่มนวล &amp; ซื้อเพิ่ม</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังกดใช้ไม่ได้</b> ณ origin/develop 2026-09-08 (f61ed9e) — Epic 4 ยังไม่มีหน้าจอ · Epic 6 ถูกซ่อนด้วยแฟลก <code>SHOW_BLOCKED = false</code> เคสนี้เขียนล่วงหน้าจาก AC ในสเปก + แบบ UI ชื่อปุ่ม/ข้อความอาจต่างจากของจริงตอนส่งมอบ · ถ้ายังไม่มีหน้าจอให้บันทึกเป็น <b>BLOCKED</b> แล้วกลับมาปรับคำเมื่อ dev ส่งของ</div></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT ด้วยบัญชี UAT ที่เครดิตเหลือ 0 แล้วจดยอดคงเหลือไว้</li><li>เปิดหน้าซื้อเครดิตเพิ่ม เลือกแพ็ก 1 รายการ</li><li>กดยกเลิก/ปิดหน้าต่างก่อนยืนยันการชำระเงิน</li><li>กลับไปดูยอดคงเหลือและรายการล่าสุด</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ยอดคงเหลือเท่าเดิม ไม่มีเครดิตเพิ่มเข้ามา</li><li>ไม่มีรายการซื้อค้างอยู่ในประวัติ</li><li>กลับมาซื้อใหม่ได้ตามปกติ</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 4 · Story 4.4</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2119" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2119" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2119" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2119" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2119" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2119"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2119" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2119">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="inC" data-level="ui" data-prio="P2" data-kind="validation" data-ui="no" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-ZERO.7</td>
+  <td class="ctitle">ข้อความเรื่องเครดิตส่วนเกินยกยอดข้ามเดือนต้องตรงกับกติกาจริง <span class="kd kd-val">Validation</span> <span class="noui">⛔ ไม่พบใน UI</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p2">P2</span></td>
+  <td class="status" data-uid="tc-2120"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2120"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ข้อความเรื่องเครดิตส่วนเกินยกยอดข้ามเดือนต้องตรงกับกติกาจริง</div>
+  <div class="h-prio">Priority: <b>P2</b> · UI · ประเภท: <b>Validation</b> <span class="hint">(format · required · ความถูกต้องของค่าที่แสดง)</span> · C · เครดิตหมด — ลดระดับอย่างนุ่มนวล &amp; ซื้อเพิ่ม</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังกดใช้ไม่ได้</b> ณ origin/develop 2026-09-08 (f61ed9e) — Epic 4 ยังไม่มีหน้าจอ · Epic 6 ถูกซ่อนด้วยแฟลก <code>SHOW_BLOCKED = false</code> เคสนี้เขียนล่วงหน้าจาก AC ในสเปก + แบบ UI ชื่อปุ่ม/ข้อความอาจต่างจากของจริงตอนส่งมอบ · ถ้ายังไม่มีหน้าจอให้บันทึกเป็น <b>BLOCKED</b> แล้วกลับมาปรับคำเมื่อ dev ส่งของ</div></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>เข้าหน้าตั้งค่าเวิร์กสเปซ → หัวข้อเครดิต AI</li><li>อ่านข้อความใต้หัวข้อซื้อเครดิตเพิ่ม (แบบ UI เขียนว่าเครดิตส่วนเกินที่เหลือยกยอดข้ามเดือนได้)</li><li>เทียบกับข้อความเรื่องโควตารายเดือนที่ไม่ยกยอด</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ข้อความบนหน้าจอแยกให้ชัดว่าอะไรยกยอดได้และอะไรไม่ได้ — โควตารายเดือนตาม FR108 ไม่ยกยอด</li><li>ถ้าสองข้อความขัดกัน ให้ถือเป็นบั๊กและเปิดใบให้ทีมยืนยันกติกาก่อนส่งมอบ</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 4 · Story 4.5 · FR108 (no rollover) เทียบกับแบบ UI credit-balance.html ("Unused overage credits roll over")</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2120" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2120" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2120" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2120" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2120" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2120"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2120" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2120">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+
+<!-- inD -->
+<tr class="epicrow" data-epic="inD"><td colspan="7">🔄 D · ต่อรอบบิล — เติมโควตาใหม่ ไม่ทบยอด · Epic 4 · Story 4.5 (FR108) <span class="rp">(4 เคส)</span></td></tr>
+<tr class="featrow" data-featkey="in-cycle"><td colspan="7">📁 รีเซ็ตโควตาตามรอบ <span class="rp"><span class="lv lvl-ui">🌐 4</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="in-cycle"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow" data-feat="inD" data-level="ui" data-prio="P0" data-kind="happy" data-ui="no" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-CYC.1</td>
+  <td class="ctitle">ครบรอบบิลแล้วโควตากลับมาเต็มตามแพ็กเกจ <span class="kd kd-happy">Happy Path</span> <span class="noui">⛔ ไม่พบใน UI</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-2121"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2121"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ครบรอบบิลแล้วโควตากลับมาเต็มตามแพ็กเกจ</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · D · ต่อรอบบิล — เติมโควตาใหม่ ไม่ทบยอด</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังกดใช้ไม่ได้</b> ณ origin/develop 2026-09-08 (f61ed9e) — Epic 4 ยังไม่มีหน้าจอ · Epic 6 ถูกซ่อนด้วยแฟลก <code>SHOW_BLOCKED = false</code> เคสนี้เขียนล่วงหน้าจาก AC ในสเปก + แบบ UI ชื่อปุ่ม/ข้อความอาจต่างจากของจริงตอนส่งมอบ · ถ้ายังไม่มีหน้าจอให้บันทึกเป็น <b>BLOCKED</b> แล้วกลับมาปรับคำเมื่อ dev ส่งของ</div></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT ด้วยบัญชี UAT ที่ตั้งวันครบรอบไว้ให้ผ่านไปแล้ว (ให้ทีมเลื่อนรอบให้ก่อนเทส)</li><li>เข้าหน้าตั้งค่าเวิร์กสเปซ → หัวข้อเครดิต AI</li><li>อ่านยอดคงเหลือ ยอดใช้ไป และวันรีเซ็ตรอบใหม่</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ยอดคงเหลือกลับมาเท่าโควตาเต็มของแพ็กเกจ (Starter 5,000 · Pro 15,000 · Enterprise 50,000)</li><li>ยอดใช้ไปของรอบใหม่เริ่มนับจาก 0</li><li>วันรีเซ็ตเลื่อนไปเป็นรอบถัดไป</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 4 · Story 4.5 · FR108</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2121" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2121" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2121" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2121" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2121" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2121"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2121" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2121">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="inD" data-level="ui" data-prio="P0" data-kind="data" data-ui="no" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-CYC.2</td>
+  <td class="ctitle">เครดิตที่เหลือจากรอบก่อนต้องไม่ทบมารอบใหม่ <span class="kd kd-data">Data</span> <span class="noui">⛔ ไม่พบใน UI</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-2122"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2122"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">เครดิตที่เหลือจากรอบก่อนต้องไม่ทบมารอบใหม่</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Data</b> <span class="hint">(empty · ค่าตรงกับแหล่งข้อมูล · ซ้ำ · ไม่มีข้อมูล)</span> · D · ต่อรอบบิล — เติมโควตาใหม่ ไม่ทบยอด</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังกดใช้ไม่ได้</b> ณ origin/develop 2026-09-08 (f61ed9e) — Epic 4 ยังไม่มีหน้าจอ · Epic 6 ถูกซ่อนด้วยแฟลก <code>SHOW_BLOCKED = false</code> เคสนี้เขียนล่วงหน้าจาก AC ในสเปก + แบบ UI ชื่อปุ่ม/ข้อความอาจต่างจากของจริงตอนส่งมอบ · ถ้ายังไม่มีหน้าจอให้บันทึกเป็น <b>BLOCKED</b> แล้วกลับมาปรับคำเมื่อ dev ส่งของ</div></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT ด้วยบัญชี UAT ที่รอบก่อนเหลือเครดิตค้างไว้ชัดเจน (เช่น เหลือ 4,000)</li><li>จดยอดคงเหลือก่อนครบรอบ</li><li>ให้ทีมเลื่อนเวลาให้ผ่านวันครบรอบ แล้วเปิดหน้าเครดิต AI อีกครั้ง</li><li>เทียบยอดคงเหลือใหม่กับโควตาเต็ม</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ยอดคงเหลือใหม่ = โควตาเต็มพอดี ไม่ใช่โควตาเต็ม + ยอดค้างจากรอบก่อน</li><li>มีข้อความ/หมายเหตุบอกกติกาไม่ทบยอดให้ผู้ใช้เข้าใจ</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 4 · Story 4.5 · FR108 (unused credits do not carry forward)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2122" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2122" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2122" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2122" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2122" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2122"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2122" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2122">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="inD" data-level="ui" data-prio="P1" data-kind="boundary" data-ui="no" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-CYC.3</td>
+  <td class="ctitle">อัปเกรดแพ็กเกจกลางรอบ โควตาและวันรีเซ็ตต้องอัปเดตถูกต้อง <span class="kd kd-bnd">Boundary/Edge</span> <span class="noui">⛔ ไม่พบใน UI</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-2123"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2123"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">อัปเกรดแพ็กเกจกลางรอบ โควตาและวันรีเซ็ตต้องอัปเดตถูกต้อง</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Boundary/Edge</b> <span class="hint">(min / max / ก่อน-ตรง-เกินขอบ)</span> · D · ต่อรอบบิล — เติมโควตาใหม่ ไม่ทบยอด</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังกดใช้ไม่ได้</b> ณ origin/develop 2026-09-08 (f61ed9e) — Epic 4 ยังไม่มีหน้าจอ · Epic 6 ถูกซ่อนด้วยแฟลก <code>SHOW_BLOCKED = false</code> เคสนี้เขียนล่วงหน้าจาก AC ในสเปก + แบบ UI ชื่อปุ่ม/ข้อความอาจต่างจากของจริงตอนส่งมอบ · ถ้ายังไม่มีหน้าจอให้บันทึกเป็น <b>BLOCKED</b> แล้วกลับมาปรับคำเมื่อ dev ส่งของ</div></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT ด้วยบัญชี UAT ระดับ Starter แล้วจดยอดคงเหลือกับวันรีเซ็ตไว้</li><li>ให้ทีมอัปเกรดแพ็กเกจเป็น Pro จากฝั่ง Takra Hub</li><li>กลับมาเปิดหน้าเครดิต AI แล้วอ่านโควตาใหม่และวันรีเซ็ต</li><li>สร้างชิ้นงาน AI 1 ครั้งเพื่อดูว่าหักจากยอดใหม่</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>โควตาทั้งหมดเปลี่ยนเป็นของแพ็กเกจใหม่</li><li>ชื่อแพ็กเกจที่แสดงเปลี่ยนตาม</li><li>การหักเครดิตหลังอัปเกรดคิดจากยอดใหม่</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 4 · Story 4.5 · FR105 (allotment ตาม Hub entitlement FR59)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2123" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2123" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2123" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2123" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2123" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2123"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2123" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2123">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="inD" data-level="ui" data-prio="P2" data-kind="validation" data-ui="no" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-CYC.4</td>
+  <td class="ctitle">จำนวนวันที่เหลือก่อนรีเซ็ตต้องตรงกับวันที่ที่แสดง <span class="kd kd-val">Validation</span> <span class="noui">⛔ ไม่พบใน UI</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p2">P2</span></td>
+  <td class="status" data-uid="tc-2124"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2124"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">จำนวนวันที่เหลือก่อนรีเซ็ตต้องตรงกับวันที่ที่แสดง</div>
+  <div class="h-prio">Priority: <b>P2</b> · UI · ประเภท: <b>Validation</b> <span class="hint">(format · required · ความถูกต้องของค่าที่แสดง)</span> · D · ต่อรอบบิล — เติมโควตาใหม่ ไม่ทบยอด</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังกดใช้ไม่ได้</b> ณ origin/develop 2026-09-08 (f61ed9e) — Epic 4 ยังไม่มีหน้าจอ · Epic 6 ถูกซ่อนด้วยแฟลก <code>SHOW_BLOCKED = false</code> เคสนี้เขียนล่วงหน้าจาก AC ในสเปก + แบบ UI ชื่อปุ่ม/ข้อความอาจต่างจากของจริงตอนส่งมอบ · ถ้ายังไม่มีหน้าจอให้บันทึกเป็น <b>BLOCKED</b> แล้วกลับมาปรับคำเมื่อ dev ส่งของ</div></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>เข้าหน้าตั้งค่าเวิร์กสเปซ → หัวข้อเครดิต AI</li><li>อ่านวันที่รีเซ็ตและจำนวนวันที่เหลือ</li><li>นับวันจากวันนี้ถึงวันที่รีเซ็ตด้วยปฏิทินแล้วเทียบกัน</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>จำนวนวันที่เหลือตรงกับผลนับจากวันที่แสดงจริง</li><li>วันที่แสดงเป็นรูปแบบที่อ่านเข้าใจได้ ไม่ใช่ค่าดิบของระบบ</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 4 · Story 4.3 · FR106 (reset date)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2124" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2124" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2124" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2124" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2124" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2124"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2124" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2124">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+
+<!-- inE -->
+<tr class="epicrow" data-epic="inE"><td colspan="7">🎯 E · AI Coach Bar หลังจบไลฟ์ · Epic 6 · Story 6.1 (FR96) <span class="rp">(5 เคส)</span></td></tr>
+<tr class="featrow" data-featkey="in-coach"><td colspan="7">📁 คำแนะนำสำหรับโฮสต์หลังจบไลฟ์ <span class="rp"><span class="lv lvl-ui">🌐 5</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="in-coach"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow" data-feat="inE" data-level="ui" data-prio="P0" data-kind="happy" data-ui="no" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-COACH.1</td>
+  <td class="ctitle">เปิดรายงานไลฟ์ที่จบแล้ว เห็นแถบคำแนะนำจาก AI <span class="kd kd-happy">Happy Path</span> <span class="noui">⛔ ไม่พบใน UI</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-2125"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2125"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">เปิดรายงานไลฟ์ที่จบแล้ว เห็นแถบคำแนะนำจาก AI</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · E · AI Coach Bar หลังจบไลฟ์</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังกดใช้ไม่ได้</b> ณ origin/develop 2026-09-08 (f61ed9e) — Epic 4 ยังไม่มีหน้าจอ · Epic 6 ถูกซ่อนด้วยแฟลก <code>SHOW_BLOCKED = false</code> เคสนี้เขียนล่วงหน้าจาก AC ในสเปก + แบบ UI ชื่อปุ่ม/ข้อความอาจต่างจากของจริงตอนส่งมอบ · ถ้ายังไม่มีหน้าจอให้บันทึกเป็น <b>BLOCKED</b> แล้วกลับมาปรับคำเมื่อ dev ส่งของ</div></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>ไปที่เมนู "เซสชัน" แล้วเปิดไลฟ์ที่บันทึกจบแล้ว 1 รายการ</li><li>อยู่ที่แท็บ "รายงาน" แล้วเลื่อนอ่านส่วนคำแนะนำจาก AI</li><li>อ่านว่าคำแนะนำอ้างถึงอะไรในไลฟ์นั้น</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>เห็นแถบคำแนะนำสำหรับโฮสต์บนหน้ารายงานของไลฟ์ที่จบแล้ว</li><li>คำแนะนำเป็นข้อความไทยที่บอกได้ว่าควรทำอะไรต่อ ไม่ใช่ตัวเลขลอยๆ</li><li>อ้างถึงช่วงเวลา/เหตุการณ์ของไลฟ์นั้นจริง</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 6 · Story 6.1 · FR96 (host-facing recommendations, post-live)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2125" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2125" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2125" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2125" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2125" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2125"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2125" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2125">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="inE" data-level="ui" data-prio="P0" data-kind="negative" data-ui="no" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-COACH.2</td>
+  <td class="ctitle">ระหว่างไลฟ์ยังบันทึกอยู่ ต้องไม่มีคำแนะนำโผล่รบกวน <span class="kd kd-neg">Negative</span> <span class="noui">⛔ ไม่พบใน UI</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-2126"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2126"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ระหว่างไลฟ์ยังบันทึกอยู่ ต้องไม่มีคำแนะนำโผล่รบกวน</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Negative</b> <span class="hint">(ข้อมูลผิด / action ผิด)</span> · E · AI Coach Bar หลังจบไลฟ์</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังกดใช้ไม่ได้</b> ณ origin/develop 2026-09-08 (f61ed9e) — Epic 4 ยังไม่มีหน้าจอ · Epic 6 ถูกซ่อนด้วยแฟลก <code>SHOW_BLOCKED = false</code> เคสนี้เขียนล่วงหน้าจาก AC ในสเปก + แบบ UI ชื่อปุ่ม/ข้อความอาจต่างจากของจริงตอนส่งมอบ · ถ้ายังไม่มีหน้าจอให้บันทึกเป็น <b>BLOCKED</b> แล้วกลับมาปรับคำเมื่อ dev ส่งของ</div></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>เริ่มติดตาม/บันทึกไลฟ์ 1 รายการจากหน้าแชนเนลที่ติดตาม</li><li>ระหว่างที่ยังบันทึกอยู่ ดูหน้าจอ HUD และแถบ Insight เรียลไทม์</li><li>สังเกตว่ามีแถบคำแนะนำหลังไลฟ์ขึ้นมาหรือไม่</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ไม่มีแถบคำแนะนำหลังไลฟ์ปรากฏระหว่างบันทึก</li><li>สิ่งที่ขึ้นระหว่างไลฟ์มีเฉพาะการแจ้งเตือนแบบเรียลไทม์ตามที่ออกแบบไว้เท่านั้น</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 6 · Story 6.1 · FR96 (post-live only ตาม silent-advisor scoping)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2126" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2126" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2126" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2126" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2126" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2126"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2126" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2126">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="inE" data-level="ui" data-prio="P1" data-kind="data" data-ui="no" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-COACH.3</td>
+  <td class="ctitle">ตัวเลขในคำแนะนำต้องตรงกับข้อมูลของไลฟ์นั้น <span class="kd kd-data">Data</span> <span class="noui">⛔ ไม่พบใน UI</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-2127"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2127"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ตัวเลขในคำแนะนำต้องตรงกับข้อมูลของไลฟ์นั้น</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Data</b> <span class="hint">(empty · ค่าตรงกับแหล่งข้อมูล · ซ้ำ · ไม่มีข้อมูล)</span> · E · AI Coach Bar หลังจบไลฟ์</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังกดใช้ไม่ได้</b> ณ origin/develop 2026-09-08 (f61ed9e) — Epic 4 ยังไม่มีหน้าจอ · Epic 6 ถูกซ่อนด้วยแฟลก <code>SHOW_BLOCKED = false</code> เคสนี้เขียนล่วงหน้าจาก AC ในสเปก + แบบ UI ชื่อปุ่ม/ข้อความอาจต่างจากของจริงตอนส่งมอบ · ถ้ายังไม่มีหน้าจอให้บันทึกเป็น <b>BLOCKED</b> แล้วกลับมาปรับคำเมื่อ dev ส่งของ</div></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT แล้วไปที่เมนู "เซสชัน" แล้วเปิดไลฟ์ที่บันทึกจบแล้ว 1 รายการ</li><li>อ่านตัวเลข/ช่วงนาทีที่ถูกอ้างในแถบคำแนะนำ</li><li>เลื่อนไปดูส่วนไทม์ไลน์และตัวชี้วัดหลักของไลฟ์เดียวกัน</li><li>เทียบตัวเลขทั้งสองจุด</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ช่วงเวลาและตัวเลขในคำแนะนำตรงกับที่ไทม์ไลน์/ตัวชี้วัดแสดง</li><li>ไม่มีตัวเลขที่หาที่มาในหน้าเดียวกันไม่ได้</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 6 · Story 6.1 · FR96 (derived from the session)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2127" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2127" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2127" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2127" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2127" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2127"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2127" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2127">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="inE" data-level="ui" data-prio="P0" data-kind="data" data-ui="no" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-COACH.4</td>
+  <td class="ctitle">ไลฟ์ที่ข้อมูลน้อยเกินไป ต้องบอกว่ายังไม่มีข้อมูล ไม่ใช่แต่งคำแนะนำ <span class="kd kd-data">Data</span> <span class="noui">⛔ ไม่พบใน UI</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-2128"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2128"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ไลฟ์ที่ข้อมูลน้อยเกินไป ต้องบอกว่ายังไม่มีข้อมูล ไม่ใช่แต่งคำแนะนำ</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Data</b> <span class="hint">(empty · ค่าตรงกับแหล่งข้อมูล · ซ้ำ · ไม่มีข้อมูล)</span> · E · AI Coach Bar หลังจบไลฟ์</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังกดใช้ไม่ได้</b> ณ origin/develop 2026-09-08 (f61ed9e) — Epic 4 ยังไม่มีหน้าจอ · Epic 6 ถูกซ่อนด้วยแฟลก <code>SHOW_BLOCKED = false</code> เคสนี้เขียนล่วงหน้าจาก AC ในสเปก + แบบ UI ชื่อปุ่ม/ข้อความอาจต่างจากของจริงตอนส่งมอบ · ถ้ายังไม่มีหน้าจอให้บันทึกเป็น <b>BLOCKED</b> แล้วกลับมาปรับคำเมื่อ dev ส่งของ</div></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>ไปที่เมนู "เซสชัน" แล้วเปิดไลฟ์ที่บันทึกไว้สั้นมากหรือไม่มีข้อมูลที่วิเคราะห์ได้</li><li>ดูส่วนคำแนะนำจาก AI</li><li>อ่านข้อความที่ระบบแสดง</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ระบบขึ้นสถานะว่ายังไม่มีข้อมูลพอสำหรับคำแนะนำ</li><li>ไม่แสดงคำแนะนำที่อ้างเหตุการณ์ซึ่งไม่มีอยู่ในไลฟ์นั้น</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 6 · Story 6.1 · FR96</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2128" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2128" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2128" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2128" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2128" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2128"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2128" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2128">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="inE" data-level="ui" data-prio="P1" data-kind="permission" data-ui="no" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-COACH.5</td>
+  <td class="ctitle">บัญชีที่ไม่มีสิทธิ์ตามแพ็กเกจต้องไม่เห็นคำแนะนำ AI <span class="kd kd-perm">Permission</span> <span class="noui">⛔ ไม่พบใน UI</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-2129"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2129"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">บัญชีที่ไม่มีสิทธิ์ตามแพ็กเกจต้องไม่เห็นคำแนะนำ AI</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Permission</b> <span class="hint">(tier / สิทธิ์ / โหมดที่จำกัดการทำงาน)</span> · E · AI Coach Bar หลังจบไลฟ์</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังกดใช้ไม่ได้</b> ณ origin/develop 2026-09-08 (f61ed9e) — Epic 4 ยังไม่มีหน้าจอ · Epic 6 ถูกซ่อนด้วยแฟลก <code>SHOW_BLOCKED = false</code> เคสนี้เขียนล่วงหน้าจาก AC ในสเปก + แบบ UI ชื่อปุ่ม/ข้อความอาจต่างจากของจริงตอนส่งมอบ · ถ้ายังไม่มีหน้าจอให้บันทึกเป็น <b>BLOCKED</b> แล้วกลับมาปรับคำเมื่อ dev ส่งของ</div></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT ระดับที่ยังไม่รวม AI Coach Bar (Free/Starter ตามตารางแพ็กเกจ)</li><li>ไปที่เมนู "เซสชัน" แล้วเปิดไลฟ์ที่บันทึกจบแล้ว 1 รายการ</li><li>ดูว่ามีแถบคำแนะนำจาก AI หรือไม่</li><li>อ่านข้อความที่ระบบบอกแทน</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ไม่มีคำแนะนำ AI แสดงให้บัญชีที่ไม่มีสิทธิ์</li><li>มีข้อความบอกว่าเป็นสิทธิ์ของแพ็กเกจระดับสูงกว่า พร้อมทางอัปเกรด</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 6 · Story 6.1 · แบบ UI: ui-mockups/shared-screens/pricing.html (AI Coach Bar = Pro ขึ้นไป)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2129" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2129" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2129" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2129" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2129" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2129"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2129" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2129">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+
+<!-- inF -->
+<tr class="epicrow" data-epic="inF"><td colspan="7">📝 F · การ์ดสรุปเรื่องเล่า AI · Epic 6 · Story 6.2 (FR97 · NFR1.10 · UX-DR8) <span class="rp">(8 เคส)</span></td></tr>
+<tr class="featrow" data-featkey="in-narrative"><td colspan="7">📁 สร้าง / สร้างใหม่ / ให้ฟีดแบ็ก <span class="rp"><span class="lv lvl-ui">🌐 8</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="in-narrative"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow" data-feat="inF" data-level="ui" data-prio="P0" data-kind="happy" data-ui="no" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-NARR.1</td>
+  <td class="ctitle">สั่งสร้างสรุปแล้วเห็นสถานะกำลังสร้าง ก่อนได้ย่อหน้าภาษาไทย <span class="kd kd-happy">Happy Path</span> <span class="noui">⛔ ไม่พบใน UI</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-2130"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2130"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">สั่งสร้างสรุปแล้วเห็นสถานะกำลังสร้าง ก่อนได้ย่อหน้าภาษาไทย</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · F · การ์ดสรุปเรื่องเล่า AI</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังกดใช้ไม่ได้</b> ณ origin/develop 2026-09-08 (f61ed9e) — Epic 4 ยังไม่มีหน้าจอ · Epic 6 ถูกซ่อนด้วยแฟลก <code>SHOW_BLOCKED = false</code> เคสนี้เขียนล่วงหน้าจาก AC ในสเปก + แบบ UI ชื่อปุ่ม/ข้อความอาจต่างจากของจริงตอนส่งมอบ · ถ้ายังไม่มีหน้าจอให้บันทึกเป็น <b>BLOCKED</b> แล้วกลับมาปรับคำเมื่อ dev ส่งของ</div></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT แล้วไปที่เมนู "เซสชัน" แล้วเปิดไลฟ์ที่บันทึกจบแล้ว 1 รายการ</li><li>อยู่ที่แท็บ "รายงาน" หัวข้อ "ภาพรวม" แล้วดูการ์ด "สรุปโดย AI"</li><li>กดปุ่ม "สร้างใหม่" แล้วสังเกตหน้าจอระหว่างรอ</li><li>อ่านข้อความที่ได้เมื่อสร้างเสร็จ</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ระหว่างสร้างขึ้นข้อความ "กำลังสร้าง…" และปุ่มแสดงสถานะกำลังทำงาน</li><li>เมื่อเสร็จได้ย่อหน้าภาษาไทยแทนที่ข้อความเดิมบนการ์ดเดียวกัน</li><li>มี toast แจ้งว่า "สร้างสรุปใหม่แล้ว"</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 6 · Story 6.2 · FR97 · NFR1.10 (async + loading state) · คำ UI: i18n th.js sessionDetail.aiSummary/toast</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2130" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2130" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2130" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2130" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2130" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2130"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2130" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2130">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="inF" data-level="ui" data-prio="P1" data-kind="boundary" data-ui="no" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-NARR.2</td>
+  <td class="ctitle">ความยาวย่อหน้าอยู่ในช่วง 200–300 คำ <span class="kd kd-bnd">Boundary/Edge</span> <span class="noui">⛔ ไม่พบใน UI</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-2131"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2131"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ความยาวย่อหน้าอยู่ในช่วง 200–300 คำ</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Boundary/Edge</b> <span class="hint">(min / max / ก่อน-ตรง-เกินขอบ)</span> · F · การ์ดสรุปเรื่องเล่า AI</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังกดใช้ไม่ได้</b> ณ origin/develop 2026-09-08 (f61ed9e) — Epic 4 ยังไม่มีหน้าจอ · Epic 6 ถูกซ่อนด้วยแฟลก <code>SHOW_BLOCKED = false</code> เคสนี้เขียนล่วงหน้าจาก AC ในสเปก + แบบ UI ชื่อปุ่ม/ข้อความอาจต่างจากของจริงตอนส่งมอบ · ถ้ายังไม่มีหน้าจอให้บันทึกเป็น <b>BLOCKED</b> แล้วกลับมาปรับคำเมื่อ dev ส่งของ</div></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT แล้วไปที่เมนู "เซสชัน" แล้วเปิดไลฟ์ที่บันทึกจบแล้ว 1 รายการ</li><li>กดสร้างสรุปโดย AI แล้วรอจนได้ข้อความ</li><li>คัดลอกข้อความทั้งย่อหน้าไปนับจำนวนคำ</li><li>ทำซ้ำอีก 2 ครั้งด้วยไลฟ์คนละรายการ</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ทุกครั้งที่สร้าง ความยาวอยู่ในช่วง 200–300 คำ</li><li>ไม่มีครั้งใดสั้นกว่าหรือยาวกว่าช่วงนี้อย่างชัดเจน</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 6 · Story 6.2 · FR97 (200–300-word Thai paragraph)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2131" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2131" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2131" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2131" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2131" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2131"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2131" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2131">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="inF" data-level="ui" data-prio="P1" data-kind="boundary" data-ui="no" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-NARR.3</td>
+  <td class="ctitle">เวลาในการสร้างต้องไม่เกิน 8 วินาที (จับ 10 ครั้ง) <span class="kd kd-bnd">Boundary/Edge</span> <span class="noui">⛔ ไม่พบใน UI</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-2132"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2132"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">เวลาในการสร้างต้องไม่เกิน 8 วินาที (จับ 10 ครั้ง)</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Boundary/Edge</b> <span class="hint">(min / max / ก่อน-ตรง-เกินขอบ)</span> · F · การ์ดสรุปเรื่องเล่า AI</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังกดใช้ไม่ได้</b> ณ origin/develop 2026-09-08 (f61ed9e) — Epic 4 ยังไม่มีหน้าจอ · Epic 6 ถูกซ่อนด้วยแฟลก <code>SHOW_BLOCKED = false</code> เคสนี้เขียนล่วงหน้าจาก AC ในสเปก + แบบ UI ชื่อปุ่ม/ข้อความอาจต่างจากของจริงตอนส่งมอบ · ถ้ายังไม่มีหน้าจอให้บันทึกเป็น <b>BLOCKED</b> แล้วกลับมาปรับคำเมื่อ dev ส่งของ</div></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT แล้วไปที่เมนู "เซสชัน" แล้วเปิดไลฟ์ที่บันทึกจบแล้ว 1 รายการ</li><li>จับเวลาตั้งแต่กดสร้างจนข้อความขึ้นครบ</li><li>ทำซ้ำ 10 ครั้ง แล้วจดเวลาทุกครั้ง</li><li>เรียงเวลาจากน้อยไปมากแล้วดูค่าที่ตำแหน่ง p95</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>อย่างน้อย 9 ใน 10 ครั้งเสร็จภายใน 8 วินาที</li><li>ระหว่างรอมีสถานะกำลังสร้างให้เห็นตลอด ไม่ใช่จอค้างเปล่า</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 6 · Story 6.2 · NFR1.10 (p95 &lt; 8s)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2132" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2132" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2132" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2132" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2132" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2132"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2132" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2132">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="inF" data-level="ui" data-prio="P1" data-kind="happy" data-ui="no" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-NARR.4</td>
+  <td class="ctitle">กด "สร้างใหม่" แล้วได้ข้อความใหม่ ไม่ใช่ข้อความเดิม <span class="kd kd-happy">Happy Path</span> <span class="noui">⛔ ไม่พบใน UI</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-2133"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2133"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">กด "สร้างใหม่" แล้วได้ข้อความใหม่ ไม่ใช่ข้อความเดิม</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · F · การ์ดสรุปเรื่องเล่า AI</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังกดใช้ไม่ได้</b> ณ origin/develop 2026-09-08 (f61ed9e) — Epic 4 ยังไม่มีหน้าจอ · Epic 6 ถูกซ่อนด้วยแฟลก <code>SHOW_BLOCKED = false</code> เคสนี้เขียนล่วงหน้าจาก AC ในสเปก + แบบ UI ชื่อปุ่ม/ข้อความอาจต่างจากของจริงตอนส่งมอบ · ถ้ายังไม่มีหน้าจอให้บันทึกเป็น <b>BLOCKED</b> แล้วกลับมาปรับคำเมื่อ dev ส่งของ</div></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT แล้วไปที่เมนู "เซสชัน" แล้วเปิดไลฟ์ที่บันทึกจบแล้ว 1 รายการ</li><li>อ่านและคัดลอกข้อความสรุปที่มีอยู่บนการ์ด</li><li>กดปุ่ม "สร้างใหม่" แล้วรอจนเสร็จ</li><li>เทียบข้อความใหม่กับข้อความที่คัดลอกไว้</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ได้ข้อความสรุปชุดใหม่ที่ต่างจากเดิม</li><li>ขึ้น toast "สร้างสรุปใหม่แล้ว"</li><li>การ์ดไม่ค้างอยู่ที่ข้อความเดิมโดยไม่มีอะไรเปลี่ยน</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 6 · Story 6.2 · UX-DR8 (regenerate) · คำ UI: i18n th.js sessionDetail.toast.regenerated</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2133" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2133" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2133" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2133" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2133" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2133"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2133" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2133">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="inF" data-level="ui" data-prio="P1" data-kind="happy" data-ui="no" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-NARR.5</td>
+  <td class="ctitle">ปุ่ม 👍/👎 บันทึกฟีดแบ็กและตอบกลับผู้ใช้ <span class="kd kd-happy">Happy Path</span> <span class="noui">⛔ ไม่พบใน UI</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-2134"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2134"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ปุ่ม 👍/👎 บันทึกฟีดแบ็กและตอบกลับผู้ใช้</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · F · การ์ดสรุปเรื่องเล่า AI</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังกดใช้ไม่ได้</b> ณ origin/develop 2026-09-08 (f61ed9e) — Epic 4 ยังไม่มีหน้าจอ · Epic 6 ถูกซ่อนด้วยแฟลก <code>SHOW_BLOCKED = false</code> เคสนี้เขียนล่วงหน้าจาก AC ในสเปก + แบบ UI ชื่อปุ่ม/ข้อความอาจต่างจากของจริงตอนส่งมอบ · ถ้ายังไม่มีหน้าจอให้บันทึกเป็น <b>BLOCKED</b> แล้วกลับมาปรับคำเมื่อ dev ส่งของ</div></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT แล้วไปที่เมนู "เซสชัน" แล้วเปิดไลฟ์ที่บันทึกจบแล้ว 1 รายการ</li><li>บนการ์ด "สรุปโดย AI" กดปุ่ม 👍</li><li>อ่านข้อความตอบกลับ แล้วกดปุ่ม 👎</li><li>ออกจากหน้าแล้วกลับเข้ามาใหม่เพื่อดูว่าปุ่มยังจำสถานะที่เลือกไว้หรือไม่</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>กด 👍 ขึ้น toast "ขอบคุณสำหรับฟีดแบ็ก 👍"</li><li>กด 👎 ขึ้น toast "รับทราบ จะปรับปรุงให้ดีขึ้น"</li><li>ปุ่มที่เลือกอยู่แสดงสถานะชัดเจนว่าเลือกแล้ว</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 6 · Story 6.2 · UX-DR8 (👍/👎 feedback) · คำ UI: i18n th.js sessionDetail.toast.feedbackUp/feedbackDown</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2134" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2134" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2134" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2134" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2134" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2134"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2134" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2134">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="inF" data-level="ui" data-prio="P1" data-kind="validation" data-ui="no" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-NARR.6</td>
+  <td class="ctitle">ระหว่างกำลังสร้าง ต้องกดซ้ำไม่ได้ <span class="kd kd-val">Validation</span> <span class="noui">⛔ ไม่พบใน UI</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-2135"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2135"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ระหว่างกำลังสร้าง ต้องกดซ้ำไม่ได้</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Validation</b> <span class="hint">(format · required · ความถูกต้องของค่าที่แสดง)</span> · F · การ์ดสรุปเรื่องเล่า AI</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังกดใช้ไม่ได้</b> ณ origin/develop 2026-09-08 (f61ed9e) — Epic 4 ยังไม่มีหน้าจอ · Epic 6 ถูกซ่อนด้วยแฟลก <code>SHOW_BLOCKED = false</code> เคสนี้เขียนล่วงหน้าจาก AC ในสเปก + แบบ UI ชื่อปุ่ม/ข้อความอาจต่างจากของจริงตอนส่งมอบ · ถ้ายังไม่มีหน้าจอให้บันทึกเป็น <b>BLOCKED</b> แล้วกลับมาปรับคำเมื่อ dev ส่งของ</div></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT แล้วไปที่เมนู "เซสชัน" แล้วเปิดไลฟ์ที่บันทึกจบแล้ว 1 รายการ</li><li>กดปุ่ม "สร้างใหม่" 1 ครั้ง</li><li>ระหว่างที่ยังขึ้น "กำลังสร้าง…" ให้กดปุ่มเดิมซ้ำอีก 3 ครั้งเร็วๆ</li><li>รอจนเสร็จแล้วไปดูรายการใช้เครดิตล่าสุด</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ปุ่มถูกปิดระหว่างกำลังสร้าง กดซ้ำแล้วไม่มีอะไรเกิดขึ้น</li><li>รายการใช้เครดิตเพิ่มขึ้นเพียง 1 รายการ ไม่ใช่ 4 รายการ</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 6 · Story 6.2 · FR105 (หักครั้งเดียวต่อการสร้าง 1 ครั้ง)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2135" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2135" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2135" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2135" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2135" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2135"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2135" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2135">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="inF" data-level="ui" data-prio="P0" data-kind="data" data-ui="no" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-NARR.7</td>
+  <td class="ctitle">เนื้อหาสรุปต้องเป็นภาษาไทยและอ้างเหตุการณ์จริงของไลฟ์นั้น <span class="kd kd-data">Data</span> <span class="noui">⛔ ไม่พบใน UI</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-2136"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2136"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">เนื้อหาสรุปต้องเป็นภาษาไทยและอ้างเหตุการณ์จริงของไลฟ์นั้น</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Data</b> <span class="hint">(empty · ค่าตรงกับแหล่งข้อมูล · ซ้ำ · ไม่มีข้อมูล)</span> · F · การ์ดสรุปเรื่องเล่า AI</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังกดใช้ไม่ได้</b> ณ origin/develop 2026-09-08 (f61ed9e) — Epic 4 ยังไม่มีหน้าจอ · Epic 6 ถูกซ่อนด้วยแฟลก <code>SHOW_BLOCKED = false</code> เคสนี้เขียนล่วงหน้าจาก AC ในสเปก + แบบ UI ชื่อปุ่ม/ข้อความอาจต่างจากของจริงตอนส่งมอบ · ถ้ายังไม่มีหน้าจอให้บันทึกเป็น <b>BLOCKED</b> แล้วกลับมาปรับคำเมื่อ dev ส่งของ</div></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT แล้วไปที่เมนู "เซสชัน" แล้วเปิดไลฟ์ที่บันทึกจบแล้ว 1 รายการ</li><li>อ่านย่อหน้าสรุปทั้งย่อหน้า</li><li>จับประเด็นที่ถูกอ้าง เช่น ช่วงนาทีที่คนดูพีค คำพูดที่ทำให้คอมเมนต์พุ่ง หรือช่วงที่คนดูหลุด</li><li>เลื่อนไปเทียบกับไทม์ไลน์และช่วงเด่นของไลฟ์เดียวกัน</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ข้อความเป็นภาษาไทยทั้งย่อหน้า อ่านลื่นไม่ใช่คำแปลดิบ</li><li>ทุกเหตุการณ์ที่ถูกอ้างหาเจอในข้อมูลของไลฟ์นั้น</li><li>ไม่มีชื่อสินค้า/ตัวเลขที่ไม่เกี่ยวกับไลฟ์นี้</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 6 · Story 6.2 · FR97</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2136" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2136" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2136" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2136" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2136" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2136"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2136" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2136">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="inF" data-level="ui" data-prio="P0" data-kind="validation" data-ui="no" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-NARR.8</td>
+  <td class="ctitle">ป้าย "ตัวอย่าง" ต้องหายไปเมื่อข้อความมาจาก AI จริง <span class="kd kd-val">Validation</span> <span class="noui">⛔ ไม่พบใน UI</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-2137"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2137"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ป้าย "ตัวอย่าง" ต้องหายไปเมื่อข้อความมาจาก AI จริง</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Validation</b> <span class="hint">(format · required · ความถูกต้องของค่าที่แสดง)</span> · F · การ์ดสรุปเรื่องเล่า AI</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังกดใช้ไม่ได้</b> ณ origin/develop 2026-09-08 (f61ed9e) — Epic 4 ยังไม่มีหน้าจอ · Epic 6 ถูกซ่อนด้วยแฟลก <code>SHOW_BLOCKED = false</code> เคสนี้เขียนล่วงหน้าจาก AC ในสเปก + แบบ UI ชื่อปุ่ม/ข้อความอาจต่างจากของจริงตอนส่งมอบ · ถ้ายังไม่มีหน้าจอให้บันทึกเป็น <b>BLOCKED</b> แล้วกลับมาปรับคำเมื่อ dev ส่งของ</div></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT แล้วไปที่เมนู "เซสชัน" แล้วเปิดไลฟ์ที่บันทึกจบแล้ว 1 รายการ</li><li>ดูหัวการ์ด "สรุปโดย AI" ว่ามีป้าย "ตัวอย่าง" กำกับอยู่หรือไม่</li><li>กดสร้างสรุปใหม่แล้วรอจนได้ข้อความจากระบบจริง</li><li>ดูหัวการ์ดอีกครั้ง</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>เมื่อข้อความมาจากการสร้างจริง ป้าย "ตัวอย่าง" ต้องไม่แสดงแล้ว</li><li>ถ้ายังเป็นข้อมูลตัวอย่าง ต้องมีป้ายกำกับให้ผู้ใช้รู้ชัดว่าไม่ใช่ผลจริง</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 6 · Story 6.2 · FR97 · UI ปัจจุบัน: SessionDetail.jsx แสดงป้าย "ตัวอย่าง" คู่กับการ์ดสรุป AI</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2137" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2137" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2137" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2137" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2137" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2137"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2137" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2137">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+
+<!-- inG -->
+<tr class="epicrow" data-epic="inG"><td colspan="7">🧠 G · หน้า AI Insights — การ์ดตามชนิด · Epic 6 · Story 6.3 (FR98) <span class="rp">(8 เคส)</span></td></tr>
+<tr class="featrow" data-featkey="in-cards"><td colspan="7">📁 การ์ด Insight ตามชนิดและ confidence <span class="rp"><span class="lv lvl-ui">🌐 8</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="in-cards"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow" data-feat="inG" data-level="ui" data-prio="P0" data-kind="happy" data-ui="no" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-CARD.1</td>
+  <td class="ctitle">เปิดส่วน AI Insights แล้วการ์ดมีหัวข้อ คำอธิบาย ความมั่นใจ และปุ่มลงมือ <span class="kd kd-happy">Happy Path</span> <span class="noui">⛔ ไม่พบใน UI</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-2138"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2138"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">เปิดส่วน AI Insights แล้วการ์ดมีหัวข้อ คำอธิบาย ความมั่นใจ และปุ่มลงมือ</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · G · หน้า AI Insights — การ์ดตามชนิด</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังกดใช้ไม่ได้</b> ณ origin/develop 2026-09-08 (f61ed9e) — Epic 4 ยังไม่มีหน้าจอ · Epic 6 ถูกซ่อนด้วยแฟลก <code>SHOW_BLOCKED = false</code> เคสนี้เขียนล่วงหน้าจาก AC ในสเปก + แบบ UI ชื่อปุ่ม/ข้อความอาจต่างจากของจริงตอนส่งมอบ · ถ้ายังไม่มีหน้าจอให้บันทึกเป็น <b>BLOCKED</b> แล้วกลับมาปรับคำเมื่อ dev ส่งของ</div></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT แล้วไปที่เมนู "เซสชัน" แล้วเปิดไลฟ์ที่บันทึกจบแล้ว 1 รายการ</li><li>กดสารบัญไปที่หัวข้อ "Insights"</li><li>อ่านการ์ดใบแรกทีละส่วน</li><li>ดูว่าแต่ละใบมีปุ่มให้ลงมือต่อหรือไม่</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>เห็นหัวข้อ "AI Insights · สิ่งที่เรียนรู้ได้" พร้อมการ์ดอย่างน้อย 1 ใบ</li><li>แต่ละการ์ดมีครบ: ป้ายชนิด · หัวข้อ · คำอธิบาย · ค่าความมั่นใจเป็นเปอร์เซ็นต์</li><li>มีปุ่มลงมือต่ออย่างน้อย 1 ปุ่มต่อการ์ด</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 6 · Story 6.3 · FR98 (Title/Description/Confidence %/action) · คำ UI: i18n th.js sessionDetail.insights.*</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2138" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2138" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2138" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2138" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2138" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2138"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2138" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2138">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="inG" data-level="ui" data-prio="P0" data-kind="permission" data-ui="no" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-CARD.2</td>
+  <td class="ctitle">M2 แสดงเฉพาะการ์ด 5 ชนิดที่อยู่ใน scope <span class="kd kd-perm">Permission</span> <span class="noui">⛔ ไม่พบใน UI</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-2139"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2139"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">M2 แสดงเฉพาะการ์ด 5 ชนิดที่อยู่ใน scope</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Permission</b> <span class="hint">(tier / สิทธิ์ / โหมดที่จำกัดการทำงาน)</span> · G · หน้า AI Insights — การ์ดตามชนิด</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังกดใช้ไม่ได้</b> ณ origin/develop 2026-09-08 (f61ed9e) — Epic 4 ยังไม่มีหน้าจอ · Epic 6 ถูกซ่อนด้วยแฟลก <code>SHOW_BLOCKED = false</code> เคสนี้เขียนล่วงหน้าจาก AC ในสเปก + แบบ UI ชื่อปุ่ม/ข้อความอาจต่างจากของจริงตอนส่งมอบ · ถ้ายังไม่มีหน้าจอให้บันทึกเป็น <b>BLOCKED</b> แล้วกลับมาปรับคำเมื่อ dev ส่งของ</div></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT แล้วไปที่เมนู "เซสชัน" แล้วเปิดไลฟ์ที่บันทึกจบแล้ว 1 รายการ</li><li>เปิดหัวข้อ "Insights" แล้วไล่อ่านป้ายชนิดของการ์ดทุกใบ</li><li>จดชนิดที่เจอทั้งหมด</li><li>เทียบกับรายการชนิดที่อยู่ใน scope ของ M2</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ชนิดที่แสดงอยู่ในกลุ่ม HOT / WARNING / HOST / EMOTION / ENERGY เท่านั้น</li><li>ทุกการ์ดที่แสดงมีข้อมูลจริงรองรับ ไม่ใช่ป้ายเปล่า</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 6 · Story 6.3 · FR98 (M2 types) · m2-cutscope-checklist.md</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2139" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2139" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2139" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2139" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2139" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2139"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2139" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2139">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="inG" data-level="ui" data-prio="P0" data-kind="negative" data-ui="no" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-CARD.3</td>
+  <td class="ctitle">การ์ดชนิดที่เลื่อนไป M3 ต้องไม่โผล่ใน M2 <span class="kd kd-neg">Negative</span> <span class="noui">⛔ ไม่พบใน UI</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-2140"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2140"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">การ์ดชนิดที่เลื่อนไป M3 ต้องไม่โผล่ใน M2</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Negative</b> <span class="hint">(ข้อมูลผิด / action ผิด)</span> · G · หน้า AI Insights — การ์ดตามชนิด</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังกดใช้ไม่ได้</b> ณ origin/develop 2026-09-08 (f61ed9e) — Epic 4 ยังไม่มีหน้าจอ · Epic 6 ถูกซ่อนด้วยแฟลก <code>SHOW_BLOCKED = false</code> เคสนี้เขียนล่วงหน้าจาก AC ในสเปก + แบบ UI ชื่อปุ่ม/ข้อความอาจต่างจากของจริงตอนส่งมอบ · ถ้ายังไม่มีหน้าจอให้บันทึกเป็น <b>BLOCKED</b> แล้วกลับมาปรับคำเมื่อ dev ส่งของ</div></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT แล้วไปที่เมนู "เซสชัน" แล้วเปิดไลฟ์ที่บันทึกจบแล้ว 1 รายการ</li><li>เปิดหัวข้อ "Insights" แล้วไล่อ่านการ์ดทุกใบจนหมดหน้า</li><li>มองหาการ์ดชนิด QUICK WIN · OPPORTUNITY · PREDICTION</li><li>บันทึกผลว่าพบหรือไม่พบ</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ไม่พบการ์ดชนิด QUICK WIN · OPPORTUNITY · PREDICTION</li><li>ไม่มีการ์ดที่อ้างผลกระทบด้านยอดขาย/AOV ซึ่งยังไม่มีแหล่งข้อมูลใน M2</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 6 · Story 6.3 (sales-driven cards suppressed until M3) · m2-cutscope-checklist.md</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2140" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2140" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2140" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2140" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2140" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2140"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2140" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2140">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="inG" data-level="ui" data-prio="P1" data-kind="validation" data-ui="no" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-CARD.4</td>
+  <td class="ctitle">ค่าความมั่นใจเป็นเปอร์เซ็นต์ที่อ่านได้และอยู่ในช่วง 0–100 <span class="kd kd-val">Validation</span> <span class="noui">⛔ ไม่พบใน UI</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-2141"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2141"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ค่าความมั่นใจเป็นเปอร์เซ็นต์ที่อ่านได้และอยู่ในช่วง 0–100</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Validation</b> <span class="hint">(format · required · ความถูกต้องของค่าที่แสดง)</span> · G · หน้า AI Insights — การ์ดตามชนิด</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังกดใช้ไม่ได้</b> ณ origin/develop 2026-09-08 (f61ed9e) — Epic 4 ยังไม่มีหน้าจอ · Epic 6 ถูกซ่อนด้วยแฟลก <code>SHOW_BLOCKED = false</code> เคสนี้เขียนล่วงหน้าจาก AC ในสเปก + แบบ UI ชื่อปุ่ม/ข้อความอาจต่างจากของจริงตอนส่งมอบ · ถ้ายังไม่มีหน้าจอให้บันทึกเป็น <b>BLOCKED</b> แล้วกลับมาปรับคำเมื่อ dev ส่งของ</div></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT แล้วไปที่เมนู "เซสชัน" แล้วเปิดไลฟ์ที่บันทึกจบแล้ว 1 รายการ</li><li>เปิดหัวข้อ "Insights" แล้วจดค่าความมั่นใจของการ์ดทุกใบ</li><li>ตรวจว่าทุกค่าอยู่ระหว่าง 0–100 และมีหน่วยเปอร์เซ็นต์</li><li>รีเฟรชหน้าแล้วดูว่าค่าคงเดิมหรือเปลี่ยนไปเอง</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ทุกค่าอยู่ในช่วง 0–100 พร้อมเครื่องหมายเปอร์เซ็นต์</li><li>ไม่มีการ์ดที่ค่าความมั่นใจว่างหรือเป็นค่าดิบของระบบ</li><li>ค่าไม่เปลี่ยนเองเมื่อรีเฟรชโดยไม่ได้สร้างใหม่</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 6 · Story 6.3 · FR98 (Confidence %)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2141" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2141" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2141" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2141" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2141" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2141"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2141" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2141">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="inG" data-level="ui" data-prio="P1" data-kind="happy" data-ui="no" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-CARD.5</td>
+  <td class="ctitle">กดปุ่มลงมือบนการ์ดแล้วพาไปยังจุดที่เกี่ยวข้อง <span class="kd kd-happy">Happy Path</span> <span class="noui">⛔ ไม่พบใน UI</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-2142"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2142"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">กดปุ่มลงมือบนการ์ดแล้วพาไปยังจุดที่เกี่ยวข้อง</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · G · หน้า AI Insights — การ์ดตามชนิด</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังกดใช้ไม่ได้</b> ณ origin/develop 2026-09-08 (f61ed9e) — Epic 4 ยังไม่มีหน้าจอ · Epic 6 ถูกซ่อนด้วยแฟลก <code>SHOW_BLOCKED = false</code> เคสนี้เขียนล่วงหน้าจาก AC ในสเปก + แบบ UI ชื่อปุ่ม/ข้อความอาจต่างจากของจริงตอนส่งมอบ · ถ้ายังไม่มีหน้าจอให้บันทึกเป็น <b>BLOCKED</b> แล้วกลับมาปรับคำเมื่อ dev ส่งของ</div></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT แล้วไปที่เมนู "เซสชัน" แล้วเปิดไลฟ์ที่บันทึกจบแล้ว 1 รายการ</li><li>เปิดหัวข้อ "Insights" แล้วเลือกการ์ด 1 ใบที่มีปุ่มลงมือ</li><li>กดปุ่มนั้น</li><li>ดูว่าระบบพาไปที่ใดและข้อมูลตรงกับการ์ดหรือไม่</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ระบบพาไปยังหน้า/ส่วนที่เกี่ยวกับสิ่งที่การ์ดแนะนำ</li><li>ข้อมูลปลายทางเป็นของไลฟ์/ช่วงเวลาเดียวกับที่การ์ดอ้าง</li><li>กลับหน้าเดิมได้โดยการ์ดยังอยู่ครบ</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 6 · Story 6.3 · FR98 (one-click action button)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2142" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2142" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2142" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2142" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2142" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2142"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2142" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2142">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="inG" data-level="ui" data-prio="P1" data-kind="data" data-ui="no" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-CARD.6</td>
+  <td class="ctitle">ข้อมูลไม่พอสร้าง Insight ต้องขึ้นสถานะว่าง ไม่ใช่การ์ดเปล่า <span class="kd kd-data">Data</span> <span class="noui">⛔ ไม่พบใน UI</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-2143"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2143"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ข้อมูลไม่พอสร้าง Insight ต้องขึ้นสถานะว่าง ไม่ใช่การ์ดเปล่า</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Data</b> <span class="hint">(empty · ค่าตรงกับแหล่งข้อมูล · ซ้ำ · ไม่มีข้อมูล)</span> · G · หน้า AI Insights — การ์ดตามชนิด</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังกดใช้ไม่ได้</b> ณ origin/develop 2026-09-08 (f61ed9e) — Epic 4 ยังไม่มีหน้าจอ · Epic 6 ถูกซ่อนด้วยแฟลก <code>SHOW_BLOCKED = false</code> เคสนี้เขียนล่วงหน้าจาก AC ในสเปก + แบบ UI ชื่อปุ่ม/ข้อความอาจต่างจากของจริงตอนส่งมอบ · ถ้ายังไม่มีหน้าจอให้บันทึกเป็น <b>BLOCKED</b> แล้วกลับมาปรับคำเมื่อ dev ส่งของ</div></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>ไปที่เมนู "เซสชัน" แล้วเปิดไลฟ์ที่มีข้อมูลน้อยมากหรือยังไม่ได้บันทึกอะไร</li><li>เปิดหัวข้อ "Insights"</li><li>อ่านสิ่งที่แสดงแทนการ์ด</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ขึ้นข้อความว่ายังไม่มีข้อมูลพอสำหรับ Insight</li><li>ไม่มีการ์ดที่มีหัวข้อแต่เนื้อหาว่าง และไม่มีตัวเลขที่ไม่มีที่มา</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 6 · Story 6.3 · FR98</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2143" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2143" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2143" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2143" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2143" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2143"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2143" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2143">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="inG" data-level="ui" data-prio="P1" data-kind="data" data-ui="no" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-CARD.7</td>
+  <td class="ctitle">สั่งสร้าง Insight รอบใหม่แล้วเวลาอัปเดตและเครดิตเปลี่ยนตาม <span class="kd kd-data">Data</span> <span class="noui">⛔ ไม่พบใน UI</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-2144"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2144"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">สั่งสร้าง Insight รอบใหม่แล้วเวลาอัปเดตและเครดิตเปลี่ยนตาม</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Data</b> <span class="hint">(empty · ค่าตรงกับแหล่งข้อมูล · ซ้ำ · ไม่มีข้อมูล)</span> · G · หน้า AI Insights — การ์ดตามชนิด</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังกดใช้ไม่ได้</b> ณ origin/develop 2026-09-08 (f61ed9e) — Epic 4 ยังไม่มีหน้าจอ · Epic 6 ถูกซ่อนด้วยแฟลก <code>SHOW_BLOCKED = false</code> เคสนี้เขียนล่วงหน้าจาก AC ในสเปก + แบบ UI ชื่อปุ่ม/ข้อความอาจต่างจากของจริงตอนส่งมอบ · ถ้ายังไม่มีหน้าจอให้บันทึกเป็น <b>BLOCKED</b> แล้วกลับมาปรับคำเมื่อ dev ส่งของ</div></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT แล้วไปที่เมนู "เซสชัน" แล้วเปิดไลฟ์ที่บันทึกจบแล้ว 1 รายการ</li><li>จดเวลาอัปเดตล่าสุดของส่วน Insight และยอดเครดิตคงเหลือ</li><li>สั่งสร้าง Insight รอบใหม่จากปุ่มบนหัวข้อนั้น</li><li>อ่านเวลาอัปเดตใหม่ แล้วไปดูยอดเครดิตอีกครั้ง</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>เวลาอัปเดตเปลี่ยนเป็นเวลาปัจจุบัน</li><li>ยอดเครดิตลดลงตามอัตราของการ์ด Insight</li><li>การ์ดชุดใหม่แสดงแทนชุดเดิมครบทุกใบ</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 6 · Story 6.3 · FR98/FR105 (cards consume credits)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2144" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2144" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2144" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2144" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2144" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2144"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2144" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2144">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="inG" data-level="ui" data-prio="P2" data-kind="boundary" data-ui="no" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-CARD.8</td>
+  <td class="ctitle">แพ็กเกจที่จำกัดจำนวน Insight ต่อสัปดาห์ต้องบอกเมื่อครบโควตา <span class="kd kd-bnd">Boundary/Edge</span> <span class="noui">⛔ ไม่พบใน UI</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p2">P2</span></td>
+  <td class="status" data-uid="tc-2145"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2145"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">แพ็กเกจที่จำกัดจำนวน Insight ต่อสัปดาห์ต้องบอกเมื่อครบโควตา</div>
+  <div class="h-prio">Priority: <b>P2</b> · UI · ประเภท: <b>Boundary/Edge</b> <span class="hint">(min / max / ก่อน-ตรง-เกินขอบ)</span> · G · หน้า AI Insights — การ์ดตามชนิด</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังกดใช้ไม่ได้</b> ณ origin/develop 2026-09-08 (f61ed9e) — Epic 4 ยังไม่มีหน้าจอ · Epic 6 ถูกซ่อนด้วยแฟลก <code>SHOW_BLOCKED = false</code> เคสนี้เขียนล่วงหน้าจาก AC ในสเปก + แบบ UI ชื่อปุ่ม/ข้อความอาจต่างจากของจริงตอนส่งมอบ · ถ้ายังไม่มีหน้าจอให้บันทึกเป็น <b>BLOCKED</b> แล้วกลับมาปรับคำเมื่อ dev ส่งของ</div></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT ระดับ Starter (โควตา 3 Insight/สัปดาห์ ตามตารางแพ็กเกจ)</li><li>สร้าง Insight จนครบโควตาของสัปดาห์นั้น</li><li>สั่งสร้างเพิ่มอีก 1 ครั้ง</li><li>อ่านข้อความที่ระบบแสดง</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ระบบบอกว่าใช้ครบโควตาของสัปดาห์แล้ว พร้อมบอกว่าจะรีเซ็ตเมื่อไร</li><li>มีทางอัปเกรดแพ็กเกจจากจุดนั้น</li><li>การ์ดที่สร้างไว้ก่อนหน้ายังอ่านได้ตามปกติ</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 6 · Story 6.3 · แบบ UI: ui-mockups/shared-screens/pricing.html (Starter = 3 AI insights/week)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2145" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2145" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2145" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2145" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2145" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2145"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2145" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2145">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+
+<!-- inH -->
+<tr class="epicrow" data-epic="inH"><td colspan="7">🚨 H · รายการความผิดปกติ HIGH/MED · Epic 6 · Story 6.4 (FR99 — เลื่อนไป M3) <span class="rp">(4 เคส)</span></td></tr>
+<tr class="featrow" data-featkey="in-anomaly"><td colspan="7">📁 รายการความผิดปกติเทียบ baseline <span class="rp"><span class="lv lvl-ui">🌐 4</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="in-anomaly"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow" data-feat="inH" data-level="ui" data-prio="P1" data-kind="happy" data-ui="no" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-ANOM.1</td>
+  <td class="ctitle">รายการความผิดปกติแยกระดับความรุนแรงพร้อมคำอธิบายสั้น <span class="kd kd-happy">Happy Path</span> <span class="noui">⛔ ไม่พบใน UI</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-2146"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2146"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">รายการความผิดปกติแยกระดับความรุนแรงพร้อมคำอธิบายสั้น</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · H · รายการความผิดปกติ HIGH/MED</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังกดใช้ไม่ได้</b> ณ origin/develop 2026-09-08 (f61ed9e) — Epic 4 ยังไม่มีหน้าจอ · Epic 6 ถูกซ่อนด้วยแฟลก <code>SHOW_BLOCKED = false</code> เคสนี้เขียนล่วงหน้าจาก AC ในสเปก + แบบ UI ชื่อปุ่ม/ข้อความอาจต่างจากของจริงตอนส่งมอบ · ถ้ายังไม่มีหน้าจอให้บันทึกเป็น <b>BLOCKED</b> แล้วกลับมาปรับคำเมื่อ dev ส่งของ</div></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT แล้วไปที่เมนู "เซสชัน" แล้วเปิดไลฟ์ที่บันทึกจบแล้ว 1 รายการ</li><li>เปิดหัวข้อ "Insights" แล้วมองหารายการความผิดปกติ</li><li>อ่านแต่ละรายการว่ามีระดับความรุนแรงและคำอธิบายหรือไม่</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>แต่ละรายการมีป้ายระดับความรุนแรง HIGH หรือ MED</li><li>แต่ละรายการมีคำอธิบายสั้นว่าผิดปกติอย่างไรเทียบกับค่าปกติ</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 6 · Story 6.4 · FR99 · ⚠️ m2-cutscope-checklist.md ระบุว่า FR99 เลื่อนไป M3 — เคสนี้ไว้ใช้เมื่อถึงรอบนั้น</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2146" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2146" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2146" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2146" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2146" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2146"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2146" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2146">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="inH" data-level="ui" data-prio="P2" data-kind="data" data-ui="no" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-ANOM.2</td>
+  <td class="ctitle">รายการเรียงจากรุนแรงมากไปน้อย <span class="kd kd-data">Data</span> <span class="noui">⛔ ไม่พบใน UI</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p2">P2</span></td>
+  <td class="status" data-uid="tc-2147"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2147"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">รายการเรียงจากรุนแรงมากไปน้อย</div>
+  <div class="h-prio">Priority: <b>P2</b> · UI · ประเภท: <b>Data</b> <span class="hint">(empty · ค่าตรงกับแหล่งข้อมูล · ซ้ำ · ไม่มีข้อมูล)</span> · H · รายการความผิดปกติ HIGH/MED</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังกดใช้ไม่ได้</b> ณ origin/develop 2026-09-08 (f61ed9e) — Epic 4 ยังไม่มีหน้าจอ · Epic 6 ถูกซ่อนด้วยแฟลก <code>SHOW_BLOCKED = false</code> เคสนี้เขียนล่วงหน้าจาก AC ในสเปก + แบบ UI ชื่อปุ่ม/ข้อความอาจต่างจากของจริงตอนส่งมอบ · ถ้ายังไม่มีหน้าจอให้บันทึกเป็น <b>BLOCKED</b> แล้วกลับมาปรับคำเมื่อ dev ส่งของ</div></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT แล้วไปที่เมนู "เซสชัน" แล้วเปิดไลฟ์ที่บันทึกจบแล้ว 1 รายการ</li><li>เปิดหัวข้อ "Insights" แล้วอ่านลำดับของรายการความผิดปกติจากบนลงล่าง</li><li>จดลำดับระดับความรุนแรงที่เห็น</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>รายการระดับ HIGH อยู่เหนือ MED ทั้งหมด</li><li>จำนวนที่สรุปไว้ด้านบนตรงกับจำนวนรายการที่แสดงจริง</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 6 · Story 6.4 · FR99 (categorized HIGH/MED)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2147" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2147" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2147" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2147" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2147" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2147"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2147" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2147">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="inH" data-level="ui" data-prio="P2" data-kind="data" data-ui="no" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-ANOM.3</td>
+  <td class="ctitle">ไม่มีความผิดปกติ ต้องขึ้นข้อความว่าง ไม่ใช่รายการค้าง <span class="kd kd-data">Data</span> <span class="noui">⛔ ไม่พบใน UI</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p2">P2</span></td>
+  <td class="status" data-uid="tc-2148"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2148"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ไม่มีความผิดปกติ ต้องขึ้นข้อความว่าง ไม่ใช่รายการค้าง</div>
+  <div class="h-prio">Priority: <b>P2</b> · UI · ประเภท: <b>Data</b> <span class="hint">(empty · ค่าตรงกับแหล่งข้อมูล · ซ้ำ · ไม่มีข้อมูล)</span> · H · รายการความผิดปกติ HIGH/MED</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังกดใช้ไม่ได้</b> ณ origin/develop 2026-09-08 (f61ed9e) — Epic 4 ยังไม่มีหน้าจอ · Epic 6 ถูกซ่อนด้วยแฟลก <code>SHOW_BLOCKED = false</code> เคสนี้เขียนล่วงหน้าจาก AC ในสเปก + แบบ UI ชื่อปุ่ม/ข้อความอาจต่างจากของจริงตอนส่งมอบ · ถ้ายังไม่มีหน้าจอให้บันทึกเป็น <b>BLOCKED</b> แล้วกลับมาปรับคำเมื่อ dev ส่งของ</div></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>ไปที่เมนู "เซสชัน" แล้วเปิดไลฟ์ที่ค่าต่างๆ อยู่ในเกณฑ์ปกติ</li><li>เปิดหัวข้อ "Insights" แล้วดูส่วนรายการความผิดปกติ</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ขึ้นข้อความว่าไม่พบความผิดปกติในช่วงนี้</li><li>ไม่มีรายการของไลฟ์อื่นค้างอยู่</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 6 · Story 6.4 · FR99</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2148" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2148" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2148" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2148" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2148" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2148"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2148" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2148">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="inH" data-level="ui" data-prio="P2" data-kind="happy" data-ui="no" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-ANOM.4</td>
+  <td class="ctitle">กดดูรายละเอียดความผิดปกติแล้วเห็นหลักฐานที่มา <span class="kd kd-happy">Happy Path</span> <span class="noui">⛔ ไม่พบใน UI</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p2">P2</span></td>
+  <td class="status" data-uid="tc-2149"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2149"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">กดดูรายละเอียดความผิดปกติแล้วเห็นหลักฐานที่มา</div>
+  <div class="h-prio">Priority: <b>P2</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · H · รายการความผิดปกติ HIGH/MED</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังกดใช้ไม่ได้</b> ณ origin/develop 2026-09-08 (f61ed9e) — Epic 4 ยังไม่มีหน้าจอ · Epic 6 ถูกซ่อนด้วยแฟลก <code>SHOW_BLOCKED = false</code> เคสนี้เขียนล่วงหน้าจาก AC ในสเปก + แบบ UI ชื่อปุ่ม/ข้อความอาจต่างจากของจริงตอนส่งมอบ · ถ้ายังไม่มีหน้าจอให้บันทึกเป็น <b>BLOCKED</b> แล้วกลับมาปรับคำเมื่อ dev ส่งของ</div></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT แล้วไปที่เมนู "เซสชัน" แล้วเปิดไลฟ์ที่บันทึกจบแล้ว 1 รายการ</li><li>เปิดหัวข้อ "Insights" แล้วเลือกรายการความผิดปกติ 1 รายการ</li><li>กดปุ่มดูรายละเอียดของรายการนั้น</li><li>อ่านสิ่งที่ระบบแสดงเป็นหลักฐาน</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ระบบพาไปยังข้อมูลที่ทำให้เกิดการแจ้งเตือนนั้น (ช่วงเวลา/ไลฟ์/ค่าที่ผิดปกติ)</li><li>ค่าที่เห็นตรงกับที่เขียนไว้ในรายการ</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 6 · Story 6.4 · FR99</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2149" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2149" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2149" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2149" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2149" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2149"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2149" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2149">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+</tbody>
+  </table>
+  </div>
+
+</div>
+<footer>[MVP2] TAKRA Insight — Epic 4 เครดิต AI + Epic 6 AI Insights · UI Manual Test Cases · 49 UI + 0 E2E = 49 TCs · UI only (manual) · TAKRA Insight desktop (MVP-2 Epic 4 + Epic 6)</footer>
+
+<script>
+// ── Load store from embedded JSON ──
+var storeEl = document.getElementById('store-data');
+var store = {};
+try { store = JSON.parse(storeEl.textContent || '{}'); } catch(_) {}
+
+var SMAP = {
+  pass:  ['pass',  'PASS'],
+  fail:  ['fail',  'FAIL'],
+  hold:  ['hold',  'HOLD'],
+  block: ['block', 'BLOCKED'],
+  skip:  ['skip',  'SKIP'],
+};
+
+// Restore saved statuses
+Object.keys(store).forEach(function(uid) {
+  var st = store[uid] && store[uid].st;
+  if (!st || !SMAP[st]) return;
+  // badge
+  var rowStatus = document.querySelector('tr.trow td.status[data-uid="' + uid + '"]');
+  if (rowStatus) {
+    var stb = rowStatus.querySelector('.stb');
+    if (stb) { stb.className = 'stb ' + SMAP[st][0]; stb.textContent = SMAP[st][1]; }
+  }
+  // opt button
+  var opt = document.querySelector('.opt[data-uid="' + uid + '"][data-st="' + st + '"]');
+  if (opt) opt.classList.add('sel');
+  // also restore actual result text
+  if (store[uid].actual) {
+    var boxes = document.querySelectorAll('tr.detail');
+    boxes.forEach(function(d) {
+      var badge = d.querySelector('.opt[data-uid="' + uid + '"]');
+      if (!badge) return;
+      var box = d.querySelector('.actualbox');
+      if (box) { box.value = store[uid].actual; box.classList.add('filled'); }
+    });
+  }
+});
+
+// ── Toggle row expand ──
+function tg(row) {
+  var detail = row.nextElementSibling;
+  var isOpen = row.classList.contains('open');
+  row.classList.toggle('open', !isOpen);
+  if (detail && detail.classList.contains('detail')) {
+    detail.classList.toggle('show', !isOpen);
+  }
+}
+function toggleAll(open) {
+  document.querySelectorAll('tr.trow').forEach(function(r) {
+    if (r.classList.contains('hide')) return;
+    r.classList.toggle('open', open);
+    var d = r.nextElementSibling;
+    if (d && d.classList.contains('detail')) d.classList.toggle('show', open);
+  });
+}
+
+// ── Save store back into the embedded script tag ──
+function save() {
+  storeEl.textContent = '\n' + JSON.stringify(store, null, 2).replace(/</g, '\\u003c') + '\n';
+}
+
+// ── Status opt buttons ──
+document.querySelectorAll('.opt').forEach(function(o) {
+  o.addEventListener('click', function(e) {
+    e.stopPropagation();
+    var uid = o.dataset.uid, st = o.dataset.st;
+    var allOpts = document.querySelectorAll('.opt[data-uid="' + uid + '"]');
+    var alreadySel = o.classList.contains('sel');
+    allOpts.forEach(function(x) { x.classList.remove('sel'); });
+    store[uid] = store[uid] || {};
+    if (alreadySel) {
+      delete store[uid].st;
+    } else {
+      o.classList.add('sel');
+      store[uid].st = st;
+    }
+    var rowStatus = document.querySelector('tr.trow td.status[data-uid="' + uid + '"]');
+    if (rowStatus) {
+      var stb = rowStatus.querySelector('.stb');
+      if (stb) {
+        if (!alreadySel && SMAP[st]) { stb.className = 'stb ' + SMAP[st][0]; stb.textContent = SMAP[st][1]; }
+        else { stb.className = 'stb pending'; stb.textContent = 'รอเทส'; }
+      }
+    }
+    save();
+    applyFilters();   // re-filter (recounts too) so an active สถานะ filter updates live
+    markDirty();
+  });
+});
+
+// ── Actual result editable on blur ──
+document.querySelectorAll('.actualbox').forEach(function(box) {
+  // a <textarea> — clicking/typing must not bubble up to the row toggle
+  box.addEventListener('click', function(ev) { ev.stopPropagation(); });
+  box.addEventListener('input', function() { box.classList.toggle('filled', box.value.trim() !== ''); });
+  box.addEventListener('blur', function() {
+    // find uid from nearest .opt
+    var opts = box.closest('tr.detail').querySelectorAll('.opt');
+    if (!opts.length) return;
+    var uid = opts[0].dataset.uid;
+    var txt = box.value.trim();
+    var prev = (store[uid] && store[uid].actual) || '';
+    if (txt === prev) return;   // nothing typed → don't dirty the file
+    store[uid] = store[uid] || {};
+    if (txt) { store[uid].actual = txt; }
+    else { delete store[uid].actual; if (!Object.keys(store[uid]).length) delete store[uid]; }
+    save();
+    markDirty();
+  });
+});
+
+// ── Filters ──
+var filters = { feat: new Set(), level: new Set(), prio: new Set(), status: new Set(), kind: new Set(), ui: new Set() };
+document.querySelectorAll('.fchip').forEach(function(c) {
+  c.addEventListener('click', function() {
+    var f = c.dataset.f, v = c.dataset.v;
+    if (filters[f].has(v)) { filters[f].delete(v); c.classList.remove('active'); }
+    else { filters[f].add(v); c.classList.add('active'); }
+    applyFilters();
+  });
+});
+document.querySelectorAll('.clearbtn').forEach(function(b) {
+  b.addEventListener('click', function() {
+    var key = b.dataset.clear;
+    filters[key].clear();
+    document.querySelectorAll('.fchip[data-f="' + key + '"]').forEach(function(c) { c.classList.remove('active'); });
+    applyFilters();
+  });
+});
+function applyFilters() {
+  document.querySelectorAll('tr.trow').forEach(function(row) {
+    var ok = true;
+    if (filters.feat.size  && !filters.feat.has(row.dataset.feat))   ok = false;
+    if (filters.level.size && !filters.level.has(row.dataset.level)) ok = false;
+    if (filters.prio.size  && !filters.prio.has(row.dataset.prio))   ok = false;
+    if (filters.kind.size  && !filters.kind.has(row.dataset.kind))   ok = false;
+    if (filters.ui.size    && !filters.ui.has(row.dataset.ui))       ok = false;
+    if (filters.status.size) {
+      var stb = row.querySelector('td.status .stb');
+      var scls = stb ? stb.className.replace('stb', '').trim().split(' ')[0] : 'pending';
+      if (!filters.status.has(scls)) ok = false;
+    }
+    row.classList.toggle('hide', !ok);
+    var d = row.nextElementSibling;
+    if (d && d.classList.contains('detail')) d.classList.toggle('hide', !ok);
+  });
+  document.querySelectorAll('tr.featrow').forEach(function(fr) {
+    var n = fr.nextElementSibling, any = false;
+    while (n && !n.classList.contains('featrow') && !n.classList.contains('epicrow')) {
+      if (n.classList.contains('trow') && !n.classList.contains('hide')) { any = true; break; }
+      n = n.nextElementSibling;
+    }
+    fr.classList.toggle('hide', !any);
+  });
+  document.querySelectorAll('tr.epicrow').forEach(function(er) {
+    var n = er.nextElementSibling, any = false;
+    while (n && !n.classList.contains('epicrow')) {
+      if (n.classList.contains('trow') && !n.classList.contains('hide')) { any = true; break; }
+      n = n.nextElementSibling;
+    }
+    er.classList.toggle('hide', !any);
+  });
+  recount();
+}
+
+function recount() {
+  var c = { pass:0, fail:0, hold:0, block:0, skip:0, pending:0 };
+  document.querySelectorAll('tr.trow').forEach(function(row) {
+    var stb = row.querySelector('td.status .stb');
+    if (!stb) return;
+    var cls = stb.className.replace('stb','').trim().split(' ')[0];
+    if (c.hasOwnProperty(cls)) c[cls]++; else c.pending++;
+  });
+  var total    = c.pass + c.fail + c.hold + c.block + c.skip + c.pending;
+  var done     = c.pass + c.fail + c.hold + c.block;
+  var testable = total - c.skip;               // SKIP = ตั้งใจข้าม ไม่นับเป็นเป้าที่ต้องทดสอบ
+  var pct      = testable ? Math.round(done / testable * 100) : 0;
+  ['pass','fail','hold','block','skip'].forEach(function(k) {
+    var e = document.getElementById('sum-'+k); if (e) e.textContent = c[k];
+    var h = document.getElementById('hdr-'+k); if (h) h.textContent = c[k];
+  });
+  var ep = document.getElementById('sum-pending'); if (ep) ep.textContent = c.pending;
+  var hp = document.getElementById('hdr-pending'); if (hp) hp.textContent = c.pending;
+  var bar = document.getElementById('sumbar'); if (bar) bar.style.width = pct + '%';
+  var pctEl = document.getElementById('sumpct');
+  if (pctEl) pctEl.textContent = pct + '% ทดสอบแล้ว (' + done + '/' + testable + ')' + (c.skip ? ' · ข้าม ' + c.skip : '');
+}
+
+// ── GitHub publish config ──
+var GH_OWNER  = 'wanlee-tankunnatam';
+var GH_REPO   = 'qa-test-reports';
+var GH_PATH   = 'projects/takra-insight/2026/09/reports/takra-insight-mvp2-epic4-6-ui-test-cases-table.html';
+var GH_BRANCH = 'master';
+var GH_API    = 'https://api.github.com/repos/' + GH_OWNER + '/' + GH_REPO + '/contents/' + GH_PATH;
+
+// ── Save state (dirty tracking + auto-publish) ──
+var dirty = false;
+var autoTimer = null;
+var publishing = false;
+
+function ghToken() {
+  var t = localStorage.getItem('gh_pat');
+  if (!t) {
+    t = prompt(
+      'ใส่ GitHub Personal Access Token (ใส่ครั้งเดียว จำไว้ในเบราว์เซอร์นี้)\n\n' +
+      'สร้าง token:\n' +
+      'github.com → Settings → Developer settings →\n' +
+      'Personal access tokens → Tokens (classic) → Generate new token (classic)\n' +
+      '→ ติ๊ก scope: repo  (หรือ public_repo เพราะ repo นี้ public)\n\n' +
+      'หรือ Fine-grained token: เลือก repo "qa-test-reports" →\n' +
+      'Permissions → Contents = Read and write'
+    );
+    if (t) localStorage.setItem('gh_pat', t.trim());
+  }
+  return t ? t.trim() : null;
+}
+function clearToken() { localStorage.removeItem('gh_pat'); }
+
+async function publishToGH(auto) {
+  if (publishing) return;
+  var btn = document.getElementById('btn-publish');
+  var token = auto ? localStorage.getItem('gh_pat') : ghToken();
+  if (!token) return;          // auto-save stays quiet until a token exists
+  publishing = true;
+  if (autoTimer) { clearTimeout(autoTimer); autoTimer = null; }
+
+  btn.disabled = true;
+  btn.textContent = '⏳ กำลังบันทึก…';
+  save();
+
+  var API = 'https://api.github.com/repos/' + GH_OWNER + '/' + GH_REPO + '/contents/' + GH_PATH;
+
+  // Serialize the page with the button forced to its idle/enabled state, so the
+  // committed file is never frozen mid-save (otherwise reopening it shows a
+  // permanently-disabled "⏳ กำลังบันทึก…" button).
+  function buildEncoded() {
+    var dis = btn.disabled, txt = btn.textContent;
+    btn.disabled = false;
+    btn.textContent = '☁️ บันทึกขึ้น GitHub';
+    var html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+    btn.disabled = dis;
+    btn.textContent = txt;
+    return btoa(unescape(encodeURIComponent(html)));
+  }
+
+  // Fetch current remote file (sha + content), bypassing any cache.
+  async function fetchRemote() {
+    var r = await fetch(
+      API + '?ref=' + GH_BRANCH + '&t=' + Date.now(),
+      { cache: 'no-store', headers: { Authorization: 'token ' + token, Accept: 'application/vnd.github+json' } }
+    );
+    if (!r.ok) {
+      if (r.status === 401) { localStorage.removeItem('gh_pat'); }
+      throw new Error('ดึงไฟล์ไม่ได้ (HTTP ' + r.status + ') — ตรวจ token หรือ branch');
+    }
+    return r.json();
+  }
+
+  // Merge statuses that exist on the remote copy but NOT locally, so a
+  // teammate's concurrent edit is not silently overwritten (local always wins
+  // for keys we changed; we only add keys we don't have).
+  function mergeRemote(remote) {
+    try {
+      var remoteHtml = decodeURIComponent(escape(atob((remote.content || '').replace(/\s/g, ''))));
+      var m = remoteHtml.match(/<script id="store-data"[^>]*>([\s\S]*?)<\/script>/);
+      if (!m) return;
+      var rs = JSON.parse((m[1] || '{}').trim() || '{}');
+      var added = 0;
+      Object.keys(rs).forEach(function(uid) {
+        if (uid in store) return;
+        store[uid] = rs[uid];
+        added++;
+        var st = rs[uid] && rs[uid].st;
+        if (st && SMAP[st]) {
+          var cell = document.querySelector('tr.trow td.status[data-uid="' + uid + '"] .stb');
+          if (cell) { cell.className = 'stb ' + SMAP[st][0]; cell.textContent = SMAP[st][1]; }
+          var opt = document.querySelector('.opt[data-uid="' + uid + '"][data-st="' + st + '"]');
+          if (opt) opt.classList.add('sel');
+        }
+      });
+      if (added) { save(); recount(); }
+    } catch (_) {}
+  }
+
+  // Commit content = the LATEST remote file with ONLY its store-data block
+  // swapped for our (merged) results. This makes auto-save a results-only
+  // overlay: a stale tab can never overwrite the repo's structure/layout —
+  // it always publishes on top of whatever structure is currently on GitHub.
+  function buildFromRemote(remote) {
+    try {
+      var remoteHtml = decodeURIComponent(escape(atob((remote.content || '').replace(/\s/g, ''))));
+      if (!/<script id="store-data"[^>]*>[\s\S]*?<\/script>/.test(remoteHtml)) return buildEncoded();
+      var json = '\n' + JSON.stringify(store, null, 2).replace(/</g, '\\u003c') + '\n';
+      var replaced = remoteHtml.replace(
+        /(<script id="store-data"[^>]*>)[\s\S]*?(<\/script>)/,
+        function(_m, o, c) { return o + json + c; }
+      );
+      return btoa(unescape(encodeURIComponent(replaced)));
+    } catch (_) {
+      return buildEncoded();   // fallback: serialize local DOM
+    }
+  }
+
+  async function commit(remote) {
+    var ts = new Date().toISOString().slice(0, 16).replace('T', ' ');
+    return fetch(API, {
+      method: 'PUT',
+      headers: { Authorization: 'token ' + token, Accept: 'application/vnd.github+json', 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        message: 'chore(qa): update test results ' + ts,
+        content: buildFromRemote(remote),
+        sha: remote.sha,
+        branch: GH_BRANCH
+      })
+    });
+  }
+
+  try {
+    var r2, lastErr;
+    // Up to 4 attempts. Re-fetch the SHA and merge remote statuses each time;
+    // a stale SHA returns 409/422 ("does not match …") which we retry.
+    for (var attempt = 0; attempt < 4; attempt++) {
+      var remote = await fetchRemote();
+      mergeRemote(remote);
+      r2 = await commit(remote);
+      if (r2.ok) break;
+      if (r2.status === 409 || r2.status === 422) {
+        lastErr = 'SHA ชนกัน (HTTP ' + r2.status + ')';
+        await new Promise(function(res) { setTimeout(res, 400 * (attempt + 1)); });
+        continue;
+      }
+      // Bad/expired token or insufficient scope — drop it so the next attempt re-prompts.
+      if (r2.status === 401 || r2.status === 403) {
+        clearToken();
+        var pe = await r2.json().catch(function() { return {}; });
+        throw new Error(
+          (pe.message || 'HTTP ' + r2.status) +
+          '\n\n→ Token สิทธิ์ไม่พอ/หมดอายุ ลบให้แล้ว ครั้งหน้าจะถามใหม่\n' +
+          '   ใช้ classic token scope "repo" (หรือ public_repo) หรือ fine-grained ที่ให้ Contents = Read and write กับ repo นี้'
+        );
+      }
+      var e = await r2.json();
+      throw new Error(e.message || 'HTTP ' + r2.status);
+    }
+    if (!r2.ok) {
+      throw new Error((lastErr || 'conflict') + ' — มีการแก้ไฟล์พร้อมกัน ลองกดบันทึกอีกครั้ง หรือ refresh หน้าก่อนบันทึก');
+    }
+
+    dirty = false;
+    publishing = false;
+    btn.textContent = '✅ บันทึกแล้ว!';
+    btn.style.background = 'var(--pass)';
+    setTimeout(function() {
+      btn.style.background = '';
+      btn.disabled = false;
+      updateIndicator();
+    }, 3000);
+  } catch (err) {
+    publishing = false;
+    if (!auto) alert('❌ บันทึกไม่สำเร็จ: ' + err.message);
+    btn.disabled = false;
+    updateIndicator();
+  }
+}
+
+document.getElementById('btn-publish').addEventListener('click', function() { publishToGH(false); });
+
+// ── Dirty tracking / unsaved indicator ──
+function autoOn() {
+  var c = document.getElementById('chk-autosave');
+  return c ? c.checked : false;
+}
+function updateIndicator() {
+  var s = document.getElementById('save-status');
+  var b = document.getElementById('btn-publish');
+  if (dirty) {
+    if (s) { s.textContent = '● ยังไม่ได้บันทึก'; s.style.color = 'var(--hold)'; }
+    if (b && !b.disabled && b.textContent.indexOf('✅') < 0) b.textContent = '☁️ บันทึกขึ้น GitHub *';
+  } else {
+    if (s) { s.textContent = '✓ ตรงกับ GitHub'; s.style.color = 'var(--muted)'; }
+    if (b && !b.disabled && b.textContent.indexOf('✅') < 0) b.textContent = '☁️ บันทึกขึ้น GitHub';
+  }
+}
+function markDirty() {
+  dirty = true;
+  updateIndicator();
+  // Auto-publish after the user stops editing — only once a token exists,
+  // so we never interrupt with a token prompt mid-edit.
+  if (autoOn() && localStorage.getItem('gh_pat')) {
+    if (autoTimer) clearTimeout(autoTimer);
+    autoTimer = setTimeout(function() { autoTimer = null; publishToGH(true); }, 5000);
+  }
+}
+window.addEventListener('beforeunload', function(e) {
+  if (dirty) { e.preventDefault(); e.returnValue = 'มีงานที่ยังไม่ได้บันทึกขึ้น GitHub'; return e.returnValue; }
+});
+
+// ── Re-render every badge from the store (used after pulling remote) ──
+function applyAllStatuses() {
+  document.querySelectorAll('.opt.sel').forEach(function(o) { o.classList.remove('sel'); });
+  document.querySelectorAll('tr.trow td.status .stb').forEach(function(s) {
+    s.className = 'stb pending'; s.textContent = 'รอเทส';
+  });
+  Object.keys(store).forEach(function(uid) {
+    var st = store[uid] && store[uid].st;
+    if (st && SMAP[st]) {
+      var cell = document.querySelector('tr.trow td.status[data-uid="' + uid + '"] .stb');
+      if (cell) { cell.className = 'stb ' + SMAP[st][0]; cell.textContent = SMAP[st][1]; }
+      var opt = document.querySelector('.opt[data-uid="' + uid + '"][data-st="' + st + '"]');
+      if (opt) opt.classList.add('sel');
+    }
+    if (store[uid] && store[uid].actual) {
+      document.querySelectorAll('tr.detail').forEach(function(d) {
+        if (!d.querySelector('.opt[data-uid="' + uid + '"]')) return;
+        var box = d.querySelector('.actualbox');
+        if (box) { box.value = store[uid].actual; box.classList.toggle('filled', !!store[uid].actual); }
+      });
+    }
+  });
+}
+
+// ── Pull latest results from GitHub (remote wins on overlap; keeps local-only) ──
+async function pullLatest() {
+  var rbtn = document.getElementById('btn-refresh');
+  if (dirty && !confirm('มีงานที่ยังไม่ได้บันทึก — การดึงล่าสุดจะใช้สถานะจาก GitHub ทับเฉพาะรายการที่ซ้ำกัน ต้องการต่อ?')) return;
+  if (rbtn) { rbtn.disabled = true; rbtn.textContent = '⏳ กำลังดึง…'; }
+  try {
+    var token = localStorage.getItem('gh_pat');
+    var html;
+    if (token) {
+      var r = await fetch(GH_API + '?ref=' + GH_BRANCH + '&t=' + Date.now(),
+        { cache: 'no-store', headers: { Authorization: 'token ' + token, Accept: 'application/vnd.github+json' } });
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      html = decodeURIComponent(escape(atob(((await r.json()).content || '').replace(/\s/g, ''))));
+    } else {
+      var rr = await fetch('https://raw.githubusercontent.com/' + GH_OWNER + '/' + GH_REPO + '/' + GH_BRANCH + '/' + GH_PATH + '?t=' + Date.now(),
+        { cache: 'no-store' });
+      if (!rr.ok) throw new Error('HTTP ' + rr.status);
+      html = await rr.text();
+    }
+    var m = html.match(/<script id="store-data"[^>]*>([\s\S]*?)<\/script>/);
+    var rs = m ? JSON.parse((m[1] || '{}').trim() || '{}') : {};
+    Object.keys(rs).forEach(function(uid) { store[uid] = rs[uid]; });
+    save();
+    applyAllStatuses();
+    recount();
+    dirty = false;
+    updateIndicator();
+    if (rbtn) { rbtn.textContent = '✅ ดึงแล้ว'; setTimeout(function() { rbtn.textContent = '🔄 ดึงล่าสุด'; rbtn.disabled = false; }, 2000); }
+  } catch (err) {
+    alert('❌ ดึงล่าสุดไม่สำเร็จ: ' + err.message);
+    if (rbtn) { rbtn.textContent = '🔄 ดึงล่าสุด'; rbtn.disabled = false; }
+  }
+}
+document.getElementById('btn-refresh').addEventListener('click', pullLatest);
+
+// ── Set / change GitHub token (one click to escape a bad/expired token) ──
+document.getElementById('btn-token').addEventListener('click', function() {
+  clearToken();
+  var t = ghToken();   // prompts for a fresh token
+  if (t) {
+    alert('บันทึก token แล้ว ✅\nลองกดเปลี่ยนสถานะ TC สัก 1 อัน — ปุ่มควรเด้ง "✅ บันทึกแล้ว!" ใน ~5 วิ');
+    updateIndicator();
+  }
+});
+
+// ── Download file (offline backup) ──
+document.getElementById('btn-save-file').addEventListener('click', function() {
+  save();
+  var html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+  var blob = new Blob([html], { type: 'text/html; charset=utf-8' });
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'takra-insight-mvp2-epic4-6-ui-test-cases.html';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(a.href);
+});
+
+document.getElementById('btn-reset').addEventListener('click', function() {
+  if (!confirm('ล้างผลทดสอบทั้งหมด?')) return;
+  store = {};
+  save();
+  dirty = false;
+  location.reload();
+});
+
+// Set TC-AD.1 default to BLOCKED
+(function() {
+  if (!store['tc-29'] || !store['tc-29'].st) {
+    store['tc-29'] = { st: 'block' };
+    save();
+  }
+})();
+
+// Footer date
+var gd = document.getElementById('gen-date');
+if (gd) gd.textContent = document.lastModified || '';
+
+recount();
+updateIndicator();
+
+// Jira / Bug links (per test case · multiple)
+function jiraLabel(u){var m=String(u).match(/([A-Za-z]+-\d+)/);return m?m[1].toUpperCase():u;}
+function normJira(u){u=(u||'').trim();if(!u)return'';if(!/^https?:\/\//i.test(u)){var m=u.match(/^[A-Za-z]+-\d+$/);if(m)return'https://kitdi.atlassian.net/browse/'+u.toUpperCase();}return u;}
+function renderJira(uid){var box=document.querySelector('.jira-list[data-uid="'+uid+'"]');if(!box)return;var arr=(store[uid]&&store[uid].jira)||[];box.innerHTML='';arr.forEach(function(url,i){var row=document.createElement('div');row.className='jira-item';var a=document.createElement('a');a.href=url;a.target='_blank';a.rel='noopener';a.textContent=jiraLabel(url);var del=document.createElement('span');del.className='jira-del';del.textContent='✕';del.title='ลบลิงก์';del.addEventListener('click',function(){store[uid].jira.splice(i,1);if(!store[uid].jira.length)delete store[uid].jira;save();markDirty();renderJira(uid);});row.appendChild(a);row.appendChild(del);box.appendChild(row);});var cell=document.querySelector('td.jira-cell[data-uid="'+uid+'"]');if(cell){cell.innerHTML='';arr.forEach(function(url){var a2=document.createElement('a');a2.href=url;a2.target='_blank';a2.rel='noopener';a2.className='jira-chip';a2.textContent=jiraLabel(url);a2.addEventListener('click',function(e){e.stopPropagation();});cell.appendChild(a2);});}}
+function addJira(uid,val){var url=normJira(val);if(!url)return;store[uid]=store[uid]||{};store[uid].jira=store[uid].jira||[];store[uid].jira.push(url);save();markDirty();renderJira(uid);}
+document.querySelectorAll('.jira-btn').forEach(function(b){b.addEventListener('click',function(e){e.stopPropagation();var u=b.dataset.uid;var inp=document.querySelector('.jira-input[data-uid="'+u+'"]');addJira(u,inp.value);inp.value='';});});
+document.querySelectorAll('.jira-input').forEach(function(inp){inp.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();addJira(inp.dataset.uid,inp.value);inp.value='';}});inp.addEventListener('click',function(e){e.stopPropagation();});});
+document.querySelectorAll('.jira-list').forEach(function(box){renderJira(box.dataset.uid);});
+function applyFeatColor(e,owner){var cls=owner==='Wanlee T (Ice)'?'owner-ice':(owner==='Kachain B (Moss)'?'owner-moss':'');var er=document.querySelector('tr.featrow[data-featkey="'+e+'"]');if(!er)return;er.classList.remove('owner-ice','owner-moss');if(cls)er.classList.add(cls);var s=er.querySelector('.feat-owner');if(s){s.classList.remove('owner-ice','owner-moss');if(cls)s.classList.add(cls);}var n=er.nextElementSibling;while(n&&!n.classList.contains('featrow')&&!n.classList.contains('epicrow')){n.classList.remove('sec-ice','sec-moss');if(cls)n.classList.add(cls==='owner-ice'?'sec-ice':'sec-moss');n=n.nextElementSibling;}}
+document.querySelectorAll('.feat-owner').forEach(function(sel){var e=sel.dataset.featkey,k='feat-'+e;var cur=(store[k]&&store[k].owner)||'';sel.value=cur;applyFeatColor(e,cur);sel.addEventListener('click',function(ev){ev.stopPropagation();});sel.addEventListener('change',function(){var v=sel.value;if(v){store[k]=store[k]||{};store[k].owner=v;}else if(store[k]){delete store[k].owner;if(!Object.keys(store[k]).length)delete store[k];}save();markDirty();applyFeatColor(e,v);});});
+</script>
+
+
+</body></html>

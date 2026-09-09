@@ -8,6 +8,7 @@ harness (CSS + JS ปุ่ม ☁️ เซฟ/ตัวกรอง/Jira/owner
       python3 tools/build/build_hub_report.py mvp2 --check            # แค่ตรวจ/นับ ไม่เขียน
 ข้อมูลเคส: mvp1 = hub_cases.py · mvp2 = hub_mvp2_cases.py · mvp2rbac = hub_mvp2_rbac_cases.py (Epic 1 RBAC/ABAC + Aff Account)
       clipbo = clip_bo_cases.py (TAKRA Clip · Back Office EP-02) · farm = farm_cases.py (TAKRA Post · takra-farm)
+      insighte46 = insight_mvp2_e46_cases.py (TAKRA Insight · MVP-2 Epic 4 เครดิต AI + Epic 6 AI Insights)
       (แต่ละไฟล์มี META บอก path/ชื่อ/uid เริ่ม)
 สถานะผลเทสเดิมในไฟล์ปลายทาง (<script id="store-data">) จะถูกคงไว้ถ้ามีอยู่แล้ว
 """
@@ -21,7 +22,8 @@ import sys
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 MODULES = {'mvp1': 'hub_cases', 'mvp2': 'hub_mvp2_cases', 'mvp2rbac': 'hub_mvp2_rbac_cases',
-           'aitickets': 'ai_tickets_cases', 'clipbo': 'clip_bo_cases', 'farm': 'farm_cases'}
+           'aitickets': 'ai_tickets_cases', 'clipbo': 'clip_bo_cases', 'farm': 'farm_cases',
+           'insighte46': 'insight_mvp2_e46_cases'}
 _which = next((a for a in sys.argv[1:] if a in MODULES), 'mvp1')
 _mod = importlib.import_module(MODULES[_which])
 EPICS, KINDS, META = _mod.EPICS, _mod.KINDS, _mod.META
@@ -33,6 +35,8 @@ UID_START = META['uid_start']
 TITLE = META['title']
 # ปุ่ม "รายงานทั้งหมด" — ตั้งต่อรายงานได้ผ่าน META['back'] (ค่าเริ่มต้น = hub)
 BACK = META.get('back', 'https://wanlee-tankunnatam.github.io/qa-test-reports/?project=hub')
+# ข้อความเตือนใต้เคสที่ยังไม่มีหน้าจอ — ตั้งต่อรายงานได้ผ่าน META['noui_note']
+NOUI_NOTE = META.get('noui_note', '⛔ <b>ไม่พบใน UI</b> ณ origin/develop 2026-08-19 (commit 27da4c0) — เคสเขียนตาม AC ในสเปกไว้ล่วงหน้า ชื่อปุ่ม/ข้อความอ้างจากเอกสาร อาจต่างจากของจริงเมื่อ build · ถ้ายังไม่มีหน้าจอให้บันทึกเป็น <b>BLOCKED</b> แล้วกลับมาปรับคำเมื่อ dev ส่งมอบ')
 
 OWNER_SEL = ('<span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="{fk}">'
              '<option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span>')
@@ -107,7 +111,7 @@ def case_html(c, uid, epic_key, epic_title_short):
         body.append(f'  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">{esc(e2e["summary"])}</div></div>')
         body.append(f'  <div class="sec"><h4>⏱ Run sheet</h4><div class="hint" style="font-size:12px">{esc(e2e["runsheet"])}</div></div>')
     if not in_ui:
-        body.append('  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ไม่พบใน UI</b> ณ origin/develop 2026-08-19 (commit 27da4c0) — เคสเขียนตาม AC ในสเปกไว้ล่วงหน้า ชื่อปุ่ม/ข้อความอ้างจากเอกสาร อาจต่างจากของจริงเมื่อ build · ถ้ายังไม่มีหน้าจอให้บันทึกเป็น <b>BLOCKED</b> แล้วกลับมาปรับคำเมื่อ dev ส่งมอบ</div></div>')
+        body.append(f'  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">{NOUI_NOTE}</div></div>')
     if c['pre']:
         body.append(f'  <div class="sec"><h4>Precondition</h4>{ul(c["pre"])}</div>')
     if c['data']:
