@@ -230,7 +230,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   },
   "tc-2223": {
     "st": "fail",
-    "actual": "r015 — 9 ก.ย. 2 รอบ: ออกจากห้อง → degraded off-live-page +62 s พร้อมข้อความ “…ถ้าไม่กลับภายใน 2 นาที ระบบจะหยุดและบันทึกเซสชันให้เอง” แต่ไม่ auto-stop (8.5 นาที · ค้าง OPEN จนเริ่ม session ใหม่ของช่องเดิม) · 10 ก.ย. @peterporames1: แบนเนอร์ไม่ทัน 30 s (เกณฑ์เสนอ) · session ปิดตอนแอปปิด (TI-447) · auto-stop 2 นาทีรอวัดซ้ำด้วย spec ที่รอ 150 s → FAIL (F5)"
+    "actual": "r015 — 9 ก.ย. 2 รอบ: ออกจากห้อง → degraded off-live-page +62 s พร้อมข้อความ “…ถ้าไม่กลับภายใน 2 นาที ระบบจะหยุดและบันทึกเซสชันให้เอง” แต่ไม่ auto-stop (8.5 นาที · ค้าง OPEN จนเริ่ม session ใหม่ของช่องเดิม) · 10 ก.ย. @peterporames1: แบนเนอร์ไม่ทัน 30 s (เกณฑ์เสนอ) · session ปิดตอนแอปปิด (TI-447) · auto-stop 2 นาทีรอวัดซ้ำด้วย spec ที่รอ 150 s → FAIL (F5) · 17:42 รอบ 3 (รอ 150 s): แบนเนอร์ 62046 ms · ยังไม่ auto-stop ใน 150 s → ยืนยัน FAIL บน build 283d7eb"
   },
   "tc-2224": {
     "st": "pass",
@@ -241,8 +241,8 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     "actual": "r015 ต่อเนื่อง 10 ก.ย. (login TikTok แล้ว · develop 8fcfec0 · @praevashop) — ร้านจบไลฟ์เองระหว่าง soak (11:19): log live-end trigger (ended-screen) 04:19:17 → ระบบ suppress ขณะเฟรมยังไหล → ปิด session เอง 04:19:25 (**8 s**) · ended_at เขียน · finalize 10 ms · engagement สุดท้าย 11:19:16 · ไม่มี session ค้าง"
   },
   "tc-2226": {
-    "st": "hold",
-    "actual": "r015 · 10 ก.ย. 16:41–17:40 · @peterporames1 (ร้านที่ผู้ใช้ส่ง) · harness pin intent/alerts แล้ว — multi-session: ⌘Q ปิด 2 session เรียบร้อย teardown ≤ 13 s (ผ่านใน D7-POS-02) · single-session: spec LR-8 ของ session f4 นับจาก registry ที่ว่าง → 2 รอบสรุปไม่ได้ (session 164444 ค้าง OPEN หลังปิดแอป) · แก้ให้นับจาก DB แล้ว รอรันซ้ำ"
+    "st": "fail",
+    "actual": "r015 · 10 ก.ย. @peterporames1 — single-session (LR-8 แก้ให้นับ session จาก DB): exit gate ขึ้น prompt ตอบ close → แอปปิด 383 ms · engine 426 ms · ffmpeg 0 แต่ไม่มี teardown และ session ยัง ended_at NULL หลัง quit (3 รอบ: 164444 · 170254 · 174034) → FAIL (F10 · TI-447 ครอบเฉพาะ multi) · multi-session 2 ห้อง: ⌘Q ปิดทั้ง 2 session เรียบร้อย teardown ≤ 13 s ✅"
   },
   "tc-2227": {
     "st": "pass",
