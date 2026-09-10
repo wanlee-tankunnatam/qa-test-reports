@@ -153,8 +153,8 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     "actual": "r015 ต่อเนื่อง 10 ก.ย. (login TikTok แล้ว · develop 8fcfec0) — กด \"เริ่มติดตาม\" บน @mint_254027 (ออฟไลน์) → ข้อความ \"ยังไม่ได้เปิดหน้าไลฟ์ของช่องที่ต้องการ หรือไลฟ์จบแล้ว — …แล้วลองใหม่\" ใน 5.9 s · ไม่มี spinner/technical leak · ไม่สร้าง session = gate TI-459 ผ่าน · 🟡 แต่ก่อนกดปุ่ม หน้า SessionPre บอกว่า \"กำลังดูสด\" ทั้งที่ร้านออฟไลน์ (F6 · P2) → CONCERNS"
   },
   "tc-2203": {
-    "st": "block",
-    "actual": "ต้องล้าง login TikTok แล้วทำมือ — ยังไม่ได้ทำรอบนี้"
+    "st": "fail",
+    "actual": "r015 · 10 ก.ย. 16:41–17:40 · @peterporames1 (ร้านที่ผู้ใช้ส่ง) · harness pin intent/alerts แล้ว — ล้าง login TikTok แล้วเริ่ม: SessionPre ไม่พูดถึง login (บอก “กำลังดูสด · พร้อมเก็บ Insight”) · session เริ่มได้ทั้งที่ยังไม่ login (19 s) · แบนเนอร์ +61 s “ยังไม่ได้รับคอมเมนต์จาก TikTok…” + ปุ่ม “เข้าสู่ระบบ TikTok” → tiktok.com/login (reactive) · ไม่มี technical leak → FAIL ตาม Expected (ต้องกันก่อนเริ่ม) · F9 รอ PM เคาะ preventive vs reactive"
   },
   "tc-2204": {
     "st": "pass",
@@ -230,27 +230,27 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   },
   "tc-2223": {
     "st": "fail",
-    "actual": "r015 (2026-09-09 · develop 8fcfec0 · dev build + engine .venv+models · ร้าน @mint_254027/@kronkan42899) — 2 รอบ (session 164001 · 170024): ระบบรู้ว่าออกจากห้องทันที · degraded off-live-page +62 s พร้อมข้อความ \"…ถ้าไม่กลับภายใน 2 นาที ระบบจะหยุดและบันทึกเซสชันให้เอง\" แต่ **ไม่ auto-stop** (ดู 8.5 นาที) · ended_at ยัง NULL แม้ปิดแอป/engine รีสตาร์ต 3 ครั้ง · session ค้างในหน้า เซสชัน (F5 · P1 · TI-384 ยังไม่ปิดจริง)"
+    "actual": "r015 — 9 ก.ย. 2 รอบ: ออกจากห้อง → degraded off-live-page +62 s พร้อมข้อความ “…ถ้าไม่กลับภายใน 2 นาที ระบบจะหยุดและบันทึกเซสชันให้เอง” แต่ไม่ auto-stop (8.5 นาที · ค้าง OPEN จนเริ่ม session ใหม่ของช่องเดิม) · 10 ก.ย. @peterporames1: แบนเนอร์ไม่ทัน 30 s (เกณฑ์เสนอ) · session ปิดตอนแอปปิด (TI-447) · auto-stop 2 นาทีรอวัดซ้ำด้วย spec ที่รอ 150 s → FAIL (F5)"
   },
   "tc-2224": {
     "st": "pass",
-    "actual": "r015 (2026-09-09 · develop 8fcfec0 · dev build + engine .venv+models · ร้าน @mint_254027/@kronkan42899) — kill -9 engine: วิดีโอเล่นต่อ (readyState 4) · ไม่มี AI · null · แอปตรวจพบ +3 s (backend exited) และ spawn ใหม่ +14 s · engagement ไหลต่อ 58 → 138 · 🟡 ไม่เห็นแบนเนอร์ engine ภายใน 10 s (respawn เร็วกว่า)"
+    "actual": "r015 — 9 ก.ย. @mint: kill -9 → วิดีโอเล่นต่อ · engine กลับเอง 13.9 s · engagement ไหลต่อ · 10 ก.ย. @peterporames1 ซ้ำ: engine กลับเอง 15.9 s · วิดีโอไม่หยุด · ไม่มี AI · null · 🟡 ไม่เห็นแบนเนอร์ engine ใน 10 s ทั้ง 2 รอบ (respawn เร็วกว่าเกณฑ์เสนอ)"
   },
   "tc-2225": {
     "st": "pass",
     "actual": "r015 ต่อเนื่อง 10 ก.ย. (login TikTok แล้ว · develop 8fcfec0 · @praevashop) — ร้านจบไลฟ์เองระหว่าง soak (11:19): log live-end trigger (ended-screen) 04:19:17 → ระบบ suppress ขณะเฟรมยังไหล → ปิด session เอง 04:19:25 (**8 s**) · ended_at เขียน · finalize 10 ms · engagement สุดท้าย 11:19:16 · ไม่มี session ค้าง"
   },
   "tc-2226": {
-    "st": "block",
-    "actual": "⌘Q ขณะ monitor → product ขึ้น exit prompt \"live session(s) still capturing\" spec เดิมไม่ผ่าน prompt → ยังวัด teardown ไม่ได้ (ต้องทำมือ)"
+    "st": "hold",
+    "actual": "r015 · 10 ก.ย. 16:41–17:40 · @peterporames1 (ร้านที่ผู้ใช้ส่ง) · harness pin intent/alerts แล้ว — multi-session: ⌘Q ปิด 2 session เรียบร้อย teardown ≤ 13 s (ผ่านใน D7-POS-02) · single-session: spec LR-8 ของ session f4 นับจาก registry ที่ว่าง → 2 รอบสรุปไม่ได้ (session 164444 ค้าง OPEN หลังปิดแอป) · แก้ให้นับจาก DB แล้ว รอรันซ้ำ"
   },
   "tc-2227": {
     "st": "pass",
     "actual": "r015 ต่อเนื่อง 10 ก.ย. (login TikTok แล้ว · develop 8fcfec0 · @praevashop) — soak: spec 120 นาที แต่ร้านจบไลฟ์เองที่นาทีที่ 30 → live 30 นาที + แอป idle 90 นาที · RAM รวมสูงสุด 1,717 MB (engine 449 MB) \u003c 2 GB · idle ลดเหลือ ~1.0 GB ไม่โต · cpu_load 0.1–0.3 · face 8,958 เฟรม (~5 fps) · คอมเมนต์ 70 p95 1.19 s → NFR1.7 ผ่าน · 🟡 ยังไม่ครบ 120 นาทีบนไลฟ์ (ต้องร้านที่ไลฟ์ ≥ 2 ชม.) · รอบ 9 ก.ย. 55 นาที @kronkan RAM 1.4–1.6 GB ผ่านเช่นกัน"
   },
   "tc-2228": {
-    "st": "hold",
-    "actual": "r015 ต่อเนื่อง 10 ก.ย. (login TikTok แล้ว · develop 8fcfec0) — 2 ห้อง @kronkan42899 + @praevashop ได้ 21.7/30 นาที (ถูก process ภายนอก kill 10:29): capture ทำงานทั้ง 2 ห้องไม่ปนกัน (engage 254/1,569 · comment 7/41) · RAM รวมสูงสุด 2,497 MB (engine 709 MB) = 1.25 GB/ห้อง — ต้องเคาะว่า NFR1.7 \u003c 2 GB นับรวมหรือต่อห้อง · teardown ยังไม่ได้วัด · face 0 (F1)"
+    "st": "pass",
+    "actual": "r015 — 10 ก.ย. เช้า (login แล้ว) 21.7 นาที: capture 2 ห้องไม่ปน (engage 254/1,569 · comment 7/41) · 10 ก.ย. 17:09 (ไม่มี login) 30 นาทีเต็ม @peterporames1+@kronkan42899: face 13,908/13,256 (~7.5 fps ต่อห้อง) · ⌘Q ปิดทั้ง 2 session + teardown ผ่าน budget (TI-447) · RAM รวมสูงสุด 2,485 MB = 1.24 GB/ห้อง (ต้องเคาะว่า NFR1.7 นับรวมหรือต่อห้อง)"
   },
   "tc-2229": {
     "st": "fail",
