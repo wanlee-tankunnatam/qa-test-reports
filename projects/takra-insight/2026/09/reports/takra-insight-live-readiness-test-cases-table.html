@@ -150,7 +150,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   },
   "tc-2202": {
     "st": "hold",
-    "actual": "r015 (2026-09-09 · develop 8fcfec0 · dev build + engine .venv+models · ร้าน @mint_254027/@kronkan42899) — ยังไม่มี verdict — harness ค้าง 5 รอบ (หลังรอบ 3 พบว่าหน้า SessionPre ของร้านออฟไลน์ @winwincenter1 แสดง \"กำลังดูสด\" และปุ่ม \"เริ่มติดตาม\" โดยไม่บอกว่าไม่ได้ไลฟ์ — รอกดปุ่มเพื่อดู gate TI-459) · ไม่มี spinner ค้าง · ไม่มี session ถูกสร้าง"
+    "actual": "r015 ต่อเนื่อง 10 ก.ย. (login TikTok แล้ว · develop 8fcfec0) — กด \"เริ่มติดตาม\" บน @mint_254027 (ออฟไลน์) → ข้อความ \"ยังไม่ได้เปิดหน้าไลฟ์ของช่องที่ต้องการ หรือไลฟ์จบแล้ว — …แล้วลองใหม่\" ใน 5.9 s · ไม่มี spinner/technical leak · ไม่สร้าง session = gate TI-459 ผ่าน · 🟡 แต่ก่อนกดปุ่ม หน้า SessionPre บอกว่า \"กำลังดูสด\" ทั้งที่ร้านออฟไลน์ (F6 · P2) → CONCERNS"
   },
   "tc-2203": {
     "st": "block",
@@ -250,7 +250,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   },
   "tc-2228": {
     "st": "hold",
-    "actual": "r015 (2026-09-09 · develop 8fcfec0 · dev build + engine .venv+models · ร้าน @mint_254027/@kronkan42899) — 2 ห้อง @kronkan42899 + @mint_254027 30 นาที: เปิดได้ 2 session · engine workers 2 · RAM รวมสูงสุด 1,976 MB (ชน NFR1.7 2 GB) · ⚠️ engagement 0 ทั้ง 2 ห้อง เพราะ TikTok ถูก logout จาก LR-4 (F7) · ⌘Q ติด exit prompt → teardown วัดไม่ได้ · 2 session ค้าง OPEN → ต้องรันซ้ำหลัง login"
+    "actual": "r015 ต่อเนื่อง 10 ก.ย. (login TikTok แล้ว · develop 8fcfec0) — 2 ห้อง @kronkan42899 + @praevashop ได้ 21.7/30 นาที (ถูก process ภายนอก kill 10:29): capture ทำงานทั้ง 2 ห้องไม่ปนกัน (engage 254/1,569 · comment 7/41) · RAM รวมสูงสุด 2,497 MB (engine 709 MB) = 1.25 GB/ห้อง — ต้องเคาะว่า NFR1.7 \u003c 2 GB นับรวมหรือต่อห้อง · teardown ยังไม่ได้วัด · face 0 (F1)"
   },
   "tc-2229": {
     "st": "block",
@@ -271,6 +271,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   "tc-2233": {
     "st": "pass",
     "actual": "r015 (2026-09-09 · develop 8fcfec0 · dev build + engine .venv+models · ร้าน @mint_254027/@kronkan42899) — ti313_finalize_no_player · sessions_list ALL PASS"
+  },
+  "tc-2205": {
+    "st": "hold",
+    "actual": "r015 ต่อเนื่อง 10 ก.ย. (login TikTok แล้ว · develop 8fcfec0) — วิธีวัด: WebcastChatMessage ที่ TikTok ส่งผ่าน WS มาถึงเครื่อง vs แถว comment ใน DB · @kronkan42899 10 นาที: ส่งมา 2 · DB 2 · completeness 100 % · ไม่มี phantom · reconnect 0 — ตัวอย่างน้อยเกินยืนยัน NFR2.2 ต้องรันซ้ำบนร้านคึก (praevashop) ซึ่งถูก kill ก่อนเริ่ม"
   }
 }
 </script>
