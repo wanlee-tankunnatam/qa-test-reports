@@ -253,8 +253,11 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     "actual": "r015 ต่อเนื่อง 10 ก.ย. (login TikTok แล้ว · develop 8fcfec0) — 2 ห้อง @kronkan42899 + @praevashop ได้ 21.7/30 นาที (ถูก process ภายนอก kill 10:29): capture ทำงานทั้ง 2 ห้องไม่ปนกัน (engage 254/1,569 · comment 7/41) · RAM รวมสูงสุด 2,497 MB (engine 709 MB) = 1.25 GB/ห้อง — ต้องเคาะว่า NFR1.7 \u003c 2 GB นับรวมหรือต่อห้อง · teardown ยังไม่ได้วัด · face 0 (F1)"
   },
   "tc-2229": {
-    "st": "block",
-    "actual": "mem_floor_probe ต้องเครื่องที่ยอมให้กด RAM — ไม่รันบนเครื่องทำงานหลัก"
+    "st": "fail",
+    "actual": "r016 (2026-09-10 · develop 283d7eb · UAT build + engine .venv+models · ร้าน @kronkan42899) — รัน 2 รอบ ผลตรงกัน · governor ไม่ลดโหลดเลย\nรอบ 1 sess 20260910_133355 (10 นาที): baseline available 5,441 MB · ASR p95 169.1 ms → knee ที่ available 4,054 MB (p95 229.5 ms = 1.36× ตอน ballast 3,000 MB) · face frames 4,999 · fps 8.33 คงที่ทุกช่วง\nรอบ 2 sess 20260910_142318 (16 นาที): baseline available 4,747 MB · p95 237.4 ms → knee ที่ available 4,194 MB (p95 374.3 ms = 1.58× ตอน ballast เพียง 500 MB) · face frames 7,989 · fps 8.31 คงที่ทั้ง 33 บักเก็ต · workers=1 · sessions_active=1 · asr_clips_dropped=0 ตลอด\nเทียบ Expected: (1) ❌ governor ไม่ลด fps/โหลดก่อนถึงพื้น — เลนเสื่อม (p95 พุ่ง) ที่ available ~4,054–4,194 MB ซึ่ง 'สูงกว่า' พื้นที่ชิปจริง criticalMemFloorMb = 800 MB (src/main/lib/governor.js:68) หลายเท่า → ถึงจุดที่ผู้ใช้เจอของช้าแล้ว governor ยังไม่ทำอะไร (แอปไม่ค้าง/ไม่ crash) · (2) ✅ probe หยุดที่เงื่อนไขแรก (knee) ทั้ง 2 รอบ ไม่จองจนเครื่องแฮงก์ · (3) ✅ หลังคืน RAM ค่ากลับปกติภายใน 2 นาที ทั้ง 2 รอบ\nverdict ของ probe เอง (ทั้ง 2 รอบ): เลนเสื่อม 'เหนือ' พื้นที่ชิป — 800 MB ต่ำเกินกว่าจะป้องกันเลน ASR\n→ FAIL (ผ่าน 2 จาก 3 ข้อ) · เปิดบั๊ก TI-466 (High · label 18-SEP · assign Thanaphat T (James) · relate TI-273/TI-417/TI-416 · แนบหลักฐาน 8 ไฟล์)",
+    "jira": [
+      "https://kitdi.atlassian.net/browse/TI-466"
+    ]
   },
   "tc-2230": {
     "st": "block",
