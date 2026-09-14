@@ -146,7 +146,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 {
   "tc-2201": {
     "st": "pass",
-    "actual": "r015 (2026-09-09 · develop 8fcfec0 · dev build + engine .venv+models · ร้าน @mint_254027/@kronkan42899) — engine พร้อม 2.9 s · เฟรมแรก 2.4 s (soak รอบ 2: 2.9 s) · คอมเมนต์สดแรก 32.4 s (ร้านเงียบ) · ไม่มี error/spinner"
+    "actual": "r015 · 14 ก.ย. 09:44–09:51 · @winwincenter1 · session 20260914_094447 · harness pin intent/alerts (lanes: intent true · alerts true · mesh on · device mps) — engine พร้อม 2.98 s · เฟรมแรก 4.74 s (เกณฑ์เสนอ 15 s) · คอมเมนต์สดแรก 24.3 s (เกณฑ์เสนอ 30 s) · ไม่มี spinner/technical leak · รวม 3 รอบ (9 ก.ย. @mint 2.4 s · 10 ก.ย. @praevashop 2.9 s · 14 ก.ย. @winwincenter1 4.7 s)"
   },
   "tc-2202": {
     "st": "hold",
@@ -158,7 +158,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   },
   "tc-2204": {
     "st": "pass",
-    "actual": "r015 — 9 ก.ย. @mint: n=10 p50 688 · p95 1,060 ms · 10 ก.ย. @praevashop 30 นาที: n=70 p50 761 · **p95 1,189 ms** · max 1,299 · dup 0 · finalize OK → ผ่าน NFR1.2 p95 \u003c 2 s (ไม่มี sentinel จากบัญชีที่ 2 — ใช้ event_time ของ TikTok)"
+    "actual": "r015 · 14 ก.ย. 09:44–09:51 · @winwincenter1 · session 20260914_094447 · harness pin intent/alerts (lanes: intent true · alerts true · mesh on · device mps) — latency (TikTok event → ingest) n=9 · p50 796 ms · p95 1,341 ms · max 1,341 \u003c NFR1.2 2 s · dupGroups 0 · รวมกับรอบก่อน: 9 ก.ย. p95 1,060 ms (n=10) · 10 ก.ย. p95 1,189 ms (n=70)"
   },
   "tc-2206": {
     "st": "pass",
@@ -182,11 +182,11 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   },
   "tc-2211": {
     "st": "hold",
-    "actual": "r015 (2026-09-09 · develop 8fcfec0 · dev build + engine .venv+models · ร้าน @mint_254027/@kronkan42899) — unit 77/77 ผ่าน · live: WebcastOecLiveShoppingMessage ถูก log \"unhandled message type\" ตาม TI-385 แต่ไม่ถึง DB/UI (k ไม่มี shopping) → scope ของ fix = log เท่านั้น ต้องเคาะกับ PM (F2)"
+    "actual": "r015 (2026-09-09 · develop 8fcfec0 · dev build + engine .venv+models · ร้าน @mint_254027/@kronkan42899) — unit 77/77 ผ่าน · live: WebcastOecLiveShoppingMessage ถูก log \"unhandled message type\" ตาม TI-385 แต่ไม่ถึง DB/UI (k ไม่มี shopping) → scope ของ fix = log เท่านั้น ต้องเคาะกับ PM (F2) · 14 ก.ย.: ยืนยัน “ชวนซื้อ” (price_ask ของคนดู) นับได้จริงบนไลฟ์ — 6 จาก 9 คอมเมนต์ (conf 0.90–0.99 ทั้งหมด positive) · แยกประเภท price_ask 6 · other 2 · praise 1 · ยังไม่ enrich 0 · ตัวเลขบนการ์ดยังไม่ได้ยืนยันด้วยตา (parse การ์ดไม่ได้)"
   },
   "tc-2212": {
     "st": "fail",
-    "actual": "r015 — F1 (แก้ไข 10 ก.ย.): MediaPipe FaceLandmarker **ล้มเหลวแบบสุ่มตอน engine start** (Metal service unavailable · SIGABRT) — 10 ก.ย. ล้ม 2/6 start · 9 ก.ย. ล้มทุกครั้ง (6 session face = 0) · เมื่อล้ม TI-389 ปิด mesh ตลอด lifetime → face 0 เฟรม · HUD บอก \"ไม่พบใบหน้า\" ทั้งที่ host อยู่กลางจอ (silent · ไม่ retry) · เมื่อโหลดได้: 8,958 เฟรม/30 นาที ≈ **5 fps** (NFR1.9 บอก 30 fps — ต้องเคาะ envelope) · latency ต่อเฟรมยังไม่ได้วัด · header AI · mps ปกติ → FAIL ที่ความน่าเชื่อถือของ init (P1)"
+    "actual": "r015 — F1 (init แบบสุ่ม): เมื่อ MediaPipe FaceLandmarker โหลดสำเร็จ เลนทำงานปกติ — 14 ก.ย. @winwincenter1 2,880 เฟรม/6 นาที = 8 fps · 10 ก.ย. @praevashop 8,958 เฟรม/30 นาที ≈ 5 fps · 2 ห้องพร้อมกัน 13,908/13,256 เฟรม ≈ 7.5 fps ต่อห้อง · header AI · mps ปกติ ไม่มี AI · null · แต่ 9 ก.ย. ล้มทุกครั้ง (6 session face=0 · HUD บอก “ไม่พบใบหน้า” ทั้งที่ host อยู่กลางจอ) และ 10 ก.ย. ล้ม 2/6 engine start → FAIL ที่ความน่าเชื่อถือของ init (ไม่ retry · ไม่บอกผู้ใช้) · fps 5–8 ห่างจาก NFR1.9 ที่เขียนไว้ 30 fps ต้องเคาะ envelope"
   },
   "tc-2213": {
     "st": "pass",
@@ -217,8 +217,8 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     "actual": "เลน alert ปิด (F3 = rig) · แก้ไข 10 ก.ย.: สาเหตุคือ rig ของ QA (npm run build = production ไม่โหลด .env.development → LHM_INTENT ปิด) ไม่ใช่ build ของผู้ใช้ — harness pin LHM_INTENT=1 แล้ว รอรันซ้ำ"
   },
   "tc-2220": {
-    "st": "block",
-    "actual": "r017 (2026-09-10 15:55–16:10 · develop 24bf0a1 = origin/develop 283d7eb · dev build out/ 13:27 + engine .venv server.py · ร้าน @kronkan42899 ไลฟ์จริง probe ผ่าน · session 20260910_155553) — **BLOCKED ตัดสินไม่ได้**: monitor ครบ 10 นาที (watched 600 s · poll /price-alert ทุก 1.5 s) alert = 0 · HUD card = 0 แต่ engagement_events = 0 ทั้ง comment/like/gift (live+history) ตลอด 10 นาที ⇒ alert 0 ไม่ใช่หลักฐานว่าไม่มี false alarm (ขั้น 4 'รอคอมเมนต์ไหล' ไม่เคยเกิด)\nสาเหตุ (ยืนยันจาก log/DB): product เองแจ้ง `capture degraded: path=tiktok:comment-stream reason=chat-never-started` ที่ +60 s (วิดีโอเล่นปกติ first frame 2.9 s · FLV จับได้) · TikTok chat WS ต่อได้แต่ msgs=0 · partition persist:tiktok ไม่มี cookie sessionid/sid_tt = เบราว์เซอร์ในตัว **ไม่ได้ login TikTok** (ขั้น 3 ของเคสไม่ครบ) — ต้นเหตุคือ session QA อีกตัวรัน LR-7 (D1-NEG-02) ซึ่ง precondition ล้าง storage ของ partition นี้ 3 รอบวันนี้ (15:36/15:43/15:52) · เทียบ: รอบ 10:07–10:49 (หลัง login) ได้คอมเมนต์ live 31–70/รอบ แต่ตั้งแต่ 14:23 = 0\nเงื่อนไขที่ครบแล้ว: Model Install Rule — ลบ takra-insight-dev/models 15:45 แล้วโหลดสด 15:52–15:53 /models/status current:true ครบ 3 lane (intent 60db06ff9af0 · asr f9f43cd349bd · diar 672195de0c25 = ตรง pin) · /health alerts=true intent=true (LHM_ALERTS/LHM_INTENT เปิด ไม่ใช่ F3 เดิม) · multi_session=false\nรบกวนเพิ่ม: 16:07:09 มีอีก session สั่ง quit แอปกลางคัน (main log: raising exit prompt path=quit — 1 live session still capturing) ⇒ video=null ตั้งแต่ +511 s และ finalize (D8) วัดไม่ได้ (ended_at ไม่ถูกเขียนใน 90 s) — ไม่กระทบข้อสรุปเพราะคอมเมนต์เป็น 0 ตั้งแต่ต้น\nต้องทำก่อนรันซ้ำ: (1) login TikTok ในเบราว์เซอร์ในตัวของแอป dev ด้วยมือ (2) ล็อกคิวแอป dev/พอร์ต 8765 ให้รันคนเดียว (3) รัน `LIVE_URL=… WATCH_MIN=10 npx playwright test e2e/live-readiness-d5neg01.manual.spec.js` (spec ใหม่: บันทึก alert ทุกตัวพร้อมคอมเมนต์ที่กระตุ้นจาก DB + HUD card) · หลักฐาน: evidence/live-readiness/D5-NEG-01-2026-09-10T08-55-r017.{json,run.log}\n— ประวัติก่อนหน้า: r015 (2026-09-09 · develop 8fcfec0 · dev build + engine .venv+models · ร้าน @mint_254027/@kronkan42899) — alert = 0 ตลอด 10 นาที แต่เลน alert ปิดใน build นี้ → ไม่ใช่หลักฐานว่าไม่มี false alarm (F3 = rig) · แก้ไข 10 ก.ย.: สาเหตุคือ rig ของ QA (npm run build = production ไม่โหลด .env.development → LHM_INTENT ปิด) ไม่ใช่ build ของผู้ใช้ — harness pin LHM_INTENT=1 แล้ว รอรันซ้ำ"
+    "st": "pass",
+    "actual": "r015 · 14 ก.ย. 09:44–09:51 · @winwincenter1 · session 20260914_094447 · harness pin intent/alerts (lanes: intent true · alerts true · mesh on · device mps) — เลน alert เปิดจริงรอบนี้ (ยืนยันจาก /health alerts=true ไม่ใช่ปิดเงียบแบบ F3) · 6 นาที คอมเมนต์ 9 ข้อความ ไม่มี alert หลอนขึ้นเลย (alertsMax=0) · คอมเมนต์ที่เข้ามาเป็น price_ask/praise/other ไม่มี objection cluster จึงไม่ควรมี alert → ผ่าน"
   },
   "tc-2221": {
     "st": "block",
@@ -265,7 +265,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   },
   "tc-2231": {
     "st": "pass",
-    "actual": "r015 (2026-09-09 · develop 8fcfec0 · dev build + engine .venv+models · ร้าน @mint_254027/@kronkan42899) — กดหยุด → ended_at เขียนใน 24 ms · รายงานเปิดได้ (session 162942)"
+    "actual": "r015 · 14 ก.ย. 09:44–09:51 · @winwincenter1 · session 20260914_094447 · harness pin intent/alerts (lanes: intent true · alerts true · mesh on · device mps) — กดหยุด → ended_at เขียนใน 122 ms · รายงานเปิดได้ (รอบ 9 ก.ย. 24 ms · 10 ก.ย. 10 ms)"
   },
   "tc-2232": {
     "st": "hold",
