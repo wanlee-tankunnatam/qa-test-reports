@@ -46,6 +46,14 @@ BACK = META.get('back', 'https://wanlee-tankunnatam.github.io/qa-test-reports/?p
 # ข้อความเตือนใต้เคสที่ยังไม่มีหน้าจอ — ตั้งต่อรายงานได้ผ่าน META['noui_note']
 # ป้ายของเคส ui=False — ตั้งต่อรายงานได้ผ่าน META['noui_badge'] (ค่าเริ่มต้น = ไม่พบใน UI)
 NOUI_BADGE = META.get('noui_badge', '⛔ ไม่พบใน UI')
+# epic ที่มี key 'jira' (เช่น RA-4077) → ป้าย epic ลิงก์ Jira บนแถว epic + ทุกเคส (epic ไม่มี key = หน้าตาเดิม)
+JIRA_BROWSE = META.get('jira_browse', 'https://kitdi.atlassian.net/browse/')
+EPIC_TAG_CSS = """
+/* ป้าย epic (Jira) */
+.epic-tag{display:inline-block;margin-left:6px;padding:0 6px;border-radius:4px;font-size:9.5px;font-weight:700;vertical-align:middle;white-space:nowrap;color:#1e3a8a;background:#eef2ff;border:1px solid #c7d2fe;text-decoration:none}
+.epic-tag:hover{background:#e0e7ff;text-decoration:underline}
+.epicrow .epic-tag{font-size:11px;margin-left:8px}
+"""
 NOUI_NOTE = META.get('noui_note', '⛔ <b>ไม่พบใน UI</b> ณ origin/develop 2026-08-19 (commit 27da4c0) — เคสเขียนตาม AC ในสเปกไว้ล่วงหน้า ชื่อปุ่ม/ข้อความอ้างจากเอกสาร อาจต่างจากของจริงเมื่อ build · ถ้ายังไม่มีหน้าจอให้บันทึกเป็น <b>BLOCKED</b> แล้วกลับมาปรับคำเมื่อ dev ส่งมอบ')
 
 OWNER_SEL = ('<span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="{fk}">'
@@ -95,7 +103,11 @@ def status_block(uid):
   </div>
 '''
 
-def case_html(c, uid, epic_key, epic_title_short):
+def epic_tag(jira):
+    return (f'<a class="epic-tag" href="{JIRA_BROWSE}{jira}" target="_blank" rel="noopener" '
+            f'onclick="event.stopPropagation()" title="Epic {jira} ใน Jira">🧩 Epic {jira}</a>') if jira else ''
+
+def case_html(c, uid, epic_key, epic_title_short, epic_jira=None):
     u = f'tc-{uid}'
     lvl = c.get('level', 'ui')
     lv_html = ('<span class="lv lvl-e2e">E2E</span>' if lvl == 'e2e' else '<span class="lv lvl-ui">UI</span>')
@@ -104,14 +116,14 @@ def case_html(c, uid, epic_key, epic_title_short):
     noui = '' if in_ui else f' <span class="noui">{NOUI_BADGE}</span>'
     head = f'''<tr class="trow" data-feat="{epic_key}" data-level="{lvl}" data-prio="{c['prio']}" data-kind="{kind}" data-ui="{'yes' if in_ui else 'no'}" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">{esc(c['id'])}</td>
-  <td class="ctitle">{esc(c['title'])} {kind_tag(kind)}{noui}</td>
+  <td class="ctitle">{esc(c['title'])} {kind_tag(kind)}{(' ' + epic_tag(epic_jira)) if epic_jira else ''}{noui}</td>
   <td class="lvl">{lv_html}</td>
   <td><span class="prio {PRIO_CLS[c['prio']]}">{c['prio']}</span></td>
   <td class="status" data-uid="{u}"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="{u}"></td>
 </tr>
 '''
-    hprio = (f'Priority: <b>{c["prio"]}</b> · {"E2E" if lvl == "e2e" else "UI"} · ประเภท: <b>{KINDS[kind][0]}</b> '
+    hprio = ((f'{epic_tag(epic_jira)} · ' if epic_jira else '') + f'Priority: <b>{c["prio"]}</b> · {"E2E" if lvl == "e2e" else "UI"} · ประเภท: <b>{KINDS[kind][0]}</b> '
              f'<span class="hint">({esc(KINDS[kind][1])})</span> · {esc(epic_title_short)}')
     body = [f'<tr class="detail"><td colspan="7"><div class="card">',
             f'  <div class="h-title">{esc(c["title"])}</div>',
@@ -185,7 +197,7 @@ def build():
     for e in EPICS:
         n = sum(len(f['cases']) for f in e['feats'])
         chips.append(f'<button class="fchip" data-f="feat" data-v="{e["key"]}">{e["chip"]} ({n})</button>')
-        rows.append(f'\n<!-- {e["key"]} -->\n<tr class="epicrow" data-epic="{e["key"]}"><td colspan="7">{e["emoji"]} {esc(e["title"])} <span class="rp">({n} เคส)</span></td></tr>')
+        rows.append(f'\n<!-- {e["key"]} -->\n<tr class="epicrow" data-epic="{e["key"]}"><td colspan="7">{e["emoji"]} {esc(e["title"])} <span class="rp">({n} เคส)</span>{(' ' + epic_tag(e['jira'])) if e.get('jira') else ''}</td></tr>')
         short = e['title'].split(' · ')[0] + ' · ' + e['title'].split(' · ')[1] if ' · ' in e['title'] else e['title']
         for f in e['feats']:
             n_ui = sum(1 for c in f['cases'] if c.get('level', 'ui') != 'e2e')
@@ -193,7 +205,7 @@ def build():
             lvs = (f'<span class="lv lvl-ui">🌐 {n_ui}</span>' if n_ui else '') + (f' <span class="lv lvl-e2e">🔄 {n_e2e}</span>' if n_e2e else '')
             rows.append(f'<tr class="featrow" data-featkey="{f["featkey"]}"><td colspan="7">📁 {esc(f["title"])} <span class="rp">{lvs}</span> {OWNER_SEL.format(fk=f["featkey"])}</td></tr>')
             for c in f['cases']:
-                rows.append(case_html(c, uid, e['key'], short))
+                rows.append(case_html(c, uid, e['key'], short, e.get('jira')))
                 uid += 1
                 total += 1
                 counts[c['prio']] += 1
@@ -301,7 +313,8 @@ def build():
 <footer>{TITLE} · {ui_n} UI + {e2e_n} E2E = {total} TCs · {META['footer']}</footer>
 
 '''
-    out = (css + EXTRA_CSS + '</style>\n</head>\n<body>\n'
+    extra_css = EXTRA_CSS + (EPIC_TAG_CSS if any(e.get('jira') for e in EPICS) else '')
+    out = (css + extra_css + '</style>\n</head>\n<body>\n'
            f'<a id="hub-back-btn" href="{BACK}" title="กลับไปหน้ารวมรายงาน (Hub)" style="position:fixed;top:12px;right:14px;z-index:99999;display:inline-flex;align-items:center;gap:7px;padding:10px 18px;border-radius:999px;background:#ffffff;color:#1e3a8a;font-size:14px;font-weight:800;text-decoration:none;box-shadow:0 4px 16px rgba(0,0,0,.35);border:2px solid #1e3a8a;font-family:\'Segoe UI\',\'Sarabun\',system-ui,sans-serif">🏠 รายงานทั้งหมด</a>\n\n\n'
            f'<script id="store-data" type="application/json">\n{store}\n</script>\n'
            + header + '\n'.join(rows) + footer + js)

@@ -68,8 +68,8 @@ def C(id, title, prio, steps, expected, src, pre=None, data=None, note=None, lev
     return dict(id=id, title=title, prio=prio, level=level, kind=kind, ui=ui, pre=pre or [], steps=steps,
                 data=data or [], expected=expected, src=src, note=note)
 
-def E(key, chip, emoji, title, feats):
-    return dict(key=key, chip=chip, emoji=emoji, title=title, feats=feats)
+def E(key, chip, emoji, title, feats, jira=None):
+    return dict(key=key, chip=chip, emoji=emoji, title=title, feats=feats, jira=jira)
 
 def F(featkey, title, cases):
     return dict(featkey=featkey, title=title, cases=cases)
@@ -89,7 +89,7 @@ EPICS.append(E('ra4027', 'RA-4027 · ส่งไลฟ์ TikTok', '📺', 'RA-
     'ที่มา: PLAN_TIKTOK K-2/K-3 (RA-4029/4030) · PLAN_APP A-8 (RA-4057) · README_TIKTOK',
     pre=PRE_LIVE, ui=False),
  ]),
-]))
+], jira='RA-4027'))
 
 # ───────────────────────── RA-4032 · Console แม่ค้า ─────────────────────────
 EPICS.append(E('ra4032', 'RA-4032 · Console แม่ค้า', '🎛️', 'RA-4032 · Console แม่ค้า — แอปคอนโซลแม่ค้า — หน้าเตรียมไลฟ์ → โหมดไลฟ์ (PLAN_CONSOLE)', [
@@ -217,7 +217,7 @@ EPICS.append(E('ra4032', 'RA-4032 · Console แม่ค้า', '🎛️', 'RA
     'ที่มา: PLAN_COMMENTS สถานะ 2026-09-03 (feedback "บทสด teleprompter/เลือกจุดเริ่มพูด") · e2e_app_spec โซน B',
     pre=PRE_TT, ui=False),
  ]),
-]))
+], jira='RA-4032'))
 
 # ───────────────────────── RA-4037 · ตอบคอมเมนต์ ─────────────────────────
 EPICS.append(E('ra4037', 'RA-4037 · ตอบคอมเมนต์', '💬', 'RA-4037 · ตอบคอมเมนต์ — ตอบคอมเมนต์ในไลฟ์ — feed · ตอบอัตโนมัติรายหมวด · จิ้มตอบเอง · ข้อมูลร้าน (PLAN_COMMENTS)', [
@@ -334,7 +334,7 @@ EPICS.append(E('ra4037', 'RA-4037 · ตอบคอมเมนต์', '💬',
     'ที่มา: PLAN_COMMENTS C-3 (RA-4040 ".doc เก่าเตือน save as .docx")',
     data=['ไฟล์ FAQ.doc (Word 97-2003)'], kind='validation', pre=PRE_TT, ui=False),
  ]),
-]))
+], jira='RA-4037'))
 
 # ───────────────────────── RA-4049 · Desktop App ─────────────────────────
 EPICS.append(E('ra4049', 'RA-4049 · Desktop App', '🖥️', 'RA-4049 · Desktop App — ห่อ TAKRA Console เป็นแอปเดสก์ท็อป (Electron) — ติดตั้ง · บูต · เชื่อม TikTok · แหล่งคอมเมนต์ (PLAN_APP)', [
@@ -456,7 +456,7 @@ EPICS.append(E('ra4049', 'RA-4049 · Desktop App', '🖥️', 'RA-4049 · Deskto
     'ที่มา: commit RA-4057 "stop the camera freezing when TAKRA is occluded" · app/src/main.js backgroundThrottling:false · README_TIKTOK Troubleshooting',
     kind='exception', pre=PRE_LIVE, ui=False),
  ]),
-]))
+], jira='RA-4049'))
 
 # ───────────────────────── RA-4058 · เปิด/ปิดไม่ค้าง ─────────────────────────
 EPICS.append(E('ra4058', 'RA-4058 · เปิด/ปิดไม่ค้าง', '⏻', 'RA-4058 · เปิด/ปิดไม่ค้าง — หน้า "กำลังปิด" · เปิดติดหลังค้าง · shortcut (PLAN_APP สถานะ 2026-09-07)', [
@@ -495,7 +495,7 @@ EPICS.append(E('ra4058', 'RA-4058 · เปิด/ปิดไม่ค้าง
     'ที่มา: app/build/installer.nsh (feedback 2026-09-07 epic RA-4058)', kind='boundary',
     pre=['เครื่อง Windows 11 ที่ Smart App Control = Off']),
  ]),
-]))
+], jira='RA-4058'))
 
 # ───────────────────────── RA-4065 · เลือกกล้อง ─────────────────────────
 EPICS.append(E('ra4065', 'RA-4065 · เลือกกล้อง', '📷', 'RA-4065 · เลือกกล้อง — เลือกกล้องได้ — dropdown · จำค่า · กล้องหลุด (DECISIONS camera picker)', [
@@ -518,7 +518,7 @@ EPICS.append(E('ra4065', 'RA-4065 · เลือกกล้อง', '📷', 'R
     'ที่มา: DECISIONS "camera picker" (RA-4068 กล้องหลุด → แจ้ง + สลับตัวที่เหลือ) · e2e_app_camlost',
     kind='exception', pre=PRE_TT + ['เครื่องมีกล้องในตัว + กล้อง USB'], ui=False),
  ]),
-]))
+], jira='RA-4065'))
 
 # ───────────────────────── RA-4077 · Installer ลูกค้า ─────────────────────────
 EPICS.append(E('ra4077', 'RA-4077 · Installer ลูกค้า', '🧰', 'RA-4077 · Installer ลูกค้า — customer-ready installer — ตรวจเครื่อง · ติดตั้ง Python/venv · โหลดโมเดล · บูตครั้งแรก (PLAN_INSTALLER)', [
@@ -648,7 +648,7 @@ EPICS.append(E('ra4077', 'RA-4077 · Installer ลูกค้า', '🧰', 'RA-
     'ที่มา: INSTALL_GUIDE ขั้นที่ 3 (ข้อจำกัด API key) · CUSTOMER_READY ด่าน 2/ด่าน 4 (เครดิต ElevenLabs หมด = อวตารเงียบ)',
     kind='exception', pre=['ติดตั้งแอปและผ่านหน้าตั้งค่าครั้งแรกแล้ว', 'ไม่มีไฟล์ .env หรือ key ที่เครดิตเสียงหมด', 'บัญชี TikTok ทดสอบ'], ui=False),
  ]),
-]))
+], jira='RA-4077'))
 
 # ───────────────────────── RA-4090 · อ่านคอมเมนต์ไลฟ์จริง ─────────────────────────
 EPICS.append(E('ra4090', 'RA-4090 · อ่านคอมเมนต์ไลฟ์จริง', '🚨', 'RA-4090 · อ่านคอมเมนต์ไลฟ์จริง — chat reader — คอมเมนต์จริงเข้า feed อย่างเสถียร · แถบเตือนแชทหลุด (PLAN_CHATREADER)', [
@@ -713,4 +713,4 @@ EPICS.append(E('ra4090', 'RA-4090 · อ่านคอมเมนต์ไล�
     'ที่มา: PLAN_CHATREADER C-2 (RA-4092 reload จนกว่าเฟรมจะไหล · สมมติฐาน "เปิดก่อน Go LIVE = ค้าง offline") · C-6 (RA-4096)',
     kind='exception', pre=PRE_LIVE),
  ]),
-]))
+], jira='RA-4090'))
