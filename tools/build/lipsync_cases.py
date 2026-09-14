@@ -11,7 +11,7 @@
   ที่เข้าไม่ถึง → คำอ้างจาก e2e_app_spec.mjs (27 เคส characterization) · e2e_*.mjs · design/console_mock.html · README_TIKTOK.md
   เคสกลุ่มนี้ตั้ง ui=False = ป้าย "🔎 คำ UI รอยืนยัน" (ฟีเจอร์มีจริงแล้ว แต่ชื่อปุ่มต้องยืนยันกับหน้าจอจริงตอนเทส)
 
-ขอบเขต: จัดกลุ่มตาม epic Jira RA เรียงเลข epic — RA-4027 ส่งไลฟ์ TikTok · RA-4032 Console · RA-4037 ตอบคอมเมนต์ · RA-4049 Desktop App
+ขอบเขต: จัดกลุ่มตาม epic Jira RA เรียงเลข epic · เลข Epic 1–8 QA ตั้งให้เอง (repo ไม่มีเลข Epic) — RA-4027 ส่งไลฟ์ TikTok · RA-4032 Console · RA-4037 ตอบคอมเมนต์ · RA-4049 Desktop App
         · RA-4058 เปิด/ปิดไม่ค้าง · RA-4065 เลือกกล้อง · RA-4077 Installer ลูกค้า · RA-4090 อ่านคอมเมนต์ไลฟ์จริง · ID = LS-<เลข epic>.<ลำดับ>
 ไม่รวม: deploy/ Docker+WSL (RA-3963 ปิดแล้วและถูกแช่แข็ง) · code signing (defer) · ช่องกรอก API key ฝั่งลูกค้า (ยังไม่มี) · หน้า dev ?ui=v1
 
@@ -24,7 +24,7 @@ META = dict(
     emoji='🎙️', uid_start=6001, download='takra-lipsync-app-ui-test-cases.html',
     back='https://wanlee-tankunnatam.github.io/qa-test-reports/?project=lipsync',
     sub='เทส UI ด้วยมืออย่างเดียว · แอปเดสก์ท็อป TAKRA Lib-Sync (Electron · Windows 11) · ต้องมีการ์ดจอ NVIDIA + บัญชี TikTok ที่มีสิทธิ์ LIVE Studio',
-    groups_label='8 epic (RA-4027 → RA-4090)',
+    groups_label='8 epic (Epic 1–8 · RA-4027 → RA-4090)',
     noui_badge='🔎 คำ UI รอยืนยัน',
     noui_note=('🔎 <b>คำ UI รอยืนยัน</b> — ฟีเจอร์นี้มีในแอปแล้ว (มี e2e ผ่าน) แต่หน้า Console v2 เป็นไฟล์ build ที่ไม่อยู่ใน git '
                '(<code>app/bundle/upstream/index_v2.html</code>) ชื่อปุ่ม/ข้อความในเคสนี้จึงอ้างจาก <code>e2e_app_spec.mjs</code> · '
@@ -35,6 +35,7 @@ META = dict(
           '📎 <b>ที่มาของเคส:</b> PLAN_APP (RA-4049) · PLAN_INSTALLER (RA-4077) · PLAN_CHATREADER (RA-4090) · PLAN_CONSOLE (RA-4032) · PLAN_COMMENTS (RA-4037) · PLAN_TIKTOK (RA-4027) · '
           'DECISIONS (RA-4065 กล้อง · RA-4070 console v2) · INSTALL_GUIDE · CUSTOMER_READY · คำ UI ลอกจาก <code>app/firstrun.html</code> · <code>app/login.html</code> · <code>app/src/main.js</code> · <code>app/src/preload.js</code> · <code>app/src/tiktok-login.js</code><br>'
           '🔎 <b>ป้าย "คำ UI รอยืนยัน":</b> เคสหน้า Console (หน้าเตรียมไลฟ์/โหมดไลฟ์/คอมเมนต์/ข้อมูลร้าน) — source ของหน้านี้ไม่อยู่ใน repo ที่เข้าถึงได้ คำอ้างจาก e2e spec + mock ให้ยืนยันคำจริงตอนเทส<br>'
+          '🧩 <b>เลข Epic 1–8:</b> QA ตั้งให้เองเพื่ออ่านง่าย เรียงตามเลขใบ Jira (repo poc-local ไม่มีเลข Epic — ทีม dev อ้างเลขใบ RA) · รหัสเคส <code>LS-&lt;เลขใบ RA&gt;.&lt;ลำดับ&gt;</code> คงเดิม<br>'
           '🏷️ <b>ประเภทเคส (กรองได้):</b> Happy Path · Negative · Boundary/Edge · Validation · Exception/Error · Permission · Data<br>'
           '🛑 <b>วินัยกันแบน TikTok (ทำทุกครั้งที่ Go LIVE จริง):</b> ชื่อไลฟ์ระบุ "AI Avatar" · หน้า avatar = หน้าคนทดสอบเอง (ห้ามภาพเดโม/คนดัง) · มีคนอยู่หน้าจอตลอด · รอบทดสอบสั้น ~2 นาที ไม่เกิน 2 รอบ/วัน<br>'
           '⚠️ <b>นอกขอบเขตรายงานนี้:</b> เส้นทาง Docker+WSL ใน <code>deploy/</code> (RA-3963 ปิดแล้ว/แช่แข็ง) · code signing (defer) · ช่องกรอก API key ฝั่งลูกค้า (ยังไม่มี) · หน้าเก่า <code>?ui=v1</code> · ความแม่นของโมเดล lip-sync เชิงตัวเลข'),
@@ -68,16 +69,16 @@ def C(id, title, prio, steps, expected, src, pre=None, data=None, note=None, lev
     return dict(id=id, title=title, prio=prio, level=level, kind=kind, ui=ui, pre=pre or [], steps=steps,
                 data=data or [], expected=expected, src=src, note=note)
 
-def E(key, chip, emoji, title, feats, jira=None):
-    return dict(key=key, chip=chip, emoji=emoji, title=title, feats=feats, jira=jira)
+def E(key, chip, emoji, title, feats, jira=None, no=None):
+    return dict(key=key, chip=chip, emoji=emoji, title=title, feats=feats, jira=jira, no=no)
 
 def F(featkey, title, cases):
     return dict(featkey=featkey, title=title, cases=cases)
 
 EPICS = []
 
-# ───────────────────────── RA-4027 · ส่งไลฟ์ TikTok ─────────────────────────
-EPICS.append(E('ra4027', 'RA-4027 · ส่งไลฟ์ TikTok', '📺', 'RA-4027 · ส่งไลฟ์ TikTok — ส่ง avatar ขึ้น TikTok LIVE ผ่าน LIVE Studio (PLAN_TIKTOK)', [
+# ───────────────────────── Epic 1 · RA-4027 · ส่งไลฟ์ TikTok ─────────────────────────
+EPICS.append(E('ra4027', 'Epic 1 · RA-4027 · ส่งไลฟ์ TikTok', '📺', 'Epic 1 · RA-4027 · ส่งไลฟ์ TikTok — ส่ง avatar ขึ้น TikTok LIVE ผ่าน LIVE Studio (PLAN_TIKTOK)', [
  F('ls-4027-studio', 'ออกอากาศผ่าน TikTok LIVE Studio', [
   C('LS-4027.1', 'ไลฟ์จริงผ่าน LIVE Studio: ผู้ชมเห็นแค่ avatar ได้ยินเสียงและปากตรง', 'P0',
     [START, LIVE, STUDIO,
@@ -89,10 +90,10 @@ EPICS.append(E('ra4027', 'RA-4027 · ส่งไลฟ์ TikTok', '📺', 'RA-
     'ที่มา: PLAN_TIKTOK K-2/K-3 (RA-4029/4030) · PLAN_APP A-8 (RA-4057) · README_TIKTOK',
     pre=PRE_LIVE, ui=False),
  ]),
-], jira='RA-4027'))
+], jira='RA-4027', no=1))
 
-# ───────────────────────── RA-4032 · Console แม่ค้า ─────────────────────────
-EPICS.append(E('ra4032', 'RA-4032 · Console แม่ค้า', '🎛️', 'RA-4032 · Console แม่ค้า — แอปคอนโซลแม่ค้า — หน้าเตรียมไลฟ์ → โหมดไลฟ์ (PLAN_CONSOLE)', [
+# ───────────────────────── Epic 2 · RA-4032 · Console แม่ค้า ─────────────────────────
+EPICS.append(E('ra4032', 'Epic 2 · RA-4032 · Console แม่ค้า', '🎛️', 'Epic 2 · RA-4032 · Console แม่ค้า — แอปคอนโซลแม่ค้า — หน้าเตรียมไลฟ์ → โหมดไลฟ์ (PLAN_CONSOLE)', [
  F('ls-4032-voice', 'เสียงผู้พูด', [
   C('LS-4032.1', 'รายชื่อเสียงโหลดครบ ฟังตัวอย่างได้ และจำเสียงที่เลือก', 'P1',
     [START, 'ที่การ์ดเสียงผู้พูด เปิด dropdown แล้วเลือกเสียงที่ไม่ใช่ตัวแรก',
@@ -217,10 +218,10 @@ EPICS.append(E('ra4032', 'RA-4032 · Console แม่ค้า', '🎛️', 'RA
     'ที่มา: PLAN_COMMENTS สถานะ 2026-09-03 (feedback "บทสด teleprompter/เลือกจุดเริ่มพูด") · e2e_app_spec โซน B',
     pre=PRE_TT, ui=False),
  ]),
-], jira='RA-4032'))
+], jira='RA-4032', no=2))
 
-# ───────────────────────── RA-4037 · ตอบคอมเมนต์ ─────────────────────────
-EPICS.append(E('ra4037', 'RA-4037 · ตอบคอมเมนต์', '💬', 'RA-4037 · ตอบคอมเมนต์ — ตอบคอมเมนต์ในไลฟ์ — feed · ตอบอัตโนมัติรายหมวด · จิ้มตอบเอง · ข้อมูลร้าน (PLAN_COMMENTS)', [
+# ───────────────────────── Epic 3 · RA-4037 · ตอบคอมเมนต์ ─────────────────────────
+EPICS.append(E('ra4037', 'Epic 3 · RA-4037 · ตอบคอมเมนต์', '💬', 'Epic 3 · RA-4037 · ตอบคอมเมนต์ — ตอบคอมเมนต์ในไลฟ์ — feed · ตอบอัตโนมัติรายหมวด · จิ้มตอบเอง · ข้อมูลร้าน (PLAN_COMMENTS)', [
  F('ls-4037-feed', 'feed คอมเมนต์', [
   C('LS-4037.1', 'feed ว่างต้องบอกสถานะ ไม่ใช่ช่องเปล่า', 'P2',
     [START, LIVE, 'ยังไม่ Go LIVE ใน Studio แล้วดู feed คอมเมนต์ในแถบขวา'],
@@ -334,10 +335,10 @@ EPICS.append(E('ra4037', 'RA-4037 · ตอบคอมเมนต์', '💬',
     'ที่มา: PLAN_COMMENTS C-3 (RA-4040 ".doc เก่าเตือน save as .docx")',
     data=['ไฟล์ FAQ.doc (Word 97-2003)'], kind='validation', pre=PRE_TT, ui=False),
  ]),
-], jira='RA-4037'))
+], jira='RA-4037', no=3))
 
-# ───────────────────────── RA-4049 · Desktop App ─────────────────────────
-EPICS.append(E('ra4049', 'RA-4049 · Desktop App', '🖥️', 'RA-4049 · Desktop App — ห่อ TAKRA Console เป็นแอปเดสก์ท็อป (Electron) — ติดตั้ง · บูต · เชื่อม TikTok · แหล่งคอมเมนต์ (PLAN_APP)', [
+# ───────────────────────── Epic 4 · RA-4049 · Desktop App ─────────────────────────
+EPICS.append(E('ra4049', 'Epic 4 · RA-4049 · Desktop App', '🖥️', 'Epic 4 · RA-4049 · Desktop App — ห่อ TAKRA Console เป็นแอปเดสก์ท็อป (Electron) — ติดตั้ง · บูต · เชื่อม TikTok · แหล่งคอมเมนต์ (PLAN_APP)', [
  F('ls-4049-install', 'ติดตั้งจาก setup.exe', [
   C('LS-4049.1', 'ติดตั้งผ่านจอเตือน SmartScreen แล้วได้ไอคอนบนหน้า Desktop', 'P0',
     ['ดาวน์โหลดไฟล์ "TAKRA Lib-Sync-x.x.x-setup.exe" จากช่องทางที่ทีมส่งให้ (ถ้าเบราว์เซอร์เตือนให้กด ⋯ → Keep)',
@@ -456,10 +457,10 @@ EPICS.append(E('ra4049', 'RA-4049 · Desktop App', '🖥️', 'RA-4049 · Deskto
     'ที่มา: commit RA-4057 "stop the camera freezing when TAKRA is occluded" · app/src/main.js backgroundThrottling:false · README_TIKTOK Troubleshooting',
     kind='exception', pre=PRE_LIVE, ui=False),
  ]),
-], jira='RA-4049'))
+], jira='RA-4049', no=4))
 
-# ───────────────────────── RA-4058 · เปิด/ปิดไม่ค้าง ─────────────────────────
-EPICS.append(E('ra4058', 'RA-4058 · เปิด/ปิดไม่ค้าง', '⏻', 'RA-4058 · เปิด/ปิดไม่ค้าง — หน้า "กำลังปิด" · เปิดติดหลังค้าง · shortcut (PLAN_APP สถานะ 2026-09-07)', [
+# ───────────────────────── Epic 5 · RA-4058 · เปิด/ปิดไม่ค้าง ─────────────────────────
+EPICS.append(E('ra4058', 'Epic 5 · RA-4058 · เปิด/ปิดไม่ค้าง', '⏻', 'Epic 5 · RA-4058 · เปิด/ปิดไม่ค้าง — หน้า "กำลังปิด" · เปิดติดหลังค้าง · shortcut (PLAN_APP สถานะ 2026-09-07)', [
  F('ls-4058-close', 'ปิดแอป', [
   C('LS-4058.1', 'กดปิดแอปแล้วเห็น "กำลังปิดระบบ TAKRA..." และปิดจบภายใน 15 วินาที', 'P0',
     [START, 'กดปุ่ม X มุมขวาบนของหน้าต่างแอป แล้วจับเวลา',
@@ -495,10 +496,10 @@ EPICS.append(E('ra4058', 'RA-4058 · เปิด/ปิดไม่ค้าง
     'ที่มา: app/build/installer.nsh (feedback 2026-09-07 epic RA-4058)', kind='boundary',
     pre=['เครื่อง Windows 11 ที่ Smart App Control = Off']),
  ]),
-], jira='RA-4058'))
+], jira='RA-4058', no=5))
 
-# ───────────────────────── RA-4065 · เลือกกล้อง ─────────────────────────
-EPICS.append(E('ra4065', 'RA-4065 · เลือกกล้อง', '📷', 'RA-4065 · เลือกกล้อง — เลือกกล้องได้ — dropdown · จำค่า · กล้องหลุด (DECISIONS camera picker)', [
+# ───────────────────────── Epic 6 · RA-4065 · เลือกกล้อง ─────────────────────────
+EPICS.append(E('ra4065', 'Epic 6 · RA-4065 · เลือกกล้อง', '📷', 'Epic 6 · RA-4065 · เลือกกล้อง — เลือกกล้องได้ — dropdown · จำค่า · กล้องหลุด (DECISIONS camera picker)', [
  F('ls-4065-cam', 'กล้อง', [
   C('LS-4065.1', 'เลือกกล้องจาก dropdown แล้วภาพเปลี่ยนตาม และจำค่าหลังปิดเปิดแอป', 'P1',
     [START, 'ที่การ์ดกล้อง เปิด dropdown เลือกกล้องแล้วเลือกกล้องตัวที่สอง',
@@ -518,10 +519,10 @@ EPICS.append(E('ra4065', 'RA-4065 · เลือกกล้อง', '📷', 'R
     'ที่มา: DECISIONS "camera picker" (RA-4068 กล้องหลุด → แจ้ง + สลับตัวที่เหลือ) · e2e_app_camlost',
     kind='exception', pre=PRE_TT + ['เครื่องมีกล้องในตัว + กล้อง USB'], ui=False),
  ]),
-], jira='RA-4065'))
+], jira='RA-4065', no=6))
 
-# ───────────────────────── RA-4077 · Installer ลูกค้า ─────────────────────────
-EPICS.append(E('ra4077', 'RA-4077 · Installer ลูกค้า', '🧰', 'RA-4077 · Installer ลูกค้า — customer-ready installer — ตรวจเครื่อง · ติดตั้ง Python/venv · โหลดโมเดล · บูตครั้งแรก (PLAN_INSTALLER)', [
+# ───────────────────────── Epic 7 · RA-4077 · Installer ลูกค้า ─────────────────────────
+EPICS.append(E('ra4077', 'Epic 7 · RA-4077 · Installer ลูกค้า', '🧰', 'Epic 7 · RA-4077 · Installer ลูกค้า — customer-ready installer — ตรวจเครื่อง · ติดตั้ง Python/venv · โหลดโมเดล · บูตครั้งแรก (PLAN_INSTALLER)', [
  F('ls-4077-policy', 'ข้อจำกัดเครื่องลูกค้า', [
   C('LS-4077.1', 'เครื่องที่เปิด Smart App Control ติดตั้งไม่ได้ (ข้อจำกัดที่ยอมรับแล้ว)', 'P1',
     ['เปิด Windows Security → App & browser control → Smart App Control แล้วจดสถานะว่าเป็น "On"',
@@ -648,10 +649,10 @@ EPICS.append(E('ra4077', 'RA-4077 · Installer ลูกค้า', '🧰', 'RA-
     'ที่มา: INSTALL_GUIDE ขั้นที่ 3 (ข้อจำกัด API key) · CUSTOMER_READY ด่าน 2/ด่าน 4 (เครดิต ElevenLabs หมด = อวตารเงียบ)',
     kind='exception', pre=['ติดตั้งแอปและผ่านหน้าตั้งค่าครั้งแรกแล้ว', 'ไม่มีไฟล์ .env หรือ key ที่เครดิตเสียงหมด', 'บัญชี TikTok ทดสอบ'], ui=False),
  ]),
-], jira='RA-4077'))
+], jira='RA-4077', no=7))
 
-# ───────────────────────── RA-4090 · อ่านคอมเมนต์ไลฟ์จริง ─────────────────────────
-EPICS.append(E('ra4090', 'RA-4090 · อ่านคอมเมนต์ไลฟ์จริง', '🚨', 'RA-4090 · อ่านคอมเมนต์ไลฟ์จริง — chat reader — คอมเมนต์จริงเข้า feed อย่างเสถียร · แถบเตือนแชทหลุด (PLAN_CHATREADER)', [
+# ───────────────────────── Epic 8 · RA-4090 · อ่านคอมเมนต์ไลฟ์จริง ─────────────────────────
+EPICS.append(E('ra4090', 'Epic 8 · RA-4090 · อ่านคอมเมนต์ไลฟ์จริง', '🚨', 'Epic 8 · RA-4090 · อ่านคอมเมนต์ไลฟ์จริง — chat reader — คอมเมนต์จริงเข้า feed อย่างเสถียร · แถบเตือนแชทหลุด (PLAN_CHATREADER)', [
  F('ls-4090-feed', 'คอมเมนต์จริงเข้า feed', [
   C('LS-4090.1', 'คอมเมนต์จริงจากไลฟ์เข้า feed เร็ว ไม่ซ้ำ ใหม่อยู่ล่าง มีเวลากำกับ', 'P0',
     [START, LIVE, STUDIO,
@@ -713,4 +714,4 @@ EPICS.append(E('ra4090', 'RA-4090 · อ่านคอมเมนต์ไล�
     'ที่มา: PLAN_CHATREADER C-2 (RA-4092 reload จนกว่าเฟรมจะไหล · สมมติฐาน "เปิดก่อน Go LIVE = ค้าง offline") · C-6 (RA-4096)',
     kind='exception', pre=PRE_LIVE),
  ]),
-], jira='RA-4090'))
+], jira='RA-4090', no=8))
