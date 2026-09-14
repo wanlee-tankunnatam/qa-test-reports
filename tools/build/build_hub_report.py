@@ -103,12 +103,11 @@ def status_block(uid):
   </div>
 '''
 
-def epic_tag(jira, no=None):
-    label = f'Epic {no} · {jira}' if no else f'Epic {jira}'   # no = เลข Epic ที่ QA ตั้งให้ (ถ้ามี)
+def epic_tag(jira):
     return (f'<a class="epic-tag" href="{JIRA_BROWSE}{jira}" target="_blank" rel="noopener" '
-            f'onclick="event.stopPropagation()" title="Epic {jira} ใน Jira">🧩 {label}</a>') if jira else ''
+            f'onclick="event.stopPropagation()" title="Epic {jira} ใน Jira">🧩 Epic {jira}</a>') if jira else ''
 
-def case_html(c, uid, epic_key, epic_title_short, epic_jira=None, epic_no=None):
+def case_html(c, uid, epic_key, epic_title_short, epic_jira=None):
     u = f'tc-{uid}'
     lvl = c.get('level', 'ui')
     lv_html = ('<span class="lv lvl-e2e">E2E</span>' if lvl == 'e2e' else '<span class="lv lvl-ui">UI</span>')
@@ -117,14 +116,14 @@ def case_html(c, uid, epic_key, epic_title_short, epic_jira=None, epic_no=None):
     noui = '' if in_ui else f' <span class="noui">{NOUI_BADGE}</span>'
     head = f'''<tr class="trow" data-feat="{epic_key}" data-level="{lvl}" data-prio="{c['prio']}" data-kind="{kind}" data-ui="{'yes' if in_ui else 'no'}" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">{esc(c['id'])}</td>
-  <td class="ctitle">{esc(c['title'])} {kind_tag(kind)}{(' ' + epic_tag(epic_jira, epic_no)) if epic_jira else ''}{noui}</td>
+  <td class="ctitle">{esc(c['title'])} {kind_tag(kind)}{(' ' + epic_tag(epic_jira)) if epic_jira else ''}{noui}</td>
   <td class="lvl">{lv_html}</td>
   <td><span class="prio {PRIO_CLS[c['prio']]}">{c['prio']}</span></td>
   <td class="status" data-uid="{u}"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="{u}"></td>
 </tr>
 '''
-    hprio = ((f'{epic_tag(epic_jira, epic_no)} · ' if epic_jira else '') + f'Priority: <b>{c["prio"]}</b> · {"E2E" if lvl == "e2e" else "UI"} · ประเภท: <b>{KINDS[kind][0]}</b> '
+    hprio = ((f'{epic_tag(epic_jira)} · ' if epic_jira else '') + f'Priority: <b>{c["prio"]}</b> · {"E2E" if lvl == "e2e" else "UI"} · ประเภท: <b>{KINDS[kind][0]}</b> '
              f'<span class="hint">({esc(KINDS[kind][1])})</span> · {esc(epic_title_short)}')
     body = [f'<tr class="detail"><td colspan="7"><div class="card">',
             f'  <div class="h-title">{esc(c["title"])}</div>',
@@ -198,7 +197,7 @@ def build():
     for e in EPICS:
         n = sum(len(f['cases']) for f in e['feats'])
         chips.append(f'<button class="fchip" data-f="feat" data-v="{e["key"]}">{e["chip"]} ({n})</button>')
-        rows.append(f'\n<!-- {e["key"]} -->\n<tr class="epicrow" data-epic="{e["key"]}"><td colspan="7">{e["emoji"]} {esc(e["title"])} <span class="rp">({n} เคส)</span>{(' ' + epic_tag(e['jira'], e.get('no'))) if e.get('jira') else ''}</td></tr>')
+        rows.append(f'\n<!-- {e["key"]} -->\n<tr class="epicrow" data-epic="{e["key"]}"><td colspan="7">{e["emoji"]} {esc(e["title"])} <span class="rp">({n} เคส)</span>{(' ' + epic_tag(e['jira'])) if e.get('jira') else ''}</td></tr>')
         short = e['title'].split(' · ')[0] + ' · ' + e['title'].split(' · ')[1] if ' · ' in e['title'] else e['title']
         for f in e['feats']:
             n_ui = sum(1 for c in f['cases'] if c.get('level', 'ui') != 'e2e')
@@ -206,7 +205,7 @@ def build():
             lvs = (f'<span class="lv lvl-ui">🌐 {n_ui}</span>' if n_ui else '') + (f' <span class="lv lvl-e2e">🔄 {n_e2e}</span>' if n_e2e else '')
             rows.append(f'<tr class="featrow" data-featkey="{f["featkey"]}"><td colspan="7">📁 {esc(f["title"])} <span class="rp">{lvs}</span> {OWNER_SEL.format(fk=f["featkey"])}</td></tr>')
             for c in f['cases']:
-                rows.append(case_html(c, uid, e['key'], short, e.get('jira'), e.get('no')))
+                rows.append(case_html(c, uid, e['key'], short, e.get('jira')))
                 uid += 1
                 total += 1
                 counts[c['prio']] += 1
