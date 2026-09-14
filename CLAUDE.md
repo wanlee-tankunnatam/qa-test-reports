@@ -43,7 +43,7 @@ repo นี้เก็บรายงาน manual test case (UI) ของท�
 | **takra-hub** | `/Users/ice/Documents/rf/takra-hub` (local develop ตามหลัง origin มาก — อ่านจาก `origin/develop` ผ่าน worktree/`git show`) | `apps/web/src` | **ฝังไทยในโค้ด** — grep คำใน `apps/web/src/**` (ไม่มี i18n) | ⚠️ อยู่ที่ `docs/` ไม่ใช่ `_bmad-output/planning-artifacts/` — `docs/epics.md` (MVP-1 Epic 1–4) · `docs/epics-mvp2.md` · `docs/prd.md` · เคส UI เดิม `_bmad-output/test-artifacts/case/*/ui.md` · รายงาน generate จาก `tools/build/hub_cases.py` (ดู README) |
 | **takra-clip** | `/Users/ice/Documents/rf/takra-clip-main` (repo ของกลาง — โค้ดจริงเป็น submodule ใต้ `apps/`: `takra-clip-service` Go+Postgres · `takra-clip-backoffice` Vue 3 · `takra-clip-extension` · ต้อง `git submodule update --init --recursive` ก่อน) | `apps/takra-clip-backoffice/src` | **i18n** — `apps/takra-clip-backoffice/src/i18n/messages.ts` (`export const th` · ห้ามใช้ข้อความเป็น key ใช้ path เช่น `nav.dashboard`) · แบบ UI ก่อนมีโค้ดอยู่ที่ `design/*.dc.html` (30 ไฟล์) | ⚠️ อยู่ที่ `docs/` — `docs/planning-artifacts/prd/full.md` · `docs/planning-artifacts/architecture/index.md` · `docs/planning-artifacts/flow-01..03` · `docs/epic/ep-01..05` · `docs/implementation-artifacts/` · `docs/test-artifacts/` · `docs/api/index.md` |
 | **takra-farm** (TAKRA Post) | `/Users/ice/Documents/rf/takra-farm` (แอปเดสก์ท็อป Tauri 2 · Rust + Vue 3 · ต้องมี `adb` บน PATH) | `src` (Vue 3 + Naive UI) · `src-tauri` (Rust) | **i18n** — `src/i18n/locales/th-TH.yml` (คู่กับ `en.yml`) | ⚠️ อยู่ที่ `docs/` — `docs/prd.md` (Brownfield PRD) · `AUTO-SCHEDULE-SPEC.md` · `CONTENT-DISPATCH.md` · `CONTENT-STUDIO-PRD.md` · `TIKTOK-QUEUE-SYSTEM.md` · `LICENSING.md` |
-| **takra-lipsync** (TAKRA Lib-Sync) | `/Users/ice/Documents/other/poc-local` (ผู้ใช้เรียก `deploy/` ว่า takra-lipsync · local main ตามหลัง origin — อ่านจาก `origin/main` ผ่าน worktree) | `app/` (Electron) · หน้า Console = `app/bundle/upstream/index_v2.html` (ไฟล์ build ไม่อยู่ใน git) | **ฝังไทยในโค้ด** — grep `app/**` · ⚠️ คำหน้า Console ยังไม่มี source ให้ลอก → อ้าง `e2e_app_spec.mjs` + `design/console_mock.html` แล้วติดป้ายรอยืนยัน | ⚠️ อยู่ที่ root repo — `PLAN_APP.md` · `PLAN_INSTALLER.md` · `PLAN_CHATREADER.md` · `PLAN_CONSOLE.md` · `PLAN_COMMENTS.md` · `PLAN_TIKTOK.md` · `DECISIONS.md` · `CUSTOMER_READY.md` · `INSTALL_GUIDE.md` |
+| **takra-lipsync** (TAKRA Lib-Sync) | `/Users/ice/Documents/other/takra-lib-sync` (repo production `Real-Factory/takra-lib-sync` · branch `develop` → `uat` (QA/RC) → `prod` · **QA อ่านจาก `origin/uat`** · repo POC `poc-local` เลิกใช้แล้ว) | `app/` (Electron) · `web/console/src` (Svelte 5 + TS — หน้า Console) | **ฝังไทยในโค้ด** — grep `app/**` + `web/console/src/**` (ไม่มี i18n · ข้าม `*.test.*`) | ⚠️ อยู่ที่ `_bmad-output/planning-artifacts/` — `prd.md` · `epics.md` (Epic M1 + Jira TLS) · `backlog/epic-1..6` · root `DECISIONS.md` · `CUSTOMER_READY.md` · `INSTALL_GUIDE.md` · `TECH_STACK.md` · `docs/stories/ux-design-stories.md` |
 
 > ก่อนเริ่มทุกครั้ง: ยืนยันว่ากำลังทำ **โปรเจกต์ไหน** แล้วใช้ path จากแถวนั้น — อย่าเอา path ข้ามโปรเจกต์
 
@@ -59,7 +59,7 @@ repo นี้เก็บรายงาน manual test case (UI) ของท�
 | **takra-hub** | `/Users/ice/Documents/rf/takra-hub` | `TKH` | https://kitdi.atlassian.net/jira/software/projects/TKH/boards/1733/timeline | `projects/takra-hub/` | `?project=hub` |
 | **takra-clip** | `/Users/ice/Documents/rf/takra-clip-main` | `ACL` | https://kitdi.atlassian.net/jira/software/projects/ACL/list | `projects/takra-clip/` | `?project=clip` |
 | **takra-farm** | `/Users/ice/Documents/rf/takra-farm` | *ยังไม่พบใน repo* | — | `projects/takra-farm/` | `?project=farm` |
-| **takra-lipsync** | `/Users/ice/Documents/other/poc-local` | `RA` (epic ราย PLAN_*.md) | — | `projects/takra-lipsync/` | `?project=lipsync` |
+| **takra-lipsync** | `/Users/ice/Documents/other/takra-lib-sync` | `TLS` (เคสชุดแรกจัดกลุ่มตาม epic `RA` ของ POC) | — | `projects/takra-lipsync/` | `?project=lipsync` |
 
 > **takra-ai คุณภาพไลฟ์รีรัน** (9 ก.ย. 2026) — 15 เคส 3 รอบ อยู่ที่ `tools/build/ai_quality_cases.py` → `python3 tools/build/build_hub_report.py aiquality`
 >
@@ -69,7 +69,7 @@ repo นี้เก็บรายงาน manual test case (UI) ของท�
 >
 > **takra-insight MVP-2 Epic 4 + Epic 6** (9 ก.ย. 2026) — เคสอยู่ที่ `tools/build/insight_mvp2_e46_cases.py` → `python3 tools/build/build_hub_report.py insighte46` (แก้ที่ไฟล์ cases แล้ว build ใหม่ อย่าแก้ HTML ตรง ๆ)
 >
-> **takra-lipsync** เข้าทะเบียน 14 ก.ย. 2026 · รายงานชุดแรก Desktop UI 69 เคส (37 เคสหน้า Console ติดป้าย "🔎 คำ UI รอยืนยัน") (`tools/build/lipsync_cases.py` → `python3 tools/build/build_hub_report.py lipsync`)
+> **takra-lipsync** เข้าทะเบียน 14 ก.ย. 2026 · **ย้าย repo เป็น `takra-lib-sync` (production) วันเดียวกัน** — เคสชุดแรกเขียนจาก POC `poc-local` @ `fcfba85` ยังไม่ได้เทียบคำกับ repo ใหม่ · รายงานชุดแรก Desktop UI 69 เคส (37 เคสหน้า Console ติดป้าย "🔎 คำ UI รอยืนยัน") (`tools/build/lipsync_cases.py` → `python3 tools/build/build_hub_report.py lipsync`)
 >
 > **takra-farm** เข้าทะเบียน 7 ก.ย. 2026 · รายงานชุดแรก Desktop UI 59 เคส (ยังไม่รวม license — ยังไม่มีในรอบนี้) (`tools/build/farm_cases.py` → `python3 tools/build/build_hub_report.py farm`)
 >

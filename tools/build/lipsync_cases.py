@@ -1,14 +1,16 @@
 # -*- coding: utf-8 -*-
 """เคส UI manual test ของ TAKRA Lib-Sync (takra-lipsync) — แอปเดสก์ท็อป Windows (Electron)
 
-ที่มา: repo poc-local (github.com/sibthinonk-cpu/poc-local) อ่านจาก origin/main @ fcfba85 (2026-09-14)
+ที่มา (เขียนเคสรอบแรก): repo POC poc-local (github.com/sibthinonk-cpu/poc-local) origin/main @ fcfba85 (2026-09-14)
+· ตั้งแต่ 2026-09-14 repo หลักย้ายเป็น production Real-Factory/takra-lib-sync (/Users/ice/Documents/other/takra-lib-sync)
+  QA อ่านจาก origin/uat · Jira TLS · แผนอยู่ที่ _bmad-output/planning-artifacts/ — เคสชุดนี้ยังไม่ได้เทียบคำกับ repo ใหม่
 · แผน/สเปก: PLAN_APP.md (RA-4049) · PLAN_INSTALLER.md (RA-4077) · PLAN_CHATREADER.md (RA-4090) · PLAN_CONSOLE.md (RA-4032)
   · PLAN_COMMENTS.md (RA-4037) · PLAN_TIKTOK.md (RA-4027) · DECISIONS.md (camera picker RA-4065 · console v2 RA-4070 · code signing)
   · INSTALL_GUIDE.md · CUSTOMER_READY.md · README_APP.md · README_TIKTOK.md · DESIGN_TOUR.md
 · คำ UI ลอกจริง (ส่วนที่แอป Electron เป็นเจ้าของ): app/firstrun.html · app/login.html · app/src/main.js (หน้ารอบูต/กำลังปิด/กล่อง error)
   · app/src/preload.js (profile chip · banner แชทหลุด) · app/src/tiktok-login.js (ข้อความ error login) · app/src/firstrun.js · app/build/installer.nsh
 · หน้า Console (หน้าเตรียมไลฟ์/โหมดไลฟ์) = app/bundle/upstream/index_v2.html ซึ่งเป็นไฟล์ build ไม่อยู่ใน git และ source Svelte อยู่อีก repo
-  ที่เข้าไม่ถึง → คำอ้างจาก e2e_app_spec.mjs (27 เคส characterization) · e2e_*.mjs · design/console_mock.html · README_TIKTOK.md
+  ที่เข้าไม่ถึง (ณ POC) → ตอนนี้ source มีแล้วที่ takra-lib-sync web/console/src (Svelte 5) แต่ยังไม่ได้เทียบคำ → คำอ้างจาก e2e_app_spec.mjs (27 เคส characterization) · e2e_*.mjs · design/console_mock.html · README_TIKTOK.md
   เคสกลุ่มนี้ตั้ง ui=False = ป้าย "🔎 คำ UI รอยืนยัน" (ฟีเจอร์มีจริงแล้ว แต่ชื่อปุ่มต้องยืนยันกับหน้าจอจริงตอนเทส)
 
 ขอบเขต: จัดกลุ่มตาม epic Jira RA เรียงเลข epic — RA-4027 ส่งไลฟ์ TikTok · RA-4032 Console · RA-4037 ตอบคอมเมนต์ · RA-4049 Desktop App
@@ -29,16 +31,16 @@ META = dict(
     noui_note=('🔎 <b>คำ UI รอยืนยัน</b> — ฟีเจอร์นี้มีในแอปแล้ว (มี e2e ผ่าน) แต่หน้า Console v2 เป็นไฟล์ build ที่ไม่อยู่ใน git '
                '(<code>app/bundle/upstream/index_v2.html</code>) ชื่อปุ่ม/ข้อความในเคสนี้จึงอ้างจาก <code>e2e_app_spec.mjs</code> · '
                '<code>design/console_mock.html</code> · <code>README_TIKTOK.md</code> — ถ้าคำบนจอไม่ตรง ให้เทสตามความหมายแล้ว<b>จดคำจริงลง Actual</b> (ไม่ต้องตี FAIL เพราะคำต่าง)'),
-    note=('🖥️ <b>Test target:</b> แอปเดสก์ท็อป <b>TAKRA Lib-Sync</b> (ไฟล์ติดตั้ง <code>TAKRA Lib-Sync-x.x.x-setup.exe</code> build จาก repo <code>poc-local</code> origin/main @ <code>fcfba85</code> 14 ก.ย. 2026) · '
+    note=('🖥️ <b>Test target:</b> แอปเดสก์ท็อป <b>TAKRA Lib-Sync</b> (ไฟล์ติดตั้ง <code>TAKRA Lib-Sync-x.x.x-setup.exe</code> build จาก branch <code>uat</code> ของ repo <code>takra-lib-sync</code> — CI สร้างไฟล์ติดตั้งให้เมื่อ promote ขึ้น uat · เคสชุดนี้เขียนจาก POC <code>poc-local</code> @ <code>fcfba85</code> 14 ก.ย. 2026) · '
           'เครื่อง <b>Windows 11 + การ์ดจอ NVIDIA (VRAM ≥6GB) + RAM ≥16GB + ดิสก์ว่าง ≥8GB</b> · เว็บแคม · <b>TikTok LIVE Studio</b> · บัญชี TikTok ทดสอบที่มีสิทธิ์ไลฟ์ผ่าน LIVE Studio · มือถืออีกเครื่องไว้คอมเมนต์ · '
           'ไฟล์ <code>.env</code> (API key OpenAI/ElevenLabs) ของทีมวางไว้แล้ว — <b>ฝั่งลูกค้ายังไม่มีช่องกรอก key</b> ไม่มี key = กดพูดไม่ได้<br>'
           '📎 <b>ที่มาของเคส:</b> PLAN_APP (RA-4049) · PLAN_INSTALLER (RA-4077) · PLAN_CHATREADER (RA-4090) · PLAN_CONSOLE (RA-4032) · PLAN_COMMENTS (RA-4037) · PLAN_TIKTOK (RA-4027) · '
           'DECISIONS (RA-4065 กล้อง · RA-4070 console v2) · INSTALL_GUIDE · CUSTOMER_READY · คำ UI ลอกจาก <code>app/firstrun.html</code> · <code>app/login.html</code> · <code>app/src/main.js</code> · <code>app/src/preload.js</code> · <code>app/src/tiktok-login.js</code><br>'
-          '🔎 <b>ป้าย "คำ UI รอยืนยัน":</b> เคสหน้า Console (หน้าเตรียมไลฟ์/โหมดไลฟ์/คอมเมนต์/ข้อมูลร้าน) — source ของหน้านี้ไม่อยู่ใน repo ที่เข้าถึงได้ คำอ้างจาก e2e spec + mock ให้ยืนยันคำจริงตอนเทส<br>'
+          '🔎 <b>ป้าย "คำ UI รอยืนยัน":</b> เคสหน้า Console (หน้าเตรียมไลฟ์/โหมดไลฟ์/คอมเมนต์/ข้อมูลร้าน) — ตอนเขียนเคส source ของหน้านี้ยังไม่อยู่ใน repo ที่เข้าถึงได้ (ตอนนี้มีแล้วที่ <code>web/console/src</code> ของ takra-lib-sync แต่ยังไม่ได้เทียบคำ) คำอ้างจาก e2e spec + mock ให้ยืนยันคำจริงตอนเทส<br>'
           '🏷️ <b>ประเภทเคส (กรองได้):</b> Happy Path · Negative · Boundary/Edge · Validation · Exception/Error · Permission · Data<br>'
           '🛑 <b>วินัยกันแบน TikTok (ทำทุกครั้งที่ Go LIVE จริง):</b> ชื่อไลฟ์ระบุ "AI Avatar" · หน้า avatar = หน้าคนทดสอบเอง (ห้ามภาพเดโม/คนดัง) · มีคนอยู่หน้าจอตลอด · รอบทดสอบสั้น ~2 นาที ไม่เกิน 2 รอบ/วัน<br>'
           '⚠️ <b>นอกขอบเขตรายงานนี้:</b> เส้นทาง Docker+WSL ใน <code>deploy/</code> (RA-3963 ปิดแล้ว/แช่แข็ง) · code signing (defer) · ช่องกรอก API key ฝั่งลูกค้า (ยังไม่มี) · หน้าเก่า <code>?ui=v1</code> · ความแม่นของโมเดล lip-sync เชิงตัวเลข'),
-    footer='UI only (manual) · TAKRA Lib-Sync desktop (poc-local)',
+    footer='UI only (manual) · TAKRA Lib-Sync desktop (takra-lib-sync)',
 )
 
 OPEN = 'ดับเบิลคลิกไอคอน "TAKRA Lib-Sync" บนหน้า Desktop แล้วรอหน้า "กำลังเปิดระบบ TAKRA Lib-Sync..." จนหาย'
