@@ -46,7 +46,7 @@ BACK = META.get('back', 'https://wanlee-tankunnatam.github.io/qa-test-reports/?p
 # ข้อความเตือนใต้เคสที่ยังไม่มีหน้าจอ — ตั้งต่อรายงานได้ผ่าน META['noui_note']
 # ป้ายของเคส ui=False — ตั้งต่อรายงานได้ผ่าน META['noui_badge'] (ค่าเริ่มต้น = ไม่พบใน UI)
 NOUI_BADGE = META.get('noui_badge', '⛔ ไม่พบใน UI')
-# epic ที่มี key 'jira' (เช่น RA-4077) → ป้าย epic ลิงก์ Jira บนแถว epic + ทุกเคส (epic ไม่มี key = หน้าตาเดิม)
+# epic ที่มี key 'jira' (เช่น RA-4077) → ป้าย epic ลิงก์ Jira บนแถว epic + หัวการ์ดเคส (ไม่ใส่ในแถวรายการเคส · epic ไม่มี key = หน้าตาเดิม)
 JIRA_BROWSE = META.get('jira_browse', 'https://kitdi.atlassian.net/browse/')
 EPIC_TAG_CSS = """
 /* ป้าย epic (Jira) */
@@ -116,7 +116,7 @@ def case_html(c, uid, epic_key, epic_title_short, epic_jira=None):
     noui = '' if in_ui else f' <span class="noui">{NOUI_BADGE}</span>'
     head = f'''<tr class="trow" data-feat="{epic_key}" data-level="{lvl}" data-prio="{c['prio']}" data-kind="{kind}" data-ui="{'yes' if in_ui else 'no'}" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">{esc(c['id'])}</td>
-  <td class="ctitle">{esc(c['title'])} {kind_tag(kind)}{(' ' + epic_tag(epic_jira)) if epic_jira else ''}{noui}</td>
+  <td class="ctitle">{esc(c['title'])} {kind_tag(kind)}{noui}</td>
   <td class="lvl">{lv_html}</td>
   <td><span class="prio {PRIO_CLS[c['prio']]}">{c['prio']}</span></td>
   <td class="status" data-uid="{u}"><span class="stb pending">รอเทส</span></td>
