@@ -12,6 +12,7 @@ harness (CSS + JS ปุ่ม ☁️ เซฟ/ตัวกรอง/Jira/owner
       lrready = insight_live_readiness_cases.py (TAKRA Insight · Live Readiness คุณภาพบนไลฟ์จริง)
       rerunquality = rerun_quality_cases.py (TAKRA Rerun · คุณภาพ/ประสิทธิภาพการไลฟ์รีรัน)
       aiquality = ai_quality_cases.py (TAKRA AI · คุณภาพไลฟ์รีรัน ท่อส่ง+เนื้อหา)
+      lipsync = lipsync_cases.py (TAKRA Lib-Sync · แอปเดสก์ท็อป poc-local)
       (แต่ละไฟล์มี META บอก path/ชื่อ/uid เริ่ม)
 สถานะผลเทสเดิมในไฟล์ปลายทาง (<script id="store-data">) จะถูกคงไว้ถ้ามีอยู่แล้ว
 """
@@ -29,7 +30,8 @@ MODULES = {'mvp1': 'hub_cases', 'mvp2': 'hub_mvp2_cases', 'mvp2rbac': 'hub_mvp2_
            'insighte46': 'insight_mvp2_e46_cases',
            'lrready': 'insight_live_readiness_cases',
            'rerunquality': 'rerun_quality_cases',
-           'aiquality': 'ai_quality_cases'}
+           'aiquality': 'ai_quality_cases',
+           'lipsync': 'lipsync_cases'}
 _which = next((a for a in sys.argv[1:] if a in MODULES), 'mvp1')
 _mod = importlib.import_module(MODULES[_which])
 EPICS, KINDS, META = _mod.EPICS, _mod.KINDS, _mod.META
@@ -42,6 +44,8 @@ TITLE = META['title']
 # ปุ่ม "รายงานทั้งหมด" — ตั้งต่อรายงานได้ผ่าน META['back'] (ค่าเริ่มต้น = hub)
 BACK = META.get('back', 'https://wanlee-tankunnatam.github.io/qa-test-reports/?project=hub')
 # ข้อความเตือนใต้เคสที่ยังไม่มีหน้าจอ — ตั้งต่อรายงานได้ผ่าน META['noui_note']
+# ป้ายของเคส ui=False — ตั้งต่อรายงานได้ผ่าน META['noui_badge'] (ค่าเริ่มต้น = ไม่พบใน UI)
+NOUI_BADGE = META.get('noui_badge', '⛔ ไม่พบใน UI')
 NOUI_NOTE = META.get('noui_note', '⛔ <b>ไม่พบใน UI</b> ณ origin/develop 2026-08-19 (commit 27da4c0) — เคสเขียนตาม AC ในสเปกไว้ล่วงหน้า ชื่อปุ่ม/ข้อความอ้างจากเอกสาร อาจต่างจากของจริงเมื่อ build · ถ้ายังไม่มีหน้าจอให้บันทึกเป็น <b>BLOCKED</b> แล้วกลับมาปรับคำเมื่อ dev ส่งมอบ')
 
 OWNER_SEL = ('<span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="{fk}">'
@@ -97,7 +101,7 @@ def case_html(c, uid, epic_key, epic_title_short):
     lv_html = ('<span class="lv lvl-e2e">E2E</span>' if lvl == 'e2e' else '<span class="lv lvl-ui">UI</span>')
     kind = c['kind']
     in_ui = c.get('ui', True)
-    noui = '' if in_ui else ' <span class="noui">⛔ ไม่พบใน UI</span>'
+    noui = '' if in_ui else f' <span class="noui">{NOUI_BADGE}</span>'
     head = f'''<tr class="trow" data-feat="{epic_key}" data-level="{lvl}" data-prio="{c['prio']}" data-kind="{kind}" data-ui="{'yes' if in_ui else 'no'}" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">{esc(c['id'])}</td>
   <td class="ctitle">{esc(c['title'])} {kind_tag(kind)}{noui}</td>
@@ -206,11 +210,11 @@ def build():
     if noui_n:
         ui_row = (f'''    <div class="row"><label>สถานะ UI</label>
       <button class="fchip" data-f="ui" data-v="yes">✅ พร้อมเทส ({total - noui_n})</button>
-      <button class="fchip" data-f="ui" data-v="no">⛔ ไม่พบใน UI ({noui_n})</button>
+      <button class="fchip" data-f="ui" data-v="no">{NOUI_BADGE} ({noui_n})</button>
       <button class="clearbtn" data-clear="ui">✕</button>
     </div>
 ''')
-    noui_pill = f'<span class="pill">⛔ ไม่พบใน UI {noui_n} · พร้อมเทส {total - noui_n}</span>' if noui_n else ''
+    noui_pill = f'<span class="pill">{NOUI_BADGE} {noui_n} · พร้อมเทส {total - noui_n}</span>' if noui_n else ''
     header = f'''
 <header class="top">
   <h1>{META['emoji']} {TITLE}</h1>

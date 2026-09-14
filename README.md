@@ -43,7 +43,7 @@ qa-test-reports/
     └── README.md                   ← QA dashboard (แยกขาด ไม่เกี่ยวกับเว็บนี้)
 ```
 
-โปรเจคปัจจุบัน: `takra-ai` · `takra-insight` · `takra-rerun` · `takra-hub` · `takra-clip` · `takra-farm`
+โปรเจคปัจจุบัน: `takra-ai` · `takra-insight` · `takra-rerun` · `takra-hub` · `takra-clip` · `takra-farm` · `takra-lipsync`
 
 ### แกนของแต่ละประเภทไม่เหมือนกัน
 
@@ -198,6 +198,15 @@ python3 tools/build/build_hub_report.py aiquality
 > เคสอยู่ที่ [`tools/build/insight_live_readiness_cases.py`](tools/build/insight_live_readiness_cases.py) · uid เริ่ม `tc-2201` · เนื้อเคสลอกจากต้นฉบับ `live-readiness-test-cases.html` (QA · 2026-09-09) คู่กับ `live-readiness-test-plan.html`
 
 > เคสอยู่ที่ [`tools/build/insight_mvp2_e46_cases.py`](tools/build/insight_mvp2_e46_cases.py) · uid เริ่ม `tc-2101` · ทั้งชุดเป็นเคส **รอรับของ** (Epic 4 ยังไม่มีหน้าจอ · Epic 6 ถูกซ่อนด้วยแฟลก `SHOW_BLOCKED = false`)
+
+รายงานของ **takra-lipsync** (TAKRA Lib-Sync — แอปเดสก์ท็อป poc-local) ใช้ builder ตัวเดียวกัน:
+
+```bash
+python3 tools/build/build_hub_report.py lipsync --check
+python3 tools/build/build_hub_report.py lipsync
+```
+
+> เคสอยู่ที่ [`tools/build/lipsync_cases.py`](tools/build/lipsync_cases.py) · คำ UI ส่วน Electron ลอกจาก `app/**` ของ poc-local · หน้า Console ติดป้าย "🔎 คำ UI รอยืนยัน" (META `noui_badge`) · uid เริ่ม `tc-6001`
 
 > เคสอยู่ที่ [`tools/build/farm_cases.py`](tools/build/farm_cases.py) · คำ UI ลอกจาก `src/i18n/locales/th-TH.yml` · uid เริ่ม `tc-8001`
 
