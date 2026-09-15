@@ -36,6 +36,8 @@ MODULES = {'mvp1': 'hub_cases', 'mvp2': 'hub_mvp2_cases', 'mvp2rbac': 'hub_mvp2_
 _which = next((a for a in sys.argv[1:] if a in MODULES), 'mvp1')
 _mod = importlib.import_module(MODULES[_which])
 EPICS, KINDS, META = _mod.EPICS, _mod.KINDS, _mod.META
+# uid คงที่ต่อเคส (optional): module ประกาศ UID_MAP = {case_id: int} — จัดกลุ่ม/เรียงใหม่แล้วผลเทสเดิมไม่หลุดจากเคส
+UID_MAP = getattr(_mod, 'UID_MAP', None) or {}
 
 TEMPLATE = ROOT / 'projects/takra-rerun/2026/07/reports/takra-rerun-mvp2-ui-test-cases-table.html'
 OUT_REL = META['out_rel']
@@ -188,6 +190,7 @@ def build():
 
     # ── body ──
     uid = UID_START
+    _used = set(UID_MAP.values())
     rows = []
     counts = {'P0': 0, 'P1': 0, 'P2': 0}
     kind_counts = {k: 0 for k in KINDS}
@@ -206,8 +209,18 @@ def build():
             lvs = (f'<span class="lv lvl-ui">🌐 {n_ui}</span>' if n_ui else '') + (f' <span class="lv lvl-e2e">🔄 {n_e2e}</span>' if n_e2e else '')
             rows.append(f'<tr class="featrow" data-featkey="{f["featkey"]}"><td colspan="7">📁 {esc(f["title"])} <span class="rp">{lvs}</span> {OWNER_SEL.format(fk=f["featkey"])}</td></tr>')
             for c in f['cases']:
-                rows.append(case_html(c, uid, e['key'], short, e.get('jira')))
-                uid += 1
+                if UID_MAP:
+                    _u = UID_MAP.get(c['id'])
+                    if _u is None:
+                        while uid in _used:
+                            uid += 1
+                        _u = uid
+                        _used.add(_u)
+                        print(f"new uid tc-{_u} -> {c['id']} (เพิ่มลง uid_map ของ module ด้วย)")
+                    rows.append(case_html(c, _u, e['key'], short, e.get('jira')))
+                else:
+                    rows.append(case_html(c, uid, e['key'], short, e.get('jira')))
+                    uid += 1
                 total += 1
                 counts[c['prio']] += 1
                 kind_counts[c['kind']] += 1
