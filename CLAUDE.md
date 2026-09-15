@@ -77,7 +77,7 @@ repo นี้เก็บรายงาน manual test case (UI) ของท�
 >
 > **takra-clip** เข้าทะเบียน 7 ก.ย. 2026 · รายงานชุดแรกคือ Back Office UI 70 เคส (`tools/build/clip_bo_cases.py` → `python3 tools/build/build_hub_report.py clipbo`) — แก้เคสที่ไฟล์ cases แล้ว build ใหม่ อย่าแก้ HTML ตรง ๆ
 >
-> **takra-radar (Trendora)** เข้าทะเบียน 15 ก.ย. 2026 · รายงานชุดแรก Web UI 163 เคส กลุ่ม A–H ตาม Epic 2–8 (`tools/build/radar_cases.py` โหลดจาก `tools/build/takra-radar-sources/*.json` → `python3 tools/build/build_hub_report.py radar`) — แก้เคสที่ JSON แล้ว build ใหม่ อย่าแก้ HTML ตรงๆ · ⚠️ แคตตาล็อกสินค้าบน UAT ว่าง (TKRD-161) เคสที่ต้องมีสินค้าให้ลง BLOCKED
+> **takra-radar (Trendora)** เข้าทะเบียน 15 ก.ย. 2026 · รายงานชุดแรก Web UI 120 เคส (เฉพาะ P0+P1 · ตัด P2 ออก 15 ก.ย.) กลุ่ม A–H ตาม Epic 2–8 (`tools/build/radar_cases.py` โหลดจาก `tools/build/takra-radar-sources/*.json` → `python3 tools/build/build_hub_report.py radar`) — แก้เคสที่ JSON แล้ว build ใหม่ อย่าแก้ HTML ตรงๆ · ⚠️ แคตตาล็อกสินค้าบน UAT ว่าง (TKRD-161) เคสที่ต้องมีสินค้าให้ลง BLOCKED
 >
 > Jira เป็นลิงก์อ้างอิงสำหรับคน — ไม่มี API token ใน repo นี้ ถ้าต้องดึงสถานะใบงานให้ผู้ใช้ export/แปะข้อมูลมา
 
