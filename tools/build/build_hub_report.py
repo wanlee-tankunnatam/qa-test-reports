@@ -31,7 +31,8 @@ MODULES = {'mvp1': 'hub_cases', 'mvp2': 'hub_mvp2_cases', 'mvp2rbac': 'hub_mvp2_
            'lrready': 'insight_live_readiness_cases',
            'rerunquality': 'rerun_quality_cases',
            'aiquality': 'ai_quality_cases',
-           'lipsync': 'lipsync_cases'}
+           'lipsync': 'lipsync_cases',
+           'radar': 'radar_cases'}
 _which = next((a for a in sys.argv[1:] if a in MODULES), 'mvp1')
 _mod = importlib.import_module(MODULES[_which])
 EPICS, KINDS, META = _mod.EPICS, _mod.KINDS, _mod.META
