@@ -268,8 +268,8 @@
     </div>
     <nav id="nav">
       <div class="nav-label">แผน</div>
-      <div class="nav-item active" data-project="timeline"><span class="emoji">📅</span><span class="name">Timeline</span><span class="n">1</span></div>
       <a class="nav-item" href="overview.html" style="text-decoration:none"><span class="emoji">📊</span><span class="name">ภาพรวม</span><span class="n">↗</span></a>
+      <div class="nav-item active" data-project="timeline"><span class="emoji">📅</span><span class="name">Timeline</span><span class="n">1</span></div>
       <div class="nav-label">โปรเจค</div>
       <div class="nav-item" data-project="rerun"><span class="emoji">🎬</span><span class="name">TAKRA Rerun</span><span class="n">1</span></div>
       <div class="nav-item" data-project="ai"><span class="emoji">🤖</span><span class="name">TAKRA AI · Live</span><span class="n">2</span></div>
@@ -547,6 +547,8 @@
 
 <script>
 (function(){
+  // ค่าเริ่มต้นของ /timeline/ = หน้าภาพรวม (overview.html) — เข้าหน้าตารางด้วย ?project=timeline
+  if(!location.search && !location.hash){ location.replace('overview.html'); return; }
   var q = document.getElementById('q');
   var navItems = [].slice.call(document.querySelectorAll('div.nav-item'));
   var rows = [].slice.call(document.querySelectorAll('table.tbl tbody tr:not(.grp):not(.wk)'));
