@@ -134,29 +134,30 @@ def main():
         items.reverse()                       # story วันหลังสุดขึ้นก่อน
         done = cnt['done']; total = len(keys)
         ep_dev = 'done' if done == total else ('wip' if cnt['done'] or cnt['review'] or cnt['in-progress'] else 'plan')
-        rows.append('<tr class="grp" data-grp="e%d"><td colspan="2"><b>%s · Epic %d — %s</b> <span class="epc">dev เสร็จ %d/%d story</span></td>'
+        rows.append('<tr class="grp" data-grp="e%d"><td class="c-topic" data-tip="%s"><b>%s · Epic %d</b> <span class="epc">dev เสร็จ %d/%d story</span></td>'
                     '<td class="c-st"><span class="pill dev-%s">%s</span></td><td class="c-d"><input type="date" data-rid="e%d" data-k="ddev"></td><td class="c-st"></td><td class="c-d"><input type="date" class="bold" data-rid="e%d" data-k="due" value="%s"></td><td></td><td class="c-rem">%s</td></tr>'
-                    % (ep, mvp, ep, html.escape(name), done, total, ep_dev, {'done': 'เสร็จแล้ว', 'wip': 'กำลังทำ', 'plan': 'วางแผน'}[ep_dev], ep, ep, (days[-1] if days else ''),
+                    % (ep, html.escape('Epic %d — %s' % (ep, name), quote=True), mvp, ep, done, total, ep_dev, {'done': 'เสร็จแล้ว', 'wip': 'กำลังทำ', 'plan': 'วางแผน'}[ep_dev], ep, ep, (days[-1] if days else ''),
                        'ไม่มี UI ให้เทส — ดูผลจาก CI/ops' if ep == 7 else ('takra-ai ไม่ทำ' if ep == 11 else '')))
         for k, typ, title, jira, dcls, qa, due, sub, ui in items:
             rid = 's%d-%s' % k
             jl = ' '.join('<a class="jk" href="https://kitdi.atlassian.net/browse/%s" target="_blank" rel="noopener">%s</a>' % (j, j) for j in jira)
             topic = '<span class="sid">%d.%s</span> <span class="typ">[%s]</span>' % (k[0], k[1], html.escape(typ))
+            tip = html.escape('Story %d.%s · %s' % (k[0], k[1], title), quote=True)
             rows.append('<tr data-rid="%s" data-title="ตะกร้าไลฟ์ takra ai ปฏิทิน epic %d story %s %s"%s>'
-                        '<td class="c-topic">%s</td><td class="c-detail">%s %s</td><td class="c-st">%s</td><td class="c-d"><input type="date" data-rid="%s" data-k="ddev"></td>'
+                        '<td class="c-topic" data-tip="%s">%s %s</td><td class="c-st">%s</td><td class="c-d"><input type="date" data-rid="%s" data-k="ddev"></td>'
                         '<td class="c-st">%s</td><td class="c-d">%s</td><td class="c-act"><input type="date" data-rid="%s" data-k="act"></td><td class="c-rem"><textarea class="rem" rows="2" data-rid="%s" data-k="rem" placeholder="หมายเหตุ…">%s</textarea></td></tr>'
                         % (rid, k[0], k[1], html.escape(title.lower()), (' data-href="%s"' % REPORT) if ui else '',
-                           topic, html.escape(title), jl, sel('dev', DEV_OPTS, dcls, rid), rid, sel('qa', QA_OPTS, qa, rid),
+                           tip, topic, jl, sel('dev', DEV_OPTS, dcls, rid), rid, sel('qa', QA_OPTS, qa, rid),
                            '<input type="date" data-rid="%s" data-k="due" value="%s">' % (rid, due), rid, rid, html.escape(sub) if sub else ('ไม่มี UI · เทสผ่าน integration/E2E ของ dev' if not ui and ep not in (7, 11) else '')))
         # แถวเสริม (E2E/retest/สรุป) — วางตามวัน
     # แถวปิดรอบ (วันหลังสุด) ไว้บนสุด
     head = []
-    head.append('<tr class="grp" data-grp="x"><td colspan="2"><b>ปิดรอบ MVP-2</b></td><td></td><td></td><td></td><td class="c-d"><input type="date" class="bold" data-rid="x" data-k="due" value="2026-10-09"></td><td></td><td></td></tr>')
+    head.append('<tr class="grp" data-grp="x"><td class="c-topic"><b>ปิดรอบ MVP-2</b></td><td></td><td></td><td></td><td class="c-d"><input type="date" class="bold" data-rid="x" data-k="due" value="2026-10-09"></td><td></td><td></td></tr>')
     for i, (d, topic, detail, rem) in reversed(list(enumerate(EXTRA_ROWS))):
         rid = 'x%d' % i
-        head.append('<tr data-rid="%s" data-title="ตะกร้าไลฟ์ takra ai ปฏิทิน %s" data-href="%s"><td class="c-topic"><b>%s</b></td><td class="c-detail">%s</td><td class="c-st"></td><td class="c-d"></td>'
+        head.append('<tr data-rid="%s" data-title="ตะกร้าไลฟ์ takra ai ปฏิทิน %s" data-href="%s"><td class="c-topic" data-tip="%s"><b>%s</b></td><td class="c-st"></td><td class="c-d"></td>'
                     '<td class="c-st">%s</td><td class="c-d"><input type="date" data-rid="%s" data-k="due" value="%s"></td><td class="c-act"><input type="date" data-rid="%s" data-k="act"></td><td class="c-rem"><textarea class="rem" rows="2" data-rid="%s" data-k="rem" placeholder="หมายเหตุ…">%s</textarea></td></tr>'
-                    % (rid, topic.lower(), REPORT, topic, detail, sel('qa', QA_OPTS, 'wait', rid), rid, d, rid, rid, html.escape(rem)))
+                    % (rid, topic.lower(), REPORT, html.escape(detail, quote=True), topic, sel('qa', QA_OPTS, 'wait', rid), rid, d, rid, rid, html.escape(rem)))
 
     rows = head + rows
     weeks = ''.join('<tr class="wk"><td class="c-wkn"><b>%s</b></td><td colspan="2">%s</td><td class="c-d"><input type="date" data-rid="w%d" data-k="start" value="%s"></td><td class="c-d"><input type="date" class="bold" data-rid="w%d" data-k="due" value="%s"></td></tr>' % (t, g, i, a, i, b) for i, (t, g, a, b) in reversed(list(enumerate(WEEKS))))
@@ -164,7 +165,7 @@ def main():
         <div class="jira">หัวข้อ = Epic/Story ที่ BA/dev กำหนด (epics.md · epics-mvp2.md) · สถานะ DEV = sprint-status.yaml ของ dev (อัปเดตล่าสุด 2026-09-10) · {n_story} story ({n_ui} story มี UI) · กำหนด QA = QA วาง ~1 epic/วัน · แผนตัวจริงบน Jira: <a href="{JIRA_BOARD}" target="_blank" rel="noopener">📋 TAKRA board timeline ↗</a></div>
         <div class="legend"><span class="lg dev-done">DEV เสร็จแล้ว</span><span class="lg dev-review">DEV รอรีวิว</span><span class="lg dev-plan">DEV วางแผน</span><span class="lg dev-blocked">DEV ติดบล็อก</span><span class="lg qa-wait">QA รอทดสอบ</span><span class="lg qa-pend">QA รอดำเนินการ (รอ dev)</span><span class="lg qa-na">ไม่มี UI</span><span class="lg">สถานะ · กำหนด DEV · Action Date · Remark แก้ในหน้าได้ — บันทึกขึ้น GitHub อัตโนมัติเหมือนไฟล์ test case</span></div>
         <div class="tblwrap wkwrap"><table class="tbl weeks"><thead><tr><th>สัปดาห์</th><th colspan="2">โฟกัส</th><th>เริ่ม</th><th>กำหนด QA</th></tr></thead><tbody>{weeks}</tbody></table></div>
-        <div class="tblwrap"><table class="tbl sheet"><thead><tr><th>หัวข้อ (Story)</th><th>รายละเอียด</th><th>สถานะ DEV</th><th>กำหนด DEV</th><th>สถานะ QA</th><th>กำหนด QA</th><th>Action Date</th><th>Remark</th></tr></thead><tbody>
+        <div class="tblwrap"><table class="tbl sheet"><thead><tr><th>หัวข้อ (hover ดูรายละเอียด)</th><th>สถานะ DEV</th><th>กำหนด DEV</th><th>สถานะ QA</th><th>กำหนด QA</th><th>Action Date</th><th>Remark</th></tr></thead><tbody>
 {chr(10).join(rows)}
 </tbody></table></div>
         <!-- CAL:END -->'''
