@@ -179,7 +179,7 @@
   .lg.qa-wait::before,.lg.qa-pend::before{background:var(--dod-bg); border-color:var(--dod)}
   .lg.qa-block::before{background:var(--issue-bg); border-color:var(--st-issue)}
   .tblwrap:has(table.sheet){overflow-x:auto}
-  table.sheet{font-size:.82rem; table-layout:auto; min-width:960px}
+  table.sheet{font-size:.82rem; table-layout:auto; min-width:900px}
   table.sheet thead th{background:var(--test-bg); color:var(--text); text-transform:none; letter-spacing:0; font-size:.8rem; border-right:1px solid var(--border)}
   table.sheet td{border-right:1px solid var(--border); padding:7px 10px; vertical-align:middle}
   table.sheet td:last-child, table.sheet th:last-child{border-right:none}
@@ -243,11 +243,11 @@
   .btn:hover{border-color:var(--accent)}
   .btn.primary{background:var(--accent); color:#fff; border-color:var(--accent)}
   .btn:disabled{opacity:.6; cursor:default}
-  textarea.rem{display:block; width:100%; min-width:180px; font:inherit; font-size:.78rem; color:var(--text); border:1px solid var(--border); border-radius:6px; padding:5px 7px; background:var(--panel); resize:vertical; min-height:44px; line-height:1.4; box-shadow:var(--shadow)}
+  textarea.rem{display:block; width:100%; min-width:140px; font:inherit; font-size:.78rem; color:var(--text); border:1px solid var(--border); border-radius:6px; padding:5px 7px; background:var(--panel); resize:none; overflow:hidden; min-height:calc(2 * 1.4 * .78rem + 12px); line-height:1.4; box-shadow:var(--shadow); box-sizing:border-box}
   textarea.rem::placeholder{color:var(--faint)}
   textarea.rem:hover{border-color:var(--accent)}
   textarea.rem:focus{outline:none; border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft)}
-  .c-rem{padding:4px 6px !important; min-width:200px}
+  .c-rem{padding:4px 6px !important; min-width:150px}
   @media (max-width:820px){ .c-rem{display:none} }
   .nav-link{display:flex; align-items:center; gap:10px; padding:9px 11px; margin-top:6px; border-radius:10px; color:var(--muted); font-size:.86rem; font-weight:600; text-decoration:none; border:1px dashed var(--border)}
   .nav-link:hover{border-color:var(--accent); color:var(--text)}
@@ -640,8 +640,15 @@
       if(rec && rec[k] != null) el.value = rec[k];
       if(el.tagName === 'SELECT') el.setAttribute('data-v', el.value);
     });
+    if(typeof fitAllRem === 'function') fitAllRem();
   }
   applyStore();
+  // Remark: สูงอย่างน้อย 2 บรรทัด และขยายตามเนื้อหา
+  function fitRem(t){ t.style.height='auto'; t.style.height=Math.max(t.scrollHeight, 0)+'px'; }
+  function fitAllRem(){ [].forEach.call(document.querySelectorAll('textarea.rem'), fitRem); }
+  fitAllRem();
+  window.addEventListener('resize', fitAllRem);
+  [].forEach.call(document.querySelectorAll('textarea.rem'), function(t){ t.addEventListener('input', function(){ fitRem(t); }); });
   fieldsAll().forEach(function(el){
     var rid = el.getAttribute('data-rid'), k = el.getAttribute('data-k');
     el.addEventListener('click', function(e){ e.stopPropagation(); });
