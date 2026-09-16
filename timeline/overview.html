@@ -146,8 +146,8 @@
   .g-cell.mon{border-left-color:var(--border)}
   .g-rows{display:grid; grid-template-columns:repeat(var(--days), var(--day)); grid-auto-rows:30px; row-gap:5px; padding:7px 0; position:relative; z-index:1}
   .g-bar{grid-row:var(--r); grid-column:var(--s) / var(--e); margin:0 2px; border-radius:6px; display:flex; align-items:center; gap:6px; padding:0 8px; color:#fff; font-weight:600; font-size:.74rem; white-space:nowrap; overflow:hidden; cursor:pointer; box-shadow:var(--shadow); border:1px solid rgba(0,0,0,.08); text-decoration:none}
-  .g-av{flex:none; width:18px; height:18px; border-radius:50%; background:rgba(255,255,255,.28); display:grid; place-items:center; font-size:.62rem; font-weight:800; position:sticky; left:calc(var(--lane) + 8px)}
-  .g-txt{overflow:hidden; text-overflow:ellipsis; position:sticky; left:calc(var(--lane) + 32px)}
+  .g-av{flex:none; width:18px; height:18px; border-radius:50%; background:rgba(255,255,255,.28); display:grid; place-items:center; font-size:.62rem; font-weight:800}
+  .g-txt{overflow:hidden; text-overflow:ellipsis}
   .g-n{margin-left:auto; flex:none; font-size:.64rem; opacity:.85}
   .g-bar.mvp1{background:var(--test)}
   .g-bar.mvp2{background:var(--summary)}
@@ -158,6 +158,8 @@
   .g-bar.narrow{overflow:visible; position:relative; justify-content:center; padding:0}
   .g-bar.narrow .g-txt,.g-bar.narrow .g-n{position:absolute; left:calc(100% + 6px); top:50%; transform:translateY(-50%); color:var(--text); font-weight:600; white-space:nowrap; overflow:visible; pointer-events:none}
   .g-bar.narrow .g-n{left:auto; display:none}
+  .g-bar.tiny .g-av{display:none}
+  .g-bar.narrow{margin:0 1px}
   .g-bar.narrow .g-txt{max-width:90px; overflow:hidden; text-overflow:ellipsis; font-size:.72rem}
   .g-today{position:absolute; top:0; bottom:0; width:2px; background:var(--accent); z-index:2; pointer-events:none}
   .g-today::before{content:""; position:absolute; top:0; left:-4px; width:10px; height:10px; border-radius:50%; background:var(--accent)}
@@ -344,6 +346,10 @@
     var days=[]; for(var d=new Date(s); d<=e; d=dAdd(d,1)) days.push(new Date(d));
     var todayIso=dIso(new Date()), idx={}; days.forEach(function(d,i){ idx[dIso(d)]=i; });
     g.style.setProperty('--days', days.length);
+    var wrap=document.getElementById('ov-wrap'), laneW=parseInt(getComputedStyle(g).getPropertyValue('--lane'))||190;
+    var dayW = showAll ? 34 : Math.max(16, Math.floor((wrap.clientWidth - laneW - 2) / days.length));
+    g.style.setProperty('--day', dayW+'px');
+    var LABEL_PX=120;                                  // พื้นที่ป้ายที่ยื่นออกนอกแท่งแคบ
     var rng=document.getElementById('ov-range'); if(rng) rng.textContent=days[0].getDate()+' '+TH_M[days[0].getMonth()]+' – '+days[days.length-1].getDate()+' '+TH_M[days[days.length-1].getMonth()]+' '+(days[days.length-1].getFullYear()+543)+(hidden?' · ซ่อนที่จบก่อนช่วงนี้ '+hidden+' รายการ':'');
     var months=[], last=null;
     days.forEach(function(d){ var k=d.getMonth(); if(k!==last){ months.push({m:k, y:d.getFullYear(), n:1}); last=k; } else months[months.length-1].n++; });
@@ -361,8 +367,8 @@
       items.forEach(function(b){
         b.cut = b.start<sIso;
         var si=b.cut?0:idx[b.start], ei=idx[b.end]+1, r=0;
-        b.narrow = (ei-si) < 4;
-        var occ = b.narrow ? si+3 : ei;      // แท่งแคบ ป้ายสั้นยื่นออกขวา ~2 วัน
+        b.narrow = (ei-si)*dayW < 90;                                   // แท่งแคบเกินจะใส่ป้ายข้างใน
+        var occ = b.narrow ? Math.max(ei, si + Math.ceil(LABEL_PX/dayW)) : ei;   // จองที่ให้ป้ายที่ยื่นออกขวา
         while(rowsEnd[r]!=null && rowsEnd[r]>si) r++;
         rowsEnd[r]=occ; b.r=r+1; b.s=si+1; b.e=ei+1;
       });
@@ -371,7 +377,8 @@
       var bh=items.map(function(b, i){
         b._i = bars.indexOf(b);
         var lab=(multi && laneMode!=='pj' ? (b.pjEmoji||'')+' ' : '')+b.label;
-        return '<a class="g-bar '+b.mvp+(b.narrow?' narrow':'')+(b.cut?' cut':'')+'" style="--r:'+b.r+';--s:'+b.s+';--e:'+b.e+'" href="./?project=timeline&pj='+(b.pj||'')+'#'+(b.rid||b.grp)+'" data-i="'+b._i+'"><span class="g-av">'+esc(b.sid)+'</span><span class="g-txt">'+esc(lab)+'</span></a>';
+        b.tiny = (b.e-b.s)*dayW < 24;
+        return '<a class="g-bar '+b.mvp+(b.narrow?' narrow':'')+(b.tiny?' tiny':'')+(b.cut?' cut':'')+'" style="--r:'+b.r+';--s:'+b.s+';--e:'+b.e+'" href="./?project=timeline&pj='+(b.pj||'')+'#'+(b.rid||b.grp)+'" data-i="'+b._i+'"><span class="g-av">'+esc(b.sid)+'</span><span class="g-txt">'+esc(lab)+'</span></a>';
       }).join('');
       out+='<div class="g-lane"><div class="g-label">'+L[1]+'<small>'+items.length+' รายการ</small></div><div class="g-body">'+bg+'<div class="g-rows" style="min-height:'+(nrows*35+9)+'px">'+bh+'</div></div></div>';
     });
@@ -406,7 +413,7 @@
       el.addEventListener('mouseleave', function(){ tip.style.display='none'; });
     });
   }
-  function scrollToday(){ var w=document.getElementById('ov-wrap'), t=document.getElementById('g-today'); if(!w||!t) return; w.scrollLeft=Math.max(0, t.offsetLeft - w.clientWidth/2); }
+  function scrollToday(){ var w=document.getElementById('ov-wrap'), t=document.getElementById('g-today'); if(!w||!t) return; if(w.scrollWidth<=w.clientWidth+4){ w.scrollLeft=0; return; } w.scrollLeft=Math.max(0, t.offsetLeft - w.clientWidth/2); }
 
   async function load(){
     var g=document.getElementById('gantt');
@@ -428,6 +435,7 @@
   seg('l-qa', function(){ setLane('qa'); });
   seg('l-mvp', function(){ setLane('mvp'); });
   seg('ov-today', scrollToday);
+  var rsT=null; window.addEventListener('resize', function(){ clearTimeout(rsT); rsT=setTimeout(render, 150); });
   seg('r-now', function(){ showAll=false; document.getElementById('r-now').classList.add('on'); document.getElementById('r-all').classList.remove('on'); render(); setTimeout(scrollToday,30); });
   seg('r-all', function(){ showAll=true; document.getElementById('r-all').classList.add('on'); document.getElementById('r-now').classList.remove('on'); render(); setTimeout(scrollToday,30); });
   seg('ov-reload', load);
