@@ -201,12 +201,12 @@
 
     <div class="group-head"><span class="emoji">📊</span><h2 id="ov-title">ทุกโปรเจกต์</h2><span class="count" id="ov-count">กำลังโหลด…</span><span class="rule"></span></div>
     <div class="pjtabs" id="pjtabs"></div>
-    <div class="jira">แท่งแสดงแค่รหัส (Epic N · Jira/Story id) — <b>hover</b> เพื่อดูรายละเอียด · ช่วงแท่ง = "กำหนด QA" จาก story แรกถึง story สุดท้าย หรือราย story เมื่อสลับมุมมอง · เลน = สถานะ QA · ข้อมูลอ่านจาก <a href="./?project=timeline">หน้า Timeline</a> (ค่าที่บันทึกขึ้น GitHub แล้ว) — แก้ที่นั่นแล้วกด 🔄 ที่นี่ · คลิกแท่งเพื่อไปดูใน Timeline</div>
+    <div class="jira">แท็บ "ทั้งหมด" = กราฟเดียวทุกโปรเจกต์ (เลนละโปรเจกต์ · สลับเลนเป็นสถานะ QA/MVP ได้) · แท่งแสดงแค่รหัส (Epic N · Jira/Story id) — <b>hover</b> เพื่อดูรายละเอียด · ช่วงแท่ง = "กำหนด QA" จาก story แรกถึง story สุดท้าย หรือราย story เมื่อสลับมุมมอง · เลน = สถานะ QA · ข้อมูลอ่านจาก <a href="./?project=timeline">หน้า Timeline</a> (ค่าที่บันทึกขึ้น GitHub แล้ว) — แก้ที่นั่นแล้วกด 🔄 ที่นี่ · คลิกแท่งเพื่อไปดูใน Timeline</div>
     <div class="ov-bar">
       <div class="legend"><span class="lg mvp1">MVP-1</span><span class="lg mvp2">MVP-2</span><span class="lg mvp3">MVP-3 / อื่น</span><span class="lg close">ปิดรอบ</span><span class="lg blocked">DEV ติดบล็อก</span></div>
       <span class="ov-tools">
         <span class="seg"><button id="m-epic" class="on">ราย Epic</button><button id="m-story">ราย Story</button></span>
-        <span class="seg"><button id="l-qa" class="on">เลน: สถานะ QA</button><button id="l-mvp">เลน: MVP</button></span>
+        <span class="seg"><button id="l-pj" class="on">เลน: โปรเจกต์</button><button id="l-qa">เลน: สถานะ QA</button><button id="l-mvp">เลน: MVP</button></span>
         <button class="btn" id="ov-today">Today</button>
         <button class="btn" id="ov-reload" title="โหลดค่าล่าสุดจากหน้า Timeline">🔄</button>
         <span class="hint" id="ov-range"></span>
@@ -222,7 +222,7 @@
   var TH_M=['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
   var QA_LANES=[['wip','กำลังทดสอบ'],['wait','รอทดสอบ'],['pend','รอดำเนินการ (รอ dev)'],['block','บล็อก'],['fail','ไม่ผ่าน'],['done','เสร็จแล้ว'],['na','ไม่มี UI']];
   var MVP_LANES=[['close','ปิดรอบ'],['mvp3','MVP-3 / อื่น'],['mvp2','MVP-2'],['mvp1','MVP-1']];
-  var mode='epic', laneMode='qa', bars=[], epicBars=[], storyBars=[];
+  var mode='epic', laneMode='pj', bars=[], epicBars=[], storyBars=[];
 
   function dIso(d){ return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
   function dParse(s){ var p=s.split('-'); return new Date(+p[0], +p[1]-1, +p[2]); }
@@ -286,8 +286,14 @@
     eps.forEach(function(b){ if(!b.start) b.start=b.end; if(!b.end) b.end=b.start; b.lane=laneOf(b.states); if(b.dev==='blocked') b.mvp='blocked'; b.sid=(b.full.match(/Epic ([\w\-]+)/)||[])[1]||'★'; b.label = /\.x$/.test(b.grp) ? 'ปิดรอบ' : 'Epic '+b.sid; b.qa=b.lane; });
     pr.eps=eps.filter(function(b){ return b.start; }); pr.sts=sts;
   }
+  function tagPj(list, pr){ return list.map(function(b){ b.pj=pr.id; b.pjName=pr.name; b.pjEmoji=pr.emoji; return b; }); }
   function selectPj(id){
-    var pr=projects.filter(function(p){ return p.id===id; })[0]||projects[0]; if(!pr) return; curPj=pr;
+    var pr;
+    if(id==='__all'){
+      pr={id:'__all', name:'ทุกโปรเจกต์ (กราฟเดียว)', emoji:'🗂️', eps:[], sts:[]};
+      projects.forEach(function(p){ pr.eps=pr.eps.concat(tagPj(p.eps,p)); pr.sts=pr.sts.concat(tagPj(p.sts,p)); });
+    } else { pr=projects.filter(function(p){ return p.id===id; })[0]||projects[0]; if(pr) tagPj(pr.eps,pr), tagPj(pr.sts,pr); }
+    if(!pr) return; curPj=pr;
     epicBars=pr.eps; storyBars=pr.sts;
     [].forEach.call(document.querySelectorAll('.pjtab'), function(t){ t.classList.toggle('on', t.getAttribute('data-pj')===pr.id); });
     var t=document.getElementById('ov-title'); if(t) t.textContent=pr.emoji+' '+pr.name;
@@ -296,7 +302,8 @@
   }
   function renderTabs(){
     var box=document.getElementById('pjtabs'); if(!box) return;
-    box.innerHTML=projects.map(function(p){ return '<button class="pjtab" data-pj="'+p.id+'"><span>'+p.emoji+'</span> '+esc(p.name.split(' (')[0])+' <small>'+p.eps.length+'</small></button>'; }).join('');
+    var total=projects.reduce(function(n,p){ return n+p.eps.length; },0);
+    box.innerHTML='<button class="pjtab" data-pj="__all"><span>🗂️</span> ทั้งหมด <small>'+total+'</small></button>'+projects.map(function(p){ return '<button class="pjtab" data-pj="'+p.id+'"><span>'+p.emoji+'</span> '+esc(p.name.split(' (')[0])+' <small>'+p.eps.length+'</small></button>'; }).join('');
     [].forEach.call(box.querySelectorAll('.pjtab'), function(t){ t.addEventListener('click', function(){ selectPj(t.getAttribute('data-pj')); }); });
   }
 
@@ -316,10 +323,12 @@
     days.forEach(function(d){ var k=d.getMonth(); if(k!==last){ months.push({m:k, y:d.getFullYear(), n:1}); last=k; } else months[months.length-1].n++; });
     function cellCls(d){ return ((d.getDay()===0||d.getDay()===6)?' we':'')+(d.getDay()===1?' mon':''); }
     var out='<div class="g-head"><div class="g-month"><span>เดือน</span>'+months.map(function(m){ return '<span style="grid-column:span '+m.n+'">'+TH_M[m.m]+' '+(m.y+543)+'</span>'; }).join('')+'</div>';
-    out+='<div class="g-corner">'+(laneMode==='qa'?'สถานะ QA':'MVP')+'</div>'+days.map(function(d){ var iso=dIso(d); return '<div class="g-day'+cellCls(d)+(iso===todayIso?' today':'')+'">'+d.getDate()+'</div>'; }).join('')+'</div>';
-    var lanes = laneMode==='qa' ? QA_LANES : MVP_LANES;
+    out+='<div class="g-corner">'+(laneMode==='qa'?'สถานะ QA':(laneMode==='mvp'?'MVP':'โปรเจกต์'))+'</div>'+days.map(function(d){ var iso=dIso(d); return '<div class="g-day'+cellCls(d)+(iso===todayIso?' today':'')+'">'+d.getDate()+'</div>'; }).join('')+'</div>';
+    var lanes = laneMode==='qa' ? QA_LANES : (laneMode==='mvp' ? MVP_LANES : projects.map(function(p){ return [p.id, p.emoji+' '+p.name.split(' (')[0]]; }));
+    if(laneMode==='pj' && curPj && curPj.id!=='__all') lanes=lanes.filter(function(L){ return L[0]===curPj.id; });
+    var multi = curPj && curPj.id==='__all';
     lanes.forEach(function(L){
-      var items=bars.filter(function(b){ return (laneMode==='qa' ? b.lane : (b.mvp==='blocked' ? 'mvp3' : b.mvp))===L[0]; })
+      var items=bars.filter(function(b){ return (laneMode==='qa' ? b.lane : (laneMode==='mvp' ? (b.mvp==='blocked' ? 'mvp3' : b.mvp) : b.pj))===L[0]; })
                      .sort(function(a,b){ return a.start<b.start?-1:(a.start>b.start?1:0); });
       if(!items.length && laneMode==='qa' && (L[0]==='na')) return;
       var rowsEnd=[];
@@ -334,7 +343,8 @@
       var bg='<div class="g-bg">'+days.map(function(d){ return '<div class="g-cell'+cellCls(d)+'"></div>'; }).join('')+'</div>';
       var bh=items.map(function(b, i){
         b._i = bars.indexOf(b);
-        return '<a class="g-bar '+b.mvp+(b.narrow?' narrow':'')+'" style="--r:'+b.r+';--s:'+b.s+';--e:'+b.e+'" href="./?project=timeline&pj='+(curPj?curPj.id:'')+'#'+(b.rid||b.grp)+'" data-i="'+b._i+'"><span class="g-av">'+esc(b.sid)+'</span><span class="g-txt">'+esc(b.label)+'</span></a>';
+        var lab=(multi && laneMode!=='pj' ? (b.pjEmoji||'')+' ' : '')+b.label;
+        return '<a class="g-bar '+b.mvp+(b.narrow?' narrow':'')+'" style="--r:'+b.r+';--s:'+b.s+';--e:'+b.e+'" href="./?project=timeline&pj='+(b.pj||'')+'#'+(b.rid||b.grp)+'" data-i="'+b._i+'"><span class="g-av">'+esc(b.sid)+'</span><span class="g-txt">'+esc(lab)+'</span></a>';
       }).join('');
       out+='<div class="g-lane"><div class="g-label">'+L[1]+'<small>'+items.length+' รายการ</small></div><div class="g-body">'+bg+'<div class="g-rows" style="min-height:'+(nrows*35+9)+'px">'+bh+'</div></div></div>';
     });
@@ -347,6 +357,7 @@
   var TH_D=function(iso){ var d=dParse(iso); return d.getDate()+' '+TH_M[d.getMonth()]; };
   function tipHtml(b){
     var rows=[];
+    if(b.pjName) rows.push('<span class="t-k">โปรเจกต์</span>'+esc((b.pjEmoji||'')+' '+b.pjName));
     if(b.rid){ rows.push('<b>'+esc(b.full)+'</b>'); if(b.jira&&b.jira.length) rows.push('<span class="t-k">Jira</span>'+b.jira.map(function(j){ return '<span class="t-j">'+esc(j)+'</span>'; }).join(' ')); rows.push('<span class="t-k">Epic</span>'+esc(b.epic)); }
     else { rows.push('<b>'+esc(b.full.replace(/ \(.*$/,''))+'</b>'); if(b.n) rows.push('<span class="t-k">Story มี UI</span>'+b.n+' รายการ'); }
     rows.push('<span class="t-k">กำหนด QA</span>'+TH_D(b.start)+(b.end!==b.start?' → '+TH_D(b.end):''));
@@ -375,7 +386,7 @@
       var r=await fetch(SRC+'?t='+Date.now(), {cache:'no-store'});
       if(!r.ok) throw new Error('HTTP '+r.status);
       parse(await r.text()); renderTabs();
-      selectPj((new URLSearchParams(location.search)).get('pj')||(curPj&&curPj.id)||'ai');
+      selectPj((new URLSearchParams(location.search)).get('pj')||(curPj&&curPj.id)||'__all');
     } catch(err){
       g.innerHTML='<div class="g-empty">โหลดข้อมูลไม่ได้: '+esc(err.message)+' — เปิดผ่านเว็บ (GitHub Pages) หรือ http server</div>';
       var cnt=document.getElementById('ov-count'); if(cnt) cnt.textContent='—';
@@ -384,8 +395,10 @@
   function seg(id, fn){ document.getElementById(id).addEventListener('click', fn); }
   seg('m-epic', function(){ mode='epic'; document.getElementById('m-epic').classList.add('on'); document.getElementById('m-story').classList.remove('on'); render(); });
   seg('m-story', function(){ mode='story'; document.getElementById('m-story').classList.add('on'); document.getElementById('m-epic').classList.remove('on'); render(); });
-  seg('l-qa', function(){ laneMode='qa'; document.getElementById('l-qa').classList.add('on'); document.getElementById('l-mvp').classList.remove('on'); render(); });
-  seg('l-mvp', function(){ laneMode='mvp'; document.getElementById('l-mvp').classList.add('on'); document.getElementById('l-qa').classList.remove('on'); render(); });
+  function setLane(m){ laneMode=m; ['pj','qa','mvp'].forEach(function(k){ document.getElementById('l-'+k).classList.toggle('on', k===m); }); render(); }
+  seg('l-pj', function(){ setLane('pj'); });
+  seg('l-qa', function(){ setLane('qa'); });
+  seg('l-mvp', function(){ setLane('mvp'); });
   seg('ov-today', scrollToday);
   seg('ov-reload', load);
 
