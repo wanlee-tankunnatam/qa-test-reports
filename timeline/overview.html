@@ -150,10 +150,15 @@
   .g-bar.narrow{overflow:visible; position:relative; justify-content:center; padding:0}
   .g-bar.narrow .g-txt,.g-bar.narrow .g-n{position:absolute; left:calc(100% + 6px); top:50%; transform:translateY(-50%); color:var(--text); font-weight:600; white-space:nowrap; overflow:visible; pointer-events:none}
   .g-bar.narrow .g-n{left:auto; display:none}
-  .g-bar.narrow .g-txt{max-width:200px; overflow:hidden; text-overflow:ellipsis}
+  .g-bar.narrow .g-txt{max-width:90px; overflow:hidden; text-overflow:ellipsis; font-size:.72rem}
   .g-today{position:absolute; top:0; bottom:0; width:2px; background:var(--accent); z-index:2; pointer-events:none}
   .g-today::before{content:""; position:absolute; top:0; left:-4px; width:10px; height:10px; border-radius:50%; background:var(--accent)}
   .g-empty{padding:18px; color:var(--faint); font-style:italic}
+  .g-tip{display:none; position:fixed; z-index:50; max-width:340px; background:var(--panel); color:var(--text); border:1px solid var(--border); border-radius:10px; padding:10px 12px; font-size:.78rem; line-height:1.55; box-shadow:0 8px 24px rgba(0,0,0,.18); pointer-events:none}
+  .g-tip b{font-size:.82rem}
+  .g-tip .t-k{display:inline-block; min-width:78px; color:var(--faint); font-size:.7rem; text-transform:uppercase; letter-spacing:.04em}
+  .g-tip .t-j{font-weight:700; color:var(--accent); background:var(--accent-soft); padding:0 6px; border-radius:5px; font-size:.72rem}
+  .g-tip .t-hint{color:var(--faint); font-size:.7rem}
   @media (max-width:820px){ .gantt{--lane:130px; --day:28px} }
 </style>
 </head>
@@ -188,7 +193,7 @@
     </div>
 
     <div class="group-head"><span class="emoji">📊</span><h2>TAKRA AI · Live (ตะกร้าไลฟ์)</h2><span class="count" id="ov-count">กำลังโหลด…</span><span class="rule"></span></div>
-    <div class="jira">แท่ง = Epic (ช่วง "กำหนด QA" จาก story แรกถึง story สุดท้าย) หรือราย story เมื่อสลับมุมมอง · เลน = สถานะ QA · ข้อมูลอ่านจาก <a href="./">หน้า Timeline</a> (ค่าที่บันทึกขึ้น GitHub แล้ว) — แก้ที่นั่นแล้วกด 🔄 ที่นี่ · คลิกแท่งเพื่อไปดูใน Timeline</div>
+    <div class="jira">แท่งแสดงแค่รหัส (Epic N · Jira/Story id) — <b>hover</b> เพื่อดูรายละเอียด · ช่วงแท่ง = "กำหนด QA" จาก story แรกถึง story สุดท้าย หรือราย story เมื่อสลับมุมมอง · เลน = สถานะ QA · ข้อมูลอ่านจาก <a href="./">หน้า Timeline</a> (ค่าที่บันทึกขึ้น GitHub แล้ว) — แก้ที่นั่นแล้วกด 🔄 ที่นี่ · คลิกแท่งเพื่อไปดูใน Timeline</div>
     <div class="ov-bar">
       <div class="legend"><span class="lg mvp1">MVP-1</span><span class="lg mvp2">MVP-2</span><span class="lg close">ปิดรอบ</span><span class="lg blocked">DEV ติดบล็อก</span></div>
       <span class="ov-tools">
@@ -255,9 +260,10 @@
       var title=detail.replace(/TAKRA-\d+/g,'').trim();
       if(q && qa!=='na'){ cur.states.push(qa); cur.n++; }
       if(due){ if(!cur.start||due<cur.start) cur.start=due; if(!cur.end||due>cur.end) cur.end=due; }
-      if(due) sts.push({grp:cur.grp, rid:rid, name:(sid?sid+' ':'')+(sid?title:topic.trim()), full:(sid?'Story '+sid+' · ':'')+title, mvp:(dev==='blocked'||dev==='block')?'blocked':cur.mvp, start:due, end:due, states:[qa], lane:qa, n:0, sid:sid||'★'});
+      var jira=[].map.call(r.querySelectorAll('.jk'), function(a){ return a.textContent.trim(); });
+      if(due) sts.push({grp:cur.grp, rid:rid, label:(jira[0]||(sid?'Story '+sid:topic.trim())), name:(sid?sid+' ':'')+(sid?title:topic.trim()), full:(sid?'Story '+sid+' · ':'')+title, jira:jira, epic:cur.name, mvp:(dev==='blocked'||dev==='block')?'blocked':cur.mvp, start:due, end:due, states:[qa], lane:qa, qa:qa, dev:dev, n:0, sid:sid||'★'});
     });
-    eps.forEach(function(b){ if(!b.start) b.start=b.end; if(!b.end) b.end=b.start; b.lane=laneOf(b.states); if(b.dev==='blocked') b.mvp='blocked'; b.sid=(b.full.match(/Epic (\d+)/)||[])[1]||'★'; });
+    eps.forEach(function(b){ if(!b.start) b.start=b.end; if(!b.end) b.end=b.start; b.lane=laneOf(b.states); if(b.dev==='blocked') b.mvp='blocked'; b.sid=(b.full.match(/Epic (\d+)/)||[])[1]||'★'; b.label = b.grp==='x' ? 'ปิดรอบ' : 'Epic '+b.sid; b.qa=b.lane; });
     epicBars=eps.filter(function(b){ return b.start; });
     storyBars=sts;
   }
@@ -288,19 +294,46 @@
       items.forEach(function(b){
         var si=idx[b.start], ei=idx[b.end]+1, r=0;
         b.narrow = (ei-si) < 4;
-        var occ = b.narrow ? si+5 : ei;      // แท่งแคบ ชื่อยื่นออกไปทางขวา ~4 วัน
+        var occ = b.narrow ? si+3 : ei;      // แท่งแคบ ป้ายสั้นยื่นออกขวา ~2 วัน
         while(rowsEnd[r]!=null && rowsEnd[r]>si) r++;
         rowsEnd[r]=occ; b.r=r+1; b.s=si+1; b.e=ei+1;
       });
       var nrows=Math.max(1, rowsEnd.length);
       var bg='<div class="g-bg">'+days.map(function(d){ return '<div class="g-cell'+cellCls(d)+'"></div>'; }).join('')+'</div>';
-      var bh=items.map(function(b){
-        return '<a class="g-bar '+b.mvp+(b.narrow?' narrow':'')+'" style="--r:'+b.r+';--s:'+b.s+';--e:'+b.e+'" href="./?project=timeline#'+(b.rid||b.grp)+'" title="'+esc(b.full)+' · '+b.start+(b.end!==b.start?' → '+b.end:'')+(b.n?' · '+b.n+' story มี UI':'')+'"><span class="g-av">'+esc(b.sid)+'</span><span class="g-txt">'+esc(b.name)+'</span>'+(b.n?'<span class="g-n">'+b.n+' story</span>':'')+'</a>';
+      var bh=items.map(function(b, i){
+        b._i = bars.indexOf(b);
+        return '<a class="g-bar '+b.mvp+(b.narrow?' narrow':'')+'" style="--r:'+b.r+';--s:'+b.s+';--e:'+b.e+'" href="./?project=timeline#'+(b.rid||b.grp)+'" data-i="'+b._i+'"><span class="g-av">'+esc(b.sid)+'</span><span class="g-txt">'+esc(b.label)+'</span></a>';
       }).join('');
       out+='<div class="g-lane"><div class="g-label">'+L[1]+'<small>'+items.length+' รายการ</small></div><div class="g-body">'+bg+'<div class="g-rows" style="min-height:'+(nrows*35+9)+'px">'+bh+'</div></div></div>';
     });
     if(idx[todayIso]!=null) out+='<div class="g-today" id="g-today" style="left:calc(var(--lane) + '+idx[todayIso]+' * var(--day) + var(--day) / 2)"></div>';
     g.innerHTML=out;
+    bindTips();
+  }
+  var QA_TXT={wip:'กำลังทดสอบ',wait:'รอทดสอบ',pend:'รอดำเนินการ (รอ dev)',block:'บล็อก',fail:'ไม่ผ่าน',done:'เสร็จแล้ว',na:'ไม่มี UI'};
+  var DEV_TXT={plan:'วางแผน',wip:'กำลังทำ',review:'รอรีวิว',done:'เสร็จแล้ว',blocked:'ติดบล็อก'};
+  var TH_D=function(iso){ var d=dParse(iso); return d.getDate()+' '+TH_M[d.getMonth()]; };
+  function tipHtml(b){
+    var rows=[];
+    if(b.rid){ rows.push('<b>'+esc(b.full)+'</b>'); if(b.jira&&b.jira.length) rows.push('<span class="t-k">Jira</span>'+b.jira.map(function(j){ return '<span class="t-j">'+esc(j)+'</span>'; }).join(' ')); rows.push('<span class="t-k">Epic</span>'+esc(b.epic)); }
+    else { rows.push('<b>'+esc(b.full.replace(/ \(.*$/,''))+'</b>'); if(b.n) rows.push('<span class="t-k">Story มี UI</span>'+b.n+' รายการ'); }
+    rows.push('<span class="t-k">กำหนด QA</span>'+TH_D(b.start)+(b.end!==b.start?' → '+TH_D(b.end):''));
+    rows.push('<span class="t-k">สถานะ QA</span>'+(QA_TXT[b.qa]||b.qa||'—')+(b.dev?' · <span class="t-k">DEV</span>'+(DEV_TXT[b.dev]||b.dev):''));
+    rows.push('<span class="t-hint">คลิกเพื่อไปดูใน Timeline</span>');
+    return rows.join('<br>');
+  }
+  function bindTips(){
+    var tip=document.getElementById('g-tip');
+    if(!tip){ tip=document.createElement('div'); tip.id='g-tip'; tip.className='g-tip'; document.body.appendChild(tip); }
+    [].forEach.call(document.querySelectorAll('.g-bar'), function(el){
+      el.addEventListener('mouseenter', function(){ var b=bars[+el.getAttribute('data-i')]; if(!b) return; tip.innerHTML=tipHtml(b); tip.style.display='block'; });
+      el.addEventListener('mousemove', function(e){
+        var x=e.clientX+14, y=e.clientY+14, w=tip.offsetWidth, hgt=tip.offsetHeight;
+        if(x+w>window.innerWidth-8) x=e.clientX-w-14; if(y+hgt>window.innerHeight-8) y=e.clientY-hgt-14;
+        tip.style.left=x+'px'; tip.style.top=y+'px';
+      });
+      el.addEventListener('mouseleave', function(){ tip.style.display='none'; });
+    });
   }
   function scrollToday(){ var w=document.getElementById('ov-wrap'), t=document.getElementById('g-today'); if(!w||!t) return; w.scrollLeft=Math.max(0, t.offsetLeft - w.clientWidth/2); }
 
