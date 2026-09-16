@@ -283,7 +283,12 @@
       var jira=[].map.call(r.querySelectorAll('.jk'), function(a){ return a.textContent.trim(); });
       if(due) sts.push({grp:cur.grp, rid:rid, label:(jira[0]||(sid?'Story '+sid:topic.trim())), name:(sid?sid+' ':'')+(sid?title:topic.trim()), full:(sid?'Story '+sid+' · ':'')+title, jira:jira, epic:cur.name, mvp:(dev==='blocked'||dev==='block')?'blocked':cur.mvp, start:due, end:due, states:[qa], lane:qa, qa:qa, dev:dev, n:0, sid:sid||'★'});
     });
-    eps.forEach(function(b){ if(!b.start) b.start=b.end; if(!b.end) b.end=b.start; b.lane=laneOf(b.states); if(b.dev==='blocked') b.mvp='blocked'; b.sid=(b.full.match(/Epic ([\w\-]+)/)||[])[1]||'★'; b.label = /\.x$/.test(b.grp) ? 'ปิดรอบ' : 'Epic '+b.sid; b.qa=b.lane; });
+    eps.forEach(function(b){ if(!b.start) b.start=b.end; if(!b.end) b.end=b.start; b.lane=laneOf(b.states); if(b.dev==='blocked') b.mvp='blocked'; var eid=(b.full.match(/Epic ([\w\-]+)/)||[])[1]||'★';
+      // ป้ายให้สม่ำเสมอ: Clip ใช้รหัส EP-0x จากเอกสาร → ป้าย "EP-02" วงกลม "2" · Lib-Sync "Epic M1" วงกลม "M1"
+      if(/^EP-\d+$/i.test(eid)){ b.label=eid; b.sid=String(parseInt(eid.slice(3),10)); }
+      else { b.label='Epic '+eid; b.sid=eid; }
+      if(/\.x$/.test(b.grp)){ b.label='ปิดรอบ'; b.sid='★'; }
+      b.qa=b.lane; });
     pr.eps=eps.filter(function(b){ return b.start; }); pr.sts=sts;
   }
   function tagPj(list, pr){ return list.map(function(b){ b.pj=pr.id; b.pjName=pr.name; b.pjEmoji=pr.emoji; return b; }); }
