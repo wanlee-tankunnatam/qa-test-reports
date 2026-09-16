@@ -744,11 +744,20 @@
     if(dirty){ if(s){ s.textContent='● ยังไม่ได้บันทึก'; s.style.color='var(--dod)'; } if(b && !b.disabled && b.textContent.indexOf('✅')<0) b.textContent='☁️ บันทึกขึ้น GitHub *'; }
     else { if(s){ s.textContent='✓ ตรงกับ GitHub'; s.style.color='var(--muted)'; } if(b && !b.disabled && b.textContent.indexOf('✅')<0) b.textContent='☁️ บันทึกขึ้น GitHub'; }
   }
+  var askedToken=false;
   function markDirty(){
     dirty=true; updateIndicator();
-    if(autoOn() && localStorage.getItem('gh_pat')){
+    if(!autoOn()) return;
+    if(!localStorage.getItem('gh_pat') && !askedToken){
+      // ครั้งแรกที่แก้ค่าแล้วยังไม่มี token → ถามทันที เพื่อให้ auto-save ทำงานได้เลย (ถามครั้งเดียวต่อการเปิดหน้า)
+      askedToken=true; ghToken();
+    }
+    if(localStorage.getItem('gh_pat')){
       if(autoTimer) clearTimeout(autoTimer);
       autoTimer=setTimeout(function(){ autoTimer=null; publishToGH(true); }, 5000);
+    } else {
+      var s=document.getElementById('save-status');
+      if(s){ s.textContent='● ยังไม่ได้บันทึก — กด 🔑 Token เพื่อเปิด auto-save'; s.style.color='var(--dod)'; }
     }
   }
   window.addEventListener('beforeunload', function(e){ if(dirty){ e.preventDefault(); e.returnValue='มีงานที่ยังไม่ได้บันทึกขึ้น GitHub'; return e.returnValue; } });
@@ -780,7 +789,7 @@
   document.getElementById('btn-refresh').addEventListener('click', pullLatest);
   document.getElementById('btn-token').addEventListener('click', function(){
     clearToken(); var t=ghToken();
-    if(t){ alert('บันทึก token แล้ว ✅\nลองเปลี่ยนสถานะสัก 1 ช่อง — ปุ่มควรเด้ง "✅ บันทึกแล้ว!" ใน ~5 วิ'); updateIndicator(); }
+    if(t){ updateIndicator(); if(dirty) publishToGH(true); else alert('บันทึก token แล้ว ✅\nลองเปลี่ยนสถานะสัก 1 ช่อง — ปุ่มควรเด้ง "✅ บันทึกแล้ว!" ใน ~5 วิ'); }
   });
 
   var initial = (new URLSearchParams(location.search)).get('project');
