@@ -269,6 +269,7 @@
     <nav id="nav">
       <div class="nav-label">แผน</div>
       <div class="nav-item active" data-project="timeline"><span class="emoji">📅</span><span class="name">Timeline</span><span class="n">1</span></div>
+      <a class="nav-item" href="overview.html" style="text-decoration:none"><span class="emoji">📊</span><span class="name">ภาพรวม</span><span class="n">↗</span></a>
       <div class="nav-label">โปรเจค</div>
       <div class="nav-item" data-project="rerun"><span class="emoji">🎬</span><span class="name">TAKRA Rerun</span><span class="n">1</span></div>
       <div class="nav-item" data-project="ai"><span class="emoji">🤖</span><span class="name">TAKRA AI · Live</span><span class="n">2</span></div>
@@ -547,7 +548,7 @@
 <script>
 (function(){
   var q = document.getElementById('q');
-  var navItems = [].slice.call(document.querySelectorAll('.nav-item'));
+  var navItems = [].slice.call(document.querySelectorAll('div.nav-item'));
   var rows = [].slice.call(document.querySelectorAll('table.tbl tbody tr:not(.grp):not(.wk)'));
   var groups = [].slice.call(document.querySelectorAll('.group'));
   var empty = document.getElementById('empty');
@@ -798,6 +799,13 @@
     clearToken(); var t=ghToken();
     if(t){ updateIndicator(); if(dirty) publishToGH(true); else alert('บันทึก token แล้ว ✅\nลองเปลี่ยนสถานะสัก 1 ช่อง — ปุ่มควรเด้ง "✅ บันทึกแล้ว!" ใน ~5 วิ'); }
   });
+
+  // มาจากหน้าภาพรวม: #<rid|grp> → เลื่อนไปแถวนั้นแล้วไฮไลต์
+  (function(){
+    var id=(location.hash||'').slice(1); if(!id) return;
+    var row=document.querySelector('table.sheet tr[data-rid="'+id+'"], table.sheet tr.grp[data-grp="'+id+'"]');
+    if(row){ setTimeout(function(){ row.scrollIntoView({behavior:'smooth', block:'center'}); row.style.outline='2px solid var(--accent)'; setTimeout(function(){ row.style.outline=''; }, 3000); }, 200); }
+  })();
 
   var initial = (new URLSearchParams(location.search)).get('project');
   if(initial && VALID.indexOf(initial) !== -1){ selectProject(initial, {scroll:false, replace:true}); }
