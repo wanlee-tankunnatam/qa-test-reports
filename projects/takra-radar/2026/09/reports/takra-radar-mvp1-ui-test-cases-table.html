@@ -334,27 +334,45 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   },
   "tc-8566": {
     "actual": "[เทส 16/09/2569 · UAT uat.trendora.watch · บัญชี qa01 (role user, entitlement active แพคมาตรฐาน, watchlistCap 10)] BLOCKED — เงื่อนไข \"ยังเฝ้าดูไม่เต็มความจุ\" ใช้ไม่ได้: บั๊ก TKRD-235: GET /api/v1/watchlist/occupancy คืน capacity 0 (used 10) ทั้งที่ /auth/me ระบุ watchlistCap 10 → มิเตอร์ \"10 / 0\" ทุกแถวถูกนับเกินความจุ. กดเพิ่มจากหน้าค้นหา → POST /watchlist/items 409 WATCHLIST_FULL. ไม่ได้กดเลิกเฝ้าดูตัวเดิมเพราะเพิ่มกลับไม่ได้. ปุ่มบนหน้าค้นหาเป็นปุ่มเดียวสลับสถานะ (✓ เลิกเฝ้าดู / + เพิ่ม) ไม่ซ้อน",
-    "st": "block"
+    "st": "block",
+    "jira": [
+      "https://kitdi.atlassian.net/browse/TKRD-235"
+    ]
   },
   "tc-8567": {
     "actual": "[เทส 16/09/2569 · UAT uat.trendora.watch · บัญชี qa01 (role user, entitlement active แพคมาตรฐาน, watchlistCap 10)] FAIL — (1) hero \"10 / 0\" + \"เต็มแล้ว เฝ้าดูครบ 0 สินค้าแล้ว…\" ไม่ตรงสิทธิ์ (cap 10) และไม่มีบรรทัด \"เหลืออีก N สินค้า\" → TKRD-235; (2) ตัวเรียงมี \"เพิ่มล่าสุด\"(ค่าเริ่มต้น) · \"ข้อมูลเก่าสุด\" สลับแล้วลำดับเปลี่ยนจริง ✓ — ไม่มี \"จอมากสุด\" (น่าจะซ่อนเพราะสวิตช์ข้อมูลจอสดยังปิด รอเทสซ้ำ ไม่เปิดบั๊ก); (3) เมนูการ์ด: สร้างลิงก์ · ดูสินค้าใน Shopee · เลิกเฝ้าดู (ท้ายสุด สีแดง ✓) ไม่มี \"ขอข้อมูลใหม่\" เพราะแถว over-cap. แผง \"สถานะจอสด\" ติด \"เร็วๆนี้\" ✓; รายการเป็นการ์ด ✓",
-    "st": "fail"
+    "st": "fail",
+    "jira": [
+      "https://kitdi.atlassian.net/browse/TKRD-235"
+    ]
   },
   "tc-8568": {
     "actual": "[เทส 16/09/2569 · UAT uat.trendora.watch · บัญชี qa01 (role user, entitlement active แพคมาตรฐาน, watchlistCap 10)] FAIL — บั๊ก TKRD-236: กด สร้างแท็ก \"ของใช้\" ในรายละเอียดสินค้า → POST /watchlist/tags อย่างเดียว แท็กไม่ติดสินค้า (กรองได้ \"แสดง 0 จาก 10\") ต้องกดชิปซ้ำจึง PUT /items/{id}/tags; ปุ่ม × บนชิปลบแท็กทั้งบัญชี (DELETE /watchlist/tags/{id}). หลังติดแล้ว: การ์ดโชว์แท็ก ✓ กรอง \"แสดง 1 จาก 10 สินค้า\" ✓ มิเตอร์คงที่ ✓ \"ทั้งหมด\" กลับมา 10 ✓. ลบแท็กทดสอบแล้ว",
-    "st": "fail"
+    "st": "fail",
+    "jira": [
+      "https://kitdi.atlassian.net/browse/TKRD-236"
+    ]
   },
   "tc-8569": {
     "actual": "[เทส 16/09/2569 · UAT uat.trendora.watch · บัญชี qa01 (role user, entitlement active แพคมาตรฐาน, watchlistCap 10)] FAIL — มีคำ \"เต็มแล้ว\" + สีเตือน ✓; เพิ่มถูกปฏิเสธก่อนบันทึก (409) จำนวนไม่เปลี่ยน ✓ ไม่พาไปหน้าจ่ายเงิน ✓ — แต่ข้อความ UI \"เฝ้าดูครบ 0 สินค้าแล้ว…\" (ควร \"ครบ 10\"); API message_th ถูกแต่ details.capacity 0. บั๊ก TKRD-235: GET /api/v1/watchlist/occupancy คืน capacity 0 (used 10) ทั้งที่ /auth/me ระบุ watchlistCap 10 → มิเตอร์ \"10 / 0\" ทุกแถวถูกนับเกินความจุ",
-    "st": "fail"
+    "st": "fail",
+    "jira": [
+      "https://kitdi.atlassian.net/browse/TKRD-235"
+    ]
   },
   "tc-8570": {
     "actual": "[เทส 16/09/2569 · UAT uat.trendora.watch · บัญชี qa01 (role user, entitlement active แพคมาตรฐาน, watchlistCap 10)] BLOCKED — ต้องเริ่มจากเฝ้าดู \u003c9 ตัว บัญชีมี 10 และ capacity 0 (TKRD-235) ไล่ขอบ 9→10→11 ไม่ได้",
-    "st": "block"
+    "st": "block",
+    "jira": [
+      "https://kitdi.atlassian.net/browse/TKRD-235"
+    ]
   },
   "tc-8571": {
     "actual": "[เทส 16/09/2569 · UAT uat.trendora.watch · บัญชี qa01 (role user, entitlement active แพคมาตรฐาน, watchlistCap 10)] HOLD — เลือก 3 ตัวบนหน้าค้นหา กด \"เพิ่มเข้ารายการเฝ้าดู 3 สินค้า\" → 409 ทั้งชุด ข้อความ \"เลือกไว้ 3 สินค้า แต่เฝ้าดูได้อีก 0 สินค้า เอาบางตัวออกจากที่เลือกก่อน\" ไม่มีตัวไหนถูกเพิ่ม ✓ all-or-nothing. ขั้น \"ลดเหลือเท่าช่องที่เหลือแล้วสำเร็จ\" ทำไม่ได้ (capacity 0 · TKRD-235)",
-    "st": "hold"
+    "st": "hold",
+    "jira": [
+      "https://kitdi.atlassian.net/browse/TKRD-235"
+    ]
   },
   "tc-8572": {
     "actual": "[เทส 15/09/2569 · UAT uat.trendora.watch · บัญชี admin (ยังไม่เปิดใช้งาน)] ผ่าน — เมนู \"สินค้าที่เฝ้าดู\" (/watchlist) ขึ้นการ์ด \"บัญชียังไม่เปิดใช้งาน\" พร้อมข้อความ \"บัญชีของคุณยังไม่เปิดใช้งาน กรุณาชำระเงินผ่านช่องทางการชำระเงินด้วยตนเองเพื่อเปิดใช้งานบัญชีและเริ่มใช้งาน\" ตรงตามที่คาดไว้ · ไม่มีรายการเฝ้าดู/มิเตอร์ · API watchlist/occupancy, watchlist/tags, watchlist/items ตอบ 403 ทั้งหมด (ไม่มีข้อมูลหลุด) · ปุ่ม \"เลือกแพ็กเกจที่เหมาะกับคุณ\" พาไป /billing (หน้าแพ็กเกจ: เลือกแพ็กเกจ โอนเงิน ส่งสลิป) ได้ ข้อสังเกต: ตอนโหลด /watchlist ครั้งแรก เมนูซ้ายโผล่ \"เช็คจอ · เซสชั่นไอดี · ลิงก์สินค้า\" เกินมา โหลดใหม่แล้วหาย ยังทำซ้ำไม่ได้",
@@ -382,11 +400,18 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   },
   "tc-8578": {
     "actual": "[เทส 16/09/2569 · UAT uat.trendora.watch · บัญชี qa01 (role user, entitlement active แพคมาตรฐาน, watchlistCap 10)] BLOCKED — ไม่มีประวัติให้จด และเลิกเฝ้าดูแล้วเพิ่มกลับไม่ได้ (capacity 0 · TKRD-235)",
-    "st": "block"
+    "st": "block",
+    "jira": [
+      "https://kitdi.atlassian.net/browse/TKRD-235"
+    ]
   },
   "tc-8579": {
     "actual": "[เทส 16/09/2569 · UAT uat.trendora.watch · บัญชี qa01 (role user, entitlement active แพคมาตรฐาน, watchlistCap 10)] FAIL — พามา \"หน้าหลัก\" + \"อะไรเปลี่ยนไปตั้งแต่ครั้งก่อน\" ✓; \"สวัสดีตอนเย็น, qa01\" (20:56) → \"สวัสดีตอนค่ำ\" (21:05) ✓; \"อัปเดตล่าสุด 00:00 น.\" ✓. hero: \"ค่าคอมรวมที่เฝ้าดู ฿57.98 ถ้าขายได้อย่างละ 1 ชิ้น\" ✓ · \"สลอตที่เฝ้าดู 10 / 0 เหลืออีก 0 สลอต\" ✗ (TKRD-235) · ใบที่ 3 ชื่อ \"อัปเดตวันนี้ 1\" ✗ สเปก \"ขยับวันนี้\" (TKRD-237) · \"โอกาสใหม่ · จอว่าง\" เร็วๆนี้ ไม่มีตัวเลข ✓",
-    "st": "fail"
+    "st": "fail",
+    "jira": [
+      "https://kitdi.atlassian.net/browse/TKRD-235",
+      "https://kitdi.atlassian.net/browse/TKRD-237"
+    ]
   },
   "tc-8580": {
     "actual": "[เทส 16/09/2569 · UAT uat.trendora.watch · บัญชี qa01 (role user, entitlement active แพคมาตรฐาน, watchlistCap 10)] BLOCKED — ส่วน \"สินค้าที่คุณเฝ้าดู\" ขึ้น \"ยังไม่มีอะไรขยับ\" ไม่มีการ์ดให้ตรวจ. \"ดูทั้งหมด ›\" ไป /watchlist ✓",
@@ -394,11 +419,17 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   },
   "tc-8581": {
     "actual": "[เทส 16/09/2569 · UAT uat.trendora.watch · บัญชี qa01 (role user, entitlement active แพคมาตรฐาน, watchlistCap 10)] HOLD — มีแท็บแค่ \"มาแรง\" · \"ราคาเพิ่งลด\" ไม่มี \"ลดเยอะ จอว่าง\" (น่าจะซ่อนเพราะสวิตช์ข้อมูลจอสดยังปิด รอเทสซ้ำ). บรรทัดที่มาแต่ละชั้น ✓; กดการ์ดเปิดรายละเอียด ✓; ค่าไม่รู้ \"ยังไม่มีข้อมูล\" ✓; ไม่ได้ลองเพิ่มเฝ้าดูจากชั้น (capacity 0). บั๊ก TKRD-238: หัวส่วน \"จากสินค้าที่เราเก็บข้อมูลอยู่ 30 รายการ\" ขัดกับ provenance 7,228,479 รายการ, รายละเอียดบอก \"ยังไม่เคยดึงข้อมูลค่าคอม\" ทั้งที่แสดง ฿19.98, การ์ดบางใบไม่มีรูป",
-    "st": "hold"
+    "st": "hold",
+    "jira": [
+      "https://kitdi.atlassian.net/browse/TKRD-238"
+    ]
   },
   "tc-8582": {
     "actual": "[เทส 16/09/2569 · UAT uat.trendora.watch · บัญชี qa01 (role user, entitlement active แพคมาตรฐาน, watchlistCap 10)] FAIL — บั๊ก TKRD-237: การ์ด \"ยังไม่มีอะไรขยับ · เราจะแจ้งให้ทันทีที่สินค้าที่คุณเฝ้าดูขยับ\" แสดงเต็ม ✓ ไม่ใช่หน้าว่าง ✓ แต่ไม่มีบรรทัดนับ \"ไม่มีการเปลี่ยนแปลง\" ใต้หัวข้อ; hero \"อัปเดตวันนี้ 1\" ขัดกับกล่อง",
-    "st": "fail"
+    "st": "fail",
+    "jira": [
+      "https://kitdi.atlassian.net/browse/TKRD-237"
+    ]
   },
   "tc-8583": {
     "actual": "[เทส 16/09/2569 · UAT uat.trendora.watch · บัญชี qa01 (role user, entitlement active แพคมาตรฐาน, watchlistCap 10)] HOLD — แท็บ \"ลดเยอะ จอว่าง\" ไม่แสดง (tablist มีแค่ มาแรง/ราคาเพิ่งลด) น่าจะถูกซ่อนเพราะสวิตช์ข้อมูลจอสดยังปิด — รอเทสซ้ำเมื่อเปิดสวิตช์; 2 แท็บที่มีโหลดรายการได้ ไม่มี spinner ค้าง",
@@ -406,19 +437,31 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   },
   "tc-8584": {
     "actual": "[เทส 16/09/2569 · UAT uat.trendora.watch · บัญชี qa01 (role user, entitlement active แพคมาตรฐาน, watchlistCap 10)] BLOCKED — ทุกแถว over-cap (capacity 0 · TKRD-235) เมนูการ์ดไม่มี \"ขอข้อมูลใหม่\"",
-    "st": "block"
+    "st": "block",
+    "jira": [
+      "https://kitdi.atlassian.net/browse/TKRD-235"
+    ]
   },
   "tc-8585": {
     "actual": "[เทส 16/09/2569 · UAT uat.trendora.watch · บัญชี qa01 (role user, entitlement active แพคมาตรฐาน, watchlistCap 10)] BLOCKED — ไม่มีปุ่ม \"ขอข้อมูลใหม่\" (TKRD-235) ทดสอบ cooldown/โควตาไม่ได้",
-    "st": "block"
+    "st": "block",
+    "jira": [
+      "https://kitdi.atlassian.net/browse/TKRD-235"
+    ]
   },
   "tc-8586": {
     "actual": "[เทส 16/09/2569 · UAT uat.trendora.watch · บัญชี qa01 (role user, entitlement active แพคมาตรฐาน, watchlistCap 10)] BLOCKED — ไม่มีปุ่ม \"ขอข้อมูลใหม่\" (TKRD-235) และต้องใช้ DevTools",
-    "st": "block"
+    "st": "block",
+    "jira": [
+      "https://kitdi.atlassian.net/browse/TKRD-235"
+    ]
   },
   "tc-8587": {
     "actual": "[เทส 16/09/2569 · UAT uat.trendora.watch · บัญชี qa01 (role user, entitlement active แพคมาตรฐาน, watchlistCap 10)] BLOCKED — ไม่มีปุ่ม \"ขอข้อมูลใหม่\" (TKRD-235) และต้อง block request ผ่าน DevTools",
-    "st": "block"
+    "st": "block",
+    "jira": [
+      "https://kitdi.atlassian.net/browse/TKRD-235"
+    ]
   },
   "tc-8588": {
     "st": "block",
