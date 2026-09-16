@@ -161,6 +161,56 @@ def parse_farm(pj):
         if last and line.startswith('  ') and line.strip(): last['title'] = clean_title(last['title'] + ' ' + line.strip())
     return out
 
+# ---------- Jira (BA/PM ปัก) → epics/stories ----------
+import json
+SNAP = pathlib.Path(__file__).resolve().parent / 'jira-snapshot'
+STATUS_MAP = {'done': 'done', 'indeterminate': 'wip', 'new': 'plan'}
+def jira_dev(i):
+    n = (i['status'] or '').lower()
+    if 'review' in n or 'ready to test' in n or 'testing' in n or 'qa' in n: return 'review'
+    if 'block' in n: return 'blocked'
+    return STATUS_MAP.get(i['status_cat'] or '', 'unk')
+def jira_dates(i):
+    st, du = i.get('start'), i.get('due') or i.get('target_end')
+    if not st and i.get('target_start'): st = i['target_start']
+    if (not st or not du) and i.get('sprint'):
+        sp = i['sprint'][-1]
+        if not st and sp.get('start'): st = sp['start'][:10]
+        if not du and sp.get('end'): du = sp['end'][:10]
+    return st or '', du or ''
+def epic_mvp(summary):
+    m = re.search(r'MVP\s*-?\s*(\d)', summary or '', re.I)
+    return ('MVP-%s' % m.group(1)) if m else 'อื่น'
+def epic_label(summary, key):
+    m = re.search(r'\bE(?:pic)?\s*-?(\d+)\b', summary or '')
+    return ('Epic %s' % m.group(1)) if m else key
+def parse_jira(pj):
+    f = SNAP / ('%s.json' % pj['jira'])
+    if not f.exists(): return None, None
+    d = json.loads(f.read_text(encoding='utf-8')); iss = d['issues']
+    by = {i['key']: i for i in iss}
+    epics, order = {}, []
+    for i in iss:
+        if i['type'] != 'Epic': continue
+        st, du = jira_dates(i)
+        epics[i['key']] = dict(key=('J', i['key']), jkey=i['key'], mvp=epic_mvp(i['summary']), num=i['key'], label=epic_label(i['summary'], i['key']), name=i['summary'],
+                               stories=[], prefix='', order=[], dev=jira_dev(i), start=st, due=du, assignee=i.get('assignee') or '', status=i['status'])
+        order.append(i['key'])
+    orphan = None
+    for i in iss:
+        if i['type'] == 'Epic': continue
+        p = i.get('parent')
+        ep = epics.get(p) if p else None
+        if ep is None:
+            if orphan is None:
+                orphan = dict(key=('J', '_none'), jkey='', mvp='อื่น', num='_none', label='ไม่มี Epic', name='Story/Task ที่ไม่ได้ผูก Epic', stories=[], prefix='', order=[], dev='unk', start='', due='', assignee='', status='')
+            ep = orphan
+        st, du = jira_dates(i)
+        ep['stories'].append(dict(no=i['key'], title=i['summary'], typ=i['type'], jira=[i['key']], dev=jira_dev(i), ents=[], start=st, due=du, assignee=i.get('assignee') or '', status=i['status']))
+    out = [epics[k] for k in order]
+    if orphan: out.append(orphan)
+    return out, d.get('fetched', '')[:16]
+
 # ---------- สถานะ dev จาก sprint-status ----------
 RANK = {'blocked': 0, 'descoped': 0, 'backlog': 1, 'ready-for-dev': 2, 'in-progress': 3, 'review': 4, 'ready-for-review': 4, 'done': 5}
 DEVMAP = {'blocked': 'blocked', 'descoped': 'blocked', 'backlog': 'plan', 'ready-for-dev': 'plan', 'in-progress': 'wip', 'review': 'review', 'ready-for-review': 'review', 'done': 'done'}
@@ -233,15 +283,24 @@ def epic_sort_num(num):
     m = re.search(r'(\d+)', num); return int(m.group(1)) if m else 0
 
 def build_project(pj):
-    epics = {'bmad': parse_bmad, 'clip': parse_clip, 'farm': parse_farm}[pj['kind']](pj)
-    upd = apply_sprint(pj, epics)
-    pid = pj['id']
-    for ep in epics:
-        ep['stories'].sort(key=lambda s: story_sort(s['no']))
-        if pj.get('epic_name') and epic_sort_num(ep['num']) in pj['epic_name']: ep['name'] = pj['epic_name'][epic_sort_num(ep['num'])]
+    pid = pj['id']; jira_mode = False; fetched = ''
+    epics, fetched = parse_jira(pj) if pj.get('jira') else (None, None)
+    if epics is not None:
+        jira_mode = True; upd = None
+    else:
+        epics = {'bmad': parse_bmad, 'clip': parse_clip, 'farm': parse_farm}[pj['kind']](pj)
+        upd = apply_sprint(pj, epics)
+        for ep in epics:
+            ep['stories'].sort(key=lambda s: story_sort(s['no']))
+            if pj.get('epic_name') and epic_sort_num(ep['num']) in pj['epic_name']: ep['name'] = pj['epic_name'][epic_sort_num(ep['num'])]
     # ---- กำหนด QA ----
     sched = {}
-    if pj.get('schedule'):
+    if jira_mode:
+        # กำหนด QA ตั้งต้น = กำหนด DEV ที่ BA/PM ปัก (ไม่มี → ว่าง ให้ QA กรอกเอง)
+        for ep in epics:
+            ds = sorted({x for x in [ep['due']] + [s['due'] for s in ep['stories']] if x})
+            sched[ep['key']] = ds
+    elif pj.get('schedule'):
         for ep in epics: sched[ep['key']] = pj['schedule'].get(epic_sort_num(ep['num']), [])
     else:
         started = ('done', 'review', 'wip') if upd else ('done', 'review', 'wip', 'unk')   # มี sprint-status → เอาเฉพาะ epic ที่ dev เริ่มแล้ว
@@ -250,13 +309,17 @@ def build_project(pj):
         for ep, d in zip(cands, days): sched[ep['key']] = [d]
         for ep in epics: sched.setdefault(ep['key'], [])
     # ---- rows (เรียงล่าสุดไว้บน) ----
-    order = sorted(epics, key=lambda ep: (sched[ep['key']][-1] if sched[ep['key']] else '0000', epic_sort_num(ep['num'])), reverse=True)
+    if jira_mode:
+        order = sorted(epics, key=lambda ep: ((ep['due'] or ep['start'] or (sched[ep['key']][-1] if sched[ep['key']] else '0000')), ep['num']), reverse=True)
+    else:
+        order = sorted(epics, key=lambda ep: (sched[ep['key']][-1] if sched[ep['key']] else '0000', epic_sort_num(ep['num'])), reverse=True)
     rows = []; n_story = n_ui = 0; n_done_epic = 0
     for ep in order:
         days = sched[ep['key']]; keys = ep['stories']; cnt = collections.Counter(); items = []
         for i, s in enumerate(keys):
-            ui = is_ui(s); cnt[s['dev']] += 1
-            due = days[min(len(days) - 1, (i * len(days)) // max(1, len(keys)))] if (days and ui) else ''
+            ui = is_ui(s) if not jira_mode else (s['typ'] != 'Task' or not NON_UI.search(s['title'])); cnt[s['dev']] += 1
+            if jira_mode: due = s['due'] if ui else ''
+            else: due = days[min(len(days) - 1, (i * len(days)) // max(1, len(keys)))] if (days and ui) else ''
             if not ui: qa = 'na'
             elif s['dev'] == 'done': qa = 'wait'
             elif s['dev'] == 'blocked': qa = 'block'
@@ -269,60 +332,83 @@ def build_project(pj):
         ep_dev = 'done' if total and done == total else ('wip' if (cnt['done'] or cnt['review'] or cnt['wip']) else ('unk' if cnt['unk'] == total else 'plan'))
         if ep_dev == 'done': n_done_epic += 1
         grp = '%s.e%s' % (pid, ep['num'])
-        elabel = ('%s · Epic %s' % (ep['mvp'], ep['num'])) if not str(ep['num']).startswith('EP-') else ep['num']
-        tip = html.escape('Epic %s — %s' % (ep['num'], ep['name']), quote=True)
-        rows.append('<tr class="grp" data-grp="%s" data-mvp="%s"><td class="c-topic" data-tip="%s"><b>%s</b> <span class="epc">dev เสร็จ %d/%d story</span></td>'
-                    '<td class="c-st"><span class="pill dev-%s">%s</span></td><td class="c-d"><input type="date" data-rid="%s" data-k="ddev"></td><td class="c-st"></td>'
+        if jira_mode:
+            ep_dev = ep['dev'] if ep['dev'] != 'unk' else ep_dev
+            elabel = ('%s · %s' % (ep['mvp'], ep['label'])) if ep['jkey'] else ep['label']
+            tip = html.escape(('%s — %s' % (ep['jkey'], ep['name'])) + (' · ' + ep['assignee'] if ep['assignee'] else '') + (' · Jira: ' + ep['status'] if ep['status'] else ''), quote=True)
+            jk = (' <a class="jk" href="%s%s" target="_blank" rel="noopener">%s</a>' % (JIRA, ep['jkey'], ep['jkey'])) if ep['jkey'] else ''
+            ep_start, ep_due, ep_qa = ep['start'], ep['due'], (ep['due'] or (days[-1] if days else ''))
+        else:
+            elabel = ('%s · Epic %s' % (ep['mvp'], ep['num'])) if not str(ep['num']).startswith('EP-') else ep['num']
+            tip = html.escape('Epic %s — %s' % (ep['num'], ep['name']), quote=True); jk = ''
+            ep_start, ep_due, ep_qa = '', '', (days[-1] if days else '')
+        rows.append('<tr class="grp" data-grp="%s" data-mvp="%s" data-key="%s"><td class="c-topic" data-tip="%s"><b>%s</b>%s <span class="epc">dev เสร็จ %d/%d</span></td>'
+                    '<td class="c-st"><span class="pill dev-%s">%s</span></td><td class="c-d"><input type="date" data-rid="%s" data-k="dstart" value="%s"></td><td class="c-d"><input type="date" data-rid="%s" data-k="ddev" value="%s"></td><td class="c-st"></td>'
                     '<td class="c-d"><input type="date" class="bold" data-rid="%s" data-k="due" value="%s"></td><td></td><td class="c-rem"></td></tr>'
-                    % (grp, ep['mvp'], tip, html.escape(elabel), done, total, ep_dev, DEV_TXT.get(ep_dev, ep_dev) if ep_dev != 'unk' else 'ไม่ระบุ', grp, grp, days[-1] if days else ''))
+                    % (grp, ep['mvp'], ep.get('jkey', ''), tip, html.escape(elabel), jk, done, total, ep_dev, DEV_TXT.get(ep_dev, ep_dev) if ep_dev != 'unk' else 'ไม่ระบุ', grp, ep_start, grp, ep_due, grp, ep_qa))
         for s, ui, qa, due, sub in items:
-            rid = '%s.s%s-%s' % (pid, ep['num'], s['no'])
-            jl = ' '.join('<a class="jk" href="%s%s" target="_blank" rel="noopener">%s</a>' % (JIRA, j, j) for j in s['jira'])
-            sid = ('%s.%s' % (ep['num'], s['no'])) if not str(s['no']).startswith(('SVC', 'BO', 'EXT')) else s['no']
-            topic = '<span class="sid">%s</span>%s' % (html.escape(sid), (' <span class="typ">[%s]</span>' % html.escape(s['typ'])) if s['typ'] else '')
-            stip = html.escape('Story %s · %s' % (sid, s['title']), quote=True)
+            if jira_mode:
+                rid = '%s.s%s' % (pid, s['no']); sid = s['no']
+                topic = '<span class="sid jira">%s</span> <span class="typ">[%s]</span>' % (html.escape(sid), html.escape(s['typ']))
+                jl = ''
+                stip = html.escape('%s · %s' % (sid, s['title']) + (' · ' + s['assignee'] if s['assignee'] else '') + (' · Jira: ' + s['status'] if s['status'] else ''), quote=True)
+                dstart, ddev = s['start'], s['due']
+            else:
+                rid = '%s.s%s-%s' % (pid, ep['num'], s['no'])
+                jl = ' '.join('<a class="jk" href="%s%s" target="_blank" rel="noopener">%s</a>' % (JIRA, j, j) for j in s['jira'])
+                sid = ('%s.%s' % (ep['num'], s['no'])) if not str(s['no']).startswith(('SVC', 'BO', 'EXT')) else s['no']
+                topic = '<span class="sid">%s</span>%s' % (html.escape(sid), (' <span class="typ">[%s]</span>' % html.escape(s['typ'])) if s['typ'] else '')
+                stip = html.escape('Story %s · %s' % (sid, s['title']), quote=True)
+                dstart, ddev = '', ''
             rem = html.escape(sub) if sub else ('ไม่มี UI · เทสผ่าน integration/E2E ของ dev' if not ui else '')
-            rows.append('<tr data-rid="%s" data-title="%s ปฏิทิน epic %s story %s %s"%s><td class="c-topic" data-tip="%s">%s %s</td>'
-                        '<td class="c-st">%s</td><td class="c-d"><input type="date" data-rid="%s" data-k="ddev"></td><td class="c-st">%s</td>'
+            href = ('%s%s' % (JIRA, sid)) if jira_mode else pj['report']
+            rows.append('<tr data-rid="%s" data-key="%s" data-title="%s ปฏิทิน epic %s story %s %s"%s><td class="c-topic" data-tip="%s">%s %s</td>'
+                        '<td class="c-st">%s</td><td class="c-d"><input type="date" data-rid="%s" data-k="dstart" value="%s"></td><td class="c-d"><input type="date" data-rid="%s" data-k="ddev" value="%s"></td><td class="c-st">%s</td>'
                         '<td class="c-d"><input type="date" data-rid="%s" data-k="due" value="%s"></td><td class="c-act"><input type="date" data-rid="%s" data-k="act"></td>'
                         '<td class="c-rem"><textarea class="rem" rows="2" data-rid="%s" data-k="rem" placeholder="หมายเหตุ…">%s</textarea></td></tr>'
-                        % (rid, html.escape(pj['name'].lower()), ep['num'], sid, html.escape(s['title'].lower()), (' data-href="%s"' % pj['report']) if ui else '',
-                           stip, topic, jl, sel('dev', DEV_OPTS, s['dev'], rid), rid, sel('qa', QA_OPTS, qa, rid), rid, due, rid, rid, rem))
+                        % (rid, sid if jira_mode else '', html.escape(pj['name'].lower()), ep['num'], sid, html.escape(s['title'].lower()), (' data-href="%s"' % href) if (ui or jira_mode) else '',
+                           stip, topic, jl, sel('dev', DEV_OPTS, s['dev'], rid), rid, dstart, rid, ddev, sel('qa', QA_OPTS, qa, rid), rid, due, rid, rid, rem))
     # ---- แถวปิดรอบ (เฉพาะที่กำหนด) ----
     head = []
-    if pj.get('extra'):
-        head.append('<tr class="grp" data-grp="%s.x"><td class="c-topic"><b>ปิดรอบ</b></td><td class="c-st"></td><td class="c-d"></td><td class="c-st"></td><td class="c-d"><input type="date" class="bold" data-rid="%s.x" data-k="due" value="%s"></td><td></td><td class="c-rem"></td></tr>' % (pid, pid, pj['extra'][-1][0]))
+    if pj.get('extra') and not jira_mode:
+        head.append('<tr class="grp" data-grp="%s.x"><td class="c-topic"><b>ปิดรอบ</b></td><td class="c-st"></td><td class="c-d"></td><td class="c-d"></td><td class="c-st"></td><td class="c-d"><input type="date" class="bold" data-rid="%s.x" data-k="due" value="%s"></td><td></td><td class="c-rem"></td></tr>' % (pid, pid, pj['extra'][-1][0]))
         for i, (d, topic, detail, rem) in reversed(list(enumerate(pj['extra']))):
             rid = '%s.x%d' % (pid, i)
-            head.append('<tr data-rid="%s" data-title="%s ปฏิทิน %s" data-href="%s"><td class="c-topic" data-tip="%s"><b>%s</b></td><td class="c-st"></td><td class="c-d"></td>'
+            head.append('<tr data-rid="%s" data-title="%s ปฏิทิน %s" data-href="%s"><td class="c-topic" data-tip="%s"><b>%s</b></td><td class="c-st"></td><td class="c-d"></td><td class="c-d"></td>'
                         '<td class="c-st">%s</td><td class="c-d"><input type="date" data-rid="%s" data-k="due" value="%s"></td><td class="c-act"><input type="date" data-rid="%s" data-k="act"></td>'
                         '<td class="c-rem"><textarea class="rem" rows="2" data-rid="%s" data-k="rem" placeholder="หมายเหตุ…">%s</textarea></td></tr>'
                         % (rid, html.escape(pj['name'].lower()), topic.lower(), pj['report'], html.escape(detail, quote=True), topic, sel('qa', QA_OPTS, 'wait', rid), rid, d, rid, rid, html.escape(rem)))
     rows = head + rows
     # ---- ตารางสัปดาห์ ----
-    if pj.get('weeks'):
+    if pj.get('weeks') and not jira_mode:
         weeks = list(pj['weeks'])
     else:
         byweek = collections.OrderedDict()
         for ep in epics:
             for d in sched[ep['key']]:
+                if d < '2026-09-01': continue    # ตารางสัปดาห์เอาเฉพาะช่วงปัจจุบันเป็นต้นไป
                 dd = datetime.date.fromisoformat(d); mon = dd - datetime.timedelta(days=dd.weekday())
-                byweek.setdefault(mon, []).append('Epic %s' % ep['num'])
+                byweek.setdefault(mon, []).append(ep['label'] if jira_mode else 'Epic %s' % ep['num'])
         weeks = []
         for i, (mon, eps) in enumerate(sorted(byweek.items())):
             fri = mon + datetime.timedelta(days=4)
             weeks.append(('สัปดาห์ที่ %d · %s–%s' % (i + 1, thd(mon.isoformat()), thd(fri.isoformat())), ' · '.join(dict.fromkeys(eps)), mon.isoformat(), fri.isoformat()))
     wk = ''.join('<tr class="wk"><td class="c-wkn"><b>%s</b></td><td colspan="2">%s</td><td class="c-d"><input type="date" data-rid="%s.w%d" data-k="start" value="%s"></td><td class="c-d"><input type="date" class="bold" data-rid="%s.w%d" data-k="due" value="%s"></td></tr>'
                  % (t, g, pid, i, a, pid, i, b) for i, (t, g, a, b) in reversed(list(enumerate(weeks))))
-    src = ' · '.join(dict.fromkeys(s[0].split('/')[-1] for s in pj['sources']))
-    sprint_txt = ('สถานะ DEV = sprint-status.yaml ของ dev (อัปเดตล่าสุด %s)' % upd) if upd else ('สถานะ DEV = ตารางสถานะในเอกสาร epic' if pj['kind'] == 'clip' else 'ไม่มี sprint-status → สถานะ DEV "ไม่ระบุ" (กรอกเองได้)')
-    sched_txt = 'กำหนด QA วางมือ' if pj.get('schedule') else ('กำหนด QA วางอัตโนมัติ ~1 epic/วันทำงาน เริ่ม %s (เฉพาะ epic ที่ dev เริ่มแล้ว) — แก้ในหน้าได้' % thd(AUTO_START))
+    if jira_mode:
+        src = 'Jira %s (snapshot %s)' % (pj['jira'], fetched.replace('T', ' '))
+        sprint_txt = 'สถานะ DEV · เริ่ม DEV · กำหนด DEV = ที่ BA/PM ปักใน Jira (Start date / Due date · ไม่มีใช้วัน Sprint)'
+        sched_txt = 'กำหนด QA ตั้งต้น = กำหนด DEV (ไม่มี = ว่าง กรอกเองได้)'
+    else:
+        src = ' · '.join(dict.fromkeys(s[0].split('/')[-1] for s in pj['sources']))
+        sprint_txt = ('สถานะ DEV = sprint-status.yaml ของ dev (อัปเดตล่าสุด %s)' % upd) if upd else ('สถานะ DEV = ตารางสถานะในเอกสาร epic' if pj['kind'] == 'clip' else 'ไม่มี sprint-status → สถานะ DEV "ไม่ระบุ" (กรอกเองได้)')
+        sched_txt = 'กำหนด QA วางมือ' if pj.get('schedule') else ('กำหนด QA วางอัตโนมัติ ~1 epic/วันทำงาน เริ่ม %s (เฉพาะ epic ที่ dev เริ่มแล้ว) — แก้ในหน้าได้' % thd(AUTO_START))
     board = ('<a href="%s" target="_blank" rel="noopener">📋 Jira %s ↗</a>' % (pj['board'], pj['jira'])) if pj.get('board') else 'Jira: ยังไม่พบใน repo'
-    ref = (' @ ' + pj['ref']) if pj['ref'] else ''
+    ref = (' @ ' + pj['ref']) if (pj['ref'] and not jira_mode) else ''
     block = '''<div class="pj" data-pj="%s" data-name="%s" data-emoji="%s">
-        <div class="jira">หัวข้อ = Epic/Story ที่ BA/dev กำหนด (%s%s) · %s · %d epic (dev เสร็จ %d) · %d story (%d มี UI) · %s · %s</div>
+        <div class="jira">หัวข้อ = Epic/Story ที่ BA/PM/dev กำหนด (%s%s) · %s · %d epic (dev เสร็จ %d) · %d story (%d มี UI) · %s · %s</div>
         <div class="tblwrap wkwrap"><table class="tbl weeks"><thead><tr><th>สัปดาห์</th><th colspan="2">โฟกัส</th><th>เริ่ม</th><th>กำหนด QA</th></tr></thead><tbody>%s</tbody></table></div>
-        <div class="tblwrap"><table class="tbl sheet"><thead><tr><th>หัวข้อ (hover ดูรายละเอียด)</th><th>สถานะ DEV</th><th>กำหนด DEV</th><th>สถานะ QA</th><th>กำหนด QA</th><th>Action Date</th><th>Remark</th></tr></thead><tbody>
+        <div class="tblwrap"><table class="tbl sheet"><thead><tr><th>หัวข้อ (hover ดูรายละเอียด)</th><th>สถานะ DEV</th><th>เริ่ม DEV</th><th>กำหนด DEV</th><th>สถานะ QA</th><th>กำหนด QA</th><th>Action Date</th><th>Remark</th></tr></thead><tbody>
 %s
 </tbody></table></div>
         </div>''' % (pid, html.escape(pj['name'], quote=True), pj['emoji'], html.escape(src), ref, sprint_txt, len(epics), n_done_epic, n_story, n_ui, sched_txt, board, wk, '\n'.join(rows))

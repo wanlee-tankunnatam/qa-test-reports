@@ -146,14 +146,15 @@
   .g-cell.mon{border-left-color:var(--border)}
   .g-rows{display:grid; grid-template-columns:repeat(var(--days), var(--day)); grid-auto-rows:30px; row-gap:5px; padding:7px 0; position:relative; z-index:1}
   .g-bar{grid-row:var(--r); grid-column:var(--s) / var(--e); margin:0 2px; border-radius:6px; display:flex; align-items:center; gap:6px; padding:0 8px; color:#fff; font-weight:600; font-size:.74rem; white-space:nowrap; overflow:hidden; cursor:pointer; box-shadow:var(--shadow); border:1px solid rgba(0,0,0,.08); text-decoration:none}
-  .g-av{flex:none; width:18px; height:18px; border-radius:50%; background:rgba(255,255,255,.28); display:grid; place-items:center; font-size:.62rem; font-weight:800}
-  .g-txt{overflow:hidden; text-overflow:ellipsis}
+  .g-av{flex:none; width:18px; height:18px; border-radius:50%; background:rgba(255,255,255,.28); display:grid; place-items:center; font-size:.62rem; font-weight:800; position:sticky; left:calc(var(--lane) + 8px)}
+  .g-txt{overflow:hidden; text-overflow:ellipsis; position:sticky; left:calc(var(--lane) + 32px)}
   .g-n{margin-left:auto; flex:none; font-size:.64rem; opacity:.85}
   .g-bar.mvp1{background:var(--test)}
   .g-bar.mvp2{background:var(--summary)}
   .g-bar.close{background:var(--dod)}
   .g-bar.blocked{background:var(--new)}
   .g-bar:hover{filter:brightness(1.08)}
+  .g-bar.cut{border-left:3px dashed rgba(255,255,255,.75); border-top-left-radius:2px; border-bottom-left-radius:2px}
   .g-bar.narrow{overflow:visible; position:relative; justify-content:center; padding:0}
   .g-bar.narrow .g-txt,.g-bar.narrow .g-n{position:absolute; left:calc(100% + 6px); top:50%; transform:translateY(-50%); color:var(--text); font-weight:600; white-space:nowrap; overflow:visible; pointer-events:none}
   .g-bar.narrow .g-n{left:auto; display:none}
@@ -201,12 +202,13 @@
 
     <div class="group-head"><span class="emoji">📊</span><h2 id="ov-title">ทุกโปรเจกต์</h2><span class="count" id="ov-count">กำลังโหลด…</span><span class="rule"></span></div>
     <div class="pjtabs" id="pjtabs"></div>
-    <div class="jira">แท็บ "ทั้งหมด" = กราฟเดียวทุกโปรเจกต์ (เลนละโปรเจกต์ · สลับเลนเป็นสถานะ QA/MVP ได้) · แท่งแสดงแค่รหัส (Epic N · Jira/Story id) — <b>hover</b> เพื่อดูรายละเอียด · ช่วงแท่ง = "กำหนด QA" จาก story แรกถึง story สุดท้าย หรือราย story เมื่อสลับมุมมอง · เลน = สถานะ QA · ข้อมูลอ่านจาก <a href="./?project=timeline">หน้า Timeline</a> (ค่าที่บันทึกขึ้น GitHub แล้ว) — แก้ที่นั่นแล้วกด 🔄 ที่นี่ · คลิกแท่งเพื่อไปดูใน Timeline</div>
+    <div class="jira">แท็บ "ทั้งหมด" = กราฟเดียวทุกโปรเจกต์ (เลนละโปรเจกต์ · สลับเลนเป็นสถานะ QA/MVP ได้) · แท่งแสดงแค่รหัส (Epic N · Jira/Story id) — <b>hover</b> เพื่อดูรายละเอียด · ช่วงแท่ง = เริ่ม DEV → กำหนด DEV ที่ BA/PM ปักใน Jira (Epic ไม่มีวันจะใช้ช่วงของ story ลูก) หรือราย story เมื่อสลับมุมมอง · เลน = สถานะ QA · ข้อมูลอ่านจาก <a href="./?project=timeline">หน้า Timeline</a> (ค่าที่บันทึกขึ้น GitHub แล้ว) — แก้ที่นั่นแล้วกด 🔄 ที่นี่ · คลิกแท่งเพื่อไปดูใน Timeline</div>
     <div class="ov-bar">
       <div class="legend"><span class="lg mvp1">MVP-1</span><span class="lg mvp2">MVP-2</span><span class="lg mvp3">MVP-3 / อื่น</span><span class="lg close">ปิดรอบ</span><span class="lg blocked">DEV ติดบล็อก</span></div>
       <span class="ov-tools">
         <span class="seg"><button id="m-epic" class="on">ราย Epic</button><button id="m-story">ราย Story</button></span>
         <span class="seg"><button id="l-pj" class="on">เลน: โปรเจกต์</button><button id="l-qa">เลน: สถานะ QA</button><button id="l-mvp">เลน: MVP</button></span>
+        <span class="seg"><button id="r-now" class="on">ช่วง: ล่าสุด</button><button id="r-all">ทั้งหมด</button></span>
         <button class="btn" id="ov-today">Today</button>
         <button class="btn" id="ov-reload" title="โหลดค่าล่าสุดจากหน้า Timeline">🔄</button>
         <span class="hint" id="ov-range"></span>
@@ -222,7 +224,7 @@
   var TH_M=['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
   var QA_LANES=[['wip','กำลังทดสอบ'],['wait','รอทดสอบ'],['pend','รอดำเนินการ (รอ dev)'],['block','บล็อก'],['fail','ไม่ผ่าน'],['done','เสร็จแล้ว'],['na','ไม่มี UI']];
   var MVP_LANES=[['close','ปิดรอบ'],['mvp3','MVP-3 / อื่น'],['mvp2','MVP-2'],['mvp1','MVP-1']];
-  var mode='epic', laneMode='pj', bars=[], epicBars=[], storyBars=[];
+  var mode='epic', laneMode='pj', bars=[], epicBars=[], storyBars=[], showAll=false;
 
   function dIso(d){ return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
   function dParse(s){ var p=s.split('-'); return new Date(+p[0], +p[1]-1, +p[2]); }
@@ -269,24 +271,34 @@
         var tipName=(r.querySelector('[data-tip]')||{}).getAttribute ? (r.querySelector('[data-tip]').getAttribute('data-tip')||name) : name;
         var grp=r.getAttribute('data-grp')||'', isClose=/\.x$/.test(grp);
         var mvpAttr=r.getAttribute('data-mvp')||'';
-        cur={grp:grp, full:tipName, name:name.replace(/^MVP-\d · /,''), mvp:isClose?'close':(mvpAttr==='MVP-1'?'mvp1':(mvpAttr==='MVP-2'?'mvp2':'mvp3')), end:val(r.querySelector('input[data-k="due"]')), start:'', states:[], n:0, dev:dev};
+        var eStart=val(r.querySelector('input[data-k="dstart"]')), eDue=val(r.querySelector('input[data-k="ddev"]')), eQa=val(r.querySelector('input[data-k="due"]'));
+        cur={grp:grp, key:r.getAttribute('data-key')||'', full:tipName, name:name.replace(/^MVP-\d · /,''), mvp:isClose?'close':(mvpAttr==='MVP-1'?'mvp1':(mvpAttr==='MVP-2'?'mvp2':'mvp3')), start:eStart, end:eDue, qaDue:eQa, cStart:'', cEnd:'', states:[], n:0, dev:dev};
         eps.push(cur); return;
       }
       if(!cur) return;
       var rid=r.getAttribute('data-rid'); var q=r.querySelector('select.st.qa'), dv=r.querySelector('select.st.dev');
-      var qa=val(q), due=val(r.querySelector('input[data-k="due"]')), dev=val(dv);
+      var qa=val(q), qaDue=val(r.querySelector('input[data-k="due"]')), dev=val(dv);
+      var sStart=val(r.querySelector('input[data-k="dstart"]')), sDue=val(r.querySelector('input[data-k="ddev"]'));
+      var due=sDue||qaDue||sStart;                      // ปลายแท่ง = กำหนด DEV (BA/PM) · ไม่มีใช้กำหนด QA
+      var start=sStart||due; var key=r.getAttribute('data-key')||'';
       var topic=(r.querySelector('.c-topic')||{}).textContent||''; var detail=((r.querySelector('[data-tip]')||{}).getAttribute ? r.querySelector('[data-tip]').getAttribute('data-tip') : '')||'';
       var sid=(r.querySelector('.sid')||{}).textContent||'';
       var title=detail.replace(/^Story [^·]+· /,'').trim();
       if(q && qa!=='na'){ cur.states.push(qa); cur.n++; }
-      if(due){ if(!cur.start||due<cur.start) cur.start=due; if(!cur.end||due>cur.end) cur.end=due; }
+      if(start){ if(!cur.cStart||start<cur.cStart) cur.cStart=start; }
+      if(due){ if(!cur.cEnd||due>cur.cEnd) cur.cEnd=due; }
       var jira=[].map.call(r.querySelectorAll('.jk'), function(a){ return a.textContent.trim(); });
-      if(due) sts.push({grp:cur.grp, rid:rid, label:(jira[0]||(sid?'Story '+sid:topic.trim())), name:(sid?sid+' ':'')+(sid?title:topic.trim()), full:(sid?'Story '+sid+' · ':'')+title, jira:jira, epic:cur.name, mvp:(dev==='blocked'||dev==='block')?'blocked':cur.mvp, start:due, end:due, states:[qa], lane:qa, qa:qa, dev:dev, n:0, sid:sid||'★'});
+      if(due) sts.push({grp:cur.grp, rid:rid, key:key, label:(key||jira[0]||(sid?'Story '+sid:topic.trim())), name:(sid?sid+' ':'')+(sid?title:topic.trim()), full:(key?key+' · ':(sid?'Story '+sid+' · ':''))+title.replace(/^[A-Z]+-\d+ · /,''), jira:key?[key]:jira, epic:cur.name, mvp:(dev==='blocked'||dev==='block')?'blocked':cur.mvp, start:start>due?due:start, end:due, qaDue:qaDue, states:[qa], lane:qa, qa:qa, dev:dev, n:0, sid:(key?key.replace(/^[A-Z]+-/,''):sid)||'★'});
     });
-    eps.forEach(function(b){ if(!b.start) b.start=b.end; if(!b.end) b.end=b.start; b.lane=laneOf(b.states); if(b.dev==='blocked') b.mvp='blocked'; var eid=(b.full.match(/Epic ([\w\-]+)/)||[])[1]||'★';
+    eps.forEach(function(b){
+      if(!b.start) b.start=b.cStart||b.end||b.cEnd||b.qaDue; if(!b.end) b.end=b.cEnd||b.start||b.qaDue;
+      if(b.start && b.end && b.start>b.end){ var t=b.start; b.start=b.end; b.end=t; }
+      b.lane=laneOf(b.states); if(b.dev==='blocked') b.mvp='blocked';
+      var eid=(b.name.match(/Epic ([\w\-]+)/)||[])[1]||(b.key?b.key.replace(/^[A-Z]+-/,''):'★');
       // ป้ายให้สม่ำเสมอ: Clip ใช้รหัส EP-0x จากเอกสาร → ป้าย "EP-02" วงกลม "2" · Lib-Sync "Epic M1" วงกลม "M1"
       var num=(eid.match(/\d+/)||[eid])[0]; num=/^\d+$/.test(num)?String(parseInt(num,10)):num;   // EP-02 → 2 · M1 → 1 (เหมือนโปรเจกต์อื่น)
-      b.label='Epic '+num; b.sid=num;
+      var hasEpicNo=/Epic \d+/.test(b.name);
+      b.label=hasEpicNo?'Epic '+num:(b.key||'Epic '+num); b.sid=num;
       if(/\.x$/.test(b.grp)){ b.label='ปิดรอบ'; b.sid='★'; }
       b.qa=b.lane; });
     pr.eps=eps.filter(function(b){ return b.start; }); pr.sts=sts;
@@ -317,13 +329,22 @@
     bars = mode==='epic' ? epicBars : storyBars;
     var cnt=document.getElementById('ov-count'); if(cnt) cnt.textContent=bars.length+(mode==='epic'?' epic':' story');
     if(!bars.length){ g.innerHTML='<div class="g-empty">ยังไม่มีรายการที่มีวันกำหนด QA</div>'; return; }
+    var allBars=bars, hidden=0;
     var min=bars.reduce(function(m,b){ return b.start<m?b.start:m; }, bars[0].start), max=bars.reduce(function(m,b){ return b.end>m?b.end:m; }, bars[0].end);
     var s=dParse(min), e=dParse(max);
+    if(!showAll){
+      var ws=dAdd(new Date(), -14); ws=dAdd(ws, -((ws.getDay()+6)%7));      // เริ่มที่วันจันทร์ 2 สัปดาห์ก่อนวันนี้
+      var wsIso=dIso(ws);
+      if(wsIso>min){ s=ws; bars=bars.filter(function(b){ return b.end>=wsIso; }); hidden=allBars.length-bars.length; }
+      if(dIso(e)<wsIso) e=dAdd(ws, 27);
+      var minE=dAdd(ws, 41); if(e<minE) e=minE;                            // อย่างน้อย 6 สัปดาห์
+    }
     s=dAdd(s, -((s.getDay()+6)%7)); e=dAdd(e, 6-((e.getDay()+6)%7));
+    var sIso=dIso(s);
     var days=[]; for(var d=new Date(s); d<=e; d=dAdd(d,1)) days.push(new Date(d));
     var todayIso=dIso(new Date()), idx={}; days.forEach(function(d,i){ idx[dIso(d)]=i; });
     g.style.setProperty('--days', days.length);
-    var rng=document.getElementById('ov-range'); if(rng) rng.textContent=days[0].getDate()+' '+TH_M[days[0].getMonth()]+' – '+days[days.length-1].getDate()+' '+TH_M[days[days.length-1].getMonth()]+' '+(days[days.length-1].getFullYear()+543);
+    var rng=document.getElementById('ov-range'); if(rng) rng.textContent=days[0].getDate()+' '+TH_M[days[0].getMonth()]+' – '+days[days.length-1].getDate()+' '+TH_M[days[days.length-1].getMonth()]+' '+(days[days.length-1].getFullYear()+543)+(hidden?' · ซ่อนที่จบก่อนช่วงนี้ '+hidden+' รายการ':'');
     var months=[], last=null;
     days.forEach(function(d){ var k=d.getMonth(); if(k!==last){ months.push({m:k, y:d.getFullYear(), n:1}); last=k; } else months[months.length-1].n++; });
     function cellCls(d){ return ((d.getDay()===0||d.getDay()===6)?' we':'')+(d.getDay()===1?' mon':''); }
@@ -338,7 +359,8 @@
       if(!items.length && laneMode==='qa' && (L[0]==='na')) return;
       var rowsEnd=[];
       items.forEach(function(b){
-        var si=idx[b.start], ei=idx[b.end]+1, r=0;
+        b.cut = b.start<sIso;
+        var si=b.cut?0:idx[b.start], ei=idx[b.end]+1, r=0;
         b.narrow = (ei-si) < 4;
         var occ = b.narrow ? si+3 : ei;      // แท่งแคบ ป้ายสั้นยื่นออกขวา ~2 วัน
         while(rowsEnd[r]!=null && rowsEnd[r]>si) r++;
@@ -349,7 +371,7 @@
       var bh=items.map(function(b, i){
         b._i = bars.indexOf(b);
         var lab=(multi && laneMode!=='pj' ? (b.pjEmoji||'')+' ' : '')+b.label;
-        return '<a class="g-bar '+b.mvp+(b.narrow?' narrow':'')+'" style="--r:'+b.r+';--s:'+b.s+';--e:'+b.e+'" href="./?project=timeline&pj='+(b.pj||'')+'#'+(b.rid||b.grp)+'" data-i="'+b._i+'"><span class="g-av">'+esc(b.sid)+'</span><span class="g-txt">'+esc(lab)+'</span></a>';
+        return '<a class="g-bar '+b.mvp+(b.narrow?' narrow':'')+(b.cut?' cut':'')+'" style="--r:'+b.r+';--s:'+b.s+';--e:'+b.e+'" href="./?project=timeline&pj='+(b.pj||'')+'#'+(b.rid||b.grp)+'" data-i="'+b._i+'"><span class="g-av">'+esc(b.sid)+'</span><span class="g-txt">'+esc(lab)+'</span></a>';
       }).join('');
       out+='<div class="g-lane"><div class="g-label">'+L[1]+'<small>'+items.length+' รายการ</small></div><div class="g-body">'+bg+'<div class="g-rows" style="min-height:'+(nrows*35+9)+'px">'+bh+'</div></div></div>';
     });
@@ -365,7 +387,8 @@
     if(b.pjName) rows.push('<span class="t-k">โปรเจกต์</span>'+esc((b.pjEmoji||'')+' '+b.pjName));
     if(b.rid){ rows.push('<b>'+esc(b.full)+'</b>'); if(b.jira&&b.jira.length) rows.push('<span class="t-k">Jira</span>'+b.jira.map(function(j){ return '<span class="t-j">'+esc(j)+'</span>'; }).join(' ')); rows.push('<span class="t-k">Epic</span>'+esc(b.epic)); }
     else { rows.push('<b>'+esc(b.full.replace(/ \(.*$/,''))+'</b>'); if(b.n) rows.push('<span class="t-k">Story มี UI</span>'+b.n+' รายการ'); }
-    rows.push('<span class="t-k">กำหนด QA</span>'+TH_D(b.start)+(b.end!==b.start?' → '+TH_D(b.end):''));
+    rows.push('<span class="t-k">DEV (BA/PM)</span>'+TH_D(b.start)+(b.end!==b.start?' → '+TH_D(b.end):''));
+    if(b.qaDue) rows.push('<span class="t-k">กำหนด QA</span>'+TH_D(b.qaDue));
     rows.push('<span class="t-k">สถานะ QA</span>'+(QA_TXT[b.qa]||b.qa||'—')+(b.dev?' · <span class="t-k">DEV</span>'+(DEV_TXT[b.dev]||b.dev):''));
     rows.push('<span class="t-hint">คลิกเพื่อไปดูใน Timeline</span>');
     return rows.join('<br>');
@@ -405,6 +428,8 @@
   seg('l-qa', function(){ setLane('qa'); });
   seg('l-mvp', function(){ setLane('mvp'); });
   seg('ov-today', scrollToday);
+  seg('r-now', function(){ showAll=false; document.getElementById('r-now').classList.add('on'); document.getElementById('r-all').classList.remove('on'); render(); setTimeout(scrollToday,30); });
+  seg('r-all', function(){ showAll=true; document.getElementById('r-all').classList.add('on'); document.getElementById('r-now').classList.remove('on'); render(); setTimeout(scrollToday,30); });
   seg('ov-reload', load);
 
   var root=document.documentElement, tb=document.getElementById('themeBtn'), saved=null;
