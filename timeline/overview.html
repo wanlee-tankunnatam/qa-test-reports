@@ -115,6 +115,13 @@
   .seg{display:inline-flex; border:1px solid var(--border); border-radius:9px; overflow:hidden; box-shadow:var(--shadow)}
   .seg button{border:none; background:var(--panel); color:var(--muted); padding:6px 11px; cursor:pointer; font-size:.78rem; font-weight:600; font-family:inherit}
   .seg button.on{background:var(--accent-soft); color:var(--text)}
+  .pjtabs{display:flex; gap:6px; flex-wrap:wrap; margin:0 0 12px}
+  .pjtab{border:1px solid var(--border); background:var(--panel); color:var(--muted); border-radius:999px; padding:6px 12px; cursor:pointer; font-size:.82rem; font-weight:600; font-family:inherit; display:inline-flex; align-items:center; gap:6px; box-shadow:var(--shadow)}
+  .pjtab small{font-size:.68rem; color:var(--faint); background:var(--panel-2); border:1px solid var(--border); border-radius:999px; padding:0 6px}
+  .pjtab:hover{border-color:var(--accent); color:var(--text)}
+  .pjtab.on{background:var(--accent-soft); border-color:var(--accent); color:var(--text)}
+  .lg.mvp3::before{background:var(--st-issue); border-color:var(--st-issue)}
+  .g-bar.mvp3{background:var(--st-issue)}
   .tblwrap{background:var(--panel); border:1px solid var(--border); border-radius:12px; overflow:hidden; box-shadow:var(--shadow)}
   .ov-wrap{overflow-x:auto; position:relative; max-height:calc(100vh - 120px); overflow-y:auto}
 
@@ -192,10 +199,11 @@
       <span class="sub">แผนภูมิเวลาจากปฏิทินทดสอบ — อ่านสดจากหน้า Timeline</span>
     </div>
 
-    <div class="group-head"><span class="emoji">📊</span><h2>TAKRA AI · Live (ตะกร้าไลฟ์)</h2><span class="count" id="ov-count">กำลังโหลด…</span><span class="rule"></span></div>
+    <div class="group-head"><span class="emoji">📊</span><h2 id="ov-title">ทุกโปรเจกต์</h2><span class="count" id="ov-count">กำลังโหลด…</span><span class="rule"></span></div>
+    <div class="pjtabs" id="pjtabs"></div>
     <div class="jira">แท่งแสดงแค่รหัส (Epic N · Jira/Story id) — <b>hover</b> เพื่อดูรายละเอียด · ช่วงแท่ง = "กำหนด QA" จาก story แรกถึง story สุดท้าย หรือราย story เมื่อสลับมุมมอง · เลน = สถานะ QA · ข้อมูลอ่านจาก <a href="./?project=timeline">หน้า Timeline</a> (ค่าที่บันทึกขึ้น GitHub แล้ว) — แก้ที่นั่นแล้วกด 🔄 ที่นี่ · คลิกแท่งเพื่อไปดูใน Timeline</div>
     <div class="ov-bar">
-      <div class="legend"><span class="lg mvp1">MVP-1</span><span class="lg mvp2">MVP-2</span><span class="lg close">ปิดรอบ</span><span class="lg blocked">DEV ติดบล็อก</span></div>
+      <div class="legend"><span class="lg mvp1">MVP-1</span><span class="lg mvp2">MVP-2</span><span class="lg mvp3">MVP-3 / อื่น</span><span class="lg close">ปิดรอบ</span><span class="lg blocked">DEV ติดบล็อก</span></div>
       <span class="ov-tools">
         <span class="seg"><button id="m-epic" class="on">ราย Epic</button><button id="m-story">ราย Story</button></span>
         <span class="seg"><button id="l-qa" class="on">เลน: สถานะ QA</button><button id="l-mvp">เลน: MVP</button></span>
@@ -213,7 +221,7 @@
   var SRC = 'index.html';   // หน้า Timeline (ไฟล์เดียวกับที่บันทึกขึ้น GitHub)
   var TH_M=['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
   var QA_LANES=[['wip','กำลังทดสอบ'],['wait','รอทดสอบ'],['pend','รอดำเนินการ (รอ dev)'],['block','บล็อก'],['fail','ไม่ผ่าน'],['done','เสร็จแล้ว'],['na','ไม่มี UI']];
-  var MVP_LANES=[['close','ปิดรอบ'],['mvp2','MVP-2'],['mvp1','MVP-1']];
+  var MVP_LANES=[['close','ปิดรอบ'],['mvp3','MVP-3 / อื่น'],['mvp2','MVP-2'],['mvp1','MVP-1']];
   var mode='epic', laneMode='qa', bars=[], epicBars=[], storyBars=[];
 
   function dIso(d){ return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
@@ -243,29 +251,53 @@
       if(el.tagName==='SELECT'){ var o=el.querySelector('option[selected]'); return o ? o.value : (el.querySelector('option')||{}).value||''; }
       return el.getAttribute('value')||'';
     }
-    var sheet=doc.querySelector('table.sheet'); if(!sheet) throw new Error('ไม่พบตารางปฏิทินในหน้า Timeline');
+    projects=[];
+    [].forEach.call(doc.querySelectorAll('.pj[data-pj]'), function(blk){
+      var sheet=blk.querySelector('table.sheet'); if(!sheet) return;
+      var pr={id:blk.getAttribute('data-pj'), name:blk.getAttribute('data-name')||blk.getAttribute('data-pj'), emoji:blk.getAttribute('data-emoji')||'', eps:[], sts:[]};
+      parseSheet(sheet, val, pr); projects.push(pr);
+    });
+    if(!projects.length) throw new Error('ไม่พบตารางปฏิทินในหน้า Timeline');
+  }
+  var projects=[], curPj=null;
+  function parseSheet(sheet, val, pr){
     var eps=[], sts=[], cur=null;
     [].forEach.call(sheet.querySelectorAll('tbody tr'), function(r){
       if(r.classList.contains('grp')){
         var name=(r.querySelector('td b')||{}).textContent||'';
         var pill=r.querySelector('.pill'); var dev=pill ? (pill.className.match(/dev-(\w+)/)||[])[1] : '';
-        cur={grp:r.getAttribute('data-grp'), full:name, name:name.replace(/^MVP-\d · /,'').replace(/ \(.*$/,''), mvp:(r.getAttribute('data-grp')==='x')?'close':(/MVP-1/.test(name)?'mvp1':(/MVP-2/.test(name)?'mvp2':'close')), end:val(r.querySelector('input[data-k="due"]')), start:'', states:[], n:0, dev:dev};
+        var tipName=(r.querySelector('[data-tip]')||{}).getAttribute ? (r.querySelector('[data-tip]').getAttribute('data-tip')||name) : name;
+        var grp=r.getAttribute('data-grp')||'', isClose=/\.x$/.test(grp);
+        var mvpAttr=r.getAttribute('data-mvp')||'';
+        cur={grp:grp, full:tipName, name:name.replace(/^MVP-\d · /,''), mvp:isClose?'close':(mvpAttr==='MVP-1'?'mvp1':(mvpAttr==='MVP-2'?'mvp2':'mvp3')), end:val(r.querySelector('input[data-k="due"]')), start:'', states:[], n:0, dev:dev};
         eps.push(cur); return;
       }
       if(!cur) return;
       var rid=r.getAttribute('data-rid'); var q=r.querySelector('select.st.qa'), dv=r.querySelector('select.st.dev');
       var qa=val(q), due=val(r.querySelector('input[data-k="due"]')), dev=val(dv);
-      var topic=(r.querySelector('.c-topic')||{}).textContent||''; var detail=(r.querySelector('.c-detail')||{}).textContent||'';
+      var topic=(r.querySelector('.c-topic')||{}).textContent||''; var detail=((r.querySelector('[data-tip]')||{}).getAttribute ? r.querySelector('[data-tip]').getAttribute('data-tip') : '')||'';
       var sid=(r.querySelector('.sid')||{}).textContent||'';
-      var title=detail.replace(/TAKRA-\d+/g,'').trim();
+      var title=detail.replace(/^Story [^·]+· /,'').trim();
       if(q && qa!=='na'){ cur.states.push(qa); cur.n++; }
       if(due){ if(!cur.start||due<cur.start) cur.start=due; if(!cur.end||due>cur.end) cur.end=due; }
       var jira=[].map.call(r.querySelectorAll('.jk'), function(a){ return a.textContent.trim(); });
       if(due) sts.push({grp:cur.grp, rid:rid, label:(jira[0]||(sid?'Story '+sid:topic.trim())), name:(sid?sid+' ':'')+(sid?title:topic.trim()), full:(sid?'Story '+sid+' · ':'')+title, jira:jira, epic:cur.name, mvp:(dev==='blocked'||dev==='block')?'blocked':cur.mvp, start:due, end:due, states:[qa], lane:qa, qa:qa, dev:dev, n:0, sid:sid||'★'});
     });
-    eps.forEach(function(b){ if(!b.start) b.start=b.end; if(!b.end) b.end=b.start; b.lane=laneOf(b.states); if(b.dev==='blocked') b.mvp='blocked'; b.sid=(b.full.match(/Epic (\d+)/)||[])[1]||'★'; b.label = b.grp==='x' ? 'ปิดรอบ' : 'Epic '+b.sid; b.qa=b.lane; });
-    epicBars=eps.filter(function(b){ return b.start; });
-    storyBars=sts;
+    eps.forEach(function(b){ if(!b.start) b.start=b.end; if(!b.end) b.end=b.start; b.lane=laneOf(b.states); if(b.dev==='blocked') b.mvp='blocked'; b.sid=(b.full.match(/Epic ([\w\-]+)/)||[])[1]||'★'; b.label = /\.x$/.test(b.grp) ? 'ปิดรอบ' : 'Epic '+b.sid; b.qa=b.lane; });
+    pr.eps=eps.filter(function(b){ return b.start; }); pr.sts=sts;
+  }
+  function selectPj(id){
+    var pr=projects.filter(function(p){ return p.id===id; })[0]||projects[0]; if(!pr) return; curPj=pr;
+    epicBars=pr.eps; storyBars=pr.sts;
+    [].forEach.call(document.querySelectorAll('.pjtab'), function(t){ t.classList.toggle('on', t.getAttribute('data-pj')===pr.id); });
+    var t=document.getElementById('ov-title'); if(t) t.textContent=pr.emoji+' '+pr.name;
+    try{ var u=new URL(location.href); u.searchParams.set('pj', pr.id); history.replaceState(null,'',u.toString()); }catch(e){}
+    render(); setTimeout(scrollToday, 30);
+  }
+  function renderTabs(){
+    var box=document.getElementById('pjtabs'); if(!box) return;
+    box.innerHTML=projects.map(function(p){ return '<button class="pjtab" data-pj="'+p.id+'"><span>'+p.emoji+'</span> '+esc(p.name.split(' (')[0])+' <small>'+p.eps.length+'</small></button>'; }).join('');
+    [].forEach.call(box.querySelectorAll('.pjtab'), function(t){ t.addEventListener('click', function(){ selectPj(t.getAttribute('data-pj')); }); });
   }
 
   function render(){
@@ -287,7 +319,7 @@
     out+='<div class="g-corner">'+(laneMode==='qa'?'สถานะ QA':'MVP')+'</div>'+days.map(function(d){ var iso=dIso(d); return '<div class="g-day'+cellCls(d)+(iso===todayIso?' today':'')+'">'+d.getDate()+'</div>'; }).join('')+'</div>';
     var lanes = laneMode==='qa' ? QA_LANES : MVP_LANES;
     lanes.forEach(function(L){
-      var items=bars.filter(function(b){ return (laneMode==='qa' ? b.lane : (b.mvp==='blocked' ? (b.full.indexOf('MVP-1')>=0?'mvp1':(b.full.indexOf('MVP-2')>=0?'mvp2':'close')) : b.mvp))===L[0]; })
+      var items=bars.filter(function(b){ return (laneMode==='qa' ? b.lane : (b.mvp==='blocked' ? 'mvp3' : b.mvp))===L[0]; })
                      .sort(function(a,b){ return a.start<b.start?-1:(a.start>b.start?1:0); });
       if(!items.length && laneMode==='qa' && (L[0]==='na')) return;
       var rowsEnd=[];
@@ -302,7 +334,7 @@
       var bg='<div class="g-bg">'+days.map(function(d){ return '<div class="g-cell'+cellCls(d)+'"></div>'; }).join('')+'</div>';
       var bh=items.map(function(b, i){
         b._i = bars.indexOf(b);
-        return '<a class="g-bar '+b.mvp+(b.narrow?' narrow':'')+'" style="--r:'+b.r+';--s:'+b.s+';--e:'+b.e+'" href="./?project=timeline#'+(b.rid||b.grp)+'" data-i="'+b._i+'"><span class="g-av">'+esc(b.sid)+'</span><span class="g-txt">'+esc(b.label)+'</span></a>';
+        return '<a class="g-bar '+b.mvp+(b.narrow?' narrow':'')+'" style="--r:'+b.r+';--s:'+b.s+';--e:'+b.e+'" href="./?project=timeline&pj='+(curPj?curPj.id:'')+'#'+(b.rid||b.grp)+'" data-i="'+b._i+'"><span class="g-av">'+esc(b.sid)+'</span><span class="g-txt">'+esc(b.label)+'</span></a>';
       }).join('');
       out+='<div class="g-lane"><div class="g-label">'+L[1]+'<small>'+items.length+' รายการ</small></div><div class="g-body">'+bg+'<div class="g-rows" style="min-height:'+(nrows*35+9)+'px">'+bh+'</div></div></div>';
     });
@@ -342,7 +374,8 @@
     try {
       var r=await fetch(SRC+'?t='+Date.now(), {cache:'no-store'});
       if(!r.ok) throw new Error('HTTP '+r.status);
-      parse(await r.text()); render(); setTimeout(scrollToday, 30);
+      parse(await r.text()); renderTabs();
+      selectPj((new URLSearchParams(location.search)).get('pj')||(curPj&&curPj.id)||'ai');
     } catch(err){
       g.innerHTML='<div class="g-empty">โหลดข้อมูลไม่ได้: '+esc(err.message)+' — เปิดผ่านเว็บ (GitHub Pages) หรือ http server</div>';
       var cnt=document.getElementById('ov-count'); if(cnt) cnt.textContent='—';

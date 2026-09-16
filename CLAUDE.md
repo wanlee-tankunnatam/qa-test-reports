@@ -79,6 +79,8 @@ repo นี้เก็บรายงาน manual test case (UI) ของท�
 >
 > **takra-radar (Trendora)** เข้าทะเบียน 15 ก.ย. 2026 · รายงานชุดแรก Web UI 120 เคส (เฉพาะ P0+P1) แยก 2 ระบบ ลูกค้า (กลุ่ม A–H) + แอดมิน (กลุ่ม ADM) · UAT = uat.trendora.watch · uid ตรึงด้วย `takra-radar-sources/uid_map.json` (จัดกลุ่มใหม่ได้โดยผลเทสไม่หลุด) (`tools/build/radar_cases.py` โหลดจาก `tools/build/takra-radar-sources/*.json` → `python3 tools/build/build_hub_report.py radar`) — แก้เคสที่ JSON แล้ว build ใหม่ อย่าแก้ HTML ตรงๆ · ⚠️ แคตตาล็อกสินค้าบน UAT ว่าง (TKRD-161) เคสที่ต้องมีสินค้าให้ลง BLOCKED
 >
+> **ปฏิทินทดสอบ + ภาพรวม (ทุกโปรเจกต์)** (16 ก.ย. 2026) — `timeline/index.html?project=timeline` (ชีต: Epic/Story ที่ BA/dev กำหนด + สถานะ DEV จาก sprint-status · แก้ในหน้าแล้ว auto-save ขึ้น GitHub ผ่าน store-data) และ `timeline/overview.html` (Gantt อ่านสดจาก index.html) · generate ด้วย `python3 tools/build/build_timeline_calendar.py` (ทะเบียนโปรเจกต์/แหล่งไฟล์/วันเทสอยู่ในสคริปต์ · แทนที่เฉพาะระหว่าง `<!-- CAL:START -->…<!-- CAL:END -->` ไม่แตะ store-data)
+
 > Jira เป็นลิงก์อ้างอิงสำหรับคน — ไม่มี API token ใน repo นี้ ถ้าต้องดึงสถานะใบงานให้ผู้ใช้ export/แปะข้อมูลมา
 
 **2 index แยกกัน:** รายงานผลทดสอบ = `index.html` (`/?project=<id>`) · เอกสาร timeline/แผนเดินงาน = `timeline/index.html` (`/timeline/?project=<id>`) — เอกสาร timeline ไม่ต้องใส่ในหน้ารายงาน
