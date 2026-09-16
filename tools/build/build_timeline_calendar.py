@@ -144,7 +144,7 @@ def main():
             topic = '<span class="sid">%d.%s</span> <span class="typ">[%s]</span>' % (k[0], k[1], html.escape(typ))
             rows.append('<tr data-rid="%s" data-title="ตะกร้าไลฟ์ takra ai ปฏิทิน epic %d story %s %s"%s>'
                         '<td class="c-topic">%s</td><td class="c-detail">%s %s</td><td class="c-st">%s</td><td class="c-d"><input type="date" data-rid="%s" data-k="ddev"></td>'
-                        '<td class="c-st">%s</td><td class="c-d">%s</td><td class="c-act"><input type="date" data-rid="%s" data-k="act"></td><td class="c-rem"><textarea class="rem" rows="1" data-rid="%s" data-k="rem" placeholder="หมายเหตุ…">%s</textarea></td></tr>'
+                        '<td class="c-st">%s</td><td class="c-d">%s</td><td class="c-act"><input type="date" data-rid="%s" data-k="act"></td><td class="c-rem"><textarea class="rem" rows="2" data-rid="%s" data-k="rem" placeholder="หมายเหตุ…">%s</textarea></td></tr>'
                         % (rid, k[0], k[1], html.escape(title.lower()), (' data-href="%s"' % REPORT) if ui else '',
                            topic, html.escape(title), jl, sel('dev', DEV_OPTS, dcls, rid), rid, sel('qa', QA_OPTS, qa, rid),
                            '<input type="date" data-rid="%s" data-k="due" value="%s">' % (rid, due), rid, rid, html.escape(sub) if sub else ('ไม่มี UI · เทสผ่าน integration/E2E ของ dev' if not ui and ep not in (7, 11) else '')))
@@ -155,7 +155,7 @@ def main():
     for i, (d, topic, detail, rem) in reversed(list(enumerate(EXTRA_ROWS))):
         rid = 'x%d' % i
         head.append('<tr data-rid="%s" data-title="ตะกร้าไลฟ์ takra ai ปฏิทิน %s" data-href="%s"><td class="c-topic"><b>%s</b></td><td class="c-detail">%s</td><td class="c-st"></td><td class="c-d"></td>'
-                    '<td class="c-st">%s</td><td class="c-d"><input type="date" data-rid="%s" data-k="due" value="%s"></td><td class="c-act"><input type="date" data-rid="%s" data-k="act"></td><td class="c-rem"><textarea class="rem" rows="1" data-rid="%s" data-k="rem" placeholder="หมายเหตุ…">%s</textarea></td></tr>'
+                    '<td class="c-st">%s</td><td class="c-d"><input type="date" data-rid="%s" data-k="due" value="%s"></td><td class="c-act"><input type="date" data-rid="%s" data-k="act"></td><td class="c-rem"><textarea class="rem" rows="2" data-rid="%s" data-k="rem" placeholder="หมายเหตุ…">%s</textarea></td></tr>'
                     % (rid, topic.lower(), REPORT, topic, detail, sel('qa', QA_OPTS, 'wait', rid), rid, d, rid, rid, html.escape(rem)))
 
     rows = head + rows
