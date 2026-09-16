@@ -285,8 +285,8 @@
     });
     eps.forEach(function(b){ if(!b.start) b.start=b.end; if(!b.end) b.end=b.start; b.lane=laneOf(b.states); if(b.dev==='blocked') b.mvp='blocked'; var eid=(b.full.match(/Epic ([\w\-]+)/)||[])[1]||'★';
       // ป้ายให้สม่ำเสมอ: Clip ใช้รหัส EP-0x จากเอกสาร → ป้าย "EP-02" วงกลม "2" · Lib-Sync "Epic M1" วงกลม "M1"
-      if(/^EP-\d+$/i.test(eid)){ b.label=eid; b.sid=String(parseInt(eid.slice(3),10)); }
-      else { b.label='Epic '+eid; b.sid=eid; }
+      var num=(eid.match(/\d+/)||[eid])[0]; num=/^\d+$/.test(num)?String(parseInt(num,10)):num;   // EP-02 → 2 · M1 → 1 (เหมือนโปรเจกต์อื่น)
+      b.label='Epic '+num; b.sid=num;
       if(/\.x$/.test(b.grp)){ b.label='ปิดรอบ'; b.sid='★'; }
       b.qa=b.lane; });
     pr.eps=eps.filter(function(b){ return b.start; }); pr.sts=sts;

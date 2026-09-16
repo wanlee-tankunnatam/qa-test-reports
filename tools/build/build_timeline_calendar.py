@@ -75,7 +75,7 @@ PROJECTS = [
        sources=[('docs/prd.md', 'v1', '')], sprint=None, report=PAGES + '?project=farm'),
   dict(id='lipsync', name='TAKRA Lib-Sync', emoji='🎙️', jira='TLS', board=None,
        repo='/Users/ice/Documents/other/takra-lib-sync', ref='origin/uat', kind='bmad', unique_epics=True,
-       sources=[('_bmad-output/planning-artifacts/epics.md', 'M1', ''),
+       sources=[('_bmad-output/planning-artifacts/epics.md', 'MVP-1', ''),
                 ('_bmad-output/planning-artifacts/backlog/epic-1-foundation.md', 'Backlog', ''), ('_bmad-output/planning-artifacts/backlog/epic-2-cicd.md', 'Backlog', ''),
                 ('_bmad-output/planning-artifacts/backlog/epic-3-backend.md', 'Backlog', ''), ('_bmad-output/planning-artifacts/backlog/epic-4-desktop.md', 'Backlog', ''),
                 ('_bmad-output/planning-artifacts/backlog/epic-5-customer-ops.md', 'Backlog', ''), ('_bmad-output/planning-artifacts/backlog/epic-6-pilot.md', 'Backlog', '')],
