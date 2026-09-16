@@ -113,6 +113,14 @@ def parse_bmad(pj):
                 if key not in epics:
                     epics[key] = dict(key=key, mvp=mvp, num=num, name=name, stories=[], prefix=prefix, order=[]); order.append(key)
                 cur = epics[key]; continue
+            # story แบบตาราง | CV-1 | TLS-39 | สรุป |  (Lib-Sync epics.md)
+            t = re.match(r'^\|\s*([A-Z]{1,4})-(\d+)\s*\|\s*([^|]*)\|\s*(.*?)\s*\|?\s*$', line)
+            if t and cur is not None and t.group(1) == str(cur['num']):
+                sno = t.group(2)
+                if not any(st['no'] == sno for st in cur['stories']):
+                    jira = re.findall(r'\b(?:%s)-\d+' % (pj['jira'] or 'XXX'), t.group(2))
+                    cur['stories'].append(dict(no=sno, title=clean_title(t.group(4)), typ='', jira=jira, dev='unk', ents=[]))
+                continue
             m = re.match(r'^#{2,3} Story ([\w\-]+)\.(\d+[a-z]?(?:-\d)?)[:：]\s*(.*)$', line)
             if m and cur is not None:
                 raw = m.group(3); typ = (re.match(r'\[([^\]]+)\]', raw) or [None, ''])[1]
