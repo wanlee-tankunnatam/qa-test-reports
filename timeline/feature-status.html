@@ -144,7 +144,7 @@
         <tbody id="rows"></tbody>
       </table>
     </div>
-    <footer>ใต้สถานะคือวันกำหนด · ตัวหนา = ครบกำหนดวันนี้ · ตัวแดง = ไม่ผ่าน/เลยกำหนด (นับเฉพาะงานที่ยังไม่เสร็จ) · ปี 2569 (2026) ทั้งหมด</footer>
+    <footer>ใต้สถานะคือวันกำหนด · ตัวแดง = ไม่ผ่าน / ครบกำหนดวันนี้ / เลยกำหนด (นับเฉพาะงานที่ยังไม่เสร็จ) · ปี 2569 (2026) ทั้งหมด</footer>
   </section>
 </div>
 
@@ -214,7 +214,7 @@ function dateLine(date, open, noDate){
   if (open) {
     const diff = Math.round((d(date) - d(TODAY)) / 864e5);
     extra = diff > 0 ? ` · อีก ${diff} วัน`
-          : diff === 0 ? ' · <span class="late">ครบกำหนดวันนี้</span>'
+          : diff === 0 ? ' · <span class="fail-txt">ครบกำหนดวันนี้</span>'
           : ` · <span class="fail-txt">เลยกำหนด ${-diff} วัน</span>`;
   }
   return `<span class="date">กำหนด ${fmt(date)}${extra}</span>`;
