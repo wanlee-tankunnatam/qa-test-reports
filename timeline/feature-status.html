@@ -58,7 +58,7 @@
   td.st{white-space:nowrap}
   .pill{display:inline-block; font-size:.82rem; font-weight:600; border-radius:999px; padding:2px 10px}
   .date{display:block; font-size:.8rem; color:var(--muted); margin-top:3px; font-variant-numeric:tabular-nums}
-  .late{color:var(--fail); font-weight:600}
+  .late{color:var(--text); font-weight:700}
   .s-pass{color:var(--pass); background:var(--pass-bg)}
   .s-fail{color:var(--fail); background:var(--fail-bg)}
   .s-prog{color:var(--prog); background:var(--prog-bg)}
@@ -91,19 +91,17 @@
   .g-day{width:var(--dw); flex:none; text-align:center; font-size:.7rem; line-height:1.15; padding-top:3px; color:var(--muted); font-variant-numeric:tabular-nums}
   .g-day b{display:block; font-size:.78rem; color:var(--text)}
   .g-day.we{color:var(--faint)} .g-day.we b{color:var(--faint)}
-  .g-day.today{background:var(--fail-bg)} .g-day.today b{color:var(--fail)}
+  .g-day.today{background:var(--prog-bg)} .g-day.today b{color:var(--prog)}
   .g-proj .g-id,.g-proj .g-name{background:var(--head)}
   .g-proj .g-name{font-weight:700; color:var(--text)}
   .g-proj .g-track{background:var(--head); background-image:none}
   .g-shade{position:absolute; top:0; bottom:0; width:var(--dw); background:rgba(127,127,127,.07); pointer-events:none; z-index:0}
-  .g-today{position:absolute; top:0; bottom:0; width:2px; background:var(--fail); opacity:.7; z-index:1; pointer-events:none}
+  .g-today{position:absolute; top:0; bottom:0; width:2px; background:var(--prog); opacity:.7; z-index:1; pointer-events:none}
   .g-bar{position:absolute; top:9px; height:16px; border-radius:4px; opacity:.38; z-index:1}
   .g-ms{position:absolute; top:8px; width:18px; height:18px; border-radius:4px; z-index:1}
   .g-ms.dev{opacity:.55}
   .g-lbl{position:absolute; top:5px; z-index:1; font-size:.64rem; line-height:1.15; color:var(--muted); white-space:nowrap; padding-left:6px; border-left:1px solid var(--faint)}
-  .g-lbl.fail{color:var(--fail); font-weight:600; border-left-color:var(--fail)}
-  .g-lbl.fail b{color:var(--fail)}
-  .g-ms.fail{box-shadow:0 0 0 2px var(--panel),0 0 0 4px var(--fail)}
+  .g-lbl.fail{color:var(--fail); font-weight:600}
   .g-lbl b{display:block; color:var(--text); font-size:.66rem; letter-spacing:.02em}
   .g-legend{display:flex; flex-wrap:wrap; gap:14px; color:var(--muted); font-size:.78rem; margin:10px 0 0}
   .g-legend i{display:inline-block; width:12px; height:12px; border-radius:3px; vertical-align:-2px; margin-right:5px; background:var(--muted)}
@@ -133,7 +131,7 @@
       <span><i style="opacity:.38"></i>ช่วง กำหนด DEV → กำหนด QA</span>
       <span><i style="opacity:.55"></i>กำหนด DEV</span>
       <span><i></i>กำหนด QA</span>
-      <span><i style="background:var(--fail);width:2px;border-radius:0"></i>วันนี้</span>
+      <span><i style="background:var(--prog);width:2px;border-radius:0"></i>วันนี้</span>
       <span>· ชี้ชื่อฟีเจอร์เพื่อดูวันกำหนด</span>
     </div>
   </section>
@@ -145,7 +143,7 @@
         <tbody id="rows"></tbody>
       </table>
     </div>
-    <footer>ใต้สถานะคือวันกำหนด · ตัวแดง = เลยกำหนดหรือครบกำหนดวันนี้ (นับเฉพาะงานที่ยังไม่เสร็จ) · ปี 2569 (2026) ทั้งหมด</footer>
+    <footer>ใต้สถานะคือวันกำหนด · ตัวหนา = เลยกำหนดหรือครบกำหนดวันนี้ (นับเฉพาะงานที่ยังไม่เสร็จ) · ปี 2569 (2026) ทั้งหมด</footer>
   </section>
 </div>
 
@@ -291,7 +289,7 @@ document.getElementById('rows').innerHTML = PROJECTS.map(p => {
         track += `<div class="g-bar" style="left:${a * DW + 2}px;width:${(b - a + 1) * DW - 4}px;background:${c}"></div>`;
         if (it.due && it.qaDue && it.due !== it.qaDue) track += `<div class="g-ms dev" style="left:${col(it.due) * DW + (DW - 18) / 2}px;background:${c}" title="กำหนด DEV ${fmt(it.due)}"></div>`;
         const endD = it.qaDue || it.due;
-        track += `<div class="g-ms${it.qa === 'fail' ? ' fail' : ''}" style="left:${col(endD) * DW + (DW - 18) / 2}px;background:${it.qa === 'fail' ? 'var(--fail)' : c}" title="${it.qaDue ? 'กำหนด QA' : 'กำหนด DEV'} ${fmt(endD)}"></div>`;
+        track += `<div class="g-ms" style="left:${col(endD) * DW + (DW - 18) / 2}px;background:${c}" title="${it.qaDue ? 'กำหนด QA' : 'กำหนด DEV'} ${fmt(endD)}"></div>`;
         const qaTxt = (it.qaLabel || QA[it.qa][1]);
         const fail = it.qa === 'fail';
         track += `<div class="g-lbl${fail ? ' fail' : ''}" style="left:${(b + 1) * DW + 2}px"><b>${it.qaDue ? 'QA ' + fmt(it.qaDue) : 'DEV ' + fmt(it.due)}</b>${esc(qaTxt)}</div>`;
