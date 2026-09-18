@@ -101,6 +101,9 @@
   .g-ms{position:absolute; top:8px; width:18px; height:18px; border-radius:4px; z-index:1}
   .g-ms.dev{opacity:.55}
   .g-lbl{position:absolute; top:5px; z-index:1; font-size:.64rem; line-height:1.15; color:var(--muted); white-space:nowrap; padding-left:6px; border-left:1px solid var(--faint)}
+  .g-lbl.fail{color:var(--fail); font-weight:600; border-left-color:var(--fail)}
+  .g-lbl.fail b{color:var(--fail)}
+  .g-ms.fail{box-shadow:0 0 0 2px var(--panel),0 0 0 4px var(--fail)}
   .g-lbl b{display:block; color:var(--text); font-size:.66rem; letter-spacing:.02em}
   .g-legend{display:flex; flex-wrap:wrap; gap:14px; color:var(--muted); font-size:.78rem; margin:10px 0 0}
   .g-legend i{display:inline-block; width:12px; height:12px; border-radius:3px; vertical-align:-2px; margin-right:5px; background:var(--muted)}
@@ -157,8 +160,8 @@ const PROJECTS = [
     { name:'Brand Overview Dashboard', due:'2026-09-18', qaDue:'2026-09-18', dev:'wait', qa:'wait' },
     { name:'AI Insights', due:'2026-09-22', qaDue:'2026-09-24', dev:'wait', qa:'wait' },
     { name:'Reports', due:'2026-09-24', qaDue:'2026-09-25', dev:'wait', qa:'wait' },
-    { name:'บัคตีกลับ · [QA] MVP 1 - Manual test', jira:'TI-270', due:null, dev:'fixing', qa:'wait', qaLabel:'รอ QA ตรวจสอบ' },
-    { name:'บัคตีกลับ · [QA] MVP 2 - Manual test', jira:'TI-273', due:null, dev:'fixing', qa:'wait', qaLabel:'รอ QA ตรวจสอบ' },
+    { name:'บัคตีกลับ · [QA] MVP 1 - Manual test', jira:'TI-270', due:null, qaDue:null, noDate:true, dev:'wait', qa:'wait', qaLabel:'รอ QA ตรวจสอบ' },
+    { name:'บัคตีกลับ · [QA] MVP 2 - Manual test', jira:'TI-273', due:null, qaDue:null, noDate:true, dev:'wait', qa:'wait', qaLabel:'รอ QA ตรวจสอบ' },
   ]},
   { name:'Live', emoji:'🎥', items:[
     { name:'Facebook', due:'2026-09-25', qaDue:'2026-09-25', dev:'wait', qa:'wait' },
@@ -175,7 +178,7 @@ const PROJECTS = [
   ]},
   { name:'Hub', emoji:'🧾', items:[
     { name:'VAT', due:'2026-09-17', qaDue:'2026-09-17', dev:'done', qa:'pass' },
-    { name:'เอกสาร', subs:['ใบเสร็จ','รวมสลิป'], due:'2026-09-18', qaDue:'2026-09-18', dev:'done', qa:'wait', qaLabel:'รอ QA ตรวจ' },
+    { name:'เอกสาร', subs:['ใบเสร็จ','รวมสลิป'], due:'2026-09-18', qaDue:'2026-09-18', dev:'done', qa:'wait', qaLabel:'รอ QA ตรวจสอบ' },
   ]},
   { name:'Trendora', emoji:'📈', items:[
     { name:'หน้าหลัก', due:'2026-09-25', dev:'done', qa:'pass' },
@@ -194,7 +197,7 @@ const PROJECTS = [
 
 const DEV = { done:['s-pass','✓ เสร็จแล้ว'], wait:['s-wait','รอ dev'], fixing:['s-prog','dev กำลังแก้'], null:['s-none','ยังไม่ระบุ'] };
 const QA  = { pass:['s-pass','✓ ผ่านแล้ว'], fail:['s-fail','✕ ไม่ผ่าน · ตีกลับ'],
-              checking:['s-prog','กำลังตรวจ'], wait:['s-wait','รอ QA'], null:['s-none','ยังไม่ระบุ'] };
+              checking:['s-prog','กำลังตรวจ'], wait:['s-wait','รอ QA ตรวจสอบ'], null:['s-none','ยังไม่ระบุ'] };
 const TH_MON = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
 
 const d = s => new Date(s + 'T00:00:00');
@@ -204,8 +207,8 @@ const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':
 document.getElementById('asof').textContent = (() => { const x = d(AS_OF); return `${x.getDate()} ${TH_MON[x.getMonth()]} ${x.getFullYear() + 543}`; })();
 
 // วันกำหนด + นับวัน (เฉพาะงานที่ยังไม่เสร็จ)
-function dateLine(date, open){
-  if (!date) return '';
+function dateLine(date, open, noDate){
+  if (!date) return noDate ? '<span class="date">ยังไม่มีกำหนด</span>' : '';
   let extra = '';
   if (open) {
     const diff = Math.round((d(date) - d(AS_OF)) / 864e5);
@@ -236,8 +239,8 @@ document.getElementById('rows').innerHTML = PROJECTS.map(p => {
     const note = [it.alias, it.subs && it.subs.join(' · ')].filter(Boolean).join(' — ');
     return `<tr>
       <td class="feat"><span class="fname">${esc(it.name)}</span>${it.jira ? ` <a class="jira" href="${JIRA}${esc(it.jira)}" target="_blank" rel="noopener">${esc(it.jira)} ↗</a>` : ''}${note ? `<span class="note">${esc(note)}</span>` : ''}</td>
-      <td class="st">${pill(it.dev_label ? [DEV[it.dev][0], '✓ ' + it.dev_label] : it.devWaitLabel ? [DEV[it.dev][0], it.devWaitLabel] : DEV[it.dev])}${dateLine(it.due, it.dev !== 'done')}</td>
-      <td class="st">${pill(qa)}${dateLine(it.qaDue, it.qa !== 'pass')}</td>
+      <td class="st">${pill(it.dev_label ? [DEV[it.dev][0], '✓ ' + it.dev_label] : it.devWaitLabel ? [DEV[it.dev][0], it.devWaitLabel] : DEV[it.dev])}${dateLine(it.due, it.dev !== 'done', it.noDate)}</td>
+      <td class="st">${pill(qa)}${dateLine(it.qaDue, it.qa !== 'pass', it.noDate)}</td>
     </tr>`;
   }).join('');
 }).join('');
@@ -288,9 +291,10 @@ document.getElementById('rows').innerHTML = PROJECTS.map(p => {
         track += `<div class="g-bar" style="left:${a * DW + 2}px;width:${(b - a + 1) * DW - 4}px;background:${c}"></div>`;
         if (it.due && it.qaDue && it.due !== it.qaDue) track += `<div class="g-ms dev" style="left:${col(it.due) * DW + (DW - 18) / 2}px;background:${c}" title="กำหนด DEV ${fmt(it.due)}"></div>`;
         const endD = it.qaDue || it.due;
-        track += `<div class="g-ms" style="left:${col(endD) * DW + (DW - 18) / 2}px;background:${c}" title="${it.qaDue ? 'กำหนด QA' : 'กำหนด DEV'} ${fmt(endD)}"></div>`;
+        track += `<div class="g-ms${it.qa === 'fail' ? ' fail' : ''}" style="left:${col(endD) * DW + (DW - 18) / 2}px;background:${it.qa === 'fail' ? 'var(--fail)' : c}" title="${it.qaDue ? 'กำหนด QA' : 'กำหนด DEV'} ${fmt(endD)}"></div>`;
         const qaTxt = (it.qaLabel || QA[it.qa][1]);
-        track += `<div class="g-lbl" style="left:${(b + 1) * DW + 2}px"><b>${it.qaDue ? 'QA ' + fmt(it.qaDue) : 'DEV ' + fmt(it.due)}</b>${esc(qaTxt)}</div>`;
+        const fail = it.qa === 'fail';
+        track += `<div class="g-lbl${fail ? ' fail' : ''}" style="left:${(b + 1) * DW + 2}px"><b>${it.qaDue ? 'QA ' + fmt(it.qaDue) : 'DEV ' + fmt(it.due)}</b>${esc(qaTxt)}</div>`;
       }
       const tip = `${it.name}${it.due ? ' · DEV ' + fmt(it.due) : ''}${it.qaDue ? ' · QA ' + fmt(it.qaDue) : ''}`;
       html += `<div class="g-row"><div class="g-lcol"><div class="g-id">${String(n).padStart(2, '0')}</div><div class="g-name" title="${esc(tip)}">${esc(it.name)}</div></div><div class="g-track">${track}</div></div>`;
