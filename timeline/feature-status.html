@@ -31,6 +31,7 @@
     --none:#f0b35b; --none-bg:#332614;
   }
   *{box-sizing:border-box}
+  [hidden]{display:none!important}
   html,body{margin:0}
   body{background:var(--bg); color:var(--text); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans Thai",Roboto,Helvetica,Arial,sans-serif; line-height:1.5; font-size:15px; -webkit-font-smoothing:antialiased}
   .wrap{max-width:1000px; margin:0 auto; padding:28px 18px 60px}
@@ -66,6 +67,11 @@
   .jira{font-size:.78rem; font-weight:600; color:var(--prog); text-decoration:none; margin-left:4px}
   .jira:hover{text-decoration:underline}
 
+  /* ---- Tabs ---- */
+  .tabs{display:flex; gap:4px; border-bottom:1px solid var(--border); margin:4px 0 16px; overflow-x:auto}
+  .tab{appearance:none; background:none; border:0; border-bottom:3px solid transparent; margin-bottom:-1px; padding:10px 16px; font:inherit; font-weight:600; font-size:.95rem; color:var(--muted); cursor:pointer; white-space:nowrap}
+  .tab:hover{color:var(--text)}
+  .tab.active{color:var(--text); border-bottom-color:var(--prog)}
   /* ---- Gantt ---- */
   h2.sec{font-size:1.05rem; margin:22px 0 10px}
   .gantt-wrap{overflow-x:auto; background:var(--panel); border:1px solid var(--border); border-radius:14px; margin-bottom:8px}
@@ -96,7 +102,7 @@
   .g-ms.dev{opacity:.55}
   .g-lbl{position:absolute; top:5px; z-index:1; font-size:.64rem; line-height:1.15; color:var(--muted); white-space:nowrap; padding-left:6px; border-left:1px solid var(--faint)}
   .g-lbl b{display:block; color:var(--text); font-size:.66rem; letter-spacing:.02em}
-  .g-legend{display:flex; flex-wrap:wrap; gap:14px; color:var(--muted); font-size:.78rem; margin:0 0 22px}
+  .g-legend{display:flex; flex-wrap:wrap; gap:14px; color:var(--muted); font-size:.78rem; margin:10px 0 0}
   .g-legend i{display:inline-block; width:12px; height:12px; border-radius:3px; vertical-align:-2px; margin-right:5px; background:var(--muted)}
   footer{margin-top:14px; color:var(--faint); font-size:.8rem}
 </style>
@@ -113,24 +119,31 @@
 
   <section class="summary" id="summary"></section>
 
-  <h2 class="sec">ไทม์ไลน์</h2>
-  <div class="gantt-wrap"><div class="gantt" id="gantt"></div></div>
-  <div class="g-legend">
-    <span><i style="opacity:.38"></i>ช่วง กำหนด DEV → กำหนด QA</span>
-    <span><i style="opacity:.55"></i>กำหนด DEV</span>
-    <span><i></i>กำหนด QA</span>
-    <span><i style="background:var(--fail);width:2px;border-radius:0"></i>วันนี้</span>
+  <div class="tabs" role="tablist">
+    <button class="tab" role="tab" data-tab="timeline">📅 ไทม์ไลน์</button>
+    <button class="tab" role="tab" data-tab="status">📋 รายละเอียดสถานะ</button>
   </div>
 
-  <h2 class="sec">รายละเอียดสถานะ</h2>
-  <div class="table-wrap">
-    <table>
-      <thead><tr><th>ฟีเจอร์</th><th>DEV</th><th>QA</th></tr></thead>
-      <tbody id="rows"></tbody>
-    </table>
-  </div>
+  <section class="panel" data-panel="timeline">
+    <div class="gantt-wrap"><div class="gantt" id="gantt"></div></div>
+    <div class="g-legend">
+      <span><i style="opacity:.38"></i>ช่วง กำหนด DEV → กำหนด QA</span>
+      <span><i style="opacity:.55"></i>กำหนด DEV</span>
+      <span><i></i>กำหนด QA</span>
+      <span><i style="background:var(--fail);width:2px;border-radius:0"></i>วันนี้</span>
+      <span>· ชี้ชื่อฟีเจอร์เพื่อดูวันกำหนด</span>
+    </div>
+  </section>
 
-  <footer>ใต้สถานะคือวันกำหนด · ตัวแดง = เลยกำหนดหรือครบกำหนดวันนี้ (นับเฉพาะงานที่ยังไม่เสร็จ) · ปี 2569 (2026) ทั้งหมด</footer>
+  <section class="panel" data-panel="status">
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>ฟีเจอร์</th><th>DEV</th><th>QA</th></tr></thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+    <footer>ใต้สถานะคือวันกำหนด · ตัวแดง = เลยกำหนดหรือครบกำหนดวันนี้ (นับเฉพาะงานที่ยังไม่เสร็จ) · ปี 2569 (2026) ทั้งหมด</footer>
+  </section>
 </div>
 
 <script>
@@ -144,6 +157,8 @@ const PROJECTS = [
     { name:'Brand Overview Dashboard', due:'2026-09-18', qaDue:'2026-09-18', dev:'wait', qa:'wait' },
     { name:'AI Insights', due:'2026-09-22', qaDue:'2026-09-24', dev:'wait', qa:'wait' },
     { name:'Reports', due:'2026-09-24', qaDue:'2026-09-25', dev:'wait', qa:'wait' },
+    { name:'บัคตีกลับ · [QA] MVP 1 - Manual test', jira:'TI-270', due:null, dev:'fixing', qa:'wait', qaLabel:'รอ QA ตรวจสอบ' },
+    { name:'บัคตีกลับ · [QA] MVP 2 - Manual test', jira:'TI-273', due:null, dev:'fixing', qa:'wait', qaLabel:'รอ QA ตรวจสอบ' },
   ]},
   { name:'Live', emoji:'🎥', items:[
     { name:'Facebook', due:'2026-09-25', qaDue:'2026-09-25', dev:'wait', qa:'wait' },
@@ -286,6 +301,19 @@ document.getElementById('rows').innerHTML = PROJECTS.map(p => {
   days.forEach((x, k) => { if (x.getDay() === 0 || x.getDay() === 6) html += `<div class="g-shade" style="left:${L + k * DW}px"></div>`; });
   html += `<div class="g-today" style="left:${L + todayCol * DW + DW / 2 - 1}px"></div>`;
   g.innerHTML = html;
+})();
+
+// ---------- Tabs (จำแท็บผ่าน #hash เพื่อแชร์ลิงก์ได้ เช่น #status) ----------
+(function(){
+  const tabs = [...document.querySelectorAll('.tab')], panels = [...document.querySelectorAll('.panel')];
+  function show(name){
+    if (!tabs.some(t => t.dataset.tab === name)) name = 'timeline';
+    tabs.forEach(t => { const on = t.dataset.tab === name; t.classList.toggle('active', on); t.setAttribute('aria-selected', on); });
+    panels.forEach(p => p.hidden = p.dataset.panel !== name);
+  }
+  tabs.forEach(t => t.addEventListener('click', () => { history.replaceState(null, '', '#' + t.dataset.tab); show(t.dataset.tab); }));
+  window.addEventListener('hashchange', () => show(location.hash.slice(1)));
+  show(location.hash.slice(1));
 })();
 </script>
 </body>
