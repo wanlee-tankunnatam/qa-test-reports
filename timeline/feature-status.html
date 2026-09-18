@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TAKRA — สถานะฟีเจอร์ DEV / QA</title>
+<style>
+  :root{
+    --bg:#f5f6f8; --panel:#ffffff; --head:#f8f9fb; --border:#e6e8ec;
+    --text:#1a1f26; --muted:#6b7280; --faint:#9aa1ab;
+    --pass:#15803d; --pass-bg:#e3f5e9;
+    --fail:#dc2626; --fail-bg:#fdeaea;
+    --prog:#2563eb; --prog-bg:#e6effe;
+    --wait:#6b7280; --wait-bg:#eef0f3;
+    --none:#b45309; --none-bg:#fdf1df;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --bg:#0e1116; --panel:#161b22; --head:#1b2230; --border:#2a313c;
+      --text:#e6e9ee; --muted:#9aa4b2; --faint:#6b7480;
+      --pass:#4ade80; --pass-bg:#12301f; --fail:#f87171; --fail-bg:#3a1618;
+      --prog:#6ea8fe; --prog-bg:#17233b; --wait:#a3acb9; --wait-bg:#1f2630;
+      --none:#f0b35b; --none-bg:#332614;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0e1116; --panel:#161b22; --head:#1b2230; --border:#2a313c;
+    --text:#e6e9ee; --muted:#9aa4b2; --faint:#6b7480;
+    --pass:#4ade80; --pass-bg:#12301f; --fail:#f87171; --fail-bg:#3a1618;
+    --prog:#6ea8fe; --prog-bg:#17233b; --wait:#a3acb9; --wait-bg:#1f2630;
+    --none:#f0b35b; --none-bg:#332614;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{background:var(--bg); color:var(--text); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans Thai",Roboto,Helvetica,Arial,sans-serif; line-height:1.5; font-size:15px; -webkit-font-smoothing:antialiased}
+  .wrap{max-width:1000px; margin:0 auto; padding:28px 18px 60px}
+  header{display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between; gap:12px; margin-bottom:16px}
+  h1{font-size:1.5rem; margin:0}
+  .sub{color:var(--muted); font-size:.9rem}
+  .back{color:var(--muted); font-size:.85rem; text-decoration:none; border:1px dashed var(--border); border-radius:10px; padding:6px 12px}
+
+  .summary{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:18px}
+  .chip{display:flex; align-items:center; gap:8px; padding:8px 14px; border-radius:12px; font-weight:600; font-size:.92rem}
+  .chip b{font-size:1.25rem; font-variant-numeric:tabular-nums}
+
+  .table-wrap{overflow-x:auto; background:var(--panel); border:1px solid var(--border); border-radius:14px}
+  table{width:100%; border-collapse:collapse; min-width:640px}
+  th,td{padding:10px 14px; text-align:left; vertical-align:top}
+  thead th{font-size:.78rem; color:var(--muted); font-weight:600; border-bottom:1px solid var(--border); white-space:nowrap}
+  tbody td{border-top:1px solid var(--border)}
+  tr.proj td{background:var(--head); font-weight:700; font-size:1rem; padding-top:12px; padding-bottom:12px; border-top:2px solid var(--border)}
+  tr.proj:first-child td{border-top:0}
+  tr.proj .prog{font-weight:500; font-size:.82rem; color:var(--muted); margin-left:10px}
+  td.feat{width:44%}
+  .fname{font-weight:600}
+  .note{display:block; color:var(--muted); font-size:.8rem; line-height:1.4}
+  td.st{white-space:nowrap}
+  .pill{display:inline-block; font-size:.82rem; font-weight:600; border-radius:999px; padding:2px 10px}
+  .date{display:block; font-size:.8rem; color:var(--muted); margin-top:3px; font-variant-numeric:tabular-nums}
+  .late{color:var(--fail); font-weight:600}
+  .s-pass{color:var(--pass); background:var(--pass-bg)}
+  .s-fail{color:var(--fail); background:var(--fail-bg)}
+  .s-prog{color:var(--prog); background:var(--prog-bg)}
+  .s-wait{color:var(--wait); background:var(--wait-bg)}
+  .s-none{color:var(--none); background:var(--none-bg)}
+  .jira{font-size:.78rem; font-weight:600; color:var(--prog); text-decoration:none; margin-left:4px}
+  .jira:hover{text-decoration:underline}
+
+  /* ---- Gantt ---- */
+  h2.sec{font-size:1.05rem; margin:22px 0 10px}
+  .gantt-wrap{overflow-x:auto; background:var(--panel); border:1px solid var(--border); border-radius:14px; margin-bottom:8px}
+  .gantt{position:relative; min-width:max-content; font-size:.8rem}
+  .g-row{display:grid; grid-template-columns:var(--lcols) var(--track); align-items:stretch}
+  .g-id,.g-name{position:sticky; background:var(--panel); z-index:2; border-bottom:1px solid var(--border); display:flex; align-items:center}
+  .g-id{left:0; width:44px; justify-content:center; font-weight:700; color:var(--muted); font-variant-numeric:tabular-nums}
+  .g-name{left:44px; width:250px; padding:0 12px; font-weight:600; border-right:1px solid var(--border); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; display:block; line-height:34px}
+  .g-lcol{display:grid; grid-template-columns:44px 250px}
+  .g-track{position:relative; height:34px; border-bottom:1px solid var(--border);
+    background-image:repeating-linear-gradient(to right, transparent 0 calc(var(--dw) - 1px), var(--border) calc(var(--dw) - 1px) var(--dw))}
+  .g-head .g-id,.g-head .g-name{background:var(--head); color:var(--muted); font-size:.72rem; font-weight:700; letter-spacing:.04em}
+  .g-head .g-name{line-height:normal; display:flex}
+  .g-months{display:flex; height:30px}
+  .g-month{display:flex; align-items:center; justify-content:center; color:#fff; font-weight:700; font-size:.82rem; border-right:2px solid var(--panel)}
+  .g-days{display:flex; height:34px; border-bottom:1px solid var(--border); background:var(--head)}
+  .g-day{width:var(--dw); flex:none; text-align:center; font-size:.7rem; line-height:1.15; padding-top:3px; color:var(--muted); font-variant-numeric:tabular-nums}
+  .g-day b{display:block; font-size:.78rem; color:var(--text)}
+  .g-day.we{color:var(--faint)} .g-day.we b{color:var(--faint)}
+  .g-day.today{background:var(--fail-bg)} .g-day.today b{color:var(--fail)}
+  .g-proj .g-id,.g-proj .g-name{background:var(--head)}
+  .g-proj .g-name{font-weight:700; color:var(--text)}
+  .g-proj .g-track{background:var(--head); background-image:none}
+  .g-shade{position:absolute; top:0; bottom:0; width:var(--dw); background:rgba(127,127,127,.07); pointer-events:none; z-index:0}
+  .g-today{position:absolute; top:0; bottom:0; width:2px; background:var(--fail); opacity:.7; z-index:1; pointer-events:none}
+  .g-bar{position:absolute; top:9px; height:16px; border-radius:4px; opacity:.38; z-index:1}
+  .g-ms{position:absolute; top:8px; width:18px; height:18px; border-radius:4px; z-index:1}
+  .g-ms.dev{opacity:.55}
+  .g-lbl{position:absolute; top:5px; z-index:1; font-size:.64rem; line-height:1.15; color:var(--muted); white-space:nowrap; padding-left:6px; border-left:1px solid var(--faint)}
+  .g-lbl b{display:block; color:var(--text); font-size:.66rem; letter-spacing:.02em}
+  .g-legend{display:flex; flex-wrap:wrap; gap:14px; color:var(--muted); font-size:.78rem; margin:0 0 22px}
+  .g-legend i{display:inline-block; width:12px; height:12px; border-radius:3px; vertical-align:-2px; margin-right:5px; background:var(--muted)}
+  footer{margin-top:14px; color:var(--faint); font-size:.8rem}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>สถานะฟีเจอร์ DEV / QA</h1>
+      <div class="sub">ทุกโปรเจกต์ TAKRA · ข้อมูล ณ <span id="asof"></span></div>
+    </div>
+    <a class="back" href="../">🏠 รายงานทั้งหมด</a>
+  </header>
+
+  <section class="summary" id="summary"></section>
+
+  <h2 class="sec">ไทม์ไลน์</h2>
+  <div class="gantt-wrap"><div class="gantt" id="gantt"></div></div>
+  <div class="g-legend">
+    <span><i style="opacity:.38"></i>ช่วง กำหนด DEV → กำหนด QA</span>
+    <span><i style="opacity:.55"></i>กำหนด DEV</span>
+    <span><i></i>กำหนด QA</span>
+    <span><i style="background:var(--fail);width:2px;border-radius:0"></i>วันนี้</span>
+  </div>
+
+  <h2 class="sec">รายละเอียดสถานะ</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>ฟีเจอร์</th><th>DEV</th><th>QA</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+
+  <footer>ใต้สถานะคือวันกำหนด · ตัวแดง = เลยกำหนดหรือครบกำหนดวันนี้ (นับเฉพาะงานที่ยังไม่เสร็จ) · ปี 2569 (2026) ทั้งหมด</footer>
+</div>
+
+<script>
+const AS_OF = '2026-09-18';
+
+// due = กำหนด DEV · qaDue = กำหนด QA (ถ้ามี)
+// dev: done | wait | fixing | null   ·   qa: pass | fail | checking | wait | null
+const PROJECTS = [
+  { name:'Insight', emoji:'📊', items:[
+    { name:'Metered LLM Proxy', due:'2026-09-16', qaDue:'2026-09-18', dev:'done', qa:'checking' },
+    { name:'Brand Overview Dashboard', due:'2026-09-18', qaDue:'2026-09-18', dev:'wait', qa:'wait' },
+    { name:'AI Insights', due:'2026-09-22', qaDue:'2026-09-24', dev:'wait', qa:'wait' },
+    { name:'Reports', due:'2026-09-24', qaDue:'2026-09-25', dev:'wait', qa:'wait' },
+  ]},
+  { name:'Live', emoji:'🎥', items:[
+    { name:'Facebook', due:'2026-09-25', qaDue:'2026-09-25', dev:'wait', qa:'wait' },
+    { name:'Tool-calling auto-reply', due:'2026-09-25', qaDue:'2026-09-25', dev:'wait', qa:'wait' },
+    { name:'บัคตีกลับ · [MVP2] QA Test Manual', jira:'TAKRA-474', due:'2026-10-02', qaDue:'2026-10-02', dev:'fixing', qa:'wait', qaLabel:'รอ QA ตรวจสอบ' },
+  ]},
+  { name:'Rerun', emoji:'🔁', items:[
+    { name:'Auto Chat-Reply (LLM)', due:'2026-09-17', qaDue:'2026-09-17', dev:'done', qa:'pass' },
+    { name:'Keyword Refinements', alias:'UU · คีย์เวิร์ดไม่จับเฉพาะคำ ต้องพิมพ์ตามคีย์เวิร์ดเท่านั้น · คีย์เวิร์ดที่ตั้งไว้ตอบคำถามแค่ครั้งเดียว', due:'2026-09-17', qaDue:'2026-09-17', dev:'done', qa:'pass' },
+    { name:'ตั้งเวลาอัตโนมัติตามเวลาจริง', alias:'เช่น ให้เริ่มไลฟ์ใหม่อัตโนมัติอีกครั้งเวลา 17:00 น.', due:'2026-09-22', qaDue:'2026-09-24', dev:null, qa:null },
+    { name:'GMV Dashboard', due:'2026-09-24', dev:null, qa:null },
+    { name:'เพิ่ม overlay แบนเนอร์วิ่ง', due:'2026-09-28', qaDue:'2026-09-25', dev:null, qa:null },
+    { name:'ทดลองไลฟ์', alias:'TT · เพิ่มฟังก์ชันทดลองไลฟ์ก่อนไลฟ์รีรันจริง', due:'2026-09-30', qaDue:'2026-10-02', dev:null, qa:null },
+  ]},
+  { name:'Hub', emoji:'🧾', items:[
+    { name:'VAT', due:'2026-09-17', qaDue:'2026-09-17', dev:'done', qa:'pass' },
+    { name:'เอกสาร', subs:['ใบเสร็จ','รวมสลิป'], due:'2026-09-18', qaDue:'2026-09-18', dev:'done', qa:'wait', qaLabel:'รอ QA ตรวจ' },
+  ]},
+  { name:'Trendora', emoji:'📈', items:[
+    { name:'หน้าหลัก', due:'2026-09-25', dev:'done', qa:'pass' },
+    { name:'ค้นหา', due:'2026-09-25', qaDue:'2026-09-25', dev:'done', qa:'fail' },
+    { name:'สินค้าเฝ้าดู', due:'2026-09-25', qaDue:'2026-09-25', dev:'done', qa:'fail' },
+    { name:'Affiliate', due:'2026-09-25', qaDue:'2026-09-25', dev:'done', qa:'fail' },
+    { name:'บัคตีกลับ · [QA] MVP 1 - Manual test', jira:'TKRD-186', due:'2026-09-25', qaDue:'2026-09-25', dev:'fixing', qa:'wait', qaLabel:'รอ QA ตรวจสอบ' },
+  ]},
+  { name:'Post', emoji:'📱', items:[
+    { name:'ต่อมือถือ Android', due:'2026-09-18', qaDue:'2026-09-18', dev:'done', qa:'pass' },
+    { name:'ตั้งตารางไว้ล่วงหน้า ระบบลงให้เองตามเวลา', due:'2026-09-18', qaDue:'2026-09-18', dev:'done', qa:'pass' },
+    { name:'คลังคอนเทนต์ + แคปชั่นรวมที่เดียว', due:'2026-09-18', qaDue:'2026-09-18', dev:'done', qa:'pass' },
+    { name:'บัคตีกลับ · Report Bug #1', jira:'TF-1', due:null, qaDue:'2026-09-18', dev:'done', dev_label:'แก้แล้ว', qa:'wait', qaLabel:'รอ QA ตรวจสอบ' },
+  ]},
+];
+
+const DEV = { done:['s-pass','✓ เสร็จแล้ว'], wait:['s-wait','รอ dev'], fixing:['s-prog','dev กำลังแก้'], null:['s-none','ยังไม่ระบุ'] };
+const QA  = { pass:['s-pass','✓ ผ่านแล้ว'], fail:['s-fail','✕ ไม่ผ่าน · ตีกลับ'],
+              checking:['s-prog','กำลังตรวจ'], wait:['s-wait','รอ QA'], null:['s-none','ยังไม่ระบุ'] };
+const TH_MON = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+
+const d = s => new Date(s + 'T00:00:00');
+const fmt = s => { const x = d(s); return `${x.getDate()} ${TH_MON[x.getMonth()]}`; };
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+document.getElementById('asof').textContent = (() => { const x = d(AS_OF); return `${x.getDate()} ${TH_MON[x.getMonth()]} ${x.getFullYear() + 543}`; })();
+
+// วันกำหนด + นับวัน (เฉพาะงานที่ยังไม่เสร็จ)
+function dateLine(date, open){
+  if (!date) return '';
+  let extra = '';
+  if (open) {
+    const diff = Math.round((d(date) - d(AS_OF)) / 864e5);
+    extra = diff > 0 ? ` · อีก ${diff} วัน`
+          : diff === 0 ? ' · <span class="late">ครบกำหนดวันนี้</span>'
+          : ` · <span class="late">เลยมา ${-diff} วัน</span>`;
+  }
+  return `<span class="date">กำหนด ${fmt(date)}${extra}</span>`;
+}
+const JIRA = 'https://kitdi.atlassian.net/browse/';
+const pill = ([c, l]) => `<span class="pill ${c}">${esc(l)}</span>`;
+
+const all = PROJECTS.flatMap(p => p.items);
+const count = k => all.filter(i => String(i.qa) === k).length;
+document.getElementById('summary').innerHTML = [
+  ['s-pass', count('pass'), 'QA ผ่านแล้ว'],
+  ['s-fail', count('fail'), 'QA ไม่ผ่าน'],
+  ['s-prog', count('checking') + count('wait'), 'รอ / กำลังตรวจ'],
+  ['s-none', count('null'), 'ยังไม่ระบุ'],
+].map(([c, n, l]) => `<div class="chip ${c}"><b>${n}</b>${l}</div>`).join('')
+  + `<div class="chip" style="color:var(--muted)">จากทั้งหมด <b style="color:var(--text)">${all.length}</b> ฟีเจอร์</div>`;
+
+document.getElementById('rows').innerHTML = PROJECTS.map(p => {
+  const passed = p.items.filter(i => i.qa === 'pass').length;
+  const head = `<tr class="proj"><td colspan="3">${p.emoji} ${esc(p.name)}<span class="prog">QA ผ่าน ${passed}/${p.items.length}</span>${p.jira ? ` <a class="jira" href="${JIRA}${esc(p.jira)}" target="_blank" rel="noopener">${esc(p.jiraLabel || '')} ${esc(p.jira)} ↗</a>` : ''}</td></tr>`;
+  return head + p.items.map(it => {
+    const qa = QA[it.qa].slice(); if (it.qaLabel) qa[1] = it.qaLabel;
+    const note = [it.alias, it.subs && it.subs.join(' · ')].filter(Boolean).join(' — ');
+    return `<tr>
+      <td class="feat"><span class="fname">${esc(it.name)}</span>${it.jira ? ` <a class="jira" href="${JIRA}${esc(it.jira)}" target="_blank" rel="noopener">${esc(it.jira)} ↗</a>` : ''}${note ? `<span class="note">${esc(note)}</span>` : ''}</td>
+      <td class="st">${pill(it.dev_label ? [DEV[it.dev][0], '✓ ' + it.dev_label] : it.devWaitLabel ? [DEV[it.dev][0], it.devWaitLabel] : DEV[it.dev])}${dateLine(it.due, it.dev !== 'done')}</td>
+      <td class="st">${pill(qa)}${dateLine(it.qaDue, it.qa !== 'pass')}</td>
+    </tr>`;
+  }).join('');
+}).join('');
+
+// ---------- Gantt (แท่ง = กำหนด DEV → กำหนด QA · สี่เหลี่ยมทึบ = กำหนด QA) ----------
+(function(){
+  const COLORS = { Insight:'#f59e0b', Live:'#e11d48', Rerun:'#7c3aed', Hub:'#0ea5e9', Trendora:'#16a34a', Post:'#0d9488' };
+  const DW = 34, DAY = 864e5, WD = ['อา','จ','อ','พ','พฤ','ศ','ส'];
+  const dates = [AS_OF];
+  PROJECTS.forEach(p => p.items.forEach(i => { if (i.due) dates.push(i.due); if (i.qaDue) dates.push(i.qaDue); }));
+  const t = dates.map(x => d(x).getTime());
+  const start = new Date(Math.min(...t) - 2 * DAY), end = new Date(Math.max(...t) + 5 * DAY);
+  const nDays = Math.round((end - start) / DAY) + 1;
+  const col = s => Math.round((d(s) - start) / DAY);
+  const g = document.getElementById('gantt');
+  g.style.setProperty('--dw', DW + 'px');
+  g.style.setProperty('--lcols', '294px');
+  g.style.setProperty('--track', nDays * DW + 'px');
+
+  const days = [...Array(nDays)].map((_, k) => new Date(start.getTime() + k * DAY));
+  // เดือน
+  const months = [];
+  days.forEach(x => { const m = x.getMonth(); const last = months[months.length - 1];
+    if (last && last.m === m) last.n++; else months.push({ m, y: x.getFullYear(), n: 1 }); });
+  const MCOL = ['#6366f1', '#0891b2', '#16a34a', '#ea580c'];
+  const monthsHtml = months.map((m, k) => `<div class="g-month" style="width:${m.n * DW}px;background:${MCOL[k % MCOL.length]}">${m.n > 2 ? TH_MON[m.m] + ' ' + (m.y + 543) : ''}</div>`).join('');
+  const todayCol = col(AS_OF);
+  const daysHtml = days.map((x, k) => { const we = x.getDay() === 0 || x.getDay() === 6;
+    return `<div class="g-day${we ? ' we' : ''}${k === todayCol ? ' today' : ''}"><b>${x.getDate()}</b>${WD[x.getDay()]}</div>`; }).join('');
+
+  let html = `<div class="g-row g-head">
+      <div class="g-lcol" style="grid-row:span 2"><div class="g-id">ID</div><div class="g-name">ฟีเจอร์</div></div>
+      <div class="g-months">${monthsHtml}</div></div>
+    <div class="g-row g-head"><div class="g-lcol"><div class="g-id" style="height:34px"></div><div class="g-name" style="height:34px"></div></div><div class="g-days">${daysHtml}</div></div>`;
+  html = `<div class="g-row g-head"><div class="g-lcol"><div class="g-id" style="height:64px;border-bottom:1px solid var(--border)">ID</div><div class="g-name" style="height:64px;border-bottom:1px solid var(--border)">ฟีเจอร์</div></div>
+      <div><div class="g-months">${monthsHtml}</div><div class="g-days">${daysHtml}</div></div></div>`;
+
+  let n = 0;
+  PROJECTS.forEach(p => {
+    const c = COLORS[p.name] || '#64748b';
+    html += `<div class="g-row g-proj"><div class="g-lcol"><div class="g-id" style="color:${c}">●</div><div class="g-name">${p.emoji} ${esc(p.name)}</div></div><div class="g-track"></div></div>`;
+    p.items.forEach(it => {
+      n++;
+      let track = '';
+      const pts = [it.due, it.qaDue].filter(Boolean);
+      if (pts.length) {
+        const cs = pts.map(col), a = Math.min(...cs), b = Math.max(...cs);
+        track += `<div class="g-bar" style="left:${a * DW + 2}px;width:${(b - a + 1) * DW - 4}px;background:${c}"></div>`;
+        if (it.due && it.qaDue && it.due !== it.qaDue) track += `<div class="g-ms dev" style="left:${col(it.due) * DW + (DW - 18) / 2}px;background:${c}" title="กำหนด DEV ${fmt(it.due)}"></div>`;
+        const endD = it.qaDue || it.due;
+        track += `<div class="g-ms" style="left:${col(endD) * DW + (DW - 18) / 2}px;background:${c}" title="${it.qaDue ? 'กำหนด QA' : 'กำหนด DEV'} ${fmt(endD)}"></div>`;
+        const qaTxt = (it.qaLabel || QA[it.qa][1]);
+        track += `<div class="g-lbl" style="left:${(b + 1) * DW + 2}px"><b>${it.qaDue ? 'QA ' + fmt(it.qaDue) : 'DEV ' + fmt(it.due)}</b>${esc(qaTxt)}</div>`;
+      }
+      const tip = `${it.name}${it.due ? ' · DEV ' + fmt(it.due) : ''}${it.qaDue ? ' · QA ' + fmt(it.qaDue) : ''}`;
+      html += `<div class="g-row"><div class="g-lcol"><div class="g-id">${String(n).padStart(2, '0')}</div><div class="g-name" title="${esc(tip)}">${esc(it.name)}</div></div><div class="g-track">${track}</div></div>`;
+    });
+  });
+  // พื้นเสาร์-อาทิตย์ + เส้นวันนี้
+  const L = 294;
+  days.forEach((x, k) => { if (x.getDay() === 0 || x.getDay() === 6) html += `<div class="g-shade" style="left:${L + k * DW}px"></div>`; });
+  html += `<div class="g-today" style="left:${L + todayCol * DW + DW / 2 - 1}px"></div>`;
+  g.innerHTML = html;
+})();
+</script>
+</body>
+</html>
