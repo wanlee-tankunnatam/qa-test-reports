@@ -59,6 +59,7 @@
   .pill{display:inline-block; font-size:.82rem; font-weight:600; border-radius:999px; padding:2px 10px}
   .date{display:block; font-size:.8rem; color:var(--muted); margin-top:3px; font-variant-numeric:tabular-nums}
   .late{color:var(--text); font-weight:700}
+  .fail-txt{color:var(--fail); font-weight:600}
   .s-pass{color:var(--pass); background:var(--pass-bg)}
   .s-fail{color:var(--fail); background:var(--fail-bg)}
   .s-prog{color:var(--prog); background:var(--prog-bg)}
@@ -77,10 +78,11 @@
   .gantt-wrap{overflow-x:auto; background:var(--panel); border:1px solid var(--border); border-radius:14px; margin-bottom:8px}
   .gantt{position:relative; min-width:max-content; font-size:.8rem}
   .g-row{display:grid; grid-template-columns:var(--lcols) var(--track); align-items:stretch}
-  .g-id,.g-name{position:sticky; background:var(--panel); z-index:2; border-bottom:1px solid var(--border); display:flex; align-items:center}
-  .g-id{left:0; width:44px; justify-content:center; font-weight:700; color:var(--muted); font-variant-numeric:tabular-nums}
-  .g-name{left:44px; width:250px; padding:0 12px; font-weight:600; border-right:1px solid var(--border); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; display:block; line-height:34px}
-  .g-lcol{display:grid; grid-template-columns:44px 250px}
+  .g-id,.g-name{background:var(--panel); border-bottom:1px solid var(--border); display:flex; align-items:center}
+  .g-id{width:44px; justify-content:center; font-weight:700; color:var(--muted); font-variant-numeric:tabular-nums}
+  .g-name{width:250px; padding:0 12px; font-weight:600; border-right:1px solid var(--border); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; display:block; line-height:34px}
+  /* ID + ฟีเจอร์ ตรึงซ้าย — เลื่อนแนวนอนเฉพาะส่วนปฏิทิน */
+  .g-lcol{display:grid; grid-template-columns:44px 250px; position:sticky; left:0; z-index:5; background:var(--panel); box-shadow:4px 0 6px -4px rgba(0,0,0,.18)}
   .g-track{position:relative; height:34px; border-bottom:1px solid var(--border);
     background-image:repeating-linear-gradient(to right, transparent 0 calc(var(--dw) - 1px), var(--border) calc(var(--dw) - 1px) var(--dw))}
   .g-head .g-id,.g-head .g-name{background:var(--head); color:var(--muted); font-size:.72rem; font-weight:700; letter-spacing:.04em}
@@ -101,7 +103,6 @@
   .g-ms{position:absolute; top:8px; width:18px; height:18px; border-radius:4px; z-index:1}
   .g-ms.dev{opacity:.55}
   .g-lbl{position:absolute; top:5px; z-index:1; font-size:.64rem; line-height:1.15; color:var(--muted); white-space:nowrap; padding-left:6px; border-left:1px solid var(--faint)}
-  .g-lbl .fail-txt{color:var(--fail); font-weight:600}
   .g-lbl b{display:block; color:var(--text); font-size:.66rem; letter-spacing:.02em}
   .g-legend{display:flex; flex-wrap:wrap; gap:14px; color:var(--muted); font-size:.78rem; margin:10px 0 0}
   .g-legend i{display:inline-block; width:12px; height:12px; border-radius:3px; vertical-align:-2px; margin-right:5px; background:var(--muted)}
@@ -143,12 +144,14 @@
         <tbody id="rows"></tbody>
       </table>
     </div>
-    <footer>ใต้สถานะคือวันกำหนด · ตัวหนา = เลยกำหนดหรือครบกำหนดวันนี้ (นับเฉพาะงานที่ยังไม่เสร็จ) · ปี 2569 (2026) ทั้งหมด</footer>
+    <footer>ใต้สถานะคือวันกำหนด · ตัวหนา = ครบกำหนดวันนี้ · ตัวแดง = ไม่ผ่าน/เลยกำหนด (นับเฉพาะงานที่ยังไม่เสร็จ) · ปี 2569 (2026) ทั้งหมด</footer>
   </section>
 </div>
 
 <script>
-const AS_OF = '2026-09-18';
+const AS_OF = '2026-09-18';   // วันที่ของข้อมูล (หัวหน้า)
+// วันนี้จริงตามเครื่องผู้เปิด — ใช้นับวันเหลือ/เลยกำหนด และเส้นวันนี้
+const TODAY = (() => { const n = new Date(); return `${n.getFullYear()}-${String(n.getMonth() + 1).padStart(2, '0')}-${String(n.getDate()).padStart(2, '0')}`; })();
 
 // due = กำหนด DEV · qaDue = กำหนด QA (ถ้ามี)
 // dev: done | wait | fixing | null   ·   qa: pass | fail | checking | wait | null
@@ -209,14 +212,20 @@ function dateLine(date, open, noDate){
   if (!date) return noDate ? '<span class="date">ยังไม่มีกำหนด</span>' : '';
   let extra = '';
   if (open) {
-    const diff = Math.round((d(date) - d(AS_OF)) / 864e5);
+    const diff = Math.round((d(date) - d(TODAY)) / 864e5);
     extra = diff > 0 ? ` · อีก ${diff} วัน`
           : diff === 0 ? ' · <span class="late">ครบกำหนดวันนี้</span>'
-          : ` · <span class="late">เลยมา ${-diff} วัน</span>`;
+          : ` · <span class="fail-txt">เลยกำหนด ${-diff} วัน</span>`;
   }
   return `<span class="date">กำหนด ${fmt(date)}${extra}</span>`;
 }
 const JIRA = 'https://kitdi.atlassian.net/browse/';
+// ไทม์ไลน์: งานที่ยังไม่เสร็จและเลยกำหนด → " · เลยกำหนด N วัน" (แดงเฉพาะข้อความ)
+function overdue(it){
+  const late = (date, open) => open && date ? Math.round((d(TODAY) - d(date)) / 864e5) : 0;
+  const n = Math.max(late(it.due, it.dev !== 'done'), late(it.qaDue, it.qa !== 'pass'));
+  return n > 0 ? ` · <span class="fail-txt">เลยกำหนด ${n} วัน</span>` : '';
+}
 const pill = ([c, l]) => `<span class="pill ${c}">${esc(l)}</span>`;
 
 const all = PROJECTS.flatMap(p => p.items);
@@ -247,7 +256,7 @@ document.getElementById('rows').innerHTML = PROJECTS.map(p => {
 (function(){
   const COLORS = { Insight:'#f59e0b', Live:'#e11d48', Rerun:'#7c3aed', Hub:'#0ea5e9', Trendora:'#16a34a', Post:'#0d9488' };
   const DW = 34, DAY = 864e5, WD = ['อา','จ','อ','พ','พฤ','ศ','ส'];
-  const dates = [AS_OF];
+  const dates = [TODAY];
   PROJECTS.forEach(p => p.items.forEach(i => { if (i.due) dates.push(i.due); if (i.qaDue) dates.push(i.qaDue); }));
   const t = dates.map(x => d(x).getTime());
   const start = new Date(Math.min(...t) - 2 * DAY), end = new Date(Math.max(...t) + 5 * DAY);
@@ -265,7 +274,7 @@ document.getElementById('rows').innerHTML = PROJECTS.map(p => {
     if (last && last.m === m) last.n++; else months.push({ m, y: x.getFullYear(), n: 1 }); });
   const MCOL = ['#6366f1', '#0891b2', '#16a34a', '#ea580c'];
   const monthsHtml = months.map((m, k) => `<div class="g-month" style="width:${m.n * DW}px;background:${MCOL[k % MCOL.length]}">${m.n > 2 ? TH_MON[m.m] + ' ' + (m.y + 543) : ''}</div>`).join('');
-  const todayCol = col(AS_OF);
+  const todayCol = col(TODAY);
   const daysHtml = days.map((x, k) => { const we = x.getDay() === 0 || x.getDay() === 6;
     return `<div class="g-day${we ? ' we' : ''}${k === todayCol ? ' today' : ''}"><b>${x.getDate()}</b>${WD[x.getDay()]}</div>`; }).join('');
 
@@ -292,7 +301,7 @@ document.getElementById('rows').innerHTML = PROJECTS.map(p => {
         track += `<div class="g-ms" style="left:${col(endD) * DW + (DW - 18) / 2}px;background:${c}" title="${it.qaDue ? 'กำหนด QA' : 'กำหนด DEV'} ${fmt(endD)}"></div>`;
         const qaTxt = (it.qaLabel || QA[it.qa][1]);
         const fail = it.qa === 'fail';
-        track += `<div class="g-lbl" style="left:${(b + 1) * DW + 2}px"><b>${it.qaDue ? 'QA ' + fmt(it.qaDue) : 'DEV ' + fmt(it.due)}</b>${fail ? `<span class="fail-txt">${esc(qaTxt)}</span>` : esc(qaTxt)}</div>`;
+        track += `<div class="g-lbl" style="left:${(b + 1) * DW + 2}px"><b>${it.qaDue ? 'QA ' + fmt(it.qaDue) : 'DEV ' + fmt(it.due)}</b>${fail ? `<span class="fail-txt">${esc(qaTxt)}</span>` : esc(qaTxt)}${overdue(it)}</div>`;
       }
       const tip = `${it.name}${it.due ? ' · DEV ' + fmt(it.due) : ''}${it.qaDue ? ' · QA ' + fmt(it.qaDue) : ''}`;
       html += `<div class="g-row"><div class="g-lcol"><div class="g-id">${String(n).padStart(2, '0')}</div><div class="g-name" title="${esc(tip)}">${esc(it.name)}</div></div><div class="g-track">${track}</div></div>`;
