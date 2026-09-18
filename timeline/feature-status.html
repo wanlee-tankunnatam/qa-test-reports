@@ -101,7 +101,7 @@
   .g-ms{position:absolute; top:8px; width:18px; height:18px; border-radius:4px; z-index:1}
   .g-ms.dev{opacity:.55}
   .g-lbl{position:absolute; top:5px; z-index:1; font-size:.64rem; line-height:1.15; color:var(--muted); white-space:nowrap; padding-left:6px; border-left:1px solid var(--faint)}
-  .g-lbl.fail{color:var(--fail); font-weight:600}
+  .g-lbl .fail-txt{color:var(--fail); font-weight:600}
   .g-lbl b{display:block; color:var(--text); font-size:.66rem; letter-spacing:.02em}
   .g-legend{display:flex; flex-wrap:wrap; gap:14px; color:var(--muted); font-size:.78rem; margin:10px 0 0}
   .g-legend i{display:inline-block; width:12px; height:12px; border-radius:3px; vertical-align:-2px; margin-right:5px; background:var(--muted)}
@@ -292,7 +292,7 @@ document.getElementById('rows').innerHTML = PROJECTS.map(p => {
         track += `<div class="g-ms" style="left:${col(endD) * DW + (DW - 18) / 2}px;background:${c}" title="${it.qaDue ? 'กำหนด QA' : 'กำหนด DEV'} ${fmt(endD)}"></div>`;
         const qaTxt = (it.qaLabel || QA[it.qa][1]);
         const fail = it.qa === 'fail';
-        track += `<div class="g-lbl${fail ? ' fail' : ''}" style="left:${(b + 1) * DW + 2}px"><b>${it.qaDue ? 'QA ' + fmt(it.qaDue) : 'DEV ' + fmt(it.due)}</b>${esc(qaTxt)}</div>`;
+        track += `<div class="g-lbl" style="left:${(b + 1) * DW + 2}px"><b>${it.qaDue ? 'QA ' + fmt(it.qaDue) : 'DEV ' + fmt(it.due)}</b>${fail ? `<span class="fail-txt">${esc(qaTxt)}</span>` : esc(qaTxt)}</div>`;
       }
       const tip = `${it.name}${it.due ? ' · DEV ' + fmt(it.due) : ''}${it.qaDue ? ' · QA ' + fmt(it.qaDue) : ''}`;
       html += `<div class="g-row"><div class="g-lcol"><div class="g-id">${String(n).padStart(2, '0')}</div><div class="g-name" title="${esc(tip)}">${esc(it.name)}</div></div><div class="g-track">${track}</div></div>`;
