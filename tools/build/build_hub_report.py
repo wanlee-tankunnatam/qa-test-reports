@@ -9,6 +9,7 @@ harness (CSS + JS ปุ่ม ☁️ เซฟ/ตัวกรอง/Jira/owner
 ข้อมูลเคส: mvp1 = hub_cases.py · mvp2 = hub_mvp2_cases.py · mvp2rbac = hub_mvp2_rbac_cases.py (Epic 1 RBAC/ABAC + Aff Account)
       clipbo = clip_bo_cases.py (TAKRA Clip · Back Office EP-02) · farm = farm_cases.py (TAKRA Post · takra-farm)
       insighte46 = insight_mvp2_e46_cases.py (TAKRA Insight · MVP-2 Epic 4 เครดิต AI + Epic 6 AI Insights)
+      insightbyok = insight_mvp2_byok_cases.py (TAKRA Insight · MVP-2 Epic 4 Metered LLM Proxy → AI Provider BYOK)
       lrready = insight_live_readiness_cases.py (TAKRA Insight · Live Readiness คุณภาพบนไลฟ์จริง)
       rerunquality = rerun_quality_cases.py (TAKRA Rerun · คุณภาพ/ประสิทธิภาพการไลฟ์รีรัน)
       aiquality = ai_quality_cases.py (TAKRA AI · คุณภาพไลฟ์รีรัน ท่อส่ง+เนื้อหา)
@@ -28,6 +29,7 @@ sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 MODULES = {'mvp1': 'hub_cases', 'mvp2': 'hub_mvp2_cases', 'mvp2rbac': 'hub_mvp2_rbac_cases',
            'aitickets': 'ai_tickets_cases', 'clipbo': 'clip_bo_cases', 'farm': 'farm_cases',
            'insighte46': 'insight_mvp2_e46_cases',
+           'insightbyok': 'insight_mvp2_byok_cases',
            'lrready': 'insight_live_readiness_cases',
            'rerunquality': 'rerun_quality_cases',
            'aiquality': 'ai_quality_cases',

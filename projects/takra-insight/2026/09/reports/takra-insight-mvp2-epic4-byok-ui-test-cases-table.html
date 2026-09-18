@@ -1,0 +1,1817 @@
+<!DOCTYPE html>
+<html lang="th"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>[MVP2] TAKRA Insight — Epic 4 Metered LLM Proxy → AI Provider (BYOK) · UI Manual Test Cases</title>
+<style>
+:root{
+  --bg:#f5f6f8;--card:#fff;--card2:#f0f2f5;--line:#dce0e7;
+  --txt:#1f2430;--muted:#6b7280;--accent:#2563eb;
+  --p0:#dc2626;--p1:#ea7a18;--p2:#2563eb;--p3:#94a3b8;
+  --pass:#16a34a;--fail:#dc2626;--hold:#d97706;--skip:#9ca3af;--block:#7c3aed;
+  --lv-ui:#db2777;--lv-e2e:#ea580c;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--txt);font-family:"Segoe UI","Sarabun",system-ui,sans-serif;line-height:1.5;font-size:13px}
+a{color:var(--accent)}
+header.top{padding:20px 28px 14px;border-bottom:1px solid var(--line);background:linear-gradient(135deg,#1e3a8a,#2563eb);color:#fff}
+header.top h1{margin:0 0 4px;font-size:20px}
+header.top .sub{font-size:12.5px;opacity:.88}
+header.top .meta{margin-top:10px;display:flex;flex-wrap:wrap;gap:8px}
+.pill{display:inline-block;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:600;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.35);color:#fff}
+.wrap{padding:16px 22px 80px;max-width:1280px;margin:0 auto}
+.counts{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 12px}
+.cnt{font-size:12px;font-weight:700;padding:5px 12px;border-radius:8px;border:1px solid var(--line);background:#fff}
+.cnt b{font-size:14px}
+.cnt.pass{color:var(--pass);border-color:#bbf7d0}.cnt.fail{color:var(--fail);border-color:#fecaca}
+.cnt.hold{color:var(--hold);border-color:#fde68a}.cnt.block{color:var(--block);border-color:#e9d5ff}
+.cnt.pending{color:var(--muted)}.cnt.skip{color:var(--skip)}
+.runsum{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin:0 0 14px}
+.runsum h3{margin:0 0 8px;font-size:13px}
+.sumchips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px}
+.progress{height:10px;background:var(--card2);border-radius:6px;overflow:hidden;border:1px solid var(--line)}
+.progressbar{height:100%;background:var(--pass);width:0;transition:width .3s}
+.hint{color:var(--muted);font-size:12px}
+.toolbar{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;margin:0 0 12px}
+.btn{font-size:12px;font-weight:600;padding:5px 12px;border-radius:7px;border:1px solid var(--line);background:#fff;color:var(--txt);cursor:pointer}
+.btn:hover{border-color:var(--accent);color:var(--accent)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.btn.primary:hover{opacity:.88}
+.filters{background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:0 0 14px}
+.filters .row{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:3px 0}
+.filters label{font-size:11px;font-weight:700;color:var(--muted);min-width:60px}
+.fchip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:3px 11px;font-size:11.5px;cursor:pointer;color:var(--txt)}
+.fchip:hover{border-color:var(--accent);color:var(--accent)}
+.fchip.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.clearbtn{font-size:11px;padding:3px 10px;border:1px solid var(--line);border-radius:6px;background:#fff;color:var(--muted);cursor:pointer;margin-left:4px}
+.clearbtn:hover{color:var(--fail);border-color:var(--fail)}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:#fff}
+table.tc{border-collapse:collapse;width:100%;min-width:900px;background:#fff}
+table.tc th,table.tc td{padding:8px 10px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+table.tc thead th{position:sticky;top:0;background:var(--card2);color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.4px;z-index:3;border-bottom:2px solid var(--line)}
+tr.epicrow td{background:#1e3a8a;color:#fff;font-weight:700;font-size:13px;padding:9px 12px}
+tr.epicrow .rp{font-weight:400;font-size:11px;opacity:.75;margin-left:6px}
+tr.featrow td{background:#eaf1fb;color:#1d4ed8;font-weight:700;font-size:12px}
+tr.featrow .rp{font-weight:500;font-size:11px;color:#3b6fc4;margin-left:8px}
+tr.trow{cursor:pointer}tr.trow:hover{background:#f7f9fc}tr.trow.open{background:#eef4fe}
+.tog{display:inline-block;width:14px;color:var(--muted);transition:transform .15s;font-size:11px}
+tr.trow.open .tog{transform:rotate(90deg);color:var(--accent)}
+.cid{font-family:monospace;font-size:10px;color:var(--muted);white-space:nowrap}
+td.jira{white-space:nowrap}td.jira a{font-family:monospace;font-size:10.5px;font-weight:700;color:var(--accent);text-decoration:none}td.jira a:hover{text-decoration:underline}
+.ctitle{font-weight:600;font-size:12.5px;max-width:400px}
+td.lvl{white-space:nowrap}
+.lv{font-size:10px;font-weight:700;padding:2px 7px;border-radius:5px;border:1px solid;background:#fff;display:inline-block;vertical-align:middle}
+.lv.lvl-ui{color:var(--lv-ui);border-color:var(--lv-ui)}
+.lv.lvl-e2e{color:var(--lv-e2e);border-color:var(--lv-e2e)}
+.ac{font-size:10px;color:var(--muted);font-family:monospace;margin-left:4px}
+.prio{font-weight:800;font-size:10px;padding:3px 7px;border-radius:5px;color:#fff;display:inline-block;white-space:nowrap}
+.p0{background:var(--p0)}.p1{background:var(--p1)}.p2{background:var(--p2)}
+td.status{white-space:nowrap}
+.stb{font-weight:700;font-size:10px;padding:3px 8px;border-radius:5px;display:inline-block}
+.stb.pending{background:#fff;border:1px solid var(--line);color:var(--muted)}
+.stb.pass{background:var(--pass);color:#fff}.stb.fail{background:var(--fail);color:#fff}
+.stb.hold{background:var(--hold);color:#fff}.stb.block{background:var(--block);color:#fff}
+.stb.skip{background:var(--skip);color:#fff}
+tr.detail{display:none}tr.detail.show{display:table-row}
+tr.detail>td{background:#fafbfc;padding:0;border-bottom:2px solid var(--line)}
+.card{padding:16px 20px}
+.card .h-title{font-size:14px;font-weight:700;margin:0 0 3px}
+.card .h-prio{font-size:12px;color:var(--muted);margin:0 0 12px}
+.card .sec{margin:0 0 12px}.card .sec:last-child{margin-bottom:0}
+.card .sec h4{margin:0 0 5px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.3px;color:#374151}
+.card .sec ol,.card .sec ul{margin:0;padding-left:18px}
+.card .sec li{margin:2px 0;font-size:12.5px}
+.card .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:760px){.card .grid{grid-template-columns:1fr}}
+.actualbox{display:block;width:100%;box-sizing:border-box;background:#fff;border:1px dashed var(--line);border-radius:7px;padding:7px 11px;color:var(--txt);font:inherit;font-size:12px;line-height:1.55;min-height:78px;resize:vertical}
+.actualbox::placeholder{color:var(--muted);font-style:italic}
+.actualbox:focus{outline:none;border-style:solid;border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,99,235,.13)}
+.actualbox.filled{border-style:solid;border-color:var(--accent)}
+.statusrow{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.opt{font-size:11px;font-weight:700;padding:4px 11px;border-radius:6px;border:1px solid var(--line);background:#fff;color:var(--muted);cursor:pointer}
+.opt:hover{opacity:.8}
+.opt.pass{border-color:var(--pass)}.opt.fail{border-color:var(--fail)}
+.opt.hold{border-color:var(--hold)}.opt.block{border-color:var(--block)}.opt.skip{border-color:var(--skip)}
+.opt.sel.pass{background:var(--pass);color:#fff}
+.opt.sel.fail{background:var(--fail);color:#fff}
+.opt.sel.hold{background:var(--hold);color:#fff}
+.opt.sel.block{background:var(--block);color:#fff}
+.opt.sel.skip{background:var(--skip);color:#fff}
+tr.trow.hide,tr.detail.hide{display:none!important}
+tr.epicrow.hide,tr.featrow.hide{display:none!important}
+.note-box{background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:8px 12px;font-size:12px;color:#92400e;margin:0 0 12px}
+footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
+@media print{.tablewrap{overflow:visible}table.tc{min-width:0}tr.detail{display:table-row!important}.toolbar,.filters,.runsum{display:none}}
+/* Jira per-case links */
+.jira-sec .jira-list{display:flex;flex-direction:column;gap:4px;margin-bottom:6px}
+.jira-item{display:flex;align-items:center;gap:8px;font-size:12px}
+.jira-item a{color:var(--accent);text-decoration:none;font-family:monospace;font-weight:700}
+.jira-item a:hover{text-decoration:underline}
+.jira-del{cursor:pointer;color:var(--fail);font-weight:700;font-size:11px;user-select:none}
+.jira-add{display:flex;gap:6px}
+.jira-input{flex:1;min-width:0;padding:5px 8px;border:1px solid var(--line);border-radius:6px;font-size:12px;font-family:inherit;background:#fff;color:var(--txt)}
+.jira-btn{white-space:nowrap}
+.edge-badge{display:inline-block;margin-left:6px;padding:0 6px;border-radius:4px;font-size:9.5px;font-weight:700;color:#92400e;background:#fef3c7;border:1px solid #fde68a;vertical-align:middle}
+.jira-cell{white-space:normal}
+.jira-chip{display:inline-block;margin:1px 3px 1px 0;padding:1px 6px;border:1px solid var(--line);border-radius:5px;font-family:monospace;font-size:10.5px;font-weight:700;color:var(--accent);text-decoration:none;background:var(--card2)}
+.jira-chip:hover{text-decoration:underline}
+/* Epic assignee + section color */
+.epic-owner-wrap{margin-left:12px;font-weight:400;font-size:11px}
+.feat-owner{font-size:11px;padding:2px 6px;border:1px solid var(--line);border-radius:5px;background:#fff;color:var(--txt);cursor:pointer}
+tr.featrow.owner-ice td{background:#60a5fa;border-left:4px solid #1d4ed8}
+tr.featrow.owner-moss td{background:#a78bfa;border-left:4px solid #6d28d9}
+tr.sec-ice>td:first-child{box-shadow:inset 5px 0 0 #2563eb}
+tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
+.feat-owner.owner-ice{border-color:#2563eb;color:#2563eb;font-weight:700}
+.feat-owner.owner-moss{border-color:#7c3aed;color:#7c3aed;font-weight:700}
+
+/* ประเภทเคส (kind) */
+.kd{display:inline-block;margin-left:6px;padding:0 6px;border-radius:4px;font-size:9.5px;font-weight:700;vertical-align:middle;border:1px solid;white-space:nowrap}
+.kd-happy{color:#15803d;background:#f0fdf4;border-color:#bbf7d0}
+.kd-neg{color:#b91c1c;background:#fef2f2;border-color:#fecaca}
+.kd-bnd{color:#b45309;background:#fffbeb;border-color:#fde68a}
+.kd-val{color:#6d28d9;background:#f5f3ff;border-color:#ddd6fe}
+.kd-exc{color:#be123c;background:#fff1f2;border-color:#fecdd3}
+.kd-perm{color:#0f766e;background:#f0fdfa;border-color:#99f6e4}
+.kd-data{color:#1d4ed8;background:#eff6ff;border-color:#bfdbfe}
+.chk{margin-top:4px;padding:6px 8px;border-left:3px solid #16a34a;background:rgba(22,163,74,.07)}
+.noui{display:inline-block;margin-left:6px;padding:0 6px;border-radius:4px;font-size:9.5px;font-weight:700;vertical-align:middle;color:#991b1b;background:#fee2e2;border:1px solid #fca5a5;white-space:nowrap}
+</style>
+</head>
+<body>
+<a id="hub-back-btn" href="https://wanlee-tankunnatam.github.io/qa-test-reports/?project=insight" title="กลับไปหน้ารวมรายงาน (Hub)" style="position:fixed;top:12px;right:14px;z-index:99999;display:inline-flex;align-items:center;gap:7px;padding:10px 18px;border-radius:999px;background:#ffffff;color:#1e3a8a;font-size:14px;font-weight:800;text-decoration:none;box-shadow:0 4px 16px rgba(0,0,0,.35);border:2px solid #1e3a8a;font-family:'Segoe UI','Sarabun',system-ui,sans-serif">🏠 รายงานทั้งหมด</a>
+
+
+<script id="store-data" type="application/json">
+{}
+</script>
+
+<header class="top">
+  <h1>🔑 [MVP2] TAKRA Insight — Epic 4 Metered LLM Proxy → AI Provider (BYOK) · UI Manual Test Cases</h1>
+  <div class="sub">เทส UI ด้วยมืออย่างเดียว · MVP-2 Epic 4 (TI-341) Story 4.1–4.4 · FR130–FR134 · Target: แอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT)</div>
+  <div class="meta">
+    <span class="pill">34 เคส + E2E 0 = 34</span>
+    <span class="pill">8 กลุ่ม (A–H)</span>
+    <span class="pill">UI + E2E · manual</span>
+    <span class="pill">P0 11 · P1 16 · P2 7</span>
+    <span class="pill">ประเภท: Happy 8 · Negative 6 · Boundary 1 · Validation 5 · Exception 8 · Permission 2 · Data 4</span>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="note-box">🖥️ <b>Test target:</b> แอปเดสก์ท็อป <b>TAKRA Insight</b> บิลด์ UAT · เข้าสู่ระบบด้วยบัญชี UAT<br>🔄 <b>ชื่อฟีเจอร์:</b> ในแผนงานยังเรียก <b>"Metered LLM Proxy"</b> แต่สเปกเปลี่ยนเมื่อ 14 ก.ย. 2569 — TAKRA ไม่มี proxy และไม่มีเครดิต AI แล้ว ลูกค้าใส่ <b>API key ของ OpenAI หรือ OpenRouter ของตัวเอง</b> ในหน้า "ผู้ให้บริการ AI" ของแอป (Jira Epic <a href="https://kitdi.atlassian.net/browse/TI-341" target="_blank">TI-341</a>) · เคสเครดิต AI ในรายงาน Epic 4+6 เดิมจึงใช้ไม่ได้แล้ว<br>📎 <b>ที่มาของเคส:</b> <code>_bmad-output/planning-artifacts/epics-mvp2.md</code> Epic 4 Story 4.1–4.4 + <code>prd.md</code> FR130–FR134 · คำบนจอลอกจาก <code>i18n/th.js</code> ของแอป (origin/uat 2026-09-18)<br>🧪 <b>Test data ที่ต้องเตรียม:</b> key OpenAI ที่ใช้ได้ 1 อัน · key OpenRouter ที่ใช้ได้ 1 อัน · key ที่ถูกยกเลิกแล้ว 1 อัน · บัญชี UAT 2 บัญชี · ไลฟ์ที่บันทึกจบแล้วและมีบทพูด (เปิดความยินยอมเรื่องเสียง) อย่างน้อย 1 ไลฟ์<br>💸 <b>ค่าใช้จ่าย:</b> ทุกครั้งที่กด "ทดสอบการเชื่อมต่อ" หรือ "สรุปด้วย AI" จะเรียกผู้ให้บริการจริงด้วย key ที่ใส่ (คิดเงินกับบัญชีเจ้าของ key)<br>🐞 <b>บัคที่เปิดอยู่:</b> <a href="https://kitdi.atlassian.net/browse/TI-483" target="_blank">TI-483</a> ช่องเลือกโมเดลเลือกได้ทั้งที่ยังไม่ได้บันทึก key (เกี่ยวกับเคส TC-BYOK-A.2)</div>
+
+  <div class="runsum">
+    <h3>📊 สรุปผล Manual Test</h3>
+    <div class="sumchips">
+      <span class="cnt pass">PASS <b id="sum-pass">0</b></span>
+      <span class="cnt fail">FAIL <b id="sum-fail">0</b></span>
+      <span class="cnt hold">HOLD <b id="sum-hold">0</b></span>
+      <span class="cnt block">BLOCKED <b id="sum-block">0</b></span>
+      <span class="cnt skip">SKIP <b id="sum-skip">0</b></span>
+      <span class="cnt pending">รอเทส <b id="sum-pending">34</b></span>
+    </div>
+    <div class="progress"><div id="sumbar" class="progressbar" style="width:0%"></div></div>
+    <div class="hint" id="sumpct" style="margin-top:5px">0% ทดสอบแล้ว (0/34)</div>
+  </div>
+
+  <div class="toolbar">
+    <button class="btn" onclick="toggleAll(true)">▸ กางทั้งหมด</button>
+    <button class="btn" onclick="toggleAll(false)">▾ ยุบทั้งหมด</button>
+    <span class="hint">💡 คลิกแถว → ดู Steps / Expected (UI only)</span>
+    <span style="margin-left:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+      <span id="save-status" class="hint" style="white-space: nowrap; color: var(--muted);">✓ ตรงกับ GitHub</span>
+      <label class="hint" style="display:flex;gap:4px;align-items:center;white-space:nowrap;cursor:pointer" title="บันทึกขึ้น GitHub อัตโนมัติหลังหยุดแก้ ~5 วินาที"><input type="checkbox" id="chk-autosave" checked=""> auto-save</label>
+      <button class="btn" id="btn-token" title="ใส่/เปลี่ยน GitHub token (ถ้าเซฟไม่ขึ้น/token เสีย กดอันนี้)">🔑 Token</button>
+      <button class="btn" id="btn-refresh" title="ดึงผลล่าสุดจาก GitHub มา merge (ไม่ต้อง reload)">🔄 ดึงล่าสุด</button>
+      <button class="btn primary" id="btn-publish" style="">☁️ บันทึกขึ้น GitHub</button>
+      <button class="btn" id="btn-save-file" title="ดาวน์โหลด HTML ไว้ใช้ offline">💾 ดาวน์โหลด</button>
+      <button class="btn" style="color:var(--fail)" id="btn-reset">🗑 ล้างผล</button>
+    </span>
+  </div>
+
+  <div class="filters">
+    <div class="row"><label>กลุ่ม</label>
+      <button class="fchip" data-f="feat" data-v="byA">A · หน้าตั้งค่า (3)</button><button class="fchip" data-f="feat" data-v="byB">B · API key (8)</button><button class="fchip" data-f="feat" data-v="byC">C · โมเดล (2)</button><button class="fchip" data-f="feat" data-v="byD">D · ข้อตกลง (4)</button><button class="fchip" data-f="feat" data-v="byE">E · ทดสอบเชื่อมต่อ (4)</button><button class="fchip" data-f="feat" data-v="byF">F · แยกบัญชี (2)</button><button class="fchip" data-f="feat" data-v="byG">G · AI ใช้ไม่ได้ (7)</button><button class="fchip" data-f="feat" data-v="byH">H · ใช้งานจริง (4)</button>
+      <button class="clearbtn" data-clear="feat">✕</button>
+    </div>
+    <div class="row"><label>ประเภท</label>
+      <button class="fchip" data-f="kind" data-v="happy" title="flow ปกติ">Happy Path (8)</button><button class="fchip" data-f="kind" data-v="negative" title="ข้อมูลผิด / action ผิด">Negative (6)</button><button class="fchip" data-f="kind" data-v="boundary" title="min / max / ก่อน-ตรง-เกินขอบ">Boundary/Edge (1)</button><button class="fchip" data-f="kind" data-v="validation" title="format · required · ความถูกต้องของค่าที่แสดง">Validation (5)</button><button class="fchip" data-f="kind" data-v="exception" title="ผู้ให้บริการล่ม · เน็ตหลุด · key ใช้ไม่ได้">Exception/Error (8)</button><button class="fchip" data-f="kind" data-v="permission" title="แยกตามบัญชี / ความปลอดภัยของ key">Permission (2)</button><button class="fchip" data-f="kind" data-v="data" title="ค่าคงอยู่ · ข้อมูลเดิมไม่หาย · ซิงก์ข้ามเครื่อง">Data (4)</button>
+      <button class="clearbtn" data-clear="kind">✕</button>
+    </div>
+    <div class="row"><label>Priority</label>
+      <button class="fchip" data-f="prio" data-v="P0">P0</button>
+      <button class="fchip" data-f="prio" data-v="P1">P1</button>
+      <button class="fchip" data-f="prio" data-v="P2">P2</button>
+      <button class="clearbtn" data-clear="prio">✕</button>
+    </div>
+    <div class="row"><label>สถานะ</label>
+      <button class="fchip" data-f="status" data-v="pass">✅ PASS</button>
+      <button class="fchip" data-f="status" data-v="fail">❌ FAIL</button>
+      <button class="fchip" data-f="status" data-v="hold">⏸ HOLD</button>
+      <button class="fchip" data-f="status" data-v="block">🚫 BLOCKED</button>
+      <button class="fchip" data-f="status" data-v="skip">⏭ SKIP</button>
+      <button class="fchip" data-f="status" data-v="pending">⏳ รอเทส</button>
+      <button class="clearbtn" data-clear="status">✕</button>
+    </div>
+  </div>
+
+  <div class="tablewrap">
+  <table class="tc" id="main-table">
+    <thead><tr><th style="width:22px"></th><th style="width:130px">TC ID</th><th>Test Case</th><th style="width:74px">Level</th><th style="width:55px">Pri</th><th style="width:80px">Status</th><th style="width:120px">Jira</th></tr></thead>
+    <tbody>
+
+<!-- byA -->
+<tr class="epicrow" data-epic="byA"><td colspan="7">⚙️ A · เข้าหน้า "ผู้ให้บริการ AI" และสถานะเริ่มต้น · Story 4.1 (FR130) <span class="rp">(3 เคส)</span></td></tr>
+<tr class="featrow" data-featkey="by-page"><td colspan="7">📁 ทางเข้าและหน้าตาหน้าตั้งค่า <span class="rp"><span class="lv lvl-ui">🌐 3</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="by-page"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow" data-feat="byA" data-level="ui" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-BYOK-A.1</td>
+  <td class="ctitle">เปิดหน้า "ผู้ให้บริการ AI" จากเมนูโปรไฟล์ได้ และเห็นหัวข้อครบ <span class="kd kd-happy">Happy Path</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-2301"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2301"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">เปิดหน้า "ผู้ให้บริการ AI" จากเมนูโปรไฟล์ได้ และเห็นหัวข้อครบ</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · A · เข้าหน้า "ผู้ให้บริการ AI" และสถานะเริ่มต้น</div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>กดรูปโปรไฟล์ ("โปรไฟล์และบัญชี") แล้วเลือกเมนู "ผู้ให้บริการ AI"</li><li>สังเกตหัวหน้าและหัวข้อในหน้า</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>หน้าแสดงหัวเรื่อง "ผู้ให้บริการ AI" และคำอธิบาย "เชื่อมต่อ key ของ OpenAI หรือ OpenRouter ของคุณเอง ฟีเจอร์ AI จะใช้บัญชีผู้ให้บริการของคุณ"</li><li>มีหัวข้อเรียงลงมา: "ผู้ให้บริการ" · "API key" · "โมเดล" · "ข้อตกลงการส่งข้อมูลให้ AI" · "ทดสอบการเชื่อมต่อ" · "รายงานประจำวัน"</li><li>ส่วน "ผู้ให้บริการ" มีให้เลือก 2 ตัว คือ "OpenAI" และ "OpenRouter"</li><li>ไม่มีคำว่าเครดิต ยอดคงเหลือ หรือโควตาของ TAKRA ในหน้านี้</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 4 · Story 4.1 · FR130 (BYOK แทนเครดิต AI ตั้งแต่ 2026-09-14)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2301" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2301" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2301" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2301" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2301" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2301"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2301" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2301">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="byA" data-level="ui" data-prio="P1" data-kind="validation" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-BYOK-A.2</td>
+  <td class="ctitle">ยังไม่มี key: เลือกโมเดล ยอมรับข้อตกลง และทดสอบการเชื่อมต่อยังทำไม่ได้ <span class="kd kd-val">Validation</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-2302"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2302"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ยังไม่มี key: เลือกโมเดล ยอมรับข้อตกลง และทดสอบการเชื่อมต่อยังทำไม่ได้</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Validation</b> <span class="hint">(format · required · ความถูกต้องของค่าที่แสดง)</span> · A · เข้าหน้า "ผู้ให้บริการ AI" และสถานะเริ่มต้น</div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT (บัญชีที่ยังไม่เคยบันทึก key)</li><li>กดรูปโปรไฟล์ ("โปรไฟล์และบัญชี") แล้วเลือกเมนู "ผู้ให้บริการ AI"</li><li>ดูส่วน "โมเดล" "ข้อตกลงการส่งข้อมูลให้ AI" และ "ทดสอบการเชื่อมต่อ" แล้วลองกดช่องเลือกโมเดลและปุ่ม "ทดสอบการเชื่อมต่อ"</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ส่วน "โมเดล" ไม่มีช่องให้เลือก ขึ้นข้อความ "บันทึก key ก่อนจึงจะเลือกโมเดลได้"</li><li>ส่วนข้อตกลงขึ้น "บันทึก key ก่อน ข้อตกลงนี้ระบุผู้ให้บริการที่คำขอของคุณจะถูกส่งไป" ไม่มีช่องติ๊กยอมรับ</li><li>ปุ่ม "ทดสอบการเชื่อมต่อ" กดไม่ได้ และมีข้อความข้างปุ่ม "บันทึก key ก่อน"</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 4 · Story 4.1 · FR130 · บัคที่เกี่ยวข้อง TI-483</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2302" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2302" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2302" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2302" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2302" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2302"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2302" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2302">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="byA" data-level="ui" data-prio="P2" data-kind="happy" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-BYOK-A.3</td>
+  <td class="ctitle">ปุ่ม "ย้อนกลับ" พากลับหน้าที่อยู่ก่อนเข้าตั้งค่า <span class="kd kd-happy">Happy Path</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p2">P2</span></td>
+  <td class="status" data-uid="tc-2303"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2303"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ปุ่ม "ย้อนกลับ" พากลับหน้าที่อยู่ก่อนเข้าตั้งค่า</div>
+  <div class="h-prio">Priority: <b>P2</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · A · เข้าหน้า "ผู้ให้บริการ AI" และสถานะเริ่มต้น</div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT แล้วไปที่เมนู "เซสชัน"</li><li>กดรูปโปรไฟล์ ("โปรไฟล์และบัญชี") แล้วเลือกเมนู "ผู้ให้บริการ AI"</li><li>กด "ย้อนกลับ" มุมบนซ้าย</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>กลับมาที่หน้า "เซสชันทั้งหมด" ที่อยู่ก่อนหน้า</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 4 · Story 4.1 (UX-DR10)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2303" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2303" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2303" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2303" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2303" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2303"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2303" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2303">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+
+<!-- byB -->
+<tr class="epicrow" data-epic="byB"><td colspan="7">🔐 B · บันทึก เปลี่ยน และลบ API key · Story 4.1 (FR130) <span class="rp">(8 เคส)</span></td></tr>
+<tr class="featrow" data-featkey="by-key"><td colspan="7">📁 จัดการ key <span class="rp"><span class="lv lvl-ui">🌐 8</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="by-key"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow" data-feat="byB" data-level="ui" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-BYOK-B.1</td>
+  <td class="ctitle">บันทึก key OpenAI ที่ถูกต้อง แล้วหน้าแสดง key แบบปิดบัง <span class="kd kd-happy">Happy Path</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-2304"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2304"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">บันทึก key OpenAI ที่ถูกต้อง แล้วหน้าแสดง key แบบปิดบัง</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · B · บันทึก เปลี่ยน และลบ API key</div>
+  <div class="sec"><h4>Test Data</h4><ul><li>key OpenAI ที่ใช้งานได้</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>กดรูปโปรไฟล์ ("โปรไฟล์และบัญชี") แล้วเลือกเมนู "ผู้ให้บริการ AI"</li><li>เลือก "OpenAI" วาง key ลงช่อง "วาง API key ของคุณ" แล้วกด "บันทึก key"</li><li>สังเกตส่วน "API key" หลังบันทึก</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ระหว่างบันทึกปุ่มเปลี่ยนเป็น "กำลังบันทึก…"</li><li>หลังบันทึกขึ้น "บันทึก key แล้ว · ลงท้ายด้วย ____" โดยเห็นแค่ 4 ตัวท้ายของ key</li><li>มีปุ่ม "เปลี่ยน key" และ "ลบ key" · ใต้ส่วนนี้มีข้อความ "key ของคุณถูกเข้ารหัสไว้บนเครื่องนี้ เก็บแยกตามข้อมูลของบัญชีนี้ และไม่ถูกส่งไปที่ TAKRA"</li><li>ส่วน "โมเดล" เปลี่ยนเป็นช่อง "เลือกโมเดล" ให้เลือกได้</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 4 · Story 4.1 · FR130</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2304" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2304" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2304" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2304" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2304" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2304"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2304" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2304">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="byB" data-level="ui" data-prio="P0" data-kind="permission" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-BYOK-B.2</td>
+  <td class="ctitle">ไม่มีที่ไหนแสดง key เต็ม ทั้งตอนพิมพ์ หลังบันทึก และหลังเปิดแอปใหม่ <span class="kd kd-perm">Permission</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-2305"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2305"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ไม่มีที่ไหนแสดง key เต็ม ทั้งตอนพิมพ์ หลังบันทึก และหลังเปิดแอปใหม่</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Permission</b> <span class="hint">(แยกตามบัญชี / ความปลอดภัยของ key)</span> · B · บันทึก เปลี่ยน และลบ API key</div>
+  <div class="sec"><h4>Test Data</h4><ul><li>key OpenAI ที่ใช้งานได้</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>กดรูปโปรไฟล์ ("โปรไฟล์และบัญชี") แล้วเลือกเมนู "ผู้ให้บริการ AI"</li><li>วาง key ลงช่อง API key แล้วดูช่องก่อนกดบันทึก จากนั้นกด "บันทึก key"</li><li>ปิดแอปแล้วเปิดใหม่ เข้าสู่ระบบบัญชีเดิม แล้วกดรูปโปรไฟล์ ("โปรไฟล์และบัญชี") แล้วเลือกเมนู "ผู้ให้บริการ AI"</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ตอนวาง key ช่องแสดงเป็นจุดปิดบัง ไม่เห็นตัวอักษรของ key</li><li>หลังบันทึกช่องถูกล้างว่าง และหน้าแสดงเฉพาะ "บันทึก key แล้ว · ลงท้ายด้วย ____" (4 ตัวท้าย)</li><li>หลังเปิดแอปใหม่ key ยังอยู่ และยังแสดงแบบปิดบังเหมือนเดิม ไม่มีปุ่มหรือจุดใดให้ดู key เต็ม</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 4 · Story 4.1 · FR130 (UI แสดงแบบปิดบังเท่านั้น)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2305" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2305" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2305" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2305" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2305" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2305"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2305" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2305">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="byB" data-level="ui" data-prio="P1" data-kind="negative" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-BYOK-B.3</td>
+  <td class="ctitle">กด "บันทึก key" ตอนช่องว่าง ขึ้นข้อความให้วาง key ก่อน <span class="kd kd-neg">Negative</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-2306"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2306"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">กด "บันทึก key" ตอนช่องว่าง ขึ้นข้อความให้วาง key ก่อน</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Negative</b> <span class="hint">(ข้อมูลผิด / action ผิด)</span> · B · บันทึก เปลี่ยน และลบ API key</div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT (บัญชีที่ยังไม่มี key)</li><li>กดรูปโปรไฟล์ ("โปรไฟล์และบัญชี") แล้วเลือกเมนู "ผู้ให้บริการ AI"</li><li>เลือก "OpenAI" ปล่อยช่อง API key ว่าง แล้วกด "บันทึก key"</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ขึ้นกล่องแจ้งเตือนสีแดง "วาง key ก่อน"</li><li>ไม่มีการบันทึก key ส่วน "โมเดล" ยังขึ้น "บันทึก key ก่อนจึงจะเลือกโมเดลได้"</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 4 · Story 4.1 · FR130</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2306" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2306" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2306" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2306" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2306" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2306"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2306" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2306">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="byB" data-level="ui" data-prio="P1" data-kind="validation" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-BYOK-B.4</td>
+  <td class="ctitle">key มีช่องว่างหรือตัวอักษรไทยปน ขึ้นข้อความให้วางใหม่ <span class="kd kd-val">Validation</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-2307"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2307"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">key มีช่องว่างหรือตัวอักษรไทยปน ขึ้นข้อความให้วางใหม่</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Validation</b> <span class="hint">(format · required · ความถูกต้องของค่าที่แสดง)</span> · B · บันทึก เปลี่ยน และลบ API key</div>
+  <div class="sec"><h4>Test Data</h4><ul><li>sk-abc def</li><li>sk-ทดสอบ123</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>กดรูปโปรไฟล์ ("โปรไฟล์และบัญชี") แล้วเลือกเมนู "ผู้ให้บริการ AI"</li><li>วาง key ที่มีช่องว่างตรงกลาง (เช่น "sk-abc def") แล้วกด "บันทึก key"</li><li>ลองอีกครั้งด้วย key ที่มีตัวอักษรไทยปน</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ทั้ง 2 ครั้งขึ้น "key มีช่องว่างหรือตัวอักษรที่ key ของผู้ให้บริการไม่มี ลองวางใหม่"</li><li>ไม่มีการบันทึก key และช่องถูกล้างว่าง</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 4 · Story 4.1 · FR130</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2307" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2307" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2307" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2307" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2307" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2307"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2307" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2307">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="byB" data-level="ui" data-prio="P2" data-kind="boundary" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-BYOK-B.5</td>
+  <td class="ctitle">key ยาวเกิน 512 ตัวอักษร ขึ้นข้อความว่า key ยาวเกินไป <span class="kd kd-bnd">Boundary/Edge</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p2">P2</span></td>
+  <td class="status" data-uid="tc-2308"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2308"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">key ยาวเกิน 512 ตัวอักษร ขึ้นข้อความว่า key ยาวเกินไป</div>
+  <div class="h-prio">Priority: <b>P2</b> · UI · ประเภท: <b>Boundary/Edge</b> <span class="hint">(min / max / ก่อน-ตรง-เกินขอบ)</span> · B · บันทึก เปลี่ยน และลบ API key</div>
+  <div class="sec"><h4>Test Data</h4><ul><li>ข้อความ a×512 · a×513</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>กดรูปโปรไฟล์ ("โปรไฟล์และบัญชี") แล้วเลือกเมนู "ผู้ให้บริการ AI"</li><li>วางข้อความยาว 512 ตัวอักษร (ไม่มีช่องว่าง) แล้วกด "บันทึก key" สังเกตผล</li><li>กด "เปลี่ยน key" (ถ้าบันทึกผ่าน) แล้ววางข้อความยาว 513 ตัวอักษร กด "บันทึก key"</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>512 ตัวอักษร: บันทึกได้ ไม่ขึ้นข้อความ key ยาวเกิน</li><li>513 ตัวอักษร: ขึ้น "key ยาวเกินไป ตรวจสอบว่าวางมาแค่ตัว key" และ key เดิมไม่ถูกแทนที่</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 4 · Story 4.1 · FR130</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2308" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2308" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2308" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2308" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2308" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2308"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2308" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2308">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="byB" data-level="ui" data-prio="P1" data-kind="negative" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-BYOK-B.6</td>
+  <td class="ctitle">"เปลี่ยน key" แล้วกด "ยกเลิก" key เดิมยังอยู่ <span class="kd kd-neg">Negative</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-2309"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2309"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">"เปลี่ยน key" แล้วกด "ยกเลิก" key เดิมยังอยู่</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Negative</b> <span class="hint">(ข้อมูลผิด / action ผิด)</span> · B · บันทึก เปลี่ยน และลบ API key</div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT (บัญชีที่บันทึก key ไว้แล้ว)</li><li>กดรูปโปรไฟล์ ("โปรไฟล์และบัญชี") แล้วเลือกเมนู "ผู้ให้บริการ AI"</li><li>กด "เปลี่ยน key" วาง key อื่นลงช่อง แล้วกด "ยกเลิก"</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>หลังกด "เปลี่ยน key" ขึ้นช่องวาง key พร้อมปุ่ม "บันทึก key" และ "ยกเลิก"</li><li>หลังกด "ยกเลิก" กลับมาแสดง "บันทึก key แล้ว · ลงท้ายด้วย ____" ด้วย 4 ตัวท้ายของ key เดิม</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 4 · Story 4.1 · FR130</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2309" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2309" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2309" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2309" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2309" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2309"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2309" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2309">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="byB" data-level="ui" data-prio="P1" data-kind="happy" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-BYOK-B.7</td>
+  <td class="ctitle">เปลี่ยนผู้ให้บริการจาก OpenAI เป็น OpenRouter ต้องบันทึก key ใหม่และยอมรับข้อตกลงใหม่ <span class="kd kd-happy">Happy Path</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-2310"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2310"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">เปลี่ยนผู้ให้บริการจาก OpenAI เป็น OpenRouter ต้องบันทึก key ใหม่และยอมรับข้อตกลงใหม่</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · B · บันทึก เปลี่ยน และลบ API key</div>
+  <div class="sec"><h4>Test Data</h4><ul><li>key OpenRouter ที่ใช้งานได้</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT (บัญชีที่ตั้งค่า OpenAI ครบแล้ว)</li><li>กดรูปโปรไฟล์ ("โปรไฟล์และบัญชี") แล้วเลือกเมนู "ผู้ให้บริการ AI"</li><li>กดเลือก "OpenRouter" แล้วอ่านข้อความเหนือช่อง key</li><li>วาง key OpenRouter แล้วกด "บันทึก key"</li><li>ดูส่วน "โมเดล" และ "ข้อตกลงการส่งข้อมูลให้ AI"</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ก่อนบันทึกมีข้อความ "การบันทึก key ของ OpenRouter จะแทนที่ key ของ OpenAI ที่บันทึกไว้ และต้องอ่านข้อตกลงการส่งข้อมูลใหม่อีกครั้ง"</li><li>หลังบันทึก หน้าแสดง key ของ OpenRouter แบบปิดบัง</li><li>ข้อตกลงกลับมาเป็นยังไม่ยอมรับ (มีช่องติ๊กและปุ่ม "ยอมรับ") ไม่ขึ้น "ยอมรับแล้วสำหรับ OpenRouter" จนกว่าจะกดยอมรับใหม่</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 4 · Story 4.1 · FR130 · FR133</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2310" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2310" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2310" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2310" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2310" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2310"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2310" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2310">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="byB" data-level="ui" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-BYOK-B.8</td>
+  <td class="ctitle">ลบ key: ยืนยันก่อนลบ และหลังลบกลับเป็นสถานะยังไม่มี key <span class="kd kd-happy">Happy Path</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-2311"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2311"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ลบ key: ยืนยันก่อนลบ และหลังลบกลับเป็นสถานะยังไม่มี key</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · B · บันทึก เปลี่ยน และลบ API key</div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT (บัญชีที่บันทึก key ไว้แล้ว)</li><li>กดรูปโปรไฟล์ ("โปรไฟล์และบัญชี") แล้วเลือกเมนู "ผู้ให้บริการ AI"</li><li>กด "ลบ key" แล้วกด "ยกเลิก" ในหน้าต่างยืนยัน</li><li>กด "ลบ key" อีกครั้ง แล้วกด "ลบ key" ในหน้าต่างยืนยัน</li><li>สังเกตหน้าตั้งค่าหลังลบ</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>หน้าต่างยืนยันขึ้นหัวข้อ "ลบ key นี้ไหม?" และข้อความ "key จะถูกลบออกจากเครื่องนี้ทันที ฟีเจอร์ AI จะใช้งานไม่ได้จนกว่าจะเพิ่ม key ใหม่"</li><li>กด "ยกเลิก" แล้ว key ยังอยู่เหมือนเดิม</li><li>กดยืนยัน "ลบ key" แล้วหน้ากลับเป็นช่อง "วาง API key ของคุณ" ส่วนโมเดลขึ้น "บันทึก key ก่อนจึงจะเลือกโมเดลได้"</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 4 · Story 4.1 · FR130 (remove ลบทันที)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2311" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2311" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2311" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2311" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2311" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2311"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2311" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2311">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+
+<!-- byC -->
+<tr class="epicrow" data-epic="byC"><td colspan="7">🧠 C · เลือกโมเดลจากรายการที่ TAKRA อนุญาต · Story 4.1 (FR130) <span class="rp">(2 เคส)</span></td></tr>
+<tr class="featrow" data-featkey="by-model"><td colspan="7">📁 ช่องเลือกโมเดล <span class="rp"><span class="lv lvl-ui">🌐 2</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="by-model"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow" data-feat="byC" data-level="ui" data-prio="P1" data-kind="validation" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-BYOK-C.1</td>
+  <td class="ctitle">รายการโมเดลแสดงเฉพาะที่อนุญาตของผู้ให้บริการที่เลือก <span class="kd kd-val">Validation</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-2312"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2312"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">รายการโมเดลแสดงเฉพาะที่อนุญาตของผู้ให้บริการที่เลือก</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Validation</b> <span class="hint">(format · required · ความถูกต้องของค่าที่แสดง)</span> · C · เลือกโมเดลจากรายการที่ TAKRA อนุญาต</div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT (บัญชีที่บันทึก key OpenAI แล้ว)</li><li>กดรูปโปรไฟล์ ("โปรไฟล์และบัญชี") แล้วเลือกเมนู "ผู้ให้บริการ AI"</li><li>กดช่อง "เลือกโมเดล" แล้วดูรายการ</li><li>เปลี่ยนเป็น OpenRouter ตามเคส TC-BYOK-B.7 แล้วกดช่อง "เลือกโมเดล" อีกครั้ง</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>OpenAI มี 2 ตัว: "GPT-5.6 Terra" · "GPT-5.6 Luna"</li><li>OpenRouter มี 4 ตัว: "GPT-5.6 Terra" · "GPT-5.6 Luna" · "Gemini 3.8 Flash" · "Claude Sonnet 5"</li><li>ไม่มีช่องให้พิมพ์ชื่อโมเดลเอง</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 4 · Story 4.1 · FR130 (TAKRA allowlist · R12) · รายชื่อจาก ai-catalog.json</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2312" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2312" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2312" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2312" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2312" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2312"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2312" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2312">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="byC" data-level="ui" data-prio="P2" data-kind="data" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-BYOK-C.2</td>
+  <td class="ctitle">โมเดลที่เลือกคงอยู่หลังปิดแล้วเปิดแอปใหม่ <span class="kd kd-data">Data</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p2">P2</span></td>
+  <td class="status" data-uid="tc-2313"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2313"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">โมเดลที่เลือกคงอยู่หลังปิดแล้วเปิดแอปใหม่</div>
+  <div class="h-prio">Priority: <b>P2</b> · UI · ประเภท: <b>Data</b> <span class="hint">(ค่าคงอยู่ · ข้อมูลเดิมไม่หาย · ซิงก์ข้ามเครื่อง)</span> · C · เลือกโมเดลจากรายการที่ TAKRA อนุญาต</div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT (บัญชีที่บันทึก key แล้ว)</li><li>กดรูปโปรไฟล์ ("โปรไฟล์และบัญชี") แล้วเลือกเมนู "ผู้ให้บริการ AI"</li><li>เลือกโมเดล "GPT-5.6 Luna"</li><li>ปิดแอป เปิดใหม่ เข้าสู่ระบบบัญชีเดิม แล้วกดรูปโปรไฟล์ ("โปรไฟล์และบัญชี") แล้วเลือกเมนู "ผู้ให้บริการ AI"</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ช่องโมเดลยังแสดง "GPT-5.6 Luna"</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 4 · Story 4.1 · FR130</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2313" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2313" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2313" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2313" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2313" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2313"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2313" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2313">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+
+<!-- byD -->
+<tr class="epicrow" data-epic="byD"><td colspan="7">📜 D · ข้อตกลงการส่งข้อมูลให้ AI ก่อนใช้งานครั้งแรก · Story 4.1 (FR133) <span class="rp">(4 เคส)</span></td></tr>
+<tr class="featrow" data-featkey="by-disclosure"><td colspan="7">📁 ข้อตกลงการส่งข้อมูล <span class="rp"><span class="lv lvl-ui">🌐 4</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="by-disclosure"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow" data-feat="byD" data-level="ui" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-BYOK-D.1</td>
+  <td class="ctitle">ยอมรับข้อตกลงได้เมื่อติ๊กช่องแล้วเท่านั้น และขึ้นป้ายยอมรับแล้ว <span class="kd kd-happy">Happy Path</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-2314"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2314"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ยอมรับข้อตกลงได้เมื่อติ๊กช่องแล้วเท่านั้น และขึ้นป้ายยอมรับแล้ว</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · D · ข้อตกลงการส่งข้อมูลให้ AI ก่อนใช้งานครั้งแรก</div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT (บัญชีที่บันทึก key OpenAI แล้วแต่ยังไม่ยอมรับข้อตกลง)</li><li>กดรูปโปรไฟล์ ("โปรไฟล์และบัญชี") แล้วเลือกเมนู "ผู้ให้บริการ AI"</li><li>อ่านส่วน "ข้อตกลงการส่งข้อมูลให้ AI" แล้วดูปุ่ม "ยอมรับ" ก่อนติ๊ก</li><li>ติ๊กช่อง "ฉันอ่านแล้ว และยอมรับว่าคำขอ AI จะถูกส่งไปที่ OpenAI" แล้วกด "ยอมรับ"</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ข้อตกลงบอกชัดว่าส่งข้อมูลจากเครื่องนี้ไปที่ OpenAI โดยตรง TAKRA ไม่ได้รับ key หรือข้อมูล และ OpenAI ประมวลผลนอกประเทศไทย</li><li>มีหัวข้อ "ข้อมูลที่แต่ละฟีเจอร์ AI ส่ง" พร้อมรายการข้อมูล</li><li>ก่อนติ๊ก ปุ่ม "ยอมรับ" กดไม่ได้</li><li>หลังยอมรับขึ้นป้ายสีเขียว "ยอมรับแล้วสำหรับ OpenAI" และช่องติ๊กหายไป</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 4 · Story 4.1 · FR133</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2314" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2314" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2314" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2314" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2314" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2314"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2314" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2314">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="byD" data-level="ui" data-prio="P1" data-kind="validation" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-BYOK-D.2</td>
+  <td class="ctitle">OpenRouter แสดงเพิ่มว่าโมเดลเป็นของบริษัทไหน และอาจส่งต่อไปบริษัทอื่น <span class="kd kd-val">Validation</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-2315"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2315"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">OpenRouter แสดงเพิ่มว่าโมเดลเป็นของบริษัทไหน และอาจส่งต่อไปบริษัทอื่น</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Validation</b> <span class="hint">(format · required · ความถูกต้องของค่าที่แสดง)</span> · D · ข้อตกลงการส่งข้อมูลให้ AI ก่อนใช้งานครั้งแรก</div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT (บัญชีที่บันทึก key OpenRouter แล้ว)</li><li>กดรูปโปรไฟล์ ("โปรไฟล์และบัญชี") แล้วเลือกเมนู "ผู้ให้บริการ AI"</li><li>อ่านส่วน "ข้อตกลงการส่งข้อมูลให้ AI"</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>มีบรรทัด "โมเดลที่เลือกได้ผ่าน OpenRouter เป็นโมเดลของบริษัท: …" ระบุชื่อบริษัท</li><li>มีบรรทัด "OpenRouter อาจส่งคำขอของคุณต่อไปยังบริษัท AI อื่นเพื่อใช้งานโมเดลที่คุณเลือก"</li><li>ประโยคยอมรับระบุ OpenRouter ไม่ใช่ OpenAI</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 4 · Story 4.1 · FR133</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2315" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2315" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2315" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2315" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2315" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2315"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2315" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2315">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="byD" data-level="ui" data-prio="P1" data-kind="validation" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-BYOK-D.3</td>
+  <td class="ctitle">ยังไม่ยอมรับข้อตกลง ปุ่มทดสอบกดไม่ได้ และลิงก์ "อ่านข้อตกลง" พาไปที่ข้อตกลง <span class="kd kd-val">Validation</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-2316"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2316"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ยังไม่ยอมรับข้อตกลง ปุ่มทดสอบกดไม่ได้ และลิงก์ "อ่านข้อตกลง" พาไปที่ข้อตกลง</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Validation</b> <span class="hint">(format · required · ความถูกต้องของค่าที่แสดง)</span> · D · ข้อตกลงการส่งข้อมูลให้ AI ก่อนใช้งานครั้งแรก</div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT (บัญชีที่บันทึก key และเลือกโมเดลแล้ว แต่ยังไม่ยอมรับข้อตกลง)</li><li>กดรูปโปรไฟล์ ("โปรไฟล์และบัญชี") แล้วเลือกเมนู "ผู้ให้บริการ AI"</li><li>เลื่อนลงไปที่ส่วน "ทดสอบการเชื่อมต่อ" แล้วกด "อ่านข้อตกลง"</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ปุ่ม "ทดสอบการเชื่อมต่อ" กดไม่ได้ ข้างปุ่มขึ้น "ยอมรับข้อตกลงการส่งข้อมูลก่อน"</li><li>กด "อ่านข้อตกลง" แล้วหน้าเลื่อนขึ้นไปที่หัวข้อ "ข้อตกลงการส่งข้อมูลให้ AI"</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 4 · Story 4.1 · FR133</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2316" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2316" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2316" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2316" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2316" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2316"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2316" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2316">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="byD" data-level="ui" data-prio="P0" data-kind="negative" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-BYOK-D.4</td>
+  <td class="ctitle">ยังไม่ยอมรับข้อตกลงแล้วกดใช้ฟีเจอร์ AI ต้องไม่ส่งข้อมูล และพาไปอ่านข้อตกลง <span class="kd kd-neg">Negative</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-2317"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2317"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ยังไม่ยอมรับข้อตกลงแล้วกดใช้ฟีเจอร์ AI ต้องไม่ส่งข้อมูล และพาไปอ่านข้อตกลง</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Negative</b> <span class="hint">(ข้อมูลผิด / action ผิด)</span> · D · ข้อตกลงการส่งข้อมูลให้ AI ก่อนใช้งานครั้งแรก</div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT (บัญชีที่บันทึก key และเลือกโมเดลแล้ว แต่ยังไม่ยอมรับข้อตกลง)</li><li>ไปที่เมนู "เซสชัน" แล้วเปิดไลฟ์ที่บันทึกจบแล้วและมีบทพูด 1 รายการ เลื่อนลงไปที่ส่วน "บทพูดของไลฟ์"</li><li>กด "สรุปด้วย AI"</li><li>กดปุ่ม "อ่านข้อตกลง" ในกล่องที่ขึ้นมา</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ไม่มีสรุปถูกสร้าง ขึ้นกล่อง "ยังไม่ได้ยอมรับข้อตกลงการส่งข้อมูล AI" พร้อมข้อความให้อ่านก่อนกดยอมรับ</li><li>กด "อ่านข้อตกลง" แล้วไปที่หน้า "ผู้ให้บริการ AI" และเลื่อนมาที่ส่วนข้อตกลงเลย</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 4 · Story 4.1 (AC disclosure) · Story 4.3 · FR133 · FR132</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2317" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2317" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2317" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2317" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2317" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2317"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2317" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2317">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+
+<!-- byE -->
+<tr class="epicrow" data-epic="byE"><td colspan="7">🔌 E · ทดสอบการเชื่อมต่อ — ผลต้องเป็น 1 ใน 4 แบบที่อ่านเข้าใจ · Story 4.1–4.2 (FR130–FR131) <span class="rp">(4 เคส)</span></td></tr>
+<tr class="featrow" data-featkey="by-test"><td colspan="7">📁 ปุ่มทดสอบการเชื่อมต่อ <span class="rp"><span class="lv lvl-ui">🌐 4</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="by-test"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow" data-feat="byE" data-level="ui" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-BYOK-E.1</td>
+  <td class="ctitle">ตั้งค่าครบแล้วทดสอบการเชื่อมต่อสำเร็จ <span class="kd kd-happy">Happy Path</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-2318"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2318"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ตั้งค่าครบแล้วทดสอบการเชื่อมต่อสำเร็จ</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · E · ทดสอบการเชื่อมต่อ — ผลต้องเป็น 1 ใน 4 แบบที่อ่านเข้าใจ</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>บัญชีนี้ตั้งค่าผู้ให้บริการ AI ครบแล้ว (บันทึก key · เลือกโมเดล · ยอมรับข้อตกลงการส่งข้อมูล)</li></ul></div>
+  <div class="sec"><h4>Test Data</h4><ul><li>key OpenAI ที่ใช้งานได้</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>กดรูปโปรไฟล์ ("โปรไฟล์และบัญชี") แล้วเลือกเมนู "ผู้ให้บริการ AI"</li><li>ดูข้อความเหนือปุ่ม "ทดสอบการเชื่อมต่อ" แล้วกดปุ่ม</li><li>สังเกตผลใต้ปุ่ม</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>เหนือปุ่มมีคำเตือน "การทดสอบจะส่งคำขอสั้นมาก 1 ครั้งไปที่ OpenAI มีค่าใช้จ่ายกับบัญชีผู้ให้บริการของคุณเล็กน้อยมาก"</li><li>ระหว่างทดสอบปุ่มเป็น "กำลังทดสอบ…" และกดปุ่มอื่นในหน้าไม่ได้</li><li>ผลขึ้นกล่องสีเขียว "เชื่อมต่อสำเร็จ key และโมเดลใช้งานได้"</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 4 · Story 4.1 · Story 4.2 · FR130 · FR131</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2318" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2318" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2318" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2318" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2318" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2318"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2318" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2318">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="byE" data-level="ui" data-prio="P0" data-kind="exception" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-BYOK-E.2</td>
+  <td class="ctitle">key ถูกยกเลิกแล้ว ทดสอบแล้วบอกว่า key ถูกปฏิเสธ ไม่โชว์ error ดิบ <span class="kd kd-exc">Exception/Error</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-2319"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2319"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">key ถูกยกเลิกแล้ว ทดสอบแล้วบอกว่า key ถูกปฏิเสธ ไม่โชว์ error ดิบ</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Exception/Error</b> <span class="hint">(ผู้ให้บริการล่ม · เน็ตหลุด · key ใช้ไม่ได้)</span> · E · ทดสอบการเชื่อมต่อ — ผลต้องเป็น 1 ใน 4 แบบที่อ่านเข้าใจ</div>
+  <div class="sec"><h4>Test Data</h4><ul><li>key OpenAI ที่ถูก revoke แล้ว</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>กดรูปโปรไฟล์ ("โปรไฟล์และบัญชี") แล้วเลือกเมนู "ผู้ให้บริการ AI"</li><li>กด "เปลี่ยน key" วาง key ที่ถูกยกเลิกแล้วแต่รูปแบบถูกต้อง แล้วกด "บันทึก key"</li><li>เลือกโมเดล ยอมรับข้อตกลง (ถ้าต้อง) แล้วกด "ทดสอบการเชื่อมต่อ"</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ผลขึ้นกล่องสีแดง "key ถูกปฏิเสธ ตรวจสอบ key และสิทธิ์ของ key ในบัญชีผู้ให้บริการ"</li><li>ไม่มีข้อความภาษาอังกฤษจากผู้ให้บริการ รหัส 401 หรือข้อความแบบ JSON โผล่ในหน้า</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 4 · Story 4.1 (ผลเป็น 1 ใน 4 แบบ ไม่ใช่ error ดิบ) · Story 4.2 · FR131</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2319" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2319" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2319" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2319" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2319" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2319"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2319" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2319">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="byE" data-level="ui" data-prio="P1" data-kind="exception" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-BYOK-E.3</td>
+  <td class="ctitle">ไม่มีอินเทอร์เน็ต ทดสอบแล้วบอกว่าติดต่อผู้ให้บริการไม่ได้ <span class="kd kd-exc">Exception/Error</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-2320"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2320"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ไม่มีอินเทอร์เน็ต ทดสอบแล้วบอกว่าติดต่อผู้ให้บริการไม่ได้</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Exception/Error</b> <span class="hint">(ผู้ให้บริการล่ม · เน็ตหลุด · key ใช้ไม่ได้)</span> · E · ทดสอบการเชื่อมต่อ — ผลต้องเป็น 1 ใน 4 แบบที่อ่านเข้าใจ</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>บัญชีนี้ตั้งค่าผู้ให้บริการ AI ครบแล้ว (บันทึก key · เลือกโมเดล · ยอมรับข้อตกลงการส่งข้อมูล)</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>กดรูปโปรไฟล์ ("โปรไฟล์และบัญชี") แล้วเลือกเมนู "ผู้ให้บริการ AI"</li><li>ปิด Wi-Fi หรือถอดสายแลนของเครื่อง</li><li>กด "ทดสอบการเชื่อมต่อ"</li><li>ต่ออินเทอร์เน็ตกลับแล้วกดทดสอบอีกครั้ง</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ตอนไม่มีเน็ต ผลขึ้น "ติดต่อผู้ให้บริการไม่ได้ ตรวจสอบการเชื่อมต่อแล้วลองใหม่ภายหลัง"</li><li>แอปไม่ค้าง ปุ่มกลับมากดได้</li><li>หลังต่อเน็ตกลับ ทดสอบใหม่ได้ "เชื่อมต่อสำเร็จ key และโมเดลใช้งานได้"</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 4 · Story 4.1 · Story 4.2 · FR131</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2320" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2320" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2320" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2320" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2320" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2320"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2320" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2320">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="byE" data-level="ui" data-prio="P2" data-kind="exception" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-BYOK-E.4</td>
+  <td class="ctitle">บัญชีผู้ให้บริการเงินหมด ทดสอบแล้วบอกว่าถูกจำกัดหรือเครดิตหมด <span class="kd kd-exc">Exception/Error</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p2">P2</span></td>
+  <td class="status" data-uid="tc-2321"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2321"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">บัญชีผู้ให้บริการเงินหมด ทดสอบแล้วบอกว่าถูกจำกัดหรือเครดิตหมด</div>
+  <div class="h-prio">Priority: <b>P2</b> · UI · ประเภท: <b>Exception/Error</b> <span class="hint">(ผู้ให้บริการล่ม · เน็ตหลุด · key ใช้ไม่ได้)</span> · E · ทดสอบการเชื่อมต่อ — ผลต้องเป็น 1 ใน 4 แบบที่อ่านเข้าใจ</div>
+  <div class="sec"><h4>Test Data</h4><ul><li>key ของบัญชี OpenRouter/OpenAI ที่ยอดเงิน 0</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>กดรูปโปรไฟล์ ("โปรไฟล์และบัญชี") แล้วเลือกเมนู "ผู้ให้บริการ AI"</li><li>เปลี่ยนเป็น key ของบัญชีผู้ให้บริการที่ยอดเงินเป็น 0 แล้วตั้งค่าให้ครบ</li><li>กด "ทดสอบการเชื่อมต่อ"</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ผลขึ้น "ถูกจำกัดการใช้งานชั่วคราวหรือเครดิตหมด รอสักครู่ หรือตรวจสอบยอดเงินและวงเงินในบัญชีผู้ให้บริการ"</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 4 · Story 4.1 · Story 4.2 · FR131</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2321" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2321" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2321" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2321" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2321" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2321"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2321" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2321">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+
+<!-- byF -->
+<tr class="epicrow" data-epic="byF"><td colspan="7">👥 F · key แยกตามบัญชีบนเครื่องเดียวกัน · Story 4.1 (FR130) <span class="rp">(2 เคส)</span></td></tr>
+<tr class="featrow" data-featkey="by-account"><td colspan="7">📁 ออกจากระบบ / สลับบัญชี <span class="rp"><span class="lv lvl-ui">🌐 2</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="by-account"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow" data-feat="byF" data-level="ui" data-prio="P1" data-kind="data" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-BYOK-F.1</td>
+  <td class="ctitle">ออกจากระบบแล้วเข้าบัญชีเดิม key ยังอยู่ <span class="kd kd-data">Data</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-2322"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2322"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ออกจากระบบแล้วเข้าบัญชีเดิม key ยังอยู่</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Data</b> <span class="hint">(ค่าคงอยู่ · ข้อมูลเดิมไม่หาย · ซิงก์ข้ามเครื่อง)</span> · F · key แยกตามบัญชีบนเครื่องเดียวกัน</div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT (บัญชี A ที่ตั้งค่าครบแล้ว)</li><li>กดรูปโปรไฟล์แล้วเลือก "ออกจากระบบ"</li><li>เข้าสู่ระบบบัญชี A อีกครั้ง แล้วกดรูปโปรไฟล์ ("โปรไฟล์และบัญชี") แล้วเลือกเมนู "ผู้ให้บริการ AI"</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ยังเห็น "บันทึก key แล้ว · ลงท้ายด้วย ____" 4 ตัวท้ายเดิม โมเดลเดิม และป้าย "ยอมรับแล้วสำหรับ …"</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 4 · Story 4.1 · FR130 (logout เก็บ key ไว้ให้บัญชีนั้น)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2322" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2322" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2322" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2322" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2322" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2322"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2322" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2322">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="byF" data-level="ui" data-prio="P0" data-kind="permission" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-BYOK-F.2</td>
+  <td class="ctitle">อีกบัญชีบนเครื่องเดียวกันมองไม่เห็นและใช้ key ของบัญชีแรกไม่ได้ <span class="kd kd-perm">Permission</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-2323"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2323"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">อีกบัญชีบนเครื่องเดียวกันมองไม่เห็นและใช้ key ของบัญชีแรกไม่ได้</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Permission</b> <span class="hint">(แยกตามบัญชี / ความปลอดภัยของ key)</span> · F · key แยกตามบัญชีบนเครื่องเดียวกัน</div>
+  <div class="sec"><h4>Test Data</h4><ul><li>บัญชี UAT 2 บัญชี</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT (บัญชี A ที่ตั้งค่าครบแล้ว)</li><li>กดรูปโปรไฟล์แล้วเลือก "ออกจากระบบ"</li><li>เข้าสู่ระบบด้วยบัญชี B บนเครื่องเดิม แล้วกดรูปโปรไฟล์ ("โปรไฟล์และบัญชี") แล้วเลือกเมนู "ผู้ให้บริการ AI"</li><li>ไปที่ไลฟ์ของบัญชี B แล้วกด "สรุปด้วย AI"</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>บัญชี B เห็นหน้าแบบยังไม่มี key (ช่อง "วาง API key ของคุณ") ไม่เห็น 4 ตัวท้ายของบัญชี A</li><li>กด "สรุปด้วย AI" แล้วขึ้น "ยังไม่ได้เชื่อมต่อผู้ให้บริการ AI" ไม่ได้ใช้ key ของบัญชี A</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 4 · Story 4.1 · FR130 (อีกบัญชีบนเครื่องเดียวกันอ่าน key ไม่ได้)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2323" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2323" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2323" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2323" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2323" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2323"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2323" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2323">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+
+<!-- byG -->
+<tr class="epicrow" data-epic="byG"><td colspan="7">🚧 G · สถานะเมื่อ AI ใช้งานไม่ได้ — ทุกแบบมีทางแก้ 1 ปุ่ม · Story 4.3 (FR132) <span class="rp">(7 เคส)</span></td></tr>
+<tr class="featrow" data-featkey="by-state"><td colspan="7">📁 กล่องสถานะบนปุ่ม "สรุปด้วย AI" ในหน้าไลฟ์ <span class="rp"><span class="lv lvl-ui">🌐 7</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="by-state"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow" data-feat="byG" data-level="ui" data-prio="P0" data-kind="negative" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-BYOK-G.1</td>
+  <td class="ctitle">ยังไม่มี key: กด "สรุปด้วย AI" แล้วมีปุ่ม "ตั้งค่า key" พาไปใส่ key <span class="kd kd-neg">Negative</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-2324"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2324"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ยังไม่มี key: กด "สรุปด้วย AI" แล้วมีปุ่ม "ตั้งค่า key" พาไปใส่ key</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Negative</b> <span class="hint">(ข้อมูลผิด / action ผิด)</span> · G · สถานะเมื่อ AI ใช้งานไม่ได้ — ทุกแบบมีทางแก้ 1 ปุ่ม</div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT (บัญชีที่ยังไม่มี key)</li><li>ไปที่เมนู "เซสชัน" แล้วเปิดไลฟ์ที่บันทึกจบแล้วและมีบทพูด 1 รายการ เลื่อนลงไปที่ส่วน "บทพูดของไลฟ์"</li><li>กด "สรุปด้วย AI"</li><li>กดปุ่ม "ตั้งค่า key"</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ขึ้นกล่อง "ยังไม่ได้เชื่อมต่อผู้ให้บริการ AI" · "ฟีเจอร์ AI ใช้ key ของ OpenAI หรือ OpenRouter ของคุณเอง เพิ่ม key เพื่อใช้ฟีเจอร์นี้"</li><li>กด "ตั้งค่า key" แล้วไปที่หน้า "ผู้ให้บริการ AI" และเคอร์เซอร์อยู่ในช่องวาง key</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 4 · Story 4.3 · FR132 (no_key → set up key)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2324" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2324" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2324" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2324" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2324" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2324"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2324" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2324">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="byG" data-level="ui" data-prio="P1" data-kind="negative" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-BYOK-G.2</td>
+  <td class="ctitle">ยังไม่เลือกโมเดล: ขึ้นสถานะให้เลือกโมเดล และปุ่มพาไปช่องโมเดล <span class="kd kd-neg">Negative</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-2325"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2325"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ยังไม่เลือกโมเดล: ขึ้นสถานะให้เลือกโมเดล และปุ่มพาไปช่องโมเดล</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Negative</b> <span class="hint">(ข้อมูลผิด / action ผิด)</span> · G · สถานะเมื่อ AI ใช้งานไม่ได้ — ทุกแบบมีทางแก้ 1 ปุ่ม</div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT (บัญชีที่บันทึก key แล้วแต่ยังไม่เลือกโมเดล)</li><li>ไปที่เมนู "เซสชัน" แล้วเปิดไลฟ์ที่บันทึกจบแล้วและมีบทพูด 1 รายการ เลื่อนลงไปที่ส่วน "บทพูดของไลฟ์"</li><li>กด "สรุปด้วย AI"</li><li>กดปุ่ม "เลือกโมเดล"</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ขึ้นกล่อง "ยังไม่มีโมเดล AI ที่ใช้ได้"</li><li>กด "เลือกโมเดล" แล้วไปที่หน้า "ผู้ให้บริการ AI" ตรงช่อง "เลือกโมเดล"</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 4 · Story 4.3 · FR132 (model_unavailable)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2325" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2325" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2325" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2325" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2325" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2325"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2325" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2325">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="byG" data-level="ui" data-prio="P1" data-kind="exception" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-BYOK-G.3</td>
+  <td class="ctitle">key ถูกปฏิเสธ: ขึ้นสถานะให้ตรวจสอบ key <span class="kd kd-exc">Exception/Error</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-2326"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2326"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">key ถูกปฏิเสธ: ขึ้นสถานะให้ตรวจสอบ key</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Exception/Error</b> <span class="hint">(ผู้ให้บริการล่ม · เน็ตหลุด · key ใช้ไม่ได้)</span> · G · สถานะเมื่อ AI ใช้งานไม่ได้ — ทุกแบบมีทางแก้ 1 ปุ่ม</div>
+  <div class="sec"><h4>Test Data</h4><ul><li>key ที่ถูก revoke แล้ว</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT (บัญชีที่บันทึก key ที่ถูกยกเลิกแล้ว และตั้งค่าส่วนอื่นครบ)</li><li>ไปที่เมนู "เซสชัน" แล้วเปิดไลฟ์ที่บันทึกจบแล้วและมีบทพูด 1 รายการ เลื่อนลงไปที่ส่วน "บทพูดของไลฟ์"</li><li>กด "สรุปด้วย AI"</li><li>กดปุ่ม "ตรวจสอบ key"</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ขึ้นกล่อง "ผู้ให้บริการ AI ปฏิเสธ key" พร้อมข้อความว่า key อาจไม่ถูกต้อง ถูกยกเลิก หรือไม่มีสิทธิ์</li><li>กด "ตรวจสอบ key" แล้วไปที่หน้า "ผู้ให้บริการ AI"</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 4 · Story 4.3 · FR132 (key_rejected → check key)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2326" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2326" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2326" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2326" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2326" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2326"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2326" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2326">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="byG" data-level="ui" data-prio="P1" data-kind="exception" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-BYOK-G.4</td>
+  <td class="ctitle">ไม่มีอินเทอร์เน็ต: ขึ้นสถานะติดต่อไม่ได้ และ "ลองใหม่" ได้เมื่อเน็ตกลับมา <span class="kd kd-exc">Exception/Error</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-2327"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2327"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ไม่มีอินเทอร์เน็ต: ขึ้นสถานะติดต่อไม่ได้ และ "ลองใหม่" ได้เมื่อเน็ตกลับมา</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Exception/Error</b> <span class="hint">(ผู้ให้บริการล่ม · เน็ตหลุด · key ใช้ไม่ได้)</span> · G · สถานะเมื่อ AI ใช้งานไม่ได้ — ทุกแบบมีทางแก้ 1 ปุ่ม</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>บัญชีนี้ตั้งค่าผู้ให้บริการ AI ครบแล้ว (บันทึก key · เลือกโมเดล · ยอมรับข้อตกลงการส่งข้อมูล)</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>ไปที่เมนู "เซสชัน" แล้วเปิดไลฟ์ที่บันทึกจบแล้วและมีบทพูด 1 รายการ เลื่อนลงไปที่ส่วน "บทพูดของไลฟ์"</li><li>ปิด Wi-Fi หรือถอดสายแลน แล้วกด "สรุปด้วย AI"</li><li>ต่ออินเทอร์เน็ตกลับ แล้วกด "ลองใหม่"</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ตอนไม่มีเน็ตขึ้นกล่อง "ติดต่อผู้ให้บริการ AI ไม่ได้" พร้อมปุ่ม "ลองใหม่"</li><li>แอปไม่ลองส่งใหม่เอง จนกว่าจะกด "ลองใหม่"</li><li>หลังต่อเน็ตแล้วกด "ลองใหม่" ได้สรุปบทพูดตามปกติ</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 4 · Story 4.3 · FR132 (provider_unavailable → retry later)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2327" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2327" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2327" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2327" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2327" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2327"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2327" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2327">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="byG" data-level="ui" data-prio="P2" data-kind="exception" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-BYOK-G.5</td>
+  <td class="ctitle">บัญชีผู้ให้บริการเงินหมด: ปุ่ม "ตรวจสอบบัญชีผู้ให้บริการ" เปิดเว็บผู้ให้บริการ <span class="kd kd-exc">Exception/Error</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p2">P2</span></td>
+  <td class="status" data-uid="tc-2328"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2328"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">บัญชีผู้ให้บริการเงินหมด: ปุ่ม "ตรวจสอบบัญชีผู้ให้บริการ" เปิดเว็บผู้ให้บริการ</div>
+  <div class="h-prio">Priority: <b>P2</b> · UI · ประเภท: <b>Exception/Error</b> <span class="hint">(ผู้ให้บริการล่ม · เน็ตหลุด · key ใช้ไม่ได้)</span> · G · สถานะเมื่อ AI ใช้งานไม่ได้ — ทุกแบบมีทางแก้ 1 ปุ่ม</div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT (บัญชีที่ใช้ key ของบัญชีผู้ให้บริการที่ยอดเงิน 0)</li><li>ไปที่เมนู "เซสชัน" แล้วเปิดไลฟ์ที่บันทึกจบแล้วและมีบทพูด 1 รายการ เลื่อนลงไปที่ส่วน "บทพูดของไลฟ์"</li><li>กด "สรุปด้วย AI"</li><li>กดปุ่ม "ตรวจสอบบัญชีผู้ให้บริการ"</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ขึ้นกล่อง "บัญชีผู้ให้บริการ AI เครดิตหมด"</li><li>กดปุ่มแล้วเปิดหน้าเว็บของผู้ให้บริการที่บันทึกไว้ (OpenAI หรือ OpenRouter) ในเบราว์เซอร์</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 4 · Story 4.3 · FR132 (quota_exhausted → check provider account)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2328" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2328" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2328" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2328" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2328" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2328"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2328" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2328">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="byG" data-level="ui" data-prio="P1" data-kind="data" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-BYOK-G.6</td>
+  <td class="ctitle">สรุปที่สร้างไว้แล้วยังแสดงอยู่ แม้ภายหลัง AI ใช้ไม่ได้ <span class="kd kd-data">Data</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-2329"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2329"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">สรุปที่สร้างไว้แล้วยังแสดงอยู่ แม้ภายหลัง AI ใช้ไม่ได้</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Data</b> <span class="hint">(ค่าคงอยู่ · ข้อมูลเดิมไม่หาย · ซิงก์ข้ามเครื่อง)</span> · G · สถานะเมื่อ AI ใช้งานไม่ได้ — ทุกแบบมีทางแก้ 1 ปุ่ม</div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>ไปที่เมนู "เซสชัน" แล้วเปิดไลฟ์ที่บันทึกจบแล้วและมีบทพูด 1 รายการ เลื่อนลงไปที่ส่วน "บทพูดของไลฟ์" ที่มี "สรุปบทพูดโดย AI" อยู่แล้ว</li><li>กดรูปโปรไฟล์ ("โปรไฟล์และบัญชี") แล้วเลือกเมนู "ผู้ให้บริการ AI" แล้วกด "ลบ key" และยืนยัน</li><li>กลับไปที่ไลฟ์เดิมในเมนู "เซสชัน" แล้วดูส่วน "บทพูดของไลฟ์"</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>สรุปเดิมใต้ "สรุปบทพูดโดย AI" ยังแสดงครบ ไม่หายและไม่ถูกแทนด้วยกล่องแจ้งเตือน</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 4 · Story 4.3 · FR132 (previously generated artifacts stay visible)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2329" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2329" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2329" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2329" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2329" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2329"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2329" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2329">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="byG" data-level="ui" data-prio="P2" data-kind="exception" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-BYOK-G.7</td>
+  <td class="ctitle">AI ใช้ไม่ได้ แต่ส่วนที่ไม่ใช่ AI ของหน้าไลฟ์ใช้งานได้ตามปกติ <span class="kd kd-exc">Exception/Error</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p2">P2</span></td>
+  <td class="status" data-uid="tc-2330"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2330"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">AI ใช้ไม่ได้ แต่ส่วนที่ไม่ใช่ AI ของหน้าไลฟ์ใช้งานได้ตามปกติ</div>
+  <div class="h-prio">Priority: <b>P2</b> · UI · ประเภท: <b>Exception/Error</b> <span class="hint">(ผู้ให้บริการล่ม · เน็ตหลุด · key ใช้ไม่ได้)</span> · G · สถานะเมื่อ AI ใช้งานไม่ได้ — ทุกแบบมีทางแก้ 1 ปุ่ม</div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT (บัญชีที่ยังไม่มี key)</li><li>ไปที่เมนู "เซสชัน" แล้วเปิดไลฟ์ที่บันทึกจบแล้วและมีบทพูด 1 รายการ เลื่อนลงไปที่ส่วน "บทพูดของไลฟ์"</li><li>พิมพ์คำในช่อง "ค้นหาในบทพูด…" แล้วกด "คัดลอก"</li><li>สลับไปแท็บ "ภาพรวม" "ไทม์ไลน์" และ "คอมเมนต์"</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ค้นหาบทพูด คัดลอก และแท็บอื่นทำงานได้ตามปกติ ไม่มี error หรือหน้าค้างเพราะ AI ใช้ไม่ได้</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 4 · Story 4.3 · FR132 (non-AI views behave as with AI disabled)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2330" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2330" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2330" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2330" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2330" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2330"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2330" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2330">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+
+<!-- byH -->
+<tr class="epicrow" data-epic="byH"><td colspan="7">✨ H · สร้างงาน AI ด้วย key ของตัวเอง และรายงานขึ้นคลาวด์ · Story 4.2 · 4.4 (FR131 · FR134) <span class="rp">(4 เคส)</span></td></tr>
+<tr class="featrow" data-featkey="by-e2e"><td colspan="7">📁 สรุปบทพูดและรายงานประจำวัน <span class="rp"><span class="lv lvl-ui">🌐 4</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="by-e2e"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow" data-feat="byH" data-level="ui" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-BYOK-H.1</td>
+  <td class="ctitle">ตั้งค่าครบแล้วกด "สรุปด้วย AI" ได้สรุปบทพูดจากผู้ให้บริการที่เลือก <span class="kd kd-happy">Happy Path</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-2331"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2331"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ตั้งค่าครบแล้วกด "สรุปด้วย AI" ได้สรุปบทพูดจากผู้ให้บริการที่เลือก</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · H · สร้างงาน AI ด้วย key ของตัวเอง และรายงานขึ้นคลาวด์</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>บัญชีนี้ตั้งค่าผู้ให้บริการ AI ครบแล้ว (บันทึก key · เลือกโมเดล · ยอมรับข้อตกลงการส่งข้อมูล)</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>ไปที่เมนู "เซสชัน" แล้วเปิดไลฟ์ที่บันทึกจบแล้วและมีบทพูด 1 รายการ เลื่อนลงไปที่ส่วน "บทพูดของไลฟ์"</li><li>กด "สรุปด้วย AI" แล้วรอจนเสร็จ</li><li>สังเกตส่วน "สรุปบทพูดโดย AI"</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ระหว่างรอปุ่มเป็น "กำลังสรุป…" และมีปุ่ม "ยกเลิก"</li><li>ได้สรุปเป็นหัวข้อสั้นๆ ภาษาไทยใต้ "สรุปบทพูดโดย AI"</li><li>มีข้อความ "เก็บไว้ในเครื่องนี้เท่านั้น ไม่ได้อัปโหลด · สร้างโดยส่งบทพูดไปยังผู้ให้บริการ AI ที่คุณเลือก"</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 4 · Story 4.2 · FR131 (ทุกงาน AI ผ่าน client ของแอป ด้วย key ลูกค้า) · Story 2.7b</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2331" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2331" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2331" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2331" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2331" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2331"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2331" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2331">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="byH" data-level="ui" data-prio="P2" data-kind="negative" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-BYOK-H.2</td>
+  <td class="ctitle">กด "สรุปใหม่" ต้องเตือนก่อนว่าจะแทนที่สรุปเดิมและเรียกผู้ให้บริการอีกครั้ง <span class="kd kd-neg">Negative</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p2">P2</span></td>
+  <td class="status" data-uid="tc-2332"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2332"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">กด "สรุปใหม่" ต้องเตือนก่อนว่าจะแทนที่สรุปเดิมและเรียกผู้ให้บริการอีกครั้ง</div>
+  <div class="h-prio">Priority: <b>P2</b> · UI · ประเภท: <b>Negative</b> <span class="hint">(ข้อมูลผิด / action ผิด)</span> · H · สร้างงาน AI ด้วย key ของตัวเอง และรายงานขึ้นคลาวด์</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>บัญชีนี้ตั้งค่าผู้ให้บริการ AI ครบแล้ว (บันทึก key · เลือกโมเดล · ยอมรับข้อตกลงการส่งข้อมูล)</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>ไปที่เมนู "เซสชัน" แล้วเปิดไลฟ์ที่บันทึกจบแล้วและมีบทพูด 1 รายการ เลื่อนลงไปที่ส่วน "บทพูดของไลฟ์" ที่มีสรุปแล้ว</li><li>กด "สรุปใหม่"</li><li>กด "ไม่ใช่ตอนนี้" แล้วลองกด "สรุปใหม่" อีกครั้งและกด "แทนที่เลย"</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ขึ้นคำเตือน "สร้างใหม่จะแทนที่สรุปเดิม และล้างคะแนนที่คุณให้ไว้ · จะเรียกผู้ให้บริการ AI อีกหนึ่งครั้งด้วย key ของคุณ"</li><li>กด "ไม่ใช่ตอนนี้" แล้วสรุปเดิมยังอยู่</li><li>กด "แทนที่เลย" แล้วได้สรุปใหม่มาแทน</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 4 · Story 4.2 · FR131 · Story 2.7b</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2332" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2332" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2332" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2332" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2332" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2332"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2332" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2332">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="byH" data-level="ui" data-prio="P1" data-kind="exception" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-BYOK-H.3</td>
+  <td class="ctitle">รายงานประจำวันตอนไม่มีเน็ต รอส่งขึ้นระบบ แล้วส่งเองเมื่อเน็ตกลับมา <span class="kd kd-exc">Exception/Error</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-2333"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2333"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">รายงานประจำวันตอนไม่มีเน็ต รอส่งขึ้นระบบ แล้วส่งเองเมื่อเน็ตกลับมา</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Exception/Error</b> <span class="hint">(ผู้ให้บริการล่ม · เน็ตหลุด · key ใช้ไม่ได้)</span> · H · สร้างงาน AI ด้วย key ของตัวเอง และรายงานขึ้นคลาวด์</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>บัญชีนี้ตั้งค่าผู้ให้บริการ AI ครบแล้ว (บันทึก key · เลือกโมเดล · ยอมรับข้อตกลงการส่งข้อมูล)</li><li>เปิดสวิตช์ "รายงานประจำวัน" ในหน้า "ผู้ให้บริการ AI" แล้ว</li><li>เมื่อวานมีไลฟ์ที่บันทึกจบแล้ว และยังไม่มีรายงานของวันนั้น</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>ปิด Wi-Fi หรือถอดสายแลน แล้วรอให้แอปเตรียมรายงานประจำวันจนเสร็จที่หน้า "หน้าหลัก"</li><li>ไปที่เมนู "รายงานประจำวัน" แล้วดูรายงานของวันนั้น</li><li>ต่ออินเทอร์เน็ตกลับ รอสักครู่ แล้วกลับมาดูหน้า "รายงานประจำวัน" อีกครั้ง</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ตอนไม่มีเน็ต ป้ายบนหน้าหลักขึ้น "บันทึกรายงานไว้ในคอมพิวเตอร์เครื่องนี้แล้ว รอส่งขึ้นระบบ" และรายงานมีป้าย "รอส่งขึ้นระบบ"</li><li>หลังเน็ตกลับมา ป้าย "รอส่งขึ้นระบบ" หายไปเองโดยไม่ต้องกดอะไร</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 4 · Story 4.4 · FR134 (upload ไม่สำเร็จ → รอในคิวและส่งใหม่ · UI แสดง waiting to upload)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2333" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2333" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2333" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2333" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2333" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2333"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2333" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2333">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="byH" data-level="ui" data-prio="P1" data-kind="data" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-BYOK-H.4</td>
+  <td class="ctitle">เปิดรายงานจากอีกเครื่องด้วยบัญชีเดียวกัน เห็นรายงานพร้อมป้าย "จากอุปกรณ์อื่น" <span class="kd kd-data">Data</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-2334"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2334"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">เปิดรายงานจากอีกเครื่องด้วยบัญชีเดียวกัน เห็นรายงานพร้อมป้าย "จากอุปกรณ์อื่น"</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Data</b> <span class="hint">(ค่าคงอยู่ · ข้อมูลเดิมไม่หาย · ซิงก์ข้ามเครื่อง)</span> · H · สร้างงาน AI ด้วย key ของตัวเอง และรายงานขึ้นคลาวด์</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เครื่องแรกสร้างรายงานประจำวันและส่งขึ้นระบบสำเร็จแล้ว (ไม่มีป้าย "รอส่งขึ้นระบบ")</li><li>มีเครื่องที่สองติดตั้งแอป UAT</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>บนเครื่องที่สอง เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชีเดียวกับเครื่องแรก</li><li>ไปที่เมนู "รายงานประจำวัน"</li><li>หารายงานของวันที่สร้างจากเครื่องแรก</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>เห็นรายงานของวันนั้นพร้อมป้าย "จากอุปกรณ์อื่น" อ่านเนื้อหาได้ครบ</li><li>หัวหน้ามีข้อความ "รายงานถูกเก็บแบบเข้ารหัสใน Takra Insight 90 วัน เพื่อให้บัญชีนี้เปิดอ่านจากอุปกรณ์อื่นได้ด้วย …"</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 4 · Story 4.4 · FR134 (อ่านได้จากทุกอุปกรณ์ของตัวเอง)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2334" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2334" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2334" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2334" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2334" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2334"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2334" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2334">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+</tbody>
+  </table>
+  </div>
+
+</div>
+<footer>[MVP2] TAKRA Insight — Epic 4 Metered LLM Proxy → AI Provider (BYOK) · UI Manual Test Cases · 34 UI + 0 E2E = 34 TCs · UI only (manual) · TAKRA Insight desktop (MVP-2 Epic 4 · AI Provider BYOK)</footer>
+
+<script>
+// ── Load store from embedded JSON ──
+var storeEl = document.getElementById('store-data');
+var store = {};
+try { store = JSON.parse(storeEl.textContent || '{}'); } catch(_) {}
+
+var SMAP = {
+  pass:  ['pass',  'PASS'],
+  fail:  ['fail',  'FAIL'],
+  hold:  ['hold',  'HOLD'],
+  block: ['block', 'BLOCKED'],
+  skip:  ['skip',  'SKIP'],
+};
+
+// Restore saved statuses
+Object.keys(store).forEach(function(uid) {
+  var st = store[uid] && store[uid].st;
+  if (!st || !SMAP[st]) return;
+  // badge
+  var rowStatus = document.querySelector('tr.trow td.status[data-uid="' + uid + '"]');
+  if (rowStatus) {
+    var stb = rowStatus.querySelector('.stb');
+    if (stb) { stb.className = 'stb ' + SMAP[st][0]; stb.textContent = SMAP[st][1]; }
+  }
+  // opt button
+  var opt = document.querySelector('.opt[data-uid="' + uid + '"][data-st="' + st + '"]');
+  if (opt) opt.classList.add('sel');
+  // also restore actual result text
+  if (store[uid].actual) {
+    var boxes = document.querySelectorAll('tr.detail');
+    boxes.forEach(function(d) {
+      var badge = d.querySelector('.opt[data-uid="' + uid + '"]');
+      if (!badge) return;
+      var box = d.querySelector('.actualbox');
+      if (box) { box.value = store[uid].actual; box.classList.add('filled'); }
+    });
+  }
+});
+
+// ── Toggle row expand ──
+function tg(row) {
+  var detail = row.nextElementSibling;
+  var isOpen = row.classList.contains('open');
+  row.classList.toggle('open', !isOpen);
+  if (detail && detail.classList.contains('detail')) {
+    detail.classList.toggle('show', !isOpen);
+  }
+}
+function toggleAll(open) {
+  document.querySelectorAll('tr.trow').forEach(function(r) {
+    if (r.classList.contains('hide')) return;
+    r.classList.toggle('open', open);
+    var d = r.nextElementSibling;
+    if (d && d.classList.contains('detail')) d.classList.toggle('show', open);
+  });
+}
+
+// ── Save store back into the embedded script tag ──
+function save() {
+  storeEl.textContent = '\n' + JSON.stringify(store, null, 2).replace(/</g, '\\u003c') + '\n';
+}
+
+// ── Status opt buttons ──
+document.querySelectorAll('.opt').forEach(function(o) {
+  o.addEventListener('click', function(e) {
+    e.stopPropagation();
+    var uid = o.dataset.uid, st = o.dataset.st;
+    var allOpts = document.querySelectorAll('.opt[data-uid="' + uid + '"]');
+    var alreadySel = o.classList.contains('sel');
+    allOpts.forEach(function(x) { x.classList.remove('sel'); });
+    store[uid] = store[uid] || {};
+    if (alreadySel) {
+      delete store[uid].st;
+    } else {
+      o.classList.add('sel');
+      store[uid].st = st;
+    }
+    var rowStatus = document.querySelector('tr.trow td.status[data-uid="' + uid + '"]');
+    if (rowStatus) {
+      var stb = rowStatus.querySelector('.stb');
+      if (stb) {
+        if (!alreadySel && SMAP[st]) { stb.className = 'stb ' + SMAP[st][0]; stb.textContent = SMAP[st][1]; }
+        else { stb.className = 'stb pending'; stb.textContent = 'รอเทส'; }
+      }
+    }
+    save();
+    applyFilters();   // re-filter (recounts too) so an active สถานะ filter updates live
+    markDirty();
+  });
+});
+
+// ── Actual result editable on blur ──
+document.querySelectorAll('.actualbox').forEach(function(box) {
+  // a <textarea> — clicking/typing must not bubble up to the row toggle
+  box.addEventListener('click', function(ev) { ev.stopPropagation(); });
+  box.addEventListener('input', function() { box.classList.toggle('filled', box.value.trim() !== ''); });
+  box.addEventListener('blur', function() {
+    // find uid from nearest .opt
+    var opts = box.closest('tr.detail').querySelectorAll('.opt');
+    if (!opts.length) return;
+    var uid = opts[0].dataset.uid;
+    var txt = box.value.trim();
+    var prev = (store[uid] && store[uid].actual) || '';
+    if (txt === prev) return;   // nothing typed → don't dirty the file
+    store[uid] = store[uid] || {};
+    if (txt) { store[uid].actual = txt; }
+    else { delete store[uid].actual; if (!Object.keys(store[uid]).length) delete store[uid]; }
+    save();
+    markDirty();
+  });
+});
+
+// ── Filters ──
+var filters = { feat: new Set(), level: new Set(), prio: new Set(), status: new Set(), kind: new Set(), ui: new Set() };
+document.querySelectorAll('.fchip').forEach(function(c) {
+  c.addEventListener('click', function() {
+    var f = c.dataset.f, v = c.dataset.v;
+    if (filters[f].has(v)) { filters[f].delete(v); c.classList.remove('active'); }
+    else { filters[f].add(v); c.classList.add('active'); }
+    applyFilters();
+  });
+});
+document.querySelectorAll('.clearbtn').forEach(function(b) {
+  b.addEventListener('click', function() {
+    var key = b.dataset.clear;
+    filters[key].clear();
+    document.querySelectorAll('.fchip[data-f="' + key + '"]').forEach(function(c) { c.classList.remove('active'); });
+    applyFilters();
+  });
+});
+function applyFilters() {
+  document.querySelectorAll('tr.trow').forEach(function(row) {
+    var ok = true;
+    if (filters.feat.size  && !filters.feat.has(row.dataset.feat))   ok = false;
+    if (filters.level.size && !filters.level.has(row.dataset.level)) ok = false;
+    if (filters.prio.size  && !filters.prio.has(row.dataset.prio))   ok = false;
+    if (filters.kind.size  && !filters.kind.has(row.dataset.kind))   ok = false;
+    if (filters.ui.size    && !filters.ui.has(row.dataset.ui))       ok = false;
+    if (filters.status.size) {
+      var stb = row.querySelector('td.status .stb');
+      var scls = stb ? stb.className.replace('stb', '').trim().split(' ')[0] : 'pending';
+      if (!filters.status.has(scls)) ok = false;
+    }
+    row.classList.toggle('hide', !ok);
+    var d = row.nextElementSibling;
+    if (d && d.classList.contains('detail')) d.classList.toggle('hide', !ok);
+  });
+  document.querySelectorAll('tr.featrow').forEach(function(fr) {
+    var n = fr.nextElementSibling, any = false;
+    while (n && !n.classList.contains('featrow') && !n.classList.contains('epicrow')) {
+      if (n.classList.contains('trow') && !n.classList.contains('hide')) { any = true; break; }
+      n = n.nextElementSibling;
+    }
+    fr.classList.toggle('hide', !any);
+  });
+  document.querySelectorAll('tr.epicrow').forEach(function(er) {
+    var n = er.nextElementSibling, any = false;
+    while (n && !n.classList.contains('epicrow')) {
+      if (n.classList.contains('trow') && !n.classList.contains('hide')) { any = true; break; }
+      n = n.nextElementSibling;
+    }
+    er.classList.toggle('hide', !any);
+  });
+  recount();
+}
+
+function recount() {
+  var c = { pass:0, fail:0, hold:0, block:0, skip:0, pending:0 };
+  document.querySelectorAll('tr.trow').forEach(function(row) {
+    var stb = row.querySelector('td.status .stb');
+    if (!stb) return;
+    var cls = stb.className.replace('stb','').trim().split(' ')[0];
+    if (c.hasOwnProperty(cls)) c[cls]++; else c.pending++;
+  });
+  var total    = c.pass + c.fail + c.hold + c.block + c.skip + c.pending;
+  var done     = c.pass + c.fail + c.hold + c.block;
+  var testable = total - c.skip;               // SKIP = ตั้งใจข้าม ไม่นับเป็นเป้าที่ต้องทดสอบ
+  var pct      = testable ? Math.round(done / testable * 100) : 0;
+  ['pass','fail','hold','block','skip'].forEach(function(k) {
+    var e = document.getElementById('sum-'+k); if (e) e.textContent = c[k];
+    var h = document.getElementById('hdr-'+k); if (h) h.textContent = c[k];
+  });
+  var ep = document.getElementById('sum-pending'); if (ep) ep.textContent = c.pending;
+  var hp = document.getElementById('hdr-pending'); if (hp) hp.textContent = c.pending;
+  var bar = document.getElementById('sumbar'); if (bar) bar.style.width = pct + '%';
+  var pctEl = document.getElementById('sumpct');
+  if (pctEl) pctEl.textContent = pct + '% ทดสอบแล้ว (' + done + '/' + testable + ')' + (c.skip ? ' · ข้าม ' + c.skip : '');
+}
+
+// ── GitHub publish config ──
+var GH_OWNER  = 'wanlee-tankunnatam';
+var GH_REPO   = 'qa-test-reports';
+var GH_PATH   = 'projects/takra-insight/2026/09/reports/takra-insight-mvp2-epic4-byok-ui-test-cases-table.html';
+var GH_BRANCH = 'master';
+var GH_API    = 'https://api.github.com/repos/' + GH_OWNER + '/' + GH_REPO + '/contents/' + GH_PATH;
+
+// ── Save state (dirty tracking + auto-publish) ──
+var dirty = false;
+var autoTimer = null;
+var publishing = false;
+
+function ghToken() {
+  var t = localStorage.getItem('gh_pat');
+  if (!t) {
+    t = prompt(
+      'ใส่ GitHub Personal Access Token (ใส่ครั้งเดียว จำไว้ในเบราว์เซอร์นี้)\n\n' +
+      'สร้าง token:\n' +
+      'github.com → Settings → Developer settings →\n' +
+      'Personal access tokens → Tokens (classic) → Generate new token (classic)\n' +
+      '→ ติ๊ก scope: repo  (หรือ public_repo เพราะ repo นี้ public)\n\n' +
+      'หรือ Fine-grained token: เลือก repo "qa-test-reports" →\n' +
+      'Permissions → Contents = Read and write'
+    );
+    if (t) localStorage.setItem('gh_pat', t.trim());
+  }
+  return t ? t.trim() : null;
+}
+function clearToken() { localStorage.removeItem('gh_pat'); }
+
+async function publishToGH(auto) {
+  if (publishing) return;
+  var btn = document.getElementById('btn-publish');
+  var token = auto ? localStorage.getItem('gh_pat') : ghToken();
+  if (!token) return;          // auto-save stays quiet until a token exists
+  publishing = true;
+  if (autoTimer) { clearTimeout(autoTimer); autoTimer = null; }
+
+  btn.disabled = true;
+  btn.textContent = '⏳ กำลังบันทึก…';
+  save();
+
+  var API = 'https://api.github.com/repos/' + GH_OWNER + '/' + GH_REPO + '/contents/' + GH_PATH;
+
+  // Serialize the page with the button forced to its idle/enabled state, so the
+  // committed file is never frozen mid-save (otherwise reopening it shows a
+  // permanently-disabled "⏳ กำลังบันทึก…" button).
+  function buildEncoded() {
+    var dis = btn.disabled, txt = btn.textContent;
+    btn.disabled = false;
+    btn.textContent = '☁️ บันทึกขึ้น GitHub';
+    var html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+    btn.disabled = dis;
+    btn.textContent = txt;
+    return btoa(unescape(encodeURIComponent(html)));
+  }
+
+  // Fetch current remote file (sha + content), bypassing any cache.
+  async function fetchRemote() {
+    var r = await fetch(
+      API + '?ref=' + GH_BRANCH + '&t=' + Date.now(),
+      { cache: 'no-store', headers: { Authorization: 'token ' + token, Accept: 'application/vnd.github+json' } }
+    );
+    if (!r.ok) {
+      if (r.status === 401) { localStorage.removeItem('gh_pat'); }
+      throw new Error('ดึงไฟล์ไม่ได้ (HTTP ' + r.status + ') — ตรวจ token หรือ branch');
+    }
+    return r.json();
+  }
+
+  // Merge statuses that exist on the remote copy but NOT locally, so a
+  // teammate's concurrent edit is not silently overwritten (local always wins
+  // for keys we changed; we only add keys we don't have).
+  function mergeRemote(remote) {
+    try {
+      var remoteHtml = decodeURIComponent(escape(atob((remote.content || '').replace(/\s/g, ''))));
+      var m = remoteHtml.match(/<script id="store-data"[^>]*>([\s\S]*?)<\/script>/);
+      if (!m) return;
+      var rs = JSON.parse((m[1] || '{}').trim() || '{}');
+      var added = 0;
+      Object.keys(rs).forEach(function(uid) {
+        if (uid in store) return;
+        store[uid] = rs[uid];
+        added++;
+        var st = rs[uid] && rs[uid].st;
+        if (st && SMAP[st]) {
+          var cell = document.querySelector('tr.trow td.status[data-uid="' + uid + '"] .stb');
+          if (cell) { cell.className = 'stb ' + SMAP[st][0]; cell.textContent = SMAP[st][1]; }
+          var opt = document.querySelector('.opt[data-uid="' + uid + '"][data-st="' + st + '"]');
+          if (opt) opt.classList.add('sel');
+        }
+      });
+      if (added) { save(); recount(); }
+    } catch (_) {}
+  }
+
+  // Commit content = the LATEST remote file with ONLY its store-data block
+  // swapped for our (merged) results. This makes auto-save a results-only
+  // overlay: a stale tab can never overwrite the repo's structure/layout —
+  // it always publishes on top of whatever structure is currently on GitHub.
+  function buildFromRemote(remote) {
+    try {
+      var remoteHtml = decodeURIComponent(escape(atob((remote.content || '').replace(/\s/g, ''))));
+      if (!/<script id="store-data"[^>]*>[\s\S]*?<\/script>/.test(remoteHtml)) return buildEncoded();
+      var json = '\n' + JSON.stringify(store, null, 2).replace(/</g, '\\u003c') + '\n';
+      var replaced = remoteHtml.replace(
+        /(<script id="store-data"[^>]*>)[\s\S]*?(<\/script>)/,
+        function(_m, o, c) { return o + json + c; }
+      );
+      return btoa(unescape(encodeURIComponent(replaced)));
+    } catch (_) {
+      return buildEncoded();   // fallback: serialize local DOM
+    }
+  }
+
+  async function commit(remote) {
+    var ts = new Date().toISOString().slice(0, 16).replace('T', ' ');
+    return fetch(API, {
+      method: 'PUT',
+      headers: { Authorization: 'token ' + token, Accept: 'application/vnd.github+json', 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        message: 'chore(qa): update test results ' + ts,
+        content: buildFromRemote(remote),
+        sha: remote.sha,
+        branch: GH_BRANCH
+      })
+    });
+  }
+
+  try {
+    var r2, lastErr;
+    // Up to 4 attempts. Re-fetch the SHA and merge remote statuses each time;
+    // a stale SHA returns 409/422 ("does not match …") which we retry.
+    for (var attempt = 0; attempt < 4; attempt++) {
+      var remote = await fetchRemote();
+      mergeRemote(remote);
+      r2 = await commit(remote);
+      if (r2.ok) break;
+      if (r2.status === 409 || r2.status === 422) {
+        lastErr = 'SHA ชนกัน (HTTP ' + r2.status + ')';
+        await new Promise(function(res) { setTimeout(res, 400 * (attempt + 1)); });
+        continue;
+      }
+      // Bad/expired token or insufficient scope — drop it so the next attempt re-prompts.
+      if (r2.status === 401 || r2.status === 403) {
+        clearToken();
+        var pe = await r2.json().catch(function() { return {}; });
+        throw new Error(
+          (pe.message || 'HTTP ' + r2.status) +
+          '\n\n→ Token สิทธิ์ไม่พอ/หมดอายุ ลบให้แล้ว ครั้งหน้าจะถามใหม่\n' +
+          '   ใช้ classic token scope "repo" (หรือ public_repo) หรือ fine-grained ที่ให้ Contents = Read and write กับ repo นี้'
+        );
+      }
+      var e = await r2.json();
+      throw new Error(e.message || 'HTTP ' + r2.status);
+    }
+    if (!r2.ok) {
+      throw new Error((lastErr || 'conflict') + ' — มีการแก้ไฟล์พร้อมกัน ลองกดบันทึกอีกครั้ง หรือ refresh หน้าก่อนบันทึก');
+    }
+
+    dirty = false;
+    publishing = false;
+    btn.textContent = '✅ บันทึกแล้ว!';
+    btn.style.background = 'var(--pass)';
+    setTimeout(function() {
+      btn.style.background = '';
+      btn.disabled = false;
+      updateIndicator();
+    }, 3000);
+  } catch (err) {
+    publishing = false;
+    if (!auto) alert('❌ บันทึกไม่สำเร็จ: ' + err.message);
+    btn.disabled = false;
+    updateIndicator();
+  }
+}
+
+document.getElementById('btn-publish').addEventListener('click', function() { publishToGH(false); });
+
+// ── Dirty tracking / unsaved indicator ──
+function autoOn() {
+  var c = document.getElementById('chk-autosave');
+  return c ? c.checked : false;
+}
+function updateIndicator() {
+  var s = document.getElementById('save-status');
+  var b = document.getElementById('btn-publish');
+  if (dirty) {
+    if (s) { s.textContent = '● ยังไม่ได้บันทึก'; s.style.color = 'var(--hold)'; }
+    if (b && !b.disabled && b.textContent.indexOf('✅') < 0) b.textContent = '☁️ บันทึกขึ้น GitHub *';
+  } else {
+    if (s) { s.textContent = '✓ ตรงกับ GitHub'; s.style.color = 'var(--muted)'; }
+    if (b && !b.disabled && b.textContent.indexOf('✅') < 0) b.textContent = '☁️ บันทึกขึ้น GitHub';
+  }
+}
+function markDirty() {
+  dirty = true;
+  updateIndicator();
+  // Auto-publish after the user stops editing — only once a token exists,
+  // so we never interrupt with a token prompt mid-edit.
+  if (autoOn() && localStorage.getItem('gh_pat')) {
+    if (autoTimer) clearTimeout(autoTimer);
+    autoTimer = setTimeout(function() { autoTimer = null; publishToGH(true); }, 5000);
+  }
+}
+window.addEventListener('beforeunload', function(e) {
+  if (dirty) { e.preventDefault(); e.returnValue = 'มีงานที่ยังไม่ได้บันทึกขึ้น GitHub'; return e.returnValue; }
+});
+
+// ── Re-render every badge from the store (used after pulling remote) ──
+function applyAllStatuses() {
+  document.querySelectorAll('.opt.sel').forEach(function(o) { o.classList.remove('sel'); });
+  document.querySelectorAll('tr.trow td.status .stb').forEach(function(s) {
+    s.className = 'stb pending'; s.textContent = 'รอเทส';
+  });
+  Object.keys(store).forEach(function(uid) {
+    var st = store[uid] && store[uid].st;
+    if (st && SMAP[st]) {
+      var cell = document.querySelector('tr.trow td.status[data-uid="' + uid + '"] .stb');
+      if (cell) { cell.className = 'stb ' + SMAP[st][0]; cell.textContent = SMAP[st][1]; }
+      var opt = document.querySelector('.opt[data-uid="' + uid + '"][data-st="' + st + '"]');
+      if (opt) opt.classList.add('sel');
+    }
+    if (store[uid] && store[uid].actual) {
+      document.querySelectorAll('tr.detail').forEach(function(d) {
+        if (!d.querySelector('.opt[data-uid="' + uid + '"]')) return;
+        var box = d.querySelector('.actualbox');
+        if (box) { box.value = store[uid].actual; box.classList.toggle('filled', !!store[uid].actual); }
+      });
+    }
+  });
+}
+
+// ── Pull latest results from GitHub (remote wins on overlap; keeps local-only) ──
+async function pullLatest() {
+  var rbtn = document.getElementById('btn-refresh');
+  if (dirty && !confirm('มีงานที่ยังไม่ได้บันทึก — การดึงล่าสุดจะใช้สถานะจาก GitHub ทับเฉพาะรายการที่ซ้ำกัน ต้องการต่อ?')) return;
+  if (rbtn) { rbtn.disabled = true; rbtn.textContent = '⏳ กำลังดึง…'; }
+  try {
+    var token = localStorage.getItem('gh_pat');
+    var html;
+    if (token) {
+      var r = await fetch(GH_API + '?ref=' + GH_BRANCH + '&t=' + Date.now(),
+        { cache: 'no-store', headers: { Authorization: 'token ' + token, Accept: 'application/vnd.github+json' } });
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      html = decodeURIComponent(escape(atob(((await r.json()).content || '').replace(/\s/g, ''))));
+    } else {
+      var rr = await fetch('https://raw.githubusercontent.com/' + GH_OWNER + '/' + GH_REPO + '/' + GH_BRANCH + '/' + GH_PATH + '?t=' + Date.now(),
+        { cache: 'no-store' });
+      if (!rr.ok) throw new Error('HTTP ' + rr.status);
+      html = await rr.text();
+    }
+    var m = html.match(/<script id="store-data"[^>]*>([\s\S]*?)<\/script>/);
+    var rs = m ? JSON.parse((m[1] || '{}').trim() || '{}') : {};
+    Object.keys(rs).forEach(function(uid) { store[uid] = rs[uid]; });
+    save();
+    applyAllStatuses();
+    recount();
+    dirty = false;
+    updateIndicator();
+    if (rbtn) { rbtn.textContent = '✅ ดึงแล้ว'; setTimeout(function() { rbtn.textContent = '🔄 ดึงล่าสุด'; rbtn.disabled = false; }, 2000); }
+  } catch (err) {
+    alert('❌ ดึงล่าสุดไม่สำเร็จ: ' + err.message);
+    if (rbtn) { rbtn.textContent = '🔄 ดึงล่าสุด'; rbtn.disabled = false; }
+  }
+}
+document.getElementById('btn-refresh').addEventListener('click', pullLatest);
+
+// ── Set / change GitHub token (one click to escape a bad/expired token) ──
+document.getElementById('btn-token').addEventListener('click', function() {
+  clearToken();
+  var t = ghToken();   // prompts for a fresh token
+  if (t) {
+    alert('บันทึก token แล้ว ✅\nลองกดเปลี่ยนสถานะ TC สัก 1 อัน — ปุ่มควรเด้ง "✅ บันทึกแล้ว!" ใน ~5 วิ');
+    updateIndicator();
+  }
+});
+
+// ── Download file (offline backup) ──
+document.getElementById('btn-save-file').addEventListener('click', function() {
+  save();
+  var html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+  var blob = new Blob([html], { type: 'text/html; charset=utf-8' });
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'takra-insight-mvp2-epic4-byok-ui-test-cases.html';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(a.href);
+});
+
+document.getElementById('btn-reset').addEventListener('click', function() {
+  if (!confirm('ล้างผลทดสอบทั้งหมด?')) return;
+  store = {};
+  save();
+  dirty = false;
+  location.reload();
+});
+
+// Set TC-AD.1 default to BLOCKED
+(function() {
+  if (!store['tc-29'] || !store['tc-29'].st) {
+    store['tc-29'] = { st: 'block' };
+    save();
+  }
+})();
+
+// Footer date
+var gd = document.getElementById('gen-date');
+if (gd) gd.textContent = document.lastModified || '';
+
+recount();
+updateIndicator();
+
+// Jira / Bug links (per test case · multiple)
+function jiraLabel(u){var m=String(u).match(/([A-Za-z]+-\d+)/);return m?m[1].toUpperCase():u;}
+function normJira(u){u=(u||'').trim();if(!u)return'';if(!/^https?:\/\//i.test(u)){var m=u.match(/^[A-Za-z]+-\d+$/);if(m)return'https://kitdi.atlassian.net/browse/'+u.toUpperCase();}return u;}
+function renderJira(uid){var box=document.querySelector('.jira-list[data-uid="'+uid+'"]');if(!box)return;var arr=(store[uid]&&store[uid].jira)||[];box.innerHTML='';arr.forEach(function(url,i){var row=document.createElement('div');row.className='jira-item';var a=document.createElement('a');a.href=url;a.target='_blank';a.rel='noopener';a.textContent=jiraLabel(url);var del=document.createElement('span');del.className='jira-del';del.textContent='✕';del.title='ลบลิงก์';del.addEventListener('click',function(){store[uid].jira.splice(i,1);if(!store[uid].jira.length)delete store[uid].jira;save();markDirty();renderJira(uid);});row.appendChild(a);row.appendChild(del);box.appendChild(row);});var cell=document.querySelector('td.jira-cell[data-uid="'+uid+'"]');if(cell){cell.innerHTML='';arr.forEach(function(url){var a2=document.createElement('a');a2.href=url;a2.target='_blank';a2.rel='noopener';a2.className='jira-chip';a2.textContent=jiraLabel(url);a2.addEventListener('click',function(e){e.stopPropagation();});cell.appendChild(a2);});}}
+function addJira(uid,val){var url=normJira(val);if(!url)return;store[uid]=store[uid]||{};store[uid].jira=store[uid].jira||[];store[uid].jira.push(url);save();markDirty();renderJira(uid);}
+document.querySelectorAll('.jira-btn').forEach(function(b){b.addEventListener('click',function(e){e.stopPropagation();var u=b.dataset.uid;var inp=document.querySelector('.jira-input[data-uid="'+u+'"]');addJira(u,inp.value);inp.value='';});});
+document.querySelectorAll('.jira-input').forEach(function(inp){inp.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();addJira(inp.dataset.uid,inp.value);inp.value='';}});inp.addEventListener('click',function(e){e.stopPropagation();});});
+document.querySelectorAll('.jira-list').forEach(function(box){renderJira(box.dataset.uid);});
+function applyFeatColor(e,owner){var cls=owner==='Wanlee T (Ice)'?'owner-ice':(owner==='Kachain B (Moss)'?'owner-moss':'');var er=document.querySelector('tr.featrow[data-featkey="'+e+'"]');if(!er)return;er.classList.remove('owner-ice','owner-moss');if(cls)er.classList.add(cls);var s=er.querySelector('.feat-owner');if(s){s.classList.remove('owner-ice','owner-moss');if(cls)s.classList.add(cls);}var n=er.nextElementSibling;while(n&&!n.classList.contains('featrow')&&!n.classList.contains('epicrow')){n.classList.remove('sec-ice','sec-moss');if(cls)n.classList.add(cls==='owner-ice'?'sec-ice':'sec-moss');n=n.nextElementSibling;}}
+document.querySelectorAll('.feat-owner').forEach(function(sel){var e=sel.dataset.featkey,k='feat-'+e;var cur=(store[k]&&store[k].owner)||'';sel.value=cur;applyFeatColor(e,cur);sel.addEventListener('click',function(ev){ev.stopPropagation();});sel.addEventListener('change',function(){var v=sel.value;if(v){store[k]=store[k]||{};store[k].owner=v;}else if(store[k]){delete store[k].owner;if(!Object.keys(store[k]).length)delete store[k];}save();markDirty();applyFeatColor(e,v);});});
+</script>
+
+
+</body></html>
