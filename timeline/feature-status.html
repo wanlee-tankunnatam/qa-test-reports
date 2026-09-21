@@ -161,8 +161,8 @@ const PROJECTS = [
     { name:'Metered LLM Proxy', due:'2026-09-16', qaDue:'2026-09-18', dev:'done', qa:'pass' },
     { name:'Brand Overview Dashboard', due:'2026-09-18', qaDue:'2026-09-22', dev:'done', qa:'wait' },
     { name:'AI Insights', due:'2026-09-22', qaDue:'2026-09-24', dev:'wait', qa:'wait' },
-    { name:'Reports', due:'2026-09-24', qaDue:'2026-09-25', dev:'wait', qa:'wait' },
-    { name:'Membership', due:'2026-09-18', qaDue:'2026-09-22', dev:'done', qa:'wait' },
+    { name:'Reports', report:'https://wanlee-tankunnatam.github.io/qa-test-reports/projects/takra-insight/2026/09/reports/takra-insight-mvp2-reports-ui-test-cases-table.html', due:'2026-09-24', qaDue:'2026-09-25', dev:'wait', qa:'wait' },
+    { name:'Membership', report:'https://wanlee-tankunnatam.github.io/qa-test-reports/projects/takra-insight/2026/09/reports/takra-insight-mvp2-membership-ui-test-cases-table.html', due:'2026-09-18', qaDue:'2026-09-22', dev:'done', qa:'wait' },
     { name:'บัคตีกลับ · [QA] MVP 1 - Manual test', jira:'TI-270', due:null, qaDue:null, noDate:true, dev:'wait', qa:'wait', qaLabel:'รอ QA ตรวจสอบ' },
     { name:'บัคตีกลับ · [QA] MVP 2 - Manual test', jira:'TI-273', due:null, qaDue:null, noDate:true, dev:'wait', qa:'wait', qaLabel:'รอ QA ตรวจสอบ' },
   ]},
@@ -260,7 +260,7 @@ document.getElementById('rows').innerHTML = PROJECTS.map(p => {
     const qa = QA[it.qa].slice(); if (it.qaLabel) qa[1] = it.qaLabel;
     const note = [it.alias, it.subs && it.subs.join(' · ')].filter(Boolean).join(' — ');
     return `<tr>
-      <td class="feat"><span class="fname">${esc(it.name)}</span>${it.jira ? ` <a class="jira" href="${JIRA}${esc(it.jira)}" target="_blank" rel="noopener">${esc(it.jira)} ↗</a>` : ''}${note ? `<span class="note">${esc(note)}</span>` : ''}</td>
+      <td class="feat"><span class="fname">${esc(it.name)}</span>${it.jira ? ` <a class="jira" href="${JIRA}${esc(it.jira)}" target="_blank" rel="noopener">${esc(it.jira)} ↗</a>` : ''}${it.report ? ` <a class="jira" href="${esc(it.report)}" target="_blank" rel="noopener">📋 Test cases ↗</a>` : ''}${note ? `<span class="note">${esc(note)}</span>` : ''}</td>
       <td class="st">${pill(it.dev_label ? [DEV[it.dev][0], '✓ ' + it.dev_label] : it.devWaitLabel ? [DEV[it.dev][0], it.devWaitLabel] : DEV[it.dev])}${dateLine(it.due, it.dev !== 'done', it.noDate)}</td>
       <td class="st">${pill(qa)}${dateLine(it.qaDue, it.qa !== 'pass', it.noDate)}</td>
     </tr>`;

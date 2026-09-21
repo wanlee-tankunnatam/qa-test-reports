@@ -166,6 +166,45 @@ def case_html(c, uid, epic_key, epic_title_short, epic_jira=None):
     body.append('</div></td></tr>\n')
     return head + '\n'.join(body)
 
+# ── คอลัมน์ "Script" (สถานะ automation script ต่อเคส) — เปิดต่อรายงานด้วย META['script_col'] = True ──
+# เก็บใน store-data เป็น store[uid].script (ไปกับ auto-save/ดึงล่าสุดเหมือนฟิลด์อื่น) · ค่าว่าง = ยังไม่ระบุ
+SCRIPT_OPTS = [('', '—'), ('todo', 'ยังไม่มี script'), ('wip', 'กำลังเขียน'), ('pass', 'script ผ่าน'),
+               ('fail', 'script ไม่ผ่าน'), ('na', 'ไม่ทำ script')]
+SCRIPT_CSS = """
+td.script-cell{white-space:nowrap}
+.script-sel{font:inherit;font-size:10px;font-weight:700;padding:2px 4px;border-radius:5px;border:1px solid var(--line);background:#fff;color:var(--muted);cursor:pointer;max-width:112px}
+.script-sel.s-todo{color:#475569;background:#f1f5f9}
+.script-sel.s-wip{color:#1d4ed8;background:#dbeafe;border-color:#93c5fd}
+.script-sel.s-pass{color:#fff;background:var(--pass);border-color:var(--pass)}
+.script-sel.s-fail{color:#fff;background:var(--fail);border-color:var(--fail)}
+.script-sel.s-na{color:#6b7280;background:#f3f4f6;text-decoration:line-through}
+"""
+SCRIPT_JS = """
+<script>
+/* คอลัมน์ Script: store[uid].script */
+function scriptPaint(sel){sel.className='script-sel'+(sel.value?' s-'+sel.value:'');}
+function syncScript(){document.querySelectorAll('.script-sel').forEach(function(sel){var u=sel.dataset.uid;sel.value=(store[u]&&store[u].script)||'';scriptPaint(sel);});}
+document.querySelectorAll('.script-sel').forEach(function(sel){
+  sel.addEventListener('click',function(e){e.stopPropagation();});
+  sel.addEventListener('change',function(e){e.stopPropagation();var u=sel.dataset.uid;store[u]=store[u]||{};
+    if(sel.value){store[u].script=sel.value;}else{delete store[u].script;if(!Object.keys(store[u]).length)delete store[u];}
+    scriptPaint(sel);save();markDirty();});
+});
+syncScript();
+(function(){var _a=applyAllStatuses;applyAllStatuses=function(){_a.apply(this,arguments);syncScript();};})();
+</script>
+"""
+
+def add_script_col(out):
+    opts = ''.join(f'<option value="{v}">{l}</option>' for v, l in SCRIPT_OPTS)
+    out = out.replace('colspan="7"', 'colspan="8"')
+    out = out.replace('<th style="width:80px">Status</th>', '<th style="width:80px">Status</th><th style="width:118px">Script</th>', 1)
+    out = re.sub(r'(  <td class="jira-cell" data-uid="(tc-\d+)"></td>)',
+                 lambda m: f'  <td class="script-cell"><select class="script-sel" data-uid="{m.group(2)}" title="สถานะ automation script">{opts}</select></td>\n' + m.group(1), out)
+    out = out.replace('</style>', SCRIPT_CSS + '</style>', 1)
+    i = out.rfind('</body>')
+    return out[:i] + SCRIPT_JS + out[i:] if i != -1 else out + SCRIPT_JS
+
 def build():
     src = TEMPLATE.read_text(encoding='utf-8')
     css_end = src.index('</style>\n</head>')
@@ -338,6 +377,8 @@ def build():
            f'<a id="hub-back-btn" href="{BACK}" title="กลับไปหน้ารวมรายงาน (Hub)" style="position:fixed;top:12px;right:14px;z-index:99999;display:inline-flex;align-items:center;gap:7px;padding:10px 18px;border-radius:999px;background:#ffffff;color:#1e3a8a;font-size:14px;font-weight:800;text-decoration:none;box-shadow:0 4px 16px rgba(0,0,0,.35);border:2px solid #1e3a8a;font-family:\'Segoe UI\',\'Sarabun\',system-ui,sans-serif">🏠 รายงานทั้งหมด</a>\n\n\n'
            f'<script id="store-data" type="application/json">\n{store}\n</script>\n'
            + header + '\n'.join(rows) + footer + js)
+    if META.get('script_col'):
+        out = add_script_col(out)
     return out, dict(total=total, ui=ui_n, e2e=e2e_n, noui=noui_n, prio=counts, kind=kind_counts)
 
 if __name__ == '__main__':
