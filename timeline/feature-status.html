@@ -60,6 +60,7 @@
   .date{display:block; font-size:.8rem; color:var(--muted); margin-top:3px; font-variant-numeric:tabular-nums}
   .late{color:var(--text); font-weight:700}
   .fail-txt{color:var(--fail); font-weight:600}
+  .warn-txt{color:var(--none); font-weight:600}
   .s-pass{color:var(--pass); background:var(--pass-bg)}
   .s-fail{color:var(--fail); background:var(--fail-bg)}
   .s-prog{color:var(--prog); background:var(--prog-bg)}
@@ -144,7 +145,7 @@
         <tbody id="rows"></tbody>
       </table>
     </div>
-    <footer>ใต้สถานะคือวันกำหนด · ตัวแดง = ไม่ผ่าน / ครบกำหนดวันนี้ / เลยกำหนด (นับเฉพาะงานที่ยังไม่เสร็จ) · ปี 2569 (2026) ทั้งหมด</footer>
+    <footer>ใต้สถานะคือวันกำหนด · ตัวแดง = ไม่ผ่าน / ครบกำหนดวันนี้ / เลยกำหนด · ตัวส้ม = ถึงกำหนดภายในสัปดาห์นี้ (นับเฉพาะงานที่ยังไม่เสร็จ) · ปี 2569 (2026) ทั้งหมด</footer>
   </section>
 </div>
 
@@ -209,12 +210,16 @@ const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':
 document.getElementById('asof').textContent = (() => { const x = d(AS_OF); return `${x.getDate()} ${TH_MON[x.getMonth()]} ${x.getFullYear() + 543}`; })();
 
 // วันกำหนด + นับวัน (เฉพาะงานที่ยังไม่เสร็จ)
+// วันที่เหลือจนถึงวันอาทิตย์ของสัปดาห์นี้ (สัปดาห์ = จันทร์–อาทิตย์)
+const WEEK_LEFT = (7 - d(TODAY).getDay()) % 7;
+
 function dateLine(date, open, noDate){
   if (!date) return noDate ? '<span class="date">ยังไม่มีกำหนด</span>' : '';
   let extra = '';
   if (open) {
     const diff = Math.round((d(date) - d(TODAY)) / 864e5);
-    extra = diff > 0 ? ` · อีก ${diff} วัน`
+    extra = diff > WEEK_LEFT ? ` · อีก ${diff} วัน`
+          : diff > 0 ? ` · <span class="warn-txt">อีก ${diff} วัน · สัปดาห์นี้</span>`
           : diff === 0 ? ' · <span class="fail-txt">ครบกำหนดวันนี้</span>'
           : ` · <span class="fail-txt">เลยกำหนด ${-diff} วัน</span>`;
   }
@@ -225,7 +230,12 @@ const JIRA = 'https://kitdi.atlassian.net/browse/';
 function overdue(it){
   const late = (date, open) => open && date ? Math.round((d(TODAY) - d(date)) / 864e5) : 0;
   const n = Math.max(late(it.due, it.dev !== 'done'), late(it.qaDue, it.qa !== 'pass'));
-  return n > 0 ? ` · <span class="fail-txt">เลยกำหนด ${n} วัน</span>` : '';
+  if (n > 0) return ` · <span class="fail-txt">เลยกำหนด ${n} วัน</span>`;
+  // ถึงกำหนดภายในสัปดาห์นี้ (ยังไม่ถึงวันนี้) → ส้ม
+  const soon = [[it.due, it.dev !== 'done'], [it.qaDue, it.qa !== 'pass']]
+    .filter(([dt, open]) => open && dt).map(([dt]) => Math.round((d(dt) - d(TODAY)) / 864e5))
+    .filter(x => x > 0 && x <= WEEK_LEFT);
+  return soon.length ? ` · <span class="warn-txt">อีก ${Math.min(...soon)} วัน · สัปดาห์นี้</span>` : '';
 }
 const pill = ([c, l]) => `<span class="pill ${c}">${esc(l)}</span>`;
 
