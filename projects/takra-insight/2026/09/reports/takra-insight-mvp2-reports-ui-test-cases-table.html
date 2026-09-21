@@ -1,0 +1,2021 @@
+<!DOCTYPE html>
+<html lang="th"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>[MVP2] TAKRA Insight — Epic 7 Daily Report Card → รายงานประจำวัน · UI Manual Test Cases</title>
+<style>
+:root{
+  --bg:#f5f6f8;--card:#fff;--card2:#f0f2f5;--line:#dce0e7;
+  --txt:#1f2430;--muted:#6b7280;--accent:#2563eb;
+  --p0:#dc2626;--p1:#ea7a18;--p2:#2563eb;--p3:#94a3b8;
+  --pass:#16a34a;--fail:#dc2626;--hold:#d97706;--skip:#9ca3af;--block:#7c3aed;
+  --lv-ui:#db2777;--lv-e2e:#ea580c;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--txt);font-family:"Segoe UI","Sarabun",system-ui,sans-serif;line-height:1.5;font-size:13px}
+a{color:var(--accent)}
+header.top{padding:20px 28px 14px;border-bottom:1px solid var(--line);background:linear-gradient(135deg,#1e3a8a,#2563eb);color:#fff}
+header.top h1{margin:0 0 4px;font-size:20px}
+header.top .sub{font-size:12.5px;opacity:.88}
+header.top .meta{margin-top:10px;display:flex;flex-wrap:wrap;gap:8px}
+.pill{display:inline-block;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:600;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.35);color:#fff}
+.wrap{padding:16px 22px 80px;max-width:1280px;margin:0 auto}
+.counts{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 12px}
+.cnt{font-size:12px;font-weight:700;padding:5px 12px;border-radius:8px;border:1px solid var(--line);background:#fff}
+.cnt b{font-size:14px}
+.cnt.pass{color:var(--pass);border-color:#bbf7d0}.cnt.fail{color:var(--fail);border-color:#fecaca}
+.cnt.hold{color:var(--hold);border-color:#fde68a}.cnt.block{color:var(--block);border-color:#e9d5ff}
+.cnt.pending{color:var(--muted)}.cnt.skip{color:var(--skip)}
+.runsum{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin:0 0 14px}
+.runsum h3{margin:0 0 8px;font-size:13px}
+.sumchips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px}
+.progress{height:10px;background:var(--card2);border-radius:6px;overflow:hidden;border:1px solid var(--line)}
+.progressbar{height:100%;background:var(--pass);width:0;transition:width .3s}
+.hint{color:var(--muted);font-size:12px}
+.toolbar{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;margin:0 0 12px}
+.btn{font-size:12px;font-weight:600;padding:5px 12px;border-radius:7px;border:1px solid var(--line);background:#fff;color:var(--txt);cursor:pointer}
+.btn:hover{border-color:var(--accent);color:var(--accent)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.btn.primary:hover{opacity:.88}
+.filters{background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:0 0 14px}
+.filters .row{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:3px 0}
+.filters label{font-size:11px;font-weight:700;color:var(--muted);min-width:60px}
+.fchip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:3px 11px;font-size:11.5px;cursor:pointer;color:var(--txt)}
+.fchip:hover{border-color:var(--accent);color:var(--accent)}
+.fchip.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.clearbtn{font-size:11px;padding:3px 10px;border:1px solid var(--line);border-radius:6px;background:#fff;color:var(--muted);cursor:pointer;margin-left:4px}
+.clearbtn:hover{color:var(--fail);border-color:var(--fail)}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:#fff}
+table.tc{border-collapse:collapse;width:100%;min-width:900px;background:#fff}
+table.tc th,table.tc td{padding:8px 10px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+table.tc thead th{position:sticky;top:0;background:var(--card2);color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.4px;z-index:3;border-bottom:2px solid var(--line)}
+tr.epicrow td{background:#1e3a8a;color:#fff;font-weight:700;font-size:13px;padding:9px 12px}
+tr.epicrow .rp{font-weight:400;font-size:11px;opacity:.75;margin-left:6px}
+tr.featrow td{background:#eaf1fb;color:#1d4ed8;font-weight:700;font-size:12px}
+tr.featrow .rp{font-weight:500;font-size:11px;color:#3b6fc4;margin-left:8px}
+tr.trow{cursor:pointer}tr.trow:hover{background:#f7f9fc}tr.trow.open{background:#eef4fe}
+.tog{display:inline-block;width:14px;color:var(--muted);transition:transform .15s;font-size:11px}
+tr.trow.open .tog{transform:rotate(90deg);color:var(--accent)}
+.cid{font-family:monospace;font-size:10px;color:var(--muted);white-space:nowrap}
+td.jira{white-space:nowrap}td.jira a{font-family:monospace;font-size:10.5px;font-weight:700;color:var(--accent);text-decoration:none}td.jira a:hover{text-decoration:underline}
+.ctitle{font-weight:600;font-size:12.5px;max-width:400px}
+td.lvl{white-space:nowrap}
+.lv{font-size:10px;font-weight:700;padding:2px 7px;border-radius:5px;border:1px solid;background:#fff;display:inline-block;vertical-align:middle}
+.lv.lvl-ui{color:var(--lv-ui);border-color:var(--lv-ui)}
+.lv.lvl-e2e{color:var(--lv-e2e);border-color:var(--lv-e2e)}
+.ac{font-size:10px;color:var(--muted);font-family:monospace;margin-left:4px}
+.prio{font-weight:800;font-size:10px;padding:3px 7px;border-radius:5px;color:#fff;display:inline-block;white-space:nowrap}
+.p0{background:var(--p0)}.p1{background:var(--p1)}.p2{background:var(--p2)}
+td.status{white-space:nowrap}
+.stb{font-weight:700;font-size:10px;padding:3px 8px;border-radius:5px;display:inline-block}
+.stb.pending{background:#fff;border:1px solid var(--line);color:var(--muted)}
+.stb.pass{background:var(--pass);color:#fff}.stb.fail{background:var(--fail);color:#fff}
+.stb.hold{background:var(--hold);color:#fff}.stb.block{background:var(--block);color:#fff}
+.stb.skip{background:var(--skip);color:#fff}
+tr.detail{display:none}tr.detail.show{display:table-row}
+tr.detail>td{background:#fafbfc;padding:0;border-bottom:2px solid var(--line)}
+.card{padding:16px 20px}
+.card .h-title{font-size:14px;font-weight:700;margin:0 0 3px}
+.card .h-prio{font-size:12px;color:var(--muted);margin:0 0 12px}
+.card .sec{margin:0 0 12px}.card .sec:last-child{margin-bottom:0}
+.card .sec h4{margin:0 0 5px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.3px;color:#374151}
+.card .sec ol,.card .sec ul{margin:0;padding-left:18px}
+.card .sec li{margin:2px 0;font-size:12.5px}
+.card .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:760px){.card .grid{grid-template-columns:1fr}}
+.actualbox{display:block;width:100%;box-sizing:border-box;background:#fff;border:1px dashed var(--line);border-radius:7px;padding:7px 11px;color:var(--txt);font:inherit;font-size:12px;line-height:1.55;min-height:78px;resize:vertical}
+.actualbox::placeholder{color:var(--muted);font-style:italic}
+.actualbox:focus{outline:none;border-style:solid;border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,99,235,.13)}
+.actualbox.filled{border-style:solid;border-color:var(--accent)}
+.statusrow{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.opt{font-size:11px;font-weight:700;padding:4px 11px;border-radius:6px;border:1px solid var(--line);background:#fff;color:var(--muted);cursor:pointer}
+.opt:hover{opacity:.8}
+.opt.pass{border-color:var(--pass)}.opt.fail{border-color:var(--fail)}
+.opt.hold{border-color:var(--hold)}.opt.block{border-color:var(--block)}.opt.skip{border-color:var(--skip)}
+.opt.sel.pass{background:var(--pass);color:#fff}
+.opt.sel.fail{background:var(--fail);color:#fff}
+.opt.sel.hold{background:var(--hold);color:#fff}
+.opt.sel.block{background:var(--block);color:#fff}
+.opt.sel.skip{background:var(--skip);color:#fff}
+tr.trow.hide,tr.detail.hide{display:none!important}
+tr.epicrow.hide,tr.featrow.hide{display:none!important}
+.note-box{background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:8px 12px;font-size:12px;color:#92400e;margin:0 0 12px}
+footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
+@media print{.tablewrap{overflow:visible}table.tc{min-width:0}tr.detail{display:table-row!important}.toolbar,.filters,.runsum{display:none}}
+/* Jira per-case links */
+.jira-sec .jira-list{display:flex;flex-direction:column;gap:4px;margin-bottom:6px}
+.jira-item{display:flex;align-items:center;gap:8px;font-size:12px}
+.jira-item a{color:var(--accent);text-decoration:none;font-family:monospace;font-weight:700}
+.jira-item a:hover{text-decoration:underline}
+.jira-del{cursor:pointer;color:var(--fail);font-weight:700;font-size:11px;user-select:none}
+.jira-add{display:flex;gap:6px}
+.jira-input{flex:1;min-width:0;padding:5px 8px;border:1px solid var(--line);border-radius:6px;font-size:12px;font-family:inherit;background:#fff;color:var(--txt)}
+.jira-btn{white-space:nowrap}
+.edge-badge{display:inline-block;margin-left:6px;padding:0 6px;border-radius:4px;font-size:9.5px;font-weight:700;color:#92400e;background:#fef3c7;border:1px solid #fde68a;vertical-align:middle}
+.jira-cell{white-space:normal}
+.jira-chip{display:inline-block;margin:1px 3px 1px 0;padding:1px 6px;border:1px solid var(--line);border-radius:5px;font-family:monospace;font-size:10.5px;font-weight:700;color:var(--accent);text-decoration:none;background:var(--card2)}
+.jira-chip:hover{text-decoration:underline}
+/* Epic assignee + section color */
+.epic-owner-wrap{margin-left:12px;font-weight:400;font-size:11px}
+.feat-owner{font-size:11px;padding:2px 6px;border:1px solid var(--line);border-radius:5px;background:#fff;color:var(--txt);cursor:pointer}
+tr.featrow.owner-ice td{background:#60a5fa;border-left:4px solid #1d4ed8}
+tr.featrow.owner-moss td{background:#a78bfa;border-left:4px solid #6d28d9}
+tr.sec-ice>td:first-child{box-shadow:inset 5px 0 0 #2563eb}
+tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
+.feat-owner.owner-ice{border-color:#2563eb;color:#2563eb;font-weight:700}
+.feat-owner.owner-moss{border-color:#7c3aed;color:#7c3aed;font-weight:700}
+
+/* ประเภทเคส (kind) */
+.kd{display:inline-block;margin-left:6px;padding:0 6px;border-radius:4px;font-size:9.5px;font-weight:700;vertical-align:middle;border:1px solid;white-space:nowrap}
+.kd-happy{color:#15803d;background:#f0fdf4;border-color:#bbf7d0}
+.kd-neg{color:#b91c1c;background:#fef2f2;border-color:#fecaca}
+.kd-bnd{color:#b45309;background:#fffbeb;border-color:#fde68a}
+.kd-val{color:#6d28d9;background:#f5f3ff;border-color:#ddd6fe}
+.kd-exc{color:#be123c;background:#fff1f2;border-color:#fecdd3}
+.kd-perm{color:#0f766e;background:#f0fdfa;border-color:#99f6e4}
+.kd-data{color:#1d4ed8;background:#eff6ff;border-color:#bfdbfe}
+.chk{margin-top:4px;padding:6px 8px;border-left:3px solid #16a34a;background:rgba(22,163,74,.07)}
+.noui{display:inline-block;margin-left:6px;padding:0 6px;border-radius:4px;font-size:9.5px;font-weight:700;vertical-align:middle;color:#991b1b;background:#fee2e2;border:1px solid #fca5a5;white-space:nowrap}
+</style>
+</head>
+<body>
+<a id="hub-back-btn" href="https://wanlee-tankunnatam.github.io/qa-test-reports/?project=insight" title="กลับไปหน้ารวมรายงาน (Hub)" style="position:fixed;top:12px;right:14px;z-index:99999;display:inline-flex;align-items:center;gap:7px;padding:10px 18px;border-radius:999px;background:#ffffff;color:#1e3a8a;font-size:14px;font-weight:800;text-decoration:none;box-shadow:0 4px 16px rgba(0,0,0,.35);border:2px solid #1e3a8a;font-family:'Segoe UI','Sarabun',system-ui,sans-serif">🏠 รายงานทั้งหมด</a>
+
+
+<script id="store-data" type="application/json">
+{}
+</script>
+
+<header class="top">
+  <h1>📰 [MVP2] TAKRA Insight — Epic 7 Daily Report Card → รายงานประจำวัน · UI Manual Test Cases</h1>
+  <div class="sub">เทส UI ด้วยมืออย่างเดียว · MVP-2 Epic 7 (TI-358) Story 7.1–7.3 · FR100 · FR134 · Target: แอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT)</div>
+  <div class="meta">
+    <span class="pill">40 เคส + E2E 0 = 40</span>
+    <span class="pill">8 กลุ่ม (A–H)</span>
+    <span class="pill">UI + E2E · manual</span>
+    <span class="pill">P0 16 · P1 16 · P2 8</span>
+    <span class="pill">ประเภท: Happy 7 · Negative 5 · Boundary 7 · Validation 3 · Exception 4 · Permission 11 · Data 3</span>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="note-box">🖥️ <b>Test target:</b> แอปเดสก์ท็อป <b>TAKRA Insight</b> บิลด์ UAT · เข้าสู่ระบบด้วยบัญชี UAT · รายงานประจำวันมีเฉพาะในแอปเดสก์ท็อป (ไม่มีหน้าเว็บ)<br>🧭 <b>ทางเข้า:</b> เมนูด้านซ้าย "รายงานประจำวัน" (ถัดจาก "เซสชัน") · ป้ายรายงานอยู่บน "หน้าหลัก" · สวิตช์เปิด/ปิดอยู่ท้ายหน้า "ผู้ให้บริการ AI" (กดรูปโปรไฟล์ → "ผู้ให้บริการ AI")<br>📎 <b>ที่มาของเคส:</b> <code>_bmad-output/planning-artifacts/epics-mvp2.md</code> Epic 7 Story 7.1 (<a href="https://kitdi.atlassian.net/browse/TI-359" target="_blank">TI-359</a>) · 7.2 (<a href="https://kitdi.atlassian.net/browse/TI-360" target="_blank">TI-360</a>) · 7.3 (<a href="https://kitdi.atlassian.net/browse/TI-475" target="_blank">TI-475</a>) + <code>prd.md</code> FR100 · FR134 + story files ใน <code>implementation-artifacts/</code> · คำบนจอลอกจาก <code>i18n/th.js</code> (origin/uat 989f4cb8, 21 ก.ย. 2569)<br>⏰ <b>จังหวะสร้างรายงาน:</b> แอปสร้างเองเมื่อเปิดแอป / เครื่องตื่นจากโหมดพัก / ไลฟ์ที่รออยู่จบ / เปลี่ยนการตั้งค่า AI · สรุปเฉพาะ "วันล่าสุดก่อนวันนี้" ที่มีไลฟ์และยังไม่มีรายงาน · ไม่ย้อนทำวันเก่า · ไม่เริ่มระหว่างบันทึกไลฟ์ · หลังไลฟ์จบต้องรอระยะหนึ่งก่อน (ช่วงนี้ไม่มีป้าย) · ลองเองอัตโนมัติได้ไม่เกิน 2 ครั้งต่อวัน<br>🧪 <b>Test data ที่ต้องเตรียม:</b> บัญชี UAT ที่ตั้งค่า "ผู้ให้บริการ AI" ครบ (key · โมเดล · ยอมรับข้อตกลง) · ไลฟ์ที่บันทึกจบแล้วของ "เมื่อวาน" (หรือวันก่อนหน้า) ในบัญชีนั้น — เตรียมหลายบัญชี/หลายวันเพราะ 1 วันสร้างรายงานได้ครั้งเดียว · เวิร์กสเปซที่มีสมาชิก เจ้าของ + ผู้จัดการแบรนด์ + โฮสต์ ≥ 2 คน (โฮสต์ 1 คนตั้ง key แล้ว อีกคนยังไม่ตั้ง) สำหรับกลุ่ม G–H · key ที่ถูกยกเลิกแล้ว 1 อัน<br>💸 <b>ค่าใช้จ่าย:</b> ทุกรายงานเรียกผู้ให้บริการจริง 1 ครั้งด้วย key ของบัญชีนั้น<br>🚩 <b>สถานะโค้ด (origin/uat 989f4cb8):</b> Story 7.1 · 7.2 · 7.3 merge ครบ (Jira Done) · หน้า/ป้าย/สวิตช์อยู่หลังแฟลก AI ซึ่งเปิดใน UAT แล้ว · กลุ่ม G–H ต้องกำหนดบทบาท "เจ้าของ" / "ผู้จัดการแบรนด์" / "โฮสต์" ได้จริงบน UAT — <a href="https://kitdi.atlassian.net/browse/TI-482" target="_blank">TI-482</a> (เปิด HUB_MEMBERSHIP_RECONCILE ที่ UAT) ยัง In Progress ถ้ากำหนดบทบาทไม่ได้ให้ลงเคสกลุ่ม G–H เป็น BLOCKED · ยังไม่ได้ทดสอบบน Windows (dev บันทึกไว้)<br>🔑 <b>เคสที่อยู่รายงานอื่น:</b> หน้า "ผู้ให้บริการ AI" (key · โมเดล · ข้อตกลง · ทดสอบการเชื่อมต่อ) · รายงานตอนออฟไลน์ "รอส่งขึ้นระบบ" (TC-BYOK-H.3) · ป้าย "จากอุปกรณ์อื่น" (TC-BYOK-H.4) อยู่ในรายงาน BYOK</div>
+
+  <div class="runsum">
+    <h3>📊 สรุปผล Manual Test</h3>
+    <div class="sumchips">
+      <span class="cnt pass">PASS <b id="sum-pass">0</b></span>
+      <span class="cnt fail">FAIL <b id="sum-fail">0</b></span>
+      <span class="cnt hold">HOLD <b id="sum-hold">0</b></span>
+      <span class="cnt block">BLOCKED <b id="sum-block">0</b></span>
+      <span class="cnt skip">SKIP <b id="sum-skip">0</b></span>
+      <span class="cnt pending">รอเทส <b id="sum-pending">40</b></span>
+    </div>
+    <div class="progress"><div id="sumbar" class="progressbar" style="width:0%"></div></div>
+    <div class="hint" id="sumpct" style="margin-top:5px">0% ทดสอบแล้ว (0/40)</div>
+  </div>
+
+  <div class="toolbar">
+    <button class="btn" onclick="toggleAll(true)">▸ กางทั้งหมด</button>
+    <button class="btn" onclick="toggleAll(false)">▾ ยุบทั้งหมด</button>
+    <span class="hint">💡 คลิกแถว → ดู Steps / Expected (UI only)</span>
+    <span style="margin-left:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+      <span id="save-status" class="hint" style="white-space: nowrap; color: var(--muted);">✓ ตรงกับ GitHub</span>
+      <label class="hint" style="display:flex;gap:4px;align-items:center;white-space:nowrap;cursor:pointer" title="บันทึกขึ้น GitHub อัตโนมัติหลังหยุดแก้ ~5 วินาที"><input type="checkbox" id="chk-autosave" checked=""> auto-save</label>
+      <button class="btn" id="btn-token" title="ใส่/เปลี่ยน GitHub token (ถ้าเซฟไม่ขึ้น/token เสีย กดอันนี้)">🔑 Token</button>
+      <button class="btn" id="btn-refresh" title="ดึงผลล่าสุดจาก GitHub มา merge (ไม่ต้อง reload)">🔄 ดึงล่าสุด</button>
+      <button class="btn primary" id="btn-publish" style="">☁️ บันทึกขึ้น GitHub</button>
+      <button class="btn" id="btn-save-file" title="ดาวน์โหลด HTML ไว้ใช้ offline">💾 ดาวน์โหลด</button>
+      <button class="btn" style="color:var(--fail)" id="btn-reset">🗑 ล้างผล</button>
+    </span>
+  </div>
+
+  <div class="filters">
+    <div class="row"><label>กลุ่ม</label>
+      <button class="fchip" data-f="feat" data-v="rpA">A · สวิตช์เปิด/ปิด (4)</button><button class="fchip" data-f="feat" data-v="rpB">B · ป้ายหน้าหลัก (8)</button><button class="fchip" data-f="feat" data-v="rpC">C · จังหวะสร้าง (6)</button><button class="fchip" data-f="feat" data-v="rpD">D · หน้ารายงาน (6)</button><button class="fchip" data-f="feat" data-v="rpE">E · เนื้อหา (3)</button><button class="fchip" data-f="feat" data-v="rpF">F · ความยินยอม (2)</button><button class="fchip" data-f="feat" data-v="rpG">G · ทุกโฮสต์ (7)</button><button class="fchip" data-f="feat" data-v="rpH">H · สิทธิ์ตามบทบาท (4)</button>
+      <button class="clearbtn" data-clear="feat">✕</button>
+    </div>
+    <div class="row"><label>ประเภท</label>
+      <button class="fchip" data-f="kind" data-v="happy" title="flow ปกติ">Happy Path (7)</button><button class="fchip" data-f="kind" data-v="negative" title="ยังไม่ตั้งค่า / action ผิด / ไม่ควรเกิด">Negative (5)</button><button class="fchip" data-f="kind" data-v="boundary" title="ขอบวัน · ช่วง 7/30/90 วัน · ก่อน-ตรง-เกินขอบ">Boundary/Edge (7)</button><button class="fchip" data-f="kind" data-v="validation" title="ข้อความ/รูปแบบที่แสดงถูกต้อง">Validation (3)</button><button class="fchip" data-f="kind" data-v="exception" title="ผู้ให้บริการล่ม · เน็ตหลุด · key ใช้ไม่ได้">Exception/Error (4)</button><button class="fchip" data-f="kind" data-v="permission" title="บทบาท เจ้าของ / ผู้จัดการแบรนด์ / โฮสต์ · แยกบัญชี · ความยินยอม">Permission (11)</button><button class="fchip" data-f="kind" data-v="data" title="ค่าคงอยู่ · รายงานไม่หาย · ไม่สร้างซ้ำ">Data (3)</button>
+      <button class="clearbtn" data-clear="kind">✕</button>
+    </div>
+    <div class="row"><label>Priority</label>
+      <button class="fchip" data-f="prio" data-v="P0">P0</button>
+      <button class="fchip" data-f="prio" data-v="P1">P1</button>
+      <button class="fchip" data-f="prio" data-v="P2">P2</button>
+      <button class="clearbtn" data-clear="prio">✕</button>
+    </div>
+    <div class="row"><label>สถานะ</label>
+      <button class="fchip" data-f="status" data-v="pass">✅ PASS</button>
+      <button class="fchip" data-f="status" data-v="fail">❌ FAIL</button>
+      <button class="fchip" data-f="status" data-v="hold">⏸ HOLD</button>
+      <button class="fchip" data-f="status" data-v="block">🚫 BLOCKED</button>
+      <button class="fchip" data-f="status" data-v="skip">⏭ SKIP</button>
+      <button class="fchip" data-f="status" data-v="pending">⏳ รอเทส</button>
+      <button class="clearbtn" data-clear="status">✕</button>
+    </div>
+  </div>
+
+  <div class="tablewrap">
+  <table class="tc" id="main-table">
+    <thead><tr><th style="width:22px"></th><th style="width:130px">TC ID</th><th>Test Case</th><th style="width:74px">Level</th><th style="width:55px">Pri</th><th style="width:80px">Status</th><th style="width:120px">Jira</th></tr></thead>
+    <tbody>
+
+<!-- rpA -->
+<tr class="epicrow" data-epic="rpA"><td colspan="7">🔘 A · สวิตช์ "รายงานประจำวัน" — ปิดไว้ก่อนจนกว่าจะเปิดเอง · Story 7.2 (FR100) <span class="rp">(4 เคส)</span></td></tr>
+<tr class="featrow" data-featkey="rp-optin"><td colspan="7">📁 สวิตช์ในหน้า "ผู้ให้บริการ AI" <span class="rp"><span class="lv lvl-ui">🌐 4</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="rp-optin"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow" data-feat="rpA" data-level="ui" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-RPT-A.1</td>
+  <td class="ctitle">บัญชีใหม่: สวิตช์ "รายงานประจำวัน" ปิดอยู่ และมีคำอธิบายครบ <span class="kd kd-happy">Happy Path</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-2501"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2501"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">บัญชีใหม่: สวิตช์ "รายงานประจำวัน" ปิดอยู่ และมีคำอธิบายครบ</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · A · สวิตช์ "รายงานประจำวัน" — ปิดไว้ก่อนจนกว่าจะเปิดเอง</div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT (บัญชีที่ยังไม่เคยเปิดรายงานประจำวัน)</li><li>กดรูปโปรไฟล์ ("โปรไฟล์และบัญชี") แล้วเลือกเมนู "ผู้ให้บริการ AI" เลื่อนลงไปที่ส่วน "รายงานประจำวัน" ท้ายหน้า</li><li>อ่านข้อความในส่วนนี้และดูสถานะสวิตช์</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>สวิตช์ "รายงานประจำวัน" อยู่ในสถานะปิด</li><li>มีคำอธิบาย "เมื่อเปิดไว้ แอปจะใช้บัญชีผู้ให้บริการ AI ของคุณสรุปไลฟ์ของวันล่าสุดก่อนวันนี้เป็นรายงาน …"</li><li>มีบรรทัด "ปิดแล้วจะไม่สร้างรายงานใหม่ รายงานที่สร้างไว้แล้วจะไม่ถูกลบ" และ "การตั้งค่านี้ใช้กับบัญชีนี้บนคอมพิวเตอร์เครื่องนี้เท่านั้น"</li><li>ไม่มีป้ายรายงานบน "หน้าหลัก" ตราบที่สวิตช์ยังปิด</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 7 · Story 7.2 AC1–AC2 · FR100 (off by default)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2501" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2501" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2501" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2501" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2501" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2501"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2501" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2501">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="rpA" data-level="ui" data-prio="P1" data-kind="validation" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-RPT-A.2</td>
+  <td class="ctitle">เปิดสวิตช์ได้ทั้งที่ยังไม่มี key และขึ้นข้อความให้ตั้งค่าให้ครบก่อน <span class="kd kd-val">Validation</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-2502"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2502"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">เปิดสวิตช์ได้ทั้งที่ยังไม่มี key และขึ้นข้อความให้ตั้งค่าให้ครบก่อน</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Validation</b> <span class="hint">(ข้อความ/รูปแบบที่แสดงถูกต้อง)</span> · A · สวิตช์ "รายงานประจำวัน" — ปิดไว้ก่อนจนกว่าจะเปิดเอง</div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT (บัญชีที่ยังไม่เคยบันทึก key)</li><li>กดรูปโปรไฟล์ ("โปรไฟล์และบัญชี") แล้วเลือกเมนู "ผู้ให้บริการ AI" เลื่อนลงไปที่ส่วน "รายงานประจำวัน" ท้ายหน้า</li><li>กดเปิดสวิตช์ "รายงานประจำวัน"</li><li>สังเกตสวิตช์และข้อความใต้สวิตช์</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>สวิตช์เปลี่ยนเป็นเปิด (ไม่ถูกบล็อกเพราะยังไม่มี key)</li><li>ขึ้นกล่องสีเหลือง "รายงานจะสร้างได้เมื่อบันทึก key เลือกโมเดล และยอมรับข้อตกลงการส่งข้อมูลด้านบนครบแล้ว"</li><li>ปิดสวิตช์กลับแล้วกล่องสีเหลืองหายไป</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 7 · Story 7.2 AC2 (switch works independently of key/model/disclosure)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2502" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2502" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2502" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2502" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2502" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2502"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2502" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2502">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="rpA" data-level="ui" data-prio="P1" data-kind="permission" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-RPT-A.3</td>
+  <td class="ctitle">สวิตช์แยกตามบัญชี: บัญชี B บนเครื่องเดียวกันยังปิดอยู่ <span class="kd kd-perm">Permission</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-2503"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2503"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">สวิตช์แยกตามบัญชี: บัญชี B บนเครื่องเดียวกันยังปิดอยู่</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Permission</b> <span class="hint">(บทบาท เจ้าของ / ผู้จัดการแบรนด์ / โฮสต์ · แยกบัญชี · ความยินยอม)</span> · A · สวิตช์ "รายงานประจำวัน" — ปิดไว้ก่อนจนกว่าจะเปิดเอง</div>
+  <div class="sec"><h4>Test Data</h4><ul><li>บัญชี UAT 2 บัญชี</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT (บัญชี A)</li><li>กดรูปโปรไฟล์ ("โปรไฟล์และบัญชี") แล้วเลือกเมนู "ผู้ให้บริการ AI" เลื่อนลงไปที่ส่วน "รายงานประจำวัน" ท้ายหน้า แล้วเปิดสวิตช์ "รายงานประจำวัน"</li><li>กดรูปโปรไฟล์ เลือก "ออกจากระบบ" แล้วเข้าสู่ระบบด้วยบัญชี B บนเครื่องเดิม</li><li>กดรูปโปรไฟล์ ("โปรไฟล์และบัญชี") แล้วเลือกเมนู "ผู้ให้บริการ AI" เลื่อนลงไปที่ส่วน "รายงานประจำวัน" ท้ายหน้า ของบัญชี B</li><li>ออกจากระบบ เข้าบัญชี A อีกครั้ง แล้วดูสวิตช์</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>บัญชี B เห็นสวิตช์ปิดอยู่ (ไม่ได้รับค่าของบัญชี A)</li><li>กลับมาบัญชี A สวิตช์ยังเปิดอยู่</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 7 · Story 7.2 AC1 (per account on this device)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2503" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2503" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2503" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2503" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2503" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2503"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2503" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2503">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="rpA" data-level="ui" data-prio="P0" data-kind="data" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-RPT-A.4</td>
+  <td class="ctitle">ปิดสวิตช์แล้วรายงานเดิมยังอยู่ครบ และไม่มีรายงานใหม่เกิดขึ้น <span class="kd kd-data">Data</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-2504"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2504"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ปิดสวิตช์แล้วรายงานเดิมยังอยู่ครบ และไม่มีรายงานใหม่เกิดขึ้น</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Data</b> <span class="hint">(ค่าคงอยู่ · รายงานไม่หาย · ไม่สร้างซ้ำ)</span> · A · สวิตช์ "รายงานประจำวัน" — ปิดไว้ก่อนจนกว่าจะเปิดเอง</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>บัญชีนี้ตั้งค่าผู้ให้บริการ AI ครบแล้ว (บันทึก key · เลือกโมเดล · ยอมรับข้อตกลงการส่งข้อมูล)</li><li>เปิดสวิตช์ "รายงานประจำวัน" ในหน้า "ผู้ให้บริการ AI" ไว้แล้ว</li><li>บัญชีนี้มีรายงานประจำวันที่สร้างไว้แล้วอย่างน้อย 1 รายงานในเวิร์กสเปซที่เลือกอยู่</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>ไปที่เมนู "รายงานประจำวัน" ด้านซ้าย แล้วจดวันที่ของรายงานที่มีอยู่</li><li>กดรูปโปรไฟล์ ("โปรไฟล์และบัญชี") แล้วเลือกเมนู "ผู้ให้บริการ AI" เลื่อนลงไปที่ส่วน "รายงานประจำวัน" ท้ายหน้า แล้วกดปิดสวิตช์</li><li>ปิดแอปแล้วเปิดใหม่ในวันถัดไป (หลังมีไลฟ์ใหม่ที่จบแล้ว) เข้าสู่ระบบบัญชีเดิม ดูป้ายรายงานด้านบนของ "หน้าหลัก" แล้วไปที่เมนู "รายงานประจำวัน" ด้านซ้าย</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>หลังปิดสวิตช์ รายงานทุกฉบับที่จดไว้ยังแสดงในหน้า "รายงานประจำวัน"</li><li>เปิดแอปวันถัดไปไม่มีป้าย "กำลังเตรียมรายงานประจำวันของ …" และไม่มีรายงานของวันใหม่เพิ่มขึ้น</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 7 · Story 7.2 AC3 · Story 7.1 AC16 (off stops future generation, keeps existing reports)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2504" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2504" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2504" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2504" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2504" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2504"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2504" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2504">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+
+<!-- rpB -->
+<tr class="epicrow" data-epic="rpB"><td colspan="7">🪧 B · ป้ายรายงานประจำวันบน "หน้าหลัก" — เตรียม / พร้อม / ต้องตั้งค่า / ล้มเหลว · Story 7.1 (FR100 · UX-DR9) <span class="rp">(8 เคส)</span></td></tr>
+<tr class="featrow" data-featkey="rp-banner"><td colspan="7">📁 สถานะของป้าย <span class="rp"><span class="lv lvl-ui">🌐 8</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="rp-banner"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow" data-feat="rpB" data-level="ui" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-RPT-B.1</td>
+  <td class="ctitle">เปิดแอปแล้วเห็นป้ายกำลังเตรียม จากนั้นเปลี่ยนเป็นพร้อมแล้ว <span class="kd kd-happy">Happy Path</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-2505"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2505"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">เปิดแอปแล้วเห็นป้ายกำลังเตรียม จากนั้นเปลี่ยนเป็นพร้อมแล้ว</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · B · ป้ายรายงานประจำวันบน "หน้าหลัก" — เตรียม / พร้อม / ต้องตั้งค่า / ล้มเหลว</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>บัญชีนี้ตั้งค่าผู้ให้บริการ AI ครบแล้ว (บันทึก key · เลือกโมเดล · ยอมรับข้อตกลงการส่งข้อมูล)</li><li>เปิดสวิตช์ "รายงานประจำวัน" ในหน้า "ผู้ให้บริการ AI" ไว้แล้ว</li><li>เมื่อวานมีไลฟ์ที่บันทึกจบแล้วอย่างน้อย 1 ไลฟ์ในเวิร์กสเปซที่เลือกอยู่ และยังไม่มีรายงานของวันนั้น</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>ดูป้ายรายงานด้านบนของ "หน้าหลัก" ทันทีหลังเข้าสู่ระบบ</li><li>รอจนป้ายเปลี่ยน (อาจใช้เวลาสักครู่) แล้วสังเกตป้ายอีกครั้ง</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ช่วงแรกขึ้นป้าย "กำลังเตรียมรายงานประจำวันของ &lt;วันที่เมื่อวาน&gt;" พร้อมไอคอนหมุน และ "ใช้บัญชีผู้ให้บริการ AI ของคุณ อาจใช้เวลาสักครู่"</li><li>เมื่อเสร็จเปลี่ยนเป็น "รายงานประจำวันของ &lt;วันที่เมื่อวาน&gt; พร้อมแล้ว" พร้อมปุ่ม "เปิดรายงาน" และปุ่มกากบาท "ปิดการแจ้งเตือน"</li><li>วันที่ในป้ายเป็นวันของไลฟ์ (เมื่อวาน) แบบไทย เช่น "20 ก.ย. 2569"</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 7 · Story 7.1 AC1 (T1 app open) · AC9 (generating → ready)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2505" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2505" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2505" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2505" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2505" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2505"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2505" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2505">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="rpB" data-level="ui" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-RPT-B.2</td>
+  <td class="ctitle">กด "เปิดรายงาน" ไปที่รายงานของวันนั้น และป้ายไม่กลับมาอีก <span class="kd kd-happy">Happy Path</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-2506"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2506"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">กด "เปิดรายงาน" ไปที่รายงานของวันนั้น และป้ายไม่กลับมาอีก</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · B · ป้ายรายงานประจำวันบน "หน้าหลัก" — เตรียม / พร้อม / ต้องตั้งค่า / ล้มเหลว</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>บัญชีนี้ตั้งค่าผู้ให้บริการ AI ครบแล้ว (บันทึก key · เลือกโมเดล · ยอมรับข้อตกลงการส่งข้อมูล)</li><li>เปิดสวิตช์ "รายงานประจำวัน" ในหน้า "ผู้ให้บริการ AI" ไว้แล้ว</li><li>รายงานของเมื่อวานสร้างเสร็จแล้วและยังไม่เคยเปิด</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>ดูป้ายรายงานด้านบนของ "หน้าหลัก" ที่ขึ้น "… พร้อมแล้ว" แล้วกด "เปิดรายงาน"</li><li>สังเกตหน้าที่เปิด</li><li>กลับไปที่ "หน้าหลัก" แล้วปิดแอป เปิดใหม่ เข้าสู่ระบบบัญชีเดิม แล้วดูหน้าหลักอีกครั้ง</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ไปที่หน้า "รายงานประจำวัน" และเลื่อนมาที่การ์ดของวันนั้นเลย โดยการ์ดมีกรอบเน้นสี</li><li>บัญชีเจ้าของ/ผู้จัดการแบรนด์ก็เปิดที่ "รายงานของฉัน" (ไม่ใช่ "ทุกโฮสต์")</li><li>กลับหน้าหลักแล้วป้าย "พร้อมแล้ว" ของรายงานนี้ไม่แสดงอีก ทั้งก่อนและหลังเปิดแอปใหม่</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 7 · Story 7.1 AC9 (ready [open] · D-D shows until opened) · Story 7.3 code review R1 (deep link → mine)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2506" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2506" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2506" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2506" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2506" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2506"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2506" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2506">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="rpB" data-level="ui" data-prio="P1" data-kind="negative" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-RPT-B.3</td>
+  <td class="ctitle">กดปิดการแจ้งเตือน (กากบาท) แล้วป้ายหาย แต่รายงานยังอยู่ในหน้ารายงาน <span class="kd kd-neg">Negative</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-2507"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2507"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">กดปิดการแจ้งเตือน (กากบาท) แล้วป้ายหาย แต่รายงานยังอยู่ในหน้ารายงาน</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Negative</b> <span class="hint">(ยังไม่ตั้งค่า / action ผิด / ไม่ควรเกิด)</span> · B · ป้ายรายงานประจำวันบน "หน้าหลัก" — เตรียม / พร้อม / ต้องตั้งค่า / ล้มเหลว</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>บัญชีนี้ตั้งค่าผู้ให้บริการ AI ครบแล้ว (บันทึก key · เลือกโมเดล · ยอมรับข้อตกลงการส่งข้อมูล)</li><li>เปิดสวิตช์ "รายงานประจำวัน" ในหน้า "ผู้ให้บริการ AI" ไว้แล้ว</li><li>รายงานของเมื่อวานสร้างเสร็จแล้วและยังไม่เคยเปิด</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>ดูป้ายรายงานด้านบนของ "หน้าหลัก" ที่ขึ้น "… พร้อมแล้ว" แล้วกดปุ่มกากบาท "ปิดการแจ้งเตือน"</li><li>ปิดแอปแล้วเปิดใหม่ เข้าสู่ระบบบัญชีเดิม ดูป้ายรายงานด้านบนของ "หน้าหลัก"</li><li>ไปที่เมนู "รายงานประจำวัน" ด้านซ้าย</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>กดกากบาทแล้วป้ายหายทันที และไม่กลับมาหลังเปิดแอปใหม่</li><li>รายงานของวันนั้นยังแสดงในหน้า "รายงานประจำวัน" ตามปกติ</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 7 · Story 7.1 AC9 (dismiss · D-D)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2507" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2507" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2507" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2507" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2507" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2507"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2507" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2507">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="rpB" data-level="ui" data-prio="P0" data-kind="negative" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-RPT-B.4</td>
+  <td class="ctitle">เปิดรายงานแต่ยังไม่มี key: ป้ายบอกให้ตั้งค่า key และพาไปใส่ key <span class="kd kd-neg">Negative</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-2508"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2508"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">เปิดรายงานแต่ยังไม่มี key: ป้ายบอกให้ตั้งค่า key และพาไปใส่ key</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Negative</b> <span class="hint">(ยังไม่ตั้งค่า / action ผิด / ไม่ควรเกิด)</span> · B · ป้ายรายงานประจำวันบน "หน้าหลัก" — เตรียม / พร้อม / ต้องตั้งค่า / ล้มเหลว</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เปิดสวิตช์ "รายงานประจำวัน" ในหน้า "ผู้ให้บริการ AI" ไว้แล้ว</li><li>เมื่อวานมีไลฟ์ที่บันทึกจบแล้วอย่างน้อย 1 ไลฟ์ในเวิร์กสเปซที่เลือกอยู่ และยังไม่มีรายงานของวันนั้น</li><li>บัญชีนี้ยังไม่บันทึก key</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT (บัญชีที่ยังไม่มี key)</li><li>ดูป้ายรายงานด้านบนของ "หน้าหลัก"</li><li>กดปุ่ม "ตั้งค่า key" ในป้าย</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ป้ายมีหัวข้อ "รายงานประจำวัน &lt;วันที่&gt;" ตามด้วยกล่อง "ยังไม่ได้เชื่อมต่อผู้ให้บริการ AI" · "ฟีเจอร์ AI ใช้ key ของ OpenAI หรือ OpenRouter ของคุณเอง เพิ่ม key เพื่อใช้ฟีเจอร์นี้"</li><li>ไม่มีรายงานถูกสร้าง</li><li>กด "ตั้งค่า key" แล้วไปที่หน้า "ผู้ให้บริการ AI" ตรงช่องวาง key</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 7 · Story 7.1 AC2 row 13 · AC9 (needs key [settings]) · Story 4.3</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2508" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2508" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2508" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2508" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2508" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2508"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2508" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2508">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="rpB" data-level="ui" data-prio="P1" data-kind="negative" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-RPT-B.5</td>
+  <td class="ctitle">มี key แต่ยังไม่ยอมรับข้อตกลง: ป้ายให้อ่านข้อตกลงก่อน <span class="kd kd-neg">Negative</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-2509"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2509"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">มี key แต่ยังไม่ยอมรับข้อตกลง: ป้ายให้อ่านข้อตกลงก่อน</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Negative</b> <span class="hint">(ยังไม่ตั้งค่า / action ผิด / ไม่ควรเกิด)</span> · B · ป้ายรายงานประจำวันบน "หน้าหลัก" — เตรียม / พร้อม / ต้องตั้งค่า / ล้มเหลว</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เปิดสวิตช์ "รายงานประจำวัน" ในหน้า "ผู้ให้บริการ AI" ไว้แล้ว</li><li>เมื่อวานมีไลฟ์ที่บันทึกจบแล้วอย่างน้อย 1 ไลฟ์ในเวิร์กสเปซที่เลือกอยู่ และยังไม่มีรายงานของวันนั้น</li><li>บันทึก key และเลือกโมเดลแล้ว แต่ยังไม่ยอมรับข้อตกลง (หรือเคยยอมรับข้อตกลงเวอร์ชันเก่า)</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>ดูป้ายรายงานด้านบนของ "หน้าหลัก"</li><li>กดปุ่ม "อ่านข้อตกลง" ในป้าย</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ป้ายมีหัวข้อ "รายงานประจำวัน &lt;วันที่&gt;" ตามด้วย "ยังไม่ได้ยอมรับข้อตกลงการส่งข้อมูล AI"</li><li>ไม่มีรายงานถูกสร้างและไม่มีข้อมูลถูกส่งไปผู้ให้บริการ</li><li>กด "อ่านข้อตกลง" แล้วไปที่หน้า "ผู้ให้บริการ AI" ส่วน "ข้อตกลงการส่งข้อมูลให้ AI"</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 7 · Story 7.1 AC2 row 14 · AC9 (needs disclosure) · FR133</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2509" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2509" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2509" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2509" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2509" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2509"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2509" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2509">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="rpB" data-level="ui" data-prio="P2" data-kind="happy" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-RPT-B.6</td>
+  <td class="ctitle">ยอมรับข้อตกลงแล้ว รายงานเริ่มเตรียมเองโดยไม่ต้องปิดเปิดแอป <span class="kd kd-happy">Happy Path</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p2">P2</span></td>
+  <td class="status" data-uid="tc-2510"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2510"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ยอมรับข้อตกลงแล้ว รายงานเริ่มเตรียมเองโดยไม่ต้องปิดเปิดแอป</div>
+  <div class="h-prio">Priority: <b>P2</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · B · ป้ายรายงานประจำวันบน "หน้าหลัก" — เตรียม / พร้อม / ต้องตั้งค่า / ล้มเหลว</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เปิดสวิตช์ "รายงานประจำวัน" ในหน้า "ผู้ให้บริการ AI" ไว้แล้ว</li><li>เมื่อวานมีไลฟ์ที่บันทึกจบแล้วอย่างน้อย 1 ไลฟ์ในเวิร์กสเปซที่เลือกอยู่ และยังไม่มีรายงานของวันนั้น</li><li>บันทึก key และเลือกโมเดลแล้ว แต่ยังไม่ยอมรับข้อตกลง</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>ดูป้ายรายงานด้านบนของ "หน้าหลัก" ที่ขึ้น "ยังไม่ได้ยอมรับข้อตกลงการส่งข้อมูล AI" แล้วกด "อ่านข้อตกลง"</li><li>ติ๊กช่องยอมรับแล้วกด "ยอมรับ"</li><li>ไปที่ "หน้าหลัก" แล้วสังเกตป้าย</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ป้ายเปลี่ยนเป็น "กำลังเตรียมรายงานประจำวันของ &lt;วันที่&gt;" แล้วเป็น "… พร้อมแล้ว" โดยไม่ต้องปิดเปิดแอป</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 7 · Story 7.1 AC1 (T4 settings change re-decides)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2510" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2510" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2510" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2510" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2510" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2510"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2510" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2510">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="rpB" data-level="ui" data-prio="P1" data-kind="exception" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-RPT-B.7</td>
+  <td class="ctitle">key ถูกปฏิเสธ: ป้ายล้มเหลวมีทั้ง "ตรวจสอบ key" และ "ลองเตรียมใหม่" <span class="kd kd-exc">Exception/Error</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-2511"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2511"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">key ถูกปฏิเสธ: ป้ายล้มเหลวมีทั้ง "ตรวจสอบ key" และ "ลองเตรียมใหม่"</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Exception/Error</b> <span class="hint">(ผู้ให้บริการล่ม · เน็ตหลุด · key ใช้ไม่ได้)</span> · B · ป้ายรายงานประจำวันบน "หน้าหลัก" — เตรียม / พร้อม / ต้องตั้งค่า / ล้มเหลว</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เปิดสวิตช์ "รายงานประจำวัน" ในหน้า "ผู้ให้บริการ AI" ไว้แล้ว</li><li>เมื่อวานมีไลฟ์ที่บันทึกจบแล้วอย่างน้อย 1 ไลฟ์ในเวิร์กสเปซที่เลือกอยู่ และยังไม่มีรายงานของวันนั้น</li><li>บันทึก key ที่ถูกยกเลิกแล้ว เลือกโมเดล และยอมรับข้อตกลงแล้ว</li></ul></div>
+  <div class="sec"><h4>Test Data</h4><ul><li>key ที่ถูก revoke แล้ว</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>ดูป้ายรายงานด้านบนของ "หน้าหลัก"</li><li>กด "ลองเตรียมใหม่" 1 ครั้ง แล้วสังเกตผล</li><li>กด "ตรวจสอบ key"</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ป้ายขึ้นหัวข้อ "รายงานประจำวัน &lt;วันที่&gt;" + "ผู้ให้บริการ AI ปฏิเสธ key"</li><li>มีปุ่ม "ตรวจสอบ key" และปุ่ม "ลองเตรียมใหม่"</li><li>กด "ลองเตรียมใหม่" แล้วลองใหม่ 1 ครั้ง ผลยังเป็นปฏิเสธ key (ปุ่มกดซ้ำระหว่างรอไม่ได้)</li><li>กด "ตรวจสอบ key" แล้วไปที่หน้า "ผู้ให้บริการ AI" ตรงช่อง key</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 7 · Story 7.1 AC3 (non-transient sticky · retry = 1 flight per press) · AC9 (failed [retry])</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2511" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2511" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2511" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2511" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2511" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2511"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2511" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2511">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="rpB" data-level="ui" data-prio="P1" data-kind="exception" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-RPT-B.8</td>
+  <td class="ctitle">ไม่มีเน็ตตอนสร้างรายงาน: ป้าย "ติดต่อผู้ให้บริการ AI ไม่ได้" และลองใหม่ได้เมื่อเน็ตกลับ <span class="kd kd-exc">Exception/Error</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-2512"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2512"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ไม่มีเน็ตตอนสร้างรายงาน: ป้าย "ติดต่อผู้ให้บริการ AI ไม่ได้" และลองใหม่ได้เมื่อเน็ตกลับ</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Exception/Error</b> <span class="hint">(ผู้ให้บริการล่ม · เน็ตหลุด · key ใช้ไม่ได้)</span> · B · ป้ายรายงานประจำวันบน "หน้าหลัก" — เตรียม / พร้อม / ต้องตั้งค่า / ล้มเหลว</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>บัญชีนี้ตั้งค่าผู้ให้บริการ AI ครบแล้ว (บันทึก key · เลือกโมเดล · ยอมรับข้อตกลงการส่งข้อมูล)</li><li>เปิดสวิตช์ "รายงานประจำวัน" ในหน้า "ผู้ให้บริการ AI" ไว้แล้ว</li><li>เมื่อวานมีไลฟ์ที่บันทึกจบแล้วอย่างน้อย 1 ไลฟ์ในเวิร์กสเปซที่เลือกอยู่ และยังไม่มีรายงานของวันนั้น</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>ทันทีที่ป้ายขึ้น "กำลังเตรียมรายงานประจำวันของ …" ให้ปิด Wi-Fi หรือถอดสายแลน แล้วรอจนป้ายเปลี่ยน</li><li>ต่ออินเทอร์เน็ตกลับ แล้วกด "ลองใหม่" ในป้าย</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ป้ายเปลี่ยนเป็นหัวข้อ "รายงานประจำวัน &lt;วันที่&gt;" + "ติดต่อผู้ให้บริการ AI ไม่ได้" (หรือ "ผู้ให้บริการ AI ตอบช้าเกินไป") พร้อมปุ่ม "ลองใหม่" — ไม่มีปุ่มลองใหม่ซ้ำ 2 ปุ่ม</li><li>แอปไม่ค้าง</li><li>หลังต่อเน็ตแล้วกด "ลองใหม่" ได้ป้าย "… พร้อมแล้ว"</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 7 · Story 7.1 AC3 (transient) · AC9 · Story 4.3 FR132</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2512" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2512" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2512" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2512" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2512" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2512"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2512" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2512">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+
+<!-- rpC -->
+<tr class="epicrow" data-epic="rpC"><td colspan="7">⏰ C · สร้างเมื่อไร วันไหน และไม่สร้างซ้ำ · Story 7.1 (FR100) <span class="rp">(6 เคส)</span></td></tr>
+<tr class="featrow" data-featkey="rp-timing"><td colspan="7">📁 กติกาเลือกวันและเวลาเริ่มสร้าง <span class="rp"><span class="lv lvl-ui">🌐 6</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="rp-timing"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow" data-feat="rpC" data-level="ui" data-prio="P0" data-kind="boundary" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-RPT-C.1</td>
+  <td class="ctitle">ไลฟ์ของวันนี้ไม่ถูกสรุป — รายงานเป็นของวันล่าสุด "ก่อนวันนี้" เท่านั้น <span class="kd kd-bnd">Boundary/Edge</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-2513"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2513"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ไลฟ์ของวันนี้ไม่ถูกสรุป — รายงานเป็นของวันล่าสุด "ก่อนวันนี้" เท่านั้น</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Boundary/Edge</b> <span class="hint">(ขอบวัน · ช่วง 7/30/90 วัน · ก่อน-ตรง-เกินขอบ)</span> · C · สร้างเมื่อไร วันไหน และไม่สร้างซ้ำ</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>บัญชีนี้ตั้งค่าผู้ให้บริการ AI ครบแล้ว (บันทึก key · เลือกโมเดล · ยอมรับข้อตกลงการส่งข้อมูล)</li><li>เปิดสวิตช์ "รายงานประจำวัน" ในหน้า "ผู้ให้บริการ AI" ไว้แล้ว</li><li>เมื่อวานมีไลฟ์ที่บันทึกจบแล้วอย่างน้อย 1 ไลฟ์ในเวิร์กสเปซที่เลือกอยู่ และยังไม่มีรายงานของวันนั้น</li><li>วันนี้ก็มีไลฟ์ที่บันทึกจบแล้วอย่างน้อย 1 ไลฟ์</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>ดูป้ายรายงานด้านบนของ "หน้าหลัก" รอจนรายงานพร้อม</li><li>ไปที่เมนู "รายงานประจำวัน" ด้านซ้าย แล้วดูวันที่ของรายงานที่เพิ่งสร้าง</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>รายงานที่สร้างเป็นของเมื่อวาน ไม่ใช่วันนี้</li><li>เนื้อหาในรายงานพูดถึงเฉพาะไลฟ์ของเมื่อวาน ไม่มีไลฟ์ของวันนี้</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 7 · Story 7.1 AC4 (most recent D &lt; today · day from session id)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2513" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2513" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2513" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2513" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2513" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2513"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2513" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2513">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="rpC" data-level="ui" data-prio="P0" data-kind="boundary" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-RPT-C.2</td>
+  <td class="ctitle">ไม่ได้เปิดแอปหลายวัน: สร้างเฉพาะวันล่าสุด ไม่ย้อนทำวันเก่า <span class="kd kd-bnd">Boundary/Edge</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-2514"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2514"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ไม่ได้เปิดแอปหลายวัน: สร้างเฉพาะวันล่าสุด ไม่ย้อนทำวันเก่า</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Boundary/Edge</b> <span class="hint">(ขอบวัน · ช่วง 7/30/90 วัน · ก่อน-ตรง-เกินขอบ)</span> · C · สร้างเมื่อไร วันไหน และไม่สร้างซ้ำ</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>บัญชีนี้ตั้งค่าผู้ให้บริการ AI ครบแล้ว (บันทึก key · เลือกโมเดล · ยอมรับข้อตกลงการส่งข้อมูล)</li><li>เปิดสวิตช์ "รายงานประจำวัน" ในหน้า "ผู้ให้บริการ AI" ไว้แล้ว</li><li>บัญชีมีไลฟ์ที่บันทึกจบแล้วใน 3 วันที่ต่างกัน (เช่น 3 วัน 2 วัน และ 1 วันก่อน) และยังไม่มีรายงานของทั้ง 3 วัน</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>ดูป้ายรายงานด้านบนของ "หน้าหลัก" รอจนรายงานพร้อม</li><li>ไปที่เมนู "รายงานประจำวัน" ด้านซ้าย แล้วดูรายการรายงานทั้งหมด</li><li>ปิดแอปแล้วเปิดใหม่ เข้าสู่ระบบบัญชีเดิม แล้วดู "หน้าหลัก" อีกครั้ง</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>มีรายงานใหม่เพียง 1 ฉบับ เป็นของวันล่าสุดที่มีไลฟ์ (ก่อนวันนี้)</li><li>วันที่เก่ากว่าที่มีไลฟ์แต่ยังไม่มีรายงานไม่ถูกสร้าง และเปิดแอปใหม่ก็ไม่ถูกสร้างย้อนหลัง</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 7 · Story 7.1 AC4 · epics-mvp2 7.1 ("only the most recent un-reported day — no catch-up")</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2514" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2514" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2514" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2514" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2514" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2514"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2514" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2514">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="rpC" data-level="ui" data-prio="P0" data-kind="data" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-RPT-C.3</td>
+  <td class="ctitle">เปิดแอปใหม่วันเดียวกัน: ไม่สร้างรายงานซ้ำและไม่เรียกผู้ให้บริการอีก <span class="kd kd-data">Data</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-2515"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2515"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">เปิดแอปใหม่วันเดียวกัน: ไม่สร้างรายงานซ้ำและไม่เรียกผู้ให้บริการอีก</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Data</b> <span class="hint">(ค่าคงอยู่ · รายงานไม่หาย · ไม่สร้างซ้ำ)</span> · C · สร้างเมื่อไร วันไหน และไม่สร้างซ้ำ</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>บัญชีนี้ตั้งค่าผู้ให้บริการ AI ครบแล้ว (บันทึก key · เลือกโมเดล · ยอมรับข้อตกลงการส่งข้อมูล)</li><li>เปิดสวิตช์ "รายงานประจำวัน" ในหน้า "ผู้ให้บริการ AI" ไว้แล้ว</li><li>เมื่อวานมีไลฟ์ที่บันทึกจบแล้วอย่างน้อย 1 ไลฟ์ในเวิร์กสเปซที่เลือกอยู่ และยังไม่มีรายงานของวันนั้น</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>ดูป้ายรายงานด้านบนของ "หน้าหลัก" รอจนรายงานพร้อม แล้วกด "เปิดรายงาน"</li><li>ปิดแอปแล้วเปิดใหม่ เข้าสู่ระบบบัญชีเดิม ดูป้ายรายงานด้านบนของ "หน้าหลัก"</li><li>ไปที่เมนู "รายงานประจำวัน" ด้านซ้าย</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>หลังเปิดแอปใหม่ไม่มีป้าย "กำลังเตรียม…" อีก</li><li>หน้ารายงานมีรายงานของวันนั้นเพียง 1 ฉบับ ไม่ซ้ำ</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 7 · Story 7.1 AC5 (at most one report per day)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2515" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2515" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2515" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2515" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2515" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2515"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2515" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2515">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="rpC" data-level="ui" data-prio="P0" data-kind="boundary" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-RPT-C.4</td>
+  <td class="ctitle">กำลังบันทึกไลฟ์อยู่: ไม่เริ่มสร้างรายงานจนกว่าไลฟ์จะจบ <span class="kd kd-bnd">Boundary/Edge</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-2516"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2516"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">กำลังบันทึกไลฟ์อยู่: ไม่เริ่มสร้างรายงานจนกว่าไลฟ์จะจบ</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Boundary/Edge</b> <span class="hint">(ขอบวัน · ช่วง 7/30/90 วัน · ก่อน-ตรง-เกินขอบ)</span> · C · สร้างเมื่อไร วันไหน และไม่สร้างซ้ำ</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>บัญชีนี้ตั้งค่าผู้ให้บริการ AI ครบแล้ว (บันทึก key · เลือกโมเดล · ยอมรับข้อตกลงการส่งข้อมูล)</li><li>เปิดสวิตช์ "รายงานประจำวัน" ในหน้า "ผู้ให้บริการ AI" ไว้แล้ว</li><li>เมื่อวานมีไลฟ์ที่บันทึกจบแล้วอย่างน้อย 1 ไลฟ์ในเวิร์กสเปซที่เลือกอยู่ และยังไม่มีรายงานของวันนั้น</li></ul></div>
+  <div class="sec"><h4>Test Data</h4><ul><li>ไลฟ์ TikTok ที่กำลังออนแอร์ 1 ไลฟ์</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT แล้วเริ่มติดตาม/บันทึกไลฟ์ 1 ไลฟ์ทันที</li><li>ดูป้ายรายงานด้านบนของ "หน้าหลัก" ระหว่างบันทึก</li><li>หยุดบันทึกไลฟ์นั้นให้จบ แล้วกลับไปดู "หน้าหลัก"</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ระหว่างบันทึกไลฟ์ไม่มีป้าย "กำลังเตรียมรายงานประจำวัน…"</li><li>หลังไลฟ์จบ แอปเริ่มเตรียมรายงานของเมื่อวานเอง (ป้าย "กำลังเตรียม…" แล้ว "… พร้อมแล้ว") โดยไม่ต้องปิดเปิดแอป</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 7 · Story 7.1 AC1 (T3) · AC2 row 6 · FR100 ("never runs while a capture is active")</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2516" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2516" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2516" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2516" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2516" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2516"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2516" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2516">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="rpC" data-level="ui" data-prio="P2" data-kind="boundary" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-RPT-C.5</td>
+  <td class="ctitle">เครื่องตื่นจากโหมดพักข้ามวัน แล้วรายงานของวันก่อนหน้าเริ่มเตรียมเอง <span class="kd kd-bnd">Boundary/Edge</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p2">P2</span></td>
+  <td class="status" data-uid="tc-2517"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2517"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">เครื่องตื่นจากโหมดพักข้ามวัน แล้วรายงานของวันก่อนหน้าเริ่มเตรียมเอง</div>
+  <div class="h-prio">Priority: <b>P2</b> · UI · ประเภท: <b>Boundary/Edge</b> <span class="hint">(ขอบวัน · ช่วง 7/30/90 วัน · ก่อน-ตรง-เกินขอบ)</span> · C · สร้างเมื่อไร วันไหน และไม่สร้างซ้ำ</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>บัญชีนี้ตั้งค่าผู้ให้บริการ AI ครบแล้ว (บันทึก key · เลือกโมเดล · ยอมรับข้อตกลงการส่งข้อมูล)</li><li>เปิดสวิตช์ "รายงานประจำวัน" ในหน้า "ผู้ให้บริการ AI" ไว้แล้ว</li><li>ยังไม่มีรายงานของวันที่จะบันทึกไลฟ์</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT ในช่วงค่ำ แล้วบันทึกไลฟ์ 1 ไลฟ์ให้จบ</li><li>สั่งเครื่องเข้าโหมดพัก (Sleep) โดยไม่ปิดแอป ทิ้งไว้ข้ามเที่ยงคืน</li><li>ปลุกเครื่องในวันถัดไป แล้วดูป้ายรายงานด้านบนของ "หน้าหลัก"</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>หลังเครื่องตื่น ป้ายขึ้น "กำลังเตรียมรายงานประจำวันของ &lt;วันที่บันทึกไลฟ์&gt;" แล้ว "… พร้อมแล้ว"</li><li>ระหว่างเปิดแอปทิ้งไว้ข้ามเที่ยงคืนโดยไม่พักเครื่อง แอปไม่สร้างรายงานเองตอนเที่ยงคืน</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 7 · Story 7.1 AC1 (T2 resume · no midnight timer) · FR100 (start or resume)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2517" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2517" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2517" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2517" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2517" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2517"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2517" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2517">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="rpC" data-level="ui" data-prio="P2" data-kind="data" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-RPT-C.6</td>
+  <td class="ctitle">ลบไลฟ์ที่อยู่ในรายงาน: ยืนยันลบบอกผลต่อรายงาน และรายงานของวันนั้นถูกเตรียมใหม่จากไลฟ์ที่เหลือ <span class="kd kd-data">Data</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p2">P2</span></td>
+  <td class="status" data-uid="tc-2518"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2518"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ลบไลฟ์ที่อยู่ในรายงาน: ยืนยันลบบอกผลต่อรายงาน และรายงานของวันนั้นถูกเตรียมใหม่จากไลฟ์ที่เหลือ</div>
+  <div class="h-prio">Priority: <b>P2</b> · UI · ประเภท: <b>Data</b> <span class="hint">(ค่าคงอยู่ · รายงานไม่หาย · ไม่สร้างซ้ำ)</span> · C · สร้างเมื่อไร วันไหน และไม่สร้างซ้ำ</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>บัญชีนี้ตั้งค่าผู้ให้บริการ AI ครบแล้ว (บันทึก key · เลือกโมเดล · ยอมรับข้อตกลงการส่งข้อมูล)</li><li>เปิดสวิตช์ "รายงานประจำวัน" ในหน้า "ผู้ให้บริการ AI" ไว้แล้ว</li><li>เมื่อวานมี 2 ไลฟ์และมีรายงานของเมื่อวานแล้ว (เป็นวันล่าสุดที่มีไลฟ์)</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>ไปที่เมนู "เซสชัน" เปิดไลฟ์ 1 ใน 2 ไลฟ์ของเมื่อวาน แล้วกดปุ่มถังขยะ</li><li>อ่านหน้าต่าง "ลบเซสชันนี้?" แล้วกด "ลบถาวร"</li><li>ดูป้ายรายงานด้านบนของ "หน้าหลัก" แล้วไปที่เมนู "รายงานประจำวัน" ด้านซ้าย</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>หน้าต่างยืนยันมีข้อความ "ถ้าไลฟ์นี้เป็นส่วนหนึ่งของรายงานประจำวันในคอมพิวเตอร์เครื่องนี้ รายงานนั้นจะถูกลบด้วย และอาจถูกเตรียมใหม่จากไลฟ์ที่เหลือ …"</li><li>หลังลบ แอปเตรียมรายงานของวันนั้นใหม่ (ป้าย "กำลังเตรียม…" → "… พร้อมแล้ว")</li><li>รายงานใหม่พูดถึงเฉพาะไลฟ์ที่เหลือ และหน้ารายงานมีรายงานของวันนั้นฉบับเดียว</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 7 · Story 7.1 AC12 (Q1 = A — delete ⇒ local report deleted + regenerated if lives remain)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2518" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2518" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2518" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2518" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2518" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2518"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2518" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2518">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+
+<!-- rpD -->
+<tr class="epicrow" data-epic="rpD"><td colspan="7">📄 D · หน้า "รายงานประจำวัน" — ทางเข้า รายการ และสถานะว่าง · Story 7.1 (FR100 · FR134 เฟส 1) <span class="rp">(6 เคส)</span></td></tr>
+<tr class="featrow" data-featkey="rp-page"><td colspan="7">📁 หน้ารายงานของฉัน <span class="rp"><span class="lv lvl-ui">🌐 6</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="rp-page"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow" data-feat="rpD" data-level="ui" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-RPT-D.1</td>
+  <td class="ctitle">เปิดหน้า "รายงานประจำวัน" จากเมนูด้านซ้ายได้ และเห็นหัวข้อ + คำอธิบายการเก็บรายงาน <span class="kd kd-happy">Happy Path</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-2519"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2519"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">เปิดหน้า "รายงานประจำวัน" จากเมนูด้านซ้ายได้ และเห็นหัวข้อ + คำอธิบายการเก็บรายงาน</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · D · หน้า "รายงานประจำวัน" — ทางเข้า รายการ และสถานะว่าง</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>บัญชีนี้มีบทบาท "โฮสต์" ในเวิร์กสเปซที่เลือกอยู่ (หรือยังไม่มีบทบาท)</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>ดูเมนูด้านซ้าย แล้วกด "รายงานประจำวัน"</li><li>สังเกตหัวหน้าและข้อความด้านบน</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>เมนู "รายงานประจำวัน" อยู่ถัดจาก "เซสชัน"</li><li>หัวหน้า "รายงานประจำวัน" + "สรุปไลฟ์รายวันที่ AI เตรียมให้ จากบัญชีผู้ให้บริการ AI ของคุณ"</li><li>มีข้อความ "รายงานถูกเก็บแบบเข้ารหัสใน Takra Insight 90 วัน เพื่อให้บัญชีนี้เปิดอ่านจากอุปกรณ์อื่นได้ด้วย หน้านี้แสดงเฉพาะรายงานที่เตรียมไว้ตอนเลือกเวิร์กสเปซนี้อยู่"</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 7 · Story 7.1 AC10 · D-G (Reports sidebar entry)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2519" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2519" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2519" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2519" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2519" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2519"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2519" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2519">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="rpD" data-level="ui" data-prio="P1" data-kind="negative" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-RPT-D.2</td>
+  <td class="ctitle">ยังไม่เคยมีรายงาน: ขึ้นสถานะว่างที่อ่านเข้าใจ <span class="kd kd-neg">Negative</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-2520"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2520"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ยังไม่เคยมีรายงาน: ขึ้นสถานะว่างที่อ่านเข้าใจ</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Negative</b> <span class="hint">(ยังไม่ตั้งค่า / action ผิด / ไม่ควรเกิด)</span> · D · หน้า "รายงานประจำวัน" — ทางเข้า รายการ และสถานะว่าง</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>บัญชีนี้มีบทบาท "โฮสต์" ในเวิร์กสเปซที่เลือกอยู่ (หรือยังไม่มีบทบาท)</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT (บัญชีที่ยังไม่เคยมีรายงานประจำวัน)</li><li>ไปที่เมนู "รายงานประจำวัน" ด้านซ้าย</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ขึ้นการ์ด "ยังไม่มีรายงานประจำวันในช่วง 90 วันที่ผ่านมา"</li><li>ไม่มีข้อความ error</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 7 · Story 7.1 AC10</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2520" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2520" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2520" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2520" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2520" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2520"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2520" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2520">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="rpD" data-level="ui" data-prio="P2" data-kind="validation" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-RPT-D.3</td>
+  <td class="ctitle">รายการเรียงวันล่าสุดก่อน และแต่ละการ์ดบอกวันที่ + โมเดลที่ใช้ <span class="kd kd-val">Validation</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p2">P2</span></td>
+  <td class="status" data-uid="tc-2521"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2521"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">รายการเรียงวันล่าสุดก่อน และแต่ละการ์ดบอกวันที่ + โมเดลที่ใช้</div>
+  <div class="h-prio">Priority: <b>P2</b> · UI · ประเภท: <b>Validation</b> <span class="hint">(ข้อความ/รูปแบบที่แสดงถูกต้อง)</span> · D · หน้า "รายงานประจำวัน" — ทางเข้า รายการ และสถานะว่าง</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>บัญชีนี้มีรายงานอย่างน้อย 2 วันที่ต่างกัน</li><li>บัญชีนี้มีบทบาท "โฮสต์" ในเวิร์กสเปซที่เลือกอยู่ (หรือยังไม่มีบทบาท)</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>ไปที่เมนู "รายงานประจำวัน" ด้านซ้าย</li><li>ดูลำดับการ์ดและบรรทัดหัวของแต่ละการ์ด</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>การ์ดเรียงจากวันล่าสุดลงไปวันเก่า</li><li>หัวการ์ดเป็นวันที่แบบไทย (เช่น "20 ก.ย. 2569") และมีป้ายเล็ก "เตรียมโดย AI · &lt;ชื่อโมเดล&gt;" ตรงกับโมเดลที่ตั้งไว้ตอนสร้าง</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 7 · Story 7.1 AC10 (order reportDate DESC)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2521" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2521" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2521" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2521" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2521" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2521"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2521" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2521">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="rpD" data-level="ui" data-prio="P1" data-kind="permission" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-RPT-D.4</td>
+  <td class="ctitle">หน้ารายงานแสดงเฉพาะรายงานของเวิร์กสเปซที่เลือกอยู่ <span class="kd kd-perm">Permission</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-2522"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2522"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">หน้ารายงานแสดงเฉพาะรายงานของเวิร์กสเปซที่เลือกอยู่</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Permission</b> <span class="hint">(บทบาท เจ้าของ / ผู้จัดการแบรนด์ / โฮสต์ · แยกบัญชี · ความยินยอม)</span> · D · หน้า "รายงานประจำวัน" — ทางเข้า รายการ และสถานะว่าง</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>บัญชีนี้อยู่ใน 2 พื้นที่ทำงาน และมีรายงานในพื้นที่ทำงานแรกเท่านั้น</li><li>ไม่ได้บันทึกไลฟ์อยู่ (สลับพื้นที่ทำงานได้)</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>ไปที่เมนู "รายงานประจำวัน" ด้านซ้าย แล้วจดวันที่ของรายงานที่เห็น</li><li>กดรูปโปรไฟล์ แล้วสลับไปอีกพื้นที่ทำงานในส่วน "พื้นที่ทำงาน"</li><li>ไปที่เมนู "รายงานประจำวัน" ด้านซ้าย อีกครั้ง</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>หลังสลับ รายงานที่สร้างตอนเลือกพื้นที่ทำงานแรกไม่แสดง (แสดงเฉพาะของพื้นที่ทำงานที่เลือกอยู่ หรือสถานะว่าง)</li><li>สลับกลับแล้วรายงานเดิมกลับมาครบ</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 7 · Story 7.1 AC10 (filtered to the selected workspace)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2522" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2522" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2522" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2522" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2522" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2522"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2522" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2522">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="rpD" data-level="ui" data-prio="P1" data-kind="exception" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-RPT-D.5</td>
+  <td class="ctitle">ออฟไลน์แล้วเปิดหน้ารายงาน: ยังเห็นรายงานในเครื่อง พร้อมหมายเหตุว่าอ่านจากอุปกรณ์อื่นไม่ได้ <span class="kd kd-exc">Exception/Error</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-2523"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2523"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ออฟไลน์แล้วเปิดหน้ารายงาน: ยังเห็นรายงานในเครื่อง พร้อมหมายเหตุว่าอ่านจากอุปกรณ์อื่นไม่ได้</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Exception/Error</b> <span class="hint">(ผู้ให้บริการล่ม · เน็ตหลุด · key ใช้ไม่ได้)</span> · D · หน้า "รายงานประจำวัน" — ทางเข้า รายการ และสถานะว่าง</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>บัญชีนี้มีรายงานประจำวันที่สร้างไว้แล้วอย่างน้อย 1 รายงานในเวิร์กสเปซที่เลือกอยู่ (สร้างบนเครื่องนี้)</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>ปิด Wi-Fi หรือถอดสายแลน</li><li>ไปที่เมนู "รายงานประจำวัน" ด้านซ้าย</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>รายงานที่สร้างบนเครื่องนี้ยังแสดงครบ</li><li>มีหมายเหตุ 1 บรรทัด "ตอนนี้อ่านรายงานจากอุปกรณ์อื่นไม่ได้ จึงแสดงเฉพาะรายงานในคอมพิวเตอร์เครื่องนี้"</li><li>ไม่มีข้อความ "ยังไม่มีรายงาน…" และไม่มี error ดิบ</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 7 · Story 7.1 AC10 (a cloud failure still lists local reports with one note)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2523" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2523" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2523" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2523" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2523" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2523"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2523" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2523">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="rpD" data-level="ui" data-prio="P2" data-kind="boundary" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-RPT-D.6</td>
+  <td class="ctitle">รายงานเก่ากว่า 90 วันไม่แสดง ส่วนรายงานภายใน 90 วันแสดงครบ <span class="kd kd-bnd">Boundary/Edge</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p2">P2</span></td>
+  <td class="status" data-uid="tc-2524"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2524"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">รายงานเก่ากว่า 90 วันไม่แสดง ส่วนรายงานภายใน 90 วันแสดงครบ</div>
+  <div class="h-prio">Priority: <b>P2</b> · UI · ประเภท: <b>Boundary/Edge</b> <span class="hint">(ขอบวัน · ช่วง 7/30/90 วัน · ก่อน-ตรง-เกินขอบ)</span> · D · หน้า "รายงานประจำวัน" — ทางเข้า รายการ และสถานะว่าง</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>บัญชีนี้มีรายงานเก่าใกล้ขอบ 90 วัน (ถ้ามี)</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>ไปที่เมนู "รายงานประจำวัน" ด้านซ้าย</li><li>เลื่อนลงไปดูการ์ดล่างสุด</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>การ์ดล่างสุดไม่เก่ากว่า 90 วันนับรวมวันนี้</li><li>ไม่มีรายงานที่เก่ากว่า 90 วันแสดง</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 7 · Story 7.1 AC10 · FR134 (retained 90 days)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2524" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2524" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2524" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2524" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2524" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2524"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2524" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2524">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+
+<!-- rpE -->
+<tr class="epicrow" data-epic="rpE"><td colspan="7">📝 E · เนื้อหารายงาน — 3 หัวข้อ ภาษาไทย ไม่มีข้อมูลผู้ชม · Story 7.1 (FR100) <span class="rp">(3 เคส)</span></td></tr>
+<tr class="featrow" data-featkey="rp-content"><td colspan="7">📁 โครงและความถูกต้องของเนื้อหา <span class="rp"><span class="lv lvl-ui">🌐 3</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="rp-content"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow" data-feat="rpE" data-level="ui" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-RPT-E.1</td>
+  <td class="ctitle">รายงานมี 3 หัวข้อเรียงตามลำดับ และ "สิ่งที่ควรทำต่อ" ไม่เกิน 3 ข้อ <span class="kd kd-happy">Happy Path</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-2525"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2525"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">รายงานมี 3 หัวข้อเรียงตามลำดับ และ "สิ่งที่ควรทำต่อ" ไม่เกิน 3 ข้อ</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · E · เนื้อหารายงาน — 3 หัวข้อ ภาษาไทย ไม่มีข้อมูลผู้ชม</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>บัญชีนี้มีรายงานประจำวันที่สร้างไว้แล้วอย่างน้อย 1 รายงานในเวิร์กสเปซที่เลือกอยู่</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>ไปที่เมนู "รายงานประจำวัน" ด้านซ้าย</li><li>อ่านการ์ดรายงานล่าสุดทั้งฉบับ</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>มีหัวข้อ "ภาพรวมวัน" · "อารมณ์เด่น" · "สิ่งที่ควรทำต่อ" ตามลำดับนี้ เป็นภาษาไทย</li><li>"ภาพรวมวัน" พูดถึงไลฟ์ของวันนั้น (เวลาเริ่ม ความยาว ผู้ชม การมีส่วนร่วม)</li><li>"อารมณ์เด่น" เล่าสิ่งที่กล้องอ่านได้ ไม่ใช่การวินิจฉัยความรู้สึกของผู้ขาย</li><li>"สิ่งที่ควรทำต่อ" มีเป็นข้อ ไม่เกิน 3 ข้อ</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 7 · Story 7.1 AC7 (three sections · ≤ 3 actions) · FR100 (Ekman-7 highlights + top-3 insights)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2525" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2525" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2525" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2525" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2525" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2525"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2525" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2525">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="rpE" data-level="ui" data-prio="P2" data-kind="validation" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-RPT-E.2</td>
+  <td class="ctitle">ตัวเลขในรายงานตรงกับข้อมูลไลฟ์จริงของวันนั้น <span class="kd kd-val">Validation</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p2">P2</span></td>
+  <td class="status" data-uid="tc-2526"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2526"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ตัวเลขในรายงานตรงกับข้อมูลไลฟ์จริงของวันนั้น</div>
+  <div class="h-prio">Priority: <b>P2</b> · UI · ประเภท: <b>Validation</b> <span class="hint">(ข้อความ/รูปแบบที่แสดงถูกต้อง)</span> · E · เนื้อหารายงาน — 3 หัวข้อ ภาษาไทย ไม่มีข้อมูลผู้ชม</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>บัญชีนี้มีรายงานประจำวันที่สร้างไว้แล้วอย่างน้อย 1 รายงานในเวิร์กสเปซที่เลือกอยู่ ของวันที่มี 2 ไลฟ์ขึ้นไป</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>ไปที่เมนู "รายงานประจำวัน" ด้านซ้าย แล้วจดตัวเลขในหัวข้อ "ภาพรวมวัน" (จำนวนไลฟ์ เวลาเริ่ม ความยาว ผู้ชม)</li><li>ไปที่เมนู "เซสชัน" เปิดไลฟ์แต่ละไลฟ์ของวันนั้น แล้วเทียบตัวเลขกับที่จดไว้</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>จำนวนไลฟ์ เวลาเริ่ม ความยาว และจำนวนผู้ชมในรายงานตรงกับหน้ารายละเอียดของแต่ละไลฟ์</li><li>ไม่มีตัวเลขที่ไม่มีในข้อมูลไลฟ์ และไม่มีการเปรียบเทียบกับวันอื่น</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 7 · Story 7.1 AC7 (forbids numbers absent from the input; no comparisons with other days)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2526" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2526" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2526" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2526" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2526" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2526"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2526" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2526">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="rpE" data-level="ui" data-prio="P0" data-kind="permission" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-RPT-E.3</td>
+  <td class="ctitle">รายงานไม่มีชื่อผู้ชม คอมเมนต์ของผู้ชม สินค้า หรือราคา <span class="kd kd-perm">Permission</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-2527"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2527"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">รายงานไม่มีชื่อผู้ชม คอมเมนต์ของผู้ชม สินค้า หรือราคา</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Permission</b> <span class="hint">(บทบาท เจ้าของ / ผู้จัดการแบรนด์ / โฮสต์ · แยกบัญชี · ความยินยอม)</span> · E · เนื้อหารายงาน — 3 หัวข้อ ภาษาไทย ไม่มีข้อมูลผู้ชม</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>บัญชีนี้มีรายงานประจำวันที่สร้างไว้แล้วอย่างน้อย 1 รายงานในเวิร์กสเปซที่เลือกอยู่ ของวันที่ไลฟ์มีคอมเมนต์จำนวนมาก</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>ไปที่เมนู "รายงานประจำวัน" ด้านซ้าย</li><li>อ่านรายงานทั้งฉบับ แล้วเทียบกับคอมเมนต์ในไลฟ์ของวันนั้น (เมนู "เซสชัน" → แท็บ "คอมเมนต์")</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ไม่มีชื่อบัญชีผู้ชม และไม่มีการยกข้อความคอมเมนต์ของผู้ชมมาใส่</li><li>ไม่มีชื่อสินค้า ราคา ยอดขาย หรือโปรโมชัน</li><li>ถ้าพูดถึงคอมเมนต์ จะเป็นจำนวน เช่น มีกี่คอมเมนต์ที่ถามราคา เท่านั้น</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 7 · Story 7.1 AC7 · epics-mvp2 7.1 (no viewer comments, handles or quotes · OQ40)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2527" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2527" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2527" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2527" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2527" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2527"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2527" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2527">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+
+<!-- rpF -->
+<tr class="epicrow" data-epic="rpF"><td colspan="7">🛡️ F · ถอนความยินยอมแล้วรายงานที่เกี่ยวข้องหาย และแยกตามบัญชี · Story 7.1 (FR134 · FR5) <span class="rp">(2 เคส)</span></td></tr>
+<tr class="featrow" data-featkey="rp-consent"><td colspan="7">📁 ถอนความยินยอม / สลับบัญชี <span class="rp"><span class="lv lvl-ui">🌐 2</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="rp-consent"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow" data-feat="rpF" data-level="ui" data-prio="P1" data-kind="permission" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-RPT-F.1</td>
+  <td class="ctitle">ถอนความยินยอมเรื่องเสียง: รายงานที่ใช้คำพูดหายไป และไม่ถูกสร้างใหม่ <span class="kd kd-perm">Permission</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-2528"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2528"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ถอนความยินยอมเรื่องเสียง: รายงานที่ใช้คำพูดหายไป และไม่ถูกสร้างใหม่</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Permission</b> <span class="hint">(บทบาท เจ้าของ / ผู้จัดการแบรนด์ / โฮสต์ · แยกบัญชี · ความยินยอม)</span> · F · ถอนความยินยอมแล้วรายงานที่เกี่ยวข้องหาย และแยกตามบัญชี</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>บัญชีนี้มีรายงาน 1 ฉบับที่สร้างตอนให้ความยินยอมเรื่องเสียง และอีก 1 ฉบับที่สร้างตอนไม่ได้ให้</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>ไปที่เมนู "รายงานประจำวัน" ด้านซ้าย แล้วจดวันที่ของรายงานที่ใช้คำพูด (ทำขณะให้ความยินยอมเรื่องเสียง)</li><li>กดรูปโปรไฟล์ เลือก "ความเป็นส่วนตัว" แล้วถอนความยินยอม "ฟังเสียงพูดระหว่างไลฟ์" และกด "ถอนความยินยอม" ยืนยัน</li><li>ปิดแอปแล้วเปิดใหม่ เข้าสู่ระบบบัญชีเดิม ดูป้ายรายงานด้านบนของ "หน้าหลัก" แล้วไปที่เมนู "รายงานประจำวัน" ด้านซ้าย</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>รายงานที่สร้างตอนมีความยินยอมเรื่องเสียงไม่แสดงในหน้ารายงานแล้ว</li><li>รายงานที่สร้างจากตัวเลข/สีหน้าอย่างเดียว (ไม่ใช้คำพูด) ยังแสดงอยู่</li><li>หลังเปิดแอปใหม่ไม่มีป้าย "กำลังเตรียม…" สำหรับวันที่หายไป (ไม่สร้างใหม่)</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 7 · Story 7.1 AC11 · AC5 (withdrawn report not regenerated) · FR134</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2528" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2528" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2528" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2528" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2528" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2528"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2528" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2528">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="rpF" data-level="ui" data-prio="P0" data-kind="permission" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-RPT-F.2</td>
+  <td class="ctitle">สลับบัญชีบนเครื่องเดียวกัน: บัญชี B ไม่เห็นป้ายและรายงานของบัญชี A <span class="kd kd-perm">Permission</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-2529"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2529"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">สลับบัญชีบนเครื่องเดียวกัน: บัญชี B ไม่เห็นป้ายและรายงานของบัญชี A</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Permission</b> <span class="hint">(บทบาท เจ้าของ / ผู้จัดการแบรนด์ / โฮสต์ · แยกบัญชี · ความยินยอม)</span> · F · ถอนความยินยอมแล้วรายงานที่เกี่ยวข้องหาย และแยกตามบัญชี</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>บัญชี A มีรายงานและยังไม่ได้เปิดป้าย "พร้อมแล้ว"</li><li>บัญชี B ไม่มีบทบาท "เจ้าของ"/"ผู้จัดการแบรนด์" ในพื้นที่ทำงานของ A</li></ul></div>
+  <div class="sec"><h4>Test Data</h4><ul><li>บัญชี UAT 2 บัญชี</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT (บัญชี A ที่มีรายงาน)</li><li>กดรูปโปรไฟล์ เลือก "ออกจากระบบ" แล้วเข้าสู่ระบบด้วยบัญชี B บนเครื่องเดิม</li><li>ดูป้ายรายงานด้านบนของ "หน้าหลัก" แล้วไปที่เมนู "รายงานประจำวัน" ด้านซ้าย</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>บัญชี B ไม่เห็นป้ายรายงานของบัญชี A บนหน้าหลัก</li><li>หน้ารายงานของบัญชี B ไม่มีรายงานของบัญชี A (แสดงเฉพาะของ B หรือ "ยังไม่มีรายงานประจำวันในช่วง 90 วันที่ผ่านมา")</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 7 · Story 7.1 AC16 (account switch) · FR134 (readable by that account)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2529" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2529" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2529" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2529" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2529" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2529"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2529" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2529">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+
+<!-- rpG -->
+<tr class="epicrow" data-epic="rpG"><td colspan="7">👥 G · เจ้าของ / ผู้จัดการแบรนด์ อ่านรายงานของทุกโฮสต์ในเวิร์กสเปซ · Story 7.3 (FR100 เฟส 2) <span class="rp">(7 เคส)</span></td></tr>
+<tr class="featrow" data-featkey="rp-workspace"><td colspan="7">📁 แท็บ "ทุกโฮสต์" <span class="rp"><span class="lv lvl-ui">🌐 7</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="rp-workspace"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow" data-feat="rpG" data-level="ui" data-prio="P0" data-kind="permission" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-RPT-G.1</td>
+  <td class="ctitle">เจ้าของเปิดหน้ารายงาน: เริ่มที่แท็บ "ทุกโฮสต์" และเห็นรายงานแยกตามโฮสต์ <span class="kd kd-perm">Permission</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-2530"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2530"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">เจ้าของเปิดหน้ารายงาน: เริ่มที่แท็บ "ทุกโฮสต์" และเห็นรายงานแยกตามโฮสต์</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Permission</b> <span class="hint">(บทบาท เจ้าของ / ผู้จัดการแบรนด์ / โฮสต์ · แยกบัญชี · ความยินยอม)</span> · G · เจ้าของ / ผู้จัดการแบรนด์ อ่านรายงานของทุกโฮสต์ในเวิร์กสเปซ</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>บัญชีนี้มีบทบาท "เจ้าของ" ในเวิร์กสเปซที่เลือกอยู่</li><li>เวิร์กสเปซมีโฮสต์ A (ตั้งค่า AI ครบ + เปิดรายงานประจำวัน + มีรายงานแล้วอย่างน้อย 1 วัน) และโฮสต์ B (ยังไม่เคยบันทึก key จึงไม่มีรายงาน)</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT (บัญชีเจ้าของ)</li><li>ไปที่เมนู "รายงานประจำวัน" ด้านซ้าย</li><li>สังเกตแถบแท็บและเนื้อหาในแท็บที่เปิดอยู่</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>มีแถบแท็บ "ทุกโฮสต์" และ "รายงานของฉัน" โดยเปิดที่ "ทุกโฮสต์" ตั้งแต่แรก (ไม่กระพริบจาก "รายงานของฉัน" ก่อน)</li><li>มีข้อความ "โฮสต์จะมีรายงานก็ต่อเมื่อเชื่อมต่อคีย์ AI ของตัวเองแล้ว คีย์ของแต่ละคนอยู่บนเครื่องของคนนั้น ส่งต่อให้กันไม่ได้"</li><li>แต่ละโฮสต์มีหัวข้อของตัวเอง ใต้หัวข้อโฮสต์ A เป็นการ์ดรายงานเรียงวันล่าสุดก่อน อ่านเนื้อหาได้ครบ 3 หัวข้อ</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 7 · Story 7.3 AC · story AC10 · ruling (f) ทุกโฮสต์ opens first</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2530" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2530" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2530" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2530" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2530" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2530"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2530" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2530">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="rpG" data-level="ui" data-prio="P0" data-kind="negative" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-RPT-G.2</td>
+  <td class="ctitle">โฮสต์ที่ยังไม่ตั้ง key แสดงเป็น "ยังไม่มีรายงาน" ไม่หายไปจากรายการ <span class="kd kd-neg">Negative</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-2531"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2531"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">โฮสต์ที่ยังไม่ตั้ง key แสดงเป็น "ยังไม่มีรายงาน" ไม่หายไปจากรายการ</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Negative</b> <span class="hint">(ยังไม่ตั้งค่า / action ผิด / ไม่ควรเกิด)</span> · G · เจ้าของ / ผู้จัดการแบรนด์ อ่านรายงานของทุกโฮสต์ในเวิร์กสเปซ</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>บัญชีนี้มีบทบาท "เจ้าของ" ในเวิร์กสเปซที่เลือกอยู่</li><li>เวิร์กสเปซมีโฮสต์ A (ตั้งค่า AI ครบ + เปิดรายงานประจำวัน + มีรายงานแล้วอย่างน้อย 1 วัน) และโฮสต์ B (ยังไม่เคยบันทึก key จึงไม่มีรายงาน)</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT (บัญชีเจ้าของ)</li><li>ไปที่เมนู "รายงานประจำวัน" ด้านซ้าย</li><li>หาหัวข้อของโฮสต์ B ในแท็บ "ทุกโฮสต์"</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>โฮสต์ B ยังมีหัวข้อของตัวเอง และใต้หัวข้อขึ้นการ์ด "ยังไม่มีรายงาน"</li><li>ไม่แสดงเป็น error</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 7 · Story 7.3 ruling (a) · story AC10 (per-host BYOK empty state)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2531" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2531" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2531" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2531" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2531" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2531"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2531" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2531">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="rpG" data-level="ui" data-prio="P1" data-kind="permission" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-RPT-G.3</td>
+  <td class="ctitle">ผู้จัดการแบรนด์เห็นแท็บ "ทุกโฮสต์" และรายงานของทุกโฮสต์เหมือนเจ้าของ <span class="kd kd-perm">Permission</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-2532"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2532"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ผู้จัดการแบรนด์เห็นแท็บ "ทุกโฮสต์" และรายงานของทุกโฮสต์เหมือนเจ้าของ</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Permission</b> <span class="hint">(บทบาท เจ้าของ / ผู้จัดการแบรนด์ / โฮสต์ · แยกบัญชี · ความยินยอม)</span> · G · เจ้าของ / ผู้จัดการแบรนด์ อ่านรายงานของทุกโฮสต์ในเวิร์กสเปซ</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>บัญชีนี้มีบทบาท "ผู้จัดการแบรนด์" ในเวิร์กสเปซที่เลือกอยู่</li><li>เวิร์กสเปซมีโฮสต์ A (ตั้งค่า AI ครบ + เปิดรายงานประจำวัน + มีรายงานแล้วอย่างน้อย 1 วัน) และโฮสต์ B (ยังไม่เคยบันทึก key จึงไม่มีรายงาน)</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT (บัญชีผู้จัดการแบรนด์)</li><li>ไปที่เมนู "รายงานประจำวัน" ด้านซ้าย</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>เปิดที่แท็บ "ทุกโฮสต์" เห็นรายงานของโฮสต์ A และ "ยังไม่มีรายงาน" ของโฮสต์ B ครบเหมือนที่เจ้าของเห็น</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 7 · Story 7.3 AC ("Owner or Brand Manager … every host") · ruling (e)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2532" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2532" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2532" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2532" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2532" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2532"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2532" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2532">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="rpG" data-level="ui" data-prio="P1" data-kind="boundary" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-RPT-G.4</td>
+  <td class="ctitle">ปุ่มช่วงวัน "7 วัน" / "30 วัน": เริ่มที่ 7 วัน และเปลี่ยนเป็น 30 วันแล้วเห็นรายงานเก่าขึ้น <span class="kd kd-bnd">Boundary/Edge</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-2533"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2533"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ปุ่มช่วงวัน "7 วัน" / "30 วัน": เริ่มที่ 7 วัน และเปลี่ยนเป็น 30 วันแล้วเห็นรายงานเก่าขึ้น</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Boundary/Edge</b> <span class="hint">(ขอบวัน · ช่วง 7/30/90 วัน · ก่อน-ตรง-เกินขอบ)</span> · G · เจ้าของ / ผู้จัดการแบรนด์ อ่านรายงานของทุกโฮสต์ในเวิร์กสเปซ</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>บัญชีนี้มีบทบาท "เจ้าของ" ในเวิร์กสเปซที่เลือกอยู่</li><li>โฮสต์ A มีรายงานวันที่ 3 วันก่อน และวันที่ 10–20 วันก่อน</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT (บัญชีเจ้าของ)</li><li>ไปที่เมนู "รายงานประจำวัน" ด้านซ้าย</li><li>ดูปุ่มช่วงวันมุมขวาบน แล้วกด "30 วัน"</li><li>กด "7 วัน" กลับ</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>เริ่มต้นเลือก "7 วัน" และเห็นเฉพาะรายงาน 7 วันล่าสุด (นับรวมวันนี้)</li><li>กด "30 วัน" แล้วมีรายงานที่เก่ากว่า 7 วันแต่ไม่เกิน 30 วันเพิ่มขึ้นมา</li><li>กด "7 วัน" กลับแล้วรายงานที่เก่ากว่า 7 วันหายไป</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 7 · Story 7.3 ruling (g) (31-day cap · default 7 · 7/30 selector)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2533" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2533" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2533" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2533" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2533" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2533"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2533" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2533">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="rpG" data-level="ui" data-prio="P2" data-kind="boundary" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-RPT-G.5</td>
+  <td class="ctitle">รายงานวันที่ 7 วันก่อน (ขอบ) อยู่ในช่วง "7 วัน" ส่วน 8 วันก่อนไม่อยู่ <span class="kd kd-bnd">Boundary/Edge</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p2">P2</span></td>
+  <td class="status" data-uid="tc-2534"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2534"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">รายงานวันที่ 7 วันก่อน (ขอบ) อยู่ในช่วง "7 วัน" ส่วน 8 วันก่อนไม่อยู่</div>
+  <div class="h-prio">Priority: <b>P2</b> · UI · ประเภท: <b>Boundary/Edge</b> <span class="hint">(ขอบวัน · ช่วง 7/30/90 วัน · ก่อน-ตรง-เกินขอบ)</span> · G · เจ้าของ / ผู้จัดการแบรนด์ อ่านรายงานของทุกโฮสต์ในเวิร์กสเปซ</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>บัญชีนี้มีบทบาท "เจ้าของ" ในเวิร์กสเปซที่เลือกอยู่</li><li>โฮสต์ A มีรายงานของวันที่ 6 วันก่อน และ 7 วันก่อน</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT (บัญชีเจ้าของ)</li><li>ไปที่เมนู "รายงานประจำวัน" ด้านซ้าย</li><li>ในแท็บ "ทุกโฮสต์" ช่วง "7 วัน" ดูการ์ดเก่าสุดของโฮสต์ A</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>รายงานของวันที่ 6 วันก่อน (วันที่ 7 นับรวมวันนี้) แสดงในช่วง "7 วัน"</li><li>รายงานของวันที่ 7 วันก่อน (วันที่ 8 นับรวมวันนี้) ไม่แสดงในช่วง "7 วัน" แต่แสดงใน "30 วัน"</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 7 · Story 7.3 ruling (g) · Reports.jsx reportRange (last N local days ending today)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2534" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2534" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2534" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2534" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2534" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2534"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2534" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2534">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="rpG" data-level="ui" data-prio="P2" data-kind="happy" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-RPT-G.6</td>
+  <td class="ctitle">สลับไปแท็บ "รายงานของฉัน" แล้วเห็นเฉพาะรายงานของตัวเอง <span class="kd kd-happy">Happy Path</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p2">P2</span></td>
+  <td class="status" data-uid="tc-2535"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2535"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">สลับไปแท็บ "รายงานของฉัน" แล้วเห็นเฉพาะรายงานของตัวเอง</div>
+  <div class="h-prio">Priority: <b>P2</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · G · เจ้าของ / ผู้จัดการแบรนด์ อ่านรายงานของทุกโฮสต์ในเวิร์กสเปซ</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>บัญชีนี้มีบทบาท "เจ้าของ" ในเวิร์กสเปซที่เลือกอยู่</li><li>เวิร์กสเปซมีโฮสต์ A (ตั้งค่า AI ครบ + เปิดรายงานประจำวัน + มีรายงานแล้วอย่างน้อย 1 วัน) และโฮสต์ B (ยังไม่เคยบันทึก key จึงไม่มีรายงาน)</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT (บัญชีเจ้าของที่มีรายงานของตัวเองด้วย)</li><li>ไปที่เมนู "รายงานประจำวัน" ด้านซ้าย</li><li>กดแท็บ "รายงานของฉัน"</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>เห็นข้อความ "รายงานถูกเก็บแบบเข้ารหัสใน Takra Insight 90 วัน …" และเฉพาะรายงานที่บัญชีนี้สร้างเอง</li><li>ไม่มีรายงานของโฮสต์ A ปนอยู่ในแท็บนี้</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 7 · Story 7.3 ruling (f) (toggle back to รายงานของฉัน) · Story 7.1 AC10</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2535" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2535" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2535" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2535" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2535" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2535"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2535" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2535">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="rpG" data-level="ui" data-prio="P1" data-kind="permission" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-RPT-G.7</td>
+  <td class="ctitle">โฮสต์ถอนความยินยอมเรื่องเสียง: เจ้าของไม่เห็นรายงานที่ใช้คำพูดของโฮสต์นั้นแล้ว <span class="kd kd-perm">Permission</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-2536"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2536"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">โฮสต์ถอนความยินยอมเรื่องเสียง: เจ้าของไม่เห็นรายงานที่ใช้คำพูดของโฮสต์นั้นแล้ว</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Permission</b> <span class="hint">(บทบาท เจ้าของ / ผู้จัดการแบรนด์ / โฮสต์ · แยกบัญชี · ความยินยอม)</span> · G · เจ้าของ / ผู้จัดการแบรนด์ อ่านรายงานของทุกโฮสต์ในเวิร์กสเปซ</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>บัญชีนี้มีบทบาท "เจ้าของ" ในเวิร์กสเปซที่เลือกอยู่</li><li>โฮสต์ A มีรายงานที่สร้างตอนให้ความยินยอมเรื่องเสียง</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT (บัญชีเจ้าของ)</li><li>ไปที่เมนู "รายงานประจำวัน" ด้านซ้าย แล้วจดรายงานของโฮสต์ A ที่เห็น</li><li>ให้โฮสต์ A ถอนความยินยอม "ฟังเสียงพูดระหว่างไลฟ์" ในแอปของตัวเอง</li><li>กลับมาที่แอปของเจ้าของ ไปเมนูอื่นแล้วกลับมาที่ "รายงานประจำวัน"</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>รายงานของโฮสต์ A ที่สร้างตอนมีความยินยอมเรื่องเสียงไม่แสดงแล้ว</li><li>รายงานของโฮสต์ A ที่ไม่ได้ใช้คำพูดยังแสดง ถ้าไม่มีเหลือ หัวข้อโฮสต์ A ยังอยู่และขึ้น "ยังไม่มีรายงาน"</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 7 · Story 7.3 story AC6 (author's consent gates the author's rows) · FR134</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2536" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2536" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2536" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2536" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2536" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2536"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2536" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2536">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+
+<!-- rpH -->
+<tr class="epicrow" data-epic="rpH"><td colspan="7">🔒 H · โฮสต์ไม่เห็นรายงานของคนอื่น · เปลี่ยนบทบาท · ต่อระบบไม่ได้ · Story 7.3 (FR58 · FR100 เฟส 2) <span class="rp">(4 เคส)</span></td></tr>
+<tr class="featrow" data-featkey="rp-roles"><td colspan="7">📁 บทบาทและข้อผิดพลาด <span class="rp"><span class="lv lvl-ui">🌐 4</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="rp-roles"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow" data-feat="rpH" data-level="ui" data-prio="P0" data-kind="permission" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-RPT-H.1</td>
+  <td class="ctitle">โฮสต์เปิดหน้ารายงาน: ไม่มีแท็บ "ทุกโฮสต์" เห็นเฉพาะรายงานของตัวเอง <span class="kd kd-perm">Permission</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-2537"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2537"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">โฮสต์เปิดหน้ารายงาน: ไม่มีแท็บ "ทุกโฮสต์" เห็นเฉพาะรายงานของตัวเอง</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Permission</b> <span class="hint">(บทบาท เจ้าของ / ผู้จัดการแบรนด์ / โฮสต์ · แยกบัญชี · ความยินยอม)</span> · H · โฮสต์ไม่เห็นรายงานของคนอื่น</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>บัญชีนี้มีบทบาท "โฮสต์" ในเวิร์กสเปซที่เลือกอยู่</li><li>เวิร์กสเปซมีโฮสต์ A (ตั้งค่า AI ครบ + เปิดรายงานประจำวัน + มีรายงานแล้วอย่างน้อย 1 วัน) และโฮสต์ B (ยังไม่เคยบันทึก key จึงไม่มีรายงาน)</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT (บัญชีโฮสต์ A)</li><li>ไปที่เมนู "รายงานประจำวัน" ด้านซ้าย</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ไม่มีแถบแท็บ "ทุกโฮสต์" / "รายงานของฉัน"</li><li>เห็นเฉพาะรายงานที่โฮสต์ A สร้างเอง ไม่มีรายงานของโฮสต์คนอื่นหรือของเจ้าของ</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 7 · Story 7.3 story AC10 (host sees no control and today's page) · ruling (b) authorship</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2537" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2537" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2537" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2537" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2537" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2537"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2537" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2537">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="rpH" data-level="ui" data-prio="P1" data-kind="permission" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-RPT-H.2</td>
+  <td class="ctitle">เจ้าของลดบทบาทผู้จัดการแบรนด์เป็นโฮสต์: แท็บ "ทุกโฮสต์" หายไป <span class="kd kd-perm">Permission</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-2538"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2538"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">เจ้าของลดบทบาทผู้จัดการแบรนด์เป็นโฮสต์: แท็บ "ทุกโฮสต์" หายไป</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Permission</b> <span class="hint">(บทบาท เจ้าของ / ผู้จัดการแบรนด์ / โฮสต์ · แยกบัญชี · ความยินยอม)</span> · H · โฮสต์ไม่เห็นรายงานของคนอื่น</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>บัญชีนี้มีบทบาท "ผู้จัดการแบรนด์" ในเวิร์กสเปซที่เลือกอยู่</li><li>มีเครื่องที่ 2 ที่เข้าสู่ระบบด้วยบัญชีเจ้าของ</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT (บัญชีผู้จัดการแบรนด์) บนเครื่องที่ 1 แล้วไปที่เมนู "รายงานประจำวัน" ด้านซ้าย ดูว่ามีแท็บ "ทุกโฮสต์"</li><li>บนเครื่องที่ 2 เจ้าของกดรูปโปรไฟล์ เลือก "สมาชิกและบทบาท" แล้วเปลี่ยนบทบาทของบัญชีนั้นเป็น "โฮสต์"</li><li>บนเครื่องที่ 1 ปิดแอปแล้วเปิดใหม่ เข้าสู่ระบบบัญชีเดิม แล้วไปที่เมนู "รายงานประจำวัน" ด้านซ้าย</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ก่อนเปลี่ยนบทบาทมีแท็บ "ทุกโฮสต์"</li><li>หลังเปลี่ยนเป็น "โฮสต์" ไม่มีแถบแท็บแล้ว เห็นเฉพาะรายงานของตัวเอง</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 7 · Story 7.3 story AC10 · Story 9.3 (Insight roles)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2538" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2538" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2538" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2538" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2538" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2538"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2538" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2538">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="rpH" data-level="ui" data-prio="P1" data-kind="exception" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-RPT-H.3</td>
+  <td class="ctitle">แท็บ "ทุกโฮสต์" ตอนต่อระบบไม่ได้: ขึ้นข้อความอ่านเข้าใจ ไม่พัง <span class="kd kd-exc">Exception/Error</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-2539"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2539"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">แท็บ "ทุกโฮสต์" ตอนต่อระบบไม่ได้: ขึ้นข้อความอ่านเข้าใจ ไม่พัง</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Exception/Error</b> <span class="hint">(ผู้ให้บริการล่ม · เน็ตหลุด · key ใช้ไม่ได้)</span> · H · โฮสต์ไม่เห็นรายงานของคนอื่น</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>บัญชีนี้มีบทบาท "เจ้าของ" ในเวิร์กสเปซที่เลือกอยู่</li><li>เวิร์กสเปซมีโฮสต์ A (ตั้งค่า AI ครบ + เปิดรายงานประจำวัน + มีรายงานแล้วอย่างน้อย 1 วัน) และโฮสต์ B (ยังไม่เคยบันทึก key จึงไม่มีรายงาน)</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT (บัญชีเจ้าของ)</li><li>ไปที่เมนู "รายงานประจำวัน" ด้านซ้าย ให้แท็บ "ทุกโฮสต์" โหลดเสร็จ</li><li>ปิด Wi-Fi หรือถอดสายแลน แล้วกด "30 วัน"</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ขึ้นหมายเหตุ "ตอนนี้ต่อระบบไม่ได้ จึงอ่านรายงานของโฮสต์คนอื่นไม่ได้" (หรือ "ตอนนี้อ่านรายงานของโฮสต์คนอื่นไม่ได้")</li><li>หน้าไม่ค้าง แท็บยังอยู่ที่ "ทุกโฮสต์" และกด "รายงานของฉัน" ได้ตามปกติ</li><li>ต่อเน็ตกลับแล้วกด "7 วัน" รายงานกลับมาแสดง</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 7 · Story 7.3 story AC10 (closed reason codes · failed read shows one note)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2539" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2539" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2539" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2539" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2539" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2539"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2539" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2539">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="rpH" data-level="ui" data-prio="P1" data-kind="permission" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-RPT-H.4</td>
+  <td class="ctitle">เจ้าของเห็นเฉพาะโฮสต์ของเวิร์กสเปซที่เลือกอยู่ ไม่ปนกับเวิร์กสเปซอื่น <span class="kd kd-perm">Permission</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-2540"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-2540"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">เจ้าของเห็นเฉพาะโฮสต์ของเวิร์กสเปซที่เลือกอยู่ ไม่ปนกับเวิร์กสเปซอื่น</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Permission</b> <span class="hint">(บทบาท เจ้าของ / ผู้จัดการแบรนด์ / โฮสต์ · แยกบัญชี · ความยินยอม)</span> · H · โฮสต์ไม่เห็นรายงานของคนอื่น</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>บัญชีนี้มีบทบาท "เจ้าของ" ในเวิร์กสเปซที่เลือกอยู่ และในพื้นที่ทำงานที่ 2 ด้วย</li><li>ไม่ได้บันทึกไลฟ์อยู่</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT (บัญชีเจ้าของที่อยู่ 2 พื้นที่ทำงาน)</li><li>ไปที่เมนู "รายงานประจำวัน" ด้านซ้าย แล้วจดรหัสโฮสต์ในแท็บ "ทุกโฮสต์"</li><li>กดรูปโปรไฟล์ แล้วสลับไปอีกพื้นที่ทำงานในส่วน "พื้นที่ทำงาน"</li><li>ไปที่เมนู "รายงานประจำวัน" ด้านซ้าย อีกครั้ง</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>หลังสลับ รายการโฮสต์และรายงานเปลี่ยนเป็นของพื้นที่ทำงานใหม่ทั้งหมด ไม่มีโฮสต์/รายงานของพื้นที่ทำงานแรกปน</li><li>ถ้าพื้นที่ทำงานใหม่ยังไม่มีโฮสต์ ขึ้น "ยังไม่มีโฮสต์ในเวิร์กสเปซนี้"</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 7 · Story 7.3 story AC3 (only this workspace) · AC10 (workspace switch re-reads)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-2540" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-2540" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-2540" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-2540" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-2540" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-2540"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2540" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2540">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+</tbody>
+  </table>
+  </div>
+
+</div>
+<footer>[MVP2] TAKRA Insight — Epic 7 Daily Report Card → รายงานประจำวัน · UI Manual Test Cases · 40 UI + 0 E2E = 40 TCs · UI only (manual) · TAKRA Insight desktop (MVP-2 Epic 7 · Daily Report Card)</footer>
+
+<script>
+// ── Load store from embedded JSON ──
+var storeEl = document.getElementById('store-data');
+var store = {};
+try { store = JSON.parse(storeEl.textContent || '{}'); } catch(_) {}
+
+var SMAP = {
+  pass:  ['pass',  'PASS'],
+  fail:  ['fail',  'FAIL'],
+  hold:  ['hold',  'HOLD'],
+  block: ['block', 'BLOCKED'],
+  skip:  ['skip',  'SKIP'],
+};
+
+// Restore saved statuses
+Object.keys(store).forEach(function(uid) {
+  var st = store[uid] && store[uid].st;
+  if (!st || !SMAP[st]) return;
+  // badge
+  var rowStatus = document.querySelector('tr.trow td.status[data-uid="' + uid + '"]');
+  if (rowStatus) {
+    var stb = rowStatus.querySelector('.stb');
+    if (stb) { stb.className = 'stb ' + SMAP[st][0]; stb.textContent = SMAP[st][1]; }
+  }
+  // opt button
+  var opt = document.querySelector('.opt[data-uid="' + uid + '"][data-st="' + st + '"]');
+  if (opt) opt.classList.add('sel');
+  // also restore actual result text
+  if (store[uid].actual) {
+    var boxes = document.querySelectorAll('tr.detail');
+    boxes.forEach(function(d) {
+      var badge = d.querySelector('.opt[data-uid="' + uid + '"]');
+      if (!badge) return;
+      var box = d.querySelector('.actualbox');
+      if (box) { box.value = store[uid].actual; box.classList.add('filled'); }
+    });
+  }
+});
+
+// ── Toggle row expand ──
+function tg(row) {
+  var detail = row.nextElementSibling;
+  var isOpen = row.classList.contains('open');
+  row.classList.toggle('open', !isOpen);
+  if (detail && detail.classList.contains('detail')) {
+    detail.classList.toggle('show', !isOpen);
+  }
+}
+function toggleAll(open) {
+  document.querySelectorAll('tr.trow').forEach(function(r) {
+    if (r.classList.contains('hide')) return;
+    r.classList.toggle('open', open);
+    var d = r.nextElementSibling;
+    if (d && d.classList.contains('detail')) d.classList.toggle('show', open);
+  });
+}
+
+// ── Save store back into the embedded script tag ──
+function save() {
+  storeEl.textContent = '\n' + JSON.stringify(store, null, 2).replace(/</g, '\\u003c') + '\n';
+}
+
+// ── Status opt buttons ──
+document.querySelectorAll('.opt').forEach(function(o) {
+  o.addEventListener('click', function(e) {
+    e.stopPropagation();
+    var uid = o.dataset.uid, st = o.dataset.st;
+    var allOpts = document.querySelectorAll('.opt[data-uid="' + uid + '"]');
+    var alreadySel = o.classList.contains('sel');
+    allOpts.forEach(function(x) { x.classList.remove('sel'); });
+    store[uid] = store[uid] || {};
+    if (alreadySel) {
+      delete store[uid].st;
+    } else {
+      o.classList.add('sel');
+      store[uid].st = st;
+    }
+    var rowStatus = document.querySelector('tr.trow td.status[data-uid="' + uid + '"]');
+    if (rowStatus) {
+      var stb = rowStatus.querySelector('.stb');
+      if (stb) {
+        if (!alreadySel && SMAP[st]) { stb.className = 'stb ' + SMAP[st][0]; stb.textContent = SMAP[st][1]; }
+        else { stb.className = 'stb pending'; stb.textContent = 'รอเทส'; }
+      }
+    }
+    save();
+    applyFilters();   // re-filter (recounts too) so an active สถานะ filter updates live
+    markDirty();
+  });
+});
+
+// ── Actual result editable on blur ──
+document.querySelectorAll('.actualbox').forEach(function(box) {
+  // a <textarea> — clicking/typing must not bubble up to the row toggle
+  box.addEventListener('click', function(ev) { ev.stopPropagation(); });
+  box.addEventListener('input', function() { box.classList.toggle('filled', box.value.trim() !== ''); });
+  box.addEventListener('blur', function() {
+    // find uid from nearest .opt
+    var opts = box.closest('tr.detail').querySelectorAll('.opt');
+    if (!opts.length) return;
+    var uid = opts[0].dataset.uid;
+    var txt = box.value.trim();
+    var prev = (store[uid] && store[uid].actual) || '';
+    if (txt === prev) return;   // nothing typed → don't dirty the file
+    store[uid] = store[uid] || {};
+    if (txt) { store[uid].actual = txt; }
+    else { delete store[uid].actual; if (!Object.keys(store[uid]).length) delete store[uid]; }
+    save();
+    markDirty();
+  });
+});
+
+// ── Filters ──
+var filters = { feat: new Set(), level: new Set(), prio: new Set(), status: new Set(), kind: new Set(), ui: new Set() };
+document.querySelectorAll('.fchip').forEach(function(c) {
+  c.addEventListener('click', function() {
+    var f = c.dataset.f, v = c.dataset.v;
+    if (filters[f].has(v)) { filters[f].delete(v); c.classList.remove('active'); }
+    else { filters[f].add(v); c.classList.add('active'); }
+    applyFilters();
+  });
+});
+document.querySelectorAll('.clearbtn').forEach(function(b) {
+  b.addEventListener('click', function() {
+    var key = b.dataset.clear;
+    filters[key].clear();
+    document.querySelectorAll('.fchip[data-f="' + key + '"]').forEach(function(c) { c.classList.remove('active'); });
+    applyFilters();
+  });
+});
+function applyFilters() {
+  document.querySelectorAll('tr.trow').forEach(function(row) {
+    var ok = true;
+    if (filters.feat.size  && !filters.feat.has(row.dataset.feat))   ok = false;
+    if (filters.level.size && !filters.level.has(row.dataset.level)) ok = false;
+    if (filters.prio.size  && !filters.prio.has(row.dataset.prio))   ok = false;
+    if (filters.kind.size  && !filters.kind.has(row.dataset.kind))   ok = false;
+    if (filters.ui.size    && !filters.ui.has(row.dataset.ui))       ok = false;
+    if (filters.status.size) {
+      var stb = row.querySelector('td.status .stb');
+      var scls = stb ? stb.className.replace('stb', '').trim().split(' ')[0] : 'pending';
+      if (!filters.status.has(scls)) ok = false;
+    }
+    row.classList.toggle('hide', !ok);
+    var d = row.nextElementSibling;
+    if (d && d.classList.contains('detail')) d.classList.toggle('hide', !ok);
+  });
+  document.querySelectorAll('tr.featrow').forEach(function(fr) {
+    var n = fr.nextElementSibling, any = false;
+    while (n && !n.classList.contains('featrow') && !n.classList.contains('epicrow')) {
+      if (n.classList.contains('trow') && !n.classList.contains('hide')) { any = true; break; }
+      n = n.nextElementSibling;
+    }
+    fr.classList.toggle('hide', !any);
+  });
+  document.querySelectorAll('tr.epicrow').forEach(function(er) {
+    var n = er.nextElementSibling, any = false;
+    while (n && !n.classList.contains('epicrow')) {
+      if (n.classList.contains('trow') && !n.classList.contains('hide')) { any = true; break; }
+      n = n.nextElementSibling;
+    }
+    er.classList.toggle('hide', !any);
+  });
+  recount();
+}
+
+function recount() {
+  var c = { pass:0, fail:0, hold:0, block:0, skip:0, pending:0 };
+  document.querySelectorAll('tr.trow').forEach(function(row) {
+    var stb = row.querySelector('td.status .stb');
+    if (!stb) return;
+    var cls = stb.className.replace('stb','').trim().split(' ')[0];
+    if (c.hasOwnProperty(cls)) c[cls]++; else c.pending++;
+  });
+  var total    = c.pass + c.fail + c.hold + c.block + c.skip + c.pending;
+  var done     = c.pass + c.fail + c.hold + c.block;
+  var testable = total - c.skip;               // SKIP = ตั้งใจข้าม ไม่นับเป็นเป้าที่ต้องทดสอบ
+  var pct      = testable ? Math.round(done / testable * 100) : 0;
+  ['pass','fail','hold','block','skip'].forEach(function(k) {
+    var e = document.getElementById('sum-'+k); if (e) e.textContent = c[k];
+    var h = document.getElementById('hdr-'+k); if (h) h.textContent = c[k];
+  });
+  var ep = document.getElementById('sum-pending'); if (ep) ep.textContent = c.pending;
+  var hp = document.getElementById('hdr-pending'); if (hp) hp.textContent = c.pending;
+  var bar = document.getElementById('sumbar'); if (bar) bar.style.width = pct + '%';
+  var pctEl = document.getElementById('sumpct');
+  if (pctEl) pctEl.textContent = pct + '% ทดสอบแล้ว (' + done + '/' + testable + ')' + (c.skip ? ' · ข้าม ' + c.skip : '');
+}
+
+// ── GitHub publish config ──
+var GH_OWNER  = 'wanlee-tankunnatam';
+var GH_REPO   = 'qa-test-reports';
+var GH_PATH   = 'projects/takra-insight/2026/09/reports/takra-insight-mvp2-reports-ui-test-cases-table.html';
+var GH_BRANCH = 'master';
+var GH_API    = 'https://api.github.com/repos/' + GH_OWNER + '/' + GH_REPO + '/contents/' + GH_PATH;
+
+// ── Save state (dirty tracking + auto-publish) ──
+var dirty = false;
+var autoTimer = null;
+var publishing = false;
+
+function ghToken() {
+  var t = localStorage.getItem('gh_pat');
+  if (!t) {
+    t = prompt(
+      'ใส่ GitHub Personal Access Token (ใส่ครั้งเดียว จำไว้ในเบราว์เซอร์นี้)\n\n' +
+      'สร้าง token:\n' +
+      'github.com → Settings → Developer settings →\n' +
+      'Personal access tokens → Tokens (classic) → Generate new token (classic)\n' +
+      '→ ติ๊ก scope: repo  (หรือ public_repo เพราะ repo นี้ public)\n\n' +
+      'หรือ Fine-grained token: เลือก repo "qa-test-reports" →\n' +
+      'Permissions → Contents = Read and write'
+    );
+    if (t) localStorage.setItem('gh_pat', t.trim());
+  }
+  return t ? t.trim() : null;
+}
+function clearToken() { localStorage.removeItem('gh_pat'); }
+
+async function publishToGH(auto) {
+  if (publishing) return;
+  var btn = document.getElementById('btn-publish');
+  var token = auto ? localStorage.getItem('gh_pat') : ghToken();
+  if (!token) return;          // auto-save stays quiet until a token exists
+  publishing = true;
+  if (autoTimer) { clearTimeout(autoTimer); autoTimer = null; }
+
+  btn.disabled = true;
+  btn.textContent = '⏳ กำลังบันทึก…';
+  save();
+
+  var API = 'https://api.github.com/repos/' + GH_OWNER + '/' + GH_REPO + '/contents/' + GH_PATH;
+
+  // Serialize the page with the button forced to its idle/enabled state, so the
+  // committed file is never frozen mid-save (otherwise reopening it shows a
+  // permanently-disabled "⏳ กำลังบันทึก…" button).
+  function buildEncoded() {
+    var dis = btn.disabled, txt = btn.textContent;
+    btn.disabled = false;
+    btn.textContent = '☁️ บันทึกขึ้น GitHub';
+    var html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+    btn.disabled = dis;
+    btn.textContent = txt;
+    return btoa(unescape(encodeURIComponent(html)));
+  }
+
+  // Fetch current remote file (sha + content), bypassing any cache.
+  async function fetchRemote() {
+    var r = await fetch(
+      API + '?ref=' + GH_BRANCH + '&t=' + Date.now(),
+      { cache: 'no-store', headers: { Authorization: 'token ' + token, Accept: 'application/vnd.github+json' } }
+    );
+    if (!r.ok) {
+      if (r.status === 401) { localStorage.removeItem('gh_pat'); }
+      throw new Error('ดึงไฟล์ไม่ได้ (HTTP ' + r.status + ') — ตรวจ token หรือ branch');
+    }
+    return r.json();
+  }
+
+  // Merge statuses that exist on the remote copy but NOT locally, so a
+  // teammate's concurrent edit is not silently overwritten (local always wins
+  // for keys we changed; we only add keys we don't have).
+  function mergeRemote(remote) {
+    try {
+      var remoteHtml = decodeURIComponent(escape(atob((remote.content || '').replace(/\s/g, ''))));
+      var m = remoteHtml.match(/<script id="store-data"[^>]*>([\s\S]*?)<\/script>/);
+      if (!m) return;
+      var rs = JSON.parse((m[1] || '{}').trim() || '{}');
+      var added = 0;
+      Object.keys(rs).forEach(function(uid) {
+        if (uid in store) return;
+        store[uid] = rs[uid];
+        added++;
+        var st = rs[uid] && rs[uid].st;
+        if (st && SMAP[st]) {
+          var cell = document.querySelector('tr.trow td.status[data-uid="' + uid + '"] .stb');
+          if (cell) { cell.className = 'stb ' + SMAP[st][0]; cell.textContent = SMAP[st][1]; }
+          var opt = document.querySelector('.opt[data-uid="' + uid + '"][data-st="' + st + '"]');
+          if (opt) opt.classList.add('sel');
+        }
+      });
+      if (added) { save(); recount(); }
+    } catch (_) {}
+  }
+
+  // Commit content = the LATEST remote file with ONLY its store-data block
+  // swapped for our (merged) results. This makes auto-save a results-only
+  // overlay: a stale tab can never overwrite the repo's structure/layout —
+  // it always publishes on top of whatever structure is currently on GitHub.
+  function buildFromRemote(remote) {
+    try {
+      var remoteHtml = decodeURIComponent(escape(atob((remote.content || '').replace(/\s/g, ''))));
+      if (!/<script id="store-data"[^>]*>[\s\S]*?<\/script>/.test(remoteHtml)) return buildEncoded();
+      var json = '\n' + JSON.stringify(store, null, 2).replace(/</g, '\\u003c') + '\n';
+      var replaced = remoteHtml.replace(
+        /(<script id="store-data"[^>]*>)[\s\S]*?(<\/script>)/,
+        function(_m, o, c) { return o + json + c; }
+      );
+      return btoa(unescape(encodeURIComponent(replaced)));
+    } catch (_) {
+      return buildEncoded();   // fallback: serialize local DOM
+    }
+  }
+
+  async function commit(remote) {
+    var ts = new Date().toISOString().slice(0, 16).replace('T', ' ');
+    return fetch(API, {
+      method: 'PUT',
+      headers: { Authorization: 'token ' + token, Accept: 'application/vnd.github+json', 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        message: 'chore(qa): update test results ' + ts,
+        content: buildFromRemote(remote),
+        sha: remote.sha,
+        branch: GH_BRANCH
+      })
+    });
+  }
+
+  try {
+    var r2, lastErr;
+    // Up to 4 attempts. Re-fetch the SHA and merge remote statuses each time;
+    // a stale SHA returns 409/422 ("does not match …") which we retry.
+    for (var attempt = 0; attempt < 4; attempt++) {
+      var remote = await fetchRemote();
+      mergeRemote(remote);
+      r2 = await commit(remote);
+      if (r2.ok) break;
+      if (r2.status === 409 || r2.status === 422) {
+        lastErr = 'SHA ชนกัน (HTTP ' + r2.status + ')';
+        await new Promise(function(res) { setTimeout(res, 400 * (attempt + 1)); });
+        continue;
+      }
+      // Bad/expired token or insufficient scope — drop it so the next attempt re-prompts.
+      if (r2.status === 401 || r2.status === 403) {
+        clearToken();
+        var pe = await r2.json().catch(function() { return {}; });
+        throw new Error(
+          (pe.message || 'HTTP ' + r2.status) +
+          '\n\n→ Token สิทธิ์ไม่พอ/หมดอายุ ลบให้แล้ว ครั้งหน้าจะถามใหม่\n' +
+          '   ใช้ classic token scope "repo" (หรือ public_repo) หรือ fine-grained ที่ให้ Contents = Read and write กับ repo นี้'
+        );
+      }
+      var e = await r2.json();
+      throw new Error(e.message || 'HTTP ' + r2.status);
+    }
+    if (!r2.ok) {
+      throw new Error((lastErr || 'conflict') + ' — มีการแก้ไฟล์พร้อมกัน ลองกดบันทึกอีกครั้ง หรือ refresh หน้าก่อนบันทึก');
+    }
+
+    dirty = false;
+    publishing = false;
+    btn.textContent = '✅ บันทึกแล้ว!';
+    btn.style.background = 'var(--pass)';
+    setTimeout(function() {
+      btn.style.background = '';
+      btn.disabled = false;
+      updateIndicator();
+    }, 3000);
+  } catch (err) {
+    publishing = false;
+    if (!auto) alert('❌ บันทึกไม่สำเร็จ: ' + err.message);
+    btn.disabled = false;
+    updateIndicator();
+  }
+}
+
+document.getElementById('btn-publish').addEventListener('click', function() { publishToGH(false); });
+
+// ── Dirty tracking / unsaved indicator ──
+function autoOn() {
+  var c = document.getElementById('chk-autosave');
+  return c ? c.checked : false;
+}
+function updateIndicator() {
+  var s = document.getElementById('save-status');
+  var b = document.getElementById('btn-publish');
+  if (dirty) {
+    if (s) { s.textContent = '● ยังไม่ได้บันทึก'; s.style.color = 'var(--hold)'; }
+    if (b && !b.disabled && b.textContent.indexOf('✅') < 0) b.textContent = '☁️ บันทึกขึ้น GitHub *';
+  } else {
+    if (s) { s.textContent = '✓ ตรงกับ GitHub'; s.style.color = 'var(--muted)'; }
+    if (b && !b.disabled && b.textContent.indexOf('✅') < 0) b.textContent = '☁️ บันทึกขึ้น GitHub';
+  }
+}
+function markDirty() {
+  dirty = true;
+  updateIndicator();
+  // Auto-publish after the user stops editing — only once a token exists,
+  // so we never interrupt with a token prompt mid-edit.
+  if (autoOn() && localStorage.getItem('gh_pat')) {
+    if (autoTimer) clearTimeout(autoTimer);
+    autoTimer = setTimeout(function() { autoTimer = null; publishToGH(true); }, 5000);
+  }
+}
+window.addEventListener('beforeunload', function(e) {
+  if (dirty) { e.preventDefault(); e.returnValue = 'มีงานที่ยังไม่ได้บันทึกขึ้น GitHub'; return e.returnValue; }
+});
+
+// ── Re-render every badge from the store (used after pulling remote) ──
+function applyAllStatuses() {
+  document.querySelectorAll('.opt.sel').forEach(function(o) { o.classList.remove('sel'); });
+  document.querySelectorAll('tr.trow td.status .stb').forEach(function(s) {
+    s.className = 'stb pending'; s.textContent = 'รอเทส';
+  });
+  Object.keys(store).forEach(function(uid) {
+    var st = store[uid] && store[uid].st;
+    if (st && SMAP[st]) {
+      var cell = document.querySelector('tr.trow td.status[data-uid="' + uid + '"] .stb');
+      if (cell) { cell.className = 'stb ' + SMAP[st][0]; cell.textContent = SMAP[st][1]; }
+      var opt = document.querySelector('.opt[data-uid="' + uid + '"][data-st="' + st + '"]');
+      if (opt) opt.classList.add('sel');
+    }
+    if (store[uid] && store[uid].actual) {
+      document.querySelectorAll('tr.detail').forEach(function(d) {
+        if (!d.querySelector('.opt[data-uid="' + uid + '"]')) return;
+        var box = d.querySelector('.actualbox');
+        if (box) { box.value = store[uid].actual; box.classList.toggle('filled', !!store[uid].actual); }
+      });
+    }
+  });
+}
+
+// ── Pull latest results from GitHub (remote wins on overlap; keeps local-only) ──
+async function pullLatest() {
+  var rbtn = document.getElementById('btn-refresh');
+  if (dirty && !confirm('มีงานที่ยังไม่ได้บันทึก — การดึงล่าสุดจะใช้สถานะจาก GitHub ทับเฉพาะรายการที่ซ้ำกัน ต้องการต่อ?')) return;
+  if (rbtn) { rbtn.disabled = true; rbtn.textContent = '⏳ กำลังดึง…'; }
+  try {
+    var token = localStorage.getItem('gh_pat');
+    var html;
+    if (token) {
+      var r = await fetch(GH_API + '?ref=' + GH_BRANCH + '&t=' + Date.now(),
+        { cache: 'no-store', headers: { Authorization: 'token ' + token, Accept: 'application/vnd.github+json' } });
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      html = decodeURIComponent(escape(atob(((await r.json()).content || '').replace(/\s/g, ''))));
+    } else {
+      var rr = await fetch('https://raw.githubusercontent.com/' + GH_OWNER + '/' + GH_REPO + '/' + GH_BRANCH + '/' + GH_PATH + '?t=' + Date.now(),
+        { cache: 'no-store' });
+      if (!rr.ok) throw new Error('HTTP ' + rr.status);
+      html = await rr.text();
+    }
+    var m = html.match(/<script id="store-data"[^>]*>([\s\S]*?)<\/script>/);
+    var rs = m ? JSON.parse((m[1] || '{}').trim() || '{}') : {};
+    Object.keys(rs).forEach(function(uid) { store[uid] = rs[uid]; });
+    save();
+    applyAllStatuses();
+    recount();
+    dirty = false;
+    updateIndicator();
+    if (rbtn) { rbtn.textContent = '✅ ดึงแล้ว'; setTimeout(function() { rbtn.textContent = '🔄 ดึงล่าสุด'; rbtn.disabled = false; }, 2000); }
+  } catch (err) {
+    alert('❌ ดึงล่าสุดไม่สำเร็จ: ' + err.message);
+    if (rbtn) { rbtn.textContent = '🔄 ดึงล่าสุด'; rbtn.disabled = false; }
+  }
+}
+document.getElementById('btn-refresh').addEventListener('click', pullLatest);
+
+// ── Set / change GitHub token (one click to escape a bad/expired token) ──
+document.getElementById('btn-token').addEventListener('click', function() {
+  clearToken();
+  var t = ghToken();   // prompts for a fresh token
+  if (t) {
+    alert('บันทึก token แล้ว ✅\nลองกดเปลี่ยนสถานะ TC สัก 1 อัน — ปุ่มควรเด้ง "✅ บันทึกแล้ว!" ใน ~5 วิ');
+    updateIndicator();
+  }
+});
+
+// ── Download file (offline backup) ──
+document.getElementById('btn-save-file').addEventListener('click', function() {
+  save();
+  var html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+  var blob = new Blob([html], { type: 'text/html; charset=utf-8' });
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'takra-insight-mvp2-reports-ui-test-cases.html';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(a.href);
+});
+
+document.getElementById('btn-reset').addEventListener('click', function() {
+  if (!confirm('ล้างผลทดสอบทั้งหมด?')) return;
+  store = {};
+  save();
+  dirty = false;
+  location.reload();
+});
+
+// Set TC-AD.1 default to BLOCKED
+(function() {
+  if (!store['tc-29'] || !store['tc-29'].st) {
+    store['tc-29'] = { st: 'block' };
+    save();
+  }
+})();
+
+// Footer date
+var gd = document.getElementById('gen-date');
+if (gd) gd.textContent = document.lastModified || '';
+
+recount();
+updateIndicator();
+
+// Jira / Bug links (per test case · multiple)
+function jiraLabel(u){var m=String(u).match(/([A-Za-z]+-\d+)/);return m?m[1].toUpperCase():u;}
+function normJira(u){u=(u||'').trim();if(!u)return'';if(!/^https?:\/\//i.test(u)){var m=u.match(/^[A-Za-z]+-\d+$/);if(m)return'https://kitdi.atlassian.net/browse/'+u.toUpperCase();}return u;}
+function renderJira(uid){var box=document.querySelector('.jira-list[data-uid="'+uid+'"]');if(!box)return;var arr=(store[uid]&&store[uid].jira)||[];box.innerHTML='';arr.forEach(function(url,i){var row=document.createElement('div');row.className='jira-item';var a=document.createElement('a');a.href=url;a.target='_blank';a.rel='noopener';a.textContent=jiraLabel(url);var del=document.createElement('span');del.className='jira-del';del.textContent='✕';del.title='ลบลิงก์';del.addEventListener('click',function(){store[uid].jira.splice(i,1);if(!store[uid].jira.length)delete store[uid].jira;save();markDirty();renderJira(uid);});row.appendChild(a);row.appendChild(del);box.appendChild(row);});var cell=document.querySelector('td.jira-cell[data-uid="'+uid+'"]');if(cell){cell.innerHTML='';arr.forEach(function(url){var a2=document.createElement('a');a2.href=url;a2.target='_blank';a2.rel='noopener';a2.className='jira-chip';a2.textContent=jiraLabel(url);a2.addEventListener('click',function(e){e.stopPropagation();});cell.appendChild(a2);});}}
+function addJira(uid,val){var url=normJira(val);if(!url)return;store[uid]=store[uid]||{};store[uid].jira=store[uid].jira||[];store[uid].jira.push(url);save();markDirty();renderJira(uid);}
+document.querySelectorAll('.jira-btn').forEach(function(b){b.addEventListener('click',function(e){e.stopPropagation();var u=b.dataset.uid;var inp=document.querySelector('.jira-input[data-uid="'+u+'"]');addJira(u,inp.value);inp.value='';});});
+document.querySelectorAll('.jira-input').forEach(function(inp){inp.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();addJira(inp.dataset.uid,inp.value);inp.value='';}});inp.addEventListener('click',function(e){e.stopPropagation();});});
+document.querySelectorAll('.jira-list').forEach(function(box){renderJira(box.dataset.uid);});
+function applyFeatColor(e,owner){var cls=owner==='Wanlee T (Ice)'?'owner-ice':(owner==='Kachain B (Moss)'?'owner-moss':'');var er=document.querySelector('tr.featrow[data-featkey="'+e+'"]');if(!er)return;er.classList.remove('owner-ice','owner-moss');if(cls)er.classList.add(cls);var s=er.querySelector('.feat-owner');if(s){s.classList.remove('owner-ice','owner-moss');if(cls)s.classList.add(cls);}var n=er.nextElementSibling;while(n&&!n.classList.contains('featrow')&&!n.classList.contains('epicrow')){n.classList.remove('sec-ice','sec-moss');if(cls)n.classList.add(cls==='owner-ice'?'sec-ice':'sec-moss');n=n.nextElementSibling;}}
+document.querySelectorAll('.feat-owner').forEach(function(sel){var e=sel.dataset.featkey,k='feat-'+e;var cur=(store[k]&&store[k].owner)||'';sel.value=cur;applyFeatColor(e,cur);sel.addEventListener('click',function(ev){ev.stopPropagation();});sel.addEventListener('change',function(){var v=sel.value;if(v){store[k]=store[k]||{};store[k].owner=v;}else if(store[k]){delete store[k].owner;if(!Object.keys(store[k]).length)delete store[k];}save();markDirty();applyFeatColor(e,v);});});
+</script>
+
+
+</body></html>
