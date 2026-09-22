@@ -207,7 +207,7 @@ const PROJECTS = [
     { name:'ต่อมือถือ Android', due:'2026-09-18', qaDue:'2026-09-18', dev:'done', qa:'pass' },
     { name:'ตั้งตารางไว้ล่วงหน้า ระบบลงให้เองตามเวลา', due:'2026-09-18', qaDue:'2026-09-18', dev:'done', qa:'pass' },
     { name:'คลังคอนเทนต์ + แคปชั่นรวมที่เดียว', due:'2026-09-18', qaDue:'2026-09-18', dev:'done', qa:'pass' },
-    { name:'บัคตีกลับ · Report Bug #1', jira:'TF-1', due:null, qaDue:'2026-09-21', dev:'done', dev_label:'แก้แล้ว', qa:'wait', qaLabel:'รอ QA ตรวจสอบ' },
+    { name:'บัคตีกลับ · Report Bug #1', jira:'TF-1', due:null, qaDue:null, qaNoDate:true, dev:'done', dev_label:'แก้แล้ว', qa:'wait', qaLabel:'รอ QA ตรวจสอบ' },
   ]},
 ];
 
@@ -271,7 +271,7 @@ document.getElementById('rows').innerHTML = PROJECTS.map(p => {
     return `<tr>
       <td class="feat"><span class="fname">${esc(it.name)}</span>${it.jira ? ` <a class="jira" href="${JIRA}${esc(it.jira)}" target="_blank" rel="noopener">${esc(it.jira)} ↗</a>` : ''}${it.report ? ` <a class="jira" href="${esc(it.report)}" target="_blank" rel="noopener">📋 Test cases ↗</a>` : ''}${note ? `<span class="note">${esc(note)}</span>` : ''}</td>
       <td class="st">${pill(it.dev_label ? [DEV[it.dev][0], '✓ ' + it.dev_label] : it.devWaitLabel ? [DEV[it.dev][0], it.devWaitLabel] : DEV[it.dev])}${dateLine(it.due, it.dev !== 'done', it.noDate)}</td>
-      <td class="st">${pill(qa)}${dateLine(it.qaDue, it.qa !== 'pass', it.noDate)}</td>
+      <td class="st">${pill(qa)}${dateLine(it.qaDue, it.qa !== 'pass', it.noDate || it.qaNoDate)}</td>
     </tr>`;
   }).join('');
 }).join('');
