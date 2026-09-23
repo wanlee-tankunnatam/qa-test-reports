@@ -89,8 +89,8 @@ def load_mvp1():
 
 
 # ---------- MVP-2 (authored JSON) ----------
-MVP2_ORDER = [10, 15, 14, 9, 8, 12, 16, 99]
-MVP2_EMOJI = {8: '📜', 9: '🖥️', 10: '🧑‍🎤', 12: '💳', 14: '📡', 15: '🎬', 16: '⚙️', 99: '🔄'}
+MVP2_ORDER = [10, 15, 14, 9, 8, 12, 16, 13, 99]
+MVP2_EMOJI = {8: '📜', 9: '🖥️', 10: '🧑‍🎤', 12: '💳', 14: '📡', 15: '🎬', 16: '⚙️', 13: '🤖', 99: '🔄'}
 
 
 def load_mvp2():
@@ -375,7 +375,7 @@ tr.featrow .ty{margin-left:3px}
     <b>MVP-1 (Happy Path)</b> = เคส flow หลัก {mvp_cnt['mvp1']} เคส ยกมาจากรายงาน <a href="https://wanlee-tankunnatam.github.io/qa-test-reports/projects/takra-ai/2026/07/reports/takra-ai-mvp1-ui-test-cases-table.html" target="_blank" rel="noopener">MVP-1 UI</a> (ตัดเคส edge/negative/validation ออก · ID เดิม · อ้าง <code>epics.md</code>) ·
     <b>MVP-2</b> = {mvp_cnt['mvp2']} เคส ออกแบบใหม่จาก <code>_bmad-output/planning-artifacts/epics-mvp2.md</code> + <code>_bmad-output/test-artifacts/mvp-2/</code> (test-plan · gaps · case/mvp2-*) + UI จริงใน <code>apps/web/src</code> (as of 2026-08-19) ·
     ประเภท MVP-2: {tcount2} ·<br>📖 <b>นิยาม:</b> {typedefs} ·
-    ⚠️ <b>Epic 11 (Ops/Support)</b> ย้ายไป TAKRA Hub แล้ว (2026-08-10) — ไม่มีเคสในรายงานนี้ · <b>Epic 13</b> (Tool-calling) = backend-only ไม่มีหน้าจอ ·
+    ⚠️ <b>Epic 11 (Ops/Support)</b> ย้ายไป TAKRA Hub แล้ว (2026-08-10) — ไม่มีเคสในรายงานนี้ · <b>Epic 13</b> (AI ตอบคอมเมนต์อัตโนมัติ · เพิ่ม 2026-09-23) = เฉพาะผลที่เห็นบนจอ อ่านจากสาขา <code>feature/TAKRA-375</code> ที่ยังไม่ merge เข้า develop/uat · tool-calling จริงถูกตัดออกตามมติ TL-7 จึงไม่มีเคส ·
     เคสที่ติดป้าย <span class="edge-badge">ไม่พบใน UI</span> ({not_in_ui} เคส) = หน้าจอนั้นยังไม่พบในโค้ด UI ณ วันสร้าง เขียนจากสเปก → ถ้า UI ยังไม่มาให้ลงผล BLOCKED</div>
 '''
     target_note_end = out.find('</div>', out.find('<div class="note-box">🌐')) + len('</div>')
