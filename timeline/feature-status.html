@@ -34,7 +34,7 @@
   [hidden]{display:none!important}
   html,body{margin:0}
   body{background:var(--bg); color:var(--text); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans Thai",Roboto,Helvetica,Arial,sans-serif; line-height:1.5; font-size:15px; -webkit-font-smoothing:antialiased}
-  .wrap{max-width:1000px; margin:0 auto; padding:28px 18px 60px}
+  .wrap{max-width:1360px; margin:0 auto; padding:28px 18px 60px}
   header{display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between; gap:12px; margin-bottom:16px}
   h1{font-size:1.5rem; margin:0}
   .sub{color:var(--muted); font-size:.9rem}
@@ -85,7 +85,7 @@
   .g-name{width:250px; padding:0 12px; font-weight:600; border-right:1px solid var(--border); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; display:block; line-height:34px}
   /* ID + ฟีเจอร์ ตรึงซ้าย — เลื่อนแนวนอนเฉพาะส่วนปฏิทิน */
   .g-own{background:var(--panel); border-bottom:1px solid var(--border); border-right:1px solid var(--border); display:flex; align-items:center; padding:0 10px; font-size:.74rem; font-weight:600; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
-  .g-lcol{display:grid; grid-template-columns:44px 250px 92px; position:sticky; left:0; z-index:5; background:var(--panel); box-shadow:4px 0 6px -4px rgba(0,0,0,.18)}
+  .g-lcol{display:grid; grid-template-columns:44px 250px 92px 92px; position:sticky; left:0; z-index:5; background:var(--panel); box-shadow:4px 0 6px -4px rgba(0,0,0,.18)}
   .g-track{position:relative; height:34px; border-bottom:1px solid var(--border);
     background-image:repeating-linear-gradient(to right, transparent 0 calc(var(--dw) - 1px), var(--border) calc(var(--dw) - 1px) var(--dw))}
   .g-head .g-own{background:var(--head); letter-spacing:.04em}
@@ -145,7 +145,7 @@
   <section class="panel" data-panel="status">
     <div class="table-wrap">
       <table>
-        <thead><tr><th>ฟีเจอร์</th><th>DEV</th><th>QA</th><th>ผู้รับผิดชอบ</th></tr></thead>
+        <thead><tr><th>ฟีเจอร์</th><th>DEV</th><th>QA</th><th>ผู้รับผิดชอบ DEV</th><th>ผู้รับผิดชอบ QA</th></tr></thead>
         <tbody id="rows"></tbody>
       </table>
     </div>
@@ -158,31 +158,31 @@ const AS_OF = '2026-09-18';   // วันที่ของข้อมูล (
 // วันนี้จริงตามเครื่องผู้เปิด — ใช้นับวันเหลือ/เลยกำหนด และเส้นวันนี้
 const TODAY = (() => { const n = new Date(); return `${n.getFullYear()}-${String(n.getMonth() + 1).padStart(2, '0')}-${String(n.getDate()).padStart(2, '0')}`; })();
 
-// owner = ผู้รับผิดชอบของทั้งโปรเจกต์ (ใส่ owner ในรายการย่อยเพื่อทับเฉพาะแถวนั้นได้)
+// owner = ผู้รับผิดชอบ QA · devOwner = ผู้รับผิดชอบ DEV (ใส่ระดับโปรเจกต์ หรือใส่ในรายการย่อยเพื่อทับเฉพาะแถว)
 // due = กำหนด DEV · qaDue = กำหนด QA (ถ้ามี)
 // dev: done | wait | fixing | null   ·   qa: pass | fail | checking | wait | null
 const PROJECTS = [
-  { name:'Insight', emoji:'📊', owner:'Ice', items:[
+  { name:'Insight', emoji:'📊', owner:'Ice', devOwner:'Jame', items:[
     { name:'Metered LLM Proxy', report:'https://wanlee-tankunnatam.github.io/qa-test-reports/projects/takra-insight/2026/09/reports/takra-insight-mvp2-epic4-byok-ui-test-cases-table.html', due:'2026-09-16', qaDue:'2026-09-18', dev:'done', qa:'pass' },
     { name:'Brand Overview Dashboard', report:'https://wanlee-tankunnatam.github.io/qa-test-reports/projects/takra-insight/2026/09/reports/takra-insight-mvp2-dashboard-ui-test-cases-table.html', due:'2026-09-18', qaDue:'2026-09-25', dev:'done', qa:'fail' },
     { name:'AI Insights', due:'2026-09-22', qaDue:'2026-09-24', dev:'wait', qa:'wait' },
     { name:'Reports', report:'https://wanlee-tankunnatam.github.io/qa-test-reports/projects/takra-insight/2026/09/reports/takra-insight-mvp2-reports-ui-test-cases-table.html', due:'2026-09-24', qaDue:'2026-09-25', dev:'wait', qa:'wait' },
     { name:'Membership', report:'https://wanlee-tankunnatam.github.io/qa-test-reports/projects/takra-insight/2026/09/reports/takra-insight-mvp2-membership-ui-test-cases-table.html', due:'2026-09-18', qaDue:'2026-09-25', dev:'done', qa:'fail' },
-    { name:'บัคตีกลับ · [QA] MVP 1 - Manual test', jira:'TI-270', owner:'Moss / Ice', due:null, qaDue:null, noDate:true, dev:'wait', qa:'wait', qaLabel:'รอ QA ตรวจสอบ' },
-    { name:'บัคตีกลับ · [QA] MVP 2 - Manual test', jira:'TI-273', owner:'Moss / Ice', due:null, qaDue:null, noDate:true, dev:'wait', qa:'wait', qaLabel:'รอ QA ตรวจสอบ' },
+    { name:'บัคตีกลับ · [QA] MVP 1 - Manual test', jira:'TI-270', devOwner:'—', owner:'Moss / Ice', due:null, qaDue:null, noDate:true, dev:'wait', qa:'wait', qaLabel:'รอ QA ตรวจสอบ' },
+    { name:'บัคตีกลับ · [QA] MVP 2 - Manual test', jira:'TI-273', devOwner:'—', owner:'Moss / Ice', due:null, qaDue:null, noDate:true, dev:'wait', qa:'wait', qaLabel:'รอ QA ตรวจสอบ' },
   ]},
   { name:'Live', emoji:'🎥', owner:'Ice', items:[
-    { name:'Facebook', due:'2026-10-30', qaDue:'2026-10-30', dev:'wait', qa:'wait' },
-    { name:'Tool-calling auto-reply', due:'2026-09-25', qaDue:'2026-09-25', dev:'wait', qa:'wait' },
-    { name:'[FE] เพิ่มเสียงกระดิ่งเมื่อมีการแจ้งเตือนใหม่', jira:'TAKRA-1223', due:'2026-09-24', qaDue:'2026-09-24', dev:'wait', qa:'wait' },
-    { name:'[Spike/BE] ปรับให้อวตารพูดแบบมีอารมณ์ ไม่แข็งทื่อ', jira:'TAKRA-1224', due:'2026-09-29', qaDue:'2026-09-29', dev:'wait', qa:'wait' },
-    { name:'[FE] ปรับ UI หน้าสร้างสคริปต์ให้ใช้งานง่ายขึ้น', jira:'TAKRA-1225', due:'2026-09-23', qaDue:'2026-09-25', dev:'wait', qa:'wait' },
-    { name:'[Infra] Setup + ตั้งค่า takra-live บนเครื่อง remote', jira:'TAKRA-1226', due:null, qaDue:null, noDate:true, dev:'wait', qa:'wait' },
-    { name:'[FS] หน้ารายการไลฟ์ที่กำลังออกอากาศ — แสดงช่องทาง / บัญชี / avatar', jira:'TAKRA-1227', due:'2026-09-23', qaDue:null, qaNoDate:true, dev:'wait', qa:'wait' },
-    { name:'[FS] จัดหมวดหมู่คำเสี่ยงใหม่', jira:'TAKRA-1228', due:'2026-09-23', qaDue:null, qaNoDate:true, dev:'wait', qa:'wait' },
-    { name:'[FE] หน้าไลฟ์ต้องมี preview ภาพที่ผู้ชมเห็น', jira:'TAKRA-1229', due:null, qaDue:null, noDate:true, dev:'wait', qa:'wait' },
-    { name:'[Spike/FS] มีเสียงอีกคนพูดแทรกในไลฟ์ เหมือนมีทีมงานร่วมรายการ', jira:'TAKRA-1230', due:null, qaDue:null, noDate:true, dev:'wait', qa:'wait' },
-    { name:'บัคตีกลับ · [MVP2] QA Test Manual', jira:'TAKRA-474', owner:'Moss / Ice', due:'2026-10-02', qaDue:'2026-10-02', dev:'fixing', qa:'wait', qaLabel:'รอ QA ตรวจสอบ' },
+    { name:'Facebook', devOwner:'No', due:'2026-10-30', qaDue:'2026-10-30', dev:'wait', qa:'wait' },
+    { name:'Tool-calling auto-reply', devOwner:'Baot', due:'2026-09-25', qaDue:'2026-09-25', dev:'wait', qa:'wait' },
+    { name:'[FE] เพิ่มเสียงกระดิ่งเมื่อมีการแจ้งเตือนใหม่', jira:'TAKRA-1223', devOwner:'No', due:'2026-09-24', qaDue:'2026-09-24', dev:'wait', qa:'wait' },
+    { name:'[Spike/BE] ปรับให้อวตารพูดแบบมีอารมณ์ ไม่แข็งทื่อ', jira:'TAKRA-1224', devOwner:'No', due:'2026-09-29', qaDue:'2026-09-29', dev:'wait', qa:'wait' },
+    { name:'[FE] ปรับ UI หน้าสร้างสคริปต์ให้ใช้งานง่ายขึ้น', jira:'TAKRA-1225', devOwner:'Baot', due:'2026-09-23', qaDue:'2026-09-25', dev:'wait', qa:'wait' },
+    { name:'[Infra] Setup + ตั้งค่า takra-live บนเครื่อง remote', jira:'TAKRA-1226', devOwner:'No', due:null, qaDue:null, noDate:true, dev:'wait', qa:'wait' },
+    { name:'[FS] หน้ารายการไลฟ์ที่กำลังออกอากาศ — แสดงช่องทาง / บัญชี / avatar', jira:'TAKRA-1227', devOwner:'Baot', due:'2026-09-23', qaDue:null, qaNoDate:true, dev:'wait', qa:'wait' },
+    { name:'[FS] จัดหมวดหมู่คำเสี่ยงใหม่', jira:'TAKRA-1228', devOwner:'Baot', due:'2026-09-23', qaDue:null, qaNoDate:true, dev:'wait', qa:'wait' },
+    { name:'[FE] หน้าไลฟ์ต้องมี preview ภาพที่ผู้ชมเห็น', jira:'TAKRA-1229', devOwner:'No', due:null, qaDue:null, noDate:true, dev:'wait', qa:'wait' },
+    { name:'[Spike/FS] มีเสียงอีกคนพูดแทรกในไลฟ์ เหมือนมีทีมงานร่วมรายการ', jira:'TAKRA-1230', devOwner:'No', due:null, qaDue:null, noDate:true, dev:'wait', qa:'wait' },
+    { name:'บัคตีกลับ · [MVP2] QA Test Manual', jira:'TAKRA-474', devOwner:'—', owner:'Moss / Ice', due:'2026-10-02', qaDue:'2026-10-02', dev:'fixing', qa:'wait', qaLabel:'รอ QA ตรวจสอบ' },
   ]},
   { name:'Rerun', emoji:'🔁', owner:'Moss', items:[
     { name:'Auto Chat-Reply (LLM)', due:'2026-09-17', qaDue:'2026-09-17', dev:'done', qa:'pass' },
@@ -197,22 +197,22 @@ const PROJECTS = [
     { name:'VAT', due:'2026-09-17', qaDue:'2026-09-17', dev:'done', qa:'pass' },
     { name:'เอกสาร', subs:['ใบเสร็จ','รวมสลิป'], due:'2026-09-18', qaDue:'2026-09-18', dev:'done', qa:'pass' },
     { name:'เอาแพ็กเกจทดลองออก', due:'2026-09-18', qaDue:'2026-09-18', dev:'done', qa:'pass' },
-    { name:'บัคตีกลับ · [MVP1] QA Test Manual', jira:'TKH-50', owner:'Moss / Ice', due:null, qaDue:null, noDate:true, dev:'wait', qa:'wait', qaLabel:'รอ QA ตรวจสอบ' },
-    { name:'บัคตีกลับ · [MVP2] QA Test Manual', jira:'TKH-121', owner:'Moss / Ice', due:null, qaDue:null, noDate:true, dev:'wait', qa:'wait', qaLabel:'รอ QA ตรวจสอบ' },
-    { name:'บัคตีกลับ · [MVP3] QA Test Manual', jira:'TKH-239', owner:'Moss / Ice', due:null, qaDue:null, noDate:true, dev:'wait', qa:'wait', qaLabel:'รอ QA ตรวจสอบ' },
+    { name:'บัคตีกลับ · [MVP1] QA Test Manual', jira:'TKH-50', devOwner:'—', owner:'Moss / Ice', due:null, qaDue:null, noDate:true, dev:'wait', qa:'wait', qaLabel:'รอ QA ตรวจสอบ' },
+    { name:'บัคตีกลับ · [MVP2] QA Test Manual', jira:'TKH-121', devOwner:'—', owner:'Moss / Ice', due:null, qaDue:null, noDate:true, dev:'wait', qa:'wait', qaLabel:'รอ QA ตรวจสอบ' },
+    { name:'บัคตีกลับ · [MVP3] QA Test Manual', jira:'TKH-239', devOwner:'—', owner:'Moss / Ice', due:null, qaDue:null, noDate:true, dev:'wait', qa:'wait', qaLabel:'รอ QA ตรวจสอบ' },
   ]},
-  { name:'Trendora', emoji:'📈', owner:'Moss / Ice', items:[
+  { name:'Trendora', emoji:'📈', owner:'Moss / Ice', devOwner:'Berm', items:[
     { name:'หน้าหลัก', due:'2026-09-25', dev:'done', qa:'pass' },
     { name:'ค้นหา', due:'2026-09-25', qaDue:'2026-09-25', dev:'done', qa:'fail' },
     { name:'สินค้าเฝ้าดู', due:'2026-09-25', qaDue:'2026-09-25', dev:'done', qa:'fail' },
     { name:'Affiliate', due:'2026-09-25', qaDue:'2026-09-25', dev:'done', qa:'fail' },
-    { name:'บัคตีกลับ · [QA] MVP 1 - Manual test', jira:'TKRD-186', due:'2026-09-25', qaDue:'2026-09-25', dev:'fixing', qa:'wait', qaLabel:'รอ QA ตรวจสอบ' },
+    { name:'บัคตีกลับ · [QA] MVP 1 - Manual test', jira:'TKRD-186', devOwner:'—', due:'2026-09-25', qaDue:'2026-09-25', dev:'fixing', qa:'wait', qaLabel:'รอ QA ตรวจสอบ' },
   ]},
-  { name:'Post', emoji:'📱', owner:'Moss', items:[
+  { name:'Post', emoji:'📱', owner:'Moss', devOwner:'Book', items:[
     { name:'ต่อมือถือ Android', due:'2026-09-18', qaDue:'2026-09-18', dev:'done', qa:'pass' },
     { name:'ตั้งตารางไว้ล่วงหน้า ระบบลงให้เองตามเวลา', due:'2026-09-18', qaDue:'2026-09-18', dev:'done', qa:'pass' },
     { name:'คลังคอนเทนต์ + แคปชั่นรวมที่เดียว', due:'2026-09-18', qaDue:'2026-09-18', dev:'done', qa:'pass' },
-    { name:'บัคตีกลับ · Report Bug #1', jira:'TF-1', owner:'Moss / Ice', due:null, qaDue:null, qaNoDate:true, dev:'done', dev_label:'แก้แล้ว', qa:'wait', qaLabel:'รอ QA ตรวจสอบ' },
+    { name:'บัคตีกลับ · Report Bug #1', jira:'TF-1', devOwner:'—', owner:'Moss / Ice', due:null, qaDue:null, qaNoDate:true, dev:'done', dev_label:'แก้แล้ว', qa:'wait', qaLabel:'รอ QA ตรวจสอบ' },
   ]},
 ];
 
@@ -269,7 +269,7 @@ document.getElementById('summary').innerHTML = [
 
 document.getElementById('rows').innerHTML = PROJECTS.map(p => {
   const passed = p.items.filter(i => i.qa === 'pass').length;
-  const head = `<tr class="proj"><td colspan="4">${p.emoji} ${esc(p.name)}<span class="prog">QA ผ่าน ${passed}/${p.items.length}</span>${p.jira ? ` <a class="jira" href="${JIRA}${esc(p.jira)}" target="_blank" rel="noopener">${esc(p.jiraLabel || '')} ${esc(p.jira)} ↗</a>` : ''}</td></tr>`;
+  const head = `<tr class="proj"><td colspan="5">${p.emoji} ${esc(p.name)}<span class="prog">QA ผ่าน ${passed}/${p.items.length}</span>${p.jira ? ` <a class="jira" href="${JIRA}${esc(p.jira)}" target="_blank" rel="noopener">${esc(p.jiraLabel || '')} ${esc(p.jira)} ↗</a>` : ''}</td></tr>`;
   return head + p.items.map(it => {
     const qa = QA[it.qa].slice(); if (it.qaLabel) qa[1] = it.qaLabel;
     const note = [it.alias, it.subs && it.subs.join(' · ')].filter(Boolean).join(' — ');
@@ -277,6 +277,7 @@ document.getElementById('rows').innerHTML = PROJECTS.map(p => {
       <td class="feat"><span class="fname">${esc(it.name)}</span>${it.jira ? ` <a class="jira" href="${JIRA}${esc(it.jira)}" target="_blank" rel="noopener">${esc(it.jira)} ↗</a>` : ''}${it.report ? ` <a class="jira" href="${esc(it.report)}" target="_blank" rel="noopener">📋 Test cases ↗</a>` : ''}${note ? `<span class="note">${esc(note)}</span>` : ''}</td>
       <td class="st">${pill(it.dev_label ? [DEV[it.dev][0], '✓ ' + it.dev_label] : it.devWaitLabel ? [DEV[it.dev][0], it.devWaitLabel] : DEV[it.dev])}${dateLine(it.due, it.dev !== 'done', it.noDate)}</td>
       <td class="st">${pill(qa)}${dateLine(it.qaDue, it.qa !== 'pass', it.noDate || it.qaNoDate)}</td>
+      <td class="owner">${esc(it.devOwner || p.devOwner || '—')}</td>
       <td class="owner">${esc(it.owner || p.owner || '—')}</td>
     </tr>`;
   }).join('');
@@ -294,7 +295,7 @@ document.getElementById('rows').innerHTML = PROJECTS.map(p => {
   const col = s => Math.round((d(s) - start) / DAY);
   const g = document.getElementById('gantt');
   g.style.setProperty('--dw', DW + 'px');
-  g.style.setProperty('--lcols', '386px');
+  g.style.setProperty('--lcols', '478px');
   g.style.setProperty('--track', nDays * DW + 'px');
 
   const days = [...Array(nDays)].map((_, k) => new Date(start.getTime() + k * DAY));
@@ -312,13 +313,13 @@ document.getElementById('rows').innerHTML = PROJECTS.map(p => {
       <div class="g-lcol" style="grid-row:span 2"><div class="g-id">ID</div><div class="g-name">ฟีเจอร์</div></div>
       <div class="g-months">${monthsHtml}</div></div>
     <div class="g-row g-head"><div class="g-lcol"><div class="g-id" style="height:34px"></div><div class="g-name" style="height:34px"></div></div><div class="g-days">${daysHtml}</div></div>`;
-  html = `<div class="g-row g-head"><div class="g-lcol"><div class="g-id" style="height:64px;border-bottom:1px solid var(--border)">ID</div><div class="g-name" style="height:64px;border-bottom:1px solid var(--border)">ฟีเจอร์</div><div class="g-own" style="height:64px">ผู้รับผิดชอบ</div></div>
+  html = `<div class="g-row g-head"><div class="g-lcol"><div class="g-id" style="height:64px;border-bottom:1px solid var(--border)">ID</div><div class="g-name" style="height:64px;border-bottom:1px solid var(--border)">ฟีเจอร์</div><div class="g-own" style="height:64px">DEV</div><div class="g-own" style="height:64px">QA</div></div>
       <div><div class="g-months">${monthsHtml}</div><div class="g-days">${daysHtml}</div></div></div>`;
 
   let n = 0;
   PROJECTS.forEach(p => {
     const c = COLORS[p.name] || '#64748b';
-    html += `<div class="g-row g-proj"><div class="g-lcol"><div class="g-id" style="color:${c}">●</div><div class="g-name">${p.emoji} ${esc(p.name)}</div><div class="g-own">${esc(p.owner || '')}</div></div><div class="g-track"></div></div>`;
+    html += `<div class="g-row g-proj"><div class="g-lcol"><div class="g-id" style="color:${c}">●</div><div class="g-name">${p.emoji} ${esc(p.name)}</div><div class="g-own">${esc(p.devOwner || '')}</div><div class="g-own">${esc(p.owner || '')}</div></div><div class="g-track"></div></div>`;
     p.items.forEach(it => {
       n++;
       let track = '';
@@ -334,11 +335,11 @@ document.getElementById('rows').innerHTML = PROJECTS.map(p => {
         track += `<div class="g-lbl" style="left:${(b + 1) * DW + 2}px"><b>${it.qaDue ? 'QA ' + fmt(it.qaDue) : 'DEV ' + fmt(it.due)}</b>${fail ? `<span class="fail-txt">${esc(qaTxt)}</span>` : esc(qaTxt)}${overdue(it)}</div>`;
       }
       const tip = `${it.name}${it.due ? ' · DEV ' + fmt(it.due) : ''}${it.qaDue ? ' · QA ' + fmt(it.qaDue) : ''}`;
-      html += `<div class="g-row"><div class="g-lcol"><div class="g-id">${String(n).padStart(2, '0')}</div><div class="g-name" title="${esc(tip)}">${esc(it.name)}</div><div class="g-own">${esc(it.owner || p.owner || '—')}</div></div><div class="g-track">${track}</div></div>`;
+      html += `<div class="g-row"><div class="g-lcol"><div class="g-id">${String(n).padStart(2, '0')}</div><div class="g-name" title="${esc(tip)}">${esc(it.name)}</div><div class="g-own">${esc(it.devOwner || p.devOwner || '—')}</div><div class="g-own">${esc(it.owner || p.owner || '—')}</div></div><div class="g-track">${track}</div></div>`;
     });
   });
   // พื้นเสาร์-อาทิตย์ + เส้นวันนี้
-  const L = 386;
+  const L = 478;
   days.forEach((x, k) => { if (x.getDay() === 0 || x.getDay() === 6) html += `<div class="g-shade" style="left:${L + k * DW}px"></div>`; });
   html += `<div class="g-today" style="left:${L + todayCol * DW + DW / 2 - 1}px"></div>`;
   g.innerHTML = html;
