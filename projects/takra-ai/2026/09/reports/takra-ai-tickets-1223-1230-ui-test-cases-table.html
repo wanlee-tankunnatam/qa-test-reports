@@ -2,7 +2,7 @@
 <html lang="th"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TAKRA AI — ใบงาน 1223–1230 (1224 · 1225 · 1227 · 1229) UI Manual Test Cases</title>
+<title>TAKRA AI — ใบงาน 1223–1230 UI Manual Test Cases</title>
 <style>
 :root{
   --bg:#f5f6f8;--card:#fff;--card2:#f0f2f5;--line:#dce0e7;
@@ -152,20 +152,20 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 </script>
 
 <header class="top">
-  <h1>🎙️ TAKRA AI — ใบงาน 1223–1230 (1224 · 1225 · 1227 · 1229) UI Manual Test Cases</h1>
+  <h1>🎙️ TAKRA AI — ใบงาน 1223–1230 UI Manual Test Cases</h1>
   <div class="sub">เทส UI ด้วยมืออย่างเดียว · ใบงานที่แจ้งเข้ามา 22 ก.ย. 2569: <b>TAKRA-1223 – 1230</b> · Target: <b>TAKRA AI Web (UAT)</b> · login ด้วยบัญชี UAT</div>
   <div class="meta">
-    <span class="pill">38 เคส + E2E 0 = 38</span>
-    <span class="pill">4 กลุ่ม (1 กลุ่ม = 1 ใบงาน) · อีก 4 ใบไม่มีหน้าจอให้เทส (ดูหมายเหตุ)</span>
-    <span class="pill">UI + E2E · manual</span><span class="pill">⛔ ยังไม่มีหน้าจอ 11 · พร้อมเทส 27</span>
-    <span class="pill">P0 23 · P1 14 · P2 1</span>
-    <span class="pill">ประเภท: Happy 19 · Negative 1 · Boundary 6 · Validation 1 · Exception 2 · Permission 2 · Data 7</span>
+    <span class="pill">57 เคส + E2E 0 = 57</span>
+    <span class="pill">8 กลุ่ม (1 กลุ่ม = 1 ใบงาน) · 5 ใบยังไม่มีหน้าจอ = เคสล่วงหน้า (⛔)</span>
+    <span class="pill">UI + E2E · manual</span><span class="pill">⛔ ยังไม่มีหน้าจอ 30 · พร้อมเทส 27</span>
+    <span class="pill">P0 35 · P1 21 · P2 1</span>
+    <span class="pill">ประเภท: Happy 25 · Negative 5 · Boundary 8 · Validation 1 · Exception 3 · Permission 4 · Data 11</span>
   </div>
 </header>
 
 <div class="wrap">
 
-  <div class="note-box">🖥️ <b>Test target:</b> เว็บ <b>TAKRA AI</b> รุ่น UAT · ใช้ Chrome บนเดสก์ท็อป · บัญชี UAT ที่ต้องเตรียม: เจ้าของ workspace ที่ผูกบัญชี TikTok สำหรับส่งตรงไว้แล้ว · มีเสียง Google ในคลังเสียง · มีสินค้าและสคริปต์ที่อนุมัติแล้ว<br>📎 <b>ที่มาของเคส:</b> Jira ทั้ง 8 ใบ + คอมเมนต์ของ dev/PO ในใบ · commit จริงบน <code>origin/develop</code> @ <code>48e17aa0</code> (23 ก.ย. 2569) · story <code>_bmad-output/implementation-artifacts/takra-1229-control-room-on-air-preview.md</code> · UI จริงใน <code>apps/web/src</code> · คำ UI ลอกจาก <code>apps/web/src/i18n/locales/th/*.ts</code><br>🚦 <b>สถานะโค้ด ณ 23 ก.ย. 2569:</b> <b>1224</b> และ <b>1229</b> ขึ้น <code>uat</code> แล้ว → เทสได้เลย · <b>1225</b> merge เข้า <code>develop</code> แล้วแต่ยังไม่ขึ้น <code>uat</code> → รอ deploy ก่อน · <b>1227</b> ยังไม่มีโค้ด → เคสเขียนตาม AC ไว้ล่วงหน้า (ติดป้าย ⛔)<br>🚫 <b>ใบที่ไม่มีเคสในรายงานนี้:</b> <b>TAKRA-1223</b> เสียงกระดิ่งแจ้งเตือน — ยังไม่ groom · คำถามหลักยังไม่ได้เคาะ (ดังทุกประเภทไหม · ค่าเริ่มต้น · เงียบระหว่างไลฟ์ไหม) และยังไม่มีโค้ด ⇒ เขียน Expected ไม่ได้โดยไม่เดา · <b>TAKRA-1226</b> ติดตั้ง takra-live บนเครื่อง remote — งาน infra ไม่มีหน้าจอ · <b>TAKRA-1228</b> จัดหมวดคำเสี่ยงใหม่ — ยังไม่มีรายการหมวดใหม่และตาราง mapping ยังไม่เคาะ และยังไม่มีโค้ด · <b>TAKRA-1230</b> เสียงอีกคนพูดแทรก — เป็น spike ผลลัพธ์คือเอกสาร ห้าม implement จากใบนี้ ⇒ จะเพิ่มเคสเมื่อใบเหล่านี้มี AC/หน้าจอ<br>🏷️ <b>ประเภทเคส (กรองได้):</b> Happy Path · Negative · Boundary · Validation · Exception · Permission · Data</div>
+  <div class="note-box">🖥️ <b>Test target:</b> เว็บ <b>TAKRA AI</b> รุ่น UAT · ใช้ Chrome บนเดสก์ท็อป · บัญชี UAT ที่ต้องเตรียม: เจ้าของ workspace ที่ผูกบัญชี TikTok สำหรับส่งตรงไว้แล้ว · มีเสียง Google ในคลังเสียง · มีสินค้าและสคริปต์ที่อนุมัติแล้ว<br>📎 <b>ที่มาของเคส:</b> Jira ทั้ง 8 ใบ + คอมเมนต์ของ dev/PO ในใบ · commit จริงบน <code>origin/develop</code> @ <code>48e17aa0</code> (23 ก.ย. 2569) · story <code>_bmad-output/implementation-artifacts/takra-1229-control-room-on-air-preview.md</code> · UI จริงใน <code>apps/web/src</code> · คำ UI ลอกจาก <code>apps/web/src/i18n/locales/th/*.ts</code><br>🚦 <b>สถานะโค้ด ณ 23 ก.ย. 2569:</b> <b>1224</b> และ <b>1229</b> ขึ้น <code>uat</code> แล้ว → เทสได้เลย · <b>1225</b> merge เข้า <code>develop</code> แล้วแต่ยังไม่ขึ้น <code>uat</code> → รอ deploy ก่อน · <b>1227</b> ยังไม่มีโค้ด → เคสเขียนตาม AC ไว้ล่วงหน้า (ติดป้าย ⛔)<br>⛔ <b>เคสล่วงหน้า (ยังไม่มีหน้าจอ):</b> <b>TAKRA-1223</b> เสียงกระดิ่ง — ยังไม่ groom · Expected ตามข้อเสนอในใบ (ตั้งค่าที่ "การแจ้งเตือน" · ค่าเริ่มต้นปิด) · <b>TAKRA-1226</b> takra-live บนเครื่อง remote — งาน infra · เคส smoke ผ่านหน้าเว็บหลังติดตั้ง · <b>TAKRA-1228</b> จัดหมวดคำเสี่ยงใหม่ — ยังไม่มีรายการหมวดใหม่ · เคส regression ก่อน/หลังย้ายหมวด · <b>TAKRA-1230</b> เสียงที่สองในไลฟ์ — spike · เคสเกณฑ์ขั้นต่ำเมื่อแตกเป็นตั๋ว dev ⇒ ปรับคำ/Expected เมื่อใบมี AC และหน้าจอจริง<br>🏷️ <b>ประเภทเคส (กรองได้):</b> Happy Path · Negative · Boundary · Validation · Exception · Permission · Data</div>
 
   <div class="runsum">
     <h3>📊 สรุปผล Manual Test</h3>
@@ -175,10 +175,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
       <span class="cnt hold">HOLD <b id="sum-hold">0</b></span>
       <span class="cnt block">BLOCKED <b id="sum-block">0</b></span>
       <span class="cnt skip">SKIP <b id="sum-skip">0</b></span>
-      <span class="cnt pending">รอเทส <b id="sum-pending">38</b></span>
+      <span class="cnt pending">รอเทส <b id="sum-pending">57</b></span>
     </div>
     <div class="progress"><div id="sumbar" class="progressbar" style="width:0%"></div></div>
-    <div class="hint" id="sumpct" style="margin-top:5px">0% ทดสอบแล้ว (0/38)</div>
+    <div class="hint" id="sumpct" style="margin-top:5px">0% ทดสอบแล้ว (0/57)</div>
   </div>
 
   <div class="toolbar">
@@ -198,16 +198,16 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
   <div class="filters">
     <div class="row"><label>กลุ่ม</label>
-      <button class="fchip" data-f="feat" data-v="t1224">🎙️ TAKRA-1224 (8)</button><button class="fchip" data-f="feat" data-v="t1225">📝 TAKRA-1225 (10)</button><button class="fchip" data-f="feat" data-v="t1229">📺 TAKRA-1229 (9)</button><button class="fchip" data-f="feat" data-v="t1227">📋 TAKRA-1227 (11)</button>
+      <button class="fchip" data-f="feat" data-v="t1224">🎙️ TAKRA-1224 (8)</button><button class="fchip" data-f="feat" data-v="t1225">📝 TAKRA-1225 (10)</button><button class="fchip" data-f="feat" data-v="t1229">📺 TAKRA-1229 (9)</button><button class="fchip" data-f="feat" data-v="t1227">📋 TAKRA-1227 (11)</button><button class="fchip" data-f="feat" data-v="t1223">🔔 TAKRA-1223 (6)</button><button class="fchip" data-f="feat" data-v="t1226">🖧 TAKRA-1226 (4)</button><button class="fchip" data-f="feat" data-v="t1228">🏷️ TAKRA-1228 (6)</button><button class="fchip" data-f="feat" data-v="t1230">🎤 TAKRA-1230 (3)</button>
       <button class="clearbtn" data-clear="feat">✕</button>
     </div>
     <div class="row"><label>ประเภท</label>
-      <button class="fchip" data-f="kind" data-v="happy" title="flow ปกติ">Happy Path (19)</button><button class="fchip" data-f="kind" data-v="negative" title="ข้อมูลผิด / action ผิด">Negative (1)</button><button class="fchip" data-f="kind" data-v="boundary" title="min · max · ก่อนขอบ · ตรงขอบ · เกินขอบ">Boundary (6)</button><button class="fchip" data-f="kind" data-v="validation" title="format · required · character · length">Validation (1)</button><button class="fchip" data-f="kind" data-v="exception" title="API fail · network fail · server error · timeout">Exception (2)</button><button class="fchip" data-f="kind" data-v="permission" title="role ไหนทำได้ / ทำไม่ได้">Permission (2)</button><button class="fchip" data-f="kind" data-v="data" title="empty · null · duplicate · existing · non-existing">Data (7)</button>
+      <button class="fchip" data-f="kind" data-v="happy" title="flow ปกติ">Happy Path (25)</button><button class="fchip" data-f="kind" data-v="negative" title="ข้อมูลผิด / action ผิด">Negative (5)</button><button class="fchip" data-f="kind" data-v="boundary" title="min · max · ก่อนขอบ · ตรงขอบ · เกินขอบ">Boundary (8)</button><button class="fchip" data-f="kind" data-v="validation" title="format · required · character · length">Validation (1)</button><button class="fchip" data-f="kind" data-v="exception" title="API fail · network fail · server error · timeout">Exception (3)</button><button class="fchip" data-f="kind" data-v="permission" title="role ไหนทำได้ / ทำไม่ได้">Permission (4)</button><button class="fchip" data-f="kind" data-v="data" title="empty · null · duplicate · existing · non-existing">Data (11)</button>
       <button class="clearbtn" data-clear="kind">✕</button>
     </div>
     <div class="row"><label>สถานะ UI</label>
       <button class="fchip" data-f="ui" data-v="yes">✅ พร้อมเทส (27)</button>
-      <button class="fchip" data-f="ui" data-v="no">⛔ ยังไม่มีหน้าจอ (11)</button>
+      <button class="fchip" data-f="ui" data-v="no">⛔ ยังไม่มีหน้าจอ (30)</button>
       <button class="clearbtn" data-clear="ui">✕</button>
     </div>
     <div class="row"><label>Priority</label>
@@ -1100,7 +1100,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">แดชบอร์ด › "กำลังออกอากาศ" — การ์ดแสดงอวาตาร์(ชื่อ) · เสียง · จำนวนสินค้า · สคริปต์+รอบ · ช่องทาง + ชื่อบัญชี</div>
   <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1227" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1227 ใน Jira">🧩 Epic TAKRA-1227</a> · Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · TAKRA-1227 · รายการไลฟ์แสดงช่องทาง / บัญชี / อวาตาร์ / เสียง / สินค้า / สคริปต์+รอบ (⛔ ยังไม่มีโค้ด ณ 23 ก.ย. — เขียนตาม AC ล่วงหน้า)</div>
-  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังไม่มีหน้าจอ</b> ณ origin/develop 48e17aa0 (23 ก.ย. 2569) — เคสเขียนตาม AC ใน TAKRA-1227 ไว้ล่วงหน้า คำบนการ์ด/หน้ารายละเอียดยังไม่มีใน i18n อาจต่างจากของจริงเมื่อ dev ส่งมอบ · ถ้ายังไม่มีให้บันทึกเป็น <b>BLOCKED</b></div></div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังไม่มีหน้าจอ</b> ณ origin/develop 48e17aa0 (23 ก.ย. 2569) — เคสเขียนตาม AC/ข้อเสนอในใบไว้ล่วงหน้า คำของส่วนใหม่ยังไม่มีใน i18n อาจต่างจากของจริงเมื่อ dev ส่งมอบ · ถ้ายังไม่มีให้บันทึกเป็น <b>BLOCKED</b></div></div>
   <div class="sec"><h4>Precondition</h4><ul><li>บัญชีเจ้าของ workspace บน UAT</li><li>มีไลฟ์ส่งตรงเข้า TikTok กำลังออกอากาศ ที่รู้ว่าประกอบด้วย อวาตาร์ · เสียง · สินค้า · สคริปต์ · จำนวนรอบ อะไร (จดไว้ก่อนเริ่ม)</li></ul></div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA AI (UAT) แล้วเข้าสู่ระบบด้วยบัญชีเจ้าของ workspace</li><li>ไปที่เมนู "แพลตฟอร์มไลฟ์" (หน้า "แดชบอร์ดไลฟ์")</li><li>ดูการ์ดไลฟ์ในหัวข้อ "กำลังออกอากาศ" แล้วเทียบกับสิ่งที่จดไว้</li></ol></div>
   <div class="grid">
@@ -1132,7 +1132,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">ห้องคุมไลฟ์ — แถวไลฟ์ "กำลังออกอากาศ" และ "ขัดข้อง" แสดงชุดข้อมูลเดียวกับการ์ดแดชบอร์ด</div>
   <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1227" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1227 ใน Jira">🧩 Epic TAKRA-1227</a> · Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · TAKRA-1227 · รายการไลฟ์แสดงช่องทาง / บัญชี / อวาตาร์ / เสียง / สินค้า / สคริปต์+รอบ (⛔ ยังไม่มีโค้ด ณ 23 ก.ย. — เขียนตาม AC ล่วงหน้า)</div>
-  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังไม่มีหน้าจอ</b> ณ origin/develop 48e17aa0 (23 ก.ย. 2569) — เคสเขียนตาม AC ใน TAKRA-1227 ไว้ล่วงหน้า คำบนการ์ด/หน้ารายละเอียดยังไม่มีใน i18n อาจต่างจากของจริงเมื่อ dev ส่งมอบ · ถ้ายังไม่มีให้บันทึกเป็น <b>BLOCKED</b></div></div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังไม่มีหน้าจอ</b> ณ origin/develop 48e17aa0 (23 ก.ย. 2569) — เคสเขียนตาม AC/ข้อเสนอในใบไว้ล่วงหน้า คำของส่วนใหม่ยังไม่มีใน i18n อาจต่างจากของจริงเมื่อ dev ส่งมอบ · ถ้ายังไม่มีให้บันทึกเป็น <b>BLOCKED</b></div></div>
   <div class="sec"><h4>Precondition</h4><ul><li>มีไลฟ์กำลังออกอากาศ 1 รอบ และรอบที่ "ขัดข้อง" ที่ยังไม่มีใครกด "รับทราบ" 1 รอบ</li></ul></div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA AI (UAT) แล้วเข้าสู่ระบบด้วยบัญชีเจ้าของ workspace</li><li>ไปที่เมนู "แพลตฟอร์มไลฟ์" แล้วเข้าหน้า "ห้องคุมไลฟ์"</li><li>ดูแถวของไลฟ์ที่ "กำลังออกอากาศ" และแถวที่ติดป้าย "ขัดข้อง"</li></ol></div>
   <div class="grid">
@@ -1164,7 +1164,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">"ไลฟ์ของฉัน" ทั้ง 3 แท็บ — ทุกแถวแสดงชุดข้อมูลเดียวกัน และอ่านออกบนจอแคบ</div>
   <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1227" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1227 ใน Jira">🧩 Epic TAKRA-1227</a> · Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · TAKRA-1227 · รายการไลฟ์แสดงช่องทาง / บัญชี / อวาตาร์ / เสียง / สินค้า / สคริปต์+รอบ (⛔ ยังไม่มีโค้ด ณ 23 ก.ย. — เขียนตาม AC ล่วงหน้า)</div>
-  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังไม่มีหน้าจอ</b> ณ origin/develop 48e17aa0 (23 ก.ย. 2569) — เคสเขียนตาม AC ใน TAKRA-1227 ไว้ล่วงหน้า คำบนการ์ด/หน้ารายละเอียดยังไม่มีใน i18n อาจต่างจากของจริงเมื่อ dev ส่งมอบ · ถ้ายังไม่มีให้บันทึกเป็น <b>BLOCKED</b></div></div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังไม่มีหน้าจอ</b> ณ origin/develop 48e17aa0 (23 ก.ย. 2569) — เคสเขียนตาม AC/ข้อเสนอในใบไว้ล่วงหน้า คำของส่วนใหม่ยังไม่มีใน i18n อาจต่างจากของจริงเมื่อ dev ส่งมอบ · ถ้ายังไม่มีให้บันทึกเป็น <b>BLOCKED</b></div></div>
   <div class="sec"><h4>Precondition</h4><ul><li>workspace มีรอบที่กำลังจะถึง · กำลังไลฟ์ · ที่ผ่านมา อย่างละอย่างน้อย 1 รอบ (ผ่านการยืนยันแล้ว)</li></ul></div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA AI (UAT) แล้วเข้าสู่ระบบด้วยบัญชีเจ้าของ workspace</li><li>ไปที่เมนู "แพลตฟอร์มไลฟ์" › "ไลฟ์ของฉัน"</li><li>ไล่ดูแถวในทั้ง 3 แท็บ (กำลังจะถึง · กำลังไลฟ์ · ที่ผ่านมา)</li><li>ย่อหน้าต่างเหลือความกว้างแบบมือถือ (~375px) แล้วดูแถวเดิมอีกครั้ง</li></ol></div>
   <div class="grid">
@@ -1196,7 +1196,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">แดชบอร์ด › "คิวไลฟ์ถัดไป" · "โปรเจกต์ของฉัน" · "ไลฟ์ล่าสุด" แสดงชุดข้อมูลเดียวกัน</div>
   <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1227" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1227 ใน Jira">🧩 Epic TAKRA-1227</a> · Priority: <b>P1</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · TAKRA-1227 · รายการไลฟ์แสดงช่องทาง / บัญชี / อวาตาร์ / เสียง / สินค้า / สคริปต์+รอบ (⛔ ยังไม่มีโค้ด ณ 23 ก.ย. — เขียนตาม AC ล่วงหน้า)</div>
-  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังไม่มีหน้าจอ</b> ณ origin/develop 48e17aa0 (23 ก.ย. 2569) — เคสเขียนตาม AC ใน TAKRA-1227 ไว้ล่วงหน้า คำบนการ์ด/หน้ารายละเอียดยังไม่มีใน i18n อาจต่างจากของจริงเมื่อ dev ส่งมอบ · ถ้ายังไม่มีให้บันทึกเป็น <b>BLOCKED</b></div></div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังไม่มีหน้าจอ</b> ณ origin/develop 48e17aa0 (23 ก.ย. 2569) — เคสเขียนตาม AC/ข้อเสนอในใบไว้ล่วงหน้า คำของส่วนใหม่ยังไม่มีใน i18n อาจต่างจากของจริงเมื่อ dev ส่งมอบ · ถ้ายังไม่มีให้บันทึกเป็น <b>BLOCKED</b></div></div>
   <div class="sec"><h4>Precondition</h4><ul><li>workspace มีรอบในคิว · โปรเจกต์ที่กำลังเตรียม · ไลฟ์ที่จบแล้ว อย่างน้อยอย่างละ 1</li></ul></div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA AI (UAT) แล้วเข้าสู่ระบบด้วยบัญชีเจ้าของ workspace</li><li>ไปที่เมนู "แพลตฟอร์มไลฟ์" (หน้า "แดชบอร์ดไลฟ์")</li><li>ดูแถวในหัวข้อ "คิวไลฟ์ถัดไป" · "โปรเจกต์ของฉัน" · "ไลฟ์ล่าสุด"</li></ol></div>
   <div class="grid">
@@ -1228,7 +1228,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">กดการ์ด/แถวเข้าไป → หน้ารายละเอียดรอบ และ "สรุปไลฟ์" แสดงชื่อสินค้า · ชื่อสคริปต์รายตัว · รอบของแต่ละฉาก</div>
   <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1227" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1227 ใน Jira">🧩 Epic TAKRA-1227</a> · Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · TAKRA-1227 · รายการไลฟ์แสดงช่องทาง / บัญชี / อวาตาร์ / เสียง / สินค้า / สคริปต์+รอบ (⛔ ยังไม่มีโค้ด ณ 23 ก.ย. — เขียนตาม AC ล่วงหน้า)</div>
-  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังไม่มีหน้าจอ</b> ณ origin/develop 48e17aa0 (23 ก.ย. 2569) — เคสเขียนตาม AC ใน TAKRA-1227 ไว้ล่วงหน้า คำบนการ์ด/หน้ารายละเอียดยังไม่มีใน i18n อาจต่างจากของจริงเมื่อ dev ส่งมอบ · ถ้ายังไม่มีให้บันทึกเป็น <b>BLOCKED</b></div></div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังไม่มีหน้าจอ</b> ณ origin/develop 48e17aa0 (23 ก.ย. 2569) — เคสเขียนตาม AC/ข้อเสนอในใบไว้ล่วงหน้า คำของส่วนใหม่ยังไม่มีใน i18n อาจต่างจากของจริงเมื่อ dev ส่งมอบ · ถ้ายังไม่มีให้บันทึกเป็น <b>BLOCKED</b></div></div>
   <div class="sec"><h4>Precondition</h4><ul><li>มีรอบในคิว 1 รอบ และไลฟ์ที่จบแล้ว 1 รอบ ที่มีหลายฉาก · หลายสินค้า · หลายสคริปต์</li></ul></div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA AI (UAT) แล้วเข้าสู่ระบบด้วยบัญชีเจ้าของ workspace</li><li>ไปที่เมนู "แพลตฟอร์มไลฟ์" › "ไลฟ์ของฉัน" กดแถวของรอบที่กำลังจะถึงเพื่อเปิดหน้ารายละเอียดรอบ</li><li>กลับไปแท็บที่ผ่านมาแล้วกดแถวของไลฟ์ที่จบแล้วเพื่อเปิด "สรุปไลฟ์"</li><li>ดูส่วนที่แสดงสิ่งที่ประกอบไว้ในทั้งสองหน้า</li></ol></div>
   <div class="grid">
@@ -1260,7 +1260,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">ไลฟ์หลายฉากที่ตั้งรอบไม่เท่ากัน → การ์ดย่อค่าตามกติกา · หน้ารายละเอียดแสดงค่าจริงรายฉาก</div>
   <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1227" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1227 ใน Jira">🧩 Epic TAKRA-1227</a> · Priority: <b>P1</b> · UI · ประเภท: <b>Boundary</b> <span class="hint">(min · max · ก่อนขอบ · ตรงขอบ · เกินขอบ)</span> · TAKRA-1227 · รายการไลฟ์แสดงช่องทาง / บัญชี / อวาตาร์ / เสียง / สินค้า / สคริปต์+รอบ (⛔ ยังไม่มีโค้ด ณ 23 ก.ย. — เขียนตาม AC ล่วงหน้า)</div>
-  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังไม่มีหน้าจอ</b> ณ origin/develop 48e17aa0 (23 ก.ย. 2569) — เคสเขียนตาม AC ใน TAKRA-1227 ไว้ล่วงหน้า คำบนการ์ด/หน้ารายละเอียดยังไม่มีใน i18n อาจต่างจากของจริงเมื่อ dev ส่งมอบ · ถ้ายังไม่มีให้บันทึกเป็น <b>BLOCKED</b></div></div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังไม่มีหน้าจอ</b> ณ origin/develop 48e17aa0 (23 ก.ย. 2569) — เคสเขียนตาม AC/ข้อเสนอในใบไว้ล่วงหน้า คำของส่วนใหม่ยังไม่มีใน i18n อาจต่างจากของจริงเมื่อ dev ส่งมอบ · ถ้ายังไม่มีให้บันทึกเป็น <b>BLOCKED</b></div></div>
   <div class="sec"><h4>Precondition</h4><ul><li>รอบไลฟ์ที่ยืนยันแล้ว มี 2 ฉาก: ฉาก 1 ตั้งรอบสคริปต์ 3 · ฉาก 2 ตั้ง 5</li><li>รอบไลฟ์อีกรอบที่ทุกฉากตั้งรอบเท่ากัน = 3</li></ul></div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA AI (UAT) แล้วเข้าสู่ระบบด้วยบัญชีเจ้าของ workspace</li><li>ไปที่เมนู "แพลตฟอร์มไลฟ์" › "ไลฟ์ของฉัน" ดูแถวของทั้งสองรอบ</li><li>กดแถวของรอบที่ตั้งรอบไม่เท่ากันเพื่อเปิดหน้ารายละเอียดรอบ</li></ol></div>
   <div class="grid">
@@ -1292,7 +1292,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">รอบที่ไม่เคยผ่านการยืนยัน / รอบเก่าที่ไม่มีข้อมูลใหม่ → ช่องที่ไม่รู้แสดง "—" ไม่ใช่ 0</div>
   <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1227" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1227 ใน Jira">🧩 Epic TAKRA-1227</a> · Priority: <b>P0</b> · UI · ประเภท: <b>Data</b> <span class="hint">(empty · null · duplicate · existing · non-existing)</span> · TAKRA-1227 · รายการไลฟ์แสดงช่องทาง / บัญชี / อวาตาร์ / เสียง / สินค้า / สคริปต์+รอบ (⛔ ยังไม่มีโค้ด ณ 23 ก.ย. — เขียนตาม AC ล่วงหน้า)</div>
-  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังไม่มีหน้าจอ</b> ณ origin/develop 48e17aa0 (23 ก.ย. 2569) — เคสเขียนตาม AC ใน TAKRA-1227 ไว้ล่วงหน้า คำบนการ์ด/หน้ารายละเอียดยังไม่มีใน i18n อาจต่างจากของจริงเมื่อ dev ส่งมอบ · ถ้ายังไม่มีให้บันทึกเป็น <b>BLOCKED</b></div></div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังไม่มีหน้าจอ</b> ณ origin/develop 48e17aa0 (23 ก.ย. 2569) — เคสเขียนตาม AC/ข้อเสนอในใบไว้ล่วงหน้า คำของส่วนใหม่ยังไม่มีใน i18n อาจต่างจากของจริงเมื่อ dev ส่งมอบ · ถ้ายังไม่มีให้บันทึกเป็น <b>BLOCKED</b></div></div>
   <div class="sec"><h4>Precondition</h4><ul><li>มีรอบไลฟ์ที่ยังไม่เคยกดยืนยัน (ร่าง) และรอบเก่าที่ยืนยันก่อนฟีเจอร์นี้ขึ้น</li></ul></div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA AI (UAT) แล้วเข้าสู่ระบบด้วยบัญชีเจ้าของ workspace</li><li>ไปที่เมนู "แพลตฟอร์มไลฟ์" ดูหัวข้อ "โปรเจกต์ของฉัน" หาแถวของรอบที่ยังไม่เคยยืนยัน</li><li>ไปที่ "ไลฟ์ของฉัน" แท็บที่ผ่านมา หาแถวของรอบเก่าที่ยืนยันก่อนฟีเจอร์นี้</li></ol></div>
   <div class="grid">
@@ -1324,7 +1324,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">รอบที่ไม่ได้เลือกเสียงแยกรายฉาก → ช่องเสียงแสดง "ใช้เสียงเริ่มต้นของอวาตาร์" ไม่ใช่ "—"</div>
   <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1227" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1227 ใน Jira">🧩 Epic TAKRA-1227</a> · Priority: <b>P1</b> · UI · ประเภท: <b>Data</b> <span class="hint">(empty · null · duplicate · existing · non-existing)</span> · TAKRA-1227 · รายการไลฟ์แสดงช่องทาง / บัญชี / อวาตาร์ / เสียง / สินค้า / สคริปต์+รอบ (⛔ ยังไม่มีโค้ด ณ 23 ก.ย. — เขียนตาม AC ล่วงหน้า)</div>
-  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังไม่มีหน้าจอ</b> ณ origin/develop 48e17aa0 (23 ก.ย. 2569) — เคสเขียนตาม AC ใน TAKRA-1227 ไว้ล่วงหน้า คำบนการ์ด/หน้ารายละเอียดยังไม่มีใน i18n อาจต่างจากของจริงเมื่อ dev ส่งมอบ · ถ้ายังไม่มีให้บันทึกเป็น <b>BLOCKED</b></div></div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังไม่มีหน้าจอ</b> ณ origin/develop 48e17aa0 (23 ก.ย. 2569) — เคสเขียนตาม AC/ข้อเสนอในใบไว้ล่วงหน้า คำของส่วนใหม่ยังไม่มีใน i18n อาจต่างจากของจริงเมื่อ dev ส่งมอบ · ถ้ายังไม่มีให้บันทึกเป็น <b>BLOCKED</b></div></div>
   <div class="sec"><h4>Precondition</h4><ul><li>รอบไลฟ์ที่ยืนยันแล้ว โดยไม่ได้เปลี่ยนเสียงในฉากใดเลย (ใช้เสียงของอวาตาร์)</li></ul></div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA AI (UAT) แล้วเข้าสู่ระบบด้วยบัญชีเจ้าของ workspace</li><li>ไปที่เมนู "แพลตฟอร์มไลฟ์" › "ไลฟ์ของฉัน"</li><li>ดูช่องเสียงในแถวของรอบนั้น</li></ol></div>
   <div class="grid">
@@ -1356,7 +1356,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">ไลฟ์โหมดถ่ายด้วยโทรศัพท์ → ช่องบัญชีแสดง "—" ห้ามเขียนว่า "ไม่มีบัญชี"</div>
   <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1227" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1227 ใน Jira">🧩 Epic TAKRA-1227</a> · Priority: <b>P1</b> · UI · ประเภท: <b>Data</b> <span class="hint">(empty · null · duplicate · existing · non-existing)</span> · TAKRA-1227 · รายการไลฟ์แสดงช่องทาง / บัญชี / อวาตาร์ / เสียง / สินค้า / สคริปต์+รอบ (⛔ ยังไม่มีโค้ด ณ 23 ก.ย. — เขียนตาม AC ล่วงหน้า)</div>
-  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังไม่มีหน้าจอ</b> ณ origin/develop 48e17aa0 (23 ก.ย. 2569) — เคสเขียนตาม AC ใน TAKRA-1227 ไว้ล่วงหน้า คำบนการ์ด/หน้ารายละเอียดยังไม่มีใน i18n อาจต่างจากของจริงเมื่อ dev ส่งมอบ · ถ้ายังไม่มีให้บันทึกเป็น <b>BLOCKED</b></div></div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังไม่มีหน้าจอ</b> ณ origin/develop 48e17aa0 (23 ก.ย. 2569) — เคสเขียนตาม AC/ข้อเสนอในใบไว้ล่วงหน้า คำของส่วนใหม่ยังไม่มีใน i18n อาจต่างจากของจริงเมื่อ dev ส่งมอบ · ถ้ายังไม่มีให้บันทึกเป็น <b>BLOCKED</b></div></div>
   <div class="sec"><h4>Precondition</h4><ul><li>มีไลฟ์ที่ออกอากาศแบบ "ถ่ายด้วยโทรศัพท์ (จ่อกล้องที่จอ Avatar)" (กำลังไลฟ์หรือจบแล้ว)</li></ul></div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA AI (UAT) แล้วเข้าสู่ระบบด้วยบัญชีเจ้าของ workspace</li><li>ไปที่เมนู "แพลตฟอร์มไลฟ์" › "ไลฟ์ของฉัน"</li><li>ดูช่องบัญชีในแถวของไลฟ์โหมดโทรศัพท์</li></ol></div>
   <div class="grid">
@@ -1388,7 +1388,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">ข้อมูลบัญชีแสดงแค่ชื่อที่ผู้ใช้ตั้งเอง — ไม่มีข้อมูลลับของ TikTok ปรากฏบนหน้าจอ</div>
   <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1227" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1227 ใน Jira">🧩 Epic TAKRA-1227</a> · Priority: <b>P0</b> · UI · ประเภท: <b>Permission</b> <span class="hint">(role ไหนทำได้ / ทำไม่ได้)</span> · TAKRA-1227 · รายการไลฟ์แสดงช่องทาง / บัญชี / อวาตาร์ / เสียง / สินค้า / สคริปต์+รอบ (⛔ ยังไม่มีโค้ด ณ 23 ก.ย. — เขียนตาม AC ล่วงหน้า)</div>
-  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังไม่มีหน้าจอ</b> ณ origin/develop 48e17aa0 (23 ก.ย. 2569) — เคสเขียนตาม AC ใน TAKRA-1227 ไว้ล่วงหน้า คำบนการ์ด/หน้ารายละเอียดยังไม่มีใน i18n อาจต่างจากของจริงเมื่อ dev ส่งมอบ · ถ้ายังไม่มีให้บันทึกเป็น <b>BLOCKED</b></div></div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังไม่มีหน้าจอ</b> ณ origin/develop 48e17aa0 (23 ก.ย. 2569) — เคสเขียนตาม AC/ข้อเสนอในใบไว้ล่วงหน้า คำของส่วนใหม่ยังไม่มีใน i18n อาจต่างจากของจริงเมื่อ dev ส่งมอบ · ถ้ายังไม่มีให้บันทึกเป็น <b>BLOCKED</b></div></div>
   <div class="sec"><h4>Precondition</h4><ul><li>มีไลฟ์ส่งตรงเข้า TikTok ที่ใช้บัญชีซึ่งตั้งชื่อที่แสดงไว้ เช่น "บัญชีหลัก QA"</li></ul></div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA AI (UAT) แล้วเข้าสู่ระบบด้วยบัญชีเจ้าของ workspace</li><li>ไปที่เมนู "แพลตฟอร์มไลฟ์" ดูการ์ดใน "กำลังออกอากาศ" แล้วกดเข้าไปที่หน้ารายละเอียด/"สรุปไลฟ์" ของรอบเดียวกัน</li><li>อ่านทุกข้อความที่เกี่ยวกับบัญชีบนการ์ดและหน้ารายละเอียด</li></ol></div>
   <div class="grid">
@@ -1420,7 +1420,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">workspace อื่นไม่เห็นข้อมูลบัญชี/สินค้า/สคริปต์ของไลฟ์ใน workspace นี้</div>
   <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1227" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1227 ใน Jira">🧩 Epic TAKRA-1227</a> · Priority: <b>P0</b> · UI · ประเภท: <b>Permission</b> <span class="hint">(role ไหนทำได้ / ทำไม่ได้)</span> · TAKRA-1227 · รายการไลฟ์แสดงช่องทาง / บัญชี / อวาตาร์ / เสียง / สินค้า / สคริปต์+รอบ (⛔ ยังไม่มีโค้ด ณ 23 ก.ย. — เขียนตาม AC ล่วงหน้า)</div>
-  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังไม่มีหน้าจอ</b> ณ origin/develop 48e17aa0 (23 ก.ย. 2569) — เคสเขียนตาม AC ใน TAKRA-1227 ไว้ล่วงหน้า คำบนการ์ด/หน้ารายละเอียดยังไม่มีใน i18n อาจต่างจากของจริงเมื่อ dev ส่งมอบ · ถ้ายังไม่มีให้บันทึกเป็น <b>BLOCKED</b></div></div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังไม่มีหน้าจอ</b> ณ origin/develop 48e17aa0 (23 ก.ย. 2569) — เคสเขียนตาม AC/ข้อเสนอในใบไว้ล่วงหน้า คำของส่วนใหม่ยังไม่มีใน i18n อาจต่างจากของจริงเมื่อ dev ส่งมอบ · ถ้ายังไม่มีให้บันทึกเป็น <b>BLOCKED</b></div></div>
   <div class="sec"><h4>Precondition</h4><ul><li>บัญชีที่เป็นสมาชิก 2 workspace (A, B) · A มีไลฟ์กำลังออกอากาศ · B ไม่มีไลฟ์</li></ul></div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA AI (UAT) แล้วเข้าสู่ระบบด้วยบัญชีที่อยู่ทั้ง 2 workspace แล้วสลับไป workspace B</li><li>ไปที่เมนู "แพลตฟอร์มไลฟ์" แล้วดูหัวข้อ "กำลังออกอากาศ" และ "ไลฟ์ของฉัน"</li><li>สลับกลับ workspace A แล้วดูหน้าเดียวกัน</li></ol></div>
   <div class="grid">
@@ -1441,12 +1441,621 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 </div></td></tr>
 
+
+<!-- t1223 -->
+<tr class="epicrow" data-epic="t1223"><td colspan="7">🔔 TAKRA-1223 · เสียงกระดิ่งเมื่อมีการแจ้งเตือนใหม่ (⛔ ยังไม่ groom · ยังไม่มีโค้ด — Expected ตามข้อเสนอในใบ) <span class="rp">(6 เคส)</span> <a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1223" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1223 ใน Jira">🧩 Epic TAKRA-1223</a></td></tr>
+<tr class="featrow" data-featkey="notification-sound"><td colspan="7">📁 notification-sound · กระดิ่ง "แจ้งเตือน" มุมขวาบน + "ตั้งค่าบัญชี" › "การแจ้งเตือน" <span class="rp"><span class="lv lvl-ui">🌐 6</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="notification-sound"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow" data-feat="t1223" data-level="ui" data-prio="P0" data-kind="happy" data-ui="no" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">T1223.1</td>
+  <td class="ctitle">หน้า "การแจ้งเตือน" มีตัวเลือกเปิด/ปิดเสียงแจ้งเตือน และค่าเริ่มต้นเป็นปิด <span class="kd kd-happy">Happy Path</span> <span class="noui">⛔ ยังไม่มีหน้าจอ</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-12339"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-12339"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">หน้า "การแจ้งเตือน" มีตัวเลือกเปิด/ปิดเสียงแจ้งเตือน และค่าเริ่มต้นเป็นปิด</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1223" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1223 ใน Jira">🧩 Epic TAKRA-1223</a> · Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · TAKRA-1223 · เสียงกระดิ่งเมื่อมีการแจ้งเตือนใหม่ (⛔ ยังไม่ groom</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังไม่มีหน้าจอ</b> ณ origin/develop 48e17aa0 (23 ก.ย. 2569) — เคสเขียนตาม AC/ข้อเสนอในใบไว้ล่วงหน้า คำของส่วนใหม่ยังไม่มีใน i18n อาจต่างจากของจริงเมื่อ dev ส่งมอบ · ถ้ายังไม่มีให้บันทึกเป็น <b>BLOCKED</b></div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>บัญชีเจ้าของ workspace ทดสอบ</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA AI (UAT) แล้วเข้าสู่ระบบด้วยบัญชีเจ้าของ workspace ที่ยังไม่เคยตั้งค่าเสียงแจ้งเตือน</li><li>กดรูปโปรไฟล์มุมขวาบน เลือก "ตั้งค่าบัญชี" แล้วไปที่ "การแจ้งเตือน"</li><li>มองหาตัวเลือกเสียงแจ้งเตือนในการ์ด "การแจ้งเตือน" แล้วสังเกตค่าที่ตั้งอยู่</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>มีตัวเลือกเปิด/ปิดเสียงแจ้งเตือนอยู่ในการ์ด "การแจ้งเตือน" (ชื่อตัวเลือกยังไม่มีใน UI — จดคำจริงลง Actual)</li><li>ค่าเริ่มต้นเป็น "ปิด"</li></ul><div class="hint" style="margin-top:6px">ที่มา: TAKRA-1223 (ยังไม่ groom · Expected ตามข้อเสนอในใบ — ปรับเมื่อมี AC) · ❓ "เปิด/ปิดได้ไหม + ค่าเริ่มต้น — ข้อเสนอ: ตั้งค่าได้ที่ notification-prefs-card และ default = ปิด"</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-12339" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-12339" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-12339" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-12339" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-12339" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-12339"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-12339" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-12339">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="t1223" data-level="ui" data-prio="P0" data-kind="negative" data-ui="no" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">T1223.2</td>
+  <td class="ctitle">ปิดเสียงไว้ (ค่าเริ่มต้น) → มีแจ้งเตือนใหม่ กระดิ่งขึ้นตัวเลขแต่ไม่มีเสียง <span class="kd kd-neg">Negative</span> <span class="noui">⛔ ยังไม่มีหน้าจอ</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-12340"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-12340"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ปิดเสียงไว้ (ค่าเริ่มต้น) → มีแจ้งเตือนใหม่ กระดิ่งขึ้นตัวเลขแต่ไม่มีเสียง</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1223" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1223 ใน Jira">🧩 Epic TAKRA-1223</a> · Priority: <b>P0</b> · UI · ประเภท: <b>Negative</b> <span class="hint">(ข้อมูลผิด / action ผิด)</span> · TAKRA-1223 · เสียงกระดิ่งเมื่อมีการแจ้งเตือนใหม่ (⛔ ยังไม่ groom</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังไม่มีหน้าจอ</b> ณ origin/develop 48e17aa0 (23 ก.ย. 2569) — เคสเขียนตาม AC/ข้อเสนอในใบไว้ล่วงหน้า คำของส่วนใหม่ยังไม่มีใน i18n อาจต่างจากของจริงเมื่อ dev ส่งมอบ · ถ้ายังไม่มีให้บันทึกเป็น <b>BLOCKED</b></div></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA AI (UAT) แล้วเข้าสู่ระบบด้วยบัญชีเจ้าของ workspace</li><li>กดรูปโปรไฟล์มุมขวาบน เลือก "ตั้งค่าบัญชี" แล้วไปที่ "การแจ้งเตือน" ยืนยันว่าเสียงแจ้งเตือนปิดอยู่ แล้วกลับไปหน้าแรก</li><li>ทำให้เกิดแจ้งเตือนใหม่ในแอป เช่น เริ่มไลฟ์รอบหนึ่งให้เกิดแจ้งเตือน "เริ่ม Live" (ช่อง "ในแอป" เปิดอยู่)</li><li>ฟังเสียงจากเครื่อง และดูกระดิ่งมุมขวาบน</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ไม่มีเสียงดัง</li><li>กระดิ่งแสดงจำนวนรายการใหม่ตามปกติ (ป้ายอ่าน "แจ้งเตือน (N ใหม่)")</li></ul><div class="hint" style="margin-top:6px">ที่มา: TAKRA-1223 (ยังไม่ groom · Expected ตามข้อเสนอในใบ — ปรับเมื่อมี AC) · DoD "เทสต์ว่าเสียงเคารพค่าตั้งค่า"</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-12340" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-12340" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-12340" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-12340" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-12340" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-12340"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-12340" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-12340">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="t1223" data-level="ui" data-prio="P0" data-kind="happy" data-ui="no" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">T1223.3</td>
+  <td class="ctitle">เปิดเสียงแล้ว → มีแจ้งเตือนใหม่ มีเสียงดัง 1 ครั้งพร้อมกระดิ่งขึ้นตัวเลข <span class="kd kd-happy">Happy Path</span> <span class="noui">⛔ ยังไม่มีหน้าจอ</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-12341"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-12341"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">เปิดเสียงแล้ว → มีแจ้งเตือนใหม่ มีเสียงดัง 1 ครั้งพร้อมกระดิ่งขึ้นตัวเลข</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1223" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1223 ใน Jira">🧩 Epic TAKRA-1223</a> · Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · TAKRA-1223 · เสียงกระดิ่งเมื่อมีการแจ้งเตือนใหม่ (⛔ ยังไม่ groom</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังไม่มีหน้าจอ</b> ณ origin/develop 48e17aa0 (23 ก.ย. 2569) — เคสเขียนตาม AC/ข้อเสนอในใบไว้ล่วงหน้า คำของส่วนใหม่ยังไม่มีใน i18n อาจต่างจากของจริงเมื่อ dev ส่งมอบ · ถ้ายังไม่มีให้บันทึกเป็น <b>BLOCKED</b></div></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA AI (UAT) แล้วเข้าสู่ระบบด้วยบัญชีเจ้าของ workspace</li><li>กดรูปโปรไฟล์มุมขวาบน เลือก "ตั้งค่าบัญชี" แล้วไปที่ "การแจ้งเตือน" เปิดเสียงแจ้งเตือนแล้วกด "บันทึก"</li><li>กลับไปหน้าแรก คลิกที่หน้าสักครั้ง แล้วทำให้เกิดแจ้งเตือนใหม่ในแอป เช่น "เริ่ม Live"</li><li>ฟังเสียงและดูกระดิ่งมุมขวาบน</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ขึ้น "บันทึกการตั้งค่าแจ้งเตือนแล้ว" หลังกด "บันทึก"</li><li>มีเสียงกระดิ่งดัง 1 ครั้งต่อแจ้งเตือนใหม่ 1 รายการ</li><li>กระดิ่งแสดงจำนวนรายการใหม่เหมือนเดิม (เสียงไม่ได้แทนตัวเลข)</li></ul><div class="hint" style="margin-top:6px">ที่มา: TAKRA-1223 (ยังไม่ groom · Expected ตามข้อเสนอในใบ — ปรับเมื่อมี AC) · 🎯 "มีเสียงเมื่อกระดิ่งแจ้งเตือนมีรายการใหม่"</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-12341" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-12341" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-12341" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-12341" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-12341" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-12341"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-12341" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-12341">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="t1223" data-level="ui" data-prio="P1" data-kind="data" data-ui="no" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">T1223.4</td>
+  <td class="ctitle">เปิดเสียงแล้วรีเฟรช/ล็อกอินใหม่ → ค่าเสียงยังเป็นเปิด <span class="kd kd-data">Data</span> <span class="noui">⛔ ยังไม่มีหน้าจอ</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-12342"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-12342"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">เปิดเสียงแล้วรีเฟรช/ล็อกอินใหม่ → ค่าเสียงยังเป็นเปิด</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1223" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1223 ใน Jira">🧩 Epic TAKRA-1223</a> · Priority: <b>P1</b> · UI · ประเภท: <b>Data</b> <span class="hint">(empty · null · duplicate · existing · non-existing)</span> · TAKRA-1223 · เสียงกระดิ่งเมื่อมีการแจ้งเตือนใหม่ (⛔ ยังไม่ groom</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังไม่มีหน้าจอ</b> ณ origin/develop 48e17aa0 (23 ก.ย. 2569) — เคสเขียนตาม AC/ข้อเสนอในใบไว้ล่วงหน้า คำของส่วนใหม่ยังไม่มีใน i18n อาจต่างจากของจริงเมื่อ dev ส่งมอบ · ถ้ายังไม่มีให้บันทึกเป็น <b>BLOCKED</b></div></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA AI (UAT) แล้วเข้าสู่ระบบด้วยบัญชีเจ้าของ workspace</li><li>กดรูปโปรไฟล์มุมขวาบน เลือก "ตั้งค่าบัญชี" แล้วไปที่ "การแจ้งเตือน" เปิดเสียงแจ้งเตือนแล้วกด "บันทึก"</li><li>ออกจากระบบแล้วเข้าสู่ระบบใหม่ แล้วกลับมาที่ "ตั้งค่าบัญชี" › "การแจ้งเตือน"</li><li>สังเกตค่าเสียงแจ้งเตือน</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ค่าเสียงแจ้งเตือนยังเป็นเปิดตามที่บันทึกไว้</li></ul><div class="hint" style="margin-top:6px">ที่มา: TAKRA-1223 (ยังไม่ groom · Expected ตามข้อเสนอในใบ — ปรับเมื่อมี AC)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-12342" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-12342" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-12342" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-12342" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-12342" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-12342"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-12342" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-12342">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="t1223" data-level="ui" data-prio="P1" data-kind="exception" data-ui="no" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">T1223.5</td>
+  <td class="ctitle">เปิดหน้าใหม่แล้วยังไม่ได้คลิกอะไร (เบราว์เซอร์บล็อกเสียงอัตโนมัติ) → ต้องมีสิ่งบอกผู้ใช้ ไม่ใช่เงียบเฉย ๆ <span class="kd kd-exc">Exception</span> <span class="noui">⛔ ยังไม่มีหน้าจอ</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-12343"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-12343"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">เปิดหน้าใหม่แล้วยังไม่ได้คลิกอะไร (เบราว์เซอร์บล็อกเสียงอัตโนมัติ) → ต้องมีสิ่งบอกผู้ใช้ ไม่ใช่เงียบเฉย ๆ</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1223" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1223 ใน Jira">🧩 Epic TAKRA-1223</a> · Priority: <b>P1</b> · UI · ประเภท: <b>Exception</b> <span class="hint">(API fail · network fail · server error · timeout)</span> · TAKRA-1223 · เสียงกระดิ่งเมื่อมีการแจ้งเตือนใหม่ (⛔ ยังไม่ groom</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังไม่มีหน้าจอ</b> ณ origin/develop 48e17aa0 (23 ก.ย. 2569) — เคสเขียนตาม AC/ข้อเสนอในใบไว้ล่วงหน้า คำของส่วนใหม่ยังไม่มีใน i18n อาจต่างจากของจริงเมื่อ dev ส่งมอบ · ถ้ายังไม่มีให้บันทึกเป็น <b>BLOCKED</b></div></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA AI (UAT) แล้วเข้าสู่ระบบด้วยบัญชีเจ้าของ workspace (เปิดเสียงแจ้งเตือนไว้แล้ว)</li><li>เปิดแท็บใหม่ไปที่หน้าแรกแล้ววางเมาส์ไว้เฉย ๆ ไม่คลิกหรือพิมพ์อะไรบนหน้า</li><li>ทำให้เกิดแจ้งเตือนใหม่ในแอปจากอีกแท็บ/อีกเครื่อง</li><li>สังเกตหน้าที่ยังไม่ได้คลิก</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ถ้าเสียงเล่นไม่ได้ หน้าจอต้องบอกผู้ใช้ (เช่น ข้อความให้คลิกเพื่อเปิดเสียง) ไม่ใช่เงียบโดยไม่มีอะไรบอก</li><li>กระดิ่งยังขึ้นตัวเลขรายการใหม่ตามปกติ</li></ul><div class="hint" style="margin-top:6px">ที่มา: TAKRA-1223 (ยังไม่ groom · Expected ตามข้อเสนอในใบ — ปรับเมื่อมี AC) · ❓ "autoplay policy … ต้องมีพฤติกรรมรองรับ ไม่ใช่เงียบแบบไม่บอกใคร"</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-12343" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-12343" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-12343" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-12343" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-12343" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-12343"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-12343" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-12343">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="t1223" data-level="ui" data-prio="P1" data-kind="boundary" data-ui="no" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">T1223.6</td>
+  <td class="ctitle">ระหว่างกำลังไลฟ์ → เสียงแจ้งเตือนไม่ดังทับเสียงอวาตาร์ <span class="kd kd-bnd">Boundary</span> <span class="noui">⛔ ยังไม่มีหน้าจอ</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-12344"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-12344"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ระหว่างกำลังไลฟ์ → เสียงแจ้งเตือนไม่ดังทับเสียงอวาตาร์</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1223" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1223 ใน Jira">🧩 Epic TAKRA-1223</a> · Priority: <b>P1</b> · UI · ประเภท: <b>Boundary</b> <span class="hint">(min · max · ก่อนขอบ · ตรงขอบ · เกินขอบ)</span> · TAKRA-1223 · เสียงกระดิ่งเมื่อมีการแจ้งเตือนใหม่ (⛔ ยังไม่ groom</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังไม่มีหน้าจอ</b> ณ origin/develop 48e17aa0 (23 ก.ย. 2569) — เคสเขียนตาม AC/ข้อเสนอในใบไว้ล่วงหน้า คำของส่วนใหม่ยังไม่มีใน i18n อาจต่างจากของจริงเมื่อ dev ส่งมอบ · ถ้ายังไม่มีให้บันทึกเป็น <b>BLOCKED</b></div></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA AI (UAT) แล้วเข้าสู่ระบบด้วยบัญชีเจ้าของ workspace (เปิดเสียงแจ้งเตือนไว้แล้ว)</li><li>ไปที่เมนู "แพลตฟอร์มไลฟ์" › "ไลฟ์ของฉัน" แล้วเริ่มออกอากาศรอบไลฟ์หนึ่ง</li><li>ระหว่างไลฟ์ ทำให้เกิดแจ้งเตือนใหม่ (เช่น คำเสี่ยงถูกพูด หรือไลฟ์อีกรอบเริ่ม)</li><li>ฟังเสียงที่เครื่อง และฟังห้องไลฟ์จากอีกเครื่อง</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>เสียงแจ้งเตือนไม่ดังในจังหวะที่ไลฟ์กำลังออกอากาศ (หรือทำตามกติกาที่ทีมตัดสิน) — ต้องไม่มีเสียงกระดิ่งหลุดเข้าไปในห้องไลฟ์</li><li>กระดิ่งยังขึ้นตัวเลขรายการใหม่</li></ul><div class="hint" style="margin-top:6px">ที่มา: TAKRA-1223 (ยังไม่ groom · Expected ตามข้อเสนอในใบ — ปรับเมื่อมี AC) · ❓ "ระหว่างไลฟ์ต้องเงียบไหม — เสียงกระดิ่งอาจเข้าไมค์/ทับเสียงอวตาร"</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-12344" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-12344" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-12344" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-12344" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-12344" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-12344"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-12344" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-12344">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+
+<!-- t1226 -->
+<tr class="epicrow" data-epic="t1226"><td colspan="7">🖧 TAKRA-1226 · Setup + ตั้งค่า takra-live บนเครื่อง remote (⛔ งาน infra ยังไม่ groom — เคส smoke ตรวจหลังติดตั้งผ่านหน้าเว็บ) <span class="rp">(4 เคส)</span> <a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1226" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1226 ใน Jira">🧩 Epic TAKRA-1226</a></td></tr>
+<tr class="featrow" data-featkey="remote-smoke"><td colspan="7">📁 remote-smoke · ใช้งานผ่านเว็บบนเครื่อง remote ได้เหมือน UAT <span class="rp"><span class="lv lvl-ui">🌐 4</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="remote-smoke"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow" data-feat="t1226" data-level="ui" data-prio="P0" data-kind="happy" data-ui="no" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">T1226.1</td>
+  <td class="ctitle">เปิดเว็บบนเครื่อง remote แล้วเข้าสู่ระบบได้ เห็นเมนูหลักครบ <span class="kd kd-happy">Happy Path</span> <span class="noui">⛔ ยังไม่มีหน้าจอ</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-12345"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-12345"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">เปิดเว็บบนเครื่อง remote แล้วเข้าสู่ระบบได้ เห็นเมนูหลักครบ</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1226" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1226 ใน Jira">🧩 Epic TAKRA-1226</a> · Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · TAKRA-1226 · Setup + ตั้งค่า takra-live บนเครื่อง remote (⛔ งาน infra ยังไม่ groom — เคส smoke ตรวจหลังติดตั้งผ่านหน้าเว็บ)</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังไม่มีหน้าจอ</b> ณ origin/develop 48e17aa0 (23 ก.ย. 2569) — เคสเขียนตาม AC/ข้อเสนอในใบไว้ล่วงหน้า คำของส่วนใหม่ยังไม่มีใน i18n อาจต่างจากของจริงเมื่อ dev ส่งมอบ · ถ้ายังไม่มีให้บันทึกเป็น <b>BLOCKED</b></div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>dev แจ้ง URL ของเครื่อง remote + บัญชีทดสอบบนเครื่องนั้น</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA AI บน URL ของเครื่อง remote (ขอ URL จาก dev) แล้วเข้าสู่ระบบด้วยบัญชีทดสอบ</li><li>ดูแถบเมนูด้านซ้าย แล้วกดเข้า "แพลตฟอร์มไลฟ์" "คลังสคริปต์" "คลังสินค้า" ทีละหน้า</li><li>สังเกตว่าแต่ละหน้าโหลดข้อมูลขึ้น</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>หน้าเว็บเปิดได้ด้วย https ไม่มีคำเตือนใบรับรอง</li><li>เข้าสู่ระบบสำเร็จ และแต่ละหน้าโหลดข้อมูลขึ้นโดยไม่มีข้อความผิดพลาด</li></ul><div class="hint" style="margin-top:6px">ที่มา: TAKRA-1226 (ยังไม่ groom · ยังไม่ระบุว่าเครื่อง remote ทำหน้าที่อะไร — เคส smoke หลังติดตั้ง)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-12345" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-12345" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-12345" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-12345" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-12345" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-12345"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-12345" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-12345">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="t1226" data-level="ui" data-prio="P0" data-kind="happy" data-ui="no" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">T1226.2</td>
+  <td class="ctitle">ประกอบไลฟ์และเริ่มออกอากาศแบบส่งตรงเข้า TikTok จากเครื่อง remote ได้จนจบรอบ <span class="kd kd-happy">Happy Path</span> <span class="noui">⛔ ยังไม่มีหน้าจอ</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-12346"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-12346"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ประกอบไลฟ์และเริ่มออกอากาศแบบส่งตรงเข้า TikTok จากเครื่อง remote ได้จนจบรอบ</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1226" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1226 ใน Jira">🧩 Epic TAKRA-1226</a> · Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · TAKRA-1226 · Setup + ตั้งค่า takra-live บนเครื่อง remote (⛔ งาน infra ยังไม่ groom — เคส smoke ตรวจหลังติดตั้งผ่านหน้าเว็บ)</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังไม่มีหน้าจอ</b> ณ origin/develop 48e17aa0 (23 ก.ย. 2569) — เคสเขียนตาม AC/ข้อเสนอในใบไว้ล่วงหน้า คำของส่วนใหม่ยังไม่มีใน i18n อาจต่างจากของจริงเมื่อ dev ส่งมอบ · ถ้ายังไม่มีให้บันทึกเป็น <b>BLOCKED</b></div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>บัญชีบนเครื่อง remote ผูกบัญชี TikTok สำหรับส่งตรงไว้แล้ว</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA AI บน URL ของเครื่อง remote (ขอ URL จาก dev) แล้วเข้าสู่ระบบด้วยบัญชีทดสอบ</li><li>ไปที่เมนู "แพลตฟอร์มไลฟ์" › "ไลฟ์ของฉัน" เปิดรอบไลฟ์ที่ยืนยันแล้ว กด "เริ่มออกอากาศ" เลือก "ส่งตรงเข้า TikTok (RTMP · ไม่ต้องใช้โทรศัพท์)" แล้วกด "เริ่มไลฟ์เข้า TikTok (RTMP)"</li><li>ปล่อยไลฟ์ 5 นาที แล้วดูห้อง TikTok จากอีกเครื่อง</li><li>กด "หยุดไลฟ์"</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>สถานะขึ้น "กำลังไลฟ์" และห้อง TikTok เห็นอวาตาร์พูดต่อเนื่อง</li><li>หยุดไลฟ์ได้ตามปกติ และรอบนั้นมี "สรุปไลฟ์"</li></ul><div class="hint" style="margin-top:6px">ที่มา: TAKRA-1226 (ยังไม่ groom · ยังไม่ระบุว่าเครื่อง remote ทำหน้าที่อะไร — เคส smoke หลังติดตั้ง) · ❓ "takra-live คือส่วนไหน" (ถ้าเครื่องนี้ไม่ได้ทำหน้าที่ออกอากาศ ให้ลง N/A)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-12346" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-12346" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-12346" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-12346" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-12346" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-12346"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-12346" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-12346">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="t1226" data-level="ui" data-prio="P0" data-kind="permission" data-ui="no" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">T1226.3</td>
+  <td class="ctitle">ไม่มีข้อมูลลับโผล่บนหน้าเว็บของเครื่อง remote <span class="kd kd-perm">Permission</span> <span class="noui">⛔ ยังไม่มีหน้าจอ</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-12347"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-12347"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ไม่มีข้อมูลลับโผล่บนหน้าเว็บของเครื่อง remote</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1226" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1226 ใน Jira">🧩 Epic TAKRA-1226</a> · Priority: <b>P0</b> · UI · ประเภท: <b>Permission</b> <span class="hint">(role ไหนทำได้ / ทำไม่ได้)</span> · TAKRA-1226 · Setup + ตั้งค่า takra-live บนเครื่อง remote (⛔ งาน infra ยังไม่ groom — เคส smoke ตรวจหลังติดตั้งผ่านหน้าเว็บ)</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังไม่มีหน้าจอ</b> ณ origin/develop 48e17aa0 (23 ก.ย. 2569) — เคสเขียนตาม AC/ข้อเสนอในใบไว้ล่วงหน้า คำของส่วนใหม่ยังไม่มีใน i18n อาจต่างจากของจริงเมื่อ dev ส่งมอบ · ถ้ายังไม่มีให้บันทึกเป็น <b>BLOCKED</b></div></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA AI บน URL ของเครื่อง remote (ขอ URL จาก dev) แล้วเข้าสู่ระบบด้วยบัญชีทดสอบ</li><li>เปิดหน้าตั้งค่าบัญชี TikTok ที่ใช้ส่งตรง หน้าเริ่มออกอากาศ และหน้า "สรุปไลฟ์"</li><li>อ่านทุกข้อความบนหน้าที่เกี่ยวกับบัญชี/การส่งสัญญาณ</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ไม่เห็น stream key · คุกกี้ · curl ของ TikTok หรือรหัสผ่านใด ๆ บนหน้าจอ</li></ul><div class="hint" style="margin-top:6px">ที่มา: TAKRA-1226 (ยังไม่ groom · ยังไม่ระบุว่าเครื่อง remote ทำหน้าที่อะไร — เคส smoke หลังติดตั้ง) · ⚠️ "TikTok session credential + stream key ห้าม log ห้ามฝังในไฟล์ config" · NFR-SEC-01/SEC-09</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-12347" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-12347" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-12347" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-12347" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-12347" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-12347"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-12347" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-12347">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="t1226" data-level="ui" data-prio="P1" data-kind="data" data-ui="no" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">T1226.4</td>
+  <td class="ctitle">ข้อมูลบนเครื่อง remote แยกจาก UAT/production — สร้างของบน remote แล้วไม่โผล่ใน UAT <span class="kd kd-data">Data</span> <span class="noui">⛔ ยังไม่มีหน้าจอ</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-12348"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-12348"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ข้อมูลบนเครื่อง remote แยกจาก UAT/production — สร้างของบน remote แล้วไม่โผล่ใน UAT</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1226" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1226 ใน Jira">🧩 Epic TAKRA-1226</a> · Priority: <b>P1</b> · UI · ประเภท: <b>Data</b> <span class="hint">(empty · null · duplicate · existing · non-existing)</span> · TAKRA-1226 · Setup + ตั้งค่า takra-live บนเครื่อง remote (⛔ งาน infra ยังไม่ groom — เคส smoke ตรวจหลังติดตั้งผ่านหน้าเว็บ)</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังไม่มีหน้าจอ</b> ณ origin/develop 48e17aa0 (23 ก.ย. 2569) — เคสเขียนตาม AC/ข้อเสนอในใบไว้ล่วงหน้า คำของส่วนใหม่ยังไม่มีใน i18n อาจต่างจากของจริงเมื่อ dev ส่งมอบ · ถ้ายังไม่มีให้บันทึกเป็น <b>BLOCKED</b></div></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA AI บน URL ของเครื่อง remote (ขอ URL จาก dev) แล้วเข้าสู่ระบบด้วยบัญชีทดสอบ</li><li>ไปที่เมนู "คลังสคริปต์" กด "สร้างสคริปต์" ตั้งชื่อ "QA-1226-remote" แล้วกด "บันทึก"</li><li>เปิดเว็บ TAKRA AI (UAT) ด้วยบัญชีเดียวกัน แล้วไปที่ "คลังสคริปต์"</li><li>ค้นหา "QA-1226-remote"</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ใน UAT ไม่มีสคริปต์ "QA-1226-remote" (เครื่อง remote ไม่ได้แอบใช้ฐานข้อมูลเดียวกับ UAT/production)</li></ul><div class="hint" style="margin-top:6px">ที่มา: TAKRA-1226 (ยังไม่ groom · ยังไม่ระบุว่าเครื่อง remote ทำหน้าที่อะไร — เคส smoke หลังติดตั้ง) · ⚠️ "ห้ามชนกับ Epic 7 — ใบนี้ต้องไม่กลายเป็นการดีพลอย prod ทางลับ"</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-12348" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-12348" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-12348" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-12348" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-12348" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-12348"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-12348" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-12348">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+
+<!-- t1228 -->
+<tr class="epicrow" data-epic="t1228"><td colspan="7">🏷️ TAKRA-1228 · จัดหมวดหมู่คำเสี่ยงใหม่ (⛔ ยังไม่ groom · ยังไม่มีโค้ด — เคส regression ก่อน/หลังย้ายหมวด) <span class="rp">(6 เคส)</span> <a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1228" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1228 ใน Jira">🧩 Epic TAKRA-1228</a></td></tr>
+<tr class="featrow" data-featkey="risk-category-migration"><td colspan="7">📁 risk-category-migration · "คำเสี่ยง" › "ประเภทธุรกิจทั้งหมด" + สินค้า + สคริปต์ + ไลฟ์ <span class="rp"><span class="lv lvl-ui">🌐 6</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="risk-category-migration"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow" data-feat="t1228" data-level="ui" data-prio="P0" data-kind="happy" data-ui="no" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">T1228.1</td>
+  <td class="ctitle">หน้า "หมวดหมู่/คำเสี่ยง" แสดงโครงหมวดใหม่ครบตามรายการที่ compliance เคาะ <span class="kd kd-happy">Happy Path</span> <span class="noui">⛔ ยังไม่มีหน้าจอ</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-12349"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-12349"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">หน้า "หมวดหมู่/คำเสี่ยง" แสดงโครงหมวดใหม่ครบตามรายการที่ compliance เคาะ</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1228" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1228 ใน Jira">🧩 Epic TAKRA-1228</a> · Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · TAKRA-1228 · จัดหมวดหมู่คำเสี่ยงใหม่ (⛔ ยังไม่ groom</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังไม่มีหน้าจอ</b> ณ origin/develop 48e17aa0 (23 ก.ย. 2569) — เคสเขียนตาม AC/ข้อเสนอในใบไว้ล่วงหน้า คำของส่วนใหม่ยังไม่มีใน i18n อาจต่างจากของจริงเมื่อ dev ส่งมอบ · ถ้ายังไม่มีให้บันทึกเป็น <b>BLOCKED</b></div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>ได้รายการหมวดใหม่ที่เคาะแล้วจากฝ่าย compliance</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA AI (UAT) แล้วเข้าสู่ระบบด้วยบัญชีเจ้าของ workspace</li><li>ไปที่เมนู "คำเสี่ยง" (หน้า "หมวดหมู่/คำเสี่ยง")</li><li>ดูรายการใต้ "ประเภทธุรกิจทั้งหมด (N)" แล้วเทียบกับรายการหมวดใหม่ที่เคาะแล้ว</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ชื่อและจำนวนหมวดตรงกับรายการใหม่ ไม่มีหมวดเก่าค้าง ไม่มีหมวดซ้ำ</li><li>แต่ละหมวดเปิดดู "คำเสี่ยงในชุด" ได้</li></ul><div class="hint" style="margin-top:6px">ที่มา: TAKRA-1228 (ยังไม่ groom · ยังไม่มีรายการหมวดใหม่/ตาราง mapping — Expected ตาม DoD ในใบ) · ❓ "โครงหมวดใหม่คืออะไร"</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-12349" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-12349" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-12349" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-12349" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-12349" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-12349"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-12349" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-12349">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="t1228" data-level="ui" data-prio="P0" data-kind="data" data-ui="no" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">T1228.2</td>
+  <td class="ctitle">คำที่ร้านเพิ่มเอง + allowlist ยังอยู่ครบหลังย้ายหมวด (ไปอยู่หมวดใหม่ตาม mapping) <span class="kd kd-data">Data</span> <span class="noui">⛔ ยังไม่มีหน้าจอ</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-12350"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-12350"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">คำที่ร้านเพิ่มเอง + allowlist ยังอยู่ครบหลังย้ายหมวด (ไปอยู่หมวดใหม่ตาม mapping)</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1228" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1228 ใน Jira">🧩 Epic TAKRA-1228</a> · Priority: <b>P0</b> · UI · ประเภท: <b>Data</b> <span class="hint">(empty · null · duplicate · existing · non-existing)</span> · TAKRA-1228 · จัดหมวดหมู่คำเสี่ยงใหม่ (⛔ ยังไม่ groom</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังไม่มีหน้าจอ</b> ณ origin/develop 48e17aa0 (23 ก.ย. 2569) — เคสเขียนตาม AC/ข้อเสนอในใบไว้ล่วงหน้า คำของส่วนใหม่ยังไม่มีใน i18n อาจต่างจากของจริงเมื่อ dev ส่งมอบ · ถ้ายังไม่มีให้บันทึกเป็น <b>BLOCKED</b></div></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA AI (UAT) แล้วเข้าสู่ระบบด้วยบัญชีเจ้าของ workspace (workspace ที่มีคำเพิ่มเองไว้ก่อนย้ายหมวด)</li><li>ก่อนย้ายหมวด: ไปที่เมนู "คำเสี่ยง" (หน้า "หมวดหมู่/คำเสี่ยง") จดคำใน "คำเฉพาะแบรนด์ (ทุกหมวด · Tier 1)" "คำเฉพาะหมวด" และ "Allowlist (ยกเว้น)" ของทุกหมวด</li><li>หลังย้ายหมวด: กลับมาหน้าเดิม แล้วใช้ช่อง "ค้นหาคำเสี่ยงทุกหมวด" ค้นทีละคำที่จดไว้</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ทุกคำที่จดไว้ยังค้นเจอ ไม่มีคำหาย</li><li>คำเฉพาะหมวดอยู่ในหมวดใหม่ตามตาราง mapping · คำ allowlist ยังอยู่ในกลุ่ม "Allowlist (ยกเว้น — ไม่ถูกจับ)"</li></ul><div class="hint" style="margin-top:6px">ที่มา: TAKRA-1228 (ยังไม่ groom · ยังไม่มีรายการหมวดใหม่/ตาราง mapping — Expected ตาม DoD ในใบ) · DoD "เทสต์ว่าคำ custom/allowlist ของลูกค้าไม่หาย"</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-12350" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-12350" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-12350" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-12350" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-12350" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-12350"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-12350" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-12350">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="t1228" data-level="ui" data-prio="P0" data-kind="data" data-ui="no" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">T1228.3</td>
+  <td class="ctitle">สินค้าที่ติดหมวดเดิมถูกย้ายไปหมวดใหม่ ไม่มีสินค้าหลุดหมวด <span class="kd kd-data">Data</span> <span class="noui">⛔ ยังไม่มีหน้าจอ</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-12351"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-12351"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">สินค้าที่ติดหมวดเดิมถูกย้ายไปหมวดใหม่ ไม่มีสินค้าหลุดหมวด</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1228" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1228 ใน Jira">🧩 Epic TAKRA-1228</a> · Priority: <b>P0</b> · UI · ประเภท: <b>Data</b> <span class="hint">(empty · null · duplicate · existing · non-existing)</span> · TAKRA-1228 · จัดหมวดหมู่คำเสี่ยงใหม่ (⛔ ยังไม่ groom</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังไม่มีหน้าจอ</b> ณ origin/develop 48e17aa0 (23 ก.ย. 2569) — เคสเขียนตาม AC/ข้อเสนอในใบไว้ล่วงหน้า คำของส่วนใหม่ยังไม่มีใน i18n อาจต่างจากของจริงเมื่อ dev ส่งมอบ · ถ้ายังไม่มีให้บันทึกเป็น <b>BLOCKED</b></div></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA AI (UAT) แล้วเข้าสู่ระบบด้วยบัญชีเจ้าของ workspace</li><li>ก่อนย้ายหมวด: ไปที่เมนู "คลังสินค้า" จดหมวดของสินค้าทดสอบ 3–5 รายการ</li><li>หลังย้ายหมวด: เปิดสินค้าชุดเดิมดูหมวดอีกครั้ง</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ทุกสินค้ายังมีหมวด และเป็นหมวดใหม่ตามตาราง mapping</li><li>ไม่มีสินค้าที่หมวดว่างหรือแสดงเป็นรหัสแปลก ๆ</li></ul><div class="hint" style="margin-top:6px">ที่มา: TAKRA-1228 (ยังไม่ groom · ยังไม่มีรายการหมวดใหม่/ตาราง mapping — Expected ตาม DoD ในใบ)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-12351" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-12351" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-12351" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-12351" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-12351" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-12351"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-12351" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-12351">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="t1228" data-level="ui" data-prio="P0" data-kind="negative" data-ui="no" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">T1228.4</td>
+  <td class="ctitle">คำที่เคยถูกจับในสคริปต์ ยังถูกจับหลังย้ายหมวด (ไม่มีคำหลุด) <span class="kd kd-neg">Negative</span> <span class="noui">⛔ ยังไม่มีหน้าจอ</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-12352"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-12352"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">คำที่เคยถูกจับในสคริปต์ ยังถูกจับหลังย้ายหมวด (ไม่มีคำหลุด)</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1228" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1228 ใน Jira">🧩 Epic TAKRA-1228</a> · Priority: <b>P0</b> · UI · ประเภท: <b>Negative</b> <span class="hint">(ข้อมูลผิด / action ผิด)</span> · TAKRA-1228 · จัดหมวดหมู่คำเสี่ยงใหม่ (⛔ ยังไม่ groom</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังไม่มีหน้าจอ</b> ณ origin/develop 48e17aa0 (23 ก.ย. 2569) — เคสเขียนตาม AC/ข้อเสนอในใบไว้ล่วงหน้า คำของส่วนใหม่ยังไม่มีใน i18n อาจต่างจากของจริงเมื่อ dev ส่งมอบ · ถ้ายังไม่มีให้บันทึกเป็น <b>BLOCKED</b></div></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA AI (UAT) แล้วเข้าสู่ระบบด้วยบัญชีเจ้าของ workspace</li><li>ก่อนย้ายหมวด: ไปที่เมนู "คลังสคริปต์" สร้างสคริปต์ผูกสินค้าทดสอบ พิมพ์บทพูดที่มีคำเสี่ยงของหมวดนั้น 5 คำ แล้วจดข้อความตรวจคำเสี่ยงที่ขึ้น</li><li>หลังย้ายหมวด: เปิดสคริปต์เดิม ดูข้อความตรวจคำเสี่ยงอีกครั้ง</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>หลังย้ายหมวดยังขึ้น "คำต้องห้าม N คำ — ต้องแก้ก่อนอนุมัติ" ด้วยจำนวนเท่าเดิมหรือมากกว่า</li><li>ไม่มีคำที่เคยถูกจับกลายเป็นไม่ถูกจับ</li></ul><div class="hint" style="margin-top:6px">ที่มา: TAKRA-1228 (ยังไม่ groom · ยังไม่มีรายการหมวดใหม่/ตาราง mapping — Expected ตาม DoD ในใบ) · DoD "ไม่มีคำที่เคยบล็อกได้แล้วหลุดหลัง migration (regression ที่สำคัญที่สุด)" · NFR-SEC-08</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-12352" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-12352" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-12352" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-12352" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-12352" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-12352"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-12352" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-12352">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="t1228" data-level="ui" data-prio="P1" data-kind="negative" data-ui="no" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">T1228.5</td>
+  <td class="ctitle">ไลฟ์จริงหลังย้ายหมวด → ด่านกรองยังบล็อกคำเสี่ยงชุดเดิม <span class="kd kd-neg">Negative</span> <span class="noui">⛔ ยังไม่มีหน้าจอ</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-12353"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-12353"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ไลฟ์จริงหลังย้ายหมวด → ด่านกรองยังบล็อกคำเสี่ยงชุดเดิม</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1228" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1228 ใน Jira">🧩 Epic TAKRA-1228</a> · Priority: <b>P1</b> · UI · ประเภท: <b>Negative</b> <span class="hint">(ข้อมูลผิด / action ผิด)</span> · TAKRA-1228 · จัดหมวดหมู่คำเสี่ยงใหม่ (⛔ ยังไม่ groom</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังไม่มีหน้าจอ</b> ณ origin/develop 48e17aa0 (23 ก.ย. 2569) — เคสเขียนตาม AC/ข้อเสนอในใบไว้ล่วงหน้า คำของส่วนใหม่ยังไม่มีใน i18n อาจต่างจากของจริงเมื่อ dev ส่งมอบ · ถ้ายังไม่มีให้บันทึกเป็น <b>BLOCKED</b></div></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA AI (UAT) แล้วเข้าสู่ระบบด้วยบัญชีเจ้าของ workspace</li><li>ไปที่เมนู "แพลตฟอร์มไลฟ์" เริ่มไลฟ์ด้วยสินค้าทดสอบ และส่งคอมเมนต์ที่ทำให้ AI ตอบด้วยคำเสี่ยงของหมวดสินค้านั้น</li><li>ดูแผงคำเสี่ยงในห้องคุมไลฟ์</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>คำเสี่ยงถูกบล็อก/แจ้งในแผงคำเสี่ยงเหมือนก่อนย้ายหมวด</li><li>อวาตาร์ไม่พูดคำที่ถูกบล็อกออกอากาศ</li></ul><div class="hint" style="margin-top:6px">ที่มา: TAKRA-1228 (ยังไม่ groom · ยังไม่มีรายการหมวดใหม่/ตาราง mapping — Expected ตาม DoD ในใบ) · ⚠️ "ด่านกรองตอนไลฟ์ต้องยังครอบคลุม ≥95%"</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-12353" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-12353" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-12353" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-12353" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-12353" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-12353"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-12353" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-12353">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="t1228" data-level="ui" data-prio="P1" data-kind="permission" data-ui="no" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">T1228.6</td>
+  <td class="ctitle">workspace อื่นไม่เห็นคำเพิ่มเองของ workspace นี้หลังย้ายหมวด <span class="kd kd-perm">Permission</span> <span class="noui">⛔ ยังไม่มีหน้าจอ</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-12354"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-12354"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">workspace อื่นไม่เห็นคำเพิ่มเองของ workspace นี้หลังย้ายหมวด</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1228" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1228 ใน Jira">🧩 Epic TAKRA-1228</a> · Priority: <b>P1</b> · UI · ประเภท: <b>Permission</b> <span class="hint">(role ไหนทำได้ / ทำไม่ได้)</span> · TAKRA-1228 · จัดหมวดหมู่คำเสี่ยงใหม่ (⛔ ยังไม่ groom</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังไม่มีหน้าจอ</b> ณ origin/develop 48e17aa0 (23 ก.ย. 2569) — เคสเขียนตาม AC/ข้อเสนอในใบไว้ล่วงหน้า คำของส่วนใหม่ยังไม่มีใน i18n อาจต่างจากของจริงเมื่อ dev ส่งมอบ · ถ้ายังไม่มีให้บันทึกเป็น <b>BLOCKED</b></div></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA AI (UAT) แล้วเข้าสู่ระบบด้วยบัญชีเจ้าของ workspace ที่อยู่ 2 workspace (A มีคำเพิ่มเอง · B ไม่มี)</li><li>สลับไป workspace B แล้วไปที่เมนู "คำเสี่ยง" (หน้า "หมวดหมู่/คำเสี่ยง")</li><li>ค้นหาคำเพิ่มเองของ A ในช่อง "ค้นหาคำเสี่ยงทุกหมวด"</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ไม่พบคำเพิ่มเองของ A ใน workspace B</li></ul><div class="hint" style="margin-top:6px">ที่มา: TAKRA-1228 (ยังไม่ groom · ยังไม่มีรายการหมวดใหม่/ตาราง mapping — Expected ตาม DoD ในใบ) · DoD "multi-tenant negative test"</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-12354" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-12354" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-12354" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-12354" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-12354" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-12354"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-12354" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-12354">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+
+<!-- t1230 -->
+<tr class="epicrow" data-epic="t1230"><td colspan="7">🎤 TAKRA-1230 · เสียงอีกคนพูดแทรกในไลฟ์ (⛔ Spike — ยังไม่มีฟีเจอร์ · เคสเกณฑ์ขั้นต่ำที่ต้องผ่านเมื่อแตกเป็นตั๋ว dev) <span class="rp">(3 เคส)</span> <a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1230" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1230 ใน Jira">🧩 Epic TAKRA-1230</a></td></tr>
+<tr class="featrow" data-featkey="co-host-voice"><td colspan="7">📁 co-host-voice · เสียงที่สองในไลฟ์ (อวาตาร์ตัวที่สอง / เสียงทีมงาน) <span class="rp"><span class="lv lvl-ui">🌐 3</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="co-host-voice"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow" data-feat="t1230" data-level="ui" data-prio="P0" data-kind="happy" data-ui="no" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">T1230.1</td>
+  <td class="ctitle">ไลฟ์ที่มีเสียงที่สอง → ผู้ชมได้ยินทั้ง 2 เสียงชัด และเสียงหลักไม่ถูกตัดกลางประโยค <span class="kd kd-happy">Happy Path</span> <span class="noui">⛔ ยังไม่มีหน้าจอ</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-12355"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-12355"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ไลฟ์ที่มีเสียงที่สอง → ผู้ชมได้ยินทั้ง 2 เสียงชัด และเสียงหลักไม่ถูกตัดกลางประโยค</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1230" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1230 ใน Jira">🧩 Epic TAKRA-1230</a> · Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · TAKRA-1230 · เสียงอีกคนพูดแทรกในไลฟ์ (⛔ Spike — ยังไม่มีฟีเจอร์</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังไม่มีหน้าจอ</b> ณ origin/develop 48e17aa0 (23 ก.ย. 2569) — เคสเขียนตาม AC/ข้อเสนอในใบไว้ล่วงหน้า คำของส่วนใหม่ยังไม่มีใน i18n อาจต่างจากของจริงเมื่อ dev ส่งมอบ · ถ้ายังไม่มีให้บันทึกเป็น <b>BLOCKED</b></div></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA AI (UAT) แล้วเข้าสู่ระบบด้วยบัญชีเจ้าของ workspace</li><li>ไปที่เมนู "แพลตฟอร์มไลฟ์" เปิด Studio ตั้งค่าเสียงที่สองตามวิธีที่ dev ส่งมอบ แล้วเริ่มไลฟ์</li><li>ฟังห้องไลฟ์จากอีกเครื่องจนเสียงที่สองพูดอย่างน้อย 3 ครั้ง</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ได้ยินเสียงที่สองพูดสลับกับอวาตาร์หลัก</li><li>อวาตาร์หลักพูดประโยคจบก่อนเสียงที่สองเริ่ม (ไม่มีการตัดกลางสคริปต์)</li><li>เสียงทั้งสองไม่ดังทับกันจนฟังไม่ออก</li></ul><div class="hint" style="margin-top:6px">ที่มา: TAKRA-1230 (Spike — ยังไม่ตัดสินว่าจะทำแบบ (ก)/(ข)/(ค) · เคสเกณฑ์ขั้นต่ำเมื่อมีฟีเจอร์) · NFR-INT-AVATAR-01 (ไม่มี pause/interrupt กลางสคริปต์) · FR43a</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-12355" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-12355" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-12355" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-12355" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-12355" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-12355"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-12355" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-12355">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="t1230" data-level="ui" data-prio="P1" data-kind="boundary" data-ui="no" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">T1230.2</td>
+  <td class="ctitle">เสียง/บุคลิกของอวาตาร์หลักไม่เปลี่ยนตลอดไลฟ์ แม้มีเสียงที่สอง <span class="kd kd-bnd">Boundary</span> <span class="noui">⛔ ยังไม่มีหน้าจอ</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-12356"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-12356"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">เสียง/บุคลิกของอวาตาร์หลักไม่เปลี่ยนตลอดไลฟ์ แม้มีเสียงที่สอง</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1230" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1230 ใน Jira">🧩 Epic TAKRA-1230</a> · Priority: <b>P1</b> · UI · ประเภท: <b>Boundary</b> <span class="hint">(min · max · ก่อนขอบ · ตรงขอบ · เกินขอบ)</span> · TAKRA-1230 · เสียงอีกคนพูดแทรกในไลฟ์ (⛔ Spike — ยังไม่มีฟีเจอร์</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังไม่มีหน้าจอ</b> ณ origin/develop 48e17aa0 (23 ก.ย. 2569) — เคสเขียนตาม AC/ข้อเสนอในใบไว้ล่วงหน้า คำของส่วนใหม่ยังไม่มีใน i18n อาจต่างจากของจริงเมื่อ dev ส่งมอบ · ถ้ายังไม่มีให้บันทึกเป็น <b>BLOCKED</b></div></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA AI (UAT) แล้วเข้าสู่ระบบด้วยบัญชีเจ้าของ workspace</li><li>เริ่มไลฟ์ที่มีเสียงที่สองเหมือน T1230.1 แล้วปล่อยยาวเกิน 20 นาที</li><li>ฟังเสียงอวาตาร์หลักช่วงต้นกับช่วงท้ายไลฟ์</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>เสียงและบุคลิกของอวาตาร์หลักเหมือนเดิมทั้งไลฟ์ ไม่สลับไปเป็นเสียงที่สอง</li></ul><div class="hint" style="margin-top:6px">ที่มา: TAKRA-1230 (Spike — ยังไม่ตัดสินว่าจะทำแบบ (ก)/(ข)/(ค) · เคสเกณฑ์ขั้นต่ำเมื่อมีฟีเจอร์) · contract voice/persona consistency</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-12356" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-12356" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-12356" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-12356" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-12356" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-12356"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-12356" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-12356">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="t1230" data-level="ui" data-prio="P0" data-kind="negative" data-ui="no" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">T1230.3</td>
+  <td class="ctitle">ไลฟ์ที่ไม่ได้ตั้งเสียงที่สอง → ทำงานเหมือนเดิมทุกอย่าง <span class="kd kd-neg">Negative</span> <span class="noui">⛔ ยังไม่มีหน้าจอ</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-12357"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-12357"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ไลฟ์ที่ไม่ได้ตั้งเสียงที่สอง → ทำงานเหมือนเดิมทุกอย่าง</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1230" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1230 ใน Jira">🧩 Epic TAKRA-1230</a> · Priority: <b>P0</b> · UI · ประเภท: <b>Negative</b> <span class="hint">(ข้อมูลผิด / action ผิด)</span> · TAKRA-1230 · เสียงอีกคนพูดแทรกในไลฟ์ (⛔ Spike — ยังไม่มีฟีเจอร์</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #dc2626;background:rgba(220,38,38,.06)">⛔ <b>ยังไม่มีหน้าจอ</b> ณ origin/develop 48e17aa0 (23 ก.ย. 2569) — เคสเขียนตาม AC/ข้อเสนอในใบไว้ล่วงหน้า คำของส่วนใหม่ยังไม่มีใน i18n อาจต่างจากของจริงเมื่อ dev ส่งมอบ · ถ้ายังไม่มีให้บันทึกเป็น <b>BLOCKED</b></div></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA AI (UAT) แล้วเข้าสู่ระบบด้วยบัญชีเจ้าของ workspace</li><li>ไปที่เมนู "แพลตฟอร์มไลฟ์" เริ่มไลฟ์ตามปกติโดยไม่ตั้งค่าเสียงที่สอง</li><li>ฟังห้องไลฟ์ 5 นาที</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>มีแค่เสียงอวาตาร์หลัก ไม่มีเสียงอื่นแทรก</li><li>เวลาไลฟ์และการตอบคอมเมนต์เป็นแบบเดิม</li></ul><div class="hint" style="margin-top:6px">ที่มา: TAKRA-1230 (Spike — ยังไม่ตัดสินว่าจะทำแบบ (ก)/(ข)/(ค) · เคสเกณฑ์ขั้นต่ำเมื่อมีฟีเจอร์)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-12357" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-12357" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-12357" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-12357" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-12357" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-12357"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-12357" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-12357">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
 </tbody>
   </table>
   </div>
 
 </div>
-<footer>TAKRA AI — ใบงาน 1223–1230 (1224 · 1225 · 1227 · 1229) UI Manual Test Cases · 38 UI + 0 E2E = 38 TCs · UI only (manual) · TAKRA AI Web UAT · ใบงาน TAKRA-1223–1230</footer>
+<footer>TAKRA AI — ใบงาน 1223–1230 UI Manual Test Cases · 57 UI + 0 E2E = 57 TCs · UI only (manual) · TAKRA AI Web UAT · ใบงาน TAKRA-1223–1230</footer>
 
 <script>
 // ── Load store from embedded JSON ──
