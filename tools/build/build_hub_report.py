@@ -14,6 +14,7 @@ harness (CSS + JS ปุ่ม ☁️ เซฟ/ตัวกรอง/Jira/owner
       lrready = insight_live_readiness_cases.py (TAKRA Insight · Live Readiness คุณภาพบนไลฟ์จริง)
       rerunquality = rerun_quality_cases.py (TAKRA Rerun · คุณภาพ/ประสิทธิภาพการไลฟ์รีรัน)
       aiquality = ai_quality_cases.py (TAKRA AI · คุณภาพไลฟ์รีรัน ท่อส่ง+เนื้อหา)
+      aitickets1223 = ai_tickets_1223_cases.py (TAKRA AI · ใบงาน TAKRA-1223–1230)
       lipsync = lipsync_cases.py (TAKRA Lib-Sync · แอปเดสก์ท็อป takra-lib-sync)
       (แต่ละไฟล์มี META บอก path/ชื่อ/uid เริ่ม)
 สถานะผลเทสเดิมในไฟล์ปลายทาง (<script id="store-data">) จะถูกคงไว้ถ้ามีอยู่แล้ว
@@ -28,7 +29,7 @@ import sys
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 MODULES = {'mvp1': 'hub_cases', 'mvp2': 'hub_mvp2_cases', 'mvp2rbac': 'hub_mvp2_rbac_cases',
-           'aitickets': 'ai_tickets_cases', 'clipbo': 'clip_bo_cases', 'farm': 'farm_cases',
+           'aitickets': 'ai_tickets_cases', 'aitickets1223': 'ai_tickets_1223_cases', 'clipbo': 'clip_bo_cases', 'farm': 'farm_cases',
            'insighte46': 'insight_mvp2_e46_cases',
            'insightbyok': 'insight_mvp2_byok_cases',
            'insightdash': 'insight_mvp2_dashboard_cases',
