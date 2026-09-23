@@ -49,7 +49,8 @@
   th,td{padding:10px 14px; text-align:left; vertical-align:top}
   thead th{font-size:.78rem; color:var(--muted); font-weight:600; border-bottom:1px solid var(--border); white-space:nowrap}
   tbody td{border-top:1px solid var(--border)}
-  tr.proj td{background:var(--head); font-weight:700; font-size:1rem; padding-top:12px; padding-bottom:12px; border-top:2px solid var(--border)}
+  tr.proj td{background:color-mix(in srgb, var(--pc) 13%, var(--panel)); font-weight:700; font-size:1rem; padding-top:12px; padding-bottom:12px; border-top:2px solid var(--border)}
+  tr.proj td:first-child{box-shadow:inset 4px 0 0 var(--pc)}
   tr.proj:first-child td{border-top:0}
   tr.proj .prog{font-weight:500; font-size:.82rem; color:var(--muted); margin-left:10px}
   td.feat{width:44%}
@@ -60,10 +61,12 @@
   /* เส้นตาราง: คั่นทุกคอลัมน์บางๆ · เส้นแบ่งกลุ่ม DEV|QA หนากว่า */
   thead th, tbody td{border-right:1px solid var(--border)}
   thead th:last-child, tbody td:last-child{border-right:0}
+  thead tr:nth-child(2) th{text-align:center}
   thead th.grp{text-align:center; color:var(--text); letter-spacing:.04em; background:var(--head)}
   thead tr:first-child th{border-bottom:1px solid var(--border)}
   th.grp, th.grpstart, td.owner{border-left:2px solid var(--border)}
-  tr.proj td{border-right:0}
+  tr.proj td{border-right:1px solid var(--border)}
+  tr.proj td:last-child{border-right:0}
   .note{display:block; color:var(--muted); font-size:.8rem; line-height:1.4}
   td.st{white-space:nowrap}
   .pill{display:inline-block; font-size:.82rem; font-weight:600; border-radius:999px; padding:2px 10px}
@@ -267,6 +270,8 @@ function overdue(it){
     .filter(x => x > 0 && x <= WEEK_LEFT);
   return soon.length ? ` · <span class="warn-txt">อีก ${Math.min(...soon)} วัน · สัปดาห์นี้</span>` : '';
 }
+const PCOLORS = { Insight:'#f59e0b', Live:'#e11d48', Rerun:'#7c3aed', Hub:'#0ea5e9', Trendora:'#16a34a', Post:'#0d9488' };
+const pcolor = n => PCOLORS[n] || '#64748b';
 const pill = ([c, l]) => `<span class="pill ${c}">${esc(l)}</span>`;
 
 const all = PROJECTS.flatMap(p => p.items);
@@ -281,7 +286,8 @@ document.getElementById('summary').innerHTML = [
 
 document.getElementById('rows').innerHTML = PROJECTS.map(p => {
   const passed = p.items.filter(i => i.qa === 'pass').length;
-  const head = `<tr class="proj"><td colspan="5">${p.emoji} ${esc(p.name)}<span class="prog">QA ผ่าน ${passed}/${p.items.length}</span>${p.jira ? ` <a class="jira" href="${JIRA}${esc(p.jira)}" target="_blank" rel="noopener">${esc(p.jiraLabel || '')} ${esc(p.jira)} ↗</a>` : ''}</td></tr>`;
+  const pc = pcolor(p.name);
+  const head = `<tr class="proj" style="--pc:${pc}"><td>${p.emoji} ${esc(p.name)}<span class="prog">QA ผ่าน ${passed}/${p.items.length}</span>${p.jira ? ` <a class="jira" href="${JIRA}${esc(p.jira)}" target="_blank" rel="noopener">${esc(p.jiraLabel || '')} ${esc(p.jira)} ↗</a>` : ''}</td><td></td><td></td><td></td><td></td></tr>`;
   return head + p.items.map(it => {
     const qa = QA[it.qa].slice(); if (it.qaLabel) qa[1] = it.qaLabel;
     const note = [it.alias, it.subs && it.subs.join(' · ')].filter(Boolean).join(' — ');
@@ -297,7 +303,6 @@ document.getElementById('rows').innerHTML = PROJECTS.map(p => {
 
 // ---------- Gantt (แท่ง = กำหนด DEV → กำหนด QA · สี่เหลี่ยมทึบ = กำหนด QA) ----------
 (function(){
-  const COLORS = { Insight:'#f59e0b', Live:'#e11d48', Rerun:'#7c3aed', Hub:'#0ea5e9', Trendora:'#16a34a', Post:'#0d9488' };
   const DW = 34, DAY = 864e5, WD = ['อา','จ','อ','พ','พฤ','ศ','ส'];
   const dates = [TODAY];
   PROJECTS.forEach(p => p.items.forEach(i => { if (i.due) dates.push(i.due); if (i.qaDue) dates.push(i.qaDue); }));
@@ -330,7 +335,7 @@ document.getElementById('rows').innerHTML = PROJECTS.map(p => {
 
   let n = 0;
   PROJECTS.forEach(p => {
-    const c = COLORS[p.name] || '#64748b';
+    const c = pcolor(p.name);
     html += `<div class="g-row g-proj"><div class="g-lcol"><div class="g-id" style="color:${c}">●</div><div class="g-name">${p.emoji} ${esc(p.name)}</div><div class="g-own">${esc(p.devOwner || '')}</div><div class="g-own">${esc(p.owner || '')}</div></div><div class="g-track"></div></div>`;
     p.items.forEach(it => {
       n++;
