@@ -55,6 +55,9 @@
   td.feat{width:44%}
   .fname{font-weight:600}
   td.owner{white-space:nowrap; color:var(--muted); font-size:.88rem; font-weight:600}
+  thead th.grp{text-align:center; border-bottom:1px solid var(--border); color:var(--text); letter-spacing:.04em}
+  thead th.grp{border-left:1px solid var(--border)}
+  tbody td.owner{border-left:1px solid var(--border)}
   .note{display:block; color:var(--muted); font-size:.8rem; line-height:1.4}
   td.st{white-space:nowrap}
   .pill{display:inline-block; font-size:.82rem; font-weight:600; border-radius:999px; padding:2px 10px}
@@ -145,7 +148,10 @@
   <section class="panel" data-panel="status">
     <div class="table-wrap">
       <table>
-        <thead><tr><th>ฟีเจอร์</th><th>DEV</th><th>QA</th><th>ผู้รับผิดชอบ DEV</th><th>ผู้รับผิดชอบ QA</th></tr></thead>
+        <thead>
+          <tr><th rowspan="2">ฟีเจอร์</th><th colspan="2" class="grp">DEV</th><th colspan="2" class="grp grp-qa">QA</th></tr>
+          <tr><th>ผู้รับผิดชอบ</th><th>Duedate</th><th>ผู้รับผิดชอบ</th><th>Duedate</th></tr>
+        </thead>
         <tbody id="rows"></tbody>
       </table>
     </div>
@@ -275,10 +281,10 @@ document.getElementById('rows').innerHTML = PROJECTS.map(p => {
     const note = [it.alias, it.subs && it.subs.join(' · ')].filter(Boolean).join(' — ');
     return `<tr>
       <td class="feat"><span class="fname">${esc(it.name)}</span>${it.jira ? ` <a class="jira" href="${JIRA}${esc(it.jira)}" target="_blank" rel="noopener">${esc(it.jira)} ↗</a>` : ''}${it.report ? ` <a class="jira" href="${esc(it.report)}" target="_blank" rel="noopener">📋 Test cases ↗</a>` : ''}${note ? `<span class="note">${esc(note)}</span>` : ''}</td>
-      <td class="st">${pill(it.dev_label ? [DEV[it.dev][0], '✓ ' + it.dev_label] : it.devWaitLabel ? [DEV[it.dev][0], it.devWaitLabel] : DEV[it.dev])}${dateLine(it.due, it.dev !== 'done', it.noDate)}</td>
-      <td class="st">${pill(qa)}${dateLine(it.qaDue, it.qa !== 'pass', it.noDate || it.qaNoDate)}</td>
       <td class="owner">${esc(it.devOwner || p.devOwner || '—')}</td>
+      <td class="st">${pill(it.dev_label ? [DEV[it.dev][0], '✓ ' + it.dev_label] : it.devWaitLabel ? [DEV[it.dev][0], it.devWaitLabel] : DEV[it.dev])}${dateLine(it.due, it.dev !== 'done', it.noDate)}</td>
       <td class="owner">${esc(it.owner || p.owner || '—')}</td>
+      <td class="st">${pill(qa)}${dateLine(it.qaDue, it.qa !== 'pass', it.noDate || it.qaNoDate)}</td>
     </tr>`;
   }).join('');
 }).join('');
