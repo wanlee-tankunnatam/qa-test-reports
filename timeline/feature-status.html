@@ -54,6 +54,7 @@
   tr.proj .prog{font-weight:500; font-size:.82rem; color:var(--muted); margin-left:10px}
   td.feat{width:44%}
   .fname{font-weight:600}
+  td.owner{white-space:nowrap; color:var(--muted); font-size:.88rem; font-weight:600}
   .note{display:block; color:var(--muted); font-size:.8rem; line-height:1.4}
   td.st{white-space:nowrap}
   .pill{display:inline-block; font-size:.82rem; font-weight:600; border-radius:999px; padding:2px 10px}
@@ -141,7 +142,7 @@
   <section class="panel" data-panel="status">
     <div class="table-wrap">
       <table>
-        <thead><tr><th>ฟีเจอร์</th><th>DEV</th><th>QA</th></tr></thead>
+        <thead><tr><th>ฟีเจอร์</th><th>ผู้รับผิดชอบ</th><th>DEV</th><th>QA</th></tr></thead>
         <tbody id="rows"></tbody>
       </table>
     </div>
@@ -154,19 +155,20 @@ const AS_OF = '2026-09-18';   // วันที่ของข้อมูล (
 // วันนี้จริงตามเครื่องผู้เปิด — ใช้นับวันเหลือ/เลยกำหนด และเส้นวันนี้
 const TODAY = (() => { const n = new Date(); return `${n.getFullYear()}-${String(n.getMonth() + 1).padStart(2, '0')}-${String(n.getDate()).padStart(2, '0')}`; })();
 
+// owner = ผู้รับผิดชอบของทั้งโปรเจกต์ (ใส่ owner ในรายการย่อยเพื่อทับเฉพาะแถวนั้นได้)
 // due = กำหนด DEV · qaDue = กำหนด QA (ถ้ามี)
 // dev: done | wait | fixing | null   ·   qa: pass | fail | checking | wait | null
 const PROJECTS = [
-  { name:'Insight', emoji:'📊', items:[
+  { name:'Insight', emoji:'📊', owner:'Ice', items:[
     { name:'Metered LLM Proxy', report:'https://wanlee-tankunnatam.github.io/qa-test-reports/projects/takra-insight/2026/09/reports/takra-insight-mvp2-epic4-byok-ui-test-cases-table.html', due:'2026-09-16', qaDue:'2026-09-18', dev:'done', qa:'pass' },
-    { name:'Brand Overview Dashboard', report:'https://wanlee-tankunnatam.github.io/qa-test-reports/projects/takra-insight/2026/09/reports/takra-insight-mvp2-dashboard-ui-test-cases-table.html', due:'2026-09-18', qaDue:'2026-09-22', dev:'done', qa:'wait' },
+    { name:'Brand Overview Dashboard', report:'https://wanlee-tankunnatam.github.io/qa-test-reports/projects/takra-insight/2026/09/reports/takra-insight-mvp2-dashboard-ui-test-cases-table.html', due:'2026-09-18', qaDue:'2026-09-25', dev:'done', qa:'fail' },
     { name:'AI Insights', due:'2026-09-22', qaDue:'2026-09-24', dev:'wait', qa:'wait' },
     { name:'Reports', report:'https://wanlee-tankunnatam.github.io/qa-test-reports/projects/takra-insight/2026/09/reports/takra-insight-mvp2-reports-ui-test-cases-table.html', due:'2026-09-24', qaDue:'2026-09-25', dev:'wait', qa:'wait' },
     { name:'Membership', report:'https://wanlee-tankunnatam.github.io/qa-test-reports/projects/takra-insight/2026/09/reports/takra-insight-mvp2-membership-ui-test-cases-table.html', due:'2026-09-18', qaDue:'2026-09-25', dev:'done', qa:'fail' },
     { name:'บัคตีกลับ · [QA] MVP 1 - Manual test', jira:'TI-270', due:null, qaDue:null, noDate:true, dev:'wait', qa:'wait', qaLabel:'รอ QA ตรวจสอบ' },
     { name:'บัคตีกลับ · [QA] MVP 2 - Manual test', jira:'TI-273', due:null, qaDue:null, noDate:true, dev:'wait', qa:'wait', qaLabel:'รอ QA ตรวจสอบ' },
   ]},
-  { name:'Live', emoji:'🎥', items:[
+  { name:'Live', emoji:'🎥', owner:'Ice', items:[
     { name:'Facebook', due:'2026-10-30', qaDue:'2026-10-30', dev:'wait', qa:'wait' },
     { name:'Tool-calling auto-reply', due:'2026-09-25', qaDue:'2026-09-25', dev:'wait', qa:'wait' },
     { name:'[FE] เพิ่มเสียงกระดิ่งเมื่อมีการแจ้งเตือนใหม่', jira:'TAKRA-1223', due:'2026-09-24', qaDue:'2026-09-24', dev:'wait', qa:'wait' },
@@ -179,7 +181,7 @@ const PROJECTS = [
     { name:'[Spike/FS] มีเสียงอีกคนพูดแทรกในไลฟ์ เหมือนมีทีมงานร่วมรายการ', jira:'TAKRA-1230', due:null, qaDue:null, noDate:true, dev:'wait', qa:'wait' },
     { name:'บัคตีกลับ · [MVP2] QA Test Manual', jira:'TAKRA-474', due:'2026-10-02', qaDue:'2026-10-02', dev:'fixing', qa:'wait', qaLabel:'รอ QA ตรวจสอบ' },
   ]},
-  { name:'Rerun', emoji:'🔁', items:[
+  { name:'Rerun', emoji:'🔁', owner:'Moss', items:[
     { name:'Auto Chat-Reply (LLM)', due:'2026-09-17', qaDue:'2026-09-17', dev:'done', qa:'pass' },
     { name:'Keyword Refinements', alias:'UU · คีย์เวิร์ดไม่จับเฉพาะคำ ต้องพิมพ์ตามคีย์เวิร์ดเท่านั้น · คีย์เวิร์ดที่ตั้งไว้ตอบคำถามแค่ครั้งเดียว', due:'2026-09-17', qaDue:'2026-09-17', dev:'done', qa:'pass' },
     { name:'ตั้งเวลาอัตโนมัติตามเวลาจริง', alias:'เช่น ให้เริ่มไลฟ์ใหม่อัตโนมัติอีกครั้งเวลา 17:00 น.', due:'2026-09-22', qaDue:'2026-09-24', dev:'wait', qa:'wait' },
@@ -188,7 +190,7 @@ const PROJECTS = [
     { name:'ทดลองไลฟ์', alias:'TT · เพิ่มฟังก์ชันทดลองไลฟ์ก่อนไลฟ์รีรันจริง', due:null, qaDue:null, noDate:true, dev:'wait', qa:'wait' },
     { name:'Green screen', due:'2026-09-30', qaDue:'2026-10-02', dev:'wait', qa:'wait' },
   ]},
-  { name:'Hub', emoji:'🧾', items:[
+  { name:'Hub', emoji:'🧾', owner:'Moss', items:[
     { name:'VAT', due:'2026-09-17', qaDue:'2026-09-17', dev:'done', qa:'pass' },
     { name:'เอกสาร', subs:['ใบเสร็จ','รวมสลิป'], due:'2026-09-18', qaDue:'2026-09-18', dev:'done', qa:'pass' },
     { name:'เอาแพ็กเกจทดลองออก', due:'2026-09-18', qaDue:'2026-09-18', dev:'done', qa:'pass' },
@@ -196,14 +198,14 @@ const PROJECTS = [
     { name:'บัคตีกลับ · [MVP2] QA Test Manual', jira:'TKH-121', due:null, qaDue:null, noDate:true, dev:'wait', qa:'wait', qaLabel:'รอ QA ตรวจสอบ' },
     { name:'บัคตีกลับ · [MVP3] QA Test Manual', jira:'TKH-239', due:null, qaDue:null, noDate:true, dev:'wait', qa:'wait', qaLabel:'รอ QA ตรวจสอบ' },
   ]},
-  { name:'Trendora', emoji:'📈', items:[
+  { name:'Trendora', emoji:'📈', owner:'Moss / Ice', items:[
     { name:'หน้าหลัก', due:'2026-09-25', dev:'done', qa:'pass' },
     { name:'ค้นหา', due:'2026-09-25', qaDue:'2026-09-25', dev:'done', qa:'fail' },
     { name:'สินค้าเฝ้าดู', due:'2026-09-25', qaDue:'2026-09-25', dev:'done', qa:'fail' },
     { name:'Affiliate', due:'2026-09-25', qaDue:'2026-09-25', dev:'done', qa:'fail' },
     { name:'บัคตีกลับ · [QA] MVP 1 - Manual test', jira:'TKRD-186', due:'2026-09-25', qaDue:'2026-09-25', dev:'fixing', qa:'wait', qaLabel:'รอ QA ตรวจสอบ' },
   ]},
-  { name:'Post', emoji:'📱', items:[
+  { name:'Post', emoji:'📱', owner:'Moss', items:[
     { name:'ต่อมือถือ Android', due:'2026-09-18', qaDue:'2026-09-18', dev:'done', qa:'pass' },
     { name:'ตั้งตารางไว้ล่วงหน้า ระบบลงให้เองตามเวลา', due:'2026-09-18', qaDue:'2026-09-18', dev:'done', qa:'pass' },
     { name:'คลังคอนเทนต์ + แคปชั่นรวมที่เดียว', due:'2026-09-18', qaDue:'2026-09-18', dev:'done', qa:'pass' },
@@ -264,12 +266,13 @@ document.getElementById('summary').innerHTML = [
 
 document.getElementById('rows').innerHTML = PROJECTS.map(p => {
   const passed = p.items.filter(i => i.qa === 'pass').length;
-  const head = `<tr class="proj"><td colspan="3">${p.emoji} ${esc(p.name)}<span class="prog">QA ผ่าน ${passed}/${p.items.length}</span>${p.jira ? ` <a class="jira" href="${JIRA}${esc(p.jira)}" target="_blank" rel="noopener">${esc(p.jiraLabel || '')} ${esc(p.jira)} ↗</a>` : ''}</td></tr>`;
+  const head = `<tr class="proj"><td colspan="4">${p.emoji} ${esc(p.name)}<span class="prog">QA ผ่าน ${passed}/${p.items.length}</span>${p.jira ? ` <a class="jira" href="${JIRA}${esc(p.jira)}" target="_blank" rel="noopener">${esc(p.jiraLabel || '')} ${esc(p.jira)} ↗</a>` : ''}</td></tr>`;
   return head + p.items.map(it => {
     const qa = QA[it.qa].slice(); if (it.qaLabel) qa[1] = it.qaLabel;
     const note = [it.alias, it.subs && it.subs.join(' · ')].filter(Boolean).join(' — ');
     return `<tr>
       <td class="feat"><span class="fname">${esc(it.name)}</span>${it.jira ? ` <a class="jira" href="${JIRA}${esc(it.jira)}" target="_blank" rel="noopener">${esc(it.jira)} ↗</a>` : ''}${it.report ? ` <a class="jira" href="${esc(it.report)}" target="_blank" rel="noopener">📋 Test cases ↗</a>` : ''}${note ? `<span class="note">${esc(note)}</span>` : ''}</td>
+      <td class="owner">${esc(it.owner || p.owner || '—')}</td>
       <td class="st">${pill(it.dev_label ? [DEV[it.dev][0], '✓ ' + it.dev_label] : it.devWaitLabel ? [DEV[it.dev][0], it.devWaitLabel] : DEV[it.dev])}${dateLine(it.due, it.dev !== 'done', it.noDate)}</td>
       <td class="st">${pill(qa)}${dateLine(it.qaDue, it.qa !== 'pass', it.noDate || it.qaNoDate)}</td>
     </tr>`;
