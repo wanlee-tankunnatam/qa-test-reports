@@ -248,12 +248,12 @@ function dateLine(date, open, noDate){
   let extra = '';
   if (open) {
     const diff = Math.round((d(date) - d(TODAY)) / 864e5);
-    extra = diff > WEEK_LEFT ? ` · อีก ${diff} วัน`
-          : diff > 0 ? ` · <span class="warn-txt">อีก ${diff} วัน · สัปดาห์นี้</span>`
-          : diff === 0 ? ' · <span class="fail-txt">ครบกำหนดวันนี้</span>'
-          : ` · <span class="fail-txt">เลยกำหนด ${-diff} วัน</span>`;
+    extra = diff > WEEK_LEFT ? `อีก ${diff} วัน`
+          : diff > 0 ? `<span class="warn-txt">อีก ${diff} วัน · สัปดาห์นี้</span>`
+          : diff === 0 ? '<span class="fail-txt">ครบกำหนดวันนี้</span>'
+          : `<span class="fail-txt">เลยกำหนด ${-diff} วัน</span>`;
   }
-  return `<span class="date">กำหนด ${fmt(date)}${extra}</span>`;
+  return `<span class="date">กำหนด ${fmt(date)}</span>${extra ? `<span class="date">${extra}</span>` : ''}`;
 }
 const JIRA = 'https://kitdi.atlassian.net/browse/';
 // ไทม์ไลน์: งานที่ยังไม่เสร็จและเลยกำหนด → " · เลยกำหนด N วัน" (แดงเฉพาะข้อความ)
