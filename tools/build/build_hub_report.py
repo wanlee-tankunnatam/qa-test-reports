@@ -302,7 +302,11 @@ OS_JS = """
 """
 
 def add_os_cols(out):
-    out = out.replace('colspan="7"', 'colspan="8"')
+    # รายงานที่เปิดคอลัมน์ Script มาก่อนแล้วจะเป็น colspan 8 อยู่ → ขยับเป็น 9
+    if 'colspan="8"' in out:
+        out = out.replace('colspan="8"', 'colspan="9"')
+    else:
+        out = out.replace('colspan="7"', 'colspan="8"')
     out = out.replace('<th style="width:80px">Status</th>',
                       '<th style="width:74px">🍎 Mac</th><th style="width:88px">🪟 Windows</th>', 1)
     out = re.sub(r'(  <td class="status" data-uid="(tc-\d+)"><span class="stb pending">รอเทส</span></td>)',

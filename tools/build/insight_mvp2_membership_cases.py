@@ -22,7 +22,7 @@ META = dict(
     script_col=True,  # คอลัมน์ "Script" หลัง Status (สถานะ automation script ต่อเคส)
     out_rel='projects/takra-insight/2026/09/reports/takra-insight-mvp2-membership-ui-test-cases-table.html',
     title='[MVP2] TAKRA Insight — Epic 9 Membership (สมาชิกและบทบาท · เชื่อมกับ Hub) · UI Manual Test Cases',
-    emoji='👥', uid_start=2601, download='takra-insight-mvp2-membership-ui-test-cases.html',
+    emoji='👥', uid_start=2601, os_cols=True, download='takra-insight-mvp2-membership-ui-test-cases.html',
     back='https://wanlee-tankunnatam.github.io/qa-test-reports/?project=insight',
     sub=('เทส UI ด้วยมืออย่างเดียว · MVP-2 Epic 9 (TI-468) Story 9.1–9.4 · FR56 · FR57 · FR58 · FR135 · '
          'Target: แอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) + เว็บ TAKRA Hub UAT'),

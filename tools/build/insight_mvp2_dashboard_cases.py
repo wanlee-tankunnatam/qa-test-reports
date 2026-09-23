@@ -19,7 +19,7 @@
 META = dict(
     out_rel='projects/takra-insight/2026/09/reports/takra-insight-mvp2-dashboard-ui-test-cases-table.html',
     title='[MVP2] TAKRA Insight — Epic 5 Brand Manager Dashboard (แดชบอร์ดแบรนด์) · UI Manual Test Cases',
-    emoji='📊', uid_start=2401, download='takra-insight-mvp2-dashboard-ui-test-cases.html',
+    emoji='📊', uid_start=2401, os_cols=True, download='takra-insight-mvp2-dashboard-ui-test-cases.html',
     back='https://wanlee-tankunnatam.github.io/qa-test-reports/?project=insight',
     sub='เทส UI ด้วยมืออย่างเดียว · MVP-2 Epic 5 Story 5.0a–5.5 (TI-471 · TI-474 · TI-348 · TI-349 · TI-350 · TI-351 · TI-352) · '
         'FR86 · FR87 · FR88 · FR91 · FR94 · Target: แอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT)',

@@ -136,6 +136,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 .kd-data{color:#1d4ed8;background:#eff6ff;border-color:#bfdbfe}
 .chk{margin-top:4px;padding:6px 8px;border-left:3px solid #16a34a;background:rgba(22,163,74,.07)}
 .noui{display:inline-block;margin-left:6px;padding:0 6px;border-radius:4px;font-size:9.5px;font-weight:700;vertical-align:middle;color:#991b1b;background:#fee2e2;border:1px solid #fca5a5;white-space:nowrap}
+
+td.status-win{white-space:nowrap}
+.osline{display:flex;align-items:center;gap:8px;margin-top:5px;flex-wrap:wrap}
+.oslbl{font-size:11px;font-weight:800;color:var(--muted);min-width:84px}
+.optw{font-size:11px;font-weight:700;padding:4px 11px;border-radius:6px;border:1px solid var(--line);background:#fff;color:var(--muted);cursor:pointer}
+.optw:hover{opacity:.8}
+.optw.pass{border-color:var(--pass)}.optw.fail{border-color:var(--fail)}
+.optw.hold{border-color:var(--hold)}.optw.block{border-color:var(--block)}.optw.skip{border-color:var(--skip)}
+.optw.sel.pass{background:var(--pass);color:#fff}
+.optw.sel.fail{background:var(--fail);color:#fff}
+.optw.sel.hold{background:var(--hold);color:#fff}
+.optw.sel.block{background:var(--block);color:#fff}
+.optw.sel.skip{background:var(--skip);color:#fff}
 </style>
 </head>
 <body>
@@ -393,21 +406,22 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
   <div class="tablewrap">
   <table class="tc" id="main-table">
-    <thead><tr><th style="width:22px"></th><th style="width:130px">TC ID</th><th>Test Case</th><th style="width:74px">Level</th><th style="width:55px">Pri</th><th style="width:80px">Status</th><th style="width:120px">Jira</th></tr></thead>
+    <thead><tr><th style="width:22px"></th><th style="width:130px">TC ID</th><th>Test Case</th><th style="width:74px">Level</th><th style="width:55px">Pri</th><th style="width:74px">🍎 Mac</th><th style="width:88px">🪟 Windows</th><th style="width:120px">Jira</th></tr></thead>
     <tbody>
 
 <!-- dsA -->
-<tr class="epicrow" data-epic="dsA"><td colspan="7">🔐 A · เมนู "แดชบอร์ดแบรนด์" และสิทธิ์ตามบทบาท · Story 5.1 · 9.3 (FR86 · FR58) <span class="rp">(5 เคส)</span></td></tr>
-<tr class="featrow" data-featkey="ds-access"><td colspan="7">📁 ใครเห็นเมนู และเปิดหน้าได้ <span class="rp"><span class="lv lvl-ui">🌐 5</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="ds-access"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="epicrow" data-epic="dsA"><td colspan="8">🔐 A · เมนู "แดชบอร์ดแบรนด์" และสิทธิ์ตามบทบาท · Story 5.1 · 9.3 (FR86 · FR58) <span class="rp">(5 เคส)</span></td></tr>
+<tr class="featrow" data-featkey="ds-access"><td colspan="8">📁 ใครเห็นเมนู และเปิดหน้าได้ <span class="rp"><span class="lv lvl-ui">🌐 5</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="ds-access"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
 <tr class="trow" data-feat="dsA" data-level="ui" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-DASH-A.1</td>
   <td class="ctitle">เจ้าของเห็นเมนู "แดชบอร์ดแบรนด์" ใต้ "หน้าหลัก" และเปิดหน้าได้ <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
   <td class="status" data-uid="tc-2401"><span class="stb pending">รอเทส</span></td>
+  <td class="status-win" data-uid="tc-2401"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-2401"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="8"><div class="card">
   <div class="h-title">เจ้าของเห็นเมนู "แดชบอร์ดแบรนด์" ใต้ "หน้าหลัก" และเปิดหน้าได้</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · A · เมนู "แดชบอร์ดแบรนด์" และสิทธิ์ตามบทบาท</div>
   <div class="sec"><h4>Precondition</h4><ul><li>พื้นที่ทำงานทดสอบมีไลฟ์ที่อัปโหลดขึ้นคลาวด์แล้วใน 7 วันล่าสุด อย่างน้อย 6 ไลฟ์ จากโฮสต์ 2 คนขึ้นไป</li></ul></div>
@@ -416,13 +430,22 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="sec"><h4>Expected Result</h4><ul><li>แถบเมนูซ้ายมี "แดชบอร์ดแบรนด์" อยู่ถัดจาก "หน้าหลัก"</li><li>หน้าแสดงหัวเรื่อง "แดชบอร์ดแบรนด์" และบรรทัดรองแบบ "N โฮสต์ · N ไลฟ์ · วันเริ่ม – วันนี้" (ก่อนโหลดเสร็จเป็น "ภาพรวมไลฟ์ของทุกโฮสต์ใน workspace นี้")</li><li>มุมขวาบนมีปุ่มช่วงเวลา "7 วันล่าสุด" (เลือกไว้เป็นค่าเริ่มต้น) · "30 วันล่าสุด" และปุ่ม "รีเฟรช"</li><li>ในหน้ามีการ์ดตัวชี้วัด 5 ใบ · การ์ด "อารมณ์โฮสต์" · การ์ด "ไลฟ์ล่าสุด"</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 5 · Story 5.1 · FR86 (Overview Dashboard · viewers = Owner / Brand Manager · surface: desktop app)</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
-  <div class="sec"><h4>Status</h4><div class="statusrow">
+  <div class="sec"><h4>Status</h4>
+  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
     <span class="opt pass" data-uid="tc-2401" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-2401" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-2401" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-2401" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-2401" data-st="skip">SKIP</span>
   </div></div>
+  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">
+    <span class="optw pass" data-uid="tc-2401" data-stw="pass">PASS</span>
+    <span class="optw fail" data-uid="tc-2401" data-stw="fail">FAIL</span>
+    <span class="optw hold" data-uid="tc-2401" data-stw="hold">HOLD</span>
+    <span class="optw block" data-uid="tc-2401" data-stw="block">BLOCKED</span>
+    <span class="optw skip" data-uid="tc-2401" data-stw="skip">SKIP</span>
+  </div></div>
+  </div>
   <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
     <div class="jira-list" data-uid="tc-2401"></div>
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2401" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2401">+ เพิ่มลิงก์</button></div>
@@ -436,9 +459,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
   <td class="status" data-uid="tc-2402"><span class="stb pending">รอเทส</span></td>
+  <td class="status-win" data-uid="tc-2402"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-2402"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="8"><div class="card">
   <div class="h-title">ผู้จัดการแบรนด์เห็นเมนูและเห็นไลฟ์ของทุกโฮสต์ในพื้นที่ทำงาน</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Permission</b> <span class="hint">(แยกตามบทบาท เจ้าของ / ผู้จัดการแบรนด์ / โฮสต์ และตามพื้นที่ทำงาน)</span> · A · เมนู "แดชบอร์ดแบรนด์" และสิทธิ์ตามบทบาท</div>
   <div class="sec"><h4>Precondition</h4><ul><li>พื้นที่ทำงานทดสอบมีไลฟ์ที่อัปโหลดขึ้นคลาวด์แล้วใน 7 วันล่าสุด อย่างน้อย 6 ไลฟ์ จากโฮสต์ 2 คนขึ้นไป</li><li>บัญชีผู้จัดการแบรนด์ไม่ได้บันทึกไลฟ์เองเลย</li></ul></div>
@@ -447,13 +471,22 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="sec"><h4>Expected Result</h4><ul><li>เห็นเมนู "แดชบอร์ดแบรนด์" และเปิดหน้าได้</li><li>การ์ด "อารมณ์โฮสต์" และ "ไลฟ์ล่าสุด" มีข้อมูลของโฮสต์ทุกคนในพื้นที่ทำงาน ไม่ใช่เฉพาะไลฟ์ของบัญชีตัวเอง</li><li>บรรทัดรองใต้หัวเรื่องนับจำนวนโฮสต์ตรงกับจำนวนโฮสต์ที่มีไลฟ์ในช่วงนี้</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 5 · Story 5.0b (workspace aggregates for Owner / Brand Manager) · Story 5.1 · FR86 · FR58</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
-  <div class="sec"><h4>Status</h4><div class="statusrow">
+  <div class="sec"><h4>Status</h4>
+  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
     <span class="opt pass" data-uid="tc-2402" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-2402" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-2402" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-2402" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-2402" data-st="skip">SKIP</span>
   </div></div>
+  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">
+    <span class="optw pass" data-uid="tc-2402" data-stw="pass">PASS</span>
+    <span class="optw fail" data-uid="tc-2402" data-stw="fail">FAIL</span>
+    <span class="optw hold" data-uid="tc-2402" data-stw="hold">HOLD</span>
+    <span class="optw block" data-uid="tc-2402" data-stw="block">BLOCKED</span>
+    <span class="optw skip" data-uid="tc-2402" data-stw="skip">SKIP</span>
+  </div></div>
+  </div>
   <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
     <div class="jira-list" data-uid="tc-2402"></div>
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2402" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2402">+ เพิ่มลิงก์</button></div>
@@ -467,9 +500,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
   <td class="status" data-uid="tc-2403"><span class="stb pending">รอเทส</span></td>
+  <td class="status-win" data-uid="tc-2403"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-2403"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="8"><div class="card">
   <div class="h-title">โฮสต์ไม่เห็นเมนู "แดชบอร์ดแบรนด์" เลย</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Permission</b> <span class="hint">(แยกตามบทบาท เจ้าของ / ผู้จัดการแบรนด์ / โฮสต์ และตามพื้นที่ทำงาน)</span> · A · เมนู "แดชบอร์ดแบรนด์" และสิทธิ์ตามบทบาท</div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT ที่เป็น "โฮสต์" ของพื้นที่ทำงานทดสอบ</li><li>ดูแถบเมนูซ้ายทั้งหมด (ทั้งตอนขยายและตอนย่อแถบเมนู)</li></ol></div>
@@ -477,13 +511,22 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="sec"><h4>Expected Result</h4><ul><li>ไม่มีเมนู "แดชบอร์ดแบรนด์" ทั้งในแถบเมนูแบบขยายและแบบย่อ</li><li>เมนูอื่นของโฮสต์ ("หน้าหลัก" · "แชนเนลที่ติดตาม" · "เซสชัน") ยังใช้งานได้ตามปกติ</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 5 · Story 5.1 AC2 (not offered — no dead entry point) · Story 9.3 · FR58</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
-  <div class="sec"><h4>Status</h4><div class="statusrow">
+  <div class="sec"><h4>Status</h4>
+  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
     <span class="opt pass" data-uid="tc-2403" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-2403" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-2403" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-2403" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-2403" data-st="skip">SKIP</span>
   </div></div>
+  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">
+    <span class="optw pass" data-uid="tc-2403" data-stw="pass">PASS</span>
+    <span class="optw fail" data-uid="tc-2403" data-stw="fail">FAIL</span>
+    <span class="optw hold" data-uid="tc-2403" data-stw="hold">HOLD</span>
+    <span class="optw block" data-uid="tc-2403" data-stw="block">BLOCKED</span>
+    <span class="optw skip" data-uid="tc-2403" data-stw="skip">SKIP</span>
+  </div></div>
+  </div>
   <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
     <div class="jira-list" data-uid="tc-2403"></div>
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2403" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2403">+ เพิ่มลิงก์</button></div>
@@ -497,9 +540,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
   <td class="status" data-uid="tc-2404"><span class="stb pending">รอเทส</span></td>
+  <td class="status-win" data-uid="tc-2404"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-2404"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="8"><div class="card">
   <div class="h-title">เจ้าของเปลี่ยนบทบาทผู้จัดการแบรนด์เป็นโฮสต์ ระหว่างที่อีกฝ่ายเปิดแดชบอร์ดอยู่</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Permission</b> <span class="hint">(แยกตามบทบาท เจ้าของ / ผู้จัดการแบรนด์ / โฮสต์ และตามพื้นที่ทำงาน)</span> · A · เมนู "แดชบอร์ดแบรนด์" และสิทธิ์ตามบทบาท</div>
   <div class="sec"><h4>Precondition</h4><ul><li>มีเครื่องที่สองติดตั้งแอป UAT</li></ul></div>
@@ -508,13 +552,22 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="sec"><h4>Expected Result</h4><ul><li>เครื่อง 1 ออกจากหน้าแดชบอร์ดกลับไปที่ "หน้าหลัก" เอง ไม่เหลือตัวเลขของพื้นที่ทำงานค้างบนจอ</li><li>เมนู "แดชบอร์ดแบรนด์" หายไปจากแถบเมนูซ้าย</li><li>ตั้งบทบาทกลับเป็น "ผู้จัดการแบรนด์" แล้วเมนูกลับมา (อาจต้องรอสักครู่หรือเปิดแอปใหม่)</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 5 · Story 5.1 AC2 · Story 9.3 (role changeable by the Owner in the desktop app)</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
-  <div class="sec"><h4>Status</h4><div class="statusrow">
+  <div class="sec"><h4>Status</h4>
+  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
     <span class="opt pass" data-uid="tc-2404" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-2404" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-2404" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-2404" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-2404" data-st="skip">SKIP</span>
   </div></div>
+  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">
+    <span class="optw pass" data-uid="tc-2404" data-stw="pass">PASS</span>
+    <span class="optw fail" data-uid="tc-2404" data-stw="fail">FAIL</span>
+    <span class="optw hold" data-uid="tc-2404" data-stw="hold">HOLD</span>
+    <span class="optw block" data-uid="tc-2404" data-stw="block">BLOCKED</span>
+    <span class="optw skip" data-uid="tc-2404" data-stw="skip">SKIP</span>
+  </div></div>
+  </div>
   <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
     <div class="jira-list" data-uid="tc-2404"></div>
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2404" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2404">+ เพิ่มลิงก์</button></div>
@@ -528,9 +581,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
   <td class="status" data-uid="tc-2405"><span class="stb pending">รอเทส</span></td>
+  <td class="status-win" data-uid="tc-2405"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-2405"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="8"><div class="card">
   <div class="h-title">สลับพื้นที่ทำงาน: เห็นเฉพาะข้อมูลของพื้นที่ที่เลือก และเมนูหายเมื่อเป็นโฮสต์ในอีกที่</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Data</b> <span class="hint">(ตัวเลขตรงกับต้นทาง · ข้อมูลไม่ปนข้ามพื้นที่ทำงาน)</span> · A · เมนู "แดชบอร์ดแบรนด์" และสิทธิ์ตามบทบาท</div>
   <div class="sec"><h4>Precondition</h4><ul><li>บัญชีเดียวกันอยู่ 2 พื้นที่ทำงาน บทบาทต่างกัน</li><li>พื้นที่ทำงาน B มีไลฟ์อย่างน้อย 1 ไลฟ์</li><li>ไม่มีไลฟ์ที่กำลังบันทึกอยู่ (สลับพื้นที่ทำงานระหว่างบันทึกไม่ได้)</li></ul></div>
@@ -539,13 +593,22 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="sec"><h4>Expected Result</h4><ul><li>ในพื้นที่ทำงาน B ไม่มีเมนู "แดชบอร์ดแบรนด์" (เป็นโฮสต์)</li><li>กลับมาพื้นที่ทำงาน A แล้วตัวเลขเท่ากับที่จดไว้ ไม่มีไลฟ์หรือโฮสต์ของพื้นที่ทำงาน B ปนมา</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 5 · Story 5.0b (never raw rows of another tenant) · Story 9.1 · 9.3 (role per workspace)</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
-  <div class="sec"><h4>Status</h4><div class="statusrow">
+  <div class="sec"><h4>Status</h4>
+  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
     <span class="opt pass" data-uid="tc-2405" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-2405" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-2405" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-2405" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-2405" data-st="skip">SKIP</span>
   </div></div>
+  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">
+    <span class="optw pass" data-uid="tc-2405" data-stw="pass">PASS</span>
+    <span class="optw fail" data-uid="tc-2405" data-stw="fail">FAIL</span>
+    <span class="optw hold" data-uid="tc-2405" data-stw="hold">HOLD</span>
+    <span class="optw block" data-uid="tc-2405" data-stw="block">BLOCKED</span>
+    <span class="optw skip" data-uid="tc-2405" data-stw="skip">SKIP</span>
+  </div></div>
+  </div>
   <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
     <div class="jira-list" data-uid="tc-2405"></div>
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2405" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2405">+ เพิ่มลิงก์</button></div>
@@ -555,17 +618,18 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 
 <!-- dsB -->
-<tr class="epicrow" data-epic="dsB"><td colspan="7">🔢 B · การ์ดตัวชี้วัด 5 ใบ และการเทียบกับช่วงก่อน · Story 5.1 (FR86) <span class="rp">(6 เคส)</span></td></tr>
-<tr class="featrow" data-featkey="ds-kpi"><td colspan="7">📁 ค่าบนการ์ดและลูกศรเทียบช่วงก่อน <span class="rp"><span class="lv lvl-ui">🌐 6</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="ds-kpi"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="epicrow" data-epic="dsB"><td colspan="8">🔢 B · การ์ดตัวชี้วัด 5 ใบ และการเทียบกับช่วงก่อน · Story 5.1 (FR86) <span class="rp">(6 เคส)</span></td></tr>
+<tr class="featrow" data-featkey="ds-kpi"><td colspan="8">📁 ค่าบนการ์ดและลูกศรเทียบช่วงก่อน <span class="rp"><span class="lv lvl-ui">🌐 6</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="ds-kpi"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
 <tr class="trow" data-feat="dsB" data-level="ui" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-DASH-B.1</td>
   <td class="ctitle">การ์ด 5 ใบเรียงตามลำดับ และ GMV เป็นการ์ดรอ M3 <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
   <td class="status" data-uid="tc-2406"><span class="stb pending">รอเทส</span></td>
+  <td class="status-win" data-uid="tc-2406"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-2406"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="8"><div class="card">
   <div class="h-title">การ์ด 5 ใบเรียงตามลำดับ และ GMV เป็นการ์ดรอ M3</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · B · การ์ดตัวชี้วัด 5 ใบ และการเทียบกับช่วงก่อน</div>
   <div class="sec"><h4>Precondition</h4><ul><li>พื้นที่ทำงานทดสอบมีไลฟ์ที่อัปโหลดขึ้นคลาวด์แล้วใน 7 วันล่าสุด อย่างน้อย 6 ไลฟ์ จากโฮสต์ 2 คนขึ้นไป</li></ul></div>
@@ -574,13 +638,22 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="sec"><h4>Expected Result</h4><ul><li>มีการ์ด 5 ใบเรียง: "ไลฟ์" · "ผู้ชมรวม" · "คอมเมนต์" · "Engagement" · "GMV"</li><li>การ์ด "GMV" เป็นกรอบเส้นประสีจาง แสดง "รอ M3" และ "ต้องเชื่อมข้อมูลยอดขาย" ไม่มีตัวเลขและไม่มีลูกศรเทียบ</li><li>ไม่มีการ์ดหรือตัวเลขยอดขาย Conversion หรือ AOV ที่แสดงค่าปลอม/ศูนย์ และไม่มีกรอบว่างที่ดูเหมือน UI พัง</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 5 · Story 5.1 · FR86 (GMV/Conversion/AOV → M3 empty state)</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
-  <div class="sec"><h4>Status</h4><div class="statusrow">
+  <div class="sec"><h4>Status</h4>
+  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
     <span class="opt pass" data-uid="tc-2406" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-2406" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-2406" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-2406" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-2406" data-st="skip">SKIP</span>
   </div></div>
+  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">
+    <span class="optw pass" data-uid="tc-2406" data-stw="pass">PASS</span>
+    <span class="optw fail" data-uid="tc-2406" data-stw="fail">FAIL</span>
+    <span class="optw hold" data-uid="tc-2406" data-stw="hold">HOLD</span>
+    <span class="optw block" data-uid="tc-2406" data-stw="block">BLOCKED</span>
+    <span class="optw skip" data-uid="tc-2406" data-stw="skip">SKIP</span>
+  </div></div>
+  </div>
   <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
     <div class="jira-list" data-uid="tc-2406"></div>
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2406" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2406">+ เพิ่มลิงก์</button></div>
@@ -594,9 +667,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
   <td class="status" data-uid="tc-2407"><span class="stb pending">รอเทส</span></td>
+  <td class="status-win" data-uid="tc-2407"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-2407"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="8"><div class="card">
   <div class="h-title">การ์ด "ไลฟ์" นับจำนวนไลฟ์ โฮสต์ และชั่วโมงได้ตรงกับไลฟ์ทดสอบ</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Data</b> <span class="hint">(ตัวเลขตรงกับต้นทาง · ข้อมูลไม่ปนข้ามพื้นที่ทำงาน)</span> · B · การ์ดตัวชี้วัด 5 ใบ และการเทียบกับช่วงก่อน</div>
   <div class="sec"><h4>Precondition</h4><ul><li>พื้นที่ทำงานทดสอบมีไลฟ์ที่อัปโหลดขึ้นคลาวด์แล้วใน 7 วันล่าสุด อย่างน้อย 6 ไลฟ์ จากโฮสต์ 2 คนขึ้นไป</li></ul></div>
@@ -606,13 +680,22 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="sec"><h4>Expected Result</h4><ul><li>ตัวเลขการ์ด "ไลฟ์" เท่ากับจำนวนไลฟ์ที่อัปโหลดแล้วของทุกโฮสต์ใน 7 วันล่าสุด (นับวันนี้ด้วย)</li><li>บรรทัดใต้ตัวเลขเป็น "N โฮสต์ · H ชม." — N ตรงกับจำนวนโฮสต์ที่มีไลฟ์ และ H ตรงกับผลรวมความยาวไลฟ์ (ทศนิยม 1 ตำแหน่ง)</li><li>บรรทัดรองใต้หัวเรื่องหน้าใช้จำนวนโฮสต์และไลฟ์ชุดเดียวกัน</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 5 · Story 5.1 · FR86 (Total Lives this period)</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
-  <div class="sec"><h4>Status</h4><div class="statusrow">
+  <div class="sec"><h4>Status</h4>
+  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
     <span class="opt pass" data-uid="tc-2407" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-2407" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-2407" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-2407" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-2407" data-st="skip">SKIP</span>
   </div></div>
+  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">
+    <span class="optw pass" data-uid="tc-2407" data-stw="pass">PASS</span>
+    <span class="optw fail" data-uid="tc-2407" data-stw="fail">FAIL</span>
+    <span class="optw hold" data-uid="tc-2407" data-stw="hold">HOLD</span>
+    <span class="optw block" data-uid="tc-2407" data-stw="block">BLOCKED</span>
+    <span class="optw skip" data-uid="tc-2407" data-stw="skip">SKIP</span>
+  </div></div>
+  </div>
   <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
     <div class="jira-list" data-uid="tc-2407"></div>
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2407" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2407">+ เพิ่มลิงก์</button></div>
@@ -626,9 +709,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
   <td class="status" data-uid="tc-2408"><span class="stb pending">รอเทส</span></td>
+  <td class="status-win" data-uid="tc-2408"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-2408"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="8"><div class="card">
   <div class="h-title">การ์ด "ผู้ชมรวม" เป็นผลรวมผู้ชมพร้อมกันสูงสุดของแต่ละไลฟ์ และคำอธิบายบอกชัด</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Data</b> <span class="hint">(ตัวเลขตรงกับต้นทาง · ข้อมูลไม่ปนข้ามพื้นที่ทำงาน)</span> · B · การ์ดตัวชี้วัด 5 ใบ และการเทียบกับช่วงก่อน</div>
   <div class="sec"><h4>Precondition</h4><ul><li>พื้นที่ทำงานทดสอบมีไลฟ์ที่อัปโหลดขึ้นคลาวด์แล้วใน 7 วันล่าสุด อย่างน้อย 6 ไลฟ์ จากโฮสต์ 2 คนขึ้นไป</li></ul></div>
@@ -637,13 +721,22 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="sec"><h4>Expected Result</h4><ul><li>คำอธิบายขึ้นว่า "รวมจำนวนคนดูพร้อมกันสูงสุดของแต่ละไลฟ์ในช่วงนี้ — ไม่ใช่จำนวนคนดูที่ไม่ซ้ำกัน"</li><li>ตัวเลขการ์ดเท่ากับผลรวมผู้ชมสูงสุดของทุกไลฟ์ในช่วงนี้ · บรรทัดใต้ตัวเลข "สูงสุดต่อไลฟ์ … · เฉลี่ย …" ตรงกับข้อมูลทดสอบ</li><li>ตัวเลขตั้งแต่ 1,000 ขึ้นไปแสดงแบบย่อ (เช่น "12.3k") และชี้เมาส์ที่ตัวเลขจะเห็นค่าเต็ม</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 5 · Story 5.1 · FR86 (Total Viewers)</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
-  <div class="sec"><h4>Status</h4><div class="statusrow">
+  <div class="sec"><h4>Status</h4>
+  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
     <span class="opt pass" data-uid="tc-2408" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-2408" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-2408" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-2408" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-2408" data-st="skip">SKIP</span>
   </div></div>
+  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">
+    <span class="optw pass" data-uid="tc-2408" data-stw="pass">PASS</span>
+    <span class="optw fail" data-uid="tc-2408" data-stw="fail">FAIL</span>
+    <span class="optw hold" data-uid="tc-2408" data-stw="hold">HOLD</span>
+    <span class="optw block" data-uid="tc-2408" data-stw="block">BLOCKED</span>
+    <span class="optw skip" data-uid="tc-2408" data-stw="skip">SKIP</span>
+  </div></div>
+  </div>
   <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
     <div class="jira-list" data-uid="tc-2408"></div>
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2408" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2408">+ เพิ่มลิงก์</button></div>
@@ -657,9 +750,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
   <td class="status" data-uid="tc-2409"><span class="stb pending">รอเทส</span></td>
+  <td class="status-win" data-uid="tc-2409"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-2409"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="8"><div class="card">
   <div class="h-title">ลูกศรเทียบช่วงก่อนหน้า: ขึ้นเป็น ▲ สีเขียว ลงเป็น ▼ และบอกว่าเทียบกับกี่วัน</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Validation</b> <span class="hint">(format · required · ความถูกต้องของค่าที่แสดง)</span> · B · การ์ดตัวชี้วัด 5 ใบ และการเทียบกับช่วงก่อน</div>
   <div class="sec"><h4>Precondition</h4><ul><li>พื้นที่ทำงานทดสอบมีไลฟ์ที่อัปโหลดขึ้นคลาวด์แล้วใน 7 วันล่าสุด อย่างน้อย 6 ไลฟ์ จากโฮสต์ 2 คนขึ้นไป</li><li>มีไลฟ์ที่อัปโหลดแล้วในช่วง 8–14 วันก่อน (คนละจำนวนกับ 7 วันล่าสุด)</li></ul></div>
@@ -668,13 +762,22 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="sec"><h4>Expected Result</h4><ul><li>การ์ดที่ค่าเพิ่มจากช่วงก่อนแสดง "▲ …" · ที่ลดแสดง "▼ …" · เท่ากันแสดง "เท่าเดิม"</li><li>"ไลฟ์" เทียบเป็นจำนวน (เช่น ▲ 2) · "ผู้ชมรวม" และ "คอมเมนต์" เป็นเปอร์เซ็นต์ (เช่น ▲ 25%) · "Engagement" เป็นแต้ม</li><li>ชี้เมาส์ที่ลูกศรขึ้นข้อความ "เพิ่มขึ้น … เทียบ 7 วันก่อนหน้า" หรือ "ลดลง … เทียบ 7 วันก่อนหน้า"</li><li>ค่าลูกศรตรงกับผลต่างระหว่างไลฟ์ทดสอบ 7 วันล่าสุด กับ 7 วันก่อนหน้านั้น</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 5 · Story 5.1 · FR86 (each KPI card with Week-over-Week delta indicator)</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
-  <div class="sec"><h4>Status</h4><div class="statusrow">
+  <div class="sec"><h4>Status</h4>
+  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
     <span class="opt pass" data-uid="tc-2409" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-2409" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-2409" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-2409" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-2409" data-st="skip">SKIP</span>
   </div></div>
+  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">
+    <span class="optw pass" data-uid="tc-2409" data-stw="pass">PASS</span>
+    <span class="optw fail" data-uid="tc-2409" data-stw="fail">FAIL</span>
+    <span class="optw hold" data-uid="tc-2409" data-stw="hold">HOLD</span>
+    <span class="optw block" data-uid="tc-2409" data-stw="block">BLOCKED</span>
+    <span class="optw skip" data-uid="tc-2409" data-stw="skip">SKIP</span>
+  </div></div>
+  </div>
   <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
     <div class="jira-list" data-uid="tc-2409"></div>
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2409" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2409">+ เพิ่มลิงก์</button></div>
@@ -688,9 +791,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p2">P2</span></td>
   <td class="status" data-uid="tc-2410"><span class="stb pending">รอเทส</span></td>
+  <td class="status-win" data-uid="tc-2410"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-2410"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="8"><div class="card">
   <div class="h-title">ช่วงก่อนไม่มีไลฟ์: การ์ดบอกสถานะแทนลูกศร ไม่ขึ้น NaN หรือ ∞%</div>
   <div class="h-prio">Priority: <b>P2</b> · UI · ประเภท: <b>Boundary/Edge</b> <span class="hint">(min / max / ก่อน-ตรง-เกินขอบ)</span> · B · การ์ดตัวชี้วัด 5 ใบ และการเทียบกับช่วงก่อน</div>
   <div class="sec"><h4>Precondition</h4><ul><li>พื้นที่ทำงานมีไลฟ์ใน 7 วันล่าสุด แต่ไม่มีไลฟ์เลยในช่วง 8–14 วันก่อน</li></ul></div>
@@ -699,13 +803,22 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="sec"><h4>Expected Result</h4><ul><li>"ไลฟ์" แสดง "▲ N" (เพิ่มจาก 0)</li><li>"ผู้ชมรวม" และ "คอมเมนต์" แสดง "ใหม่ในช่วงนี้" ไม่ใช่เปอร์เซ็นต์</li><li>"Engagement" แสดง "ไม่มีข้อมูลช่วงก่อน"</li><li>ไม่มีการ์ดใดขึ้น "NaN" "Infinity" หรือ "∞%"</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 5 · Story 5.1 · FR86 (WoW delta) · สถานะเทียบไม่ได้ตาม Story 5.1 D6</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
-  <div class="sec"><h4>Status</h4><div class="statusrow">
+  <div class="sec"><h4>Status</h4>
+  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
     <span class="opt pass" data-uid="tc-2410" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-2410" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-2410" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-2410" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-2410" data-st="skip">SKIP</span>
   </div></div>
+  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">
+    <span class="optw pass" data-uid="tc-2410" data-stw="pass">PASS</span>
+    <span class="optw fail" data-uid="tc-2410" data-stw="fail">FAIL</span>
+    <span class="optw hold" data-uid="tc-2410" data-stw="hold">HOLD</span>
+    <span class="optw block" data-uid="tc-2410" data-stw="block">BLOCKED</span>
+    <span class="optw skip" data-uid="tc-2410" data-stw="skip">SKIP</span>
+  </div></div>
+  </div>
   <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
     <div class="jira-list" data-uid="tc-2410"></div>
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2410" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2410">+ เพิ่มลิงก์</button></div>
@@ -719,9 +832,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p2">P2</span></td>
   <td class="status" data-uid="tc-2411"><span class="stb pending">รอเทส</span></td>
+  <td class="status-win" data-uid="tc-2411"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-2411"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="8"><div class="card">
   <div class="h-title">บางไลฟ์ไม่มีข้อมูลสีหน้า: การ์ด "Engagement" บอกว่านับจากกี่ไลฟ์ และไม่มีเลยเป็น "—"</div>
   <div class="h-prio">Priority: <b>P2</b> · UI · ประเภท: <b>Boundary/Edge</b> <span class="hint">(min / max / ก่อน-ตรง-เกินขอบ)</span> · B · การ์ดตัวชี้วัด 5 ใบ และการเทียบกับช่วงก่อน</div>
   <div class="sec"><h4>Precondition</h4><ul><li>มีไลฟ์ในช่วงนี้ทั้งแบบมีใบหน้าและไม่มีใบหน้า</li><li>มีพื้นที่ทำงานที่ไลฟ์ทั้งหมดไม่เปิดการอ่านอารมณ์จากสีหน้า</li></ul></div>
@@ -730,13 +844,22 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="sec"><h4>Expected Result</h4><ul><li>คำอธิบายขึ้น "คะแนนการมีส่วนร่วมของโฮสต์ 0–100 จากใบหน้าและพลังงานระหว่างไลฟ์ เฉลี่ยทุกไลฟ์ในช่วงนี้"</li><li>เมื่อมีบางไลฟ์ไม่มีข้อมูลสีหน้า ใต้ตัวเลขมี "จาก n/ทั้งหมด ไลฟ์" ตรงกับจำนวนไลฟ์ที่มีใบหน้า</li><li>พื้นที่ทำงานที่ไม่มีข้อมูลสีหน้าเลย การ์ดแสดง "—" ไม่ใช่ 0</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 5 · Story 5.1 · FR86 (engagement KPI)</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
-  <div class="sec"><h4>Status</h4><div class="statusrow">
+  <div class="sec"><h4>Status</h4>
+  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
     <span class="opt pass" data-uid="tc-2411" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-2411" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-2411" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-2411" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-2411" data-st="skip">SKIP</span>
   </div></div>
+  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">
+    <span class="optw pass" data-uid="tc-2411" data-stw="pass">PASS</span>
+    <span class="optw fail" data-uid="tc-2411" data-stw="fail">FAIL</span>
+    <span class="optw hold" data-uid="tc-2411" data-stw="hold">HOLD</span>
+    <span class="optw block" data-uid="tc-2411" data-stw="block">BLOCKED</span>
+    <span class="optw skip" data-uid="tc-2411" data-stw="skip">SKIP</span>
+  </div></div>
+  </div>
   <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
     <div class="jira-list" data-uid="tc-2411"></div>
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2411" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2411">+ เพิ่มลิงก์</button></div>
@@ -746,17 +869,18 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 
 <!-- dsC -->
-<tr class="epicrow" data-epic="dsC"><td colspan="7">🗓️ C · ช่วงเวลา รีเฟรช และหน้าจอเมื่อไม่มีข้อมูลหรือเชื่อมต่อไม่ได้ · Story 5.1 (FR86 · NFR1.8) <span class="rp">(7 เคส)</span></td></tr>
-<tr class="featrow" data-featkey="ds-period"><td colspan="7">📁 ช่วงเวลาและรีเฟรช <span class="rp"><span class="lv lvl-ui">🌐 3</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="ds-period"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="epicrow" data-epic="dsC"><td colspan="8">🗓️ C · ช่วงเวลา รีเฟรช และหน้าจอเมื่อไม่มีข้อมูลหรือเชื่อมต่อไม่ได้ · Story 5.1 (FR86 · NFR1.8) <span class="rp">(7 เคส)</span></td></tr>
+<tr class="featrow" data-featkey="ds-period"><td colspan="8">📁 ช่วงเวลาและรีเฟรช <span class="rp"><span class="lv lvl-ui">🌐 3</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="ds-period"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
 <tr class="trow" data-feat="dsC" data-level="ui" data-prio="P1" data-kind="happy" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-DASH-C.1</td>
   <td class="ctitle">สลับ "7 วันล่าสุด" ↔ "30 วันล่าสุด" แล้วตัวเลขและช่วงวันที่เปลี่ยนตาม <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
   <td class="status" data-uid="tc-2412"><span class="stb pending">รอเทส</span></td>
+  <td class="status-win" data-uid="tc-2412"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-2412"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="8"><div class="card">
   <div class="h-title">สลับ "7 วันล่าสุด" ↔ "30 วันล่าสุด" แล้วตัวเลขและช่วงวันที่เปลี่ยนตาม</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · C · ช่วงเวลา รีเฟรช และหน้าจอเมื่อไม่มีข้อมูลหรือเชื่อมต่อไม่ได้</div>
   <div class="sec"><h4>Precondition</h4><ul><li>พื้นที่ทำงานทดสอบมีไลฟ์ที่อัปโหลดขึ้นคลาวด์แล้วใน 7 วันล่าสุด อย่างน้อย 6 ไลฟ์ จากโฮสต์ 2 คนขึ้นไป</li></ul></div>
@@ -765,13 +889,22 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="sec"><h4>Expected Result</h4><ul><li>ช่วง "7 วันล่าสุด" ขึ้นวันที่ 7 วันนับรวมวันนี้ (เช่น "15 ก.ย. – 21 ก.ย.")</li><li>กด "30 วันล่าสุด" แล้วปุ่มนั้นถูกเลือก ช่วงวันที่เปลี่ยนเป็น 30 วัน การ์ดตัวชี้วัดและการ์ดอื่นโหลดตัวเลขของช่วงใหม่ และข้อความเทียบเป็น "เทียบ 30 วันก่อนหน้า"</li><li>กลับมา "7 วันล่าสุด" แล้วตัวเลขเท่ากับตอนแรก</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 5 · Story 5.1 · FR86 (period · WoW)</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
-  <div class="sec"><h4>Status</h4><div class="statusrow">
+  <div class="sec"><h4>Status</h4>
+  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
     <span class="opt pass" data-uid="tc-2412" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-2412" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-2412" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-2412" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-2412" data-st="skip">SKIP</span>
   </div></div>
+  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">
+    <span class="optw pass" data-uid="tc-2412" data-stw="pass">PASS</span>
+    <span class="optw fail" data-uid="tc-2412" data-stw="fail">FAIL</span>
+    <span class="optw hold" data-uid="tc-2412" data-stw="hold">HOLD</span>
+    <span class="optw block" data-uid="tc-2412" data-stw="block">BLOCKED</span>
+    <span class="optw skip" data-uid="tc-2412" data-stw="skip">SKIP</span>
+  </div></div>
+  </div>
   <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
     <div class="jira-list" data-uid="tc-2412"></div>
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2412" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2412">+ เพิ่มลิงก์</button></div>
@@ -785,9 +918,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p2">P2</span></td>
   <td class="status" data-uid="tc-2413"><span class="stb pending">รอเทส</span></td>
+  <td class="status-win" data-uid="tc-2413"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-2413"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="8"><div class="card">
   <div class="h-title">ไลฟ์ที่ขอบช่วง: วันที่ 7 นับเข้า วันที่ 8 ไม่นับ (ตามวันที่เวลาไทย)</div>
   <div class="h-prio">Priority: <b>P2</b> · UI · ประเภท: <b>Boundary/Edge</b> <span class="hint">(min / max / ก่อน-ตรง-เกินขอบ)</span> · C · ช่วงเวลา รีเฟรช และหน้าจอเมื่อไม่มีข้อมูลหรือเชื่อมต่อไม่ได้</div>
   <div class="sec"><h4>Precondition</h4><ul><li>มีไลฟ์ที่เริ่มเมื่อ 6 วันก่อน 1 ไลฟ์ และเมื่อ 7 วันก่อน 1 ไลฟ์ (ใกล้เที่ยงคืนตามเวลาไทยจะดีที่สุด)</li></ul></div>
@@ -796,13 +930,22 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="sec"><h4>Expected Result</h4><ul><li>ไลฟ์ที่เริ่มในวันแรกของช่วง (6 วันก่อนวันนี้) ถูกนับ</li><li>ไลฟ์ที่เริ่มเมื่อ 7 วันก่อนวันนี้ (วันที่ 8) ไม่ถูกนับในช่วงนี้ แต่ไปอยู่ในช่วงก่อนหน้าที่ใช้เทียบ</li><li>การนับใช้วันที่ตามเวลาไทย แม้เครื่องจะตั้งโซนเวลาอื่น</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 5 · Story 5.1 · FR86 (Total Lives this period)</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
-  <div class="sec"><h4>Status</h4><div class="statusrow">
+  <div class="sec"><h4>Status</h4>
+  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
     <span class="opt pass" data-uid="tc-2413" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-2413" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-2413" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-2413" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-2413" data-st="skip">SKIP</span>
   </div></div>
+  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">
+    <span class="optw pass" data-uid="tc-2413" data-stw="pass">PASS</span>
+    <span class="optw fail" data-uid="tc-2413" data-stw="fail">FAIL</span>
+    <span class="optw hold" data-uid="tc-2413" data-stw="hold">HOLD</span>
+    <span class="optw block" data-uid="tc-2413" data-stw="block">BLOCKED</span>
+    <span class="optw skip" data-uid="tc-2413" data-stw="skip">SKIP</span>
+  </div></div>
+  </div>
   <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
     <div class="jira-list" data-uid="tc-2413"></div>
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2413" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2413">+ เพิ่มลิงก์</button></div>
@@ -816,9 +959,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
   <td class="status" data-uid="tc-2414"><span class="stb pending">รอเทส</span></td>
+  <td class="status-win" data-uid="tc-2414"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-2414"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="8"><div class="card">
   <div class="h-title">ไลฟ์ใหม่ที่เพิ่งอัปโหลดขึ้นหลังกด "รีเฟรช"</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · C · ช่วงเวลา รีเฟรช และหน้าจอเมื่อไม่มีข้อมูลหรือเชื่อมต่อไม่ได้</div>
   <div class="sec"><h4>Precondition</h4><ul><li>โฮสต์อีกเครื่องให้ความยินยอมการบันทึกในพื้นที่ทำงานนี้แล้ว</li></ul></div>
@@ -827,13 +971,22 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="sec"><h4>Expected Result</h4><ul><li>ระหว่างโหลดปุ่มเปลี่ยนเป็น "กำลังอัปเดต…" และกดซ้ำไม่ได้</li><li>หลังโหลดเสร็จการ์ด "ไลฟ์" เพิ่มขึ้น 1 และไลฟ์ใหม่อยู่บนสุดของ "ไลฟ์ล่าสุด"</li><li>ไม่ต้องปิดเปิดแอปใหม่</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 5 · Story 5.0a (finished session summaries uploaded) · Story 5.1 · FR86</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
-  <div class="sec"><h4>Status</h4><div class="statusrow">
+  <div class="sec"><h4>Status</h4>
+  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
     <span class="opt pass" data-uid="tc-2414" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-2414" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-2414" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-2414" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-2414" data-st="skip">SKIP</span>
   </div></div>
+  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">
+    <span class="optw pass" data-uid="tc-2414" data-stw="pass">PASS</span>
+    <span class="optw fail" data-uid="tc-2414" data-stw="fail">FAIL</span>
+    <span class="optw hold" data-uid="tc-2414" data-stw="hold">HOLD</span>
+    <span class="optw block" data-uid="tc-2414" data-stw="block">BLOCKED</span>
+    <span class="optw skip" data-uid="tc-2414" data-stw="skip">SKIP</span>
+  </div></div>
+  </div>
   <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
     <div class="jira-list" data-uid="tc-2414"></div>
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2414" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2414">+ เพิ่มลิงก์</button></div>
@@ -841,16 +994,17 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 </div></td></tr>
 
-<tr class="featrow" data-featkey="ds-states"><td colspan="7">📁 สถานะว่างและเชื่อมต่อไม่ได้ <span class="rp"><span class="lv lvl-ui">🌐 4</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="ds-states"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="featrow" data-featkey="ds-states"><td colspan="8">📁 สถานะว่างและเชื่อมต่อไม่ได้ <span class="rp"><span class="lv lvl-ui">🌐 4</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="ds-states"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
 <tr class="trow" data-feat="dsC" data-level="ui" data-prio="P1" data-kind="exception" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-DASH-C.4</td>
   <td class="ctitle">พื้นที่ทำงานที่ยังไม่มีไลฟ์: ขึ้น "ยังไม่มีไลฟ์ในช่วงนี้" และไม่มีการ์ดที่ว่างเปล่า <span class="kd kd-exc">Exception/Error</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
   <td class="status" data-uid="tc-2415"><span class="stb pending">รอเทส</span></td>
+  <td class="status-win" data-uid="tc-2415"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-2415"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="8"><div class="card">
   <div class="h-title">พื้นที่ทำงานที่ยังไม่มีไลฟ์: ขึ้น "ยังไม่มีไลฟ์ในช่วงนี้" และไม่มีการ์ดที่ว่างเปล่า</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Exception/Error</b> <span class="hint">(เน็ตหลุด · คลาวด์ล่ม · ไม่มีข้อมูล · AI ใช้ไม่ได้)</span> · C · ช่วงเวลา รีเฟรช และหน้าจอเมื่อไม่มีข้อมูลหรือเชื่อมต่อไม่ได้</div>
   <div class="sec"><h4>Precondition</h4><ul><li>พื้นที่ทำงานว่าง ไม่มีไลฟ์ใน 30 วันล่าสุด</li></ul></div>
@@ -859,13 +1013,22 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="sec"><h4>Expected Result</h4><ul><li>มีกล่องข้อความ "ยังไม่มีไลฟ์ในช่วงนี้"</li><li>การ์ด "ไลฟ์" แสดง 0 · การ์ด GMV ยังเป็น "รอ M3"</li><li>ไม่มีแถบ "AI HIGHLIGHT" ไม่มีการ์ด "อารมณ์โฮสต์" และ "ไลฟ์ล่าสุด" (ไม่แสดงกรอบว่าง)</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 5 · Story 5.1 (no dead UI) · Story 5.2 AC (period data) · Story 5.4 AC (at least one completed live)</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
-  <div class="sec"><h4>Status</h4><div class="statusrow">
+  <div class="sec"><h4>Status</h4>
+  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
     <span class="opt pass" data-uid="tc-2415" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-2415" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-2415" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-2415" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-2415" data-st="skip">SKIP</span>
   </div></div>
+  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">
+    <span class="optw pass" data-uid="tc-2415" data-stw="pass">PASS</span>
+    <span class="optw fail" data-uid="tc-2415" data-stw="fail">FAIL</span>
+    <span class="optw hold" data-uid="tc-2415" data-stw="hold">HOLD</span>
+    <span class="optw block" data-uid="tc-2415" data-stw="block">BLOCKED</span>
+    <span class="optw skip" data-uid="tc-2415" data-stw="skip">SKIP</span>
+  </div></div>
+  </div>
   <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
     <div class="jira-list" data-uid="tc-2415"></div>
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2415" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2415">+ เพิ่มลิงก์</button></div>
@@ -879,9 +1042,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
   <td class="status" data-uid="tc-2416"><span class="stb pending">รอเทส</span></td>
+  <td class="status-win" data-uid="tc-2416"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-2416"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="8"><div class="card">
   <div class="h-title">ไม่มีอินเทอร์เน็ตตอนเปิดหน้า: บอกว่าเชื่อมต่อคลาวด์ไม่ได้ และกด "ลองใหม่" ได้</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Exception/Error</b> <span class="hint">(เน็ตหลุด · คลาวด์ล่ม · ไม่มีข้อมูล · AI ใช้ไม่ได้)</span> · C · ช่วงเวลา รีเฟรช และหน้าจอเมื่อไม่มีข้อมูลหรือเชื่อมต่อไม่ได้</div>
   <div class="sec"><h4>Precondition</h4><ul><li>พื้นที่ทำงานทดสอบมีไลฟ์ที่อัปโหลดขึ้นคลาวด์แล้วใน 7 วันล่าสุด อย่างน้อย 6 ไลฟ์ จากโฮสต์ 2 คนขึ้นไป</li></ul></div>
@@ -890,13 +1054,22 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="sec"><h4>Expected Result</h4><ul><li>ตอนไม่มีเน็ตขึ้นกล่องสีเหลือง "เชื่อมต่อคลาวด์ไม่ได้" พร้อมลิงก์ "ลองใหม่" · การ์ดตัวชี้วัดแสดง "—" หน้าไม่ค้างหรือว่างขาว</li><li>หลังต่อเน็ตแล้วกด "ลองใหม่" ตัวเลขโหลดขึ้นครบและกล่องแจ้งเตือนหายไป</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 5 · Story 5.1 (states — every outcome has a screen) · FR86</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
-  <div class="sec"><h4>Status</h4><div class="statusrow">
+  <div class="sec"><h4>Status</h4>
+  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
     <span class="opt pass" data-uid="tc-2416" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-2416" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-2416" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-2416" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-2416" data-st="skip">SKIP</span>
   </div></div>
+  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">
+    <span class="optw pass" data-uid="tc-2416" data-stw="pass">PASS</span>
+    <span class="optw fail" data-uid="tc-2416" data-stw="fail">FAIL</span>
+    <span class="optw hold" data-uid="tc-2416" data-stw="hold">HOLD</span>
+    <span class="optw block" data-uid="tc-2416" data-stw="block">BLOCKED</span>
+    <span class="optw skip" data-uid="tc-2416" data-stw="skip">SKIP</span>
+  </div></div>
+  </div>
   <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
     <div class="jira-list" data-uid="tc-2416"></div>
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2416" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2416">+ เพิ่มลิงก์</button></div>
@@ -910,9 +1083,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p2">P2</span></td>
   <td class="status" data-uid="tc-2417"><span class="stb pending">รอเทส</span></td>
+  <td class="status-win" data-uid="tc-2417"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-2417"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="8"><div class="card">
   <div class="h-title">เน็ตหลุดตอนกด "รีเฟรช" หลังโหลดแล้ว: ตัวเลขเดิมยังอยู่พร้อมบอกว่าอัปเดตไม่สำเร็จ</div>
   <div class="h-prio">Priority: <b>P2</b> · UI · ประเภท: <b>Exception/Error</b> <span class="hint">(เน็ตหลุด · คลาวด์ล่ม · ไม่มีข้อมูล · AI ใช้ไม่ได้)</span> · C · ช่วงเวลา รีเฟรช และหน้าจอเมื่อไม่มีข้อมูลหรือเชื่อมต่อไม่ได้</div>
   <div class="sec"><h4>Precondition</h4><ul><li>พื้นที่ทำงานทดสอบมีไลฟ์ที่อัปโหลดขึ้นคลาวด์แล้วใน 7 วันล่าสุด อย่างน้อย 6 ไลฟ์ จากโฮสต์ 2 คนขึ้นไป</li></ul></div>
@@ -921,13 +1095,22 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="sec"><h4>Expected Result</h4><ul><li>ตัวเลขชุดเดิมยังแสดงอยู่ ไม่กลายเป็น "—"</li><li>มีข้อความ "อัปเดตไม่สำเร็จ — แสดงตัวเลขล่าสุดที่โหลดได้" พร้อมลิงก์ "ลองใหม่"</li><li>ต่อเน็ตแล้วกด "ลองใหม่" ข้อความหายไป</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 5 · Story 5.1 · FR86</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
-  <div class="sec"><h4>Status</h4><div class="statusrow">
+  <div class="sec"><h4>Status</h4>
+  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
     <span class="opt pass" data-uid="tc-2417" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-2417" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-2417" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-2417" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-2417" data-st="skip">SKIP</span>
   </div></div>
+  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">
+    <span class="optw pass" data-uid="tc-2417" data-stw="pass">PASS</span>
+    <span class="optw fail" data-uid="tc-2417" data-stw="fail">FAIL</span>
+    <span class="optw hold" data-uid="tc-2417" data-stw="hold">HOLD</span>
+    <span class="optw block" data-uid="tc-2417" data-stw="block">BLOCKED</span>
+    <span class="optw skip" data-uid="tc-2417" data-stw="skip">SKIP</span>
+  </div></div>
+  </div>
   <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
     <div class="jira-list" data-uid="tc-2417"></div>
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2417" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2417">+ เพิ่มลิงก์</button></div>
@@ -941,9 +1124,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p2">P2</span></td>
   <td class="status" data-uid="tc-2418"><span class="stb pending">รอเทส</span></td>
+  <td class="status-win" data-uid="tc-2418"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-2418"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="8"><div class="card">
   <div class="h-title">นาฬิกาเครื่องเพี้ยนเป็นพรุ่งนี้: หน้าบอกว่าช่วงวันที่อาจไม่ใช่ล่าสุดจริง</div>
   <div class="h-prio">Priority: <b>P2</b> · UI · ประเภท: <b>Exception/Error</b> <span class="hint">(เน็ตหลุด · คลาวด์ล่ม · ไม่มีข้อมูล · AI ใช้ไม่ได้)</span> · C · ช่วงเวลา รีเฟรช และหน้าจอเมื่อไม่มีข้อมูลหรือเชื่อมต่อไม่ได้</div>
   <div class="sec"><h4>Precondition</h4><ul><li>พื้นที่ทำงานทดสอบมีไลฟ์ที่อัปโหลดขึ้นคลาวด์แล้วใน 7 วันล่าสุด อย่างน้อย 6 ไลฟ์ จากโฮสต์ 2 คนขึ้นไป</li></ul></div>
@@ -952,13 +1136,22 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="sec"><h4>Expected Result</h4><ul><li>มีข้อความ "นาฬิกาของเครื่องนี้ไม่ตรงกับเซิร์ฟเวอร์ — ช่วงวันที่ด้านบนคำนวณจากเครื่องคุณ จึงอาจไม่ใช่ช่วงล่าสุดจริง"</li><li>หลังตั้งเวลากลับและกด "รีเฟรช" ข้อความหายไป</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 5 · Story 5.1 · FR86 (period)</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
-  <div class="sec"><h4>Status</h4><div class="statusrow">
+  <div class="sec"><h4>Status</h4>
+  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
     <span class="opt pass" data-uid="tc-2418" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-2418" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-2418" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-2418" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-2418" data-st="skip">SKIP</span>
   </div></div>
+  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">
+    <span class="optw pass" data-uid="tc-2418" data-stw="pass">PASS</span>
+    <span class="optw fail" data-uid="tc-2418" data-stw="fail">FAIL</span>
+    <span class="optw hold" data-uid="tc-2418" data-stw="hold">HOLD</span>
+    <span class="optw block" data-uid="tc-2418" data-stw="block">BLOCKED</span>
+    <span class="optw skip" data-uid="tc-2418" data-stw="skip">SKIP</span>
+  </div></div>
+  </div>
   <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
     <div class="jira-list" data-uid="tc-2418"></div>
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2418" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2418">+ เพิ่มลิงก์</button></div>
@@ -968,17 +1161,18 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 
 <!-- dsD -->
-<tr class="epicrow" data-epic="dsD"><td colspan="7">✨ D · แถบ "AI HIGHLIGHT" ประโยคเดียวสรุปช่วงเวลา · Story 5.2 (FR87 · FR131 · FR132) <span class="rp">(6 เคส)</span></td></tr>
-<tr class="featrow" data-featkey="ds-highlight"><td colspan="7">📁 สร้างประโยคสรุปและสถานะเมื่อ AI ใช้ไม่ได้ <span class="rp"><span class="lv lvl-ui">🌐 6</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="ds-highlight"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="epicrow" data-epic="dsD"><td colspan="8">✨ D · แถบ "AI HIGHLIGHT" ประโยคเดียวสรุปช่วงเวลา · Story 5.2 (FR87 · FR131 · FR132) <span class="rp">(6 เคส)</span></td></tr>
+<tr class="featrow" data-featkey="ds-highlight"><td colspan="8">📁 สร้างประโยคสรุปและสถานะเมื่อ AI ใช้ไม่ได้ <span class="rp"><span class="lv lvl-ui">🌐 6</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="ds-highlight"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
 <tr class="trow" data-feat="dsD" data-level="ui" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-DASH-D.1</td>
   <td class="ctitle">กด "สรุปด้วย AI" ได้ประโยคภาษาไทยประโยคเดียวบนสุดของหน้า <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
   <td class="status" data-uid="tc-2419"><span class="stb pending">รอเทส</span></td>
+  <td class="status-win" data-uid="tc-2419"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-2419"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="8"><div class="card">
   <div class="h-title">กด "สรุปด้วย AI" ได้ประโยคภาษาไทยประโยคเดียวบนสุดของหน้า</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · D · แถบ "AI HIGHLIGHT" ประโยคเดียวสรุปช่วงเวลา</div>
   <div class="sec"><h4>Precondition</h4><ul><li>พื้นที่ทำงานทดสอบมีไลฟ์ที่อัปโหลดขึ้นคลาวด์แล้วใน 7 วันล่าสุด อย่างน้อย 6 ไลฟ์ จากโฮสต์ 2 คนขึ้นไป</li><li>บัญชีนี้ตั้งค่าผู้ให้บริการ AI ครบแล้ว (บันทึก key · เลือกโมเดล · ยอมรับข้อตกลงการส่งข้อมูลเวอร์ชันล่าสุด)</li></ul></div>
@@ -987,13 +1181,22 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="sec"><h4>Expected Result</h4><ul><li>ก่อนกดมีปุ่ม "สรุปด้วย AI" และข้อความ "ให้ AI สรุปสัญญาณสำคัญที่สุดของช่วงนี้เป็นประโยคเดียว"</li><li>ระหว่างรอปุ่มเป็น "กำลังสรุป…" และมีปุ่ม "ยกเลิก" · การ์ดตัวชี้วัดด้านล่างยังแสดงและใช้งานได้ตามปกติ</li><li>ได้แถบหัวข้อ "AI HIGHLIGHT" มีประโยคภาษาไทยธรรมดา 1 ประโยค และบรรทัด "สรุปจากตัวเลขรวมของ workspace ในช่วงนี้ · ไม่ได้บันทึกไว้ เมื่อปิดแอปจะหายไป"</li><li>มุมขวาของแถบมีปุ่ม "สรุปใหม่"</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 5 · Story 5.2 · FR87 (single plain-Thai AI sentence) · FR131 (generated on the desktop)</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
-  <div class="sec"><h4>Status</h4><div class="statusrow">
+  <div class="sec"><h4>Status</h4>
+  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
     <span class="opt pass" data-uid="tc-2419" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-2419" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-2419" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-2419" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-2419" data-st="skip">SKIP</span>
   </div></div>
+  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">
+    <span class="optw pass" data-uid="tc-2419" data-stw="pass">PASS</span>
+    <span class="optw fail" data-uid="tc-2419" data-stw="fail">FAIL</span>
+    <span class="optw hold" data-uid="tc-2419" data-stw="hold">HOLD</span>
+    <span class="optw block" data-uid="tc-2419" data-stw="block">BLOCKED</span>
+    <span class="optw skip" data-uid="tc-2419" data-stw="skip">SKIP</span>
+  </div></div>
+  </div>
   <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
     <div class="jira-list" data-uid="tc-2419"></div>
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2419" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2419">+ เพิ่มลิงก์</button></div>
@@ -1007,9 +1210,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
   <td class="status" data-uid="tc-2420"><span class="stb pending">รอเทส</span></td>
+  <td class="status-win" data-uid="tc-2420"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-2420"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="8"><div class="card">
   <div class="h-title">ตัวเลขในประโยค AI ตรงกับการ์ดตัวชี้วัดด้านล่าง</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Data</b> <span class="hint">(ตัวเลขตรงกับต้นทาง · ข้อมูลไม่ปนข้ามพื้นที่ทำงาน)</span> · D · แถบ "AI HIGHLIGHT" ประโยคเดียวสรุปช่วงเวลา</div>
   <div class="sec"><h4>Precondition</h4><ul><li>พื้นที่ทำงานทดสอบมีไลฟ์ที่อัปโหลดขึ้นคลาวด์แล้วใน 7 วันล่าสุด อย่างน้อย 6 ไลฟ์ จากโฮสต์ 2 คนขึ้นไป</li><li>บัญชีนี้ตั้งค่าผู้ให้บริการ AI ครบแล้ว (บันทึก key · เลือกโมเดล · ยอมรับข้อตกลงการส่งข้อมูลเวอร์ชันล่าสุด)</li></ul></div>
@@ -1018,13 +1222,22 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="sec"><h4>Expected Result</h4><ul><li>ทุกตัวเลขที่ประโยคพูดถึงมีอยู่จริงบนการ์ดของช่วงเดียวกัน ไม่มีตัวเลขที่ไม่ปรากฏในหน้า</li><li>ประโยคไม่พูดถึงยอดขาย GMV หรือ Conversion</li><li>ประโยคไม่ระบุชื่อโฮสต์ ชื่อช่อง หรือชื่อไลฟ์</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 5 · Story 5.2 · FR87 (summarizing the most important signal for the period)</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
-  <div class="sec"><h4>Status</h4><div class="statusrow">
+  <div class="sec"><h4>Status</h4>
+  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
     <span class="opt pass" data-uid="tc-2420" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-2420" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-2420" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-2420" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-2420" data-st="skip">SKIP</span>
   </div></div>
+  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">
+    <span class="optw pass" data-uid="tc-2420" data-stw="pass">PASS</span>
+    <span class="optw fail" data-uid="tc-2420" data-stw="fail">FAIL</span>
+    <span class="optw hold" data-uid="tc-2420" data-stw="hold">HOLD</span>
+    <span class="optw block" data-uid="tc-2420" data-stw="block">BLOCKED</span>
+    <span class="optw skip" data-uid="tc-2420" data-stw="skip">SKIP</span>
+  </div></div>
+  </div>
   <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
     <div class="jira-list" data-uid="tc-2420"></div>
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2420" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2420">+ เพิ่มลิงก์</button></div>
@@ -1038,9 +1251,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
   <td class="status" data-uid="tc-2421"><span class="stb pending">รอเทส</span></td>
+  <td class="status-win" data-uid="tc-2421"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-2421"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="8"><div class="card">
   <div class="h-title">ยังไม่ได้ใส่ key: แถบบอกให้ตั้งค่า key และพาไปหน้า "ผู้ให้บริการ AI"</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Exception/Error</b> <span class="hint">(เน็ตหลุด · คลาวด์ล่ม · ไม่มีข้อมูล · AI ใช้ไม่ได้)</span> · D · แถบ "AI HIGHLIGHT" ประโยคเดียวสรุปช่วงเวลา</div>
   <div class="sec"><h4>Precondition</h4><ul><li>พื้นที่ทำงานทดสอบมีไลฟ์ที่อัปโหลดขึ้นคลาวด์แล้วใน 7 วันล่าสุด อย่างน้อย 6 ไลฟ์ จากโฮสต์ 2 คนขึ้นไป</li></ul></div>
@@ -1049,13 +1263,22 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="sec"><h4>Expected Result</h4><ul><li>กล่องบนสุดขึ้น "ยังไม่ได้เชื่อมต่อผู้ให้บริการ AI" และ "ฟีเจอร์ AI ใช้ key ของ OpenAI หรือ OpenRouter ของคุณเอง เพิ่ม key เพื่อใช้ฟีเจอร์นี้"</li><li>กด "ตั้งค่า key" แล้วไปหน้า "ผู้ให้บริการ AI"</li><li>การ์ดตัวชี้วัด อารมณ์โฮสต์ และไลฟ์ล่าสุดยังแสดงครบตามปกติ</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 5 · Story 5.2 (Story 4.3 states when AI cannot run) · FR132</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
-  <div class="sec"><h4>Status</h4><div class="statusrow">
+  <div class="sec"><h4>Status</h4>
+  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
     <span class="opt pass" data-uid="tc-2421" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-2421" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-2421" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-2421" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-2421" data-st="skip">SKIP</span>
   </div></div>
+  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">
+    <span class="optw pass" data-uid="tc-2421" data-stw="pass">PASS</span>
+    <span class="optw fail" data-uid="tc-2421" data-stw="fail">FAIL</span>
+    <span class="optw hold" data-uid="tc-2421" data-stw="hold">HOLD</span>
+    <span class="optw block" data-uid="tc-2421" data-stw="block">BLOCKED</span>
+    <span class="optw skip" data-uid="tc-2421" data-stw="skip">SKIP</span>
+  </div></div>
+  </div>
   <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
     <div class="jira-list" data-uid="tc-2421"></div>
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2421" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2421">+ เพิ่มลิงก์</button></div>
@@ -1069,9 +1292,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
   <td class="status" data-uid="tc-2422"><span class="stb pending">รอเทส</span></td>
+  <td class="status-win" data-uid="tc-2422"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-2422"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="8"><div class="card">
   <div class="h-title">ยังไม่ได้ยอมรับข้อตกลงการส่งข้อมูล AI เวอร์ชันใหม่: กดสร้างไม่ได้จนกว่าจะยอมรับ</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Exception/Error</b> <span class="hint">(เน็ตหลุด · คลาวด์ล่ม · ไม่มีข้อมูล · AI ใช้ไม่ได้)</span> · D · แถบ "AI HIGHLIGHT" ประโยคเดียวสรุปช่วงเวลา</div>
   <div class="sec"><h4>Precondition</h4><ul><li>พื้นที่ทำงานทดสอบมีไลฟ์ที่อัปโหลดขึ้นคลาวด์แล้วใน 7 วันล่าสุด อย่างน้อย 6 ไลฟ์ จากโฮสต์ 2 คนขึ้นไป</li><li>บัญชีบันทึก key และเลือกโมเดลแล้ว แต่ยังไม่ยอมรับข้อตกลงเวอร์ชันล่าสุด (บิลด์นี้ขึ้นเวอร์ชันใหม่ ทุกบัญชีต้องยอมรับใหม่)</li></ul></div>
@@ -1080,13 +1304,22 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="sec"><h4>Expected Result</h4><ul><li>ก่อนยอมรับ กล่องบนสุดขึ้น "ยังไม่ได้ยอมรับข้อตกลงการส่งข้อมูล AI" และไม่มีปุ่ม "สรุปด้วย AI"</li><li>หน้าข้อตกลงบอกว่าตัวเลขรวมของแดชบอร์ดจะถูกส่งไปยังผู้ให้บริการที่เลือก</li><li>หลังยอมรับแล้วกลับมา มีปุ่ม "สรุปด้วย AI" ให้กด</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 5 · Story 5.2 (disclosure names the new categories before the first request · FR133) · FR132</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
-  <div class="sec"><h4>Status</h4><div class="statusrow">
+  <div class="sec"><h4>Status</h4>
+  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
     <span class="opt pass" data-uid="tc-2422" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-2422" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-2422" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-2422" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-2422" data-st="skip">SKIP</span>
   </div></div>
+  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">
+    <span class="optw pass" data-uid="tc-2422" data-stw="pass">PASS</span>
+    <span class="optw fail" data-uid="tc-2422" data-stw="fail">FAIL</span>
+    <span class="optw hold" data-uid="tc-2422" data-stw="hold">HOLD</span>
+    <span class="optw block" data-uid="tc-2422" data-stw="block">BLOCKED</span>
+    <span class="optw skip" data-uid="tc-2422" data-stw="skip">SKIP</span>
+  </div></div>
+  </div>
   <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
     <div class="jira-list" data-uid="tc-2422"></div>
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2422" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2422">+ เพิ่มลิงก์</button></div>
@@ -1100,9 +1333,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p2">P2</span></td>
   <td class="status" data-uid="tc-2423"><span class="stb pending">รอเทส</span></td>
+  <td class="status-win" data-uid="tc-2423"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-2423"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="8"><div class="card">
   <div class="h-title">key ถูกปฏิเสธหรือเน็ตหลุดตอนสร้าง: บอกสาเหตุ และตัวเลขส่วนอื่นไม่เสีย</div>
   <div class="h-prio">Priority: <b>P2</b> · UI · ประเภท: <b>Exception/Error</b> <span class="hint">(เน็ตหลุด · คลาวด์ล่ม · ไม่มีข้อมูล · AI ใช้ไม่ได้)</span> · D · แถบ "AI HIGHLIGHT" ประโยคเดียวสรุปช่วงเวลา</div>
   <div class="sec"><h4>Precondition</h4><ul><li>พื้นที่ทำงานทดสอบมีไลฟ์ที่อัปโหลดขึ้นคลาวด์แล้วใน 7 วันล่าสุด อย่างน้อย 6 ไลฟ์ จากโฮสต์ 2 คนขึ้นไป</li><li>บัญชียอมรับข้อตกลงการส่งข้อมูลแล้ว</li></ul></div>
@@ -1112,13 +1346,22 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="sec"><h4>Expected Result</h4><ul><li>key ที่ถูกยกเลิก: ขึ้น "ผู้ให้บริการ AI ปฏิเสธ key" พร้อมปุ่ม "ตรวจสอบ key"</li><li>ไม่มีเน็ต: ขึ้น "ติดต่อผู้ให้บริการ AI ไม่ได้" (หรือ "ผู้ให้บริการ AI ตอบช้าเกินไป") พร้อมปุ่ม "ลองใหม่"</li><li>ทั้งสองกรณีการ์ดตัวชี้วัดและการ์ดอื่นยังแสดงตัวเลขเดิม ไม่ว่างหรือค้าง</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 5 · Story 5.2 (Story 4.3 states) · FR132</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
-  <div class="sec"><h4>Status</h4><div class="statusrow">
+  <div class="sec"><h4>Status</h4>
+  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
     <span class="opt pass" data-uid="tc-2423" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-2423" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-2423" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-2423" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-2423" data-st="skip">SKIP</span>
   </div></div>
+  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">
+    <span class="optw pass" data-uid="tc-2423" data-stw="pass">PASS</span>
+    <span class="optw fail" data-uid="tc-2423" data-stw="fail">FAIL</span>
+    <span class="optw hold" data-uid="tc-2423" data-stw="hold">HOLD</span>
+    <span class="optw block" data-uid="tc-2423" data-stw="block">BLOCKED</span>
+    <span class="optw skip" data-uid="tc-2423" data-stw="skip">SKIP</span>
+  </div></div>
+  </div>
   <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
     <div class="jira-list" data-uid="tc-2423"></div>
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2423" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2423">+ เพิ่มลิงก์</button></div>
@@ -1132,9 +1375,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p2">P2</span></td>
   <td class="status" data-uid="tc-2424"><span class="stb pending">รอเทส</span></td>
+  <td class="status-win" data-uid="tc-2424"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-2424"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="8"><div class="card">
   <div class="h-title">กด "ยกเลิก" ระหว่างสร้าง / กด "สรุปใหม่" / เปลี่ยนช่วงเวลา แล้วประโยคเป็นของช่วงที่เลือกเสมอ</div>
   <div class="h-prio">Priority: <b>P2</b> · UI · ประเภท: <b>Negative</b> <span class="hint">(ข้อมูลผิด / action ผิด)</span> · D · แถบ "AI HIGHLIGHT" ประโยคเดียวสรุปช่วงเวลา</div>
   <div class="sec"><h4>Precondition</h4><ul><li>พื้นที่ทำงานทดสอบมีไลฟ์ที่อัปโหลดขึ้นคลาวด์แล้วใน 7 วันล่าสุด อย่างน้อย 6 ไลฟ์ จากโฮสต์ 2 คนขึ้นไป</li><li>บัญชีนี้ตั้งค่าผู้ให้บริการ AI ครบแล้ว (บันทึก key · เลือกโมเดล · ยอมรับข้อตกลงการส่งข้อมูลเวอร์ชันล่าสุด)</li></ul></div>
@@ -1143,13 +1387,22 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="sec"><h4>Expected Result</h4><ul><li>กด "ยกเลิก" แล้วกลับมาเป็นปุ่ม "สรุปด้วย AI" ไม่มีประโยคค้าง</li><li>กด "สรุปใหม่" แล้วได้ประโยคใหม่แทนที่ประโยคเดิม</li><li>ช่วง "30 วันล่าสุด" ไม่แสดงประโยคของ 7 วัน (ขึ้นปุ่ม "สรุปด้วย AI" ใหม่) · กลับมา 7 วันแล้วเห็นประโยคเดิมของ 7 วัน</li><li>หลังเปิดแอปใหม่ ไม่มีประโยคเดิม ต้องกดสร้างใหม่ (ตามบรรทัด "ไม่ได้บันทึกไว้ เมื่อปิดแอปจะหายไป")</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 5 · Story 5.2 · FR87 (one sentence for the period)</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
-  <div class="sec"><h4>Status</h4><div class="statusrow">
+  <div class="sec"><h4>Status</h4>
+  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
     <span class="opt pass" data-uid="tc-2424" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-2424" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-2424" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-2424" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-2424" data-st="skip">SKIP</span>
   </div></div>
+  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">
+    <span class="optw pass" data-uid="tc-2424" data-stw="pass">PASS</span>
+    <span class="optw fail" data-uid="tc-2424" data-stw="fail">FAIL</span>
+    <span class="optw hold" data-uid="tc-2424" data-stw="hold">HOLD</span>
+    <span class="optw block" data-uid="tc-2424" data-stw="block">BLOCKED</span>
+    <span class="optw skip" data-uid="tc-2424" data-stw="skip">SKIP</span>
+  </div></div>
+  </div>
   <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
     <div class="jira-list" data-uid="tc-2424"></div>
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2424" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2424">+ เพิ่มลิงก์</button></div>
@@ -1159,17 +1412,18 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 
 <!-- dsE -->
-<tr class="epicrow" data-epic="dsE"><td colspan="7">😊 E · การ์ด "อารมณ์โฮสต์" สรุปอารมณ์ พลังงาน และการยิ้มรายโฮสต์ · Story 5.3 (FR88) <span class="rp">(4 เคส)</span></td></tr>
-<tr class="featrow" data-featkey="ds-hosts"><td colspan="7">📁 สรุปรายโฮสต์ <span class="rp"><span class="lv lvl-ui">🌐 4</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="ds-hosts"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="epicrow" data-epic="dsE"><td colspan="8">😊 E · การ์ด "อารมณ์โฮสต์" สรุปอารมณ์ พลังงาน และการยิ้มรายโฮสต์ · Story 5.3 (FR88) <span class="rp">(4 เคส)</span></td></tr>
+<tr class="featrow" data-featkey="ds-hosts"><td colspan="8">📁 สรุปรายโฮสต์ <span class="rp"><span class="lv lvl-ui">🌐 4</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="ds-hosts"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
 <tr class="trow" data-feat="dsE" data-level="ui" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-DASH-E.1</td>
   <td class="ctitle">การ์ด "อารมณ์โฮสต์" แสดงข้อมูลครบทุกโฮสต์ที่มีไลฟ์ในช่วงนี้ <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
   <td class="status" data-uid="tc-2425"><span class="stb pending">รอเทส</span></td>
+  <td class="status-win" data-uid="tc-2425"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-2425"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="8"><div class="card">
   <div class="h-title">การ์ด "อารมณ์โฮสต์" แสดงข้อมูลครบทุกโฮสต์ที่มีไลฟ์ในช่วงนี้</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · E · การ์ด "อารมณ์โฮสต์" สรุปอารมณ์ พลังงาน และการยิ้มรายโฮสต์</div>
   <div class="sec"><h4>Precondition</h4><ul><li>พื้นที่ทำงานทดสอบมีไลฟ์ที่อัปโหลดขึ้นคลาวด์แล้วใน 7 วันล่าสุด อย่างน้อย 6 ไลฟ์ จากโฮสต์ 2 คนขึ้นไป</li><li>บัญชีเจ้าของบันทึกไลฟ์เองด้วยอย่างน้อย 1 ไลฟ์ในช่วงนี้</li></ul></div>
@@ -1178,13 +1432,22 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="sec"><h4>Expected Result</h4><ul><li>คำอธิบายหัวข้อขึ้น "สรุปอารมณ์จากสีหน้าของโฮสต์แต่ละคนตลอดช่วงนี้ — ถ่วงน้ำหนักด้วยจำนวนเฟรมใบหน้ามาแล้ว · อารมณ์มี 6 แบบตามที่ระบบอ่านได้จริง"</li><li>แต่ละโฮสต์มี: ชื่อช่องของโฮสต์ · "N ไลฟ์ · H ชม." · อารมณ์เด่น · แถบสัดส่วนอารมณ์ 6 แบบ ("มีความสุข" "ประหลาดใจ" "เฉยๆ" "กังวล" "เศร้า" "โกรธ") · "พลังงาน n" · "ยิ้ม n/นาที"</li><li>โฮสต์ที่เป็นบัญชีที่เข้าสู่ระบบอยู่มีป้าย "(คุณ)" ต่อท้าย</li><li>ไม่มีส่วน Joy↔Sales หรือกล่องว่างที่รอข้อมูลยอดขาย</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 5 · Story 5.3 · FR88 (Ekman + Energy + Smile-Rate per host · Joy↔Sales → M3 omitted, no broken placeholder)</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
-  <div class="sec"><h4>Status</h4><div class="statusrow">
+  <div class="sec"><h4>Status</h4>
+  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
     <span class="opt pass" data-uid="tc-2425" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-2425" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-2425" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-2425" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-2425" data-st="skip">SKIP</span>
   </div></div>
+  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">
+    <span class="optw pass" data-uid="tc-2425" data-stw="pass">PASS</span>
+    <span class="optw fail" data-uid="tc-2425" data-stw="fail">FAIL</span>
+    <span class="optw hold" data-uid="tc-2425" data-stw="hold">HOLD</span>
+    <span class="optw block" data-uid="tc-2425" data-stw="block">BLOCKED</span>
+    <span class="optw skip" data-uid="tc-2425" data-stw="skip">SKIP</span>
+  </div></div>
+  </div>
   <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
     <div class="jira-list" data-uid="tc-2425"></div>
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2425" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2425">+ เพิ่มลิงก์</button></div>
@@ -1198,9 +1461,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
   <td class="status" data-uid="tc-2426"><span class="stb pending">รอเทส</span></td>
+  <td class="status-win" data-uid="tc-2426"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-2426"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="8"><div class="card">
   <div class="h-title">โฮสต์ที่ไม่มีข้อมูลสีหน้า และช่วงที่ไม่มีใครมีข้อมูลสีหน้าเลย</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Boundary/Edge</b> <span class="hint">(min / max / ก่อน-ตรง-เกินขอบ)</span> · E · การ์ด "อารมณ์โฮสต์" สรุปอารมณ์ พลังงาน และการยิ้มรายโฮสต์</div>
   <div class="sec"><h4>Precondition</h4><ul><li>มีโฮสต์ 1 คนที่ไลฟ์ในช่วงนี้ไม่เปิดการอ่านอารมณ์จากสีหน้า</li><li>มีพื้นที่ทำงานที่ไลฟ์ทั้งหมดไม่มีใบหน้า</li></ul></div>
@@ -1209,13 +1473,22 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="sec"><h4>Expected Result</h4><ul><li>โฮสต์ที่ไม่มีข้อมูลขึ้น "ยังไม่มีข้อมูลอารมณ์" และคำอธิบาย "เกิดได้ 2 กรณี: โฮสต์คนนี้ยังไม่ได้เปิดการอ่านอารมณ์จากสีหน้า หรือไลฟ์ในช่วงนี้ไม่มีใบหน้าที่อ่านได้นานพอ" — ไม่ขึ้นพลังงาน/ยิ้มเป็น 0</li><li>พื้นที่ทำงานที่ไม่มีใครมีข้อมูล ขึ้น "ยังไม่มีข้อมูลอารมณ์ของโฮสต์คนไหนในช่วงนี้ — โฮสต์ที่ยังไม่เปิดการอ่านอารมณ์จากสีหน้าจะไม่มีตัวเลขส่วนนี้"</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 5 · Story 5.3 · FR88</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
-  <div class="sec"><h4>Status</h4><div class="statusrow">
+  <div class="sec"><h4>Status</h4>
+  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
     <span class="opt pass" data-uid="tc-2426" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-2426" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-2426" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-2426" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-2426" data-st="skip">SKIP</span>
   </div></div>
+  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">
+    <span class="optw pass" data-uid="tc-2426" data-stw="pass">PASS</span>
+    <span class="optw fail" data-uid="tc-2426" data-stw="fail">FAIL</span>
+    <span class="optw hold" data-uid="tc-2426" data-stw="hold">HOLD</span>
+    <span class="optw block" data-uid="tc-2426" data-stw="block">BLOCKED</span>
+    <span class="optw skip" data-uid="tc-2426" data-stw="skip">SKIP</span>
+  </div></div>
+  </div>
   <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
     <div class="jira-list" data-uid="tc-2426"></div>
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2426" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2426">+ เพิ่มลิงก์</button></div>
@@ -1229,9 +1502,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p2">P2</span></td>
   <td class="status" data-uid="tc-2427"><span class="stb pending">รอเทส</span></td>
+  <td class="status-win" data-uid="tc-2427"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-2427"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="8"><div class="card">
   <div class="h-title">มีโฮสต์เกิน 6 คน: แสดง 6 คนแรก พร้อมปุ่ม "ดูทั้งหมด (n)"</div>
   <div class="h-prio">Priority: <b>P2</b> · UI · ประเภท: <b>Boundary/Edge</b> <span class="hint">(min / max / ก่อน-ตรง-เกินขอบ)</span> · E · การ์ด "อารมณ์โฮสต์" สรุปอารมณ์ พลังงาน และการยิ้มรายโฮสต์</div>
   <div class="sec"><h4>Precondition</h4><ul><li>พื้นที่ทำงานมีโฮสต์ที่มีไลฟ์ในช่วงนี้ 7 คนขึ้นไป (และอีกพื้นที่มี 6 คนพอดี ถ้าเตรียมได้)</li></ul></div>
@@ -1240,13 +1514,22 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="sec"><h4>Expected Result</h4><ul><li>ตอนแรกเห็นการ์ดโฮสต์ 6 ใบ และปุ่ม "ดูทั้งหมด (n)" โดย n เท่ากับจำนวนโฮสต์ทั้งหมด</li><li>กดแล้วเห็นครบทุกคน ปุ่มเปลี่ยนเป็น "แสดงน้อยลง"</li><li>กด "แสดงน้อยลง" แล้วกลับเหลือ 6 ใบ</li><li>พื้นที่ทำงานที่มีโฮสต์ 6 คนพอดีไม่มีปุ่ม "ดูทั้งหมด"</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 5 · Story 5.3 · FR88 (per host · a Brand Manager with multiple hosts)</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
-  <div class="sec"><h4>Status</h4><div class="statusrow">
+  <div class="sec"><h4>Status</h4>
+  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
     <span class="opt pass" data-uid="tc-2427" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-2427" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-2427" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-2427" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-2427" data-st="skip">SKIP</span>
   </div></div>
+  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">
+    <span class="optw pass" data-uid="tc-2427" data-stw="pass">PASS</span>
+    <span class="optw fail" data-uid="tc-2427" data-stw="fail">FAIL</span>
+    <span class="optw hold" data-uid="tc-2427" data-stw="hold">HOLD</span>
+    <span class="optw block" data-uid="tc-2427" data-stw="block">BLOCKED</span>
+    <span class="optw skip" data-uid="tc-2427" data-stw="skip">SKIP</span>
+  </div></div>
+  </div>
   <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
     <div class="jira-list" data-uid="tc-2427"></div>
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2427" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2427">+ เพิ่มลิงก์</button></div>
@@ -1260,9 +1543,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
   <td class="status" data-uid="tc-2428"><span class="stb pending">รอเทส</span></td>
+  <td class="status-win" data-uid="tc-2428"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-2428"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="8"><div class="card">
   <div class="h-title">ตัวเลขรายโฮสต์ตรงกับหน้าไลฟ์เดี่ยว เมื่อโฮสต์มีไลฟ์เดียวในช่วงนี้</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Data</b> <span class="hint">(ตัวเลขตรงกับต้นทาง · ข้อมูลไม่ปนข้ามพื้นที่ทำงาน)</span> · E · การ์ด "อารมณ์โฮสต์" สรุปอารมณ์ พลังงาน และการยิ้มรายโฮสต์</div>
   <div class="sec"><h4>Precondition</h4><ul><li>พื้นที่ทำงานทดสอบมีไลฟ์ที่อัปโหลดขึ้นคลาวด์แล้วใน 7 วันล่าสุด อย่างน้อย 6 ไลฟ์ จากโฮสต์ 2 คนขึ้นไป</li><li>มีโฮสต์ 1 คนที่มีไลฟ์เดียวในช่วง 7 วันล่าสุดและเปิดการอ่านอารมณ์จากสีหน้า</li></ul></div>
@@ -1271,13 +1555,22 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="sec"><h4>Expected Result</h4><ul><li>"พลังงาน" และ "อัตราการยิ้ม" ในหน้าไลฟ์เดี่ยวตรงกับค่าบนการ์ดของโฮสต์ (ปัดเศษเท่ากัน)</li><li>อารมณ์ที่สัดส่วนสูงสุดใน "สัดส่วนอารมณ์ทั้งไลฟ์" ตรงกับอารมณ์เด่นบนการ์ด</li><li>"N ไลฟ์ · H ชม." บนการ์ดเป็น 1 ไลฟ์ และชั่วโมงตรงกับความยาวไลฟ์</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 5 · Story 5.3 · FR88 · Story 5.5 · FR94</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
-  <div class="sec"><h4>Status</h4><div class="statusrow">
+  <div class="sec"><h4>Status</h4>
+  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
     <span class="opt pass" data-uid="tc-2428" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-2428" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-2428" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-2428" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-2428" data-st="skip">SKIP</span>
   </div></div>
+  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">
+    <span class="optw pass" data-uid="tc-2428" data-stw="pass">PASS</span>
+    <span class="optw fail" data-uid="tc-2428" data-stw="fail">FAIL</span>
+    <span class="optw hold" data-uid="tc-2428" data-stw="hold">HOLD</span>
+    <span class="optw block" data-uid="tc-2428" data-stw="block">BLOCKED</span>
+    <span class="optw skip" data-uid="tc-2428" data-stw="skip">SKIP</span>
+  </div></div>
+  </div>
   <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
     <div class="jira-list" data-uid="tc-2428"></div>
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2428" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2428">+ เพิ่มลิงก์</button></div>
@@ -1287,17 +1580,18 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 
 <!-- dsF -->
-<tr class="epicrow" data-epic="dsF"><td colspan="7">🎬 F · การ์ด "ไลฟ์ล่าสุด" 5 ไลฟ์ล่าสุด กดเข้าไปดูรายละเอียดได้ · Story 5.4 (FR91) <span class="rp">(4 เคส)</span></td></tr>
-<tr class="featrow" data-featkey="ds-recent"><td colspan="7">📁 รายการไลฟ์ล่าสุด <span class="rp"><span class="lv lvl-ui">🌐 4</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="ds-recent"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="epicrow" data-epic="dsF"><td colspan="8">🎬 F · การ์ด "ไลฟ์ล่าสุด" 5 ไลฟ์ล่าสุด กดเข้าไปดูรายละเอียดได้ · Story 5.4 (FR91) <span class="rp">(4 เคส)</span></td></tr>
+<tr class="featrow" data-featkey="ds-recent"><td colspan="8">📁 รายการไลฟ์ล่าสุด <span class="rp"><span class="lv lvl-ui">🌐 4</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="ds-recent"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
 <tr class="trow" data-feat="dsF" data-level="ui" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-DASH-F.1</td>
   <td class="ctitle">แสดง 5 ไลฟ์ล่าสุดเรียงใหม่ไปเก่า พร้อมข้อมูลแต่ละแถวครบ <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
   <td class="status" data-uid="tc-2429"><span class="stb pending">รอเทส</span></td>
+  <td class="status-win" data-uid="tc-2429"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-2429"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="8"><div class="card">
   <div class="h-title">แสดง 5 ไลฟ์ล่าสุดเรียงใหม่ไปเก่า พร้อมข้อมูลแต่ละแถวครบ</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · F · การ์ด "ไลฟ์ล่าสุด" 5 ไลฟ์ล่าสุด กดเข้าไปดูรายละเอียดได้</div>
   <div class="sec"><h4>Precondition</h4><ul><li>พื้นที่ทำงานทดสอบมีไลฟ์ที่อัปโหลดขึ้นคลาวด์แล้วใน 7 วันล่าสุด อย่างน้อย 6 ไลฟ์ จากโฮสต์ 2 คนขึ้นไป</li></ul></div>
@@ -1307,13 +1601,22 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="sec"><h4>Expected Result</h4><ul><li>หัวการ์ด "ไลฟ์ล่าสุด" มี 5 แถว เรียงจากไลฟ์ที่เริ่มล่าสุดลงไป</li><li>แต่ละแถวมี: ไอคอนแพลตฟอร์ม · ชื่อไลฟ์ · ชื่อช่องของโฮสต์ · วันเวลาเริ่ม (เวลาไทย) · ความยาว · "ผู้ชมสูงสุด n" · คะแนน Engagement ทางขวา และลูกศรไปต่อ</li><li>ข้อมูลทุกแถวตรงกับตารางไลฟ์ทดสอบ และมีไลฟ์ของโฮสต์หลายคนปนกันตามเวลา</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 5 · Story 5.4 · FR91 (Recent Lives showing 5 latest lives)</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
-  <div class="sec"><h4>Status</h4><div class="statusrow">
+  <div class="sec"><h4>Status</h4>
+  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
     <span class="opt pass" data-uid="tc-2429" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-2429" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-2429" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-2429" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-2429" data-st="skip">SKIP</span>
   </div></div>
+  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">
+    <span class="optw pass" data-uid="tc-2429" data-stw="pass">PASS</span>
+    <span class="optw fail" data-uid="tc-2429" data-stw="fail">FAIL</span>
+    <span class="optw hold" data-uid="tc-2429" data-stw="hold">HOLD</span>
+    <span class="optw block" data-uid="tc-2429" data-stw="block">BLOCKED</span>
+    <span class="optw skip" data-uid="tc-2429" data-stw="skip">SKIP</span>
+  </div></div>
+  </div>
   <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
     <div class="jira-list" data-uid="tc-2429"></div>
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2429" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2429">+ เพิ่มลิงก์</button></div>
@@ -1327,9 +1630,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
   <td class="status" data-uid="tc-2430"><span class="stb pending">รอเทส</span></td>
+  <td class="status-win" data-uid="tc-2430"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-2430"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="8"><div class="card">
   <div class="h-title">จำนวนแถวตามขอบ: มี 6 ไลฟ์ขึ้นไปแสดงแค่ 5 · มี 2 ไลฟ์แสดง 2</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Boundary/Edge</b> <span class="hint">(min / max / ก่อน-ตรง-เกินขอบ)</span> · F · การ์ด "ไลฟ์ล่าสุด" 5 ไลฟ์ล่าสุด กดเข้าไปดูรายละเอียดได้</div>
   <div class="sec"><h4>Precondition</h4><ul><li>พื้นที่ทำงาน 1 ที่มีไลฟ์ 6 ไลฟ์ขึ้นไป และอีกที่มีไลฟ์ 2 ไลฟ์ ใน 7 วันล่าสุด</li></ul></div>
@@ -1338,13 +1642,22 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="sec"><h4>Expected Result</h4><ul><li>พื้นที่ที่มี 6 ไลฟ์ขึ้นไป: แสดง 5 แถว ไลฟ์ที่เก่าที่สุดไม่อยู่ในรายการ</li><li>พื้นที่ที่มี 2 ไลฟ์: แสดง 2 แถว ไม่มีแถวว่างเติมให้ครบ 5</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 5 · Story 5.4 · FR91 (5 latest lives)</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
-  <div class="sec"><h4>Status</h4><div class="statusrow">
+  <div class="sec"><h4>Status</h4>
+  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
     <span class="opt pass" data-uid="tc-2430" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-2430" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-2430" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-2430" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-2430" data-st="skip">SKIP</span>
   </div></div>
+  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">
+    <span class="optw pass" data-uid="tc-2430" data-stw="pass">PASS</span>
+    <span class="optw fail" data-uid="tc-2430" data-stw="fail">FAIL</span>
+    <span class="optw hold" data-uid="tc-2430" data-stw="hold">HOLD</span>
+    <span class="optw block" data-uid="tc-2430" data-stw="block">BLOCKED</span>
+    <span class="optw skip" data-uid="tc-2430" data-stw="skip">SKIP</span>
+  </div></div>
+  </div>
   <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
     <div class="jira-list" data-uid="tc-2430"></div>
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2430" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2430">+ เพิ่มลิงก์</button></div>
@@ -1358,9 +1671,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p2">P2</span></td>
   <td class="status" data-uid="tc-2431"><span class="stb pending">รอเทส</span></td>
+  <td class="status-win" data-uid="tc-2431"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-2431"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="8"><div class="card">
   <div class="h-title">ไลฟ์ไม่มีชื่อหรือไม่มีคะแนน แสดงคำแทนที่ชัดเจน ไม่ขึ้น 0</div>
   <div class="h-prio">Priority: <b>P2</b> · UI · ประเภท: <b>Validation</b> <span class="hint">(format · required · ความถูกต้องของค่าที่แสดง)</span> · F · การ์ด "ไลฟ์ล่าสุด" 5 ไลฟ์ล่าสุด กดเข้าไปดูรายละเอียดได้</div>
   <div class="sec"><h4>Precondition</h4><ul><li>ในไลฟ์ 5 ล่าสุดมีไลฟ์ที่ไม่มีชื่อ 1 ไลฟ์ และไลฟ์ที่ไม่เปิดการอ่านอารมณ์จากสีหน้า 1 ไลฟ์</li></ul></div>
@@ -1369,13 +1683,22 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="sec"><h4>Expected Result</h4><ul><li>ไลฟ์ที่ไม่มีชื่อแสดง "(ไม่มีชื่อไลฟ์)"</li><li>ไลฟ์ที่ไม่มีข้อมูลสีหน้าแสดงคะแนนเป็น "—" ไม่ใช่ 0</li><li>ไลฟ์ที่ไม่มีจำนวนผู้ชมไม่แสดง "ผู้ชมสูงสุด" และไม่มีจุดคั่น "·" ลอยค้าง</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 5 · Story 5.4 · FR91</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
-  <div class="sec"><h4>Status</h4><div class="statusrow">
+  <div class="sec"><h4>Status</h4>
+  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
     <span class="opt pass" data-uid="tc-2431" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-2431" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-2431" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-2431" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-2431" data-st="skip">SKIP</span>
   </div></div>
+  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">
+    <span class="optw pass" data-uid="tc-2431" data-stw="pass">PASS</span>
+    <span class="optw fail" data-uid="tc-2431" data-stw="fail">FAIL</span>
+    <span class="optw hold" data-uid="tc-2431" data-stw="hold">HOLD</span>
+    <span class="optw block" data-uid="tc-2431" data-stw="block">BLOCKED</span>
+    <span class="optw skip" data-uid="tc-2431" data-stw="skip">SKIP</span>
+  </div></div>
+  </div>
   <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
     <div class="jira-list" data-uid="tc-2431"></div>
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2431" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2431">+ เพิ่มลิงก์</button></div>
@@ -1389,9 +1712,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p2">P2</span></td>
   <td class="status" data-uid="tc-2432"><span class="stb pending">รอเทส</span></td>
+  <td class="status-win" data-uid="tc-2432"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-2432"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="8"><div class="card">
   <div class="h-title">โฮสต์ที่ถูกนำออกจากพื้นที่ทำงาน: ไลฟ์เดิมยังอยู่พร้อมป้ายบอกสถานะ</div>
   <div class="h-prio">Priority: <b>P2</b> · UI · ประเภท: <b>Data</b> <span class="hint">(ตัวเลขตรงกับต้นทาง · ข้อมูลไม่ปนข้ามพื้นที่ทำงาน)</span> · F · การ์ด "ไลฟ์ล่าสุด" 5 ไลฟ์ล่าสุด กดเข้าไปดูรายละเอียดได้</div>
   <div class="sec"><h4>Precondition</h4><ul><li>พื้นที่ทำงานทดสอบมีไลฟ์ที่อัปโหลดขึ้นคลาวด์แล้วใน 7 วันล่าสุด อย่างน้อย 6 ไลฟ์ จากโฮสต์ 2 คนขึ้นไป</li><li>โฮสต์ที่จะนำออกมีไลฟ์ใน 7 วันล่าสุด</li></ul></div>
@@ -1400,13 +1724,22 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="sec"><h4>Expected Result</h4><ul><li>แถวไลฟ์ยังอยู่และมีป้าย "ถูกนำออก" ต่อจากชื่อช่อง</li><li>การ์ดใน "อารมณ์โฮสต์" ยังอยู่และมีป้าย "ถูกถอดออก"</li><li>หน้าไลฟ์เดี่ยวเปิดได้ และหัวหน้ามีป้าย "ออกจาก workspace แล้ว"</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 5 · Story 5.0b (removed host stays visible, marked removed, until the 90-day storage period) · Story 5.3 · 5.4 · 5.5</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
-  <div class="sec"><h4>Status</h4><div class="statusrow">
+  <div class="sec"><h4>Status</h4>
+  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
     <span class="opt pass" data-uid="tc-2432" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-2432" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-2432" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-2432" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-2432" data-st="skip">SKIP</span>
   </div></div>
+  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">
+    <span class="optw pass" data-uid="tc-2432" data-stw="pass">PASS</span>
+    <span class="optw fail" data-uid="tc-2432" data-stw="fail">FAIL</span>
+    <span class="optw hold" data-uid="tc-2432" data-stw="hold">HOLD</span>
+    <span class="optw block" data-uid="tc-2432" data-stw="block">BLOCKED</span>
+    <span class="optw skip" data-uid="tc-2432" data-stw="skip">SKIP</span>
+  </div></div>
+  </div>
   <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
     <div class="jira-list" data-uid="tc-2432"></div>
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2432" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2432">+ เพิ่มลิงก์</button></div>
@@ -1416,17 +1749,18 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 
 <!-- dsG -->
-<tr class="epicrow" data-epic="dsG"><td colspan="7">🔎 G · หน้ารายละเอียดไลฟ์เดี่ยว (ไลฟ์ของโฮสต์คนอื่น อ่านจากคลาวด์) · Story 5.5 (FR94) <span class="rp">(7 เคส)</span></td></tr>
-<tr class="featrow" data-featkey="ds-detail"><td colspan="7">📁 ส่วนต่างๆ ของหน้าไลฟ์เดี่ยว <span class="rp"><span class="lv lvl-ui">🌐 7</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="ds-detail"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="epicrow" data-epic="dsG"><td colspan="8">🔎 G · หน้ารายละเอียดไลฟ์เดี่ยว (ไลฟ์ของโฮสต์คนอื่น อ่านจากคลาวด์) · Story 5.5 (FR94) <span class="rp">(7 เคส)</span></td></tr>
+<tr class="featrow" data-featkey="ds-detail"><td colspan="8">📁 ส่วนต่างๆ ของหน้าไลฟ์เดี่ยว <span class="rp"><span class="lv lvl-ui">🌐 7</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="ds-detail"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
 <tr class="trow" data-feat="dsG" data-level="ui" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-DASH-G.1</td>
   <td class="ctitle">กดแถวใน "ไลฟ์ล่าสุด" แล้วเปิดหน้าไลฟ์นั้น เห็นหัวหน้าและตัวชี้วัดครบ <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
   <td class="status" data-uid="tc-2433"><span class="stb pending">รอเทส</span></td>
+  <td class="status-win" data-uid="tc-2433"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-2433"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="8"><div class="card">
   <div class="h-title">กดแถวใน "ไลฟ์ล่าสุด" แล้วเปิดหน้าไลฟ์นั้น เห็นหัวหน้าและตัวชี้วัดครบ</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · G · หน้ารายละเอียดไลฟ์เดี่ยว (ไลฟ์ของโฮสต์คนอื่น อ่านจากคลาวด์)</div>
   <div class="sec"><h4>Precondition</h4><ul><li>พื้นที่ทำงานทดสอบมีไลฟ์ที่อัปโหลดขึ้นคลาวด์แล้วใน 7 วันล่าสุด อย่างน้อย 6 ไลฟ์ จากโฮสต์ 2 คนขึ้นไป</li></ul></div>
@@ -1435,13 +1769,22 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="sec"><h4>Expected Result</h4><ul><li>หัวหน้ามีชื่อไลฟ์ · ชื่อช่อง · แพลตฟอร์ม · วันที่ · ความยาว · ป้าย "เสร็จสิ้น" ตรงกับแถวที่กด</li><li>มีข้อความ "มุมมองจากคลาวด์ — บทพูด สรุป AI คำแนะนำ AI คำเด่นในคอมเมนต์ และผู้ให้ของขวัญ มีเฉพาะบนเครื่องที่บันทึกไลฟ์นี้"</li><li>ตัวชี้วัดหลัก: "คนดูสูงสุด" · "เวลาดูรวมของผู้ชมทุกคน" (หน่วย "คน-นาที") · "คอมเมนต์" · "ของขวัญ" · "ผู้ติดตามใหม่" และแถวรอง "คนดูเฉลี่ย" "ไลก์" "ผู้เข้าร่วม" "แชร์" "ระยะเวลา"</li><li>แถบ "สารบัญ" มีปุ่ม "ภาพรวม" "ไทม์ไลน์" "โฮสต์" "Insights" (และ "คอมเมนต์" ถ้ามีข้อมูลความรู้สึก) · กด "กลับไปหน้าแดชบอร์ด" แล้วกลับมาที่ "แดชบอร์ดแบรนด์"</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 5 · Story 5.4 (row clickable → Single Live Detail) · Story 5.5 · FR91 · FR94 (Live Header · peak viewers · watch time)</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
-  <div class="sec"><h4>Status</h4><div class="statusrow">
+  <div class="sec"><h4>Status</h4>
+  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
     <span class="opt pass" data-uid="tc-2433" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-2433" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-2433" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-2433" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-2433" data-st="skip">SKIP</span>
   </div></div>
+  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">
+    <span class="optw pass" data-uid="tc-2433" data-stw="pass">PASS</span>
+    <span class="optw fail" data-uid="tc-2433" data-stw="fail">FAIL</span>
+    <span class="optw hold" data-uid="tc-2433" data-stw="hold">HOLD</span>
+    <span class="optw block" data-uid="tc-2433" data-stw="block">BLOCKED</span>
+    <span class="optw skip" data-uid="tc-2433" data-stw="skip">SKIP</span>
+  </div></div>
+  </div>
   <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
     <div class="jira-list" data-uid="tc-2433"></div>
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2433" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2433">+ เพิ่มลิงก์</button></div>
@@ -1455,9 +1798,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
   <td class="status" data-uid="tc-2434"><span class="stb pending">รอเทส</span></td>
+  <td class="status-win" data-uid="tc-2434"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-2434"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="8"><div class="card">
   <div class="h-title">กราฟผู้ชมตามเวลา พร้อมป้ายช่วงสำคัญ และ "ช่วงเด่นของไลฟ์" ไม่เกิน 3 ข้อ</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · G · หน้ารายละเอียดไลฟ์เดี่ยว (ไลฟ์ของโฮสต์คนอื่น อ่านจากคลาวด์)</div>
   <div class="sec"><h4>Precondition</h4><ul><li>พื้นที่ทำงานทดสอบมีไลฟ์ที่อัปโหลดขึ้นคลาวด์แล้วใน 7 วันล่าสุด อย่างน้อย 6 ไลฟ์ จากโฮสต์ 2 คนขึ้นไป</li></ul></div>
@@ -1466,13 +1810,22 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="sec"><h4>Expected Result</h4><ul><li>ส่วน "Engagement ตามเวลา" มีกราฟ "คนดู" รายนาที และคำอธิบาย "จากคลาวด์มีเฉพาะจำนวนผู้ชมต่อนาที คอมเมนต์และของขวัญต่อนาทีมีเฉพาะบนเครื่องที่บันทึก"</li><li>มีแถว "ช่วงสำคัญบนไทม์ไลน์" เป็นป้าย เช่น "ผู้ชมสูงสุด" "ยิ้มน้อยลง" "สีหน้ากังวล/เศร้า" ปักอยู่บนกราฟ</li><li>"ช่วงเด่นของไลฟ์" มีคำอธิบาย "หาจากตัวเลขของไลฟ์นี้ ไม่ได้ใช้ AI" และมีไม่เกิน 3 ข้อ (ป้าย "จุดเด่น" / "ควรระวัง" / "ช่วงน่าสนใจ")</li><li>กด "ไปที่ช่วงนี้" แล้วหน้าเลื่อนกลับไปที่กราฟและไฮไลต์นาทีนั้น</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 5 · Story 5.5 · FR94 (viewer timeline chart with event badges · Top Moments)</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
-  <div class="sec"><h4>Status</h4><div class="statusrow">
+  <div class="sec"><h4>Status</h4>
+  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
     <span class="opt pass" data-uid="tc-2434" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-2434" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-2434" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-2434" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-2434" data-st="skip">SKIP</span>
   </div></div>
+  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">
+    <span class="optw pass" data-uid="tc-2434" data-stw="pass">PASS</span>
+    <span class="optw fail" data-uid="tc-2434" data-stw="fail">FAIL</span>
+    <span class="optw hold" data-uid="tc-2434" data-stw="hold">HOLD</span>
+    <span class="optw block" data-uid="tc-2434" data-stw="block">BLOCKED</span>
+    <span class="optw skip" data-uid="tc-2434" data-stw="skip">SKIP</span>
+  </div></div>
+  </div>
   <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
     <div class="jira-list" data-uid="tc-2434"></div>
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2434" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2434">+ เพิ่มลิงก์</button></div>
@@ -1486,9 +1839,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
   <td class="status" data-uid="tc-2435"><span class="stb pending">รอเทส</span></td>
+  <td class="status-win" data-uid="tc-2435"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-2435"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="8"><div class="card">
   <div class="h-title">ส่วนใบหน้าและอารมณ์: เส้นสีหน้าตามเวลา สัดส่วนอารมณ์ และภาพความเข้มอารมณ์ตามเวลา</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · G · หน้ารายละเอียดไลฟ์เดี่ยว (ไลฟ์ของโฮสต์คนอื่น อ่านจากคลาวด์)</div>
   <div class="sec"><h4>Precondition</h4><ul><li>พื้นที่ทำงานทดสอบมีไลฟ์ที่อัปโหลดขึ้นคลาวด์แล้วใน 7 วันล่าสุด อย่างน้อย 6 ไลฟ์ จากโฮสต์ 2 คนขึ้นไป</li></ul></div>
@@ -1497,13 +1851,22 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="sec"><h4>Expected Result</h4><ul><li>ส่วน "โฮสต์ &amp; การพูด" มีตัวชี้วัด "พลังงาน" "อัตราการยิ้ม" "การสบตา" "รอยยิ้ม" "การมีส่วนร่วม" "อารมณ์"</li><li>มี "สีหน้าตามเวลา" (ช่วงที่กล้องไม่เห็นหน้าเว้นว่าง ไม่ลากเส้นข้าม) และ "สัดส่วนอารมณ์ทั้งไลฟ์"</li><li>มี "ความเข้มของอารมณ์ตามเวลา" เป็นตารางสีอารมณ์ × นาที พร้อมหมายเหตุ "ไม่มีแถว “มั่นใจ” เพราะโมเดลยังไม่วัดอารมณ์นี้"</li><li>ถ้าไลฟ์อัปโหลดก่อนมีข้อมูลรายนาที แสดง "ภาพความเข้มอารมณ์รายนาทีมีเฉพาะบนเครื่องที่บันทึกไลฟ์นี้" แทน</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 5 · Story 5.5 · FR94 (Face &amp; Emotion Analytics incl. Ekman × time heatmap) · UX-DR7</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
-  <div class="sec"><h4>Status</h4><div class="statusrow">
+  <div class="sec"><h4>Status</h4>
+  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
     <span class="opt pass" data-uid="tc-2435" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-2435" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-2435" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-2435" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-2435" data-st="skip">SKIP</span>
   </div></div>
+  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">
+    <span class="optw pass" data-uid="tc-2435" data-stw="pass">PASS</span>
+    <span class="optw fail" data-uid="tc-2435" data-stw="fail">FAIL</span>
+    <span class="optw hold" data-uid="tc-2435" data-stw="hold">HOLD</span>
+    <span class="optw block" data-uid="tc-2435" data-stw="block">BLOCKED</span>
+    <span class="optw skip" data-uid="tc-2435" data-stw="skip">SKIP</span>
+  </div></div>
+  </div>
   <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
     <div class="jira-list" data-uid="tc-2435"></div>
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2435" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2435">+ เพิ่มลิงก์</button></div>
@@ -1517,9 +1880,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
   <td class="status" data-uid="tc-2436"><span class="stb pending">รอเทส</span></td>
+  <td class="status-win" data-uid="tc-2436"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-2436"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="8"><div class="card">
   <div class="h-title">ไม่มีส่วนการเงินในหน้าไลฟ์เดี่ยว (GMV / Orders / AOV / Conversion)</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Validation</b> <span class="hint">(format · required · ความถูกต้องของค่าที่แสดง)</span> · G · หน้ารายละเอียดไลฟ์เดี่ยว (ไลฟ์ของโฮสต์คนอื่น อ่านจากคลาวด์)</div>
   <div class="sec"><h4>Precondition</h4><ul><li>พื้นที่ทำงานทดสอบมีไลฟ์ที่อัปโหลดขึ้นคลาวด์แล้วใน 7 วันล่าสุด อย่างน้อย 6 ไลฟ์ จากโฮสต์ 2 คนขึ้นไป</li></ul></div>
@@ -1528,13 +1892,22 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="sec"><h4>Expected Result</h4><ul><li>ไม่มีการ์ดหรือกราฟ GMV · ออเดอร์ · AOV · Conversion · ยอดขายสะสม · สินค้าขายดี · ช่วงอายุผู้ชม</li><li>ไม่มีกรอบว่าง ไอคอนเสีย หรือข้อความ error แทนที่ส่วนที่ตัดออก</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 5 · Story 5.5 AC2 (financial sections omitted or M3 empty states — no broken UI) · FR94</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
-  <div class="sec"><h4>Status</h4><div class="statusrow">
+  <div class="sec"><h4>Status</h4>
+  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
     <span class="opt pass" data-uid="tc-2436" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-2436" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-2436" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-2436" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-2436" data-st="skip">SKIP</span>
   </div></div>
+  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">
+    <span class="optw pass" data-uid="tc-2436" data-stw="pass">PASS</span>
+    <span class="optw fail" data-uid="tc-2436" data-stw="fail">FAIL</span>
+    <span class="optw hold" data-uid="tc-2436" data-stw="hold">HOLD</span>
+    <span class="optw block" data-uid="tc-2436" data-stw="block">BLOCKED</span>
+    <span class="optw skip" data-uid="tc-2436" data-stw="skip">SKIP</span>
+  </div></div>
+  </div>
   <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
     <div class="jira-list" data-uid="tc-2436"></div>
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2436" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2436">+ เพิ่มลิงก์</button></div>
@@ -1548,9 +1921,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p2">P2</span></td>
   <td class="status" data-uid="tc-2437"><span class="stb pending">รอเทส</span></td>
+  <td class="status-win" data-uid="tc-2437"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-2437"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="8"><div class="card">
   <div class="h-title">ความรู้สึกของคอมเมนต์: มีสัดส่วนบวก/ลบ หรือบอกว่าดูได้เฉพาะเครื่องที่บันทึก</div>
   <div class="h-prio">Priority: <b>P2</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · G · หน้ารายละเอียดไลฟ์เดี่ยว (ไลฟ์ของโฮสต์คนอื่น อ่านจากคลาวด์)</div>
   <div class="sec"><h4>Precondition</h4><ul><li>พื้นที่ทำงานทดสอบมีไลฟ์ที่อัปโหลดขึ้นคลาวด์แล้วใน 7 วันล่าสุด อย่างน้อย 6 ไลฟ์ จากโฮสต์ 2 คนขึ้นไป</li></ul></div>
@@ -1559,13 +1933,22 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="sec"><h4>Expected Result</h4><ul><li>ไลฟ์ที่อัปโหลดสัดส่วนความรู้สึกไว้: มีแถบสัดส่วนบวก/กลาง/ลบของคอมเมนต์</li><li>ไลฟ์ที่ไม่มี: แสดง "ความรู้สึกของคอมเมนต์ไลฟ์นี้อ่านได้บนเครื่องที่บันทึกไลฟ์เท่านั้น"</li><li>ไม่มีข้อความคอมเมนต์จริงหรือ "คำเด่นในคอมเมนต์" ของโฮสต์คนอื่นในหน้านี้</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 5 · Story 5.5 · FR94 (Comment Sentiment)</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
-  <div class="sec"><h4>Status</h4><div class="statusrow">
+  <div class="sec"><h4>Status</h4>
+  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
     <span class="opt pass" data-uid="tc-2437" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-2437" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-2437" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-2437" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-2437" data-st="skip">SKIP</span>
   </div></div>
+  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">
+    <span class="optw pass" data-uid="tc-2437" data-stw="pass">PASS</span>
+    <span class="optw fail" data-uid="tc-2437" data-stw="fail">FAIL</span>
+    <span class="optw hold" data-uid="tc-2437" data-stw="hold">HOLD</span>
+    <span class="optw block" data-uid="tc-2437" data-stw="block">BLOCKED</span>
+    <span class="optw skip" data-uid="tc-2437" data-stw="skip">SKIP</span>
+  </div></div>
+  </div>
   <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
     <div class="jira-list" data-uid="tc-2437"></div>
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2437" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2437">+ เพิ่มลิงก์</button></div>
@@ -1579,9 +1962,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
   <td class="status" data-uid="tc-2438"><span class="stb pending">รอเทส</span></td>
+  <td class="status-win" data-uid="tc-2438"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-2438"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="8"><div class="card">
   <div class="h-title">ตัวเลขหน้าไลฟ์เดี่ยวตรงกับแถวใน "ไลฟ์ล่าสุด" และเครื่องที่บันทึก</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Data</b> <span class="hint">(ตัวเลขตรงกับต้นทาง · ข้อมูลไม่ปนข้ามพื้นที่ทำงาน)</span> · G · หน้ารายละเอียดไลฟ์เดี่ยว (ไลฟ์ของโฮสต์คนอื่น อ่านจากคลาวด์)</div>
   <div class="sec"><h4>Precondition</h4><ul><li>พื้นที่ทำงานทดสอบมีไลฟ์ที่อัปโหลดขึ้นคลาวด์แล้วใน 7 วันล่าสุด อย่างน้อย 6 ไลฟ์ จากโฮสต์ 2 คนขึ้นไป</li><li>เข้าถึงเครื่องของโฮสต์ที่บันทึกไลฟ์นั้นได้</li></ul></div>
@@ -1590,13 +1974,22 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="sec"><h4>Expected Result</h4><ul><li>"คนดูสูงสุด" และ "ระยะเวลา" ในหน้าไลฟ์เดี่ยวตรงกับแถวใน "ไลฟ์ล่าสุด"</li><li>"คนดูสูงสุด" "คอมเมนต์" "ของขวัญ" "ผู้ติดตามใหม่" ตรงกับหน้าเดียวกันบนเครื่องที่บันทึก</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 5 · Story 5.0a (derived summaries uploaded) · Story 5.5 · FR94</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
-  <div class="sec"><h4>Status</h4><div class="statusrow">
+  <div class="sec"><h4>Status</h4>
+  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
     <span class="opt pass" data-uid="tc-2438" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-2438" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-2438" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-2438" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-2438" data-st="skip">SKIP</span>
   </div></div>
+  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">
+    <span class="optw pass" data-uid="tc-2438" data-stw="pass">PASS</span>
+    <span class="optw fail" data-uid="tc-2438" data-stw="fail">FAIL</span>
+    <span class="optw hold" data-uid="tc-2438" data-stw="hold">HOLD</span>
+    <span class="optw block" data-uid="tc-2438" data-stw="block">BLOCKED</span>
+    <span class="optw skip" data-uid="tc-2438" data-stw="skip">SKIP</span>
+  </div></div>
+  </div>
   <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
     <div class="jira-list" data-uid="tc-2438"></div>
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2438" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2438">+ เพิ่มลิงก์</button></div>
@@ -1610,9 +2003,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p2">P2</span></td>
   <td class="status" data-uid="tc-2439"><span class="stb pending">รอเทส</span></td>
+  <td class="status-win" data-uid="tc-2439"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-2439"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="8"><div class="card">
   <div class="h-title">เปิดหน้าไลฟ์เดี่ยวตอนไม่มีเน็ต: บอกว่าโหลดจากคลาวด์ไม่ได้ และกด "ลองใหม่" ได้</div>
   <div class="h-prio">Priority: <b>P2</b> · UI · ประเภท: <b>Exception/Error</b> <span class="hint">(เน็ตหลุด · คลาวด์ล่ม · ไม่มีข้อมูล · AI ใช้ไม่ได้)</span> · G · หน้ารายละเอียดไลฟ์เดี่ยว (ไลฟ์ของโฮสต์คนอื่น อ่านจากคลาวด์)</div>
   <div class="sec"><h4>Precondition</h4><ul><li>พื้นที่ทำงานทดสอบมีไลฟ์ที่อัปโหลดขึ้นคลาวด์แล้วใน 7 วันล่าสุด อย่างน้อย 6 ไลฟ์ จากโฮสต์ 2 คนขึ้นไป</li></ul></div>
@@ -1621,13 +2015,22 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="sec"><h4>Expected Result</h4><ul><li>ขึ้นหน้า "ตอนนี้โหลดข้อมูลจากคลาวด์ไม่ได้" และ "ลองใหม่อีกครั้ง หรือตรวจอินเทอร์เน็ตของเครื่อง" พร้อมปุ่ม "ลองใหม่" และ "กลับไปหน้าแดชบอร์ด"</li><li>ต่อเน็ตแล้วกด "ลองใหม่" หน้าไลฟ์โหลดขึ้นครบ</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 5 · Story 5.5 · FR94</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
-  <div class="sec"><h4>Status</h4><div class="statusrow">
+  <div class="sec"><h4>Status</h4>
+  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
     <span class="opt pass" data-uid="tc-2439" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-2439" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-2439" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-2439" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-2439" data-st="skip">SKIP</span>
   </div></div>
+  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">
+    <span class="optw pass" data-uid="tc-2439" data-stw="pass">PASS</span>
+    <span class="optw fail" data-uid="tc-2439" data-stw="fail">FAIL</span>
+    <span class="optw hold" data-uid="tc-2439" data-stw="hold">HOLD</span>
+    <span class="optw block" data-uid="tc-2439" data-stw="block">BLOCKED</span>
+    <span class="optw skip" data-uid="tc-2439" data-stw="skip">SKIP</span>
+  </div></div>
+  </div>
   <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
     <div class="jira-list" data-uid="tc-2439"></div>
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2439" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2439">+ เพิ่มลิงก์</button></div>
@@ -1637,17 +2040,18 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 
 <!-- dsH -->
-<tr class="epicrow" data-epic="dsH"><td colspan="7">💻 H · ไลฟ์ที่บันทึกบนเครื่องนี้เปิดเป็นหน้าเต็ม พร้อมแถบ AI Summary · Story 5.5 (FR94 · FR131) <span class="rp">(3 เคส)</span></td></tr>
-<tr class="featrow" data-featkey="ds-local"><td colspan="7">📁 เปิดไลฟ์ของตัวเอง <span class="rp"><span class="lv lvl-ui">🌐 3</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="ds-local"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="epicrow" data-epic="dsH"><td colspan="8">💻 H · ไลฟ์ที่บันทึกบนเครื่องนี้เปิดเป็นหน้าเต็ม พร้อมแถบ AI Summary · Story 5.5 (FR94 · FR131) <span class="rp">(3 เคส)</span></td></tr>
+<tr class="featrow" data-featkey="ds-local"><td colspan="8">📁 เปิดไลฟ์ของตัวเอง <span class="rp"><span class="lv lvl-ui">🌐 3</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="ds-local"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
 <tr class="trow" data-feat="dsH" data-level="ui" data-prio="P1" data-kind="happy" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-DASH-H.1</td>
   <td class="ctitle">กดไลฟ์ที่ตัวเองบันทึกบนเครื่องนี้ใน "ไลฟ์ล่าสุด" แล้วได้หน้าเต็มของเครื่อง ไม่ใช่มุมมองคลาวด์ <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
   <td class="status" data-uid="tc-2440"><span class="stb pending">รอเทส</span></td>
+  <td class="status-win" data-uid="tc-2440"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-2440"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="8"><div class="card">
   <div class="h-title">กดไลฟ์ที่ตัวเองบันทึกบนเครื่องนี้ใน "ไลฟ์ล่าสุด" แล้วได้หน้าเต็มของเครื่อง ไม่ใช่มุมมองคลาวด์</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · H · ไลฟ์ที่บันทึกบนเครื่องนี้เปิดเป็นหน้าเต็ม พร้อมแถบ AI Summary</div>
   <div class="sec"><h4>Precondition</h4><ul><li>บัญชีเจ้าของบันทึกไลฟ์บนเครื่องนี้และอัปโหลดขึ้นคลาวด์แล้ว ภายใน 7 วันล่าสุด</li></ul></div>
@@ -1656,13 +2060,22 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="sec"><h4>Expected Result</h4><ul><li>เปิดหน้าไลฟ์แบบเต็มของเครื่อง (เหมือนเปิดจากเมนู "เซสชัน") มีบทพูดและส่วนอื่นที่มีเฉพาะเครื่องที่บันทึก</li><li>ไม่มีข้อความ "มุมมองจากคลาวด์ — …"</li><li>ตัวเลขหลักตรงกับแถวที่กด</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 5 · Story 5.5 · FR94 (Brand Manager and Seller-Owner can open Single Live Detail)</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
-  <div class="sec"><h4>Status</h4><div class="statusrow">
+  <div class="sec"><h4>Status</h4>
+  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
     <span class="opt pass" data-uid="tc-2440" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-2440" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-2440" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-2440" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-2440" data-st="skip">SKIP</span>
   </div></div>
+  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">
+    <span class="optw pass" data-uid="tc-2440" data-stw="pass">PASS</span>
+    <span class="optw fail" data-uid="tc-2440" data-stw="fail">FAIL</span>
+    <span class="optw hold" data-uid="tc-2440" data-stw="hold">HOLD</span>
+    <span class="optw block" data-uid="tc-2440" data-stw="block">BLOCKED</span>
+    <span class="optw skip" data-uid="tc-2440" data-stw="skip">SKIP</span>
+  </div></div>
+  </div>
   <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
     <div class="jira-list" data-uid="tc-2440"></div>
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2440" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2440">+ เพิ่มลิงก์</button></div>
@@ -1676,9 +2089,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
   <td class="status" data-uid="tc-2441"><span class="stb pending">รอเทส</span></td>
+  <td class="status-win" data-uid="tc-2441"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-2441"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="8"><div class="card">
   <div class="h-title">แถบ "AI Summary · สรุปไลฟ์นี้" บนไลฟ์ของเครื่องนี้ ได้จุดเด่นไม่เกิน 3 และข้อควรระวังไม่เกิน 2</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · H · ไลฟ์ที่บันทึกบนเครื่องนี้เปิดเป็นหน้าเต็ม พร้อมแถบ AI Summary</div>
   <div class="sec"><h4>Precondition</h4><ul><li>บัญชีเจ้าของบันทึกไลฟ์บนเครื่องนี้และอัปโหลดขึ้นคลาวด์แล้ว ภายใน 7 วันล่าสุด</li><li>บัญชีนี้ตั้งค่าผู้ให้บริการ AI ครบแล้ว (บันทึก key · เลือกโมเดล · ยอมรับข้อตกลงการส่งข้อมูลเวอร์ชันล่าสุด)</li></ul></div>
@@ -1687,13 +2101,22 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="sec"><h4>Expected Result</h4><ul><li>ก่อนกดมีข้อความ "ใช้ key ของคุณเองให้ AI เรียบเรียงตัวเลขของไลฟ์นี้เป็นจุดเด่นไม่เกิน 3 ข้อ และข้อควรระวังไม่เกิน 2 ข้อ"</li><li>ระหว่างรอปุ่มเป็น "กำลังสรุป…" พร้อมปุ่ม "ยกเลิก"</li><li>ได้หัวข้อ "จุดเด่น" ไม่เกิน 3 ข้อ และ "ควรระวัง" ไม่เกิน 2 ข้อ ตัวเลขที่อ้างตรงกับตัวเลขในหน้า</li><li>มีบรรทัด "เก็บไว้ในเครื่องนี้เท่านั้น ไม่ได้อัปโหลด · …"</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 5 · Story 5.5 · FR94 (AI Summary Bar — Live highlights + warnings) · FR131</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
-  <div class="sec"><h4>Status</h4><div class="statusrow">
+  <div class="sec"><h4>Status</h4>
+  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
     <span class="opt pass" data-uid="tc-2441" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-2441" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-2441" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-2441" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-2441" data-st="skip">SKIP</span>
   </div></div>
+  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">
+    <span class="optw pass" data-uid="tc-2441" data-stw="pass">PASS</span>
+    <span class="optw fail" data-uid="tc-2441" data-stw="fail">FAIL</span>
+    <span class="optw hold" data-uid="tc-2441" data-stw="hold">HOLD</span>
+    <span class="optw block" data-uid="tc-2441" data-stw="block">BLOCKED</span>
+    <span class="optw skip" data-uid="tc-2441" data-stw="skip">SKIP</span>
+  </div></div>
+  </div>
   <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
     <div class="jira-list" data-uid="tc-2441"></div>
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2441" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2441">+ เพิ่มลิงก์</button></div>
@@ -1707,9 +2130,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p2">P2</span></td>
   <td class="status" data-uid="tc-2442"><span class="stb pending">รอเทส</span></td>
+  <td class="status-win" data-uid="tc-2442"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-2442"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="8"><div class="card">
   <div class="h-title">ไลฟ์ของตัวเองที่บันทึกจากอีกเครื่อง เปิดเป็นมุมมองคลาวด์ ไม่มีแถบ AI Summary</div>
   <div class="h-prio">Priority: <b>P2</b> · UI · ประเภท: <b>Negative</b> <span class="hint">(ข้อมูลผิด / action ผิด)</span> · H · ไลฟ์ที่บันทึกบนเครื่องนี้เปิดเป็นหน้าเต็ม พร้อมแถบ AI Summary</div>
   <div class="sec"><h4>Precondition</h4><ul><li>บัญชีเจ้าของบันทึกไลฟ์บนเครื่องแรกและอัปโหลดแล้ว</li><li>มีเครื่องที่สองติดตั้งแอป UAT</li></ul></div>
@@ -1718,13 +2142,22 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="sec"><h4>Expected Result</h4><ul><li>เปิดเป็นหน้ามุมมองคลาวด์ มีข้อความ "มุมมองจากคลาวด์ — บทพูด สรุป AI คำแนะนำ AI คำเด่นในคอมเมนต์ และผู้ให้ของขวัญ มีเฉพาะบนเครื่องที่บันทึกไลฟ์นี้"</li><li>ไม่มีแถบ "AI Summary · สรุปไลฟ์นี้" และไม่มีบทพูด</li><li>ตัวชี้วัดหลักยังแสดงครบเหมือนเคส TC-DASH-G.1</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 5 · Story 5.5 · FR94</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
-  <div class="sec"><h4>Status</h4><div class="statusrow">
+  <div class="sec"><h4>Status</h4>
+  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
     <span class="opt pass" data-uid="tc-2442" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-2442" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-2442" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-2442" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-2442" data-st="skip">SKIP</span>
   </div></div>
+  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">
+    <span class="optw pass" data-uid="tc-2442" data-stw="pass">PASS</span>
+    <span class="optw fail" data-uid="tc-2442" data-stw="fail">FAIL</span>
+    <span class="optw hold" data-uid="tc-2442" data-stw="hold">HOLD</span>
+    <span class="optw block" data-uid="tc-2442" data-stw="block">BLOCKED</span>
+    <span class="optw skip" data-uid="tc-2442" data-stw="skip">SKIP</span>
+  </div></div>
+  </div>
   <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
     <div class="jira-list" data-uid="tc-2442"></div>
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-2442" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-2442">+ เพิ่มลิงก์</button></div>
@@ -2256,4 +2689,81 @@ document.querySelectorAll('.feat-owner').forEach(function(sel){var e=sel.dataset
 </script>
 
 
+
+<script>
+/* Status แยก Mac (store[uid].st) / Windows (store[uid].stw) */
+(function(){
+  var SW = { pass:['pass','PASS'], fail:['fail','FAIL'], hold:['hold','HOLD'], block:['block','BLOCKED'], skip:['skip','SKIP'] };
+  var DONE = { pass:1, fail:1, hold:1, block:1 };
+  function paintWin(uid){
+    var st = (store[uid] || {}).stw;
+    var cell = document.querySelector('td.status-win[data-uid="' + uid + '"] .stb');
+    if (cell) {
+      if (st && SW[st]) { cell.className = 'stb ' + SW[st][0]; cell.textContent = SW[st][1]; }
+      else { cell.className = 'stb pending'; cell.textContent = 'รอเทส'; }
+    }
+    document.querySelectorAll('.optw[data-uid="' + uid + '"]').forEach(function(x){ x.classList.toggle('sel', !!st && x.dataset.stw === st); });
+  }
+  function paintAllWin(){ document.querySelectorAll('td.status-win[data-uid]').forEach(function(c){ paintWin(c.dataset.uid); }); }
+  document.querySelectorAll('.optw').forEach(function(o){
+    o.addEventListener('click', function(e){
+      e.stopPropagation();
+      var uid = o.dataset.uid, st = o.dataset.stw;
+      store[uid] = store[uid] || {};
+      if (store[uid].stw === st) { delete store[uid].stw; } else { store[uid].stw = st; }
+      if (!Object.keys(store[uid]).length) delete store[uid];
+      save(); markDirty(); paintWin(uid); applyFilters();
+    });
+  });
+  function stOf(row, sel){ var b = row.querySelector(sel + ' .stb'); return b ? b.className.replace('stb','').trim().split(' ')[0] : 'pending'; }
+  /* ตัวกรองสถานะ: ระบบใดระบบหนึ่งตรงก็พอ */
+  var _af = applyFilters;
+  applyFilters = function(){
+    _af.apply(this, arguments);
+    if (filters.status.size) {
+      document.querySelectorAll('tr.trow').forEach(function(row){
+        if (!row.classList.contains('hide')) return;
+        var ok = true;
+        if (filters.feat.size  && !filters.feat.has(row.dataset.feat))   ok = false;
+        if (filters.level.size && !filters.level.has(row.dataset.level)) ok = false;
+        if (filters.prio.size  && !filters.prio.has(row.dataset.prio))   ok = false;
+        if (ok && !filters.status.has(stOf(row, 'td.status-win'))) ok = false;
+        if (!ok) return;
+        row.classList.remove('hide');
+        var d = row.nextElementSibling;
+        if (d && d.classList.contains('detail')) d.classList.remove('hide');
+      });
+      ['tr.featrow', 'tr.epicrow'].forEach(function(sel){
+        document.querySelectorAll(sel).forEach(function(hr){
+          var n = hr.nextElementSibling, any = false, stop = sel === 'tr.epicrow' ? ['epicrow'] : ['featrow','epicrow'];
+          while (n && !stop.some(function(c){ return n.classList.contains(c); })) {
+            if (n.classList.contains('trow') && !n.classList.contains('hide')) { any = true; break; }
+            n = n.nextElementSibling;
+          }
+          hr.classList.toggle('hide', !any);
+        });
+      });
+    }
+    osRecount();
+  };
+  /* % ทดสอบแล้ว: เคสนับว่าเสร็จเมื่อครบทั้ง Mac และ Windows */
+  function osRecount(){
+    var done = 0, testable = 0, skip = 0;
+    document.querySelectorAll('tr.trow').forEach(function(row){
+      var mac = stOf(row, 'td.status'), win = stOf(row, 'td.status-win');
+      if (mac === 'skip' || win === 'skip') { skip++; return; }
+      testable++;
+      if (DONE[mac] && DONE[win]) done++;
+    });
+    var pct = testable ? Math.round(done / testable * 100) : 0;
+    var bar = document.getElementById('sumbar'); if (bar) bar.style.width = pct + '%';
+    var pctEl = document.getElementById('sumpct');
+    if (pctEl) pctEl.textContent = pct + '% ทดสอบแล้ว ครบ 2 ระบบ (' + done + '/' + testable + ')' + (skip ? ' · ข้าม ' + skip : '');
+  }
+  var _aas = applyAllStatuses;
+  applyAllStatuses = function(){ _aas.apply(this, arguments); paintAllWin(); applyFilters(); };
+  paintAllWin();
+  applyFilters();
+})();
+</script>
 </body></html>
