@@ -205,6 +205,122 @@ def add_script_col(out):
     i = out.rfind('</body>')
     return out[:i] + SCRIPT_JS + out[i:] if i != -1 else out + SCRIPT_JS
 
+# ── คอลัมน์ Status แยก Mac / Windows — เปิดต่อรายงานด้วย META['os_cols'] = True ──
+# Mac = store[uid].st (ฟิลด์เดิม ผลเก่าจึงกลายเป็นของ Mac) · Windows = store[uid].stw (ฟิลด์ใหม่)
+# % ทดสอบแล้ว นับเคสว่าเสร็จเมื่อ "ครบทั้ง 2 ระบบ" · ตัวกรองสถานะจับระบบใดระบบหนึ่งตรงก็พอ
+OS_CSS = """
+td.status-win{white-space:nowrap}
+.osline{display:flex;align-items:center;gap:8px;margin-top:5px;flex-wrap:wrap}
+.oslbl{font-size:11px;font-weight:800;color:var(--muted);min-width:84px}
+.optw{font-size:11px;font-weight:700;padding:4px 11px;border-radius:6px;border:1px solid var(--line);background:#fff;color:var(--muted);cursor:pointer}
+.optw:hover{opacity:.8}
+.optw.pass{border-color:var(--pass)}.optw.fail{border-color:var(--fail)}
+.optw.hold{border-color:var(--hold)}.optw.block{border-color:var(--block)}.optw.skip{border-color:var(--skip)}
+.optw.sel.pass{background:var(--pass);color:#fff}
+.optw.sel.fail{background:var(--fail);color:#fff}
+.optw.sel.hold{background:var(--hold);color:#fff}
+.optw.sel.block{background:var(--block);color:#fff}
+.optw.sel.skip{background:var(--skip);color:#fff}
+"""
+OS_JS = """
+<script>
+/* Status แยก Mac (store[uid].st) / Windows (store[uid].stw) */
+(function(){
+  var SW = { pass:['pass','PASS'], fail:['fail','FAIL'], hold:['hold','HOLD'], block:['block','BLOCKED'], skip:['skip','SKIP'] };
+  var DONE = { pass:1, fail:1, hold:1, block:1 };
+  function paintWin(uid){
+    var st = (store[uid] || {}).stw;
+    var cell = document.querySelector('td.status-win[data-uid="' + uid + '"] .stb');
+    if (cell) {
+      if (st && SW[st]) { cell.className = 'stb ' + SW[st][0]; cell.textContent = SW[st][1]; }
+      else { cell.className = 'stb pending'; cell.textContent = 'รอเทส'; }
+    }
+    document.querySelectorAll('.optw[data-uid="' + uid + '"]').forEach(function(x){ x.classList.toggle('sel', !!st && x.dataset.stw === st); });
+  }
+  function paintAllWin(){ document.querySelectorAll('td.status-win[data-uid]').forEach(function(c){ paintWin(c.dataset.uid); }); }
+  document.querySelectorAll('.optw').forEach(function(o){
+    o.addEventListener('click', function(e){
+      e.stopPropagation();
+      var uid = o.dataset.uid, st = o.dataset.stw;
+      store[uid] = store[uid] || {};
+      if (store[uid].stw === st) { delete store[uid].stw; } else { store[uid].stw = st; }
+      if (!Object.keys(store[uid]).length) delete store[uid];
+      save(); markDirty(); paintWin(uid); applyFilters();
+    });
+  });
+  function stOf(row, sel){ var b = row.querySelector(sel + ' .stb'); return b ? b.className.replace('stb','').trim().split(' ')[0] : 'pending'; }
+  /* ตัวกรองสถานะ: ระบบใดระบบหนึ่งตรงก็พอ */
+  var _af = applyFilters;
+  applyFilters = function(){
+    _af.apply(this, arguments);
+    if (filters.status.size) {
+      document.querySelectorAll('tr.trow').forEach(function(row){
+        if (!row.classList.contains('hide')) return;
+        var ok = true;
+        if (filters.feat.size  && !filters.feat.has(row.dataset.feat))   ok = false;
+        if (filters.level.size && !filters.level.has(row.dataset.level)) ok = false;
+        if (filters.prio.size  && !filters.prio.has(row.dataset.prio))   ok = false;
+        if (ok && !filters.status.has(stOf(row, 'td.status-win'))) ok = false;
+        if (!ok) return;
+        row.classList.remove('hide');
+        var d = row.nextElementSibling;
+        if (d && d.classList.contains('detail')) d.classList.remove('hide');
+      });
+      ['tr.featrow', 'tr.epicrow'].forEach(function(sel){
+        document.querySelectorAll(sel).forEach(function(hr){
+          var n = hr.nextElementSibling, any = false, stop = sel === 'tr.epicrow' ? ['epicrow'] : ['featrow','epicrow'];
+          while (n && !stop.some(function(c){ return n.classList.contains(c); })) {
+            if (n.classList.contains('trow') && !n.classList.contains('hide')) { any = true; break; }
+            n = n.nextElementSibling;
+          }
+          hr.classList.toggle('hide', !any);
+        });
+      });
+    }
+    osRecount();
+  };
+  /* % ทดสอบแล้ว: เคสนับว่าเสร็จเมื่อครบทั้ง Mac และ Windows */
+  function osRecount(){
+    var done = 0, testable = 0, skip = 0;
+    document.querySelectorAll('tr.trow').forEach(function(row){
+      var mac = stOf(row, 'td.status'), win = stOf(row, 'td.status-win');
+      if (mac === 'skip' || win === 'skip') { skip++; return; }
+      testable++;
+      if (DONE[mac] && DONE[win]) done++;
+    });
+    var pct = testable ? Math.round(done / testable * 100) : 0;
+    var bar = document.getElementById('sumbar'); if (bar) bar.style.width = pct + '%';
+    var pctEl = document.getElementById('sumpct');
+    if (pctEl) pctEl.textContent = pct + '% ทดสอบแล้ว ครบ 2 ระบบ (' + done + '/' + testable + ')' + (skip ? ' · ข้าม ' + skip : '');
+  }
+  var _aas = applyAllStatuses;
+  applyAllStatuses = function(){ _aas.apply(this, arguments); paintAllWin(); applyFilters(); };
+  paintAllWin();
+  applyFilters();
+})();
+</script>
+"""
+
+def add_os_cols(out):
+    out = out.replace('colspan="7"', 'colspan="8"')
+    out = out.replace('<th style="width:80px">Status</th>',
+                      '<th style="width:74px">🍎 Mac</th><th style="width:88px">🪟 Windows</th>', 1)
+    out = re.sub(r'(  <td class="status" data-uid="(tc-\d+)"><span class="stb pending">รอเทส</span></td>)',
+                 lambda m: m.group(1) + f'\n  <td class="status-win" data-uid="{m.group(2)}"><span class="stb pending">รอเทส</span></td>', out)
+
+    def two_rows(m):
+        opts = m.group(1)
+        win = opts.replace('class="opt ', 'class="optw ').replace('data-st="', 'data-stw="')
+        return ('  <div class="sec"><h4>Status</h4>\n'
+                f'  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">\n{opts}  </div></div>\n'
+                f'  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">\n{win}  </div></div>\n'
+                '  </div>')
+    out = re.sub(r'  <div class="sec"><h4>Status</h4><div class="statusrow">\n((?:    <span class="opt [^\n]*\n)+)  </div></div>',
+                 two_rows, out)
+    out = out.replace('</style>', OS_CSS + '</style>', 1)
+    i = out.rfind('</body>')
+    return out[:i] + OS_JS + out[i:] if i != -1 else out + OS_JS
+
 def build():
     src = TEMPLATE.read_text(encoding='utf-8')
     css_end = src.index('</style>\n</head>')
@@ -379,6 +495,8 @@ def build():
            + header + '\n'.join(rows) + footer + js)
     if META.get('script_col'):
         out = add_script_col(out)
+    if META.get('os_cols'):
+        out = add_os_cols(out)
     return out, dict(total=total, ui=ui_n, e2e=e2e_n, noui=noui_n, prio=counts, kind=kind_counts)
 
 if __name__ == '__main__':

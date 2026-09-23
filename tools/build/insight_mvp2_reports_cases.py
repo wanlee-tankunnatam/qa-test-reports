@@ -18,7 +18,7 @@
 META = dict(
     out_rel='projects/takra-insight/2026/09/reports/takra-insight-mvp2-reports-ui-test-cases-table.html',
     title='[MVP2] TAKRA Insight — Epic 7 Daily Report Card → รายงานประจำวัน · UI Manual Test Cases',
-    emoji='📰', uid_start=2501, download='takra-insight-mvp2-reports-ui-test-cases.html',
+    emoji='📰', uid_start=2501, os_cols=True, download='takra-insight-mvp2-reports-ui-test-cases.html',
     back='https://wanlee-tankunnatam.github.io/qa-test-reports/?project=insight',
     sub='เทส UI ด้วยมืออย่างเดียว · MVP-2 Epic 7 (TI-358) Story 7.1–7.3 · FR100 · FR134 · Target: แอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT)',
     groups_label='8 กลุ่ม (A–H)',
