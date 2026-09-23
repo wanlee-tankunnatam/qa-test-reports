@@ -125,6 +125,8 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 .feat-owner.owner-ice{border-color:#2563eb;color:#2563eb;font-weight:700}
 .feat-owner.owner-moss{border-color:#7c3aed;color:#7c3aed;font-weight:700}
 
+/* ป้ายเตือนต่อเคส — ตั้งผ่าน c['flag'] (เช่น เคสที่ตกลงว่าไม่ทดสอบ) */
+.flag-box{margin:6px 0 2px;padding:7px 11px;border-radius:7px;background:#fff7ed;border:1px solid #fdba74;color:#9a3412;font-size:11.5px;font-weight:700;line-height:1.5}
 /* ประเภทเคส (kind) */
 .kd{display:inline-block;margin-left:6px;padding:0 6px;border-radius:4px;font-size:9.5px;font-weight:700;vertical-align:middle;border:1px solid;white-space:nowrap}
 .kd-happy{color:#15803d;background:#f0fdf4;border-color:#bbf7d0}
@@ -1005,6 +1007,7 @@ td.status-win{white-space:nowrap}
 <tr class="detail"><td colspan="9"><div class="card">
   <div class="h-title">บทบาทเริ่มต้นของสมาชิกใหม่มาจาก role ที่เชิญใน Hub</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Data</b> <span class="hint">(รายชื่อตรงกับ Hub · ข้อมูลไม่หาย · แยกข้อมูลแต่ละทีม)</span> · C · หน้า "สมาชิกและบทบาท" ของเจ้าของ</div>
+  <div class="flag-box">🚫 ไม่ทดสอบในรอบนี้ — เคสนี้ต้องสมัคร/เชิญบัญชีใหม่ทุกครั้งที่เทสซ้ำ</div>
   <div class="sec"><h4>Test Data</h4><ul><li>บัญชีที่ใช้ (UAT): wanleeta.official@gmail.com · บทบาท "เจ้าของ"</li><li>บัญชี NEW-1 · NEW-2 (ยังไม่เคยใช้ Insight)</li></ul></div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub UAT (https://uat-hub.takra.ai) แล้วเข้าสู่ระบบด้วยบัญชี OWNER แล้วกดตัวเลือกทีมด้านบน เลือก "ทีม A" แล้วกด "ตั้งค่าทีม" กด "เชิญสมาชิก" เลือก "เชิญเป็น role" เป็น "ผู้จัดการ" กด "สร้างลิงก์เชิญ" แล้วกด "คัดลอกลิงก์" ส่งลิงก์ให้บัญชี NEW-1 กดเข้าร่วม</li><li>ก่อนเริ่มทดสอบ ให้สลับบทบาทของบัญชีนี้ก่อน: กดรูปโปรไฟล์มุมล่างซ้าย ("โปรไฟล์และบัญชี") ดูส่วน "พื้นที่ทำงาน" แล้วกดชื่อทีมที่บัญชีนี้มีบทบาท "เจ้าของ" (ถ้าทีมที่ใช้อยู่เป็นบทบาทนี้อยู่แล้ว ข้ามขั้นนี้)</li><li>ทำซ้ำอีกครั้งโดยเลือก "เชิญเป็น role" เป็น "สมาชิก" ให้บัญชี NEW-2</li><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี OWNER แล้วกดรูปโปรไฟล์มุมล่างซ้าย ("โปรไฟล์และบัญชี") แล้วเลือกเมนู "สมาชิกและบทบาท"</li><li>ดูบทบาทของ NEW-1 และ NEW-2</li></ol></div>
   <div class="grid">
@@ -1047,6 +1050,7 @@ td.status-win{white-space:nowrap}
 <tr class="detail"><td colspan="9"><div class="card">
   <div class="h-title">สมาชิกที่ยังไม่เคยเข้า Insight มีป้ายบอก และตั้งบทบาทล่วงหน้าได้</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Boundary/Edge</b> <span class="hint">(มี 1 ทีม vs หลายทีม · ชื่อซ้ำ · ครั้งแรก/ครั้งเดียว)</span> · C · หน้า "สมาชิกและบทบาท" ของเจ้าของ</div>
+  <div class="flag-box">🚫 ไม่ทดสอบในรอบนี้ — เคสนี้ต้องสมัคร/เชิญบัญชีใหม่ทุกครั้งที่เทสซ้ำ</div>
   <div class="sec"><h4>Precondition</h4><ul><li>NEW-1 เข้าร่วมทีม A ใน Hub แล้วแต่ยังไม่เคยเปิด Insight</li></ul></div>
   <div class="sec"><h4>Test Data</h4><ul><li>บัญชีที่ใช้ (UAT): wanleeta.official@gmail.com · บทบาท "เจ้าของ"</li></ul></div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี OWNER</li><li>ก่อนเริ่มทดสอบ ให้สลับบทบาทของบัญชีนี้ก่อน: กดรูปโปรไฟล์มุมล่างซ้าย ("โปรไฟล์และบัญชี") ดูส่วน "พื้นที่ทำงาน" แล้วกดชื่อทีมที่บัญชีนี้มีบทบาท "เจ้าของ" (ถ้าทีมที่ใช้อยู่เป็นบทบาทนี้อยู่แล้ว ข้ามขั้นนี้)</li><li>กดรูปโปรไฟล์มุมล่างซ้าย ("โปรไฟล์และบัญชี") แล้วเลือกเมนู "สมาชิกและบทบาท"</li><li>ดูแถวของ NEW-1 (ยังไม่เคยเปิด Insight) แล้วเปลี่ยนบทบาทเป็น "โฮสต์"</li><li>ให้ NEW-1 เปิดแอป Insight เข้าสู่ระบบจนผ่านขั้นความยินยอม แล้วเจ้าของเข้าเมนู "สมาชิกและบทบาท" อีกครั้ง</li></ol></div>
@@ -1479,6 +1483,7 @@ td.status-win{white-space:nowrap}
 <tr class="detail"><td colspan="9"><div class="card">
   <div class="h-title">ผู้ถูกเชิญเข้าร่วมใน Hub แล้วเปิด Insight ลงที่ทีมที่เชิญ และให้ความยินยอมเอง</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · E · ผู้ถูกเชิญจาก Hub เปิด Insight ครั้งแรก</div>
+  <div class="flag-box">🚫 ไม่ทดสอบในรอบนี้ — เคสนี้ต้องสมัคร/เชิญบัญชีใหม่ทุกครั้งที่เทสซ้ำ</div>
   <div class="sec"><h4>Precondition</h4><ul><li>เจ้าของทีม A เคยเปิด Insight แล้ว</li></ul></div>
   <div class="sec"><h4>Test Data</h4><ul><li>บัญชีที่ใช้ (UAT): wanleeta.official@gmail.com · บทบาท "เจ้าของ"</li><li>บัญชี NEW ใหม่ที่ยังไม่เคยใช้ Insight</li></ul></div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub UAT (https://uat-hub.takra.ai) แล้วเข้าสู่ระบบด้วยบัญชี OWNER แล้วกดตัวเลือกทีมด้านบน เลือก "ทีม A" แล้วกด "ตั้งค่าทีม" กด "เชิญสมาชิก" เลือก "เชิญเป็น role" เป็น "สมาชิก" กด "สร้างลิงก์เชิญ" แล้วกด "คัดลอกลิงก์"</li><li>ก่อนเริ่มทดสอบ ให้สลับบทบาทของบัญชีนี้ก่อน: กดรูปโปรไฟล์มุมล่างซ้าย ("โปรไฟล์และบัญชี") ดูส่วน "พื้นที่ทำงาน" แล้วกดชื่อทีมที่บัญชีนี้มีบทบาท "เจ้าของ" (ถ้าทีมที่ใช้อยู่เป็นบทบาทนี้อยู่แล้ว ข้ามขั้นนี้)</li><li>เปิดลิงก์เชิญในเบราว์เซอร์ เข้าสู่ระบบด้วยบัญชี NEW แล้วกด "เข้าร่วมทีม"</li><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี NEW</li><li>ดูหน้าขอความยินยอม แล้วกด "ยินยอมและเริ่มใช้งาน"</li><li>กดรูปโปรไฟล์มุมล่างซ้าย ("โปรไฟล์และบัญชี") แล้วดูเมนู</li></ol></div>
@@ -1522,6 +1527,7 @@ td.status-win{white-space:nowrap}
 <tr class="detail"><td colspan="9"><div class="card">
   <div class="h-title">หลังผู้ถูกเชิญเข้าใช้ เจ้าของเห็นเขาในหน้า "สมาชิกและบทบาท" เป็น "โฮสต์"</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Data</b> <span class="hint">(รายชื่อตรงกับ Hub · ข้อมูลไม่หาย · แยกข้อมูลแต่ละทีม)</span> · E · ผู้ถูกเชิญจาก Hub เปิด Insight ครั้งแรก</div>
+  <div class="flag-box">🚫 ไม่ทดสอบในรอบนี้ — เคสนี้ต้องสมัคร/เชิญบัญชีใหม่ทุกครั้งที่เทสซ้ำ</div>
   <div class="sec"><h4>Precondition</h4><ul><li>ทำเคส TC-MEM-E.1 ผ่านแล้ว</li></ul></div>
   <div class="sec"><h4>Test Data</h4><ul><li>บัญชีที่ใช้ (UAT): wanleeta.official@gmail.com · บทบาท "เจ้าของ"</li></ul></div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี OWNER</li><li>ก่อนเริ่มทดสอบ ให้สลับบทบาทของบัญชีนี้ก่อน: กดรูปโปรไฟล์มุมล่างซ้าย ("โปรไฟล์และบัญชี") ดูส่วน "พื้นที่ทำงาน" แล้วกดชื่อทีมที่บัญชีนี้มีบทบาท "เจ้าของ" (ถ้าทีมที่ใช้อยู่เป็นบทบาทนี้อยู่แล้ว ข้ามขั้นนี้)</li><li>กดรูปโปรไฟล์มุมล่างซ้าย ("โปรไฟล์และบัญชี") แล้วเลือกเมนู "สมาชิกและบทบาท"</li><li>หาแถวของบัญชี NEW จากเคส E.1</li></ol></div>
@@ -1565,6 +1571,7 @@ td.status-win{white-space:nowrap}
 <tr class="detail"><td colspan="9"><div class="card">
   <div class="h-title">ความยินยอมของผู้ถูกเชิญแยกจากเจ้าของ: ถอนของตัวเองไม่กระทบเจ้าของ</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Permission</b> <span class="hint">(แต่ละบทบาทเห็น/ทำอะไรได้)</span> · E · ผู้ถูกเชิญจาก Hub เปิด Insight ครั้งแรก</div>
+  <div class="flag-box">🚫 ไม่ทดสอบในรอบนี้ — เคสนี้ต้องสมัคร/เชิญบัญชีใหม่ทุกครั้งที่เทสซ้ำ</div>
   <div class="sec"><h4>Precondition</h4><ul><li>ทำเคส TC-MEM-E.1 ผ่านแล้ว</li></ul></div>
   <div class="sec"><h4>Test Data</h4><ul><li>บัญชีที่ใช้ (UAT): wanleeta.official@gmail.com · บทบาท "เจ้าของ"</li></ul></div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี NEW</li><li>ก่อนเริ่มทดสอบ ให้สลับบทบาทของบัญชีนี้ก่อน: กดรูปโปรไฟล์มุมล่างซ้าย ("โปรไฟล์และบัญชี") ดูส่วน "พื้นที่ทำงาน" แล้วกดชื่อทีมที่บัญชีนี้มีบทบาท "เจ้าของ" (ถ้าทีมที่ใช้อยู่เป็นบทบาทนี้อยู่แล้ว ข้ามขั้นนี้)</li><li>กดรูปโปรไฟล์มุมล่างซ้าย ("โปรไฟล์และบัญชี") แล้วเลือกเมนู "ความเป็นส่วนตัว"</li><li>ถอนความยินยอม "อ่านอารมณ์จากสีหน้า" แล้วยืนยัน</li><li>บนเครื่องของเจ้าของ เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี OWNER แล้วกดรูปโปรไฟล์มุมล่างซ้าย ("โปรไฟล์และบัญชี") เลือก "ความเป็นส่วนตัว"</li></ol></div>
@@ -1608,6 +1615,7 @@ td.status-win{white-space:nowrap}
 <tr class="detail"><td colspan="9"><div class="card">
   <div class="h-title">เปิด Insight ก่อนกด "เข้าร่วมทีม" ใน Hub: ขึ้นหน้าไม่มีสิทธิ์พร้อมคำแนะนำ แล้วเช็กอีกครั้งผ่านได้</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Negative</b> <span class="hint">(ข้อมูลผิด / action ผิด / ยกเลิกกลางทาง)</span> · E · ผู้ถูกเชิญจาก Hub เปิด Insight ครั้งแรก</div>
+  <div class="flag-box">🚫 ไม่ทดสอบในรอบนี้ — เคสนี้ต้องสมัคร/เชิญบัญชีใหม่ทุกครั้งที่เทสซ้ำ</div>
   <div class="sec"><h4>Test Data</h4><ul><li>บัญชีที่ใช้ (UAT): wanleeta.official@gmail.com · บทบาท "เจ้าของ"</li><li>บัญชี NEW ใหม่ที่ไม่มีแพ็กเกจของตัวเอง</li></ul></div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub UAT (https://uat-hub.takra.ai) แล้วเข้าสู่ระบบด้วยบัญชี OWNER แล้วกดตัวเลือกทีมด้านบน เลือก "ทีม A" แล้วกด "ตั้งค่าทีม" กด "เชิญสมาชิก" เลือก "เชิญเป็น role" เป็น "สมาชิก" กด "สร้างลิงก์เชิญ" แล้วกด "คัดลอกลิงก์" (ยังไม่ต้องเปิดลิงก์)</li><li>ก่อนเริ่มทดสอบ ให้สลับบทบาทของบัญชีนี้ก่อน: กดรูปโปรไฟล์มุมล่างซ้าย ("โปรไฟล์และบัญชี") ดูส่วน "พื้นที่ทำงาน" แล้วกดชื่อทีมที่บัญชีนี้มีบทบาท "เจ้าของ" (ถ้าทีมที่ใช้อยู่เป็นบทบาทนี้อยู่แล้ว ข้ามขั้นนี้)</li><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี NEW (บัญชีใหม่อีกตัว)</li><li>อ่านหน้าที่ขึ้น</li><li>เปิดลิงก์เชิญในเบราว์เซอร์ เข้าสู่ระบบด้วยบัญชี NEW เดิม แล้วกด "เข้าร่วมทีม"</li><li>กลับมาที่แอปแล้วกด "ฉันเริ่มแล้ว · เช็กอีกครั้ง"</li></ol></div>
   <div class="grid">
@@ -1650,6 +1658,7 @@ td.status-win{white-space:nowrap}
 <tr class="detail"><td colspan="9"><div class="card">
   <div class="h-title">เจ้าของทีมยังไม่เคยเปิด Insight: ผู้ถูกเชิญเห็นหน้ารอ แล้วไปต่อเองเมื่อเจ้าของเปิดแอป</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Boundary/Edge</b> <span class="hint">(มี 1 ทีม vs หลายทีม · ชื่อซ้ำ · ครั้งแรก/ครั้งเดียว)</span> · E · ผู้ถูกเชิญจาก Hub เปิด Insight ครั้งแรก</div>
+  <div class="flag-box">🚫 ไม่ทดสอบในรอบนี้ — เคสนี้ต้องสมัคร/เชิญบัญชีใหม่ทุกครั้งที่เทสซ้ำ</div>
   <div class="sec"><h4>Precondition</h4><ul><li>ทีม C: ทีม Hub ที่มีแพ็กเกจ Insight แต่เจ้าของยังไม่เคยเปิด Insight</li></ul></div>
   <div class="sec"><h4>Test Data</h4><ul><li>บัญชีที่ใช้ (UAT): wanleeta.official@gmail.com</li></ul></div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub UAT (https://uat-hub.takra.ai) แล้วเข้าสู่ระบบด้วยบัญชี เจ้าของทีม C (ยังไม่เคยใช้ Insight) เชิญบัญชี NEW เข้าทีม C และ NEW กด "เข้าร่วมทีม"</li><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี NEW</li><li>อ่านหน้าที่ขึ้นแล้วเปิดค้างไว้</li><li>บนอีกเครื่อง ให้เจ้าของทีม C เปิดแอป Insight และเข้าสู่ระบบ</li><li>รอประมาณ 1 นาทีแล้วดูหน้าจอของ NEW</li></ol></div>
