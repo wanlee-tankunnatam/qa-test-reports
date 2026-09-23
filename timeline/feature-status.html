@@ -90,6 +90,8 @@
   .s-none{color:var(--none); background:var(--none-bg)}
   .jira{font-size:.78rem; font-weight:600; color:var(--prog); text-decoration:none; margin-left:4px}
   .jira:hover{text-decoration:underline}
+  .links{display:flex; flex-wrap:wrap; gap:2px 12px; margin-top:2px}
+  .links .jira{margin-left:0}
 
   /* ---- Tabs ---- */
   .tabs{display:flex; gap:4px; border-bottom:1px solid var(--border); margin:4px 0 16px; overflow-x:auto}
@@ -301,7 +303,7 @@ document.getElementById('rows').innerHTML = PROJECTS.map(p => {
     const qa = QA[it.qa].slice(); if (it.qaLabel) qa[1] = it.qaLabel;
     const note = [it.alias, it.subs && it.subs.join(' · ')].filter(Boolean).join(' — ');
     return `<tr data-of="${esc(p.name)}">
-      <td class="feat"><span class="fname">${esc(it.name)}</span>${it.jira ? ` <a class="jira" href="${JIRA}${esc(it.jira)}" target="_blank" rel="noopener">${esc(it.jira)} ↗</a>` : ''}${it.report ? ` <a class="jira" href="${esc(it.report)}" target="_blank" rel="noopener">📋 Test cases ↗</a>` : ''}${note ? `<span class="note">${esc(note)}</span>` : ''}</td>
+      <td class="feat"><span class="fname">${esc(it.name)}</span>${it.jira || it.report ? `<span class="links">${it.jira ? `<a class="jira" href="${JIRA}${esc(it.jira)}" target="_blank" rel="noopener">${esc(it.jira)} ↗</a>` : ''}${it.report ? `<a class="jira" href="${esc(it.report)}" target="_blank" rel="noopener">📋 Test cases ↗</a>` : ''}</span>` : ''}${note ? `<span class="note">${esc(note)}</span>` : ''}</td>
       <td class="owner"><span class="oname">${esc(it.devOwner || p.devOwner || '—')}</span>${pill(it.dev_label ? [DEV[it.dev][0], '✓ ' + it.dev_label] : it.devWaitLabel ? [DEV[it.dev][0], it.devWaitLabel] : DEV[it.dev])}</td>
       <td class="st">${dateLine(it.due, it.dev !== 'done', it.noDate) || '<span class="date">—</span>'}</td>
       <td class="owner"><span class="oname">${esc(it.owner || p.owner || '—')}</span>${pill(qa)}</td>
