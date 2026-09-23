@@ -55,9 +55,13 @@
   td.feat{width:44%}
   .fname{font-weight:600}
   td.owner{white-space:nowrap; color:var(--muted); font-size:.88rem; font-weight:600}
-  thead th.grp{text-align:center; border-bottom:1px solid var(--border); color:var(--text); letter-spacing:.04em}
-  thead th.grp{border-left:1px solid var(--border)}
-  tbody td.owner{border-left:1px solid var(--border)}
+  /* เส้นตาราง: คั่นทุกคอลัมน์บางๆ · เส้นแบ่งกลุ่ม DEV|QA หนากว่า */
+  thead th, tbody td{border-right:1px solid var(--border)}
+  thead th:last-child, tbody td:last-child{border-right:0}
+  thead th.grp{text-align:center; color:var(--text); letter-spacing:.04em; background:var(--head)}
+  thead tr:first-child th{border-bottom:1px solid var(--border)}
+  th.grp, th.grpstart, td.owner{border-left:2px solid var(--border)}
+  tr.proj td{border-right:0}
   .note{display:block; color:var(--muted); font-size:.8rem; line-height:1.4}
   td.st{white-space:nowrap}
   .pill{display:inline-block; font-size:.82rem; font-weight:600; border-radius:999px; padding:2px 10px}
@@ -150,7 +154,7 @@
       <table>
         <thead>
           <tr><th rowspan="2">ฟีเจอร์</th><th colspan="2" class="grp">DEV</th><th colspan="2" class="grp grp-qa">QA</th></tr>
-          <tr><th>ผู้รับผิดชอบ</th><th>Duedate</th><th>ผู้รับผิดชอบ</th><th>Duedate</th></tr>
+          <tr><th class="grpstart">ผู้รับผิดชอบ</th><th>Duedate</th><th class="grpstart">ผู้รับผิดชอบ</th><th>Duedate</th></tr>
         </thead>
         <tbody id="rows"></tbody>
       </table>
