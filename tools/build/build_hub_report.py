@@ -14,7 +14,7 @@ harness (CSS + JS ปุ่ม ☁️ เซฟ/ตัวกรอง/Jira/owner
       lrready = insight_live_readiness_cases.py (TAKRA Insight · Live Readiness คุณภาพบนไลฟ์จริง)
       rerunquality = rerun_quality_cases.py (TAKRA Rerun · คุณภาพ/ประสิทธิภาพการไลฟ์รีรัน)
       aiquality = ai_quality_cases.py (TAKRA AI · คุณภาพไลฟ์รีรัน ท่อส่ง+เนื้อหา)
-      aitickets1223 = ai_tickets_1223_cases.py (TAKRA AI · ใบงาน TAKRA-1223–1230)
+      ai1223 … ai1230 = ai_tickets_1223_cases.py (TAKRA AI · 1 ไฟล์ต่อ 1 ใบงาน TAKRA-1223–1230)
       aiautoreply = ai_autoreply_cases.py (TAKRA AI · Tool-calling auto-reply · Epic 13)
       lipsync = lipsync_cases.py (TAKRA Lib-Sync · แอปเดสก์ท็อป takra-lib-sync)
       (แต่ละไฟล์มี META บอก path/ชื่อ/uid เริ่ม)
@@ -30,7 +30,7 @@ import sys
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 MODULES = {'mvp1': 'hub_cases', 'mvp2': 'hub_mvp2_cases', 'mvp2rbac': 'hub_mvp2_rbac_cases',
-           'aitickets': 'ai_tickets_cases', 'aitickets1223': 'ai_tickets_1223_cases', 'aiautoreply': 'ai_autoreply_cases', 'clipbo': 'clip_bo_cases', 'farm': 'farm_cases',
+           'aitickets': 'ai_tickets_cases', 'ai1223': 'ai_tickets_1223_cases:t1223', 'ai1224': 'ai_tickets_1223_cases:t1224', 'ai1225': 'ai_tickets_1223_cases:t1225', 'ai1226': 'ai_tickets_1223_cases:t1226', 'ai1227': 'ai_tickets_1223_cases:t1227', 'ai1228': 'ai_tickets_1223_cases:t1228', 'ai1229': 'ai_tickets_1223_cases:t1229', 'ai1230': 'ai_tickets_1223_cases:t1230', 'aiautoreply': 'ai_autoreply_cases', 'clipbo': 'clip_bo_cases', 'farm': 'farm_cases',
            'insighte46': 'insight_mvp2_e46_cases',
            'insightbyok': 'insight_mvp2_byok_cases',
            'insightdash': 'insight_mvp2_dashboard_cases',
@@ -42,7 +42,11 @@ MODULES = {'mvp1': 'hub_cases', 'mvp2': 'hub_mvp2_cases', 'mvp2rbac': 'hub_mvp2_
            'lipsync': 'lipsync_cases',
            'radar': 'radar_cases'}
 _which = next((a for a in sys.argv[1:] if a in MODULES), 'mvp1')
-_mod = importlib.import_module(MODULES[_which])
+# 'module:key' = โมดูลเดียวสร้างได้หลายไฟล์ — เรียก select(key) ก่อนอ่าน EPICS/META
+_modname, _, _sel = MODULES[_which].partition(':')
+_mod = importlib.import_module(_modname)
+if _sel:
+    _mod.select(_sel)
 EPICS, KINDS, META = _mod.EPICS, _mod.KINDS, _mod.META
 # uid คงที่ต่อเคส (optional): module ประกาศ UID_MAP = {case_id: int} — จัดกลุ่ม/เรียงใหม่แล้วผลเทสเดิมไม่หลุดจากเคส
 UID_MAP = getattr(_mod, 'UID_MAP', None) or {}
