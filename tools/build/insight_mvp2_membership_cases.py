@@ -422,3 +422,7 @@ EPICS.append(E('memH', 'H · Hub ล่ม/ออฟไลน์', '📡', 'H ·
     pre=['BM ตั้งค่า "ผู้ให้บริการ AI" ครบแล้ว และมีรายงานในเครื่องอย่างน้อย 1 ฉบับ']),
  ]),
 ]))
+
+# ── บัญชีทดสอบ (UAT) + ขั้นสลับบทบาท — ดู insight_accounts.py ──
+from insight_accounts import apply_accounts  # noqa: E402
+apply_accounts(EPICS)

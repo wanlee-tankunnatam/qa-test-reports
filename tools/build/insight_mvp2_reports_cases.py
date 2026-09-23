@@ -403,3 +403,7 @@ EPICS.append(E('rpH', 'H · สิทธิ์ตามบทบาท', '🔒',
     pre=[OWNER + ' และในพื้นที่ทำงานที่ 2 ด้วย', 'ไม่ได้บันทึกไลฟ์อยู่']),
  ]),
 ]))
+
+# ── บัญชีทดสอบ (UAT) + ขั้นสลับบทบาท — ดู insight_accounts.py ──
+from insight_accounts import apply_accounts  # noqa: E402
+apply_accounts(EPICS)

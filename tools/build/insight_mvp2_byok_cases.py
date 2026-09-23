@@ -320,3 +320,7 @@ EPICS.append(E('byH', 'H · ใช้งานจริง', '✨', 'H · สร
     kind='data'),
  ]),
 ]))
+
+# ── บัญชีทดสอบ (UAT) + ขั้นสลับบทบาท — ดู insight_accounts.py ──
+from insight_accounts import apply_accounts  # noqa: E402
+apply_accounts(EPICS)

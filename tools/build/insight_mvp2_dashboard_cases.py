@@ -434,3 +434,7 @@ EPICS.append(E('dsH', 'H · ไลฟ์บนเครื่องนี้', '
     note='สเปก FR94 ให้มี AI Summary Bar บนหน้าไลฟ์เดี่ยว แต่ Story 5.5 D11 (owner Q2 17 ก.ย.) จำกัดไว้เฉพาะไลฟ์ที่บันทึกบนเครื่องนี้'),
  ]),
 ]))
+
+# ── บัญชีทดสอบ (UAT) + ขั้นสลับบทบาท — ดู insight_accounts.py ──
+from insight_accounts import apply_accounts  # noqa: E402
+apply_accounts(EPICS)
