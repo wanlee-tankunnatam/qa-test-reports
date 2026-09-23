@@ -84,9 +84,12 @@
   .g-id{width:44px; justify-content:center; font-weight:700; color:var(--muted); font-variant-numeric:tabular-nums}
   .g-name{width:250px; padding:0 12px; font-weight:600; border-right:1px solid var(--border); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; display:block; line-height:34px}
   /* ID + ฟีเจอร์ ตรึงซ้าย — เลื่อนแนวนอนเฉพาะส่วนปฏิทิน */
-  .g-lcol{display:grid; grid-template-columns:44px 250px; position:sticky; left:0; z-index:5; background:var(--panel); box-shadow:4px 0 6px -4px rgba(0,0,0,.18)}
+  .g-own{background:var(--panel); border-bottom:1px solid var(--border); border-right:1px solid var(--border); display:flex; align-items:center; padding:0 10px; font-size:.74rem; font-weight:600; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+  .g-lcol{display:grid; grid-template-columns:44px 250px 92px; position:sticky; left:0; z-index:5; background:var(--panel); box-shadow:4px 0 6px -4px rgba(0,0,0,.18)}
   .g-track{position:relative; height:34px; border-bottom:1px solid var(--border);
     background-image:repeating-linear-gradient(to right, transparent 0 calc(var(--dw) - 1px), var(--border) calc(var(--dw) - 1px) var(--dw))}
+  .g-head .g-own{background:var(--head); letter-spacing:.04em}
+  .g-proj .g-own{background:var(--head)}
   .g-head .g-id,.g-head .g-name{background:var(--head); color:var(--muted); font-size:.72rem; font-weight:700; letter-spacing:.04em}
   .g-head .g-name{line-height:normal; display:flex}
   .g-months{display:flex; height:30px}
@@ -142,7 +145,7 @@
   <section class="panel" data-panel="status">
     <div class="table-wrap">
       <table>
-        <thead><tr><th>ฟีเจอร์</th><th>ผู้รับผิดชอบ</th><th>DEV</th><th>QA</th></tr></thead>
+        <thead><tr><th>ฟีเจอร์</th><th>DEV</th><th>QA</th><th>ผู้รับผิดชอบ</th></tr></thead>
         <tbody id="rows"></tbody>
       </table>
     </div>
@@ -272,9 +275,9 @@ document.getElementById('rows').innerHTML = PROJECTS.map(p => {
     const note = [it.alias, it.subs && it.subs.join(' · ')].filter(Boolean).join(' — ');
     return `<tr>
       <td class="feat"><span class="fname">${esc(it.name)}</span>${it.jira ? ` <a class="jira" href="${JIRA}${esc(it.jira)}" target="_blank" rel="noopener">${esc(it.jira)} ↗</a>` : ''}${it.report ? ` <a class="jira" href="${esc(it.report)}" target="_blank" rel="noopener">📋 Test cases ↗</a>` : ''}${note ? `<span class="note">${esc(note)}</span>` : ''}</td>
-      <td class="owner">${esc(it.owner || p.owner || '—')}</td>
       <td class="st">${pill(it.dev_label ? [DEV[it.dev][0], '✓ ' + it.dev_label] : it.devWaitLabel ? [DEV[it.dev][0], it.devWaitLabel] : DEV[it.dev])}${dateLine(it.due, it.dev !== 'done', it.noDate)}</td>
       <td class="st">${pill(qa)}${dateLine(it.qaDue, it.qa !== 'pass', it.noDate || it.qaNoDate)}</td>
+      <td class="owner">${esc(it.owner || p.owner || '—')}</td>
     </tr>`;
   }).join('');
 }).join('');
@@ -291,7 +294,7 @@ document.getElementById('rows').innerHTML = PROJECTS.map(p => {
   const col = s => Math.round((d(s) - start) / DAY);
   const g = document.getElementById('gantt');
   g.style.setProperty('--dw', DW + 'px');
-  g.style.setProperty('--lcols', '294px');
+  g.style.setProperty('--lcols', '386px');
   g.style.setProperty('--track', nDays * DW + 'px');
 
   const days = [...Array(nDays)].map((_, k) => new Date(start.getTime() + k * DAY));
@@ -309,13 +312,13 @@ document.getElementById('rows').innerHTML = PROJECTS.map(p => {
       <div class="g-lcol" style="grid-row:span 2"><div class="g-id">ID</div><div class="g-name">ฟีเจอร์</div></div>
       <div class="g-months">${monthsHtml}</div></div>
     <div class="g-row g-head"><div class="g-lcol"><div class="g-id" style="height:34px"></div><div class="g-name" style="height:34px"></div></div><div class="g-days">${daysHtml}</div></div>`;
-  html = `<div class="g-row g-head"><div class="g-lcol"><div class="g-id" style="height:64px;border-bottom:1px solid var(--border)">ID</div><div class="g-name" style="height:64px;border-bottom:1px solid var(--border)">ฟีเจอร์</div></div>
+  html = `<div class="g-row g-head"><div class="g-lcol"><div class="g-id" style="height:64px;border-bottom:1px solid var(--border)">ID</div><div class="g-name" style="height:64px;border-bottom:1px solid var(--border)">ฟีเจอร์</div><div class="g-own" style="height:64px">ผู้รับผิดชอบ</div></div>
       <div><div class="g-months">${monthsHtml}</div><div class="g-days">${daysHtml}</div></div></div>`;
 
   let n = 0;
   PROJECTS.forEach(p => {
     const c = COLORS[p.name] || '#64748b';
-    html += `<div class="g-row g-proj"><div class="g-lcol"><div class="g-id" style="color:${c}">●</div><div class="g-name">${p.emoji} ${esc(p.name)}</div></div><div class="g-track"></div></div>`;
+    html += `<div class="g-row g-proj"><div class="g-lcol"><div class="g-id" style="color:${c}">●</div><div class="g-name">${p.emoji} ${esc(p.name)}</div><div class="g-own">${esc(p.owner || '')}</div></div><div class="g-track"></div></div>`;
     p.items.forEach(it => {
       n++;
       let track = '';
@@ -331,11 +334,11 @@ document.getElementById('rows').innerHTML = PROJECTS.map(p => {
         track += `<div class="g-lbl" style="left:${(b + 1) * DW + 2}px"><b>${it.qaDue ? 'QA ' + fmt(it.qaDue) : 'DEV ' + fmt(it.due)}</b>${fail ? `<span class="fail-txt">${esc(qaTxt)}</span>` : esc(qaTxt)}${overdue(it)}</div>`;
       }
       const tip = `${it.name}${it.due ? ' · DEV ' + fmt(it.due) : ''}${it.qaDue ? ' · QA ' + fmt(it.qaDue) : ''}`;
-      html += `<div class="g-row"><div class="g-lcol"><div class="g-id">${String(n).padStart(2, '0')}</div><div class="g-name" title="${esc(tip)}">${esc(it.name)}</div></div><div class="g-track">${track}</div></div>`;
+      html += `<div class="g-row"><div class="g-lcol"><div class="g-id">${String(n).padStart(2, '0')}</div><div class="g-name" title="${esc(tip)}">${esc(it.name)}</div><div class="g-own">${esc(it.owner || p.owner || '—')}</div></div><div class="g-track">${track}</div></div>`;
     });
   });
   // พื้นเสาร์-อาทิตย์ + เส้นวันนี้
-  const L = 294;
+  const L = 386;
   days.forEach((x, k) => { if (x.getDay() === 0 || x.getDay() === 6) html += `<div class="g-shade" style="left:${L + k * DW}px"></div>`; });
   html += `<div class="g-today" style="left:${L + todayCol * DW + DW / 2 - 1}px"></div>`;
   g.innerHTML = html;
