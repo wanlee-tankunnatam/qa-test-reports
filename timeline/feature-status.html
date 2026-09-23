@@ -54,7 +54,9 @@
   tr.proj .prog{font-weight:500; font-size:.82rem; color:var(--muted); margin-left:10px}
   td.feat{width:44%}
   .fname{font-weight:600}
-  td.owner{white-space:nowrap; color:var(--muted); font-size:.88rem; font-weight:600}
+  td.owner{white-space:nowrap}
+  .oname{display:block; color:var(--muted); font-size:.88rem; font-weight:600; margin-bottom:4px}
+  td.st .date{margin-top:0}
   /* เส้นตาราง: คั่นทุกคอลัมน์บางๆ · เส้นแบ่งกลุ่ม DEV|QA หนากว่า */
   thead th, tbody td{border-right:1px solid var(--border)}
   thead th:last-child, tbody td:last-child{border-right:0}
@@ -285,10 +287,10 @@ document.getElementById('rows').innerHTML = PROJECTS.map(p => {
     const note = [it.alias, it.subs && it.subs.join(' · ')].filter(Boolean).join(' — ');
     return `<tr>
       <td class="feat"><span class="fname">${esc(it.name)}</span>${it.jira ? ` <a class="jira" href="${JIRA}${esc(it.jira)}" target="_blank" rel="noopener">${esc(it.jira)} ↗</a>` : ''}${it.report ? ` <a class="jira" href="${esc(it.report)}" target="_blank" rel="noopener">📋 Test cases ↗</a>` : ''}${note ? `<span class="note">${esc(note)}</span>` : ''}</td>
-      <td class="owner">${esc(it.devOwner || p.devOwner || '—')}</td>
-      <td class="st">${pill(it.dev_label ? [DEV[it.dev][0], '✓ ' + it.dev_label] : it.devWaitLabel ? [DEV[it.dev][0], it.devWaitLabel] : DEV[it.dev])}${dateLine(it.due, it.dev !== 'done', it.noDate)}</td>
-      <td class="owner">${esc(it.owner || p.owner || '—')}</td>
-      <td class="st">${pill(qa)}${dateLine(it.qaDue, it.qa !== 'pass', it.noDate || it.qaNoDate)}</td>
+      <td class="owner"><span class="oname">${esc(it.devOwner || p.devOwner || '—')}</span>${pill(it.dev_label ? [DEV[it.dev][0], '✓ ' + it.dev_label] : it.devWaitLabel ? [DEV[it.dev][0], it.devWaitLabel] : DEV[it.dev])}</td>
+      <td class="st">${dateLine(it.due, it.dev !== 'done', it.noDate) || '<span class="date">—</span>'}</td>
+      <td class="owner"><span class="oname">${esc(it.owner || p.owner || '—')}</span>${pill(qa)}</td>
+      <td class="st">${dateLine(it.qaDue, it.qa !== 'pass', it.noDate || it.qaNoDate) || '<span class="date">—</span>'}</td>
     </tr>`;
   }).join('');
 }).join('');
