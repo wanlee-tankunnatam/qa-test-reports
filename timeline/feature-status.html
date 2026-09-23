@@ -52,6 +52,9 @@
   tr.proj td{background:color-mix(in srgb, var(--pc) 13%, var(--panel)); font-weight:700; font-size:1rem; padding-top:12px; padding-bottom:12px; border-top:2px solid var(--border)}
   tr.proj td:first-child{box-shadow:inset 4px 0 0 var(--pc)}
   tr.proj:first-child td{border-top:0}
+  tr.proj{cursor:pointer; user-select:none}
+  tr.proj .caret{display:inline-block; width:14px; color:var(--pc); font-size:.8rem; transition:transform .15s}
+  tr.proj.collapsed .caret{transform:rotate(-90deg)}
   tr.proj .prog{font-weight:500; font-size:.82rem; color:var(--muted); margin-left:10px}
   td.feat{width:44%}
   .fname{font-weight:600}
@@ -289,11 +292,11 @@ document.getElementById('summary').innerHTML = [
 document.getElementById('rows').innerHTML = PROJECTS.map(p => {
   const passed = p.items.filter(i => i.qa === 'pass').length;
   const pc = pcolor(p.name);
-  const head = `<tr class="proj" style="--pc:${pc}"><td>${p.emoji} ${esc(p.name)}<span class="prog">QA ผ่าน ${passed}/${p.items.length}</span>${p.jira ? ` <a class="jira" href="${JIRA}${esc(p.jira)}" target="_blank" rel="noopener">${esc(p.jiraLabel || '')} ${esc(p.jira)} ↗</a>` : ''}</td><td></td><td></td><td></td><td></td></tr>`;
+  const head = `<tr class="proj" style="--pc:${pc}" data-proj="${esc(p.name)}" role="button" tabindex="0" aria-expanded="true"><td><span class="caret">▾</span>${p.emoji} ${esc(p.name)}<span class="prog">QA ผ่าน ${passed}/${p.items.length}</span>${p.jira ? ` <a class="jira" href="${JIRA}${esc(p.jira)}" target="_blank" rel="noopener">${esc(p.jiraLabel || '')} ${esc(p.jira)} ↗</a>` : ''}</td><td></td><td></td><td></td><td></td></tr>`;
   return head + p.items.map(it => {
     const qa = QA[it.qa].slice(); if (it.qaLabel) qa[1] = it.qaLabel;
     const note = [it.alias, it.subs && it.subs.join(' · ')].filter(Boolean).join(' — ');
-    return `<tr>
+    return `<tr data-of="${esc(p.name)}">
       <td class="feat"><span class="fname">${esc(it.name)}</span>${it.jira ? ` <a class="jira" href="${JIRA}${esc(it.jira)}" target="_blank" rel="noopener">${esc(it.jira)} ↗</a>` : ''}${it.report ? ` <a class="jira" href="${esc(it.report)}" target="_blank" rel="noopener">📋 Test cases ↗</a>` : ''}${note ? `<span class="note">${esc(note)}</span>` : ''}</td>
       <td class="owner"><span class="oname">${esc(it.devOwner || p.devOwner || '—')}</span>${pill(it.dev_label ? [DEV[it.dev][0], '✓ ' + it.dev_label] : it.devWaitLabel ? [DEV[it.dev][0], it.devWaitLabel] : DEV[it.dev])}</td>
       <td class="st">${dateLine(it.due, it.dev !== 'done', it.noDate) || '<span class="date">—</span>'}</td>
@@ -302,6 +305,27 @@ document.getElementById('rows').innerHTML = PROJECTS.map(p => {
     </tr>`;
   }).join('');
 }).join('');
+
+// ---------- พับ/กางรายการของแต่ละโปรเจกต์ (จำไว้ในเครื่องผู้เปิด) ----------
+(function(){
+  const KEY = 'fs-collapsed';
+  const load = () => { try { return new Set(JSON.parse(localStorage.getItem(KEY) || '[]')); } catch (e) { return new Set(); } };
+  const save = set => { try { localStorage.setItem(KEY, JSON.stringify([...set])); } catch (e) {} };
+  const hidden = load();
+  const apply = row => {
+    const name = row.dataset.proj, off = hidden.has(name);
+    row.classList.toggle('collapsed', off);
+    row.setAttribute('aria-expanded', off ? 'false' : 'true');
+    document.querySelectorAll(`tr[data-of="${CSS.escape(name)}"]`).forEach(r => { r.hidden = off; });
+  };
+  const rows = [...document.querySelectorAll('tr.proj')];
+  rows.forEach(apply);
+  const toggle = row => { const n = row.dataset.proj; hidden.has(n) ? hidden.delete(n) : hidden.add(n); save(hidden); apply(row); };
+  rows.forEach(row => {
+    row.addEventListener('click', e => { if (!e.target.closest('a')) toggle(row); });
+    row.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(row); } });
+  });
+})();
 
 // ---------- Gantt (แท่ง = กำหนด DEV → กำหนด QA · สี่เหลี่ยมทึบ = กำหนด QA) ----------
 (function(){
