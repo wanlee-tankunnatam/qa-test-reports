@@ -25,14 +25,6 @@ SWITCH = ('ก่อนเริ่มทดสอบ ให้สลับบ�
           '(ถ้าทีมที่ใช้อยู่เป็นบทบาทนี้อยู่แล้ว ข้ามขั้นนี้)')
 
 
-# ── เคสที่ตกลงว่า "ไม่ทดสอบ" เพราะต้องสมัคร/เชิญบัญชีใหม่ทุกครั้ง (ผู้ใช้กำหนด 23 ก.ย. 2569) ──
-NO_TEST = {
-    'TC-RPT-A.1', 'TC-MEM-C.3', 'TC-MEM-C.4',
-    'TC-MEM-E.1', 'TC-MEM-E.2', 'TC-MEM-E.3', 'TC-MEM-E.4', 'TC-MEM-E.5',
-}
-NO_TEST_FLAG = '🚫 ไม่ทดสอบในรอบนี้ — เคสนี้ต้องสมัคร/เชิญบัญชีใหม่ทุกครั้งที่เทสซ้ำ'
-
-
 def role_of(case):
     """บทบาทที่เคสต้องใช้ — ดูจาก step แรก (ขั้นเข้าสู่ระบบ) ก่อน แล้วค่อยดู Precondition"""
     steps = case.get('steps') or []
@@ -53,8 +45,6 @@ def apply_accounts(EPICS):
                 if not any(ACCT in d for d in data):
                     data.insert(0, line)
                 c['data'] = data
-                if c['id'] in NO_TEST:
-                    c['flag'] = NO_TEST_FLAG
                 steps = list(c.get('steps') or [])
                 if role and steps and not any('สลับบทบาท' in s for s in steps):
                     steps.insert(1, SWITCH.format(role=role))

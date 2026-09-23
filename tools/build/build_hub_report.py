@@ -72,8 +72,6 @@ KIND_CLS = {'happy': 'kd-happy', 'negative': 'kd-neg', 'boundary': 'kd-bnd', 'va
             'exception': 'kd-exc', 'permission': 'kd-perm', 'data': 'kd-data'}
 
 EXTRA_CSS = """
-/* ป้ายเตือนต่อเคส — ตั้งผ่าน c['flag'] (เช่น เคสที่ตกลงว่าไม่ทดสอบ) */
-.flag-box{margin:6px 0 2px;padding:7px 11px;border-radius:7px;background:#fff7ed;border:1px solid #fdba74;color:#9a3412;font-size:11.5px;font-weight:700;line-height:1.5}
 /* ประเภทเคส (kind) */
 .kd{display:inline-block;margin-left:6px;padding:0 6px;border-radius:4px;font-size:9.5px;font-weight:700;vertical-align:middle;border:1px solid;white-space:nowrap}
 .kd-happy{color:#15803d;background:#f0fdf4;border-color:#bbf7d0}
@@ -139,9 +137,6 @@ def case_html(c, uid, epic_key, epic_title_short, epic_jira=None):
     body = [f'<tr class="detail"><td colspan="7"><div class="card">',
             f'  <div class="h-title">{esc(c["title"])}</div>',
             f'  <div class="h-prio">{hprio}</div>']
-    # ป้ายเตือนต่อเคส (เช่น เคสที่ตกลงกันว่าไม่ทดสอบ) — ตั้งผ่าน c['flag']
-    if c.get('flag'):
-        body.append(f'  <div class="flag-box">{c["flag"]}</div>')
     e2e = c.get('e2e')
     if e2e:
         body.append(f'  <div class="sec"><h4>📄 อ้างอิงเอกสาร</h4><div class="hint" style="font-size:12px">{esc(e2e["summary"])}</div></div>')
