@@ -1,0 +1,15 @@
+{
+ "tc": "TC-LR-D1-NEG-02", "run": 3, "shop": "@kronkan42899", "startedAt": "2026-09-10T08:52:08.064Z", "build": "develop@283d7eb (out/ 13:27, npm run dev-style unpackaged, LHM_MULTI_SESSION=0)",
+ "modelsAtStart": {"note": "/models/status ตอน 15:52:10 = current:false ทุก lane (peer session ลบ models/ 15:45 แล้วกำลังโหลดใหม่ · intent เสร็จ 15:52:15 · asr 15:53:37 · diar 15:53:51) ⇒ ผลนี้ไม่ใช่ model สดตามกฎ Model Install Rule — แต่เคสนี้ไม่พึ่ง intent/asr/diar"},
+ "pre": {"authCookiesBefore": [], "cookiesAfterClear": 0, "note": "persist:tiktok ล้าง storage ทั้งหมดก่อนเปิดไลฟ์ = เครื่องที่ยังไม่เคย Login TikTok · หน้า TikTok ใน webview ขึ้น CAPTCHA (เห็นใน run 1 screenshot)"},
+ "step2_sessionPre": {"route": "#/session/new", "webviewUrl": "https://www.tiktok.com/@kronkan42899/live", "mentionsLogin": false, "mentionsFollowFirst": true, "bodyExcerpt": "กำลังดู @kronkan42899 · กำลังดูสด · ยังไม่บันทึก · เริ่มติดตาม · พร้อมเก็บ Insight แล้ว กด \"เริ่มติดตาม\" เพื่อเริ่มเก็บคอมเมนต์…"},
+ "step3_startWithoutLogin": {"startButtonVisible": true, "sessionStartedWithoutLogin": true, "sessionStartMs": 9462, "sessionId": "20260910_155222", "route": "#/session/recording"},
+ "banner": {"bannerMs": 63467, "text": "คอมเมนต์สด — ยังไม่ได้รับคอมเมนต์จาก TikTok — ลองตรวจว่ายังล็อกอิน TikTok อยู่ในหน้าไลฟ์ · ระบบจะกลับมาเก็บให้เองเมื่อคอมเมนต์เข้ามาอีกครั้ง — วิดีโอและอารมณ์ยังบันทึกตามปกติ", "actionButton": true, "mainLog": "08:53:16.604Z [session] capture degraded: path=tiktok:comment-stream reason=chat-never-started flvActive=true", "dbAtBanner": {"frames": 402, "comments": 0, "engage": 0}},
+ "sessionEndedEarly": {"endedAt": "2026-09-10T08:53:51+00:00", "elapsedFromStartS": 89, "mainLog": "08:53:51.681Z [session] stop 20260910_155222 (ไม่มี reason นำหน้า) · py: 15:53:51,674 session logging stopped", "coincidesWith": "diar/.bundle.json เขียน 15:53:51 = model download (ของ peer + first-run) ติดตั้งครบ → engine rebuild state", "attribution": "ไม่ใช่ product ปกติ — เกิดจาก session เริ่มขณะ model ยังโหลดไม่ครบ (ready:false) แล้ว engine reload เมื่อโหลดเสร็จ · ต้อง retest สะอาด"},
+ "at150s": {"db": {"frames": 654, "comments": 0, "engage": 0, "endedAt": "2026-09-10T08:53:51+00:00"}, "video": null, "bannerStill": false},
+ "loginOverlayClick": {"result": "NOT VERIFIED — กดปุ่มหลัง session จบไปแล้ว overlay ไม่เปิด webview ยังอยู่ที่หน้าไลฟ์"},
+ "steps4_5_manualLogin": "NOT RUN — ต้องคน Login TikTok จริงใน overlay (MANUAL_LOGIN_MIN=<นาที>)",
+ "technicalLeak": false,
+ "verdict": "PARTIAL — ขั้น 1–3 ยืนยันได้ว่าโปรดักต์ไม่ block การเริ่ม session ก่อน Login (ต่างจาก expected ข้อ 1) แต่บอกเหตุที่คอมเมนต์เป็น 0 ด้วยแบนเนอร์ + ปุ่ม 'เข้าสู่ระบบ TikTok' ภายใน ~63 s · ปุ่ม→หน้า Login และขั้น 4–5 ยังไม่ได้วัด",
+ "runsDiscarded": {"run1_08:36": "harness pushState ไม่พาไป SessionPre (route ค้าง #/dashboard)", "run2_08:43": "ชนกับ session Claude อีกตัว (takra-insight-02) ที่เปิด/ปิดแอป dev สลับกันช่วง 15:47–15:52 → route เด้งกลับ dashboard"}
+}
