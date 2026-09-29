@@ -113,7 +113,7 @@ td.sc{width:1%;white-space:nowrap}
 td.st{width:1%;white-space:nowrap}
 .stt{font-size:.72rem;font-weight:600;display:inline-flex;align-items:center;gap:5px}
 .stt::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
-.t-todo{color:var(--st-todo)} .t-prog{color:var(--st-prog)} .t-rev{color:var(--st-rev)} .t-rtt{color:var(--st-rtt)}
+.t-todo{color:var(--st-todo)} .t-adv{color:var(--sev-med)} .t-prog{color:var(--st-prog)} .t-rev{color:var(--st-rev)} .t-rtt{color:var(--st-rtt)}
 .none{color:var(--muted);font-size:.85rem;padding:18px 0}
 footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--line);color:var(--muted);font-size:.78rem}
 @media (max-width:520px){ .wrap{padding-block:20px 48px} th,td{padding:7px 9px} }
@@ -122,7 +122,7 @@ footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--line);color:v
 <body>
 <div class="wrap">
   <h1>บั๊กค้างรอบส่งงาน</h1>
-  <p class="sub">บั๊กที่ยังไม่ปิดจากทุกโปรเจกต์ใน Jira แยกตามรอบส่ง แล้วแยกตามผู้รับผิดชอบ · ข้อมูล ณ 29 ก.ย. 2026 23:31 น.</p>
+  <p class="sub">บั๊กที่ยังไม่ปิดจากทุกโปรเจกต์ใน Jira แยกตามรอบส่ง แล้วแยกตามผู้รับผิดชอบ · ข้อมูล ณ 29 ก.ย. 2026 23:31 น. (Rerun · Radar · Post ดึงเพิ่ม 30 ก.ย. 00:04 น.)</p>
   <div class="proj" id="fj" role="group" aria-label="โปรเจกต์"></div>
   <div class="tot" id="tot"></div>
 
@@ -372,7 +372,65 @@ const ROWS = [
 ["30-SEP", "James", "TI-580", "Medium", "[P3][M1][backend] e2e flaky บนเครื่อง macOS: supertest ฟังพอร์ตสุ่มแบบ wildcard แต่ยิงไปที่ 127.0.0.1 ⇒ ชนกับแอปอื่นที่จองพอร์ตเดียวกัน (เช่น GitHub Desktop :49152) → request ค้าง/ได้ 404 แล้วทั้ง describe ที่เหลือค้างตาม", "To Do"],
 ["30-SEP", "James", "TI-581", "Medium", "[P2][M1][desktop] หน้าขอความยินยอมครั้งแรกแสดงสวิตช์ \"อ่านอารมณ์จากสีหน้า\" เป็นปิด แม้ cloud เป็น granted · กด \"ยินยอมและเริ่มใช้งาน\" โดยไม่แตะสวิตช์จะส่ง refused ทับสิทธิ์เดิม (สวิตช์เสียงแก้แล้วใน review P5 แต่ capture ยังไม่แก้)", "To Do"],
 ["30-SEP", "James", "TI-582", "Medium", "[P3][M1][desktop] กล่องยืนยัน \"ให้ความยินยอม\" ในหน้า ตั้งค่า › ความยินยอม แสดงข้อความผลของการถอน (\"เซสชันถัดไปจะเป็นโหมดคอมเมนต์อย่างเดียว …\") · GrantDialog ใช้ consent.effect ตัวเดียวกับ RevokeDialog", "To Do"],
-["30-SEP", "James", "TI-583", "Medium", "[P2][MVP-2][desktop] ออกจากหน้าไลฟ์ไปหน้าโปรไฟล์/วิดีโอของร้านเดียวกัน (/@shop · /@shop/video/…) ขณะอัด → ไม่เตือน off-live และไม่ auto-stop · เซสชันอัดต่อเรื่อย ๆ โดยไม่ได้คอมเมนต์", "To Do"]
+["30-SEP", "James", "TI-583", "Medium", "[P2][MVP-2][desktop] ออกจากหน้าไลฟ์ไปหน้าโปรไฟล์/วิดีโอของร้านเดียวกัน (/@shop · /@shop/video/…) ขณะอัด → ไม่เตือน off-live และไม่ auto-stop · เซสชันอัดต่อเรื่อย ๆ โดยไม่ได้คอมเมนต์", "To Do"],
+["15-SEP", "Hope", "TAK-557", "Highest", "[MVP2] TAKRA Rerun (Windows) ไม่ป้องกันการเพิ่มบัญชี TikTok เกินจำนวนที่แพ็กเกจกำหนดข้ามอุปกรณ์", "READY TO TEST"],
+["ยังไม่มีรอบ", "Hope", "TAK-559", "Low", "Timeline pin: ตั้งเวลาปักเกินความยาวคลิปได้ ไม่มีแจ้งเตือน + สินค้าที่เกินเวลาไม่แสดง (คลิปเล่นต่อได้)", "To Do"],
+["ยังไม่มีรอบ", "Hope", "TAK-564", "Medium", "[MVP2] ค้นหาแชท Telegram แม่นยำไม่พอ — ช่อง (channel) มองไม่เห็น · แจ้ง \"มี webhook\" ผิด · poll ค้างไม่ถูกยกเลิก", "IN REVIEW"],
+["ยังไม่มีรอบ", "Hope", "TAK-569", "Medium", "📌 [Bug / Permission] TAKRA Rerun: บัญชีผู้ใช้ระดับ \"Seller\" ไม่สามารถเปิดใช้งานไลฟ์สดได้", "READY TO TEST"],
+["ยังไม่มีรอบ", "Hope", "TAK-570", "Medium", "📌 [Bug / Performance] TAKRA Rerun: สตรีมไลฟ์มีอาการกระตุกเป็นบางช่วง (Intermittent Streaming Lag)", "To Do"],
+["ยังไม่มีรอบ", "Berm", "TAK-576", "High", "ลูกค้าตอบแชทในช่องแชทของระบบแล้วไม่แสดงผล (chat ขาเข้าไม่ขึ้นในแอป)", "To Do"],
+["ยังไม่มีรอบ", "Hope", "TAK-582", "Medium", "📌 [Bug / System] TAKRA Rerun: เซสชันไลฟ์หลุด ขึ้น Error \"CONNECTION_LOST\" และไม่สามารถ Auto-Reconnect ได้สำเร็จ", "IN REVIEW"],
+["15-SEP", "Hope", "TAK-584", "High", "[MVP2] TAKRA Rerun (Windows) หลังอัปเกรดแพ็กเกจที่ TAKRA Hub แล้ว เพดานการใช้งานไม่อัปเดตในแอป", "READY TO TEST"],
+["15-SEP", "Hope", "TAK-585", "Highest", "[MVP2] TAKRA Rerun (Windows) ไม่ป้องกันการเริ่มไลฟ์เกินจำนวนห้องพร้อมกันตามแพ็กเกจ", "READY TO TEST"],
+["ยังไม่มีรอบ", "ไม่มีคนรับ", "TAK-609", "Medium", "โอเวอร์เลย์รายคลิปเพี้ยน เมื่อ playlist มีคลิปสัดส่วนไม่เท่ากัน", "To Do"],
+["ยังไม่มีรอบ", "Hope", "TAK-618", "Medium", "rerun-desktop: กลุ่ม fatal crashes (RaiseException + crash_reporter::DumpWithoutCrashing) — วิเคราะห์รวมกลุ่ม (แยกจาก TAK-525 item 4)", "READY TO TEST"],
+["ยังไม่มีรอบ", "Hope", "TAK-619", "Medium", "📌 [Bug / API Error] TAKRA Rerun: กดเริ่มไลฟ์ไม่ได้ ขึ้น Error \"ROOM_CREATE_FAILED\" (TikTok ปฏิเสธคำขอเปิดห้อง)", "IN REVIEW"],
+["15-SEP", "Ice", "TAK-621", "Medium", "[QA][UAT e2e] TAKRA Rerun: TC-UAT-05 Diagnostics ตกทุกครั้ง — spec ยังรอดาวน์โหลดทันที ทั้งที่ TAK-540 เปลี่ยนเป็น dialog เลือกทางก่อน", "To Do"],
+["15-SEP", "Ice", "TAK-622", "Low", "[QA][Stub e2e][Flaky] TAKRA Rerun: TC-24.4-01/04 live-uptime ตกเป็นครั้งคราว — `page.clock.install` ไม่หยุดเวลา ค่าที่ assert วิ่งหนีทีละวินาที", "To Do"],
+["ยังไม่มีรอบ", "Hope", "TAK-641", "High", "[Bug] แพ็กเกจ Agency เพิ่มบัญชีที่ 9 ไม่ได้ — central นับ slot ค้าง (ACCOUNT_CAP ทั้งที่ cap = 9)", "To Do"],
+["ยังไม่มีรอบ", "Mae", "TAK-661", "Medium", "e2e desktop แดงค้าง 13 ตัวบน develop หลังรีดีไซน์ TAK-652 (CI ไม่ได้รัน e2e/vitest เลย)", "READY TO TEST"],
+["ยังไม่มีรอบ", "Hope", "TAK-691", "Medium", "e2e เว็บ telegram-onboarding TC-E2E-10.1-01 ล้มเป็นพักๆ — เทสต์มองหาบรรทัด \"เจอแชท\" ไม่ทัน เพราะหน้าเปลี่ยนเป็น \"เชื่อมสำเร็จ!\" ไปก่อน", "READY TO TEST"],
+["ยังไม่มีรอบ", "Hope", "TAK-729", "Medium", "[TAKRA rerun] AI ตอบคอมเมนต์ในไลฟ์ — แท็กชื่อลูกค้ามีคำว่า \"คุณ\" นำหน้า ควรตัดออกให้เหลือแค่ชื่อ", "To Do"],
+["25-SEP", "Berm", "TKRD-174", "Medium", "[Trendora] หน้าเข้าสู่ระบบ — แสดง \"วันนี้สลับเครื่องครบแล้ว\" และบล็อกการ login ทั้งที่เพิ่งเปิดหน้า ยังไม่ได้สลับเครื่องใด ๆ (ผู้ใช้เข้าระบบไม่ได้เลย)", "Need Advise"],
+["25-SEP", "Berm", "TKRD-190", "High", "[Trendora] รหัสโปรโมชั่นทุกประเภท (วัน / สิทธิ์เฝ้าดู / แพ็กเกจ) — ลูกค้ากดใช้โค้ดได้ มีประวัติ แต่ไม่ได้รับรางวัล แม้บัญชี active แล้ว", "READY TO TEST"],
+["ยังไม่มีรอบ", "Berm", "TKRD-282", "High", "[Trendora] บัญชีใช้อุปกรณ์เกินเกณฑ์ต่อเดือนแล้วไม่ถูกติดธง ล็อกอินครั้งถัดไปไม่ถูกจำกัด", "Need Advise"],
+["25-SEP", "Berm", "TKRD-287", "Medium", "[Trendora] หน้าเข้าสู่ระบบ — ข้อความตอนถูกจำกัดการสลับเครื่องไม่บอกสาเหตุ และไม่มีทางออกให้ผู้ใช้", "To Do"],
+["ยังไม่มีรอบ", "Berm", "TKRD-289", "Medium", "[Trendora] หน้าค้นหาบนมือถือ — สถานะ \"กำลังโหลด / โหลดไม่สำเร็จ / ไม่พบสินค้า\" ถูกซ่อนทั้งหมด (.resultwrap display:none) เหลือแต่พื้นที่ว่างไม่มีข้อความ", "To Do"],
+["ยังไม่มีรอบ", "Berm", "TKRD-290", "Medium", "[Trendora] เช็คจอ (เซสชันไอดี) และ ราคาเปลี่ยน บนหน้าหลัก ยังใช้ราคาเต็มก่อนลด — ต้องแก้ที่ API/schema ก่อน", "To Do"],
+["ยังไม่มีรอบ", "Berm", "TKRD-292", "Medium", "[Trendora] สถานะเฝ้าดูเกินโควตาไม่อธิบายตัวเอง — ลูกค้าเห็น \"25 / 10 เต็มแล้ว\" โดยไม่รู้สาเหตุและไม่มีทางออก", "To Do"],
+["25-SEP", "Berm", "TKRD-301", "Medium", "[Trendora] หน้าหลัก (/) ส่วน น่าสนใจ — ปุ่มเพิ่มเข้ารายการเฝ้าดูปรับเป็นไอคอน และทบทวนบรรทัดราคาในแท็บ ราคาเพิ่งลด", "In Progress"],
+["ยังไม่มีรอบ", "Berm", "TKRD-325", "Medium", "leaderboard กับเฝ้าดู ยังดึงค่าคอมได้ไม่จำกัด (ต่อจาก TKRD-323)", "READY TO TEST"],
+["ยังไม่มีรอบ", "ไม่มีคนรับ", "TKRD-328", "Medium", "[Trendora] หน้าอันดับและหน้าลิงก์บอกว่า \"โหลดไม่สำเร็จ\" กับบัญชีที่ยังไม่เปิดใช้งาน แทนที่จะบอกให้ไปชำระเงิน", "To Do"],
+["ยังไม่มีรอบ", "ไม่มีคนรับ", "TKRD-329", "Medium", "[Trendora – Admin] หน้าสลิปรอตรวจสอบไม่เต็มความกว้าง — grid จองคอลัมน์ให้ dock ที่ไม่ได้เรนเดอร์", "To Do"],
+["ยังไม่มีรอบ", "ไม่มีคนรับ", "TKRD-330", "Medium", "[Trendora] หน้าเลือกแพ็กเกจไม่บอกว่าแพ็กไหนดูอันดับได้ — ปุ่ม \"อัปเกรดแพ็กเกจ\" ของ TKRD-324 จึงพาไปทางตัน", "To Do"],
+["29-SEP", "Berm", "TKRD-332", "High", "[หน้าค้นหา] API ค้นหาตอบ 503 \"โหลดไม่สำเร็จ\" เมื่อมีการค้นหาพร้อมกันตั้งแต่ 3 request ขึ้นไป และระบบยังหักโควต้าค้นหาแม้ค้นหาไม่สำเร็จ", "To Do"],
+["29-SEP", "Berm", "TKRD-334", "High", "[หน้าสินค้าขายดีและมาแรง] บนมือถือไม่แสดงรายการสินค้าเลย เห็นแค่แถบตัวกรอง แม้ API ตอบ 200 และมีข้อมูลครบ", "To Do"],
+["29-SEP", "Berm", "TKRD-335", "Medium", "[หน้าสินค้าขายดีและมาแรง] หัวเพจแสดง \"หน้าหลัก / อะไรเปลี่ยนไปตั้งแต่ครั้งก่อน\" แทน \"สินค้าขายดีและมาแรง\"", "To Do"],
+["29-SEP", "Berm", "TKRD-336", "Medium", "[หน้าสินค้าขายดีและมาแรง] ที่จอกว้าง ≤ 1040px คอลัมน์ \"สินค้า\" ถูกบีบจนชื่อสินค้าเหลือ 3–4 ตัวอักษรต่อบรรทัด อ่านไม่ออก", "To Do"],
+["29-SEP", "Berm", "TKRD-337", "Medium", "[หน้าค้นหา] ค่าตัวกรองที่ไม่ถูกต้องค้างอยู่หลังรีโหลด และขึ้นข้อความ error สีแดงทั้งที่แผงตัวกรองถูกซ่อน ผู้ใช้มือถือไม่รู้ว่าต้องแก้ช่องไหน", "To Do"],
+["29-SEP", "Berm", "TKRD-338", "Low", "[ทั้งระบบ] หน้า 404 ไม่มี style และไม่มีทางกลับไปหน้าหลัก ผู้ใช้ติดอยู่ในจอดำ", "To Do"],
+["29-SEP", "Berm", "TKRD-340", "Medium", "[ทั้งระบบ] สวิตช์โหมดสว่าง/มืดบนแถบบนกับท้ายเมนูเก็บสถานะแยกกัน — กดครั้งแรกไม่ทำอะไร และป้ายบอกโหมดผิด (RD-B.6)", "To Do"],
+["29-SEP", "Berm", "TKRD-341", "Medium", "[หน้าค้นหา] หัวตารางผลลัพธ์เดสก์ท็อปไม่ลอยค้างเมื่อเลื่อนอีกแล้ว — regression ของ TKRD-271 (RD-C.14)", "To Do"],
+["29-SEP", "Berm", "TKRD-342", "Medium", "[สินค้าที่บันทึกไว้] เมนูการ์ดไม่มีคำสั่ง \"ขอข้อมูลใหม่\" และตัวเรียงลำดับไม่มี \"จอมากสุด\" (RD-E.2, RD-E.22)", "To Do"],
+["29-SEP", "Berm", "TKRD-343", "Low", "[แผงรายละเอียดสินค้า] กราฟ \"ประวัติการเปลี่ยนแปลง\" มีตัวชี้วัดแค่ ราคา / ยอดขายต่อวัน — ไม่มี ค่าคอม และ จำนวนจอ (RD-E.13)", "To Do"],
+["ยังไม่มีรอบ", "ไม่มีคนรับ", "TKRD-346", "High", "[CI] admin-catalog.spec.tsx flaky บน develop — merge gate แดงสุ่ม ๆ โดยไม่เกี่ยวกับ PR", "To Do"],
+["ยังไม่มีรอบ", "Berm", "TKRD-348", "Medium", "[ทั้งระบบ] ปุ่มตัวกรองแบบแถบ (.seg) ตัดคำกลางคำแล้วกลืนตัวอักษรหายเมื่อจอแคบกว่า ~320px", "To Do"],
+["ยังไม่มีรอบ", "Gong", "TF-76", "High", "Takra Post: ปิดโปรแกรมเรียก shutdown() 2 รอบ — ปิดช้า +2 วิ และบางครั้งทิ้ง adb server ค้างไว้ (ทำให้ installer เจอ adb ค้าง)", "In Progress"],
+["ยังไม่มีรอบ", "Gong", "TF-78", "High", "Takra Post: กด X แล้วเลือก \"ยกเลิก\" ในกล่อง \"ยังมีงานกำลังทำอยู่\" — โปรแกรมยังเปิดอยู่แต่ถูก shutdown ไปแล้ว (มิเรอร์ค้าง, หยุด adb, โพสต์ที่รันอยู่ถูกตัด)", "In Progress"],
+["ยังไม่มีรอบ", "Gong", "TF-79", "Low", "Calibrator: บรรทัดตั้งต้นขึ้น \"เติมค่าเดิม 16/13 ขั้น\" — ตัวเศษเกินตัวส่วน (ต่อจาก TF-47)", "In Progress"],
+["ยังไม่มีรอบ", "Book", "TF-80", "High", "มอนิเตอร์: ปุ่ม \"▶ รันเดี๋ยวนี้\" ไม่ผ่าน gate \"เตรียมความพร้อมอุปกรณ์\" — รันงานได้ทั้งที่ agent ไม่พร้อม (ต่อจาก TF-75)", "To Do"],
+["ยังไม่มีรอบ", "Book", "TF-81", "Medium", "การ์ดตัวตนเครื่อง: agent หลุด bound แล้วขึ้น \"พร้อมใช้งาน\" คู่กับ \"ยังไม่มี agent\" — ข้อความผิดและไม่มีปุ่มปลุก/ต่อ agent ใหม่ (เกณฑ์ข้อ 3 ของ TF-75)", "To Do"],
+["ยังไม่มีรอบ", "Book", "TF-82", "Medium", "agent_install: เส้นทางปกติ (install -r + am force-stop) ไม่เช็กว่าเครื่องกำลังรันงาน — gate อาจ force-stop agent กลางโพสต์ (ต่อจาก TF-75)", "To Do"],
+["ยังไม่มีรอบ", "Book", "TF-83", "Low", "gate \"เตรียมความพร้อมอุปกรณ์\" ไม่เขียน log เมื่อเตรียม/ติดตั้ง agent สำเร็จ — สืบย้อนไม่ได้ว่าเครื่องไหนถูกติดตั้งใหม่เมื่อไร (ต่อจาก TF-75)", "To Do"],
+["ยังไม่มีรอบ", "Book", "TF-84", "High", "ปุ่มอันตรายไม่มีกล่องยืนยัน — ยกเลิก task (มอนิเตอร์ / สร้าง Task), ลบ task, รีบูต, ปิดเครื่อง ทำงานทันทีที่คลิก", "To Do"],
+["ยังไม่มีรอบ", "Book", "TF-85", "Medium", "flow_runner: action ที่ไม่รู้จักถูกนับว่า \"ผ่าน\" — compat_smoke ขึ้น COMPAT PASS และป้าย \"ใช้งานได้ ✓\" ทั้งที่ไม่ได้อ่านหน้าจอเลย", "To Do"],
+["ยังไม่มีรอบ", "Book", "TF-86", "Medium", "ค้นหาแบบรวม (Ctrl K): เจอเครื่องแต่กดผลลัพธ์แล้วไม่เกิดอะไรบนกำแพงมือถือ", "To Do"],
+["ยังไม่มีรอบ", "Book", "TF-87", "Medium", "ภาพรวม: ตัวเลขชวนเข้าใจผิด — \"7,660 โพสต์ต่อวัน\" ไม่นับเพดาน/ระยะห่างของช่อง และงานที่ผู้ใช้ยกเลิกถูกนับเป็นล้มเหลว", "To Do"],
+["ยังไม่มีรอบ", "Book", "TF-88", "Medium", "ทดสอบ Agent Flow: รายการ \"ลำดับที่เครื่องทำงานจริง\" มีไฟล์พิกัด coord-*.reference ปนเป็น flow — กดรันได้ผลผ่านแบบว่างเปล่า", "To Do"],
+["ยังไม่มีรอบ", "Book", "TF-89", "Medium", "ค่า canary ของ TF-70 แสดงบนหน้าจอและใน log — บรรทัดแรกของ flow runner (\"flow: … · asset …\")", "To Do"],
+["ยังไม่มีรอบ", "Book", "TF-90", "Low", "รวมจุดเล็กจากการทดสอบทั้งระบบ 28 ก.ย. — ข้อความ/ป้ายผิด, คำเตือนขาด, ปุ่มคัดลอก log ไม่มี (8 ข้อ)", "To Do"],
+["ยังไม่มีรอบ", "Book", "TF-91", "High", "Takra Calibrator: cal_adb_up อาจเปิด adb server ขึ้นมาให้ตัวติดตั้ง Takra Post ฆ่า (taskkill /f) ขณะฝูง Samsung เสียบอยู่ — ต้องไม่เปิดขณะมี installer ทำงาน", "To Do"],
+["ยังไม่มีรอบ", "Book", "TF-92", "High", "ปิด Takra Calibrator ขณะ Takra Post เปิดอยู่ → shutdown ของ Calibrator สั่ง adb kill-server ตัวที่ Post ใช้ → ฝูงหลุดจาก Post (ทิศกลับของ TF-77)", "To Do"]
 ];
 // Projects: the Jira key prefix decides the project, so rows from another project
 // show up here as soon as they are added to ROWS. Add a line to PROJECTS to give it a name.
@@ -452,6 +510,9 @@ const scCls=v=>v===SCOPE_LABEL.ui?"c-ui":v===SCOPE_LABEL.sys?"c-sys":"c-tool";
 const PROJECTS={
   TAKRA:{name:"Takra AI", jira:"https://kitdi.atlassian.net"},
   TI:{name:"Takra Insight", jira:"https://kitdi.atlassian.net"},
+  TAK:{name:"Takra Rerun", jira:"https://kitdi.atlassian.net"},
+  TKRD:{name:"Takra Radar", jira:"https://kitdi.atlassian.net"},
+  TF:{name:"Takra Post", jira:"https://kitdi.atlassian.net"},
 };
 const projOf=r=>r[2].split("-")[0];
 const projName=k=>(PROJECTS[k]&&PROJECTS[k].name)||k;
@@ -467,8 +528,8 @@ const RO=[...new Set(ROWS.map(r=>r[0]))].sort((a,b)=>roundKey(a)-roundKey(b)||a.
 const DO=order(["Boat","No"],ROWS.map(r=>r[1]).filter(d=>d!=="ไม่มีคนรับ")).concat(ROWS.some(r=>r[1]==="ไม่มีคนรับ")?["ไม่มีคนรับ"]:[]);
 const PO=order(["Highest","High","Medium","Low","Lowest"],ROWS.map(r=>r[3]));
 const CO=Object.values(SCOPE_LABEL);
-const SO=order(["To Do","In Progress","IN REVIEW","READY TO TEST"],ROWS.map(r=>r[5]));
-const stCls=s=>s==="In Progress"?"t-prog":s==="IN REVIEW"?"t-rev":s==="READY TO TEST"?"t-rtt":"t-todo";
+const SO=order(["To Do","Need Advise","In Progress","IN REVIEW","TESTING","READY TO TEST"],ROWS.map(r=>r[5]));
+const stCls=s=>s==="In Progress"?"t-prog":(s==="IN REVIEW"||s==="TESTING")?"t-rev":s==="READY TO TEST"?"t-rtt":s==="Need Advise"?"t-adv":"t-todo";
 const EXTRA=DO.filter(d=>d!=="Boat"&&d!=="No"&&d!=="ไม่มีคนรับ");
 const devSlot=d=>d==="Boat"?"boat":d==="No"?"no":EXTRA.includes(d)?"x"+(EXTRA.indexOf(d)%4+1):"none";
 const devCls=d=>"d-"+devSlot(d);
@@ -533,7 +594,7 @@ function box(base,title,key,items){
 }
 function drawSummary(base){
   const sev={Highest:"--sev-highest",High:"--sev-high",Medium:"--sev-med",Low:"--sev-low"};
-  const sts={"To Do":"--st-todo","In Progress":"--st-prog","IN REVIEW":"--st-rev","READY TO TEST":"--st-rtt"};
+  const sts={"To Do":"--st-todo","Need Advise":"--sev-med","In Progress":"--st-prog","IN REVIEW":"--st-rev","TESTING":"--st-rev","READY TO TEST":"--st-rtt"};
   document.getElementById("tot").innerHTML =
     '<div class="box total"><div class="lab2">'+(st.j?esc(projName(st.j)):'ทุกโปรเจกต์')+'</div><div class="big">'+base.length+'<small>ใบ</small></div></div>' +
     box(base,"ผู้รับผิดชอบ",1,DO.map(d=>[d,devVar(d)])) +
