@@ -27,7 +27,7 @@ META = dict(
           'บัญชีที่ต้องเตรียม: ผู้ใช้เปิดสิทธิ์แล้ว · ผู้ใช้ใหม่ยังไม่เปิดสิทธิ์ · ผู้ใช้เกิน cap (read-only) · admin · อีเมลใหม่<br>'
           '📎 <b>ที่มาของเคส:</b> สเปก BMad ถูกถอดจาก repo (2026-08-18) — อ่านจาก <code>git show ac885d7:_bmad-output/planning-artifacts/epics.md</code> (Epic 1–8) + <code>prd.md</code> · '
           'คำ UI ลอกจากโค้ดจริง <code>apps/web/src</code> + <code>packages/shared</code> (origin/develop 2026-09-13) — คัดเฉพาะข้อที่คนกดเองแล้วเห็นผลบนหน้าจอได้ (Epic 1 = ท่อข้อมูล backend ไม่มีเคส UI)<br>'
-          '🟢 <b>อัปเดตสถานะข้อมูล (29 ก.ย.):</b> แคตตาล็อกย้ายไป ClickHouse แล้ว (ยืนยัน 18 ก.ย.) — ค้นหา/เฝ้าดู/สร้างลิงก์มีข้อมูลจริงบน UAT เทสได้เต็มชุด · note "TKRD-161" ในเคสเก่าเป็นเงื่อนไขที่ปิดไปแล้ว · เหลือจับตาความครบของ<b>ค่าคอม</b> (TKRD-165 ยัง To Do — เคสค่าคอมบางตัวอาจเจอ summary-only/ยังไม่เคยดึง ให้บันทึกตามจริง)<br>'
+          '🟢 <b>อัปเดตสถานะข้อมูล (29 ก.ย.):</b> แคตตาล็อกย้ายไป ClickHouse แล้ว (ยืนยัน 18 ก.ย.) — ค้นหา/เฝ้าดู/สร้างลิงก์มีข้อมูลจริงบน UAT เทสได้เต็มชุด · note "TKRD-161" ในเคสเก่าเป็นเงื่อนไขที่ปิดไปแล้ว · <b>ค่าคอม</b>ก็อ่านจาก ClickHouse (<code>f_item_commission</code>) แล้ว — สินค้าที่ยังไม่เคยถูกดึง rate จะมีสถานะบอกบนจอ (เคส RD-C.20–22 รองรับ) ไม่ใช่บั๊ก · Jira TKRD-161/165 เนื้อหาเก่ากว่าโค้ด อย่าใช้เป็นเหตุ BLOCKED<br>'
           '🏷️ <b>ประเภทเคส (กรองได้):</b> Happy Path · Negative · Boundary · Validation · Exception · Permission · Data'),
     footer='UI only (manual) · Trendora (takra-radar) Web UAT · Jira TKRD',
 )
