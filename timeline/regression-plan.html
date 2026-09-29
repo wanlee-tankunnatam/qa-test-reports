@@ -66,6 +66,9 @@
   .s-prog{color:var(--prog); background:var(--prog-bg)}
   .s-wait{color:var(--wait); background:var(--wait-bg)}
   .s-none{color:var(--none); background:var(--none-bg)}
+  .os-win{color:#1d4ed8; background:#dbeafe; border:1px solid #93c5fd}
+  .os-mac{color:#374151; background:#e5e7eb; border:1px solid #c7ccd4}
+  @media (prefers-color-scheme:dark){ :root:not([data-theme="light"]) .os-win{color:#93c5fd;background:#17233b;border-color:#2a3b5c} :root:not([data-theme="light"]) .os-mac{color:#cbd2da;background:#242b35;border-color:#39414d} }
   .warn-txt{color:var(--none); font-weight:600}
 
   .tabs{display:flex; gap:4px; border-bottom:1px solid var(--border); margin:4px 0 16px; overflow-x:auto}
@@ -125,7 +128,7 @@
   <section class="panel" data-panel="plan">
     <div class="table-wrap">
       <table>
-        <thead><tr><th>ขอบเขต Regression</th><th>ผู้เทส</th><th>วัน</th><th>~เคส</th><th>สถานะ</th></tr></thead>
+        <thead><tr><th>ขอบเขต Regression</th><th>ผู้เทส</th><th>OS</th><th>วัน</th><th>~เคส</th><th>สถานะ</th></tr></thead>
         <tbody id="rows"></tbody>
       </table>
     </div>
@@ -146,12 +149,12 @@ const PLAN = [
     { name:'จุดที่เคย FAIL + ฟีเจอร์รอบ ก.ย. (ใบงาน 1223–1230 · tool-calling)', note:'re-test เฉพาะเคสที่เคยไม่ผ่านและ dev ปิดแล้ว + บัคตีกลับชุด MVP2 (รอ dev ปิดก่อน 2 ต.ค.)', owner:'Ice', start:'2026-10-06', end:'2026-10-06', cases:'~90', status:'plan' },
   ]},
   { name:'Rerun', emoji:'🔁', color:'#7c3aed', owner:'Moss', items:[
-    { name:'🪟 Windows — flow หลัก + จุดที่เคย FAIL 33 + ฟีเจอร์ใหม่ ก.ย.', note:'สโคปเดียวกันรันคู่ 2 OS ตามธรรมเนียม Rerun · P0 ของ MVP-1+2 + re-test เคสไม่ผ่านที่แก้แล้ว + auto chat-reply · ตั้งเวลา · แบนเนอร์', owner:'Moss', start:'2026-10-05', end:'2026-10-05', cases:'~80', status:'plan' },
-    { name:'🍎 macOS — สโคปเดียวกับ Windows (คู่ OS)', note:'ชุดเดียวกับแถว Windows ทุกเคส — เทียบผลสองแพลตฟอร์ม บันทึกแยกคอลัมน์ Mac/Win ในรายงาน', owner:'Moss', start:'2026-10-06', end:'2026-10-06', cases:'~80', status:'plan' },
+    { name:'flow หลัก + จุดที่เคย FAIL 33 + ฟีเจอร์ใหม่ ก.ย.', os:'win', note:'สโคปเดียวกันรันคู่ 2 OS ตามธรรมเนียม Rerun · P0 ของ MVP-1+2 + re-test เคสไม่ผ่านที่แก้แล้ว + auto chat-reply · ตั้งเวลา · แบนเนอร์', owner:'Moss', start:'2026-10-05', end:'2026-10-05', cases:'~80', status:'plan' },
+    { name:'สโคปเดียวกับแถว Windows ทุกเคส (คู่ OS)', os:'mac', note:'เทียบผลสองแพลตฟอร์ม — บันทึกแยกคอลัมน์ Mac/Win ในรายงาน', owner:'Moss', start:'2026-10-06', end:'2026-10-06', cases:'~80', status:'plan' },
   ]},
   { name:'Insight', emoji:'📊', color:'#f59e0b', owner:'Ice', items:[
-    { name:'🪟 Windows — Live Readiness รอบยืนยัน + จุดที่เคย FAIL (Dashboard · Reports · Membership)', note:'สโคปเดียวกันรันคู่ 2 OS ตามธรรมเนียม Insight · Live Readiness 33 เคสรันกับไลฟ์จริง 1 รอบ + re-test บั๊กของขวัญนับซ้ำและชุด fail ที่ dev ปิดแล้ว + BYOK smoke', owner:'Ice', start:'2026-10-07', end:'2026-10-07', cases:'~70', status:'plan' },
-    { name:'🍎 macOS — สโคปเดียวกับ Windows (คู่ OS)', note:'ชุดเดียวกับแถว Windows (Live Readiness ไม่ต้องรันไลฟ์จริงซ้ำ ใช้ไลฟ์รอบเดียวดูจอ Mac คู่กันได้) — บันทึกแยกคอลัมน์ Mac/Win ในรายงาน', owner:'Ice', start:'2026-10-09', end:'2026-10-09', cases:'~55', status:'plan' },
+    { name:'Live Readiness รอบยืนยัน + จุดที่เคย FAIL (Dashboard · Reports · Membership)', os:'win', note:'สโคปเดียวกันรันคู่ 2 OS ตามธรรมเนียม Insight · Live Readiness 33 เคสรันกับไลฟ์จริง 1 รอบ + re-test บั๊กของขวัญนับซ้ำและชุด fail ที่ dev ปิดแล้ว + BYOK smoke', owner:'Ice', start:'2026-10-07', end:'2026-10-07', cases:'~70', status:'plan' },
+    { name:'สโคปเดียวกับแถว Windows ทุกเคส (คู่ OS)', os:'mac', note:'ชุดเดียวกับแถว Windows (Live Readiness ไม่ต้องรันไลฟ์จริงซ้ำ ใช้ไลฟ์รอบเดียวดูจอ Mac คู่กันได้) — บันทึกแยกคอลัมน์ Mac/Win ในรายงาน', owner:'Ice', start:'2026-10-09', end:'2026-10-09', cases:'~55', status:'plan' },
   ]},
   { name:'Hub', emoji:'🧾', color:'#0ea5e9', owner:'Moss', items:[
     { name:'flow เงินครบลูป (สมัคร → เลือกแพ็กเกจ → สลิป → CS ตรวจ → เปิดสิทธิ์ → ดาวน์โหลด) + VAT/เอกสาร', note:'MVP-1 P0 + ของใหม่ VAT/ใบเสร็จ/รวมสลิป + re-test บัคตีกลับ 3 ชุด (TKH-50/121/239 — รอ dev ปิดก่อน)', owner:'Moss', start:'2026-10-07', end:'2026-10-07', cases:'~90', status:'plan' },
@@ -195,10 +198,11 @@ document.getElementById('summary').innerHTML = [
 
 // ── ตารางแผน ──
 document.getElementById('rows').innerHTML = PLAN.map(p => {
-  const head = `<tr class="proj" style="--pc:${p.color}"><td>${p.emoji} ${esc(p.name)}<span class="prog">ผู้เทสหลัก ${esc(p.owner)}</span></td><td></td><td></td><td></td><td></td></tr>`;
+  const head = `<tr class="proj" style="--pc:${p.color}"><td>${p.emoji} ${esc(p.name)}<span class="prog">ผู้เทสหลัก ${esc(p.owner)}${p.items.some(i=>i.os) ? ' · 🪟+🍎 คู่ 2 OS' : ''}</span></td><td></td><td></td><td></td><td></td><td></td></tr>`;
   return head + p.items.map(it => `<tr>
     <td class="scope"><span class="fname">${esc(it.name)}</span>${it.note ? `<span class="note">${esc(it.note)}</span>` : ''}</td>
     <td class="owner">${esc(it.owner || p.owner)}</td>
+    <td class="st">${it.os ? `<span class="pill ${it.os === 'win' ? 'os-win' : 'os-mac'}">${it.os === 'win' ? '🪟 Windows' : '🍎 macOS'}</span>` : '<span style="color:var(--faint)">—</span>'}</td>
     <td class="day">${fmt(it.start)}${it.end !== it.start ? ` – ${fmt(it.end)}` : ''}</td>
     <td class="cs">${esc(it.cases)}</td>
     <td class="st"><span class="pill ${ST[it.status][0]}">${ST[it.status][1]}</span></td>
@@ -227,8 +231,8 @@ document.getElementById('rows').innerHTML = PLAN.map(p => {
     p.items.forEach(it => {
       n++;
       const a = col(it.start), b = col(it.end);
-      const bar = `<div class="g-bar" style="left:${a * DW + 3}px;width:${(b - a + 1) * DW - 6}px;background:${p.color}" title="${esc(it.name)} · ${fmt(it.start)}${it.end !== it.start ? '–' + fmt(it.end) : ''}">${esc(it.owner || p.owner)} · ${esc(it.cases)} เคส${it.status === 'risk' ? ' ⚠️' : ''}</div>`;
-      html += `<div class="g-row"><div class="g-lcol"><div class="g-id">${String(n).padStart(2, '0')}</div><div class="g-name" title="${esc(it.name)}">${esc(it.name)}</div><div class="g-own">${esc(it.owner || p.owner)}</div></div><div class="g-track">${bar}</div></div>`;
+      const bar = `<div class="g-bar" style="left:${a * DW + 3}px;width:${(b - a + 1) * DW - 6}px;background:${p.color}" title="${esc(it.name)} · ${fmt(it.start)}${it.end !== it.start ? '–' + fmt(it.end) : ''}">${it.os ? (it.os === 'win' ? '🪟 WIN · ' : '🍎 MAC · ') : ''}${esc(it.owner || p.owner)} · ${esc(it.cases)} เคส${it.status === 'risk' ? ' ⚠️' : ''}</div>`;
+      html += `<div class="g-row"><div class="g-lcol"><div class="g-id">${String(n).padStart(2, '0')}</div><div class="g-name" title="${esc(it.name)}">${it.os ? (it.os === 'win' ? '🪟 ' : '🍎 ') : ''}${esc(it.name)}</div><div class="g-own">${esc(it.owner || p.owner)}</div></div><div class="g-track">${bar}</div></div>`;
     });
   });
   days.forEach((x, k) => { if (x.getDay() === 0 || x.getDay() === 6) html += `<div class="g-shade" style="left:${L + k * DW}px"></div>`; });
