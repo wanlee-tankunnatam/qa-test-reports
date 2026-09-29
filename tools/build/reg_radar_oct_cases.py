@@ -12,9 +12,9 @@ META = dict(
     title='[REG 5–9 ต.ค.] TAKRA Radar (Trendora) — Regression Test Cases',
     emoji='📡', uid_start=15501, download='takra-radar-regression-oct0509-ui-test-cases.html',
     back='https://wanlee-tankunnatam.github.io/qa-test-reports/?project=radar',
-    sub='รอบ Regression <b>จ 5 – ศ 9 ต.ค. 2569</b> · ชุดเต็ม 130 เคส (ลูกค้า A–H + แอดมิน ADM) รอบยืนยัน 8 ต.ค. · ⚠️ ต้องมีข้อมูลแคตตาล็อกก่อน (TKRD-161)',
+    sub='รอบ Regression <b>จ 5 – ศ 9 ต.ค. 2569</b> · ชุดเต็ม 130 เคส (ลูกค้า A–H + แอดมิน ADM) รอบยืนยัน 8 ต.ค. · ✅ ข้อมูลแคตตาล็อกบน UAT มีแล้ว (ClickHouse)',
     groups_label=_base.META.get('groups_label', ''),
-    note='🧪 <b>รอบ Regression 5–9 ต.ค. 2569</b> — ชุดเต็ม 130 เคส (ลูกค้า A–H + แอดมิน ADM) รอบยืนยัน 8 ต.ค. · ⚠️ ต้องมีข้อมูลแคตตาล็อกก่อน (TKRD-161)<br>📎 เคสคัดจากชุดหลัก (<code>radar_cases.py</code>) · ผลรอบนี้บันทึกแยกจากรายงานชุดหลัก · แผนรวม: <a href="https://wanlee-tankunnatam.github.io/qa-test-reports/timeline/regression-plan.html#plan">regression-plan</a>',
+    note='🧪 <b>รอบ Regression 5–9 ต.ค. 2569</b> — ชุดเต็ม 130 เคส (ลูกค้า A–H + แอดมิน ADM) รอบยืนยัน 8 ต.ค. · ✅ ข้อมูลแคตตาล็อกบน UAT มีแล้ว (ClickHouse)<br>📎 เคสคัดจากชุดหลัก (<code>radar_cases.py</code>) · ผลรอบนี้บันทึกแยกจากรายงานชุดหลัก · แผนรวม: <a href="https://wanlee-tankunnatam.github.io/qa-test-reports/timeline/regression-plan.html#plan">regression-plan</a>',
     footer='Regression 5–9 ต.ค. 2569 · takra-radar',
 )
 

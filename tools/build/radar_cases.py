@@ -27,8 +27,7 @@ META = dict(
           'บัญชีที่ต้องเตรียม: ผู้ใช้เปิดสิทธิ์แล้ว · ผู้ใช้ใหม่ยังไม่เปิดสิทธิ์ · ผู้ใช้เกิน cap (read-only) · admin · อีเมลใหม่<br>'
           '📎 <b>ที่มาของเคส:</b> สเปก BMad ถูกถอดจาก repo (2026-08-18) — อ่านจาก <code>git show ac885d7:_bmad-output/planning-artifacts/epics.md</code> (Epic 1–8) + <code>prd.md</code> · '
           'คำ UI ลอกจากโค้ดจริง <code>apps/web/src</code> + <code>packages/shared</code> (origin/develop 2026-09-13) — คัดเฉพาะข้อที่คนกดเองแล้วเห็นผลบนหน้าจอได้ (Epic 1 = ท่อข้อมูล backend ไม่มีเคส UI)<br>'
-          '🔴 <b>ข้อจำกัดใหญ่ตอนนี้ (TKRD-161):</b> ตาราง <code>product</code> ว่างทั้ง prod และ uat — หน้าค้นหาคืนผลว่างทุกคำค้น "และนั่นถูกต้อง" (ท่อ CSV ปิด · แคตตาล็อกกำลังย้ายไป ClickHouse) → '
-          'เคสที่ต้องมีข้อมูลสินค้า (ค้นหาเจอ · ติดตาม · สร้างลิงก์ · เช็คจอ) มี note กำกับ ให้ลงผล <b>BLOCKED</b> จนกว่าข้อมูลจะมา · เช็คสถานะแหล่งข้อมูลได้ที่ <code>GET /api/v1/source-status</code> (ไม่ต้อง login)<br>'
+          '🟢 <b>อัปเดตสถานะข้อมูล (29 ก.ย.):</b> แคตตาล็อกย้ายไป ClickHouse แล้ว (ยืนยัน 18 ก.ย.) — ค้นหา/เฝ้าดู/สร้างลิงก์มีข้อมูลจริงบน UAT เทสได้เต็มชุด · note "TKRD-161" ในเคสเก่าเป็นเงื่อนไขที่ปิดไปแล้ว · เหลือจับตาความครบของ<b>ค่าคอม</b> (TKRD-165 ยัง To Do — เคสค่าคอมบางตัวอาจเจอ summary-only/ยังไม่เคยดึง ให้บันทึกตามจริง)<br>'
           '🏷️ <b>ประเภทเคส (กรองได้):</b> Happy Path · Negative · Boundary · Validation · Exception · Permission · Data'),
     footer='UI only (manual) · Trendora (takra-radar) Web UAT · Jira TKRD',
 )
