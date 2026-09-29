@@ -1,0 +1,493 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>บั๊กค้างรอบส่งงาน</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+/* Layout: sticky filter rail above one continuous table, grouped by round then by dev */
+:root{
+  --bg:#f6f7fb; --surface:#ffffff; --sunken:#eef0f7; --raised:#fafbff;
+  --fg:#151826; --muted:#5f6680; --line:#dfe3ee;
+  --accent:#7c3aed; --accent-soft:#f1eaff;
+  --sev-highest:#e11d48; --sev-high:#ea580c; --sev-med:#d97706; --sev-low:#64748b;
+  --dev-boat:#0d9488; --dev-no:#ea580c; --dev-none:#64748b;
+  --st-todo:#64748b; --st-prog:#2563eb; --st-rev:#9333ea;
+  --dev-boat-soft:#ccfbf1; --dev-no-soft:#ffedd5; --on-dev:#ffffff;
+  --dev-x1:#4f46e5; --dev-x1-soft:#e0e7ff; --dev-x2:#db2777; --dev-x2-soft:#fce7f3; --dev-x3:#0891b2; --dev-x3-soft:#cffafe; --dev-x4:#65a30d; --dev-x4-soft:#ecfccb; --dev-none-soft:#eef0f7;
+  --st-rtt:#16a34a;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --bg:#0f1220; --surface:#171a2b; --sunken:#20243a; --raised:#1b1f33;
+  --fg:#eef1fb; --muted:#9aa3bf; --line:#2c3150;
+  --accent:#a78bfa; --accent-soft:#2a2150;
+  --sev-highest:#fb7185; --sev-high:#fb923c; --sev-med:#facc15; --sev-low:#94a3b8;
+  --dev-boat:#2dd4bf; --dev-no:#fb923c; --dev-none:#9aa3bf;
+  --st-todo:#94a3b8; --st-prog:#60a5fa; --st-rev:#c084fc;
+  --dev-boat-soft:#0f3a36; --dev-no-soft:#3d2412; --on-dev:#0f1220;
+  --dev-x1:#818cf8; --dev-x1-soft:#23264d; --dev-x2:#f472b6; --dev-x2-soft:#3d1a2e; --dev-x3:#22d3ee; --dev-x3-soft:#0d3440; --dev-x4:#a3e635; --dev-x4-soft:#26330f; --dev-none-soft:#20243a;
+  --st-rtt:#4ade80;
+  color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#0f1220; --surface:#171a2b; --sunken:#20243a; --raised:#1b1f33;
+  --fg:#eef1fb; --muted:#9aa3bf; --line:#2c3150;
+  --accent:#a78bfa; --accent-soft:#2a2150;
+  --sev-highest:#fb7185; --sev-high:#fb923c; --sev-med:#facc15; --sev-low:#94a3b8;
+  --dev-boat:#2dd4bf; --dev-no:#fb923c; --dev-none:#9aa3bf;
+  --st-todo:#94a3b8; --st-prog:#60a5fa; --st-rev:#c084fc;
+  --dev-boat-soft:#0f3a36; --dev-no-soft:#3d2412; --on-dev:#0f1220;
+  --dev-x1:#818cf8; --dev-x1-soft:#23264d; --dev-x2:#f472b6; --dev-x2-soft:#3d1a2e; --dev-x3:#22d3ee; --dev-x3-soft:#0d3440; --dev-x4:#a3e635; --dev-x4-soft:#26330f; --dev-none-soft:#20243a;
+  --st-rtt:#4ade80;
+  color-scheme:dark;
+}
+body{background:var(--bg);color:var(--fg);font-family:"IBM Plex Sans Thai",system-ui,-apple-system,"Helvetica Neue",sans-serif;line-height:1.5;-webkit-text-size-adjust:100%}
+.wrap{max-width:1180px;margin:0 auto;padding-inline:16px;padding-block:28px 64px}
+h1{font-size:clamp(1.5rem,4vw,2.1rem);font-weight:700;letter-spacing:-.01em;margin:0;text-wrap:balance}
+.sub{color:var(--muted);font-size:.9rem;margin:.4rem 0 0}
+.tot{display:grid;grid-template-columns:auto repeat(3,minmax(0,1fr));gap:10px;margin-top:18px}
+@media (max-width:760px){.tot{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:420px){.tot{grid-template-columns:minmax(0,1fr)}}
+.box{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px;min-width:0}
+.box .lab2{font-size:.72rem;letter-spacing:.06em;color:var(--muted);font-weight:600}
+.box.total{display:flex;flex-direction:column;justify-content:center;padding-inline:18px}
+.box.total .big{font-size:2.2rem;font-weight:700;line-height:1.1;font-variant-numeric:tabular-nums}
+.box.total .big small{font-size:.85rem;font-weight:500;color:var(--muted);margin-left:4px}
+.stack{display:flex;height:10px;border-radius:5px;overflow:hidden;background:var(--sunken);margin:9px 0 9px}
+.stack i{display:block;height:100%}
+.stack i+i{border-left:2px solid var(--surface)}
+.leg{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:.8rem}
+.leg span{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.leg .sw{width:9px;height:9px;border-radius:2px;flex:none}
+.leg b{font-variant-numeric:tabular-nums;font-weight:700}
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line);margin-top:22px;padding-block:10px;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.bar .lab{font-size:.7rem;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin-right:2px}
+button.f{font:inherit;font-size:.8rem;font-weight:500;cursor:pointer;border:1px solid var(--line);background:var(--surface);color:var(--fg);border-radius:6px;padding:4px 10px}
+button.f[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--surface)}
+:root[data-theme="dark"] button.f[aria-pressed="true"],
+button.f[aria-pressed="true"]{color:#fff}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) button.f[aria-pressed="true"]{color:#0f1220}}
+:root[data-theme="dark"] button.f[aria-pressed="true"]{color:#0f1220}
+button.f:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+input#q{font:inherit;font-size:.8rem;flex:1;min-width:150px;border:1px solid var(--line);background:var(--surface);color:var(--fg);border-radius:6px;padding:5px 10px}
+.sep{flex-basis:100%;height:0}
+.proj{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:16px}
+.proj .lab{font-size:.7rem;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.proj button{font:inherit;cursor:pointer;display:inline-flex;align-items:baseline;gap:8px;border:1px solid var(--line);background:var(--surface);color:var(--fg);border-radius:10px;padding:8px 14px;font-size:.9rem;font-weight:600}
+.proj button small{font-weight:500;color:var(--muted);font-size:.78rem}
+.proj button .k{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:.72rem;font-weight:600;color:var(--muted);border:1px solid var(--line);border-radius:4px;padding:0 5px}
+.proj button[aria-pressed="true"]{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent);background:var(--accent-soft)}
+.proj .hint{font-size:.76rem;color:var(--muted)}
+td.pj{width:1%;white-space:nowrap}
+.ptag{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:.7rem;font-weight:600;color:var(--muted);border:1px solid var(--line);border-radius:4px;padding:1px 6px}
+.sq{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:6px;vertical-align:0}
+.grp{margin-top:30px}
+.rnd{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;border-bottom:2px solid var(--accent);padding-bottom:6px}
+.rnd h2{margin:0;font-size:1.15rem;font-weight:700;font-family:"IBM Plex Mono",ui-monospace,monospace;letter-spacing:.02em}
+.rnd .n{font-size:.78rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.dev{margin-top:16px;border:1px solid var(--line);border-left:6px solid var(--dc);border-radius:8px;overflow:hidden;background:var(--surface)}
+.d-boat{--dc:var(--dev-boat);--ds:var(--dev-boat-soft)} .d-no{--dc:var(--dev-no);--ds:var(--dev-no-soft)} .d-none{--dc:var(--dev-none);--ds:var(--dev-none-soft)}
+.d-x1{--dc:var(--dev-x1);--ds:var(--dev-x1-soft)} .d-x2{--dc:var(--dev-x2);--ds:var(--dev-x2-soft)} .d-x3{--dc:var(--dev-x3);--ds:var(--dev-x3-soft)} .d-x4{--dc:var(--dev-x4);--ds:var(--dev-x4-soft)}
+.devh{margin:0;background:var(--dc);color:var(--on-dev);font-size:.95rem;font-weight:700;letter-spacing:.02em;padding:7px 12px;display:flex;align-items:baseline;gap:10px}
+.devh .n{font-size:.8rem;font-weight:500;opacity:.9;font-variant-numeric:tabular-nums}
+.dev th{background:var(--ds)}
+.scroll{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:640px;font-size:.84rem}
+th{text-align:left;font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600;padding:8px 12px;background:var(--sunken);border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+tr:last-child td{border-bottom:0}
+tr:nth-child(even) td{background:var(--raised)}
+td.id{white-space:nowrap;width:1%}
+td.id a{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:.8rem;font-weight:600;color:var(--accent);text-decoration:none;font-variant-numeric:tabular-nums}
+td.id a:hover{text-decoration:underline}
+td.p{width:1%;white-space:nowrap}
+.sev{font-size:.7rem;font-weight:600;letter-spacing:.04em;border-radius:4px;padding:2px 7px;border:1px solid currentColor}
+.s-Highest{color:var(--sev-highest)} .s-High{color:var(--sev-high)} .s-Medium{color:var(--sev-med)} .s-Low{color:var(--sev-low)}
+td.nm{min-width:0}
+td.st{width:1%;white-space:nowrap}
+.stt{font-size:.72rem;font-weight:600;display:inline-flex;align-items:center;gap:5px}
+.stt::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
+.t-todo{color:var(--st-todo)} .t-prog{color:var(--st-prog)} .t-rev{color:var(--st-rev)} .t-rtt{color:var(--st-rtt)}
+.none{color:var(--muted);font-size:.85rem;padding:18px 0}
+footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--line);color:var(--muted);font-size:.78rem}
+@media (max-width:520px){ .wrap{padding-block:20px 48px} th,td{padding:7px 9px} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>บั๊กค้างรอบส่งงาน</h1>
+  <p class="sub">บั๊กที่ยังไม่ปิดจากทุกโปรเจกต์ใน Jira แยกตามรอบส่ง แล้วแยกตามผู้รับผิดชอบ · ข้อมูล ณ 29 ก.ย. 2026 23:31 น.</p>
+  <div class="proj" id="fj" role="group" aria-label="โปรเจกต์"></div>
+  <div class="tot" id="tot"></div>
+
+  <div class="bar">
+    <span class="lab">รอบ</span><span id="fr"></span>
+    <span class="sep"></span>
+    <span class="lab">Dev</span><span id="fd"></span>
+    <span class="lab" style="margin-left:6px">ระดับ</span><span id="fp"></span>
+    <span class="sep"></span>
+    <span class="lab">สถานะ</span><span id="fs"></span>
+    <input id="q" type="search" placeholder="ค้นหา ID หรือชื่อ…" autocomplete="off">
+  </div>
+
+  <div id="out"></div>
+
+  <footer>แตะรหัสตั๋วเพื่อเปิดใน Jira · Insight (TI) ใบที่ไม่มีป้ายวันที่รวมไว้ใน "ยังไม่มีรอบ" · กติกาของ TAKRA: รอบ 15-OCT ใบเยอะสุด (37 ใบ) · 15-OCT แน่นแล้ว · ใบที่ In Progress / IN REVIEW อยู่ 30-SEP · กระดิ่ง + AI ตอบคอมเมนต์ที่ลูกค้าเจอในไลฟ์ไม่เกิน 2-OCT ส่วนช่องโหว่ของเทสต์/เมตริกลง 15-OCT หรือ 23-OCT</footer>
+</div>
+
+<script>
+const ROWS = [
+["9-OCT", "No", "TAKRA-572", "Medium", "[MVP2] หน้าเตรียมอุปกรณ์ก่อนเริ่มออกอากาศแสดง UI ไม่สอดคล้องกันระหว่างการเริ่มไลฟ์และเมนูตรวจอุปกรณ์", "To Do"],
+["9-OCT", "No", "TAKRA-576", "High", "[BUG] Silent SSO ทำให้ local logout ถูก re-login เงียบๆ — logout ที่ไม่จบ Zitadel session ถูกดึงกลับเข้าระบบทันที", "To Do"],
+["23-OCT", "No", "TAKRA-584", "Medium", "[MVP2] ข้อความบน Modal ในหน้ารายละเอียดอวตารแสดงผลไม่ชัดเจนในโหมดมืด", "To Do"],
+["25-SEP", "No", "TAKRA-602", "Highest", "[P0][MVP2][Test] TAKRA AI — เปิดหน้าผู้ใช้และบทบาทแล้วเห็นสมาชิกครบพร้อมข้อมูลที่จำเป็น", "To Do"],
+["9-OCT", "No", "TAKRA-660", "Medium", "[TC-TL.E1][Epic 4] ทดสอบเครือข่ายไม่ครบ (กดหยุดกลางคัน) แต่ระบบขึ้นผล \"✓ ความเร็วพร้อมไลฟ์ HD\" แทนที่จะแจ้งว่าทดสอบไม่ครบ", "To Do"],
+["9-OCT", "Boat", "TAKRA-661", "High", "Takra Live (Mac) - Dashboard ไม่แสดงข้อมูล \"ไลฟ์สัปดาห์นี้\" แม้มีรายการไลฟ์ในตารางไลฟ์", "To Do"],
+["9-OCT", "No", "TAKRA-664", "Medium", "[Epic 4][Live Studio] ผูกสคริปต์เข้าไลฟ์ไม่สำเร็จทุกครั้ง - ไม่มีสิทธิ์ workspace.settings.write แม้บัญชีเป็น Owner (บล็อกการทดสอบ TC-BR/TC-DP ทั้งหมด)", "To Do"],
+["15-OCT", "No", "TAKRA-697", "Medium", "[takra-ai] migration 0046 ไม่มี guard และไม่ได้ GRANT — ทำ uat crash loop", "To Do"],
+["15-OCT", "No", "TAKRA-709", "Medium", "[รอ ฉาก2+] [Live · direct-RTMP] ฉากถูกแช่แข็งตั้งแต่กด Start — การสลับฉากของ TAKRA-705 ไม่ถึง encoder ที่ออก TikTok", "To Do"],
+["30-SEP", "No", "TAKRA-746", "Medium", "[Voice] กดฟังตัวอย่างเสียงแล้วเด้ง 502 — ระบบเราตัดสายเองที่ 10 วินาที ทั้งที่การสังเคราะห์เสียงใช้ 3–8 วินาทีเป็นปกติ", "IN REVIEW"],
+["30-SEP", "No", "TAKRA-747", "Medium", "[Voice] กดฟังเสียงเดิมซ้ำ = สังเคราะห์ใหม่ทุกครั้ง — เก็บ bytes ไว้ในแท็บระหว่างที่หน้ายังเปิด", "IN REVIEW"],
+["9-OCT", "No", "TAKRA-760", "Medium", "UAT /products/new: ปุ่ม \"เพิ่มสินค้า\" บนฟอร์มว่าง enabled แต่กดแล้วเงียบ (ไม่มี POST · ไม่มีข้อความแจ้ง)", "To Do"],
+["9-OCT", "Boat", "TAKRA-780", "Medium", "[Studio] ปุ่มแก้สคริปต์ในโมดัลผูกสคริปต์ไม่มีวันขึ้น และถึงกดได้ก็ไม่บันทึกลง DB — โค้ดตายจากยุค mock", "To Do"],
+["30-SEP", "No", "TAKRA-791", "Medium", "📌 [Bug / Integration] Takra AI: หน้า \"ตั้งค่าแพ็กเกจ\" และ \"ผู้ใช้และบทบาท\" ยังคงแสดงข้อมูลจำลอง (Mock Data)", "IN REVIEW"],
+["18-SEP", "No", "TAKRA-792", "Medium", "📌 [Bug] Takra AI: ตัวกรอง (Filter) ในหน้า \"คลังอวาตาร์\" ทำงานผิดพลาด ไม่แสดงรายการอวาตาร์ ", "To Do"],
+["30-SEP", "No", "TAKRA-798", "Medium", "[Bug] เพิ่มบัญชี TikTok: วาง curl แบบ `curl --url '...'` แล้วขึ้น \"อ่าน URL ไม่ได้\" + หน้าจอไม่บอกว่าต้องก็อป request ไหน", "IN REVIEW"],
+["30-OCT", "No", "TAKRA-872", "Low", "TAKRA Live - คลังสคริปต์ยิง API ซ้ำทั้งชุดทุกครั้งที่สลับแท็บหรือเปลี่ยนตัวกรอง", "To Do"],
+["30-OCT", "No", "TAKRA-873", "Low", "TAKRA Live - GET /entitlement ตอบ 403 ทุกครั้งที่โหลดหน้า ทั้งที่ผู้ใช้มีสิทธิ์ Owner", "To Do"],
+["15-OCT", "Boat", "TAKRA-874", "Medium", "TAKRA Live - อวาตาร์บางตัวในคลังไม่มีรูปตัวอย่าง แสดงเป็น Placeholder สีเทา", "To Do"],
+["15-OCT", "No", "TAKRA-879", "Medium", "TAKRA Live - Pre-flight แสดง \"เสียงถูกเพิกถอน\" ครอบทุกกรณี (ไม่พบ/ID ผิด/ข้าม Workspace) ทั้งที่สาเหตุต่างกัน", "To Do"],
+["23-OCT", "No", "TAKRA-880", "Low", "TAKRA Live - ป๊อปอัปเลือกเสียงแสดงข้อความขัดแย้งกันเอง และปุ่มยืนยันใช้ภาษาปนกัน (\"ใช้ voice\")", "To Do"],
+["18-SEP", "No", "TAKRA-882", "Medium", "TAKRA Live - ห้องคุมไลฟ์ไม่แสดงสาเหตุเมื่อไลฟ์หยุดกลางคัน", "To Do"],
+["30-OCT", "No", "TAKRA-912", "Low", "Direct-RTMP - log ขึ้น non-existing PPS 0 / no frame! รัวๆ ทั้งที่ภาพออกปกติ (log หลอกให้ diagnose ผิดทาง)", "To Do"],
+["25-SEP", "No", "TAKRA-921", "High", "ไลฟ์ realfact ที่พูดครบ 20 นาทีถูกตัดแล้วบันทึกเป็น completed — ผู้ใช้ไม่เคยรู้ว่ามีเพดาน", "To Do"],
+["30-SEP", "No", "TAKRA-924", "Low", "flaky test: live-studio-create-script.spec.tsx ล้มสุ่ม ๆ เฉพาะตอนรันทั้งชุด (2.5 วิ → 15.79 วิ)", "IN REVIEW"],
+["15-OCT", "Boat", "TAKRA-928", "Medium", "TAKRA Live - อัปโหลดไฟล์ที่ไม่ใช่ไฟล์เสียงในคลังเสียง แล้วไม่มีข้อความแจ้งเตือนให้ผู้ใช้เห็น", "To Do"],
+["30-SEP", "No", "TAKRA-931", "High", "ภาพออกอากาศกระตุกจนแทบหยุดโดยไม่มีใครรู้ — ห้องคุมไลฟ์ต้องบอก fps จริง + เตือนเมื่อหน้าส่งภาพถูกซ่อน", "IN REVIEW"],
+["15-OCT", "No", "TAKRA-964", "Medium", "เลข \"วาด\" ขึ้นสูงสุดตอนภาพค้าง — นับว่าวาดกี่ครั้ง ไม่ได้นับว่าวาดของใหม่กี่ครั้ง", "To Do"],
+["30-SEP", "No", "TAKRA-965", "High", "ปิดหน้าต่างจอไลฟ์ (popout) ได้เงียบๆ ไม่มี dialog เตือน ทั้งที่ปิดแล้วไลฟ์ทั้งรอบจบทันทีและกู้ไม่ได้", "To Do"],
+["18-SEP", "Boat", "TAKRA-967", "High", "[Blocked รอ Epic 13]TAKRA Live - AI ตอบคอมเมนต์ต้องไม่สร้างหรือส่งข้อมูลราคา ลิงก์ การทักแชท โปรโมชัน หรือคำสั่งซื้อ (guardrail ตอบคอมเมนต์ real-time)", "To Do"],
+["15-OCT", "Boat", "TAKRA-970", "Medium", "TAKRA Live - หน้าออกอากาศได้แล้วและ Monitor ต้องแสดงระยะเวลาการไลฟ์และเวลาที่เหลือก่อนจบ (+ ชื่อ Live บนหน้า Monitor)", "To Do"],
+["25-SEP", "No", "TAKRA-971", "High", "TAKRA Hub / TAKRA Live - Session ผู้ใช้ไม่สอดคล้องกันระหว่าง Hub และ Live ทำให้แสดงบัญชีผิดคน (Login User A ที่ Hub แต่ Live แสดง user เก่าที่ค้างอยู่)", "To Do"],
+["23-OCT", "No", "TAKRA-972", "Medium", "TAKRA Live / TAKRA Hub - ปุ่มที่ลิงก์ไป TAKRA Hub (หน้าแรก uat-hub.takra.ai) แสดง UI ให้กด เข้าสู่ระบบ ใหม่ทุกครั้ง ทั้งที่ล็อกอิน TAKRA Live อยู่แล้ว", "To Do"],
+["30-SEP", "Boat", "TAKRA-975", "High", "[รอ Epic13] TAKRA Live - AI ตอบคอมเมนต์ต้องตอบข้อความปฏิเสธ (canned refusal) เมื่อพบคำเสี่ยง ไม่ว่าสถานะใด (Block/Warn/Review)", "IN REVIEW"],
+["30-SEP", "Boat", "TAKRA-976", "High", "[รอ Epic13] TAKRA Live - อวตารต้องไม่พูดตอบข้อมูลคำเสี่ยง และต้องพูดข้อความปฏิเสธแทน ทุกสถานะ (Block/Warn/Review)", "IN REVIEW"],
+["23-OCT", "Boat", "TAKRA-983", "Low", "TAKRA Live - ชื่อ preset ในคลังสื่อ Studio ไม่ตรงกับภาพที่แสดง (ฉากหลังโทนเขียว / Product showcase / Confetti)", "To Do"],
+["2-OCT", "Boat", "TAKRA-984", "Medium", "TAKRA Live - พื้นที่ทำงานสลับเองหลังออกจาก Studio โดยผู้ใช้ไม่ได้กดเปลี่ยน (พบ 1 ครั้ง ทำซ้ำไม่ได้)", "To Do"],
+["23-OCT", "Boat", "TAKRA-998", "Low", "TAKRA AI — กล่องแจ้งเตือน (toast) ใช้ aria-label บน <div> ที่ไม่มี role ทำให้ screen reader ไม่อ่านชื่อพื้นที่แจ้งเตือน (axe: aria-prohibited-attr · ทุกหน้า)", "To Do"],
+["23-OCT", "Boat", "TAKRA-999", "Low", "TAKRA AI — ธีมสว่าง: สีข้อความรอง (--text-faint #8a939c) บนพื้นขาวมีคอนทราสต์ 3.12:1 ต่ำกว่าเกณฑ์ WCAG AA 4.5:1 (axe color-contrast 24 จุดบนหน้าตารางไลฟ์)", "To Do"],
+["15-OCT", "Boat", "TAKRA-1001", "Low", "TAKRA Live - ปุ่มลบ Content ที่ถูกปิดในหน้าสร้างสคริปต์ บอกเหตุผล \"ต้องมีอย่างน้อย 1 สคริปต์\" ใน title= อย่างเดียว มองไม่เห็นบนมือถือ", "To Do"],
+["30-OCT", "Boat", "TAKRA-1004", "Low", "[FE] use-session-events.spec.ts ไม่มี test พยานว่า alert.clear ถอนแบนเนอร์ preload_failed (AC3 ของ TAKRA-799) — ทั้งเฟรมสดและเฟรม replay", "To Do"],
+["25-SEP", "No", "TAKRA-1008", "High", "[Infra] Cloudflare แทน 502 ทุกตัวของ API ด้วยหน้าของตัวเอง — ข้อความ error ที่ผู้ใช้ต้องอ่าน (voice clone/preview · script-gen · re-air) ไม่เคยถึง browser บน UAT/prod", "To Do"],
+["15-OCT", "No", "TAKRA-1009", "Medium", "[BE] ข้อความ 503 ที่ \"อย่า retry แจ้งทีมงาน\" จาก TAKRA-758 ไม่ถึงผู้ใช้ — guardProvider ยังตอบ \"Voice clone provider is unreachable\" กับทุก 503", "To Do"],
+["9-OCT", "No", "TAKRA-1010", "Medium", "TikTok ตัดสาย RTMP กลางไลฟ์แล้วไม่มีอะไรรู้เลย — watchdog เฝ้าขาเข้า ไม่มีใครเฝ้าขาออก", "To Do"],
+["25-SEP", "No", "TAKRA-1026", "High", "TAKRA Live - ครบ 90 วิ server ปิดรอบไลฟ์เงียบ (display-connect-timeout) แต่สถานะรอบไม่เปลี่ยนเป็น \"ขัดข้อง\" — ห้องคุมไลฟ์บังคับปิดเองแล้วขึ้นว่า \"มีผู้ใช้สั่งบังคับปิด\"", "To Do"],
+["15-OCT", "No", "TAKRA-1027", "Medium", "แก้ chroma_key ของอวาตาร์แล้วไม่มีบันทึกว่าใครแก้ ตอนไหน ค่าเดิมคืออะไร", "To Do"],
+["25-SEP", "No", "TAKRA-1132", "High", "[Live · direct-RTMP] stream key ของ TikTok รั่วลง log ของ mediamtx ทุกครั้งที่ ffmpeg เปิดปลายทางไม่สำเร็จ (NFR-2)", "To Do"],
+["15-OCT", "Boat", "TAKRA-1138", "Medium", "เก็บดีไซน์เพิ่มเติม ", "To Do"],
+["23-OCT", "No", "TAKRA-1140", "Low", "[BE] เทสต์แถว AIEventLog Reply ตอนตอบสำเร็จไม่เช็ค commentId และ durationMs (ต่อจาก TAKRA-380)", "To Do"],
+["2-OCT", "No", "TAKRA-1141", "Medium", "[BE] backfill:ai-events คัดลอกบล็อกคำเสี่ยงครั้งแรกที่เขียนสองที่ซ้ำ — /ai-history มี RiskWord 2 แถวต่อ 1 บล็อก (UAT + prod อย่างละ 1)", "To Do"],
+["9-OCT", "Boat", "TAKRA-1144", "Medium", "TAKRA Live - เช็คลิสต์ก่อนเริ่มไลฟ์ขึ้น \"ผ่าน\" ทั้งที่สคริปต์มีคำเสี่ยงระดับ \"ควรตรวจทาน\" (ไม่เคยขึ้นสถานะเตือน)", "To Do"],
+["30-OCT", "Boat", "TAKRA-1145", "Low", "[FE] กฎ ESLint กัน mock ยังจับไม่ได้ 2 ทาง — import แบบ template literal และไฟล์ .js ใต้ src (ต่อจาก TAKRA-790)", "To Do"],
+["9-OCT", "Boat", "TAKRA-1146", "Medium", "Takra AI - หน้า Plan & Usage บอกเพดานชั่วโมงอวาตาร์สองค่าขัดกัน (สิทธิ์แพ็กเกจ 300 ชม. vs แถบโควตาจริง 150 ชม.) และแสดงยอดใช้เป็นทศนิยมดิบ 0.1123", "To Do"],
+["15-OCT", "Boat", "TAKRA-1151", "Medium", "TAKRA Live - Studio ยังขึ้น \"ฉบับร่าง · บันทึกอัตโนมัติ\" และบอกตอนออกว่า \"งานของคุณถูกบันทึกอัตโนมัติแล้ว\" ทั้งที่หยุดบันทึกไปแล้ว หลังเปิดร่างที่ไม่ได้อยู่ใน Workspace ที่ใช้งาน", "To Do"],
+["23-OCT", "Boat", "TAKRA-1152", "Low", "TAKRA Live - ร่างขยะ launch-7f0735a3 ที่เกิดจากบั๊กบันทึกข้าม Workspace (TAKRA-944) ยังค้างใน Workspace ทีมของ QA Tester ผู้ใช้มองไม่เห็นและลบเองไม่ได้", "To Do"],
+["30-OCT", "Boat", "TAKRA-1154", "Low", "[FE] เทสต์ Studio ไม่คุมตัวกันบันทึกตอนกด \"เริ่มไลฟ์\"/\"ตั้งเวลา\" เมื่อร่างไม่ได้อยู่ใน Workspace ที่ใช้งาน (flushPendingSave · ต่อจาก TAKRA-944)", "To Do"],
+["15-OCT", "No", "TAKRA-1164", "Medium", "[Test] เทสต์ส่งสคริปต์พร้อมกันล้มสุ่มบน CI แล้วกลืนสาเหตุจริงทิ้ง — รู้แค่ว่า &quot;ไม่ใช่ 409&quot; ไล่ต่อไม่ได้", "To Do"],
+["9-OCT", "Boat", "TAKRA-1165", "Medium", "TAKRA Live - หน้าตารางไลฟ์ (/schedule) ไม่มีการแบ่งหน้า / per page — สร้างรอบไลฟ์มาเท่าไรแสดงทั้งหมดในหน้าเดียว", "To Do"],
+["30-SEP", "No", "TAKRA-1167", "Medium", "[FS] เราทิ้ง say_error ของ Realfact เงียบ ๆ — บรรทัดที่ TTS ล้มทำผู้ชมเงียบ 30-35 วินาทีโดยไม่มีอะไรอธิบาย", "IN REVIEW"],
+["30-SEP", "No", "TAKRA-1169", "High", "[BE] ด่านกันไลฟ์ TikTok ซ้อนยังหลุด เมื่อบัญชีเดียวกันถูกบันทึกไว้หลายรายการ — ล็อกผูกกับ &quot;แถวที่บันทึก&quot; ไม่ใช่ตัวตนจริงบน TikTok (ต่อจาก TAKRA-969)", "To Do"],
+["9-OCT", "No", "TAKRA-1173", "High", "TAKRA Live - ไลฟ์ทันทีเริ่มไม่ได้เพราะชนกับรอบที่ตั้งเวลาไว้ในช่อง TikTok เดียวกัน (ยังไม่ขึ้น TikTok จริง) แต่ไม่มีข้อความแจ้งและไม่มีทางไปต่อ", "To Do"],
+["9-OCT", "No", "TAKRA-1174", "Medium", "[BE] pod ถูก kill กลางไลฟ์ → boot recovery เปิด avatar session ใหม่ทับ ตัวเก่าเผา credit ต่อโดยไม่มีใครปิด", "To Do"],
+["9-OCT", "No", "TAKRA-1175", "Medium", "[BE] avatar session สำรอง (warm successor) ไม่มีใครปิด — ทุกทางจบไลฟ์ปล่อยทิ้งไว้เผา credit", "To Do"],
+["15-OCT", "Boat", "TAKRA-1183", "Low", "TAKRA Live — ข้อความ validation ของ API ยังเป็นภาษาอังกฤษของ zod (\"String must contain at most 120 character(s) (label)\" · \"Required (title)\") ขึ้นถึง detail และ toast บนหน้าจอภาษาไทย", "To Do"],
+["23-OCT", "Boat", "TAKRA-1184", "Low", "TAKRA Live — API ของ My Lives และ \"สรุปวันนี้\" ตอบ 422 ด้วยข้อความคงที่ (\"invalid my-lives query\" · \"invalid daily-summary query\") — เหตุผลจริงซ่อนอยู่ใน errors[] แบบเดียวกับ TAKRA-1000", "To Do"],
+["30-OCT", "Boat", "TAKRA-1186", "Low", "TAKRA Live - เทสต์ตัวเล่นเสียง (waveform-player.spec) ไม่จับกรณี \"กดลองใหม่แล้วได้โควตา 2 ครั้ง\" — ลบ attemptsRef.current = 0 แล้วเทสต์ยังเขียว", "To Do"],
+["30-SEP", "Boat", "TAKRA-1188", "Medium", "TAKRA Live - แท็บ \"ไลฟ์เลย\" จองรอบตายตัว 60 นาที ไม่มีช่องให้ตั้งความยาว — เนื้อหาที่ยาวกว่า 1 ชม. ถูกตัดทิ้ง และทางเดียวที่จะไลฟ์ให้ครบคือไปแท็บ \"ตั้งเวลา\"", "In Progress"],
+["9-OCT", "No", "TAKRA-1189", "Medium", "TAKRA Live - คำเตือน \"ผู้ชมไม่เห็นภาพแล้ว\" หายไปเองและการ์ดกลับเป็น \"กำลังไลฟ์\" ทั้งที่ปลายทางยังมืด เมื่อการถามสถานะล้มเพียงครั้งเดียว", "To Do"],
+["30-OCT", "No", "TAKRA-1190", "Low", "[FE] เทสต์ไม่จับกรณี \"เจอ 404 แล้วยังถามสถานะปลายทางซ้ำทุก 10 วินาที\" — ถอดตัวหยุด poll ของ TAKRA-1179 ออกแล้วเทสต์ยังเขียว 53/53", "To Do"],
+["30-OCT", "No", "TAKRA-1191", "Low", "[FE] ตัวถามสถานะปลายทางใช้ไม่ได้ทั้งไลฟ์ก็ยังเงียบ — ไม่มี log/ตัวนับบอกว่าคำเตือน \"ผู้ชมไม่เห็นภาพแล้ว\" กำลังตายอยู่ (ขอบเขตข้อ 3 ของ TAKRA-1179 ที่ยังไม่ได้ทำ)", "To Do"],
+["23-OCT", "No", "TAKRA-1192", "Low", "TAKRA Live - หน้าแพ็กเกจและการใช้งาน: สลับ Workspace แล้วราคา/โควตา/ยอดใช้ของพื้นที่ทำงานเดิมค้างอยู่ใต้ชื่อแพ็กเกจของพื้นที่ทำงานใหม่จนกว่าข้อมูลใหม่จะโหลดเสร็จ", "To Do"],
+["15-OCT", "No", "TAKRA-1193", "Medium", "[BE] กด \"รับทราบ\" หลังระบบปิด avatar session ให้แล้ว → ตัวนับ session ค้าง (no_state_id) ขึ้นปลอม + log ว่ายังคิดเงินอยู่ ทั้งที่ปิดไปแล้วจริง", "To Do"],
+["9-OCT", "No", "TAKRA-1194", "Medium", "[BE] สั่งปิด avatar session ไม่สำเร็จบนรอบที่จบแบบ completed/cancelled → แถวถูกลบ id หายถาวร แต่ตัวนับ session ค้างไม่ขยับ (ของรั่วจริงไม่ถูกนับ)", "To Do"],
+["25-SEP", "No", "TAKRA-1195", "High", "[BE] API ยังล็อกตายทั้งระบบได้อีก — เส้นเริ่มไลฟ์ / ปิดไลฟ์ / หยุดรอบ ยังเปิดทรานแซกชันซ้อนขณะถือ connection อยู่ (จุดที่ TAKRA-1162 ยังไม่ได้แก้)", "To Do"],
+["9-OCT", "No", "TAKRA-1196", "Medium", "[BE/DevOps] pool ตันแล้วไม่มีอะไรกู้ให้ — /health และ /ready ไม่แตะ DB และยังไม่ได้ตั้ง idle_in_transaction_session_timeout บน role ของ UAT/prod (ตาข่ายชั้นสองของ TAKRA-1162)", "To Do"],
+["15-OCT", "No", "TAKRA-1197", "Medium", "[BE] เทสต์ไม่จับ 2 ด่านของปลายทาง RTMP — \"สวิตช์ปิดแล้วยังบอกหน้าเว็บว่ามีปลายทาง\" ตอนกด Start และตัวเช็ค workspace ใน rtmpPlatformOf (ถอดออกแล้วเทสต์ยังเขียว · ต่อจาก TAKRA-1136)", "To Do"],
+["30-OCT", "No", "TAKRA-1198", "Low", "[FE] เทสต์ไม่จับ 2 จุดของหน้าเริ่มไลฟ์แบบปลายทาง RTMP — คำเตือน \"ยังไม่ได้เลือกบัญชี TikTok\" ไม่มีเทสต์เลย และคำตอบของ workspace เก่าที่มาช้า (ถอดออกแล้วเทสต์ยังเขียว · ต่อจาก TAKRA-1136)", "To Do"],
+["30-OCT", "No", "TAKRA-1199", "Low", "TAKRA Live - กลับเข้าไลฟ์ที่ออกเฉพาะปลายทาง RTMP หลังเซิร์ฟเวอร์รีสตาร์ท ขึ้นข้อความให้ \"เลือกปลายทาง RTMP ก่อน\" ทั้งที่หน้านั้นไม่มีที่ให้เลือก", "To Do"],
+["30-OCT", "No", "TAKRA-1200", "Low", "[BE] ลบปลายทาง RTMP แล้วตั้งใหม่ทันทีได้ 503 \"ที่เก็บ stream key ไม่พร้อมใช้งาน\" อยู่ราว 25 วินาที — Secrets Manager ยังลบชื่อเดิมไม่เสร็จ", "To Do"],
+["15-OCT", "No", "TAKRA-1202", "Medium", "[FE] เทสต์ของหน้าตั้งค่าปลายทางการออกอากาศไม่จับ 5 จุด — ด่าน \"ห้ามมีป้ายสถานะออกอากาศปลอม\" (AC9) ไม่ได้ตรวจอะไรจริง ใส่ LIVE · 0 errors ในแถวแล้วยังเขียว (ต่อจาก TAKRA-411)", "To Do"],
+["30-OCT", "No", "TAKRA-1203", "Low", "[FE] หน้าตั้งค่าปลายทางการออกอากาศ — ลบแถวแล้วฟอร์มแก้ไขของแถวนั้นยังค้าง · ข้อความ 404 สั่งให้โหลดใหม่แต่ไม่มีปุ่มให้กด · คำอธิบายใต้ช่อง stream key บอกผิดว่าเว้นว่างได้ (ต่อจาก TAKRA-411)", "To Do"],
+["2-OCT", "Boat", "TAKRA-1205", "Low", "[BE] ด่านคำเสี่ยงขาออกรายงานระดับคำเป็น warn ทั้งที่คำตอบมีคำ block อยู่ด้วย — แถวหลักฐาน ReplyBlocked และสีบนจอผู้ควบคุมเบากว่าจริง (ขาเข้าแก้แล้ว 17 ก.ย. ขาออกยังไม่ได้แก้ · ต่อจาก TAKRA-405)", "To Do"],
+["30-OCT", "No", "TAKRA-1206", "Low", "[BE] เทสต์ไม่จับ 3 จุดของปลายทาง RTMP ที่ระดับ HTTP บน Postgres จริง — สิทธิ์ของสมาชิกจริง · ลบข้าม workspace · สร้างพร้อมกัน (TC-14.1-15/20/22)", "To Do"],
+["15-OCT", "No", "TAKRA-1207", "Medium", "[BE] ปลายทาง RTMP ที่เปิดขาไม่ได้เลย ระบบลองแขวนกลับไปเรื่อย ๆ ไม่มีเพดาน — วัดได้ 53 ครั้งใน 1 ชั่วโมงและไม่หยุด (ต่อจาก TAKRA-410)", "To Do"],
+["15-OCT", "No", "TAKRA-1208", "Medium", "[BE] ปลายทาง RTMP ที่รับสายแต่ไม่ตอบ (ค้าง handshake) ถูกอ่านว่า \"มีชีวิต\" ~50 วิ — แถบเตือนถูกถอนทั้งที่ปลายทางดำ และกะพริบขึ้น-ลง 10 รอบ (ต่อจาก TAKRA-410)", "To Do"],
+["15-OCT", "No", "TAKRA-1209", "Medium", "[BE] เทสต์ไม่จับ 2 ตัวกันที่กัน path ถือ stream key ค้างบน relay — ลำดับ latch ของ stop() ขาปลายทาง และจังหวะ resume ชนกับ stop (ถอดออกแล้วเทสต์ยังเขียว · ต่อจาก TAKRA-1012)", "To Do"],
+["30-OCT", "No", "TAKRA-1210", "Low", "[BE] relay สร้างขาปลายทาง RTMP ไปแล้วแต่ฝั่งเราเห็น timeout — ขาค้างพร้อม stream key โดยไม่มีใครถือ และการแขวนกลับได้ 400 \"path already exists\" ทุกรอบ แถบเตือนค้างทั้งที่ปลายทางออกอากาศอยู่ (ต่อจาก TAKRA-1012)", "To Do"],
+["30-OCT", "No", "TAKRA-1211", "Low", "[FS] stream key ที่มีอักขระอย่าง ! หรือ @ บันทึกได้และผ่านด่านตอนกดเริ่ม แต่ relay ปฏิเสธตอนขึ้นอากาศ — ผู้ใช้ได้แค่แถบ \"ปลายทางที่ส่งออกไปหลุด\" ที่ไม่บอกว่าต้องแก้ key (ต่อจาก TAKRA-1012)", "To Do"],
+["2-OCT", "No", "TAKRA-1217", "Medium", "[Live · direct-RTMP] กระดิ่ง {{bell}} ดังกลางประโยค — จังหวะหยุดของ TTS ถูกนับเป็น \"พูดจบ\" (ต่อจาก TAKRA-1215)", "To Do"],
+["15-OCT", "No", "TAKRA-1218", "Medium", "[Improvement] TAKRA Live - ปรับอารมณ์/จังหวะการพูดของอวตารให้เหมือนพูดสด ไม่ใช่อ่าน (เน้นเสียง) + เพิ่มเสียงเพศหลากหลาย (LGBTQ+)", "To Do"],
+["30-OCT", "No", "TAKRA-1231", "Low", "[FE] เทสต์ไม่จับกรณีคำเตือน \"ผู้ชมไม่เห็นภาพแล้ว\" ถูกตัดสายจากตัวถามสถานะ — ปิดการถาม/ไม่ส่ง session id แล้วเทสต์ยังเขียว 1911/1911 (ต่อจาก TAKRA-1133)", "To Do"],
+["30-OCT", "No", "TAKRA-1232", "Low", "[BE] เทสต์ของ watchdog ขาออกไม่ล็อกจังหวะเวลา — เปลี่ยนเวลารอ 45 วิ เป็น 0 หรือ 5 นาที หรือถอดการเริ่มนับใหม่ แล้วเทสต์ยังเขียว 313/313 (ต่อจาก TAKRA-1133)", "To Do"],
+["30-SEP", "No", "TAKRA-1233", "High", "[BE] ด่านกันไลฟ์ TikTok ซ้อนยังหลุดข้าม workspace เมื่อ curl วาง multi_sids ไว้หน้าสุดใน -b — ระบบหาตัวตนบัญชีไม่เจอแล้วถอยไปล็อกรายแถวเงียบ ๆ (ต่อจาก TAKRA-1169)", "To Do"],
+["15-OCT", "No", "TAKRA-1234", "Medium", "เพดานความยาวไลฟ์ยังเขียนตายไว้ที่ 20 นาที — ให้อ่าน max_duration_sec จาก Realfact แทนเมื่อฟิลด์มา", "To Do"],
+["9-OCT", "No", "TAKRA-1235", "Medium", "[FE] ไลฟ์ชนกับไลฟ์ของ workspace ตัวเองบนบัญชี TikTok เดียวกัน — ขึ้นแค่ข้อความ ไม่มีลิงก์ไปหยุดไลฟ์แรก ทั้งที่ API ส่ง liveSessionId มาให้ (ต่อจาก TAKRA-1169)", "To Do"],
+["30-OCT", "No", "TAKRA-1236", "Low", "[BE] คอมเมนต์ในโค้ดด่านกันไลฟ์ซ้อนยังบอกว่าล็อกด้วย uid_tt ทั้งที่เปลี่ยนเป็น multi_sids แล้ว — ชี้ผิดไปหาค่าที่เปลี่ยนทุก session (ต่อจาก TAKRA-1169)", "To Do"],
+["23-OCT", "No", "TAKRA-1237", "Low", "[Live · direct-RTMP] ถ้าเสียงอวาตาร์หายไปชั่วขณะแล้วกลับมา ไลฟ์จะเงียบตลอด — replaceAudioTrack สลับกลับเข้า sender เสียงไม่ได้อีก (ต่อจาก TAKRA-1178)", "To Do"],
+["23-OCT", "No", "TAKRA-1238", "Low", "[Live · direct-RTMP] ไม่มีเทสต์คุมการสลับเสียงตอนหมุนอวาตาร์ในตัวผสมเสียงกระดิ่ง — sfx-mixer.setAvatarTrack พังแล้วเทสต์ไม่แดง (TAKRA-1178 / 1215)", "To Do"],
+["2-OCT", "No", "TAKRA-1239", "Medium", "[Live · direct-RTMP] ไลฟ์ไปได้สักพัก หน้าไลฟ์ส่งสัญญาณกลับหา BE ไม่ผ่าน (401) — heartbeat / avatar-audio / utterance-done ตกหมด (แยกจาก TAKRA-1217)", "To Do"],
+["23-OCT", "Boat", "TAKRA-1245", "Low", "TAKRA Live - คลังสคริปต์ > ตารางรอการอนุมัติ: คอลัมน์ประเภท/ความยาว/ใช้ในไลฟ์/อัปเดต/ปุ่ม จัดกึ่งกลางแนวตั้งเมื่อช่องสคริปต์สูง — ควรชิดบน-ซ้าย (text align top-left)", "To Do"],
+["23-OCT", "Boat", "TAKRA-1247", "Low", "TAKRA Live - คลังสคริปต์ > ให้ AI ร่าง: error เดียวกันแจ้งซ้ำซ้อน 2 ที่ (toast + แบนเนอร์ \"ระบบขัดข้อง\" ในฟอร์ม) — ควรแจ้งที่เดียว", "To Do"],
+["9-OCT", "Boat", "TAKRA-1251", "Medium", "[FS] ให้ AI ร่างสคริปต์ล้มทุกครั้ง (ผู้ให้บริการหมดเครดิต) + error บอกสาเหตุไม่ได้ · แจ้งซ้ำ 2 ที่ · toast หายเร็วเกินอ่าน — แก้ทั้งสาย (2 PR: realfact + takra-ai)", "To Do"],
+["30-SEP", "Boat", "TAKRA-1256", "Medium", "TAKRA Live — เน็ตผู้ส่งหลุดจนระบบเลิกต่อกลับ เส้นแดงขึ้น \"Failed to fetch\" ทับข้อความภาษาไทยที่เตรียมไว้", "In Progress"],
+["30-SEP", "Boat", "TAKRA-1257", "Medium", "TAKRA Live — หน้าแรกไม่บอกว่าโหลดตารางไลฟ์ไม่สำเร็จตอนเน็ตหลุด ต่างจากหน้าตารางไลฟ์ที่ขึ้นแจ้งเตือน", "In Progress"],
+["15-OCT", "Boat", "TAKRA-1258", "Medium", "TAKRA Live — Studio ติดป้าย \"คำต้องห้าม\" ให้สคริปต์ที่ถูกบล็อกเพราะพาไปซื้อนอกแพลตฟอร์ม ทั้งที่แยกชื่อเรียกไว้แล้ว", "To Do"],
+["9-OCT", "No", "TAKRA-1259", "Medium", "[BE] 409 ไลฟ์ชนบัญชี TikTok เดิมส่ง liveSessionId ไม่ถึงหน้าเว็บ — ตัวกรอง error ตัดฟิลด์ทิ้งก่อนออกจากเซิร์ฟเวอร์", "To Do"],
+["9-OCT", "No", "TAKRA-1260", "Medium", "[BE] สร้าง avatar live session ด้วยร่างที่ไม่ได้ตั้งน้ำเสียงแล้วได้ 400 — Studio เขียนค่า null แต่ API ไม่รับ null", "To Do"],
+["30-OCT", "No", "TAKRA-1261", "Low", "[BE] เพดาน \"เลือกอารมณ์ได้สูงสุด 3\" ถูกข้ามได้ด้วยการส่งอารมณ์เดิมซ้ำ — ตัวตรวจไม่ได้ตัดค่าซ้ำก่อนนับ", "To Do"],
+["9-OCT", "Boat", "TAKRA-1262", "Medium", "TAKRA Live — หน้าจอ \"เริ่มออกอากาศไม่สำเร็จ (502)\" ขึ้นหัวข้อผิดเรื่อง และให้ปุ่มลองใหม่ที่บน prod จะกดยังไงก็ไม่สำเร็จ", "To Do"],
+["23-OCT", "Boat", "TAKRA-1263", "Low", "TAKRA Live — ปุ่มอนุมัติสคริปต์ใน Studio (ยังไม่ถูกใช้งาน) ใช้คำว่า \"คำเสี่ยง\" กับกรณีเนื้อหาที่ห้ามออกอากาศ", "To Do"],
+["9-OCT", "No", "TAKRA-1265", "Medium", "TAKRA Live — โหมดกล้องมือถือ: กล่องเตือนตอนออกจากหน้าไลฟ์ขึ้นข้อความของโหมดส่งตรง (บอกผิดว่าหน้านี้คือตัวส่งภาพเข้า TikTok)", "To Do"],
+["9-OCT", "Boat", "TAKRA-1270", "Medium", "[Improvement] TAKRA Live - ห้องคุมไลฟ์โหมดถ่ายด้วยโทรศัพท์ระหว่างออกอากาศ: ต้องบอกชัดว่าโหมดนี้ไม่มีคอมเมนต์/คนดู/บล็อก (แสดง — ไม่ใช่ 0) + แบนเนอร์อธิบายโหมด ตามไฟล์สเปกที่แนบ", "To Do"],
+["9-OCT", "Boat", "TAKRA-1271", "Medium", "TAKRA Live — ปุ่มหลักสีส้มตัวอักษรขาว contrast 3.68:1 ต่ำกว่าเกณฑ์ WCAG AA (ธีมมืด 2.3:1) ใช้ซ้ำ 90 จุดทั้งแอป", "To Do"],
+["15-OCT", "Boat", "TAKRA-1272", "Low", "TAKRA Live — เลเยอร์นับถอยหลังที่เพิ่งเพิ่ม: --:-- ตกบรรทัดจนคำกำกับ \"โปรหมดใน\" ถูกบีบหายจากจอ Studio", "To Do"],
+["23-OCT", "Boat", "TAKRA-1273", "Low", "TAKRA Live — หน้าต่างเลือกสคริปต์มีปุ่มชื่อ \"ปิด\" ซ้ำสองตัว (ฉากหลังเต็มจอถูกประกาศเป็นปุ่ม)", "To Do"],
+["15-OCT", "Boat", "TAKRA-1274", "Low", "TAKRA Live — เมนู ⋯ ของแถวคลังสคริปต์ปิดตัวเองทันทีเมื่อรายการยังเลื่อนอยู่ กดไม่ติด", "To Do"],
+["2-OCT", "No", "TAKRA-1277", "Medium", "TAKRA Live — หน้าสรุปรอบซ่อนส่วน AI ทั้งก้อน ทั้งที่หัวข้อบอกว่ารอบนี้เปิดตอบคอมเมนต์ไว้", "To Do"],
+["2-OCT", "No", "TAKRA-1278", "Medium", "TAKRA Live — ด่านห้ามพูดจำนวนคงเหลือ/เวลาจัดส่ง มองไม่เห็นเลขที่สะกดเป็นตัวหนังสือ (\"เหลือห้าชิ้นสุดท้าย\" ผ่าน)", "To Do"],
+["2-OCT", "No", "TAKRA-1279", "Medium", "TAKRA Live — ด่านคำเสี่ยงขาออกเพิ่มตัวตรวจชั้นที่สองแต่ไม่ขยายงบเวลา 300ms ⇒ เกินเวลาแล้วผู้ชมได้ยินคำขอโทษแทนคำตอบ", "To Do"],
+["9-OCT", "No", "TAKRA-1280", "Medium", "TAKRA Live — ข้อความน้ำเสียงยาวเกิน 200 ตัวอักษรที่ผู้ให้บริการอ่าน ⇒ อารมณ์/ระดับเสียง/เสียงขำถูกตัดทิ้งเงียบ ๆ", "To Do"],
+["15-OCT", "Boat", "TAKRA-1281", "Medium", "Studio > ปุ่มแก้ไข (✏️) ในรายการ Layers กดแล้วไม่เปิดหน้าตั้งค่า (ข้อความ / Link-QR / การ์ดสินค้า / แจ้งเตือน)", "To Do"],
+["30-SEP", "No", "TAKRA-1282", "High", "TAKRA Live — เช็คลิสต์ก่อนไลฟ์ยังคิดเวลาที่อัตราเดิม ไม่ตามความเร็วพูดที่เลือก ⇒ เตือนว่าเนื้อหาจะตกหล่นทั้งที่ออกครบ", "To Do"],
+["9-OCT", "No", "TAKRA-1283", "Medium", "TAKRA Live — ปุ่มเลือกความเร็วพูดหายไปเมื่อใช้เสียงนอกค่าย Google แต่ค่าที่ตั้งไว้ยังถูกใช้งานต่อโดยไม่มีอะไรบอก", "To Do"],
+["9-OCT", "Boat", "TAKRA-1285", "Medium", "TAKRA Live — ตัวกรองภาษาในคลังเสียงไม่มีตัวเลือก \"ไม่ระบุ\" ⇒ เลือก \"ไทย\" แล้วเสียงที่ยังไม่ติดป้ายหายทั้งหมด", "To Do"],
+["9-OCT", "No", "TAKRA-1287", "Medium", "TAKRA Live — ค่า voice_speed_applied ที่ผู้ให้บริการตอบกลับถูกทิ้งทั้งค่า ⇒ ผู้ใช้ไม่รู้ว่าความเร็วที่เลือกไม่ได้ถูกใช้ และเวลาที่คำนวณผิดทั้งรอบ", "To Do"],
+["23-OCT", "Boat", "TAKRA-1288", "Low", "[FE] TAKRA Live - เครื่องผู้ส่งเน็ตหลุดตอนกด \"เริ่มไลฟ์เข้า TikTok (RTMP)\" หรือ \"หยุดไลฟ์\" เส้นแดงขึ้นข้อความดิบ \"Failed to fetch\"", "To Do"],
+["2-OCT", "Boat", "TAKRA-1289", "High", "[BE] ด่านการขายของ AI ตอบคอมเมนต์จับได้เฉพาะสำนวนที่อยู่ในรายการคำ — สำนวนเปลี่ยนคำหลุด 26 จาก 26 ประโยคที่ลอง (ทักเข้ามา · สั่งซื้อผ่านไลน์ · ครึ่งราคา · จองไว้ให้ ฯลฯ) อวาตาร์พูดออกอากาศได้ (ต่อจาก TAKRA-967)", "To Do"],
+["9-OCT", "Boat", "TAKRA-1297", "Medium", "TAKRA Live - การ์ด/แถวไลฟ์ (หยุดกลางคัน · กำลังออกอากาศ · ไลฟ์ของฉันบนมือถือ): บรรทัดอวาตาร์ · เสียง · สินค้า · สคริปต์+รอบ · บัญชี ถูกตัดด้วย \"…\" จนอ่านไม่ครบ (ต่อจาก TAKRA-1227)", "To Do"],
+["15-OCT", "No", "TAKRA-1298", "Medium", "TAKRA Live - คลังเสียงมีรายการที่ต้องอัปเดตแต่ไม่มีอะไรแจ้งผู้ใช้ และ modal เลือกเสียงไม่มีปุ่มอัปเดต/เวลาอัปเดตล่าสุด (เลือกเสียงชุดเก่าไปใช้ไลฟ์โดยไม่รู้ตัว)", "To Do"],
+["9-OCT", "Boat", "TAKRA-1302", "Medium", "ห้องอวาตาร์ถูก Realfact ลบกลางสคริปต์ — ไลฟ์จบเงียบ หน้าจอบอกว่า \"แพลตฟอร์มปิดห้อง\" และไม่มีหลักฐานส่งให้ vendor", "To Do"],
+["2-OCT", "No", "TAKRA-1305", "Medium", "[BE] บรรทัดที่จบด้วย {{bell}} ไม่เคยล้างตัวนับบรรทัดเงียบ ⇒ ไลฟ์ปกติถูกตัดจบเป็น \"หลุดกลางคัน\"", "To Do"],
+["9-OCT", "No", "TAKRA-1306", "Medium", "[FS] ค่ายเสียงที่ \"ยังไม่รู้\" ถูกตีเป็น \"ไม่รองรับ\" ⇒ workspace ที่ยังไม่ sync เปิดคลังเสียงมาว่างเปล่า", "To Do"],
+["23-OCT", "No", "TAKRA-1307", "Low", "[BE] POST …/sfx-cue ด้วย cue_id อะไรก็ได้ ล้างตัวนับหน้าจอเงียบ ⇒ ปิดกลไกเลิกรอกระดิ่งถาวร", "To Do"],
+["2-OCT", "No", "TAKRA-1309", "Medium", "[FE] กระดิ่งติดกันหลายใบในบรรทัดเดียว — ใบกลางถูกทับทิ้งเงียบ ๆ ไม่ดังและไม่รายงาน", "To Do"],
+["23-OCT", "No", "TAKRA-1310", "Low", "[BE] เมตริก sfx_cue นับผิดหลังแก้ TAKRA-1299 — รายงานที่มาช้าค้างเป็น timeout · หน้าต่างที่ข้ามไม่ถูกนับเลย", "To Do"],
+["15-OCT", "No", "TAKRA-1311", "Medium", "[BE · test] เคส \\\"บล็อกที่ทับเสียงเก่า\\\" ของ TAKRA-1308 เขียวโดยไม่ได้ทดสอบอะไร — ถอด guard spokenOverOlderAudio ออกแล้วไม่มีเคสไหนแดง", "To Do"],
+["9-OCT", "No", "TAKRA-1312", "Medium", "[BE · Live] รายงานมิเตอร์เสียงที่มาผิดลำดับทำให้ BE ค้างที่ \\\"เงียบ\\\" ทั้งที่อวาตาร์พูดอยู่ — และตั้งแต่ TAKRA-1308 ความเข้าใจผิดนี้ตัดบรรทัดกลางประโยคได้", "To Do"],
+["15-OCT", "No", "TAKRA-1313", "Medium", "[BE · Live] มิเตอร์เสียงเก็บสถานะใบเดียวต่อไลฟ์ ไม่มี id ของหน้าจอ — หน้าจอที่เงียบตัดบรรทัดที่หน้าจอจริงกำลังพูดได้", "To Do"],
+["9-OCT", "Boat", "TAKRA-1315", "Medium", "TAKRA Live - Studio: ย่อขนาดเลเยอร์ \"ตัวนับเวลา\" แล้วตัวอักษรไม่ย่อตาม — ล้นกรอบทั้งบนแคนวาส จอ Display Device และภาพที่ออกอากาศ", "To Do"],
+["2-OCT", "Boat", "TAKRA-1316", "Medium", "TAKRA Live - เพิ่มบัญชี TikTok ด้วย QR: กล่อง OTP ไม่บอกว่าส่งรหัสไปอีเมลไหน และเมื่อยืนยันไม่ผ่านก็เด้งกลับช่องว่างโดยไม่มี error / ปุ่มขอรหัสใหม่", "To Do"],
+["2-OCT", "Boat", "TAKRA-1318", "Medium", "TAKRA Live - งานปรับ UI หน้าจอไลฟ์ 3 จุด: (A) % ที่ AI ตอบกลับไม่มีคำอธิบาย (B) ปุ่มในหน้าเริ่มออกอากาศไม่เข้าธีม (C) โลโก้แพลตฟอร์มต้องตามด้วยชื่อโปรไฟล์บนการ์ดไลฟ์", "To Do"],
+["30-SEP", "Boat", "TAKRA-1324", "High", "TAKRA Live - AI ตอบคอมเมนต์แต่งคำตอบเองแทนที่จะตอบจากข้อมูลสินค้าจริง (เช่น อ้างว่ามีไซซ์ M กับ L ด้วยความมั่นใจ 95%) — เสี่ยงให้ข้อมูลสินค้าผิดออกอากาศ", "To Do"],
+["30-SEP", "Boat", "TAKRA-1325", "High", "TAKRA Live - AI ไม่ตอบคอมเมนต์เป็นส่วนใหญ่เมื่อคอมเมนต์เข้ามาติด ๆ กัน (5 จาก 9 ข้อความไม่ได้ตอบ — \"เลยช่วงเวลาตอบไปแล้ว\" และ \"สร้างคำตอบไม่สำเร็จ\")", "To Do"],
+["30-SEP", "Boat", "TAKRA-1327", "Medium", "TAKRA Live - ห้องคุมไลฟ์: เปิดสวิตช์ \"ให้ AI ตอบคอมเมนต์ผู้ชม\" แล้วแถวไทล์ยังขึ้นแบบ 3 ช่อง (ไม่มี AI ตอบ / รอ AI ตอบ) จนกว่าข้อมูลสดจะเข้ามา — ต้องแสดง 5 ช่องตั้งแต่ต้นตามสถานะสวิตช์", "In Progress"],
+["15-OCT", "Boat", "TAKRA-1328", "Low", "[BE · test] เทสต์ของคำปฏิเสธยังไม่กันกรณี AI ร่างคำตอบไม่ทันเวลา (timeout) หรือได้คำตอบรูปแบบผิด (malformed) — แก้ให้พูดคำปฏิเสธในสองกรณีนี้แล้วเทสต์ยังเขียวทั้งชุด (ต่อจาก TAKRA-1290)", "To Do"],
+["2-OCT", "Boat", "TAKRA-1329", "Low", "[BE] ด่านการขายปล่อยประโยคที่บอกว่ามีโปรโมชัน เมื่อมีคำว่า \"ยังไม่ได้\" นำหน้า \"ข้อมูล/เรื่อง\" — ข้อยกเว้นคำปฏิเสธที่ขยายใน TAKRA-1291 อ่านข้ามคำคั่นไปเจอคำปฏิเสธของกริยาอื่น (ต่อจาก TAKRA-1291)", "To Do"],
+["15-OCT", "Boat", "TAKRA-1330", "Low", "[BE · test] เทสต์ของ TAKRA-1291 ไม่เฝ้ากฎของข้อยกเว้นคำปฏิเสธ — QA แก้โค้ดให้ผิด 3 แบบแล้ว commerce-guard.spec.ts ยังเขียวทั้งชุด (ต่อจาก TAKRA-1291)", "To Do"],
+["15-OCT", "Boat", "TAKRA-1331", "Low", "[BE · test] เทสต์ของด่านคำเสี่ยงขาออกไม่ล็อกขอบ 5,000/5,001 ตัวอักษร — ขยับด่านไปที่ >= หรือ > 5,005 แล้วเทสต์ยังเขียวทั้งชุด (ต่อจาก TAKRA-1204)", "To Do"],
+["30-SEP", "Boat", "TAKRA-1332", "High", "[BE] ด่านการขายหลังแก้ TAKRA-1289 จับสำนวนที่ไม่อยู่ในตั๋วได้แค่ 29 จาก 68 ประโยค — ราคาหลุด 9 จาก 10 (ตัวนี้ 590 เองค่ะ · ห้าร้อยเก้าสิบค่ะ) · ทักเพจมา / เดี๋ยวส่งลิงก์ให้ / เปิดบิลให้ ออกอากาศได้ (ต่อจาก TAKRA-1289)", "In Progress"],
+["30-SEP", "Boat", "TAKRA-1333", "Medium", "[BE] ด่านการขายหลบได้ด้วยอักขระล่องหน (zero-width space) หรือขึ้นบรรทัดใหม่คั่นกลางสำนวนที่ TAKRA-1289 เพิ่ม — \"ทัก​เข้า​มา\" · \"สั่ง​ซื้อ​ผ่าน​ไลน์\" · \"ลิงก์⏎อยู่ด้านล่าง\" ผ่านด่าน (ต่อจาก TAKRA-1289)", "In Progress"],
+["15-OCT", "Boat", "TAKRA-1334", "Low", "[BE · test] เทสต์ของ TAKRA-1289 ไม่ตรึงสำนวนใหม่ 11 จาก 33 จุด — ถอดออกทีละจุดแล้วเทสต์ยังเขียวทั้งชุด (ปักหมุด · @ชื่อบัญชี · โอนแล้ว · ตัวละ N · เลข+ร้อย/พัน · วันนี้ลด ฯลฯ) (ต่อจาก TAKRA-1289)", "To Do"],
+["30-SEP", "Boat", "TAKRA-1335", "High", "TAKRA Live - ห้องคุมไลฟ์: การ์ด \"AI ตอบ\" แสดง \"0%\" ตั้งแต่ยังไม่มีคอมเมนต์สักข้อ (0 หาร 0) ต้องแสดง \"—\" ตามกติกาไม่มีแหล่งข้อมูล", "In Progress"],
+["30-SEP", "Boat", "TAKRA-1336", "High", "TAKRA Live - สวิตช์ \"ให้ AI ตอบคอมเมนต์ผู้ชม\" ปิดอยู่ แต่หน้าเดียวกันขึ้นแบนเนอร์ \"ตอบคอมเมนต์อัตโนมัติด้วย AI\" และแสดงการ์ด AI ตอบ / รอ AI ตอบ ครบ — ผู้ขายแยกไม่ออกว่ารอบนี้ AI ตอบหรือไม่", "In Progress"],
+["2-OCT", "Boat", "TAKRA-1337", "Medium", "TAKRA Live - หน้าออกอากาศ: กด \"ปิด preview\" แล้วกรอบภาพย่อหายไป ควรคงกรอบเดิมแล้วแสดงรูปนิ่งของอวตารแทนคลิปที่ออกอากาศ", "To Do"],
+["2-OCT", "Boat", "TAKRA-1338", "Medium", "[BE] ด่าน \"ผู้ให้บริการเสียง\" ตอนเริ่มออกอากาศเช็คแค่รายชื่อเสียง ไม่ได้ลองสังเคราะห์เสียงจริง — รายชื่อตอบได้แต่ TTS ใช้ไม่ได้ ไลฟ์ยังขึ้นแล้วอวตารเงียบ · ด่านเดียวกันตอนกด \"ยืนยันไลฟ์\" ไม่มีเทสต์คุม (ต่อจาก TAKRA-1244)", "To Do"],
+["30-OCT", "Boat", "TAKRA-1339", "Low", "[FE · test] เทสต์ของหน้าคลังเสียงไม่ล็อกตัวนับ \"แสดง x จาก y\" — แก้ให้ตัวนับกลับไปนับจากรายการที่ซ่อนแล้วเทสต์ยังเขียวทั้งชุด (ต่อจาก TAKRA-1304)", "To Do"],
+["15-OCT", "Boat", "TAKRA-1340", "Low", "TAKRA Live - ปุ่ม \"แสดงทั้งหมด\" / \"ซ่อนอีกครั้ง\" ในคลังเสียงบนมือถือเป็นตัวหนังสือเล็ก สูงแค่ 18px กดยาก (ต่อจาก TAKRA-1304)", "To Do"],
+["15-OCT", "Boat", "TAKRA-1343", "Low", "[BE] สล็อตสคริปต์ที่มีแค่อักขระล่องหน (zero-width space) ผ่านตรวจก่อนไลฟ์ว่า \"มีข้อความให้พูด\" และคลังสคริปต์บันทึกบล็อกข้อความว่าง/ล่องหนได้ผ่าน API (ต่อจาก TAKRA-1244)", "To Do"],
+["15-OCT", "No", "TAKRA-1347", "Medium", "[FS] บรรทัดที่ถูกตัดกลางคัน (say_error/interrupted) ติดพื้นความน่าเชื่อ TAKRA-910 ⇒ รอ watchdog เงียบต่ออีก ~8 วิ", "To Do"],
+["30-OCT", "No", "TAKRA-1349", "Low", "[FE · test] เทสต์ของคำเตือนน้ำเสียงยังไม่กันคำแนะนำให้ย้ายไปเสียง Google — เอาข้อความเก่ากลับมา 2 ใน 4 ประโยค หรือเขียนคำแนะนำด้วยสำนวนอื่น เทสต์ยังเขียวทั้งชุด (ต่อจาก TAKRA-1345)", "To Do"],
+["23-OCT", "No", "TAKRA-1357", "Medium", "ปุ่ม \"พักไลฟ์\" ไม่ได้หยุด avatar — เปลี่ยนแค่สถานะใน DB ไม่เคยเรียก orchestrator.pause() (ทุก avatar)", "To Do"],
+["15-OCT", "Boat", "TAKRA-1358", "Low", "[FE] TAKRA Live - อัปโหลดรูปสินค้าไม่สำเร็จเพราะเน็ตหรือที่เก็บไฟล์ล่ม toast ขึ้นข้อความดิบ \"Failed to fetch\"", "To Do"],
+["23-OCT", "Boat", "TAKRA-1359", "Low", "TAKRA Live - หน้าต่าง \"ยินยอมโคลนเสียง (PDPA)\" ที่เปิดจากรายละเอียดเสียง กด Esc ครั้งแรกไปปิดแผงรายละเอียดข้างหลังแทน หน้าต่างยินยอมยังค้าง ต้องกด Esc อีกครั้ง", "To Do"],
+["ยังไม่มีรอบ", "Simon", "TI-154", "Highest", "ระหว่างดูไลฟ์ AI ติดตามใบหน้าล่าช้า และตรวจจับอารมณ์ไม่ถูกต้อง", "To Do"],
+["ยังไม่มีรอบ", "James", "TI-321", "Low", "Windows: the \"restart\" button opens a full installer wizard — and going silent races our own quit sequence", "To Do"],
+["15-SEP", "James", "TI-385", "Medium", "TAKRA Insight - ข้อความ WebcastOecLiveShoppingMessage (สัญญาณสินค้า/ตะกร้าจากไลฟ์) ถูกนับแล้วทิ้ง ไม่ถึง UI/DB", "To Do"],
+["ยังไม่มีรอบ", "James", "TI-400", "Medium", "[P0][M1][backend] POST /v1/compliance/ml-models/rollback ไม่มี role gate + workspaceId จาก body ⇒ rollback model ของ tenant อื่นได้ (cross-tenant)", "To Do"],
+["ยังไม่มีรอบ", "James", "TI-401", "Medium", "[P0][M1][backend] ตารางทั้ง schema compliance ไม่มี RLS + rls-introspect ตรวจเฉพาะ public ⇒ rls:check ตาบอด · tenant isolation ของ audit/tos/rollback/breach พึ่ง WHERE มือล้วน", "To Do"],
+["ยังไม่มีรอบ", "James", "TI-403", "Medium", "[P1][M1][backend] DEK lifecycle หลัง erasure: ingest ไม่เคยอ่าน erasure_tombstone (subject ไม่มี DEK ตอน erase → mint ใหม่ = resurrection) + re-consent หลัง shred = lockout ถาวร", "To Do"],
+["ยังไม่มีรอบ", "James", "TI-405", "Medium", "[P1][M1][backend] consent upsert idempotency กลืน 2 กรณี: submit audit loop หลัง commit + retry ⇒ decision unaudited ถาวร · re-consent ต่าง policyVersion ถูกทิ้งเงียบ (setWhere เช็คแค่ status)", "To Do"],
+["ยังไม่มีรอบ", "James", "TI-406", "Medium", "[P1][M1][backend] compliance sink fail-open ทั้งชุด: WORM mirror = Noop ทุก env (ไม่มี prod boot guard) · breach trigger a/b/c ไม่ wire + NoopAlertSink · reconciler ทั้งหมด = Story 1.8 ที่ยังไม่มี", "To Do"],
+["ยังไม่มีรอบ", "James", "TI-407", "Medium", "[P1][M1][backend] comment.captured ingest ไม่มี consent gate + ไม่ bind subjectRef ⇒ PII ของ commenter บุคคลที่สามถูก provision DEK + เก็บ · registry บอก erasure \"deferred\" = ลบไม่ได้", "To Do"],
+["15-SEP", "James", "TI-435", "Medium", "TAKRA Insight - Hub Overlay ไม่สามารถคลิกและลากย้ายตำแหน่งได้ ทำให้บดบังข้อมูลสำคัญบนหน้าจอ", "To Do"],
+["30-SEP", "James", "TI-436", "High", "TAKRA Insight - แท็บ บทพูด หลังจบ Record ไลฟ์ ไม่แสดงสถานะผู้พูดหรือเสียงที่ระบบตรวจจับได้", "To Do"],
+["30-SEP", "James", "TI-437", "High", "TAKRA Insight - แท็บ บทพูด ตรวจจับเสียงของ Host คนเดียวเป็นหลาย Speaker", "To Do"],
+["30-SEP", "James", "TI-444", "High", "TAKRA Insight - quit ระหว่างมี session: path WS stop ยังตัดสิน discard เอง ไม่ withhold ให้ teardown ของ main (AC ของ TI-323) — spec ti323-quit-teardown เคส 2 ตกเมื่อมี engine จริง", "To Do"],
+["15-SEP", "James", "TI-449", "Low", "TAKRA Insight - [build] npm run dist:uat ลบ dist/mac-arm64/Takra Insight.app ที่ได้จาก npm run dist ทิ้ง → e2e packaged (ti307/ti320) หา app ไม่เจอถ้า build uat ทีหลัง", "To Do"],
+["15-SEP", "James", "TI-450", "Low", "TAKRA Insight - [unit] session-finalize.test.js \"requestSignal: outside a teardown it does NOT compose\" ตกบน Node 26 — เทสส่อง internal symbol kDependantSignals ที่ Node เปลี่ยนเป็น kComposite (CI Node 22 เขียว)", "To Do"],
+["2-OCT", "Ice", "TI-451", "Medium", "TAKRA Insight - [QA harness] probe liveness แบบ fetch (liveRoom.status) ใน manual spec โดน TikTok bot-block (1155 bytes) → ti315-live-preview / ti328-live-identity skip ทั้งที่ร้านไลฟ์อยู่จริง", "To Do"],
+["2-OCT", "Ice", "TI-452", "Low", "TAKRA Insight - [QA harness] spec ล้าสมัย/ผูกกับ rig เก่า: ti313-live-finalize (flow ก่อน TI-315 Part 2) · ti323-quit-teardown เคส wedged ใช้ pgrep server.py · ti322-live-view-cycles flaky", "To Do"],
+["2-OCT", "Ice", "TI-453", "Low", "TAKRA Insight - [QA docs] e2e/uat/README §LIVE-REAL ขั้น 2 ชี้ engine จาก Takra Insight.app (build 7 ส.ค. ไม่รู้จัก consentType → frames 0) และไม่ระบุ LHM_MULTI_SESSION ให้ตรง launchApp({multiSession}) ของแต่ละ spec", "To Do"],
+["30-SEP", "James", "TI-454", "High", "TAKRA Insight - ต้อง Login ใหม่ทุกครั้งที่เปิด App ทั้งที่บัญชีผู้ใช้ A ยังไม่ Logout จาก TAKRA Hub", "To Do"],
+["15-SEP", "James", "TI-483", "Medium", "TAKRA Insight - หน้าตั้งค่าผู้ให้บริการ AI (BYOK): ช่องเลือกโมเดลยังเลือกได้ทั้งที่ยังไม่ได้บันทึก API key (ควร disable/ไม่ให้เลือกจนกว่าจะมี key)", "To Do"],
+["30-SEP", "James", "TI-484", "Medium", "TAKRA Insight - คอมเมนต์ยาวแบบไม่มีเว้นวรรคทำให้ชิป \"คำที่พบบ่อย\" ในหน้ารายงานดันเลย์เอาต์ล้นออกข้างจอ (SessionDetail.jsx:1380 · ชิปไม่มี break/min-w-0)", "READY TO TEST"],
+["30-SEP", "James", "TI-492", "Medium", "TAKRA Insight - ขณะบันทึกไลฟ์ workspace อื่นในเมนูบัญชีถูกปิดกดไม่ได้ · ควรกดได้แล้วขึ้น popup แจ้งว่ามีไลฟ์กำลังบันทึก สลับไม่ได้ พร้อมปุ่ม \"รับทราบ\"", "READY TO TEST"],
+["15-SEP", "James", "TI-495", "Medium", "TAKRA Insight - สมาชิกบทบาท Host ยังเห็นเมนูครบทุกเมนู (แดชบอร์ดแบรนด์ · รายงานประจำวัน) · แถบเมนูด้านซ้ายไม่อ่าน productRole เลย", "To Do"],
+["15-SEP", "James", "TI-496", "Medium", "TAKRA Insight - multi-session-flag.spec.js: engine ที่ spec ตั้งเองใช้ LHM_DATA_DIR ผิดโฟลเดอร์ (ราก takra-insight-dev แทน users/<subject>) → 2 เทสได้ port-foreign แทน engine-flag-mismatch", "To Do"],
+["15-SEP", "James", "TI-515", "Medium", "TAKRA Insight - เอาสมาชิกออกจากทีมแล้วเชิญกลับเป็น \"สมาชิก\" หน้า \"สมาชิกและบทบาท\" ไม่แสดงบทบาท \"โฮสต์\" (ค่าเริ่มต้นใหม่) · บทบาทเดิมใน role_assignment ถูกลบเฉพาะตอน reconcile เห็นการเอาออก", "To Do"],
+["30-SEP", "James", "TI-516", "High", "TAKRA Insight - บัญชีผู้จัดการแบรนด์ยังเห็นเมนู \"สมาชิกและบทบาท\" ในเมนูโปรไฟล์ · เมนูนี้แสดงเฉพาะเมื่อ bind ตอบ productRole = owner (ProfileMenu.jsx:175)", "To Do"],
+["30-SEP", "James", "TI-521", "Medium", "TAKRA Insight - ปุ่มโปรไฟล์มุมล่างซ้ายแสดง badge \"ใช้งานอยู่\" แต่ไม่บอกชื่อพื้นที่ทำงาน · ส่วนหัวของเมนูโปรไฟล์ไม่แสดงบทบาท (เจ้าของ/ผู้จัดการแบรนด์/โฮสต์) · ขอปรับ UX", "READY TO TEST"],
+["15-SEP", "James", "TI-525", "Medium", "TAKRA Insight - แดชบอร์ดแบรนด์: @deproud_official ปิดการจับใบหน้าแล้ว แต่การ์ด \"อารมณ์โฮสต์\" ยังแสดง \"เฉยๆ · พลังงาน 70\" และไลฟ์ล่าสุดมีคะแนน 72 (ควรเป็น \"—\")", "To Do"],
+["15-SEP", "James", "TI-526", "Medium", "TAKRA Insight - (Windows) แดชบอร์ดแบรนด์: การ์ด \"อารมณ์โฮสต์\" ไม่แสดงป้าย \"(คุณ)\" บนการ์ดของบัญชีที่ login อยู่ (@deproud_official)", "To Do"],
+["15-SEP", "James", "TI-527", "Medium", "TAKRA Insight - (Windows) แดชบอร์ดแบรนด์: ไลฟ์ของ @molichic.th (22 ก.ย. 2 ไลฟ์, 21 ก.ย. 58 นาที) ไม่ขึ้นทั้งใน \"อารมณ์โฮสต์\" และ \"ไลฟ์ล่าสุด\" ทั้งที่อยู่ในหน้าเซสชัน", "To Do"],
+["15-SEP", "James", "TI-528", "Medium", "TAKRA Insight - (Windows) แดชบอร์ดแบรนด์: รายการ \"ไลฟ์ล่าสุด\" ไม่ตรงกับหน้า \"เซสชัน\" · ไลฟ์ล่าสุด 3 ไลฟ์ (molichic.th ×2, deproud_official วันที่ 22 ก.ย.) ไม่ขึ้นในแดชบอร์ด", "To Do"],
+["15-SEP", "James", "TI-529", "Medium", "TAKRA Insight - (Windows) แดชบอร์ดแบรนด์: การ์ด \"อารมณ์โฮสต์\" และแถว \"ไลฟ์ล่าสุด\" ไม่บอกว่ามาจากผู้ใช้คนไหน · ขอแสดง \"(คุณ)\" หรือ \"(ชื่อผู้ใช้)\"", "To Do"],
+["15-SEP", "James", "TI-531", "Medium", "TAKRA Insight - รายงานประจำวัน แท็บ \"ทุกโฮสต์\": หัวข้อกลุ่มแสดง id ดิบ (377944987188330655) ไม่มีชื่อผู้ใช้กำกับ · ขอแสดงชื่อ + \"(คุณ)\"", "To Do"],
+["15-SEP", "James", "TI-533", "Medium", "TAKRA Insight - หน้า \"สมาชิกและบทบาท\": ป้ายบทบาท (โฮสต์ / ผู้จัดการแบรนด์) ไม่สื่อว่ากดเพื่อเปลี่ยนได้ · FilterDropdown แบบไม่ fullWidth ไม่มีลูกศร", "To Do"],
+["15-SEP", "James", "TI-536", "Medium", "TAKRA Insight - การ์ด AI ทุกใบ (บทพูดของไลฟ์ · AI Summary · AI Coach · AI Narrative): การยืนยันสร้างใหม่เป็นแถบแทรกในการ์ด · ขอเปลี่ยนเป็น popup (แทนที่เลย / ไม่ใช่ตอนนี้)", "To Do"],
+["23-SEP", "ไม่มีคนรับ", "TI-537", "Medium", "TAKRA Insight - รายงานประจำวัน: ไม่มีอินเทอร์เน็ตแล้วป้ายเงียบ ไม่บอกผู้ใช้ว่าทำไมรายงานไม่มา", "To Do"],
+["23-SEP", "ไม่มีคนรับ", "TI-538", "Medium", "TAKRA Insight - รายงานประจำวัน: เริ่มเตรียมรายงานทั้งที่ยังบันทึกไลฟ์อยู่", "To Do"],
+["23-SEP", "ไม่มีคนรับ", "TI-539", "Low", "TAKRA Insight - รายงานประจำวัน: ลบไลฟ์ที่อยู่ในรายงานแล้วไม่เตรียมรายงานใหม่ทันที", "To Do"],
+["30-SEP", "James", "TI-547", "Medium", "TAKRA Insight - หน้า \"ตั้งค่าครั้งแรก\" บอกให้ดาวน์โหลด AI model \"(~0 MB)\" ขณะขึ้นแบนเนอร์ engine port-foreign — subtitle ประกาศขนาดก่อนที่จะอ่าน /models/status ได้ (FirstRunSetup.jsx:668)", "READY TO TEST"],
+["2-OCT", "James", "TI-549", "High", "TAKRA Insight - ไลฟ์ที่ไม่มี engagement ของบัญชีที่อยู่หลาย workspace ไม่มีวันอัปโหลดขึ้นแดชบอร์ด · sessions.workspace_id ถูกประทับจาก engagement batch ที่เดียว → workspace_park ถาวร (server.py:14195)", "To Do"],
+["23-SEP", "James", "TI-550", "Medium", "TAKRA Insight - คอมเมนต์ไม่เข้าเลย: capture degraded chat-never-started ทุกไลฟ์ (2 ช่อง) แม้โปรไฟล์ล็อกอิน TikTok แล้ว · IM websocket เปิดแต่ได้แค่เฟรมเดียว (frames=1 msgs=0)", "To Do"],
+["ยังไม่มีรอบ", "James", "TI-551", "Medium", "[P1][M1][backend] เทสไม่จับการถอด predicate workspace_id ของตาราง compliance ที่ exempt RLS (รอด mutation 3 จุด) ⇒ isolation ของ 7 ตาราง exempt ไม่มีอะไรกันการถอย", "To Do"],
+["ยังไม่มีรอบ", "James", "TI-552", "Medium", "[P1][M1][backend] compliance route ไม่มี rate limit: user ที่ login แล้ว (ได้ admin ของ workspace ตัวเองอัตโนมัติ) ยิงซ้ำท่วม audit_log ที่ลบไม่ได้ (4,906 แถว/8 วิ) + ทำ audit append ของ tenant อื่นช้าลง ~2–3× ผ่าน global chain lock", "To Do"],
+["ยังไม่มีรอบ", "James", "TI-553", "Medium", "[P2][M1][backend] tripwire tenant-binding ไม่จับ route เดิมที่แก้ไปอ่าน tenant จาก body ผ่าน computed key / key ใน const / rest-destructure ⇒ tenant-binding.spec ยังเขียว 72/72 (พบตอน re-test TI-400)", "To Do"],
+["ยังไม่มีรอบ", "James", "TI-554", "Medium", "[P2][M1][desktop] ข้อความ \"ลบได้ทุกเมื่อ · ภายใน 7 วัน ไม่มีเงื่อนไข\" ใน GrantDialog/HesitationExplainer ขัดกับกล่องถอนของ consent เดียวกัน (สถิติ/กราฟ/ตัวเลขอารมณ์บนเครื่องอยู่ต่อ) — ยังสัญญาการลบที่ระบบไม่ทำ", "To Do"],
+["24-SEP", "ไม่มีคนรับ", "TI-555", "Medium", "TAKRA Insight - (Windows) รายงานประจำวัน: อ่านความยินยอมจากคลาวด์ไม่ได้แล้วป้ายเงียบ ไม่บอกผู้ใช้ว่าทำไมรายงานไม่มา (เกิดซ้ำ TI-537 บน Windows)", "To Do"],
+["24-SEP", "ไม่มีคนรับ", "TI-556", "Low", "TAKRA Insight - (Windows) รายงานประจำวัน: ลบไลฟ์ที่อยู่ในรายงานแล้วไม่เตรียมรายงานใหม่ทันที (เกิดซ้ำ TI-539 บน Windows)", "To Do"],
+["30-SEP", "James", "TI-557", "Low", "TAKRA Insight - (Windows) แดชบอร์ดแบรนด์: ตัวเลขย่อของการ์ดตั้งแต่ 10,000 ขึ้นไปตัดทศนิยมทิ้ง (12,345 → \"12k\") ไม่ตรงกับเคส TC-DASH-B.3 ที่คาด \"12.3k\" · เกี่ยวข้อง TI-524", "READY TO TEST"],
+["24-SEP", "ไม่มีคนรับ", "TI-558", "Medium", "TAKRA Insight - (Windows) แดชบอร์ดแบรนด์/หน้าไลฟ์: ระยะเวลาของไลฟ์เดียวกันไม่ตรงกัน · แถวใน \"ไลฟ์ล่าสุด\" แสดง 3m แต่หน้าไลฟ์บนเครื่องที่บันทึกและหน้า \"เซสชัน\" แสดง 2m", "To Do"],
+["ยังไม่มีรอบ", "James", "TI-564", "Medium", "[desktop][security] API ของ engine (localhost:8765) ไม่มีการยืนยันตัวตน + CORS เปิดทุก origin ⇒ หน้าเว็บอื่นบนเครื่องเดียวกันอ่านรายการไลฟ์และสั่ง DELETE /sessions/{id} ได้", "To Do"],
+["25-SEP", "James", "TI-565", "Medium", "TAKRA Insight - แชนแนลที่ติดตาม: ยิง probe สถานะติดกันสูงสุด 30 ช่อง TikTok ตอบ 403 ตัวท้ายชุด → ติดตาม 35 ช่อง มี 16 ช่อง (46%) ไม่เคยได้สถานะใน 2 รอบ", "To Do"],
+["ยังไม่มีรอบ", "James", "TI-567", "Medium", "[P1][M1][desktop] การ์ดอัปเดตไม่รู้ว่ากำลังมอนิเตอร์ไลฟ์อยู่ — ไม่บอกว่ามีไลฟ์ขวาง ไม่มีปุ่ม \"หยุดไลฟ์แล้วอัปเดต\" และกด \"ภายหลัง\" แล้วไม่เตือนซ้ำเมื่อไลฟ์จบ", "To Do"],
+["ยังไม่มีรอบ", "James", "TI-568", "Medium", "[P2][MVP-2][desktop] ท่อคอมเมนต์ของห้องตาย (สภาพ TI-383) + ผู้ใช้ออกจากหน้าอัด → แอปตัดสินว่า \"ไลฟ์จบ\" แล้ว auto-stop เซสชันใน ~10 วินาที ทั้งที่ไลฟ์ยังดำเนินอยู่", "To Do"],
+["25-SEP", "James", "TI-569", "Medium", "TAKRA Insight - (Windows) แชนเนลที่ติดตาม: ถ้ามีช่องที่ TikTok ตอบ user_not_found ในรายการ poller ยืดรอบเช็กจาก 3 → 6 → 12 นาที (ขัด AC3 ของ TI-375) · ป้าย \"กำลังไลฟ์\" หลุดเป็น \"—\" ทั้งที่เปิดหน้าอยู่", "To Do"],
+["ยังไม่มีรอบ", "James", "TI-570", "Medium", "[P3][MVP-2][desktop] เพิ่มช่องที่ไลฟ์จบแล้วผ่าน startSession เปิดเซสชันได้จริง ~5 วินาที (ยิง provenance/identity/frame-source เข้า engine) ก่อนถูก auto-stop ทิ้ง — ทาง UI ปฏิเสธตั้งแต่ต้น", "To Do"],
+["ยังไม่มีรอบ", "James", "TI-571", "Medium", "[P3][MVP-2][tooling] mem_floor_probe.py ramp วิ่งจนชนเพดาน ballast 8 GB (swap +7 GB) เพราะ safety stop ยึด available ซึ่งบน macOS ที่ swap หนักไม่ลดตามการจอง", "To Do"],
+["30-SEP", "James", "TI-572", "Medium", "TAKRA Insight - AI NARRATIVE บน workspace ข้อมูลน้อย ขึ้น \"ติดต่อผู้ให้บริการ AI ไม่ได้\" ทั้งที่ provider ตอบปกติ (คำตอบสั้นกว่ากรอบ 120 คำ ถูกปัด malformed → map เป็น provider_unavailable ชี้สาเหตุผิด)", "IN REVIEW"],
+["30-SEP", "James", "TI-575", "Medium", "TAKRA Insight - AI NARRATIVE: ด่านตรวจตัวเลขตัดประโยคที่เลขถูกต้องเพราะใช้คำต่างจากที่กำหนด → คำตอบถูกปัดทั้งก้อน ขึ้น \"ติดต่อผู้ให้บริการ AI ไม่ได้\" (แดชบอร์ดข้อมูลแน่น เรียก 10 ครั้ง ได้ย่อหน้า 3 ครั้ง)", "IN REVIEW"],
+["25-SEP", "James", "TI-576", "Medium", "TAKRA Insight - หน้ารายละเอียดไลฟ์: การ์ดช่วงเด่น \"ผู้ชมสูงสุด\" แสดง 24,285 ที่ 4:00 แต่ไทล์ \"คนดูสูงสุด\" แสดง 24,316 (จุดสูงสุดจริงเกิดราว 3:35) · เส้นผู้ชมรายนาทีเก็บค่าสุดท้ายของนาที ไม่ใช่ค่าสูงสุด", "To Do"],
+["30-SEP", "James", "TI-577", "Medium", "TAKRA Insight - ถูกเชิญเข้าทีมใหม่ที่ยังไม่มีข้อมูล (ทีมของ wanlee QA31) แต่หน้า แชนเนลที่ติดตาม / เซสชัน / ภาพรวม แสดงข้อมูลของทีมก่อนหน้า · ข้อมูลในเครื่องไม่กรองตาม workspace ที่เลือก", "To Do"],
+["ยังไม่มีรอบ", "James", "TI-578", "Medium", "[P1][M1][desktop] หลังถอน capture consent คอมเมนต์ถูกเก็บโดยไม่มีข้อความ → uploader ทิ้งเป็น unshippable → ไม่มีคอมเมนต์ขึ้น cloud เลย (โหมดคอมเมนต์อย่างเดียวที่ TI-407 และ consent copy สัญญาไว้ใช้ไม่ได้)", "To Do"],
+["ยังไม่มีรอบ", "James", "TI-580", "Medium", "[P3][M1][backend] e2e flaky บนเครื่อง macOS: supertest ฟังพอร์ตสุ่มแบบ wildcard แต่ยิงไปที่ 127.0.0.1 ⇒ ชนกับแอปอื่นที่จองพอร์ตเดียวกัน (เช่น GitHub Desktop :49152) → request ค้าง/ได้ 404 แล้วทั้ง describe ที่เหลือค้างตาม", "To Do"],
+["ยังไม่มีรอบ", "James", "TI-581", "Medium", "[P2][M1][desktop] หน้าขอความยินยอมครั้งแรกแสดงสวิตช์ \"อ่านอารมณ์จากสีหน้า\" เป็นปิด แม้ cloud เป็น granted · กด \"ยินยอมและเริ่มใช้งาน\" โดยไม่แตะสวิตช์จะส่ง refused ทับสิทธิ์เดิม (สวิตช์เสียงแก้แล้วใน review P5 แต่ capture ยังไม่แก้)", "To Do"],
+["ยังไม่มีรอบ", "James", "TI-582", "Medium", "[P3][M1][desktop] กล่องยืนยัน \"ให้ความยินยอม\" ในหน้า ตั้งค่า › ความยินยอม แสดงข้อความผลของการถอน (\"เซสชันถัดไปจะเป็นโหมดคอมเมนต์อย่างเดียว …\") · GrantDialog ใช้ consent.effect ตัวเดียวกับ RevokeDialog", "To Do"],
+["ยังไม่มีรอบ", "James", "TI-583", "Medium", "[P2][MVP-2][desktop] ออกจากหน้าไลฟ์ไปหน้าโปรไฟล์/วิดีโอของร้านเดียวกัน (/@shop · /@shop/video/…) ขณะอัด → ไม่เตือน off-live และไม่ auto-stop · เซสชันอัดต่อเรื่อย ๆ โดยไม่ได้คอมเมนต์", "To Do"]
+];
+// Projects: the Jira key prefix decides the project, so rows from another project
+// show up here as soon as they are added to ROWS. Add a line to PROJECTS to give it a name.
+const PROJECTS={
+  TAKRA:{name:"Takra AI", jira:"https://kitdi.atlassian.net"},
+  TI:{name:"Takra Insight", jira:"https://kitdi.atlassian.net"},
+};
+const projOf=r=>r[2].split("-")[0];
+const projName=k=>(PROJECTS[k]&&PROJECTS[k].name)||k;
+const jiraBase=k=>(PROJECTS[k]&&PROJECTS[k].jira)||"https://kitdi.atlassian.net";
+
+// Known orders first; any new value another project brings is appended, not dropped.
+const order=(known,vals)=>known.filter(v=>vals.includes(v)).concat([...new Set(vals)].filter(v=>!known.includes(v)).sort());
+const PJ=order(Object.keys(PROJECTS),ROWS.map(projOf));
+const NO_ROUND="ยังไม่มีรอบ";
+const MON={JAN:0,FEB:1,MAR:2,APR:3,MAY:4,JUN:5,JUL:6,AUG:7,SEP:8,OCT:9,NOV:10,DEC:11};
+const roundKey=r=>{const m=/^(\d{1,2})-([A-Z]{3})$/.exec(r); return m&&MON[m[2]]!==undefined?MON[m[2]]*100+(+m[1]):9999;};
+const RO=[...new Set(ROWS.map(r=>r[0]))].sort((a,b)=>roundKey(a)-roundKey(b)||a.localeCompare(b));
+const DO=order(["Boat","No"],ROWS.map(r=>r[1]).filter(d=>d!=="ไม่มีคนรับ")).concat(ROWS.some(r=>r[1]==="ไม่มีคนรับ")?["ไม่มีคนรับ"]:[]);
+const PO=order(["Highest","High","Medium","Low","Lowest"],ROWS.map(r=>r[3]));
+const SO=order(["To Do","In Progress","IN REVIEW","READY TO TEST"],ROWS.map(r=>r[5]));
+const stCls=s=>s==="In Progress"?"t-prog":s==="IN REVIEW"?"t-rev":s==="READY TO TEST"?"t-rtt":"t-todo";
+const EXTRA=DO.filter(d=>d!=="Boat"&&d!=="No"&&d!=="ไม่มีคนรับ");
+const devSlot=d=>d==="Boat"?"boat":d==="No"?"no":EXTRA.includes(d)?"x"+(EXTRA.indexOf(d)%4+1):"none";
+const devCls=d=>"d-"+devSlot(d);
+const devVar=d=>"--dev-"+devSlot(d);
+const byR=r=>RO.indexOf(r[0]), byD=r=>DO.indexOf(r[1]), byP=r=>PO.indexOf(r[3]);
+ROWS.sort((a,b)=>byR(a)-byR(b)||byD(a)-byD(b)||byP(a)-byP(b)||a[2].localeCompare(b[2]));
+
+const st={j:null,r:null,d:null,p:null,s:null,q:""};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const inProj=()=>ROWS.filter(r=>!st.j||projOf(r)===st.j);
+const cnt=(rows,k,v)=>rows.filter(r=>r[k]===v).length;
+
+const FILTERS=[["fr",0,"r",()=>RO],["fd",1,"d",()=>DO],["fp",3,"p",()=>PO],["fs",5,"s",()=>SO]];
+FILTERS.forEach(([id,,key])=>document.getElementById(id).addEventListener("click",e=>{
+  const b=e.target.closest("button.f"); if(!b) return; st[key]=b.dataset.v||null; render();
+}));
+// The selected project lives in the URL hash (#TAKRA) so a link opens on that project.
+const projFromHash=()=>{const k=decodeURIComponent(location.hash.slice(1)).toUpperCase(); return PJ.includes(k)?k:null;};
+// replaceState keeps the address bar in sync (#TI) without piling up history entries.
+function setHash(k){
+  const want=k?"#"+k:location.pathname+location.search;
+  if(location.hash===(k?"#"+k:"")) return;
+  history.replaceState(null,"",want);
+}
+st.j=projFromHash();
+window.addEventListener("hashchange",()=>{st.j=projFromHash();render();});
+document.getElementById("fj").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b) return; st.j=b.dataset.v||null; setHash(st.j); render();
+});
+document.getElementById("q").addEventListener("input",e=>{st.q=e.target.value.trim().toLowerCase();render();});
+
+function drawProjects(){
+  const el=document.getElementById("fj");
+  el.innerHTML='<span class="lab">โปรเจกต์</span>'+
+    '<button type="button" data-v="" aria-pressed="'+(st.j===null)+'">ทุกโปรเจกต์ <small>'+ROWS.length+' ใบ</small></button>'+
+    PJ.map(k=>'<button type="button" data-v="'+esc(k)+'" aria-pressed="'+(st.j===k)+'">'+esc(projName(k))+' <span class="k">'+esc(k)+'</span> <small>'+ROWS.filter(r=>projOf(r)===k).length+' ใบ</small></button>').join("")+
+    (PJ.length===1?'<span class="hint">โปรเจกต์อื่นจะขึ้นเป็นแท็บใหม่ตรงนี้เมื่อมีตั๋ว</span>':'');
+}
+function drawFilters(base){
+  FILTERS.forEach(([id,k,key,vals])=>{
+    const el=document.getElementById(id);
+    el.innerHTML='<button class="f" data-v="" aria-pressed="'+(st[key]===null)+'">ทั้งหมด</button>'+
+      vals().filter(v=>cnt(base,k,v)>0||st[key]===v).map(v=>'<button class="f" data-v="'+esc(v)+'" aria-pressed="'+(st[key]===v)+'">'+
+        (k===1&&v!=="ไม่มีคนรับ"?'<span class="sq" style="background:var('+devVar(v)+')"></span>':'')+
+        esc(v)+' ('+cnt(base,k,v)+')</button>').join("");
+  });
+}
+// summary: total + one box per dimension, each a proportion bar with a legend (zero counts hidden)
+function box(base,title,key,items){
+  const its=items.map(([v,c])=>[v,c,cnt(base,key,v)]).filter(x=>x[2]>0);
+  return '<div class="box"><div class="lab2">'+title+'</div><div class="stack">'+
+    its.map(([v,c,n])=>'<i style="width:'+(n/base.length*100)+'%;background:var('+c+')" title="'+esc(v)+' '+n+'"></i>').join("")+
+    '</div><div class="leg">'+its.map(([v,c,n])=>'<span><i class="sw" style="background:var('+c+')"></i>'+esc(v)+' <b>'+n+'</b></span>').join("")+'</div></div>';
+}
+function drawSummary(base){
+  const sev={Highest:"--sev-highest",High:"--sev-high",Medium:"--sev-med",Low:"--sev-low"};
+  const sts={"To Do":"--st-todo","In Progress":"--st-prog","IN REVIEW":"--st-rev","READY TO TEST":"--st-rtt"};
+  document.getElementById("tot").innerHTML =
+    '<div class="box total"><div class="lab2">'+(st.j?esc(projName(st.j)):'ทุกโปรเจกต์')+'</div><div class="big">'+base.length+'<small>ใบ</small></div></div>' +
+    box(base,"ผู้รับผิดชอบ",1,DO.map(d=>[d,devVar(d)])) +
+    box(base,"ระดับความสำคัญ",3,PO.map(p=>[p,sev[p]||"--sev-low"])) +
+    box(base,"สถานะ",5,SO.map(s=>[s,sts[s]||"--st-todo"]));
+}
+
+function render(){
+  const base=inProj();
+  drawProjects(); drawFilters(base); drawSummary(base);
+  const rows=base.filter(r=>
+    (!st.r||r[0]===st.r)&&(!st.d||r[1]===st.d)&&(!st.p||r[3]===st.p)&&(!st.s||r[5]===st.s)&&
+    (!st.q||r[2].toLowerCase().includes(st.q)||r[4].toLowerCase().includes(st.q)));
+
+  const out=document.getElementById("out");
+  if(!rows.length){out.innerHTML='<p class="none">ไม่มีตั๋วที่ตรงเงื่อนไขนี้</p>';return;}
+  const showProj=!st.j;   // mixed view: say which project each ticket belongs to
+
+  let h="";
+  RO.forEach(rd=>{
+    const inR=rows.filter(r=>r[0]===rd); if(!inR.length) return;
+    h+='<section class="grp"><div class="rnd"><h2>'+esc(rd)+'</h2><span class="n">'+inR.length+' ใบ</span></div>';
+    DO.forEach(dv=>{
+      const inD=inR.filter(r=>r[1]===dv); if(!inD.length) return;
+      h+='<div class="dev '+devCls(dv)+'"><h3 class="devh">'+esc(dv)+' <span class="n">'+inD.length+' ใบ</span></h3>'+
+         '<div class="scroll"><table><thead><tr>'+(showProj?'<th>โปรเจกต์</th>':'')+'<th>ID</th><th>ชื่อ</th><th>Priority</th><th>สถานะ</th></tr></thead><tbody>';
+      inD.forEach(r=>{
+        const pk=projOf(r);
+        h+='<tr>'+(showProj?'<td class="pj"><span class="ptag" title="'+esc(projName(pk))+'">'+esc(pk)+'</span></td>':'')+
+           '<td class="id"><a href="'+jiraBase(pk)+'/browse/'+esc(r[2])+'" target="_blank" rel="noopener">'+esc(r[2])+'</a></td>'+
+           '<td class="nm">'+esc(r[4])+'</td>'+
+           '<td class="p"><span class="sev s-'+esc(r[3])+'">'+esc(r[3])+'</span></td>'+
+           '<td class="st"><span class="stt '+stCls(r[5])+'">'+esc(r[5])+'</span></td></tr>';
+      });
+      h+='</tbody></table></div></div>';
+    });
+    h+='</section>';
+  });
+  out.innerHTML=h;
+}
+render();
+</script>
+
+</body>
+</html>
