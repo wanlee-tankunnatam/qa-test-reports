@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TAKRA — แผน Regression ทุกโปรเจกต์ · 5–9 ต.ค.</title>
+<style>
+  :root{
+    --bg:#f5f6f8; --panel:#ffffff; --head:#f8f9fb; --border:#e6e8ec;
+    --text:#1a1f26; --muted:#6b7280; --faint:#9aa1ab;
+    --pass:#15803d; --pass-bg:#e3f5e9;
+    --fail:#dc2626; --fail-bg:#fdeaea;
+    --prog:#2563eb; --prog-bg:#e6effe;
+    --wait:#6b7280; --wait-bg:#eef0f3;
+    --none:#b45309; --none-bg:#fdf1df; --yel:#ca8a04;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --bg:#0e1116; --panel:#161b22; --head:#1b2230; --border:#2a313c;
+      --text:#e6e9ee; --muted:#9aa4b2; --faint:#6b7480;
+      --pass:#4ade80; --pass-bg:#12301f; --fail:#f87171; --fail-bg:#3a1618;
+      --prog:#6ea8fe; --prog-bg:#17233b; --wait:#a3acb9; --wait-bg:#1f2630;
+      --none:#f0b35b; --none-bg:#332614; --yel:#facc15;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0e1116; --panel:#161b22; --head:#1b2230; --border:#2a313c;
+    --text:#e6e9ee; --muted:#9aa4b2; --faint:#6b7480;
+    --pass:#4ade80; --pass-bg:#12301f; --fail:#f87171; --fail-bg:#3a1618;
+    --prog:#6ea8fe; --prog-bg:#17233b; --wait:#a3acb9; --wait-bg:#1f2630;
+    --none:#f0b35b; --none-bg:#332614; --yel:#facc15;
+  }
+  *{box-sizing:border-box}
+  [hidden]{display:none!important}
+  html,body{margin:0}
+  body{background:var(--bg); color:var(--text); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans Thai",Roboto,Helvetica,Arial,sans-serif; line-height:1.5; font-size:15px; -webkit-font-smoothing:antialiased}
+  .wrap{max-width:1120px; margin:0 auto; padding:28px 18px 60px}
+  header{display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between; gap:12px; margin-bottom:16px}
+  h1{font-size:1.5rem; margin:0}
+  .sub{color:var(--muted); font-size:.9rem}
+  .back{color:var(--muted); font-size:.85rem; text-decoration:none; border:1px dashed var(--border); border-radius:10px; padding:6px 12px}
+
+  .summary{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:18px}
+  .chip{display:flex; align-items:center; gap:8px; padding:8px 14px; border-radius:12px; font-weight:600; font-size:.92rem}
+  .chip b{font-size:1.25rem; font-variant-numeric:tabular-nums}
+
+  .table-wrap{overflow-x:auto; background:var(--panel); border:1px solid var(--border); border-radius:14px}
+  table{width:100%; border-collapse:collapse; min-width:720px}
+  th,td{padding:10px 14px; text-align:left; vertical-align:top}
+  thead th{font-size:.78rem; color:var(--muted); font-weight:600; border-bottom:1px solid var(--border); white-space:nowrap; background:var(--head)}
+  tbody td{border-top:1px solid var(--border)}
+  thead th, tbody td{border-right:1px solid var(--border)}
+  thead th:last-child, tbody td:last-child{border-right:0}
+  tr.proj td{background:color-mix(in srgb, var(--pc) 13%, var(--panel)); font-weight:700; font-size:1rem; padding-top:12px; padding-bottom:12px; border-top:2px solid var(--border)}
+  tr.proj td:first-child{box-shadow:inset 4px 0 0 var(--pc)}
+  tr.proj:first-child td{border-top:0}
+  tr.proj .prog{font-weight:500; font-size:.82rem; color:var(--muted); margin-left:10px}
+  td.scope{width:46%}
+  .fname{font-weight:600}
+  .note{display:block; color:var(--muted); font-size:.8rem; line-height:1.4}
+  td.owner,td.st,td.cs{white-space:nowrap; text-align:center}
+  td.day{white-space:nowrap; font-variant-numeric:tabular-nums; text-align:center; font-weight:600}
+  .pill{display:inline-block; font-size:.82rem; font-weight:600; border-radius:999px; padding:2px 10px}
+  .s-pass{color:var(--pass); background:var(--pass-bg)}
+  .s-fail{color:var(--fail); background:var(--fail-bg)}
+  .s-prog{color:var(--prog); background:var(--prog-bg)}
+  .s-wait{color:var(--wait); background:var(--wait-bg)}
+  .s-none{color:var(--none); background:var(--none-bg)}
+  .warn-txt{color:var(--none); font-weight:600}
+
+  .tabs{display:flex; gap:4px; border-bottom:1px solid var(--border); margin:4px 0 16px; overflow-x:auto}
+  .tab{appearance:none; background:none; border:0; border-bottom:3px solid transparent; margin-bottom:-1px; padding:10px 16px; font:inherit; font-weight:600; font-size:.95rem; color:var(--muted); cursor:pointer; white-space:nowrap}
+  .tab:hover{color:var(--text)}
+  .tab.active{color:var(--text); border-bottom-color:var(--prog)}
+
+  /* ---- Gantt (สัปดาห์เดียว) ---- */
+  .gantt-wrap{overflow-x:auto; background:var(--panel); border:1px solid var(--border); border-radius:14px; margin-bottom:8px}
+  .gantt{position:relative; min-width:max-content; font-size:.8rem}
+  .g-row{display:grid; grid-template-columns:var(--lcols) var(--track); align-items:stretch}
+  .g-lcol{display:grid; grid-template-columns:44px 300px 92px; position:sticky; left:0; z-index:5; background:var(--panel); box-shadow:4px 0 6px -4px rgba(0,0,0,.18)}
+  .g-id,.g-name,.g-own{background:var(--panel); border-bottom:1px solid var(--border)}
+  .g-id{width:44px; display:flex; align-items:center; justify-content:center; font-weight:700; color:var(--muted); font-variant-numeric:tabular-nums}
+  .g-name{width:300px; padding:0 12px; font-weight:600; border-right:1px solid var(--border); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; line-height:34px}
+  .g-own{border-right:1px solid var(--border); display:flex; align-items:center; padding:0 10px; font-size:.74rem; font-weight:600; color:var(--muted); white-space:nowrap}
+  .g-head .g-id,.g-head .g-name,.g-head .g-own{background:var(--head); color:var(--muted); font-size:.72rem; font-weight:700; letter-spacing:.04em}
+  .g-days{display:flex; height:44px; border-bottom:1px solid var(--border); background:var(--head)}
+  .g-day{width:var(--dw); flex:none; text-align:center; font-size:.72rem; line-height:1.2; padding-top:5px; color:var(--muted); font-variant-numeric:tabular-nums}
+  .g-day b{display:block; font-size:.84rem; color:var(--text)}
+  .g-day.we{color:var(--faint)} .g-day.we b{color:var(--faint)}
+  .g-day.today{background:var(--prog-bg)} .g-day.today b{color:var(--prog)}
+  .g-proj .g-id,.g-proj .g-name,.g-proj .g-own{background:var(--head)}
+  .g-proj .g-name{font-weight:700; color:var(--text)}
+  .g-proj .g-track{background:var(--head); background-image:none}
+  .g-track{position:relative; height:34px; border-bottom:1px solid var(--border);
+    background-image:repeating-linear-gradient(to right, transparent 0 calc(var(--dw) - 1px), var(--border) calc(var(--dw) - 1px) var(--dw))}
+  .g-shade{position:absolute; top:0; bottom:0; width:var(--dw); background:rgba(127,127,127,.09); pointer-events:none; z-index:0}
+  .g-today{position:absolute; top:0; bottom:0; width:2px; background:var(--prog); opacity:.7; z-index:2; pointer-events:none}
+  .g-bar{position:absolute; top:7px; height:20px; border-radius:5px; opacity:.85; z-index:1; color:#fff; font-size:.68rem; font-weight:700; line-height:20px; padding:0 8px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+  .g-legend{display:flex; flex-wrap:wrap; gap:14px; color:var(--muted); font-size:.78rem; margin:10px 0 0}
+  footer{margin-top:14px; color:var(--faint); font-size:.8rem}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>🧪 แผน Regression ทุกโปรเจกต์</h1>
+      <div class="sub">รอบ <b>จันทร์ 5 – ศุกร์ 9 ต.ค. 2569</b> · วางแผนล่วงหน้า (ยังไม่ผูก Jira / test case) · ข้อมูล ณ <span id="asof"></span></div>
+    </div>
+    <a class="back" href="../">🏠 รายงานทั้งหมด</a>
+  </header>
+
+  <section class="summary" id="summary"></section>
+
+  <div class="tabs" role="tablist">
+    <button class="tab" role="tab" data-tab="timeline">📅 ไทม์ไลน์สัปดาห์</button>
+    <button class="tab" role="tab" data-tab="plan">📋 แผนรายโปรเจกต์</button>
+  </div>
+
+  <section class="panel" data-panel="timeline">
+    <div class="gantt-wrap"><div class="gantt" id="gantt"></div></div>
+    <div class="g-legend"><span>แท่ง = ช่วงวันที่วางไว้ของแต่ละสโคป · สีตามโปรเจกต์ · ตัวหนังสือบนแท่ง = ผู้เทส + เคสโดยประมาณ</span></div>
+  </section>
+
+  <section class="panel" data-panel="plan">
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>ขอบเขต Regression</th><th>ผู้เทส</th><th>วัน</th><th>~เคส</th><th>สถานะ</th></tr></thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+    <footer>แผนตั้งต้น — แก้ข้อมูลได้ที่ไฟล์นี้ (array <code>PLAN</code>) · สถานะ: วางแผน → กำลังเทส → เสร็จ · "ติดเงื่อนไข" = มี precondition ที่ต้องเคลียร์ก่อนถึงวัน · ลิงก์ Jira/test case จะผูกทีหลังตอนใกล้รอบ</footer>
+  </section>
+</div>
+
+<script>
+const AS_OF = '2026-09-29';
+const TODAY = (() => { const n = new Date(); return `${n.getFullYear()}-${String(n.getMonth() + 1).padStart(2, '0')}-${String(n.getDate()).padStart(2, '0')}`; })();
+
+// ── แผน regression 5–9 ต.ค. 2569 — แก้มือได้ที่นี่ ──
+// item: name=สโคป · note=รายละเอียด/เงื่อนไข · owner=ผู้เทส · start/end (YYYY-MM-DD ใน 2026-10-05..09) · cases=ประมาณการ
+// status: plan (วางแผน) | doing (กำลังเทส) | done (เสร็จ) | risk (ติดเงื่อนไข) | fail (เจอปัญหา)
+const PLAN = [
+  { name:'Live', emoji:'🎥', color:'#e11d48', owner:'Ice', items:[
+    { name:'MVP-1 happy path ทั้งเส้น (login → คลัง → Studio → ไลฟ์ → จบ)', note:'ชุด happy 141 เคส — ยืนยันของเดิมไม่พังหลัง dev แก้ชุดใหญ่', owner:'Ice', start:'2026-10-05', end:'2026-10-05', cases:'~141', status:'plan' },
+    { name:'จุดที่เคย FAIL + ฟีเจอร์รอบ ก.ย. (ใบงาน 1223–1230 · tool-calling)', note:'re-test เฉพาะเคสที่เคยไม่ผ่านและ dev ปิดแล้ว + บัคตีกลับชุด MVP2 (รอ dev ปิดก่อน 2 ต.ค.)', owner:'Ice', start:'2026-10-06', end:'2026-10-06', cases:'~90', status:'plan' },
+  ]},
+  { name:'Rerun', emoji:'🔁', color:'#7c3aed', owner:'Moss', items:[
+    { name:'Windows — flow หลัก + จุดที่เคย FAIL 33 เคส', note:'ไล่เฉพาะ P0 ของ MVP-1+2 Windows + re-test เคสไม่ผ่านที่แก้แล้ว', owner:'Moss', start:'2026-10-05', end:'2026-10-05', cases:'~80', status:'plan' },
+    { name:'macOS — สุ่ม P0 + ฟีเจอร์ใหม่ ก.ย. (auto chat-reply · ตั้งเวลา · แบนเนอร์)', note:'สุ่มชุดเดียวกับ Windows ให้ครอบสองแพลตฟอร์มตามธรรมเนียม Mac/Win', owner:'Moss', start:'2026-10-06', end:'2026-10-06', cases:'~70', status:'plan' },
+  ]},
+  { name:'Insight', emoji:'📊', color:'#f59e0b', owner:'Ice', items:[
+    { name:'Live Readiness รอบยืนยัน + จุดที่เคย FAIL (Dashboard · Reports · Membership)', note:'Live Readiness 33 เคสรันกับไลฟ์จริง 1 รอบ + re-test บั๊กของขวัญนับซ้ำและชุด fail ที่ dev ปิดแล้ว + BYOK smoke', owner:'Ice', start:'2026-10-07', end:'2026-10-07', cases:'~70', status:'plan' },
+  ]},
+  { name:'Hub', emoji:'🧾', color:'#0ea5e9', owner:'Moss', items:[
+    { name:'flow เงินครบลูป (สมัคร → เลือกแพ็กเกจ → สลิป → CS ตรวจ → เปิดสิทธิ์ → ดาวน์โหลด) + VAT/เอกสาร', note:'MVP-1 P0 + ของใหม่ VAT/ใบเสร็จ/รวมสลิป + re-test บัคตีกลับ 3 ชุด (TKH-50/121/239 — รอ dev ปิดก่อน)', owner:'Moss', start:'2026-10-07', end:'2026-10-07', cases:'~90', status:'plan' },
+  ]},
+  { name:'Trendora', emoji:'📈', color:'#16a34a', owner:'Ice', items:[
+    { name:'4 หน้าหลัก (หน้าหลัก · ค้นหา · เฝ้าดู · Affiliate) + โซนแอดมิน + จุดที่เคย FAIL', note:'ชุด 130 เคสรอบยืนยัน + re-test บัค 11 ใบ (TKRD-186) · ติดเงื่อนไข: แคตตาล็อกสินค้าต้องมีข้อมูลจริงก่อน (TKRD-161) ไม่งั้นก้อนค้นหา/เฝ้าดู BLOCKED ต่อ', owner:'Ice', start:'2026-10-08', end:'2026-10-08', cases:'~130', status:'risk' },
+  ]},
+  { name:'Post', emoji:'📱', color:'#0d9488', owner:'Moss', items:[
+    { name:'3 ฟีเจอร์หลัก (ต่อมือถือ · ตั้งตาราง · คลังคอนเทนต์) + เคสค้าง', note:'รวม re-test Report Bug #1 (TF-1) และเคสที่ยังไม่ได้เทส ~45 จากชุด 59', owner:'Moss', start:'2026-10-08', end:'2026-10-08', cases:'~59', status:'plan' },
+  ]},
+  { name:'Lib-Sync', emoji:'🎙️', color:'#db2777', owner:'Ice', items:[
+    { name:'Smoke แอปเดสก์ท็อป (ติดตั้ง → login TikTok → Console → เปิดไลฟ์ → ปิดไม่ค้าง)', note:'รอบแรกของชุด 69 เคส เลือกเฉพาะเส้นหลัก + ถือโอกาสยืนยันคำ UI หน้า Console 37 เคสกับจอจริง', owner:'Ice', start:'2026-10-09', end:'2026-10-09', cases:'~35', status:'plan' },
+  ]},
+  { name:'Clip', emoji:'🎬', color:'#6366f1', owner:'Moss', items:[
+    { name:'Back Office รอบแรก — smoke P0', note:'ยังไม่เคยเทสเลย (ไม่ใช่ regression แท้) เดินเส้นหลักของชุด 70 เคสก่อน', owner:'Moss', start:'2026-10-09', end:'2026-10-09', cases:'~35', status:'plan' },
+  ]},
+  { name:'เก็บตก', emoji:'🧯', color:'#64748b', owner:'Ice / Moss', items:[
+    { name:'กันชนท้ายสัปดาห์ — re-test บัคที่เจอระหว่างรอบ + สโคปที่เลื่อน', note:'ครึ่งบ่ายศุกร์ เผื่อของหลุดจากวันก่อนหน้า และสรุปผลรอบ regression', owner:'Ice / Moss', start:'2026-10-09', end:'2026-10-09', cases:'—', status:'plan' },
+  ]},
+];
+
+const ST = { plan:['s-wait','วางแผน'], doing:['s-prog','กำลังเทส'], done:['s-pass','✓ เสร็จ'], risk:['s-none','ติดเงื่อนไข'], fail:['s-fail','✕ เจอปัญหา'] };
+const TH_MON = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+const WD = ['อา','จ','อ','พ','พฤ','ศ','ส'];
+const d = s => new Date(s + 'T00:00:00');
+const fmt = s => { const x = d(s); return `${WD[x.getDay()]} ${x.getDate()} ${TH_MON[x.getMonth()]}`; };
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+document.getElementById('asof').textContent = (() => { const x = d(AS_OF); return `${x.getDate()} ${TH_MON[x.getMonth()]} ${x.getFullYear() + 543}`; })();
+
+// ── สรุปหัวหน้า ──
+const items = PLAN.flatMap(p => p.items.map(i => ({ ...i, proj: p.name })));
+const sumCases = items.reduce((a, i) => a + (parseInt(String(i.cases).replace(/[^0-9]/g, '')) || 0), 0);
+document.getElementById('summary').innerHTML = [
+  ['', PLAN.length, 'โปรเจกต์', 'var(--text)'],
+  ['', items.length, 'สโคป regression', 'var(--text)'],
+  ['s-prog', '~' + sumCases, 'เคสโดยประมาณ', ''],
+  ['s-wait', 5, 'วันเทส (จ–ศ)', ''],
+  ['s-none', items.filter(i => i.status === 'risk').length, 'ติดเงื่อนไขต้องเคลียร์ก่อน', ''],
+].map(([c, n, l, col]) => `<div class="chip ${c}" ${col ? `style="color:var(--muted)"` : ''}><b ${col ? `style="color:${col}"` : ''}>${n}</b>${l}</div>`).join('');
+
+// ── ตารางแผน ──
+document.getElementById('rows').innerHTML = PLAN.map(p => {
+  const head = `<tr class="proj" style="--pc:${p.color}"><td>${p.emoji} ${esc(p.name)}<span class="prog">ผู้เทสหลัก ${esc(p.owner)}</span></td><td></td><td></td><td></td><td></td></tr>`;
+  return head + p.items.map(it => `<tr>
+    <td class="scope"><span class="fname">${esc(it.name)}</span>${it.note ? `<span class="note">${esc(it.note)}</span>` : ''}</td>
+    <td class="owner">${esc(it.owner || p.owner)}</td>
+    <td class="day">${fmt(it.start)}${it.end !== it.start ? ` – ${fmt(it.end)}` : ''}</td>
+    <td class="cs">${esc(it.cases)}</td>
+    <td class="st"><span class="pill ${ST[it.status][0]}">${ST[it.status][1]}</span></td>
+  </tr>`).join('');
+}).join('');
+
+// ── Gantt สัปดาห์ 3–11 ต.ค. ──
+(function(){
+  const DW = 96, DAY = 864e5;
+  const start = d('2026-10-03'), end = d('2026-10-11');
+  const nDays = Math.round((end - start) / DAY) + 1;
+  const col = s => Math.round((d(s) - start) / DAY);
+  const g = document.getElementById('gantt');
+  g.style.setProperty('--dw', DW + 'px');
+  const L = 44 + 300 + 92;
+  g.style.setProperty('--lcols', L + 'px');
+  g.style.setProperty('--track', nDays * DW + 'px');
+  const days = [...Array(nDays)].map((_, k) => new Date(start.getTime() + k * DAY));
+  const todayCol = col(TODAY);
+  const daysHtml = days.map((x, k) => { const we = x.getDay() === 0 || x.getDay() === 6;
+    return `<div class="g-day${we ? ' we' : ''}${k === todayCol ? ' today' : ''}"><b>${x.getDate()} ${TH_MON[x.getMonth()]}</b>${WD[x.getDay()]}</div>`; }).join('');
+  let html = `<div class="g-row g-head"><div class="g-lcol"><div class="g-id" style="height:44px">ID</div><div class="g-name" style="height:44px;line-height:44px">สโคป</div><div class="g-own" style="height:44px">ผู้เทส</div></div><div class="g-days">${daysHtml}</div></div>`;
+  let n = 0;
+  PLAN.forEach(p => {
+    html += `<div class="g-row g-proj"><div class="g-lcol"><div class="g-id" style="color:${p.color}">●</div><div class="g-name">${p.emoji} ${esc(p.name)}</div><div class="g-own">${esc(p.owner)}</div></div><div class="g-track"></div></div>`;
+    p.items.forEach(it => {
+      n++;
+      const a = col(it.start), b = col(it.end);
+      const bar = `<div class="g-bar" style="left:${a * DW + 3}px;width:${(b - a + 1) * DW - 6}px;background:${p.color}" title="${esc(it.name)} · ${fmt(it.start)}${it.end !== it.start ? '–' + fmt(it.end) : ''}">${esc(it.owner || p.owner)} · ${esc(it.cases)} เคส${it.status === 'risk' ? ' ⚠️' : ''}</div>`;
+      html += `<div class="g-row"><div class="g-lcol"><div class="g-id">${String(n).padStart(2, '0')}</div><div class="g-name" title="${esc(it.name)}">${esc(it.name)}</div><div class="g-own">${esc(it.owner || p.owner)}</div></div><div class="g-track">${bar}</div></div>`;
+    });
+  });
+  days.forEach((x, k) => { if (x.getDay() === 0 || x.getDay() === 6) html += `<div class="g-shade" style="left:${L + k * DW}px"></div>`; });
+  if (todayCol >= 0 && todayCol < nDays) html += `<div class="g-today" style="left:${L + todayCol * DW + DW / 2 - 1}px"></div>`;
+  g.innerHTML = html;
+})();
+
+// ── Tabs (#timeline / #plan) ──
+(function(){
+  const tabs = [...document.querySelectorAll('.tab')], panels = [...document.querySelectorAll('.panel')];
+  function show(name){
+    if (!tabs.some(t => t.dataset.tab === name)) name = 'timeline';
+    tabs.forEach(t => { const on = t.dataset.tab === name; t.classList.toggle('active', on); t.setAttribute('aria-selected', on); });
+    panels.forEach(p => p.hidden = p.dataset.panel !== name);
+  }
+  tabs.forEach(t => t.addEventListener('click', () => { history.replaceState(null, '', '#' + t.dataset.tab); show(t.dataset.tab); }));
+  window.addEventListener('hashchange', () => show(location.hash.slice(1)));
+  show(location.hash.slice(1));
+})();
+</script>
+</body>
+</html>

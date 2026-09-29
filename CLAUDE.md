@@ -81,6 +81,8 @@ repo นี้เก็บรายงาน manual test case (UI) ของท�
 >
 > **ปฏิทินทดสอบ + ภาพรวม (ทุกโปรเจกต์)** (16 ก.ย. 2026) — `timeline/index.html?project=timeline` (ชีต: Epic + Story/Task ลูก · สถานะ · เริ่ม DEV/กำหนด DEV **จาก Jira ที่ BA/PM ปัก** · แก้ในหน้าแล้ว auto-save ขึ้น GitHub ผ่าน store-data) และ `timeline/overview.html` (Gantt อ่านสดจาก index.html · แท่ง = เริ่ม DEV → กำหนด DEV) · ขั้นตอน: `python3 tools/build/fetch_jira_snapshot.py` (ดึง Jira → `tools/build/jira-snapshot/<KEY>.json` · auth จาก `~/.config/jira-auth` ผ่าน `~/.claude/scripts/jira.py` · ห้าม print token) แล้ว `python3 tools/build/build_timeline_calendar.py` (แทนที่เฉพาะระหว่าง `<!-- CAL:START -->…<!-- CAL:END -->` ไม่แตะ store-data) · takra-farm ไม่มี Jira → อ่านจาก `docs/prd.md` · ฟิลด์ Jira: Start date = `customfield_10015` · Due = `duedate` · Sprint = `customfield_10020`
 
+> **แผน Regression ทุกโปรเจกต์ (รอบ 5–9 ต.ค. 2569)** (29 ก.ย. 2026) — `timeline/regression-plan.html` (#timeline Gantt สัปดาห์ · #plan ตารางแผน) ดีไซน์เดียวกับ feature-status · ข้อมูลแก้มือใน array `PLAN` ในไฟล์ · ยังไม่ผูก Jira/test case ตามที่ตกลง — จะผูกตอนใกล้รอบ
+>
 > Jira เป็นลิงก์อ้างอิงสำหรับคน — ไม่มี API token ใน repo นี้ ถ้าต้องดึงสถานะใบงานให้ผู้ใช้ export/แปะข้อมูลมา
 
 **2 index แยกกัน:** รายงานผลทดสอบ = `index.html` (`/?project=<id>`) · เอกสาร timeline/แผนเดินงาน = `timeline/index.html` (`/timeline/?project=<id>`) — เอกสาร timeline ไม่ต้องใส่ในหน้ารายงาน
