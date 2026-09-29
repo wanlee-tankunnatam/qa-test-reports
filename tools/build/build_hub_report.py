@@ -44,7 +44,6 @@ MODULES = {'mvp1': 'hub_cases', 'mvp2': 'hub_mvp2_cases', 'mvp2rbac': 'hub_mvp2_
            'lipsync': 'lipsync_cases',
            'radar': 'radar_cases',
            'regradar': 'reg_radar_oct_cases', 'regfarm': 'reg_farm_oct_cases',
-           'reghub': 'reg_hub_oct_cases',
            'regai1': 'reg_ai_happy_oct_cases', 'regai2': 'reg_ai_failfeat_oct_cases',
            'regrerun': 'reg_rerun_oct_cases', 'reginsight': 'reg_insight_oct_cases'}
 _which = next((a for a in sys.argv[1:] if a in MODULES), 'mvp1')
