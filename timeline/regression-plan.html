@@ -70,6 +70,9 @@
   .os-mac{color:#374151; background:#e5e7eb; border:1px solid #c7ccd4}
   @media (prefers-color-scheme:dark){ :root:not([data-theme="light"]) .os-win{color:#93c5fd;background:#17233b;border-color:#2a3b5c} :root:not([data-theme="light"]) .os-mac{color:#cbd2da;background:#242b35;border-color:#39414d} }
   .warn-txt{color:var(--none); font-weight:600}
+  .jira{font-size:.8rem; font-weight:600; color:var(--prog); text-decoration:none}
+  .jira:hover{text-decoration:underline}
+  .links{display:flex; flex-wrap:wrap; gap:2px 12px; margin-top:3px}
 
   .tabs{display:flex; gap:4px; border-bottom:1px solid var(--border); margin:4px 0 16px; overflow-x:auto}
   .tab{appearance:none; background:none; border:0; border-bottom:3px solid transparent; margin-bottom:-1px; padding:10px 16px; font:inherit; font-weight:600; font-size:.95rem; color:var(--muted); cursor:pointer; white-space:nowrap}
@@ -200,7 +203,7 @@ document.getElementById('summary').innerHTML = [
 document.getElementById('rows').innerHTML = PLAN.map(p => {
   const head = `<tr class="proj" style="--pc:${p.color}"><td>${p.emoji} ${esc(p.name)}<span class="prog">ผู้เทสหลัก ${esc(p.owner)}${p.items.some(i=>i.os) ? ' · 🪟+🍎 คู่ 2 OS' : ''}</span></td><td></td><td></td><td></td><td></td><td></td></tr>`;
   return head + p.items.map(it => `<tr>
-    <td class="scope"><span class="fname">${esc(it.name)}</span>${it.note ? `<span class="note">${esc(it.note)}</span>` : ''}</td>
+    <td class="scope"><span class="fname">${esc(it.name)}</span>${it.report ? `<span class="links"><a class="jira" href="${esc(it.report)}" target="_blank" rel="noopener">📋 Regression test cases ↗</a></span>` : ''}${it.note ? `<span class="note">${esc(it.note)}</span>` : ''}</td>
     <td class="owner">${esc(it.owner || p.owner)}</td>
     <td class="st">${it.os ? `<span class="pill ${it.os === 'win' ? 'os-win' : 'os-mac'}">${it.os === 'win' ? '🪟 Windows' : '🍎 macOS'}</span>` : '<span style="color:var(--faint)">—</span>'}</td>
     <td class="day">${fmt(it.start)}${it.end !== it.start ? ` – ${fmt(it.end)}` : ''}</td>

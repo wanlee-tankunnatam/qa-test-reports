@@ -40,7 +40,10 @@ MODULES = {'mvp1': 'hub_cases', 'mvp2': 'hub_mvp2_cases', 'mvp2rbac': 'hub_mvp2_
            'rerunquality': 'rerun_quality_cases',
            'aiquality': 'ai_quality_cases',
            'lipsync': 'lipsync_cases',
-           'radar': 'radar_cases'}
+           'radar': 'radar_cases',
+           'regradar': 'reg_radar_oct_cases', 'regfarm': 'reg_farm_oct_cases',
+           'reglipsync': 'reg_lipsync_oct_cases', 'regclip': 'reg_clip_oct_cases',
+           'reghub': 'reg_hub_oct_cases'}
 _which = next((a for a in sys.argv[1:] if a in MODULES), 'mvp1')
 # 'module:key' = โมดูลเดียวสร้างได้หลายไฟล์ — เรียก select(key) ก่อนอ่าน EPICS/META
 _modname, _, _sel = MODULES[_which].partition(':')
