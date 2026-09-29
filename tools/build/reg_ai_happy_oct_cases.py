@@ -37,3 +37,9 @@ META = dict(
           'แผนรวม: <a href="https://wanlee-tankunnatam.github.io/qa-test-reports/timeline/regression-plan.html#plan">regression-plan</a>'),
     footer='Regression 5–9 ต.ค. 2569 · takra-ai (Live) · MVP-1 happy path',
 )
+
+
+# ── รอบนี้เอาแค่ P0 + P1 (ตัด P2 ออก — สั่ง 2026-09-29) ──
+EPICS = [e2 for e2 in (
+    dict(_e0, feats=[f2 for f2 in (dict(_f0, cases=[c for c in _f0['cases'] if c['prio'] in ('P0', 'P1')]) for _f0 in _e0['feats']) if f2['cases']])
+    for _e0 in EPICS) if e2['feats']]
