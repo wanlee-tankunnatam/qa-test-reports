@@ -73,6 +73,15 @@
   .jira{font-size:.8rem; font-weight:600; color:var(--prog); text-decoration:none}
   .jira:hover{text-decoration:underline}
   .links{display:flex; flex-wrap:wrap; gap:2px 12px; margin-top:3px}
+  .lv-wrap{display:flex; flex-direction:column; gap:3px; align-items:center}
+  .lv-bar{width:86px; height:8px; border-radius:999px; background:var(--border); overflow:hidden; display:flex; gap:2px}
+  .lv-bar i{display:block; height:100%; min-width:3px; border-radius:999px}
+  .lv-pass{background:var(--pass)} .lv-issue{background:#7c3aed}
+  .lv-fail{background-color:var(--fail); background-image:repeating-linear-gradient(45deg, rgba(255,255,255,.55) 0 1.5px, transparent 1.5px 3.5px)}
+  .lv-txt{font-size:.78rem; font-variant-numeric:tabular-nums; color:var(--muted); white-space:nowrap}
+  .lv-txt b{color:var(--text)}
+  .lv-chips{font-size:.74rem; white-space:nowrap}
+  .lv-chips .c-p{color:var(--pass); font-weight:700} .lv-chips .c-f{color:var(--fail); font-weight:700} .lv-chips .c-b{color:#7c3aed; font-weight:700}
 
   .tabs{display:flex; gap:4px; border-bottom:1px solid var(--border); margin:4px 0 16px; overflow-x:auto}
   .tab{appearance:none; background:none; border:0; border-bottom:3px solid transparent; margin-bottom:-1px; padding:10px 16px; font:inherit; font-weight:600; font-size:.95rem; color:var(--muted); cursor:pointer; white-space:nowrap}
@@ -202,7 +211,7 @@ document.getElementById('rows').innerHTML = PLAN.map(p => {
     <td class="st">${it.os ? `<span class="pill ${it.os === 'win' ? 'os-win' : 'os-mac'}">${it.os === 'win' ? '🪟 Windows' : '🍎 macOS'}</span>` : '<span style="color:var(--faint)">—</span>'}</td>
     <td class="day">${fmt(it.start)}${it.end !== it.start ? ` – ${fmt(it.end)}` : ''}</td>
     <td class="cs">${esc(it.cases)}</td>
-    <td class="st"><span class="pill ${ST[it.status][0]}">${ST[it.status][1]}</span></td>
+    <td class="st" data-live="${it.report ? esc(it.report) + '|' + (it.os || '') : ''}"><span class="pill ${ST[it.status][0]}">${ST[it.status][1]}</span></td>
   </tr>`).join('');
 }).join('');
 
@@ -235,6 +244,47 @@ document.getElementById('rows').innerHTML = PLAN.map(p => {
   days.forEach((x, k) => { if (x.getDay() === 0 || x.getDay() === 6) html += `<div class="g-shade" style="left:${L + k * DW}px"></div>`; });
   if (todayCol >= 0 && todayCol < nDays) html += `<div class="g-today" style="left:${L + todayCol * DW + DW / 2 - 1}px"></div>`;
   g.innerHTML = html;
+})();
+
+// ── สถานะสดจาก store-data ของรายงานแต่ละแถว (โหลดตอนเปิดหน้า · แบบเดียวกับหน้ารวมรายงาน) ──
+(function(){
+  const cells = [...document.querySelectorAll('td.st[data-live]')].filter(td => td.dataset.live);
+  if (!cells.length) return;
+  const rel = u => { const m = u.match(/qa-test-reports\/([^?#]+)/); return '../' + (m ? m[1] : u); };
+  const cache = {};
+  const load = url => cache[url] || (cache[url] = fetch(rel(url), { cache: 'no-store' })
+    .then(r => r.text())
+    .then(text => {
+      const uids = new Set(); let mm; const rx = /data-uid="(tc-\d+)"/g;
+      while ((mm = rx.exec(text))) uids.add(mm[1]);
+      const sm = text.match(/<script id="store-data"[^>]*>([\s\S]*?)<\/script>/);
+      let store = {}; try { store = JSON.parse((sm ? sm[1] : '{}').trim() || '{}'); } catch (e) {}
+      return { uids, store };
+    }).catch(() => null));
+  cells.forEach(td => {
+    const [url, os] = td.dataset.live.split('|');
+    load(url).then(d => {
+      if (!d) return;
+      const key = os === 'win' ? 'stw' : 'st';   // os_cols: st = Mac · stw = Windows · รายงานเดี่ยวใช้ st
+      const c = { pass:0, fail:0, hold:0, block:0, skip:0 };
+      d.uids.forEach(u => { const v = d.store[u]; const st = v && v[key]; if (st && c.hasOwnProperty(st)) c[st]++; });
+      const total = d.uids.size, issue = c.hold + c.block;
+      const done = c.pass + c.fail + issue, testable = Math.max(1, total - c.skip);
+      if (!done && !c.skip) {   // ยังไม่เริ่ม — คงป้ายแผนเดิม เติมบรรทัดบอกจำนวน
+        td.insertAdjacentHTML('beforeend', `<span class="lv-txt" style="display:block;margin-top:3px">ยังไม่เริ่ม · 0/${total}</span>`);
+        return;
+      }
+      const w = n => (n / testable * 100);
+      let segs = '';
+      if (c.pass) segs += `<i class="lv-pass" style="width:${w(c.pass)}%"></i>`;
+      if (issue)  segs += `<i class="lv-issue" style="width:${w(issue)}%"></i>`;
+      if (c.fail) segs += `<i class="lv-fail" style="width:${w(c.fail)}%"></i>`;
+      const pct = Math.round(done / testable * 100);
+      const chips = `${c.pass ? `<span class="c-p">✓${c.pass}</span>` : ''} ${c.fail ? `<span class="c-f">✗${c.fail}</span>` : ''} ${issue ? `<span class="c-b">⏸${issue}</span>` : ''}${c.skip ? ` <span>⏭${c.skip}</span>` : ''}`;
+      const label = pct >= 100 && !c.fail && !issue ? '<span class="pill s-pass">✓ เสร็จ</span>' : `<span class="pill s-prog">กำลังเทส</span>`;
+      td.innerHTML = `<span class="lv-wrap">${label}<span class="lv-bar">${segs}</span><span class="lv-txt"><b>${pct}%</b> · ${done}/${total - c.skip}</span><span class="lv-chips">${chips}</span></span>`;
+    });
+  });
 })();
 
 // ── Tabs (#timeline / #plan) ──
