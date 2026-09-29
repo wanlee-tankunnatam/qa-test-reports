@@ -106,6 +106,10 @@ td.p{width:1%;white-space:nowrap}
 .sev{font-size:.7rem;font-weight:600;letter-spacing:.04em;border-radius:4px;padding:2px 7px;border:1px solid currentColor}
 .s-Highest{color:var(--sev-highest)} .s-High{color:var(--sev-high)} .s-Medium{color:var(--sev-med)} .s-Low{color:var(--sev-low)}
 td.nm{min-width:0}
+td.sc{width:1%;white-space:nowrap}
+.scp{font-size:.7rem;font-weight:600;border-radius:4px;padding:2px 7px;border:1px solid currentColor;cursor:help}
+.c-ui{color:var(--st-rtt)} .c-sys{color:var(--sev-high)} .c-tool{color:var(--sev-low)}
+.why{display:block;margin-top:3px;font-size:.74rem;color:var(--muted)}
 td.st{width:1%;white-space:nowrap}
 .stt{font-size:.72rem;font-weight:600;display:inline-flex;align-items:center;gap:5px}
 .stt::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
@@ -127,6 +131,8 @@ footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--line);color:v
     <span class="sep"></span>
     <span class="lab">Dev</span><span id="fd"></span>
     <span class="lab" style="margin-left:6px">ระดับ</span><span id="fp"></span>
+    <span class="sep" data-scope></span>
+    <span class="lab" data-scope>ขอบเขตงาน</span><span id="fc" data-scope></span>
     <span class="sep"></span>
     <span class="lab">สถานะ</span><span id="fs"></span>
     <input id="q" type="search" placeholder="ค้นหา ID หรือชื่อ…" autocomplete="off">
@@ -134,7 +140,7 @@ footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--line);color:v
 
   <div id="out"></div>
 
-  <footer>แตะรหัสตั๋วเพื่อเปิดใน Jira · Insight (TI) ใบที่ไม่มีป้ายวันที่รวมไว้ใน "ยังไม่มีรอบ" · กติกาของ TAKRA: รอบ 15-OCT ใบเยอะสุด (37 ใบ) · 15-OCT แน่นแล้ว · ใบที่ In Progress / IN REVIEW อยู่ 30-SEP · กระดิ่ง + AI ตอบคอมเมนต์ที่ลูกค้าเจอในไลฟ์ไม่เกิน 2-OCT ส่วนช่องโหว่ของเทสต์/เมตริกลง 15-OCT หรือ 23-OCT</footer>
+  <footer>แตะรหัสตั๋วเพื่อเปิดใน Jira · ขอบเขตงาน (เฉพาะ TI · 29 ก.ย.): "UI อย่างเดียว" = แก้ที่หน้าจอในแอป ไม่ต้องแตะ API เลย · "แตะ API / ระบบ" = ต้องแก้ backend, engine, การเรียก API หรือตรรกะฝั่ง main · "เทส / เครื่องมือ" = spec, build, สคริปต์ ไม่ใช่ตัวแอป — แยกจากรายละเอียดในตั๋ว Jira · Insight (TI) ใบที่ไม่มีป้ายวันที่รวมไว้ใน "ยังไม่มีรอบ" · กติกาของ TAKRA: รอบ 15-OCT ใบเยอะสุด (37 ใบ) · 15-OCT แน่นแล้ว · ใบที่ In Progress / IN REVIEW อยู่ 30-SEP · กระดิ่ง + AI ตอบคอมเมนต์ที่ลูกค้าเจอในไลฟ์ไม่เกิน 2-OCT ส่วนช่องโหว่ของเทสต์/เมตริกลง 15-OCT หรือ 23-OCT</footer>
 </div>
 
 <script>
@@ -370,6 +376,79 @@ const ROWS = [
 ];
 // Projects: the Jira key prefix decides the project, so rows from another project
 // show up here as soon as they are added to ROWS. Add a line to PROJECTS to give it a name.
+// Work scope per ticket: can a UI-only developer fix it without touching any API?
+// ui = screen only · sys = backend / engine / API calls / main-process logic · tool = tests, build, scripts
+const SCOPE={
+  "TI-435":["ui","ทำให้ Overlay ลากย้ายได้ — งานหน้าจอล้วน"],
+  "TI-483":["ui","ปิดช่องเลือกโมเดลจนกว่าจะมี key — หน้าจอรู้อยู่แล้วว่ามี key หรือไม่"],
+  "TI-484":["ui","ชิปคำที่พบบ่อยล้นจอ — แก้ CSS ของชิป (SessionDetail.jsx)"],
+  "TI-492":["ui","เปลี่ยนรายการที่กดไม่ได้เป็น popup แจ้งเตือน — งานหน้าจอ"],
+  "TI-495":["ui","ซ่อนเมนูตามบทบาท — API กันข้อมูลถูกแล้ว หน้าจอมี productRole อยู่แล้ว (รอ PM เคาะชุดเมนู)"],
+  "TI-521":["ui","แสดงชื่อพื้นที่ทำงาน/บทบาทในเมนูโปรไฟล์ — ข้อมูลมีในเมนูอยู่แล้ว"],
+  "TI-533":["ui","เพิ่มลูกศรให้ป้ายบทบาท — ส่ง fullWidth ให้ FilterDropdown"],
+  "TI-536":["ui","เปลี่ยนแถบยืนยันในการ์ด AI เป็น popup — งานหน้าจอ"],
+  "TI-547":["ui","คำบรรยายไม่ควรบอกขนาด (~0 MB) ก่อนรู้ขนาด — แก้ข้อความใน FirstRunSetup.jsx"],
+  "TI-554":["ui","แก้ข้อความสัญญาการลบให้ตรงกับกล่องถอน — ข้อความล้วน (รอ PO เคาะ)"],
+  "TI-557":["ui","ตัวเลขย่อ 12,345 → 12.3k — แก้ formatCompact ในหน้าจอ"],
+  "TI-569":["ui","รอบเช็กถูกยืดเพราะนับช่องที่ตายเป็นรอบล้มเหลว — แก้ตรรกะรอบเช็กในหน้า (livePollPlan / FollowedChannels.jsx) ไม่แตะ API"],
+  "TI-581":["ui","สวิตช์อ่านอารมณ์ต้องตั้งค่าเริ่มจากค่า consent ที่หน้าได้มาแล้ว (เหมือนสวิตช์เสียง) — แก้ FirstRunSetup.jsx"],
+  "TI-582":["ui","กล่อง \"ให้ความยินยอม\" ใช้ข้อความของการถอน — เปลี่ยนคีย์ข้อความใน GrantDialog"],
+  "TI-154":["sys","ติดตามใบหน้า/ตรวจอารมณ์ — โมเดล AI ใน engine"],
+  "TI-321":["sys","ตัวติดตั้ง Windows เปิดวิซาร์ดเต็ม — ค่าการ build/ติดตั้ง และลำดับการปิดแอป"],
+  "TI-385":["sys","ข้อความสินค้า/ตะกร้าถูกทิ้งก่อนถึง UI/DB — ตัวเก็บข้อมูลใน engine"],
+  "TI-400":["sys","backend: route rollback ไม่มีสิทธิ์กำกับ"],
+  "TI-401":["sys","backend: ตาราง compliance ไม่มี RLS"],
+  "TI-403":["sys","backend: วงจร DEK หลังลบข้อมูล"],
+  "TI-405":["sys","backend: consent upsert กลืน audit"],
+  "TI-406":["sys","backend: ตัวส่ง compliance ไม่ทำงาน (WORM/breach)"],
+  "TI-407":["sys","backend: รับคอมเมนต์โดยไม่เช็ค consent"],
+  "TI-436":["sys","บทพูดไม่มีป้ายผู้พูด — ตัวแยกเสียงผู้พูดใน engine"],
+  "TI-437":["sys","แยกเสียงคนเดียวเป็นหลายคน — ตัวแยกเสียงผู้พูดใน engine"],
+  "TI-444":["sys","ปิดแอประหว่างอัด — เส้น WS stop ของ engine กับ teardown ฝั่ง main"],
+  "TI-454":["sys","ต้องล็อกอินใหม่ทุกครั้ง — การใช้ session ร่วมกับ Hub (SSO)"],
+  "TI-515":["sys","บทบาทหลังเชิญกลับ — role_assignment ใน backend"],
+  "TI-516":["sys","หน้าจอซ่อนเมนูถูกแล้ว แต่ bind ตอบ productRole = owner ให้ BM — backend"],
+  "TI-525":["sys","ปิดจับใบหน้าแต่ยังมีคะแนนอารมณ์ — ตัวอัปโหลดสรุปอารมณ์ / ตัวรวมข้อมูลใน backend"],
+  "TI-526":["sys","ป้าย (คุณ) ไม่ขึ้น — ต้นเหตุยังไม่ชัด: auth.ensure() บน Windows หรือ hostSubject บน cloud"],
+  "TI-527":["sys","ไลฟ์ไม่ขึ้นแดชบอร์ด — การอัปโหลด/ข้อมูลบน cloud"],
+  "TI-528":["sys","รายการไลฟ์ล่าสุดไม่ตรงหน้าเซสชัน — การอัปโหลด/ข้อมูลบน cloud"],
+  "TI-529":["sys","แสดงชื่อสมาชิกคนอื่น — backend ไม่มีชื่อ ต้องส่งมาเพิ่ม (รอ PM เคาะเรื่องข้อมูลส่วนบุคคล)"],
+  "TI-531":["sys","หัวข้อกลุ่มเป็น id ดิบ — backend ไม่มีชื่อ ต้องส่งมาเพิ่ม"],
+  "TI-537":["sys","อ่าน consent จาก cloud ไม่ได้แล้วป้ายเงียบ — ตัวจัดคิวรายงาน (main) กับการเรียก API"],
+  "TI-538":["sys","เตรียมรายงานระหว่างอัด — ตัวจัดคิวรายงาน (main) ไม่ได้รับสถานะกำลังอัด"],
+  "TI-539":["sys","ลบไลฟ์แล้วไม่เตรียมรายงานใหม่ — ตัวจัดคิวรายงาน (main)"],
+  "TI-549":["sys","ไลฟ์ไม่ถูกอัปโหลด — engine ประทับ workspace ผิด (server.py)"],
+  "TI-550":["sys","คอมเมนต์ไม่เข้า — ตัวเก็บข้อมูลแชทของ TikTok"],
+  "TI-552":["sys","backend: route compliance ไม่มี rate limit"],
+  "TI-555":["sys","อ่าน consent จาก cloud ไม่ได้แล้วป้ายเงียบ (Windows) — ตัวจัดคิวรายงาน (main) กับการเรียก API"],
+  "TI-556":["sys","ลบไลฟ์แล้วไม่เตรียมรายงานใหม่ (Windows) — ตัวจัดคิวรายงาน (main)"],
+  "TI-558":["sys","ระยะเวลาบน cloud ไม่ตรงกับในเครื่อง — ข้อมูลที่อัปโหลด"],
+  "TI-564":["sys","API ของ engine ไม่มีการยืนยันตัวตน + CORS เปิด — engine"],
+  "TI-565":["sys","TikTok ตอบ 403 เพราะยิงถี่ — ต้องเว้นระยะการเรียก API ของ TikTok"],
+  "TI-567":["sys","การ์ดอัปเดตต้องรู้ว่ากำลังอัด + ปุ่มหยุดแล้วอัปเดต — ตัวอัปเดตฝั่ง main"],
+  "TI-568":["sys","หยุดอัดเองทั้งที่ไลฟ์ยังอยู่ — ตรรกะ auto-stop ของเซสชัน"],
+  "TI-570":["sys","เปิดเซสชันกับห้องที่จบแล้ว — ด่าน startSession ฝั่ง main/engine"],
+  "TI-572":["sys","คำตอบ AI สั้นถูกปัดเป็นติดต่อไม่ได้ — ตัวตรวจคำตอบของผู้ให้บริการ AI"],
+  "TI-575":["sys","ด่านตรวจตัวเลขปัดคำตอบที่ถูก — ตัวตรวจคำตอบของผู้ให้บริการ AI"],
+  "TI-576":["sys","เส้นผู้ชมรายนาทีเก็บค่าท้ายนาที — การเก็บข้อมูลใน engine"],
+  "TI-577":["sys","ข้อมูลในเครื่องไม่แยกตาม workspace — ฐานข้อมูล/engine ฝั่ง main"],
+  "TI-578":["sys","คอมเมนต์ไม่มีข้อความหลังถอน consent — engine/ตัวอัปโหลด"],
+  "TI-583":["sys","ออกไปหน้าร้านแล้วไม่เตือน/ไม่หยุด — ตรรกะตรวจหน้าไลฟ์ของเซสชัน"],
+  "TI-449":["tool","คำสั่ง build ลบแอปที่ build ไว้"],
+  "TI-450":["tool","unit test ตกบน Node 26"],
+  "TI-451":["tool","spec ของ QA โดน TikTok บล็อก"],
+  "TI-452":["tool","spec ของ QA ล้าสมัย"],
+  "TI-453":["tool","คู่มือ e2e ของ QA ชี้ engine ผิด"],
+  "TI-496":["tool","e2e spec ของ DEV ใช้โฟลเดอร์ข้อมูลผิด"],
+  "TI-551":["tool","ช่องโหว่ของเทส backend"],
+  "TI-553":["tool","ตัวดัก tenant-binding ในเทส backend"],
+  "TI-571":["tool","สคริปต์วัดหน่วยความจำของทีม"],
+  "TI-580":["tool","e2e backend flaky บน macOS"]
+};
+const SCOPE_LABEL={ui:"UI อย่างเดียว",sys:"แตะ API / ระบบ",tool:"เทส / เครื่องมือ"};
+ROWS.forEach(r=>{const c=SCOPE[r[2]]; r[6]=c?SCOPE_LABEL[c[0]]:"";});
+const scCls=v=>v===SCOPE_LABEL.ui?"c-ui":v===SCOPE_LABEL.sys?"c-sys":"c-tool";
+
 const PROJECTS={
   TAKRA:{name:"Takra AI", jira:"https://kitdi.atlassian.net"},
   TI:{name:"Takra Insight", jira:"https://kitdi.atlassian.net"},
@@ -387,6 +466,7 @@ const roundKey=r=>{const m=/^(\d{1,2})-([A-Z]{3})$/.exec(r); return m&&MON[m[2]]
 const RO=[...new Set(ROWS.map(r=>r[0]))].sort((a,b)=>roundKey(a)-roundKey(b)||a.localeCompare(b));
 const DO=order(["Boat","No"],ROWS.map(r=>r[1]).filter(d=>d!=="ไม่มีคนรับ")).concat(ROWS.some(r=>r[1]==="ไม่มีคนรับ")?["ไม่มีคนรับ"]:[]);
 const PO=order(["Highest","High","Medium","Low","Lowest"],ROWS.map(r=>r[3]));
+const CO=Object.values(SCOPE_LABEL);
 const SO=order(["To Do","In Progress","IN REVIEW","READY TO TEST"],ROWS.map(r=>r[5]));
 const stCls=s=>s==="In Progress"?"t-prog":s==="IN REVIEW"?"t-rev":s==="READY TO TEST"?"t-rtt":"t-todo";
 const EXTRA=DO.filter(d=>d!=="Boat"&&d!=="No"&&d!=="ไม่มีคนรับ");
@@ -396,12 +476,12 @@ const devVar=d=>"--dev-"+devSlot(d);
 const byR=r=>RO.indexOf(r[0]), byD=r=>DO.indexOf(r[1]), byP=r=>PO.indexOf(r[3]);
 ROWS.sort((a,b)=>byR(a)-byR(b)||byD(a)-byD(b)||byP(a)-byP(b)||a[2].localeCompare(b[2]));
 
-const st={j:null,r:null,d:null,p:null,s:null,q:""};
+const st={j:null,r:null,d:null,p:null,s:null,c:null,q:""};
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const inProj=()=>ROWS.filter(r=>!st.j||projOf(r)===st.j);
 const cnt=(rows,k,v)=>rows.filter(r=>r[k]===v).length;
 
-const FILTERS=[["fr",0,"r",()=>RO],["fd",1,"d",()=>DO],["fp",3,"p",()=>PO],["fs",5,"s",()=>SO]];
+const FILTERS=[["fr",0,"r",()=>RO],["fd",1,"d",()=>DO],["fp",3,"p",()=>PO],["fs",5,"s",()=>SO],["fc",6,"c",()=>CO]];
 FILTERS.forEach(([id,,key])=>document.getElementById(id).addEventListener("click",e=>{
   const b=e.target.closest("button.f"); if(!b) return; st[key]=b.dataset.v||null; render();
 }));
@@ -433,6 +513,9 @@ function drawProjects(){
     (PJ.length===1?'<span class="hint">โปรเจกต์อื่นจะขึ้นเป็นแท็บใหม่ตรงนี้เมื่อมีตั๋ว</span>':'');
 }
 function drawFilters(base){
+  const hasScope=base.some(r=>r[6]);
+  if(!hasScope) st.c=null;
+  document.querySelectorAll("[data-scope]").forEach(el=>el.hidden=!hasScope);
   FILTERS.forEach(([id,k,key,vals])=>{
     const el=document.getElementById(id);
     el.innerHTML='<button class="f" data-v="" aria-pressed="'+(st[key]===null)+'">ทั้งหมด</button>'+
@@ -462,12 +545,13 @@ function render(){
   const base=inProj();
   drawProjects(); drawFilters(base); drawSummary(base);
   const rows=base.filter(r=>
-    (!st.r||r[0]===st.r)&&(!st.d||r[1]===st.d)&&(!st.p||r[3]===st.p)&&(!st.s||r[5]===st.s)&&
+    (!st.r||r[0]===st.r)&&(!st.d||r[1]===st.d)&&(!st.p||r[3]===st.p)&&(!st.s||r[5]===st.s)&&(!st.c||r[6]===st.c)&&
     (!st.q||r[2].toLowerCase().includes(st.q)||r[4].toLowerCase().includes(st.q)));
 
   const out=document.getElementById("out");
   if(!rows.length){out.innerHTML='<p class="none">ไม่มีตั๋วที่ตรงเงื่อนไขนี้</p>';return;}
   const showProj=!st.j;   // mixed view: say which project each ticket belongs to
+  const showScope=rows.some(r=>r[6]);
 
   let h="";
   RO.forEach(rd=>{
@@ -476,12 +560,13 @@ function render(){
     DO.forEach(dv=>{
       const inD=inR.filter(r=>r[1]===dv); if(!inD.length) return;
       h+='<div class="dev '+devCls(dv)+'"><h3 class="devh">'+esc(dv)+' <span class="n">'+inD.length+' ใบ</span></h3>'+
-         '<div class="scroll"><table><thead><tr>'+(showProj?'<th>โปรเจกต์</th>':'')+'<th>ID</th><th>ชื่อ</th><th>Priority</th><th>สถานะ</th></tr></thead><tbody>';
+         '<div class="scroll"><table><thead><tr>'+(showProj?'<th>โปรเจกต์</th>':'')+'<th>ID</th><th>ชื่อ</th>'+(showScope?'<th>ขอบเขตงาน</th>':'')+'<th>Priority</th><th>สถานะ</th></tr></thead><tbody>';
       inD.forEach(r=>{
         const pk=projOf(r);
         h+='<tr>'+(showProj?'<td class="pj"><span class="ptag" title="'+esc(projName(pk))+'">'+esc(pk)+'</span></td>':'')+
            '<td class="id"><a href="'+jiraBase(pk)+'/browse/'+esc(r[2])+'" target="_blank" rel="noopener">'+esc(r[2])+'</a></td>'+
-           '<td class="nm">'+esc(r[4])+'</td>'+
+           '<td class="nm">'+esc(r[4])+(r[6]?'<span class="why">'+esc(SCOPE[r[2]][1])+'</span>':'')+'</td>'+
+           (showScope?'<td class="sc">'+(r[6]?'<span class="scp '+scCls(r[6])+'" title="'+esc(SCOPE[r[2]][1])+'">'+esc(r[6])+'</span>':'')+'</td>':'')+
            '<td class="p"><span class="sev s-'+esc(r[3])+'">'+esc(r[3])+'</span></td>'+
            '<td class="st"><span class="stt '+stCls(r[5])+'">'+esc(r[5])+'</span></td></tr>';
       });
