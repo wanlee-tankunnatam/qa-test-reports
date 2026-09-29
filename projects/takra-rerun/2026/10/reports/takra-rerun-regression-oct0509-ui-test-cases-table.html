@@ -379,7 +379,7 @@ td.status-win{white-space:nowrap}
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · จุดที่เคย FAIL รอบก่อน (union ผล Windows + Mac · ดู note "ผลรอบก่อน" ในแต่ละเคส)</div>
   <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>มีบัญชี TikTok เชื่อมไว้ในระบบแล้วอย่างน้อย 1 บัญชี และคุกกี้ยังไม่หมดอายุ</li><li>มีเพลย์ลิสต์ที่ยังไม่มีคลิปเลย</li></ul></div>
   <div class="sec"><h4>Test Data</h4><ul><li>เพลย์ลิสต์: หมวดใหม่ (0 คลิป)</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Rerun (Windows)</li><li>ล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>ไปที่เมนู "บัญชีไลฟ์"</li><li>เปิดบัญชีไลฟ์ที่ต้องการ</li><li>ผูกเพลย์ลิสต์ว่าง (ที่ไม่มีคลิป) กับบัญชี แล้วกด "บันทึก"</li><li>กด "เริ่มไลฟ์"</li><li>อ่านข้อความที่ระบบขึ้น</li><li>ดูสถานะบัญชีบนหน้าแรกว่ายังไม่เริ่มไลฟ์</li></ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Rerun (Windows)</li><li>ล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>ไปที่เมนู "บัญชีไลฟ์"</li><li>เปิดบัญชีไลฟ์ที่ต้องการ</li><li>ที่แท็บ "วิดีโอ" ช่อง "เพลย์ลิสต์ที่ออกอากาศ" เลือกเพลย์ลิสต์ว่าง (ที่ไม่มีคลิป) — แท็บนี้บันทึกอัตโนมัติ ไม่มีปุ่มบันทึก</li><li>กด "เริ่มไลฟ์"</li><li>อ่านข้อความที่ระบบขึ้น</li><li>ดูสถานะบัญชีบนหน้าแรกว่ายังไม่เริ่มไลฟ์</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ระบบไม่เริ่มไลฟ์ และขึ้นข้อความบอกว่าไม่มีคลิปให้ออกอากาศ</li><li>ข้อความบอกวิธีแก้ได้ เช่น ให้ไปเพิ่มคลิปในเพลย์ลิสต์ก่อน</li><li>สถานะบัญชีไม่ค้างอยู่ที่กำลังเริ่มไลฟ์</li></ul><div class="hint" style="margin-top:6px">ที่มา: รายงาน MVP1+2 (Windows) · ผลรอบก่อน (Win/Mac): PASS / FAIL</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
@@ -423,7 +423,7 @@ td.status-win{white-space:nowrap}
   <div class="sec"><h4>Test Data</h4><ul><li>คลิป: demo-new.mp4 (ยังไม่ตั้งสินค้าปัก)</li></ul></div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Rerun (Windows)</li><li>ล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>ไปที่เมนู "บัญชีไลฟ์"</li><li>เปิดบัญชีไลฟ์ที่คลิปยังไม่ได้ตั้งสินค้าที่จะปัก</li><li>กด "เริ่มไลฟ์"</li><li>อ่านหัวข้อและเนื้อหาในหน้าต่างที่เด้งขึ้น</li><li>ดูว่าหน้าต่างเสนอชุดสินค้าที่แนะนำให้หรือไม่</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>หน้าต่างเด้งขึ้นพร้อมคำถามว่าสินค้าที่ปัก ↔ คลิป ตรงกันหรือไม่</li><li>มีข้อความบอกว่าคลิปนี้ยังไม่ได้ตั้งสินค้าที่จะปัก</li><li>ไลฟ์ยังไม่เริ่มจนกว่าจะตอบหน้าต่างนี้</li></ul><div class="hint" style="margin-top:6px">ที่มา: รายงาน MVP1+2 (Windows) · ผลรอบก่อน (Win/Mac): HOLD / FAIL</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>หน้าต่างยืนยันเด้งขึ้น — คลิปที่ไม่มีสินค้าปักขึ้นหัวข้อ "เริ่มไลฟ์โดยไม่มีสินค้าหรือไม่?" (กรณีมีสินค้าแต่ไม่ตรงจะถาม "สินค้าที่ปัก ↔ คลิป ตรงกันหรือไม่?")</li><li>มีข้อความบอกว่ายังไม่ได้เลือกสินค้าในตะกร้า/ยังไม่ได้ปักสินค้าให้คลิปนี้ และถ้ามีชุดแนะนำจะแสดง "ระบบแนะนำชุดปัก N รายการจากคลิปนี้" พร้อมปุ่มใช้ชุดที่แนะนำ</li><li>ไลฟ์ยังไม่เริ่มจนกว่าจะตอบหน้าต่างนี้</li></ul><div class="hint" style="margin-top:6px">ที่มา: รายงาน MVP1+2 (Windows) · ผลรอบก่อน (Win/Mac): HOLD / FAIL</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
@@ -758,7 +758,7 @@ td.status-win{white-space:nowrap}
   <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · จุดที่เคย FAIL รอบก่อน (union ผล Windows + Mac · ดู note "ผลรอบก่อน" ในแต่ละเคส)</div>
   <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>มีเครื่องทดสอบ 2 เครื่องที่ลงแอปแล้ว และล็อกอินด้วยบัญชี UAT ตัวเดียวกัน (workspace เดียวกัน)</li><li>รู้เพดานจำนวนบัญชีของแพ็กเกจปัจจุบัน</li></ul></div>
   <div class="sec"><h4>Test Data</h4><ul><li>เพดานบัญชี: 3 · เพิ่มครบ 3 ที่เครื่อง 1 แล้วลองเพิ่มตัวที่ 4 ที่เครื่อง 2</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Rerun (Windows) บน เครื่อง A</li><li>เข้าสู่ระบบด้วยบัญชีทดสอบ บัญชี A ที่มีแพ็กเกจใช้งานอยู่</li><li>ไปที่เมนู "บัญชีไลฟ์"</li><li>กด "เพิ่มบัญชีไลฟ์" แล้วเชื่อมบัญชี TikTok จนจำนวนบัญชีครบเพดานของแพ็กเกจ</li><li>เปิด TAKRA Rerun (Windows) บน เครื่อง B</li><li>เข้าสู่ระบบด้วยบัญชีทดสอบ บัญชี A เดียวกัน (workspace เดียวกัน)</li><li>ไปที่เมนู "บัญชีไลฟ์"</li><li>กด "เพิ่มบัญชีไลฟ์" เพื่อเพิ่มอีก 1 บัญชี</li><li>อ่านข้อความที่ขึ้น</li><li>นับจำนวนบัญชีในเมนู "บัญชีไลฟ์" ของทั้งสองเครื่อง</li><li>ตรวจสอบผลลัพธ์</li></ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Rerun (Windows) บน เครื่อง A</li><li>เข้าสู่ระบบด้วยบัญชีทดสอบ บัญชี A ที่มีแพ็กเกจใช้งานอยู่</li><li>ไปที่เมนู "บัญชีไลฟ์"</li><li>กด "เพิ่มบัญชี" แล้วเชื่อมบัญชี TikTok จนจำนวนบัญชีครบเพดานของแพ็กเกจ</li><li>เปิด TAKRA Rerun (Windows) บน เครื่อง B</li><li>เข้าสู่ระบบด้วยบัญชีทดสอบ บัญชี A เดียวกัน (workspace เดียวกัน)</li><li>ไปที่เมนู "บัญชีไลฟ์"</li><li>กด "เพิ่มบัญชี" เพื่อเพิ่มอีก 1 บัญชี</li><li>อ่านข้อความที่ขึ้น</li><li>นับจำนวนบัญชีในเมนู "บัญชีไลฟ์" ของทั้งสองเครื่อง</li><li>ตรวจสอบผลลัพธ์</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>เครื่องที่ 2 เพิ่มบัญชีไม่ได้ และขึ้นข้อความบอกว่าชนเพดาน</li><li>จำนวนบัญชีบนทั้งสองเครื่องยังเท่าเดิมตามเพดานแพ็กเกจ ไม่มีบัญชีค้างที่เพิ่มไม่สำเร็จ</li><li>ข้อความบอกทางไปอัปเกรดแพ็กเกจได้</li></ul><div class="hint" style="margin-top:6px">ที่มา: รายงาน MVP1+2 (Windows) · ผลรอบก่อน (Win/Mac): FAIL / —</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
@@ -1084,7 +1084,7 @@ td.status-win{white-space:nowrap}
 <tr class="featrow" data-featkey="rrfail-13"><td colspan="8">📁 💬 ขั้นที่ 13 · ตอบแชทอัตโนมัติ (Epic 22 · FR-Q4/Q5) <span class="rp"><span class="lv lvl-ui">🌐 4</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="rrfail-13"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
 <tr class="trow" data-feat="rrfail" data-level="ui" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-Q4.2</td>
-  <td class="ctitle">เปิดโหมดร่างคำตอบ แล้วคนดูถามเรื่องสินค้า ระบบร่างคำตอบมาให้ <span class="kd kd-happy">Happy Path</span></td>
+  <td class="ctitle">เปิดตอบด้วย AI แล้วคนดูถามเรื่องสินค้า ระบบตอบให้อัตโนมัติ <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
   <td class="status" data-uid="tc-14021"><span class="stb pending">รอเทส</span></td>
@@ -1092,13 +1092,13 @@ td.status-win{white-space:nowrap}
   <td class="jira-cell" data-uid="tc-14021"></td>
 </tr>
 <tr class="detail"><td colspan="8"><div class="card">
-  <div class="h-title">เปิดโหมดร่างคำตอบ แล้วคนดูถามเรื่องสินค้า ระบบร่างคำตอบมาให้</div>
+  <div class="h-title">เปิดตอบด้วย AI แล้วคนดูถามเรื่องสินค้า ระบบตอบให้อัตโนมัติ</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · จุดที่เคย FAIL รอบก่อน (union ผล Windows + Mac · ดู note "ผลรอบก่อน" ในแต่ละเคส)</div>
-  <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>มีบัญชี TikTok เชื่อมไว้ในระบบแล้วอย่างน้อย 1 บัญชี และคุกกี้ยังไม่หมดอายุ</li><li>เปิดฟีเจอร์ตอบแชทอัตโนมัติเป็นโหมดร่างคำตอบ</li><li>กำลังไลฟ์และมีคนดูพิมพ์แชทได้</li></ul></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>มีบัญชี TikTok เชื่อมไว้ในระบบแล้วอย่างน้อย 1 บัญชี และคุกกี้ยังไม่หมดอายุ</li><li>เปิดสวิตช์ "เปิดใช้งานตอบด้วย AI" ในแท็บ "ถามตอบ" และเชื่อมต่อคีย์ AI ของ workspace แล้ว</li><li>กำลังไลฟ์และมีคนดูพิมพ์แชทได้</li></ul></div>
   <div class="sec"><h4>Test Data</h4><ul><li>คำถาม: "ครีมตัวนี้ราคาเท่าไหร่คะ"</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Rerun (Windows)</li><li>ล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>ไปที่เมนู "บัญชีไลฟ์"</li><li>เปิดบัญชีไลฟ์ที่กำลังไลฟ์อยู่</li><li>เปิดโหมดร่างคำตอบของฟีเจอร์ตอบแชทอัตโนมัติ</li><li>ให้ผู้ทดสอบอีกคนพิมพ์คำถามเรื่องราคาสินค้าในห้องไลฟ์ TikTok</li><li>ดูแผงแชทในแอป แล้วดูว่ามีคำตอบที่ระบบร่างไว้โผล่ขึ้นมาหรือไม่</li><li>อ่านคำตอบที่ร่างมา</li></ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Rerun (Windows)</li><li>ล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>ไปที่เมนู "บัญชีไลฟ์"</li><li>เปิดบัญชีไลฟ์ที่กำลังไลฟ์อยู่</li><li>เปิดหน้าไลฟ์ของบัญชี (ปุ่ม "สถานะ") แล้วดูสวิตช์ "ตอบด้วย AI" ที่หัวแผงแชทว่าเปิดอยู่ (ป้าย "AI ตอบอยู่")</li><li>ให้ผู้ทดสอบอีกคนพิมพ์คำถามเรื่องราคาสินค้าในห้องไลฟ์ TikTok</li><li>ดูแผงแชทในแอปและห้องไลฟ์ ว่า AI ส่งคำตอบให้เองภายในรอบตอบ (~15 วินาที) หรือไม่</li><li>อ่านคำตอบที่ AI ส่ง</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>มีคำตอบที่ระบบร่างไว้ขึ้นมาให้เห็นคู่กับคำถาม</li><li>คำตอบเกี่ยวข้องกับสินค้าที่ถาม ไม่ใช่ข้อความมั่ว</li><li>คำตอบมีเครื่องหมายบอกชัดว่าเป็นคำตอบที่ยังไม่ได้ส่ง</li></ul><div class="hint" style="margin-top:6px">ที่มา: รายงาน MVP1+2 (Windows) · ผลรอบก่อน (Win/Mac): FAIL / —</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>AI ตอบคำถามให้เองจากข้อมูลร้าน/สินค้าในตะกร้า (ไม่มีขั้นรอยืนยันแล้ว — flow ปัจจุบันของ Epic 22)</li><li>คำตอบเกี่ยวข้องกับสินค้าที่ถาม ไม่ใช่ข้อความมั่ว</li><li>ข้อความที่ส่งเห็นทั้งในแผงแชทของแอปและในห้องไลฟ์จริง</li></ul><div class="hint" style="margin-top:6px">ที่มา: รายงาน MVP1+2 (Windows) · ผลรอบก่อน (Win/Mac): FAIL / —</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
@@ -1140,7 +1140,7 @@ td.status-win{white-space:nowrap}
   <div class="sec"><h4>Test Data</h4><ul><li>คำตอบที่ร่างไว้ 1 ข้อความ · รอ 2 นาที</li></ul></div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Rerun (Windows)</li><li>ล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>ไปที่เมนู "บัญชีไลฟ์"</li><li>เลือกบัญชีไลฟ์ที่ต้องการ</li><li>เปิดแท็บ "AUTO"</li><li>ปล่อยคำตอบที่ระบบร่างไว้ทิ้งไว้ 2 นาทีโดยไม่แตะอะไร</li><li>เปิดห้องไลฟ์ TikTok แล้วดูว่ามีข้อความถูกส่งไปหรือไม่</li><li>กลับมาดูแผงแชทในแอป</li><li>ตรวจสอบผลลัพธ์</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ไม่มีข้อความถูกส่งไปห้องไลฟ์เอง</li><li>คำตอบยังรออยู่ในสถานะรอยืนยัน</li><li>ไม่มีการนับถอยหลังที่จะส่งอัตโนมัติ</li></ul><div class="hint" style="margin-top:6px">ที่มา: รายงาน MVP1+2 (Windows) · ผลรอบก่อน (Win/Mac): FAIL / —</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ไม่มีข้อความถูกส่งไปห้องไลฟ์เอง</li><li>คำตอบยังรออยู่ในสถานะรอยืนยัน</li><li>ไม่มีการนับถอยหลังที่จะส่งอัตโนมัติ</li></ul><div class="hint" style="margin-top:6px">ที่มา: รายงาน MVP1+2 (Windows) · ⚠️ ฟีเจอร์เปลี่ยน flow — Epic 22 ไม่มีโหมดร่างคำตอบรอยืนยันแล้ว: "ตอบด้วย AI" ส่งคำตอบเองอัตโนมัติระหว่างไลฟ์ ไม่มีคิวรอกดยืนยัน/ไม่ส่ง (TAK-638 · TAK-652) → ลง SKIP · ผลรอบก่อน (Win/Mac): FAIL / —</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
@@ -1182,7 +1182,7 @@ td.status-win{white-space:nowrap}
   <div class="sec"><h4>Test Data</h4><ul><li>คำตอบ: "ครีมตัวนี้ราคา 590 บาทค่ะ"</li></ul></div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Rerun (Windows)</li><li>ล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>ไปที่เมนู "บัญชีไลฟ์"</li><li>เลือกบัญชีไลฟ์ที่ต้องการ</li><li>เปิดแท็บ "AUTO"</li><li>กดปุ่มยืนยันส่งที่คำตอบที่ระบบร่างไว้</li><li>ดูแผงแชทในแอป</li><li>เปิดห้องไลฟ์ TikTok แล้วดูว่าข้อความโผล่หรือไม่</li><li>ตรวจสอบผลลัพธ์</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ข้อความถูกส่งและโผล่ในห้องไลฟ์จริง</li><li>แผงแชทในแอปแสดงว่าส่งแล้ว</li><li>ข้อความที่ส่งตรงกับที่ร่างไว้ ไม่ถูกตัดหรือเพี้ยน</li></ul><div class="hint" style="margin-top:6px">ที่มา: รายงาน MVP1+2 (Windows) · ผลรอบก่อน (Win/Mac): FAIL / —</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ข้อความถูกส่งและโผล่ในห้องไลฟ์จริง</li><li>แผงแชทในแอปแสดงว่าส่งแล้ว</li><li>ข้อความที่ส่งตรงกับที่ร่างไว้ ไม่ถูกตัดหรือเพี้ยน</li></ul><div class="hint" style="margin-top:6px">ที่มา: รายงาน MVP1+2 (Windows) · ⚠️ ฟีเจอร์เปลี่ยน flow — Epic 22 ไม่มีโหมดร่างคำตอบรอยืนยันแล้ว: "ตอบด้วย AI" ส่งคำตอบเองอัตโนมัติระหว่างไลฟ์ ไม่มีคิวรอกดยืนยัน/ไม่ส่ง (TAK-638 · TAK-652) → ลง SKIP · ผลรอบก่อน (Win/Mac): FAIL / —</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
@@ -1224,7 +1224,7 @@ td.status-win{white-space:nowrap}
   <div class="sec"><h4>Test Data</h4><ul><li>กดทิ้งคำตอบที่ร่างไว้</li></ul></div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Rerun (Windows)</li><li>ล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>ไปที่เมนู "บัญชีไลฟ์"</li><li>เลือกบัญชีไลฟ์ที่ต้องการ</li><li>เปิดแท็บ "AUTO"</li><li>กดปุ่มไม่ส่งหรือทิ้งคำตอบที่ระบบร่างไว้</li><li>ดูแผงแชทในแอป</li><li>เปิดห้องไลฟ์ TikTok แล้วดูว่ามีข้อความไปหรือไม่</li><li>ตรวจสอบผลลัพธ์</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>คำตอบหายจากคิวรอยืนยัน</li><li>ไม่มีข้อความไปโผล่ในห้องไลฟ์</li><li>คำถามเดิมยังอยู่ในแผงแชทให้ตอบเองได้</li></ul><div class="hint" style="margin-top:6px">ที่มา: รายงาน MVP1+2 (Windows) · ผลรอบก่อน (Win/Mac): FAIL / —</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>คำตอบหายจากคิวรอยืนยัน</li><li>ไม่มีข้อความไปโผล่ในห้องไลฟ์</li><li>คำถามเดิมยังอยู่ในแผงแชทให้ตอบเองได้</li></ul><div class="hint" style="margin-top:6px">ที่มา: รายงาน MVP1+2 (Windows) · ⚠️ ฟีเจอร์เปลี่ยน flow — Epic 22 ไม่มีโหมดร่างคำตอบรอยืนยันแล้ว: "ตอบด้วย AI" ส่งคำตอบเองอัตโนมัติระหว่างไลฟ์ ไม่มีคิวรอกดยืนยัน/ไม่ส่ง (TAK-638 · TAK-652) → ลง SKIP · ผลรอบก่อน (Win/Mac): FAIL / —</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
@@ -1265,9 +1265,9 @@ td.status-win{white-space:nowrap}
   <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · จุดที่เคย FAIL รอบก่อน (union ผล Windows + Mac · ดู note "ผลรอบก่อน" ในแต่ละเคส)</div>
   <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>มีเครื่องทดสอบ 2 เครื่องที่ลงแอปแล้ว และล็อกอินด้วยบัญชี UAT ตัวเดียวกัน (workspace เดียวกัน)</li><li>อัปโหลดไฟล์จากเครื่องที่ 1 ไปแล้ว</li></ul></div>
   <div class="sec"><h4>Test Data</h4><ul><li>workspace เดียวกัน · เครื่อง 2 เพิ่งลงแอปใหม่</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Rerun (Windows) บน เครื่อง A</li><li>เข้าสู่ระบบด้วยบัญชีทดสอบ บัญชี A ที่มีแพ็กเกจใช้งานอยู่</li><li>ไปที่เมนู "คลังวิดีโอ"</li><li>เลือกจัดเรียงเป็น "ใหม่สุด" แล้วกด "โหลดเพิ่ม" จนหมด</li><li>จดชื่อไฟล์และขนาดไว้ทั้งหมด</li><li>เปิด TAKRA Rerun (Windows) บน เครื่อง B</li><li>เข้าสู่ระบบด้วยบัญชีทดสอบ บัญชี A เดียวกัน (workspace เดียวกัน)</li><li>ไปที่เมนู "คลังวิดีโอ"</li><li>เลือกจัดเรียง "ใหม่สุด" แล้วกด "โหลดเพิ่ม" จนหมด</li><li>เทียบชื่อไฟล์และขนาดกับที่จดไว้จาก เครื่อง A ทีละรายการ</li><li>ดูแถบคำอธิบายสัญลักษณ์ แยกการ์ด "ในเครื่องแล้ว" (จุดเขียว) กับ "อยู่บนคลาวด์" (จุดน้ำเงิน)</li><li>ตรวจสอบผลลัพธ์</li></ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Rerun (Windows) บน เครื่อง A</li><li>เข้าสู่ระบบด้วยบัญชีทดสอบ บัญชี A ที่มีแพ็กเกจใช้งานอยู่</li><li>ไปที่เมนู "คลังวิดีโอ"</li><li>เลือกจัดเรียงเป็น "ใหม่สุด" แล้วกด "โหลดเพิ่ม" จนหมด</li><li>จดชื่อไฟล์และขนาดไว้ทั้งหมด</li><li>เปิด TAKRA Rerun (Windows) บน เครื่อง B</li><li>เข้าสู่ระบบด้วยบัญชีทดสอบ บัญชี A เดียวกัน (workspace เดียวกัน)</li><li>ไปที่เมนู "คลังวิดีโอ"</li><li>เลือกจัดเรียง "ใหม่สุด" แล้วกด "โหลดเพิ่ม" จนหมด</li><li>เทียบชื่อไฟล์และขนาดกับที่จดไว้จาก เครื่อง A ทีละรายการ</li><li>ดูตัวกรองแหล่งไฟล์ "ทั้งหมด · ในเครื่อง · บนคลาวด์" (พร้อมตัวนับ) และป้ายบนการ์ดที่แยก "ในเครื่อง" กับ "บนคลาวด์"</li><li>ตรวจสอบผลลัพธ์</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>เครื่องที่ 2 เห็นไฟล์ครบชุดเดียวกับเครื่องที่ 1 — ชื่อไฟล์และขนาดตรงกันทุกรายการ</li><li>ไฟล์ที่ยังไม่ได้โหลดลงเครื่องที่ 2 แสดงเป็นการ์ดที่มีป้าย บนคลาวด์ พร้อมปุ่ม ดาวน์โหลด และรูปตัวอย่างเป็นไอคอนเมฆ (ยังไม่มีภาพนิ่งของคลิป)</li><li>ไฟล์ที่มีอยู่ในเครื่องที่ 2 อยู่แล้วแสดงป้าย ในเครื่อง และมีภาพนิ่งของคลิป</li><li>ไม่มีไฟล์ของ workspace อื่นปนเข้ามาในรายการ</li><li>กล่อง พื้นที่จัดเก็บ ของทั้งสองเครื่องแสดงตัวเลขเดียวกัน (โควตาเป็นของ workspace ไม่ใช่ของเครื่อง)</li></ul><div class="hint" style="margin-top:6px">ที่มา: รายงาน MVP1+2 (Windows) · ผลรอบก่อน (Win/Mac): FAIL / FAIL</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>เครื่องที่ 2 เห็นไฟล์ครบชุดเดียวกับเครื่องที่ 1 — ชื่อไฟล์และขนาดตรงกันทุกรายการ</li><li>ไฟล์ที่ยังไม่ได้โหลดลงเครื่องที่ 2 แสดงเป็นการ์ดที่มีป้าย บนคลาวด์ พร้อมปุ่ม ดาวน์โหลด และรูปตัวอย่างเป็นไอคอนเมฆ (ยังไม่มีภาพนิ่งของคลิป)</li><li>ไฟล์ที่มีอยู่ในเครื่องที่ 2 อยู่แล้วแสดงป้าย ในเครื่อง และมีภาพนิ่งของคลิป</li><li>ไม่มีไฟล์ของ workspace อื่นปนเข้ามาในรายการ</li><li>แถบ "พื้นที่บนคลาวด์" ของทั้งสองเครื่องแสดงตัวเลขเดียวกัน (โควตาเป็นของ workspace ไม่ใช่ของเครื่อง)</li></ul><div class="hint" style="margin-top:6px">ที่มา: รายงาน MVP1+2 (Windows) · ผลรอบก่อน (Win/Mac): FAIL / FAIL</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
@@ -1309,7 +1309,7 @@ td.status-win{white-space:nowrap}
   <div class="sec"><h4>Test Data</h4><ul><li>เครื่องที่ 2 ลงแอปใหม่ · workspace เดียวกัน</li></ul></div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เครื่องที่ 2 (ลงแอปใหม่ ยังไม่เคยล็อกอิน): เปิดแอปแล้วเข้าสู่ระบบด้วยบัญชี UAT เดียวกับเครื่องที่ 1</li><li>เลือก workspace เดียวกับเครื่องที่ 1</li><li>เปิดเมนู คลังวิดีโอ แล้วกด โหลดเพิ่ม จนหมด</li><li>เทียบจำนวนไฟล์และชื่อไฟล์กับเครื่องที่ 1</li><li>เลือกการ์ด บนคลาวด์ 1 ใบ กด ดาวน์โหลด จนเสร็จ แล้วลองเปิดดูตัวอย่างคลิป</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>เห็นรายการไฟล์ของ workspace ครบเหมือนเครื่องที่ 1 ทั้งที่เพิ่งลงแอปใหม่</li><li>ไฟล์ทั้งหมดขึ้นเป็นการ์ด บนคลาวด์ พร้อมปุ่ม ดาวน์โหลด เพราะยังไม่มีไฟล์ในเครื่องนี้</li><li>ดาวน์โหลดลงเครื่องที่ 2 แล้วใช้งานได้จริง — เปิดดูตัวอย่างได้ และเลือกไปใช้ในบัญชีไลฟ์ได้</li><li>ไม่ต้องอัปโหลดไฟล์ใหม่จากเครื่องที่ 2 เลย</li><li>กล่อง พื้นที่จัดเก็บ แสดงตัวเลขชุดเดียวกับเครื่องที่ 1</li></ul><div class="hint" style="margin-top:6px">ที่มา: รายงาน MVP1+2 (Windows) · ผลรอบก่อน (Win/Mac): FAIL / FAIL</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>เห็นรายการไฟล์ของ workspace ครบเหมือนเครื่องที่ 1 ทั้งที่เพิ่งลงแอปใหม่</li><li>ไฟล์ทั้งหมดขึ้นเป็นการ์ด บนคลาวด์ พร้อมปุ่ม ดาวน์โหลด เพราะยังไม่มีไฟล์ในเครื่องนี้</li><li>ดาวน์โหลดลงเครื่องที่ 2 แล้วใช้งานได้จริง — เปิดดูตัวอย่างได้ และเลือกไปใช้ในบัญชีไลฟ์ได้</li><li>ไม่ต้องอัปโหลดไฟล์ใหม่จากเครื่องที่ 2 เลย</li><li>แถบ "พื้นที่บนคลาวด์" แสดงตัวเลขชุดเดียวกับเครื่องที่ 1</li></ul><div class="hint" style="margin-top:6px">ที่มา: รายงาน MVP1+2 (Windows) · ผลรอบก่อน (Win/Mac): FAIL / FAIL</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
@@ -1436,7 +1436,7 @@ td.status-win{white-space:nowrap}
   <div class="sec"><h4>Test Data</h4><ul><li>ขีดจำกัดตาม UI: คีย์เวิร์ด ≤ 64 ตัวอักษร · ข้อความตอบกลับ ≤ 500 ตัวอักษร</li></ul></div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Rerun (Windows)</li><li>ล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>ไปที่เมนู "บัญชีไลฟ์"</li><li>เลือกบัญชีไลฟ์ที่ต้องการ</li><li>เปิดแท็บ "ถามตอบ"</li><li>ดูปุ่ม "เพิ่มคีย์เวิร์ด" ตอนที่ยังไม่กรอกอะไร</li><li>กรอกเฉพาะช่องคีย์เวิร์ด (เว้นช่องข้อความตอบกลับ) แล้วดูปุ่ม</li><li>พิมพ์คีย์เวิร์ดยาวเกิน 64 ตัวอักษร และข้อความตอบกลับยาวเกิน 500 ตัวอักษร</li><li>ตรวจสอบผลลัพธ์</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ปุ่ม "เพิ่มคีย์เวิร์ด" ถูกปิด (กดไม่ได้) จนกว่าจะกรอกครบทั้งสองช่อง (ไม่ใช่ช่องว่าง)</li><li>ช่องกรอกไม่ยอมให้พิมพ์เกินขีดจำกัด (คีย์เวิร์ด 64 · ตอบกลับ 500 ตัวอักษร)</li></ul><div class="hint" style="margin-top:6px">ที่มา: รายงาน MVP1+2 (Windows) · ผลรอบก่อน (Win/Mac): FAIL / —</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ปุ่ม "เพิ่มคีย์เวิร์ด" ถูกปิด (กดไม่ได้) จนกว่าจะกรอกครบทั้งสองช่อง (ไม่ใช่ช่องว่าง)</li><li>คีย์เวิร์ดพิมพ์เกิน 64 ตัวอักษรไม่ได้ · ข้อความตอบกลับเกิน 500 ตัวอักษรจะขึ้นตัวนับ/คำเตือนให้เห็นและเพิ่ม/บันทึกไม่ได้ (ช่องเผื่อให้พิมพ์เกินได้ 1 ตัวเพื่อโชว์คำเตือน)</li></ul><div class="hint" style="margin-top:6px">ที่มา: รายงาน MVP1+2 (Windows) · ผลรอบก่อน (Win/Mac): FAIL / —</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
@@ -1521,7 +1521,7 @@ td.status-win{white-space:nowrap}
 <tr class="detail"><td colspan="8"><div class="card">
   <div class="h-title">สร้างเพลย์ลิสต์ใหม่พร้อมตั้งชื่อหมวด</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · flow หลัก P0 — login · สร้าง/รันรีรัน</div>
-  <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>เปิดเมนู "คลังวิดีโอ" แล้วเลื่อนลงมาที่ส่วน "เพลย์ลิสต์ (จัดหมวดคลิป)"</li></ul></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>เปิดเมนู "คลังวิดีโอ" แล้วสลับไปแท็บ "เพลย์ลิสต์"</li></ul></div>
   <div class="sec"><h4>Test Data</h4><ul><li>ชื่อเพลย์ลิสต์: ครีมบำรุงผิว</li></ul></div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Rerun (Windows)</li><li>ล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>ไปที่เมนู "คลังวิดีโอ"</li><li>สลับไปแท็บ "เพลย์ลิสต์"</li><li>กด "สร้างเพลย์ลิสต์ใหม่"</li><li>พิมพ์ชื่อเพลย์ลิสต์ลงในช่องชื่อ (หมวดหมู่ไลฟ์ TikTok เป็นตัวเลือก ไม่บังคับ) แล้วกด "สร้าง"</li><li>ดูรายการเพลย์ลิสต์บนหน้า</li></ol></div>
   <div class="grid">
@@ -1649,7 +1649,7 @@ td.status-win{white-space:nowrap}
   <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · flow หลัก P0 — login · สร้าง/รันรีรัน</div>
   <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>คลังวิดีโอ (เมนู "คลังวิดีโอ") มีคลิป .mp4 อย่างน้อย 2 คลิป</li><li>มีเพลย์ลิสต์ที่ยังไม่มีคลิป 1 อัน</li></ul></div>
   <div class="sec"><h4>Test Data</h4><ul><li>เพลย์ลิสต์: ครีมบำรุงผิว · คลิป: demo-cream-60s.mp4, demo-serum-45s.mp4</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Rerun (Windows)</li><li>ล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>ไปที่เมนู "คลังวิดีโอ"</li><li>กด "จัดการคลิป" ที่การ์ดเพลย์ลิสต์ แล้วอ่านสถานะของเพลย์ลิสต์ที่ยังว่าง</li><li>กดเพิ่มคลิปจากคลังวิดีโอ แล้วเลือกคลิป 2 คลิป จากนั้นกด "ยืนยัน"</li><li>ดูรายการคลิปในเพลย์ลิสต์</li></ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Rerun (Windows)</li><li>ล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>ไปที่เมนู "คลังวิดีโอ"</li><li>กด "จัดการคลิป" ที่การ์ดเพลย์ลิสต์ แล้วอ่านสถานะของเพลย์ลิสต์ที่ยังว่าง</li><li>กดเพิ่มคลิปจากคลังวิดีโอ แล้วเลือกคลิป 2 คลิป จากนั้นกด "เพิ่ม 2 คลิป"</li><li>ดูรายการคลิปในเพลย์ลิสต์</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>หน้าต่างชื่อ "จัดการคลิป — ครีมบำรุงผิว" เปิดขึ้น</li><li>ตอนยังว่างขึ้นข้อความว่ายังไม่มีคลิปในเพลย์ลิสต์นี้ พร้อมคำแนะนำให้เพิ่มคลิป</li><li>เพิ่มแล้วคลิปทั้ง 2 โผล่ในรายการทันทีพร้อมชื่อไฟล์และภาพย่อ</li><li>การ์ดเพลย์ลิสต์แสดงจำนวนคลิปเป็น 2</li></ul><div class="hint" style="margin-top:6px">ที่มา: รายงาน MVP1+2 (Windows)</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
@@ -1975,7 +1975,7 @@ td.status-win{white-space:nowrap}
 <tr class="featrow" data-featkey="rrcore-5"><td colspan="8">📁 📡 ขั้นที่ 5 · ผูกเพลย์ลิสต์เข้ากับไลฟ์ (Epic 12 · FR-Z3/Z8/Z7c) <span class="rp"><span class="lv lvl-ui">🌐 4</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="rrcore-5"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
 <tr class="trow" data-feat="rrcore" data-level="ui" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-Z3.1</td>
-  <td class="ctitle">เลือกเพลย์ลิสต์ให้บัญชีในแท็บไลฟ์ <span class="kd kd-happy">Happy Path</span></td>
+  <td class="ctitle">เลือกเพลย์ลิสต์ให้บัญชีในแท็บวิดีโอ <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
   <td class="status" data-uid="tc-14042"><span class="stb pending">รอเทส</span></td>
@@ -1983,13 +1983,13 @@ td.status-win{white-space:nowrap}
   <td class="jira-cell" data-uid="tc-14042"></td>
 </tr>
 <tr class="detail"><td colspan="8"><div class="card">
-  <div class="h-title">เลือกเพลย์ลิสต์ให้บัญชีในแท็บไลฟ์</div>
+  <div class="h-title">เลือกเพลย์ลิสต์ให้บัญชีในแท็บวิดีโอ</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · flow หลัก P0 — login · สร้าง/รันรีรัน</div>
-  <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>มีบัญชี TikTok เชื่อมไว้ในระบบแล้วอย่างน้อย 1 บัญชี และคุกกี้ยังไม่หมดอายุ</li><li>มีเพลย์ลิสต์ที่มีคลิปอยู่แล้วอย่างน้อย 1 อัน</li><li>เปิดหน้ารายละเอียดบัญชี แล้วอยู่ที่แท็บ "ไลฟ์"</li></ul></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>มีบัญชี TikTok เชื่อมไว้ในระบบแล้วอย่างน้อย 1 บัญชี และคุกกี้ยังไม่หมดอายุ</li><li>มีเพลย์ลิสต์ที่มีคลิปอยู่แล้วอย่างน้อย 1 อัน</li><li>เปิดหน้ารายละเอียดบัญชี แล้วอยู่ที่แท็บ "วิดีโอ"</li></ul></div>
   <div class="sec"><h4>Test Data</h4><ul><li>เพลย์ลิสต์: ครีมบำรุงผิว (3 คลิป)</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Rerun (Windows)</li><li>ล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>ไปที่เมนู "บัญชีไลฟ์"</li><li>เปิดบัญชีไลฟ์ที่ต้องการ</li><li>มองหาช่อง "เพลย์ลิสต์ที่ออกอากาศ" แล้วกดที่ช่องเพื่อดูรายการเพลย์ลิสต์ที่เลือกได้</li><li>เลือกเพลย์ลิสต์ที่ต้องการ แล้วกด "บันทึก"</li><li>สังเกตว่าเพลย์ลิสต์ถูกผูกกับบัญชีเรียบร้อย</li></ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Rerun (Windows)</li><li>ล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>ไปที่เมนู "บัญชีไลฟ์"</li><li>เปิดบัญชีไลฟ์ที่ต้องการ</li><li>เปิดแท็บ "วิดีโอ" แล้วมองหาช่อง "เพลย์ลิสต์ที่ออกอากาศ" กดที่ช่องเพื่อดูรายการเพลย์ลิสต์ที่เลือกได้</li><li>เลือกเพลย์ลิสต์ที่ต้องการ (แท็บนี้บันทึกอัตโนมัติ ไม่มีปุ่มบันทึก)</li><li>สังเกตว่าเพลย์ลิสต์ถูกผูกกับบัญชีเรียบร้อย</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ช่องเลือกเพลย์ลิสต์แสดงรายการเพลย์ลิสต์ของ workspace พร้อมชื่อ</li><li>เลือกแล้วช่องแสดงชื่อเพลย์ลิสต์ที่ผูกไว้</li><li>บันทึกแล้วขึ้นข้อความยืนยัน</li></ul><div class="hint" style="margin-top:6px">ที่มา: รายงาน MVP1+2 (Windows)</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ช่องเลือกเพลย์ลิสต์แสดงรายการเพลย์ลิสต์ของ workspace พร้อมชื่อ</li><li>เลือกแล้วช่องแสดงชื่อเพลย์ลิสต์ที่ผูกไว้</li><li>ระบบบันทึกเองและขึ้นข้อความ "ผูกเพลย์ลิสต์แล้ว"</li></ul><div class="hint" style="margin-top:6px">ที่มา: รายงาน MVP1+2 (Windows)</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
@@ -2029,7 +2029,7 @@ td.status-win{white-space:nowrap}
   <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · flow หลัก P0 — login · สร้าง/รันรีรัน</div>
   <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>ผูกเพลย์ลิสต์ให้บัญชีไว้แล้ว</li></ul></div>
   <div class="sec"><h4>Test Data</h4><ul><li>เพลย์ลิสต์: ครีมบำรุงผิว</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Rerun (Windows)</li><li>ล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>ไปที่เมนู "บัญชีไลฟ์"</li><li>เปิดบัญชีไลฟ์ที่ผูกเพลย์ลิสต์ไว้</li><li>จดชื่อเพลย์ลิสต์ที่ผูกไว้</li><li>ออกจากหน้าบัญชีกลับไปหน้าแรก</li><li>กลับเข้ามาที่แท็บไลฟ์ของบัญชีเดิม แล้วสังเกตว่าเพลย์ลิสต์ที่ผูกไว้ยังเป็นชื่อเดิม</li><li>ตรวจสอบผลลัพธ์</li></ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Rerun (Windows)</li><li>ล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>ไปที่เมนู "บัญชีไลฟ์"</li><li>เปิดบัญชีไลฟ์ที่ผูกเพลย์ลิสต์ไว้</li><li>จดชื่อเพลย์ลิสต์ที่ผูกไว้</li><li>ออกจากหน้าบัญชีกลับไปหน้าแรก</li><li>กลับเข้ามาที่แท็บ "วิดีโอ" ของบัญชีเดิม แล้วสังเกตว่าเพลย์ลิสต์ที่ผูกไว้ยังเป็นชื่อเดิม</li><li>ตรวจสอบผลลัพธ์</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ช่องเพลย์ลิสต์ยังแสดงชื่อเดิมที่ผูกไว้</li><li>ไม่กลับไปเป็น "ไม่ผูก" เอง</li><li>ปิดแอปแล้วเปิดใหม่ยังผูกอยู่เหมือนเดิม</li></ul><div class="hint" style="margin-top:6px">ที่มา: รายงาน MVP1+2 (Windows)</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
@@ -2071,9 +2071,9 @@ td.status-win{white-space:nowrap}
   <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · flow หลัก P0 — login · สร้าง/รันรีรัน</div>
   <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>บัญชีผูกเพลย์ลิสต์อยู่ และมีคลิปที่เลือกไว้ในแท็บวิดีโอ</li></ul></div>
   <div class="sec"><h4>Test Data</h4><ul><li>คลิปที่เลือกไว้: demo-cream-60s.mp4</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Rerun (Windows)</li><li>ล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>ไปที่เมนู "บัญชีไลฟ์"</li><li>เปิดบัญชีไลฟ์ที่ผูกเพลย์ลิสต์ไว้</li><li>เปิดช่องเลือกเพลย์ลิสต์ แล้วเลือก "ไม่ผูก" จากนั้นกด "บันทึก"</li><li>เปิดแท็บ "วิดีโอ" เพื่อยืนยันว่าคลิปที่เลือกไว้ยังอยู่</li><li>กด "เริ่มไลฟ์" แล้วดูว่าออกอากาศคลิปไหน</li><li>ตรวจสอบผลลัพธ์</li></ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Rerun (Windows)</li><li>ล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>ไปที่เมนู "บัญชีไลฟ์"</li><li>เปิดบัญชีไลฟ์ที่ผูกเพลย์ลิสต์ไว้</li><li>เปิดช่อง "เพลย์ลิสต์ที่ออกอากาศ" แล้วเลือก "— ไม่ผูก (ใช้คลิปเดี่ยว) —" (บันทึกอัตโนมัติ ขึ้น "เลิกผูกเพลย์ลิสต์แล้ว")</li><li>เปิดแท็บ "วิดีโอ" เพื่อยืนยันว่าคลิปที่เลือกไว้ยังอยู่</li><li>กด "เริ่มไลฟ์" แล้วดูว่าออกอากาศคลิปไหน</li><li>ตรวจสอบผลลัพธ์</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>เลือกไม่ผูกได้และบันทึกสำเร็จ</li><li>คลิปเดี่ยวที่เลือกไว้ยังอยู่ ไม่ถูกล้าง</li><li>ไลฟ์ออกอากาศคลิปเดี่ยวนั้นวนไปเรื่อย ๆ เหมือนก่อนมีเพลย์ลิสต์</li></ul><div class="hint" style="margin-top:6px">ที่มา: รายงาน MVP1+2 (Windows)</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>เลือกไม่ผูกได้ ระบบบันทึกเองและขึ้นข้อความ "เลิกผูกเพลย์ลิสต์แล้ว"</li><li>คลิปเดี่ยวที่เลือกไว้ยังอยู่ ไม่ถูกล้าง</li><li>ไลฟ์ออกอากาศคลิปเดี่ยวนั้นวนไปเรื่อย ๆ เหมือนก่อนมีเพลย์ลิสต์</li></ul><div class="hint" style="margin-top:6px">ที่มา: รายงาน MVP1+2 (Windows)</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
@@ -2455,7 +2455,7 @@ td.status-win{white-space:nowrap}
   <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · ฟีเจอร์ใหม่ ก.ย. — auto chat-reply (LLM · Epic 22) + keyword ตอบกลับอัตโนมัติ (Epic 23)</div>
   <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>บัญชีที่ยังไม่เคยตั้งค่าตอบแชทอัตโนมัติ</li></ul></div>
   <div class="sec"><h4>Test Data</h4><ul><li>บัญชีใหม่ที่ยังไม่ตั้งค่า</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Rerun (Windows)</li><li>ล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>ไปที่เมนู "บัญชีไลฟ์"</li><li>เปิดบัญชีไลฟ์ที่ต้องการ</li><li>เปิดหน้าตั้งค่าของบัญชี แล้วหาส่วนตอบแชทอัตโนมัติ</li><li>ดูสถานะสวิตช์ของฟีเจอร์</li><li>อ่านคำอธิบายของฟีเจอร์</li></ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Rerun (Windows)</li><li>ล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>ไปที่เมนู "บัญชีไลฟ์"</li><li>เปิดบัญชีไลฟ์ที่ต้องการ</li><li>เปิดแท็บ "ถามตอบ" แล้วดูส่วน "ตอบด้วย AI" ด้านบนสุด</li><li>ดูสถานะสวิตช์ "เปิดใช้งานตอบด้วย AI"</li><li>อ่านคำอธิบายของฟีเจอร์</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>สวิตช์อยู่ที่ปิดเป็นค่าเริ่มต้น</li><li>มีคำอธิบายบอกว่าฟีเจอร์นี้ทำอะไรและมีความเสี่ยงอะไร</li><li>เปิดใช้ต้องกดเองเท่านั้น ไม่เปิดให้อัตโนมัติ</li></ul><div class="hint" style="margin-top:6px">ที่มา: รายงาน MVP1+2 (Windows)</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
@@ -2495,11 +2495,11 @@ td.status-win{white-space:nowrap}
 <tr class="detail"><td colspan="8"><div class="card">
   <div class="h-title">คำถามนอกเรื่องหรือไม่เหมาะสม ระบบต้องไม่ร่างคำตอบให้ส่ง</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · ฟีเจอร์ใหม่ ก.ย. — auto chat-reply (LLM · Epic 22) + keyword ตอบกลับอัตโนมัติ (Epic 23)</div>
-  <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>เปิดโหมดร่างคำตอบและกำลังไลฟ์</li></ul></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>เปิด "ตอบด้วย AI" และกำลังไลฟ์</li></ul></div>
   <div class="sec"><h4>Test Data</h4><ul><li>ข้อความนอกเรื่อง 1 ข้อ · ข้อความหยาบคาย 1 ข้อ</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Rerun (Windows)</li><li>ล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>ไปที่เมนู "บัญชีไลฟ์"</li><li>เลือกบัญชีไลฟ์ที่ต้องการ</li><li>เปิดแท็บ "AUTO"</li><li>ให้ผู้ทดสอบอีกคนพิมพ์คำถามนอกเรื่องในห้องไลฟ์ TikTok เช่น ถามเรื่องการเมือง</li><li>ให้พิมพ์ข้อความหยาบคายอีก 1 ข้อความ</li><li>ดูแผงแชทในแอป แล้วดูว่าระบบร่างคำตอบให้หรือไม่ในแต่ละกรณี</li></ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Rerun (Windows)</li><li>ล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>ไปที่เมนู "บัญชีไลฟ์"</li><li>เลือกบัญชีไลฟ์ที่ต้องการ</li><li>เปิดหน้าไลฟ์ของบัญชี (ปุ่ม "สถานะ") แล้วดูแผงแชท</li><li>ให้ผู้ทดสอบอีกคนพิมพ์คำถามนอกเรื่องในห้องไลฟ์ TikTok เช่น ถามเรื่องการเมือง</li><li>ให้พิมพ์ข้อความหยาบคายอีก 1 ข้อความ</li><li>ดูแผงแชทในแอป แล้วดูว่า AI ส่งคำตอบให้หรือไม่ในแต่ละกรณี</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ระบบไม่ร่างคำตอบให้กับข้อความนอกเรื่องและหยาบคาย</li><li>ถ้าแสดงอะไร ต้องบอกว่าไม่ร่างคำตอบเพราะอะไร</li><li>ไม่มีคำตอบที่ไม่เหมาะสมหลุดเข้าคิวรอส่ง</li></ul><div class="hint" style="margin-top:6px">ที่มา: รายงาน MVP1+2 (Windows)</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>AI ไม่ตอบข้อความนอกเรื่องและหยาบคาย (เกณฑ์อธิบายไว้ในหมายเหตุ "ทำไมบางครั้งไม่ตอบ?" ของแท็บถามตอบ)</li><li>ถ้าแสดงอะไร ต้องไม่ใช่คำตอบที่ไม่เหมาะสม</li><li>ไม่มีคำตอบที่ไม่เหมาะสมถูกส่งเข้าห้องไลฟ์</li></ul><div class="hint" style="margin-top:6px">ที่มา: รายงาน MVP1+2 (Windows)</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
@@ -2537,11 +2537,11 @@ td.status-win{white-space:nowrap}
 <tr class="detail"><td colspan="8"><div class="card">
   <div class="h-title">คำถามซ้ำ ๆ รัว ๆ ระบบต้องไม่ร่างและส่งซ้ำเป็นชุด</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · ฟีเจอร์ใหม่ ก.ย. — auto chat-reply (LLM · Epic 22) + keyword ตอบกลับอัตโนมัติ (Epic 23)</div>
-  <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>เปิดโหมดร่างคำตอบและกำลังไลฟ์</li></ul></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>เปิด "ตอบด้วย AI" และกำลังไลฟ์</li></ul></div>
   <div class="sec"><h4>Test Data</h4><ul><li>คำถามเดิมซ้ำ 5 ครั้ง</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Rerun (Windows)</li><li>ล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>ไปที่เมนู "บัญชีไลฟ์"</li><li>เลือกบัญชีไลฟ์ที่ต้องการ</li><li>เปิดแท็บ "AUTO"</li><li>ให้ผู้ทดสอบอีกคนพิมพ์คำถามเดิมซ้ำ 5 ครั้งติดกันภายใน 1 นาทีในห้องไลฟ์ TikTok</li><li>ดูแผงแชทในแอป แล้วนับจำนวนคำตอบที่ระบบร่างขึ้นมา</li><li>กดยืนยันส่ง แล้วดูว่ามีข้อความไปกี่ข้อความ</li><li>ตรวจสอบผลลัพธ์</li></ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Rerun (Windows)</li><li>ล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>ไปที่เมนู "บัญชีไลฟ์"</li><li>เลือกบัญชีไลฟ์ที่ต้องการ</li><li>เปิดหน้าไลฟ์ของบัญชี (ปุ่ม "สถานะ") แล้วดูแผงแชท</li><li>ให้ผู้ทดสอบอีกคนพิมพ์คำถามเดิมซ้ำ 5 ครั้งติดกันภายใน 1 นาทีในห้องไลฟ์ TikTok</li><li>ดูแผงแชทในแอป แล้วนับจำนวนคำตอบที่ AI ส่งออกไป</li><li>เปิดห้องไลฟ์ TikTok แล้วนับว่ามีข้อความตอบไปกี่ข้อความ</li><li>ตรวจสอบผลลัพธ์</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ระบบไม่ร่างคำตอบครบทั้ง 5 ครั้งแบบซ้ำ ๆ</li><li>ถ้าส่ง ต้องส่งไม่ถี่จนดูเป็นสแปมในห้อง</li><li>มีข้อความหรือสถานะบอกว่าถูกจำกัดจำนวน</li></ul><div class="hint" style="margin-top:6px">ที่มา: รายงาน MVP1+2 (Windows)</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ระบบไม่ตอบครบทั้ง 5 ครั้งแบบซ้ำ ๆ</li><li>ถ้าส่ง ต้องส่งไม่ถี่จนดูเป็นสแปมในห้อง</li><li>ถ้าความถี่สูง มีแถบสถานะแจ้งว่า "ตอบกลับอัตโนมัติถูกพักชั่วคราว · ความถี่สูง"</li></ul><div class="hint" style="margin-top:6px">ที่มา: รายงาน MVP1+2 (Windows)</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
@@ -2581,7 +2581,7 @@ td.status-win{white-space:nowrap}
   <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · ฟีเจอร์ใหม่ ก.ย. — auto chat-reply (LLM · Epic 22) + keyword ตอบกลับอัตโนมัติ (Epic 23)</div>
   <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>เปิดฟีเจอร์ตอบแชทอัตโนมัติไว้ และกำลังไลฟ์</li></ul></div>
   <div class="sec"><h4>Test Data</h4><ul><li>ข้อความที่พิมพ์เอง 3 ข้อความ</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Rerun (Windows)</li><li>ล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>ไปที่เมนู "บัญชีไลฟ์"</li><li>เลือกบัญชีไลฟ์ที่ต้องการ</li><li>เปิดแท็บ "AUTO"</li><li>พิมพ์ข้อความตอบเองในช่อง "ตอบแชท" แล้วกด "ส่ง"</li><li>เปิดห้องไลฟ์ TikTok แล้วดูว่าข้อความไปโผล่หรือไม่</li><li>ส่งซ้ำอีก 2 ข้อความ แล้วดูผลเช่นเดิม</li><li>ตรวจสอบผลลัพธ์</li></ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Rerun (Windows)</li><li>ล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>ไปที่เมนู "บัญชีไลฟ์"</li><li>เลือกบัญชีไลฟ์ที่ต้องการ</li><li>เปิดหน้าไลฟ์ของบัญชี (ปุ่ม "สถานะ") แล้วไปที่แผงแชท</li><li>พิมพ์ข้อความตอบเองในช่อง "ตอบแชท" แล้วกด "ส่ง"</li><li>เปิดห้องไลฟ์ TikTok แล้วดูว่าข้อความไปโผล่หรือไม่</li><li>ส่งซ้ำอีก 2 ข้อความ แล้วดูผลเช่นเดิม</li><li>ตรวจสอบผลลัพธ์</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ตอบเองได้ตามปกติ ไม่ถูกฟีเจอร์อัตโนมัติขวาง</li><li>ข้อความไปโผล่ในห้องไลฟ์ครบ</li><li>ไม่มีข้อความอัตโนมัติแทรกสลับจนสับสน</li></ul><div class="hint" style="margin-top:6px">ที่มา: รายงาน MVP1+2 (Windows)</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
@@ -2621,11 +2621,11 @@ td.status-win{white-space:nowrap}
 <tr class="detail"><td colspan="8"><div class="card">
   <div class="h-title">กดสวิตช์หยุดฉุกเฉิน การส่งอัตโนมัติต้องหยุดทันที</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · ฟีเจอร์ใหม่ ก.ย. — auto chat-reply (LLM · Epic 22) + keyword ตอบกลับอัตโนมัติ (Epic 23)</div>
-  <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>เปิดฟีเจอร์ตอบแชทอัตโนมัติอยู่และมีคำตอบรอในคิว</li></ul></div>
-  <div class="sec"><h4>Test Data</h4><ul><li>กดหยุดฉุกเฉินขณะมีคำตอบรอ 2 ข้อความ</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Rerun (Windows)</li><li>ล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>ไปที่เมนู "บัญชีไลฟ์"</li><li>เลือกบัญชีไลฟ์ที่ต้องการ</li><li>เปิดแท็บ "AUTO"</li><li>กดสวิตช์หยุดฉุกเฉินของฟีเจอร์ตอบแชทอัตโนมัติ</li><li>จับเวลาว่ากี่วินาทีจนสถานะเปลี่ยนเป็นหยุด</li><li>ดูว่าคำตอบที่รออยู่ในคิวถูกส่งออกไปหรือไม่</li><li>ให้ผู้ทดสอบอีกคนพิมพ์คำถามใหม่ในห้องไลฟ์ TikTok แล้วดูว่ามีคำตอบร่างขึ้นมาอีกหรือไม่</li><li>ตรวจสอบผลลัพธ์</li></ol></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>เปิด "ตอบด้วย AI" อยู่และ AI กำลังตอบระหว่างไลฟ์</li></ul></div>
+  <div class="sec"><h4>Test Data</h4><ul><li>ปิดสวิตช์ขณะ AI กำลังตอบ</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Rerun (Windows)</li><li>ล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>ไปที่เมนู "บัญชีไลฟ์"</li><li>เลือกบัญชีไลฟ์ที่ต้องการ</li><li>เปิดหน้าไลฟ์ของบัญชี (ปุ่ม "สถานะ")</li><li>ปิดสวิตช์ "ตอบด้วย AI" ที่หัวแผงแชท</li><li>จับเวลาว่ากี่วินาทีจนป้ายเปลี่ยนเป็น "AI ปิด"</li><li>ดูว่ามีคำตอบใหม่ถูกส่งออกไปอีกหรือไม่ (ข้อความที่กำลังส่งค้างรอบนั้นจะส่งจนจบตามที่ระบบแจ้ง)</li><li>ให้ผู้ทดสอบอีกคนพิมพ์คำถามใหม่ในห้องไลฟ์ TikTok แล้วดูว่ามีคำตอบร่างขึ้นมาอีกหรือไม่</li><li>ตรวจสอบผลลัพธ์</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>สถานะเปลี่ยนเป็นหยุดภายในไม่กี่วินาที</li><li>ไม่มีคำตอบในคิวหลุดออกไปหลังกดหยุด</li><li>คำถามใหม่ไม่ถูกร่างคำตอบอีก</li></ul><div class="hint" style="margin-top:6px">ที่มา: รายงาน MVP1+2 (Windows)</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ป้ายเปลี่ยนเป็น "AI ปิด" ทันที และระบบแจ้ง "ปิดแล้วหยุดตอบทันที — ข้อความที่กำลังส่งรอบนี้จะส่งจนจบ"</li><li>หลังรอบที่ค้างจบ ไม่มีคำตอบใหม่ถูกส่งออกไปอีก</li><li>คำถามใหม่ไม่ถูก AI ตอบอีก</li></ul><div class="hint" style="margin-top:6px">ที่มา: รายงาน MVP1+2 (Windows)</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
@@ -2663,9 +2663,9 @@ td.status-win{white-space:nowrap}
 <tr class="detail"><td colspan="8"><div class="card">
   <div class="h-title">หลังกดหยุดฉุกเฉิน ตอบด้วยมือยังทำได้</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · ฟีเจอร์ใหม่ ก.ย. — auto chat-reply (LLM · Epic 22) + keyword ตอบกลับอัตโนมัติ (Epic 23)</div>
-  <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>เพิ่งกดสวิตช์หยุดฉุกเฉินไป</li></ul></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>เพิ่งปิดสวิตช์ "ตอบด้วย AI" ไป</li></ul></div>
   <div class="sec"><h4>Test Data</h4><ul><li>ข้อความที่พิมพ์เอง 1 ข้อความ</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Rerun (Windows)</li><li>ล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>ไปที่เมนู "บัญชีไลฟ์"</li><li>เลือกบัญชีไลฟ์ที่ต้องการ</li><li>เปิดแท็บ "AUTO"</li><li>พิมพ์ข้อความตอบเองในช่อง "ตอบแชท" แล้วกด "ส่ง"</li><li>เปิดห้องไลฟ์ TikTok แล้วดูว่าข้อความไปโผล่หรือไม่</li><li>ดูสถานะฟีเจอร์ตอบแชทอัตโนมัติว่ายังหยุดอยู่</li></ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Rerun (Windows)</li><li>ล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>ไปที่เมนู "บัญชีไลฟ์"</li><li>เลือกบัญชีไลฟ์ที่ต้องการ</li><li>เปิดหน้าไลฟ์ของบัญชี (ปุ่ม "สถานะ") แล้วไปที่แผงแชท</li><li>พิมพ์ข้อความตอบเองในช่อง "ตอบแชท" แล้วกด "ส่ง"</li><li>เปิดห้องไลฟ์ TikTok แล้วดูว่าข้อความไปโผล่หรือไม่</li><li>ดูป้ายสถานะว่ายังเป็น "AI ปิด" อยู่</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ตอบเองส่งได้ตามปกติ</li><li>ฟีเจอร์อัตโนมัติยังหยุดอยู่ ไม่กลับมาเองโดยไม่ได้กด</li><li>ไลฟ์ยังออกอากาศต่อ</li></ul><div class="hint" style="margin-top:6px">ที่มา: รายงาน MVP1+2 (Windows)</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
@@ -2705,9 +2705,9 @@ td.status-win{white-space:nowrap}
 <tr class="detail"><td colspan="8"><div class="card">
   <div class="h-title">ทุกคำตอบอัตโนมัติต้องมีบันทึกไว้ให้ย้อนดูได้</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · ฟีเจอร์ใหม่ ก.ย. — auto chat-reply (LLM · Epic 22) + keyword ตอบกลับอัตโนมัติ (Epic 23)</div>
-  <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>ส่งคำตอบจากโหมดร่างไปแล้วอย่างน้อย 3 ข้อความ</li></ul></div>
-  <div class="sec"><h4>Test Data</h4><ul><li>คำตอบที่ส่งไปแล้ว 3 ข้อความ</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Rerun (Windows)</li><li>ล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>เปิดหน้าประวัติการใช้งานหรือหน้าตรวจสอบ</li><li>หารายการของคำตอบที่ส่งจากฟีเจอร์ตอบแชทอัตโนมัติ</li><li>อ่านรายละเอียดของแต่ละรายการ</li></ol></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>AI ส่งคำตอบไปแล้วอย่างน้อย 3 ข้อความระหว่างไลฟ์</li></ul></div>
+  <div class="sec"><h4>Test Data</h4><ul><li>คำตอบที่ AI ส่งไปแล้ว 3 ข้อความ</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Rerun (Windows)</li><li>ล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>เปิด "ระบบ &amp; ตั้งค่า" แท็บ "Logs" (บันทึกการทำงาน) หรือแผงแชทของไลฟ์นั้น</li><li>หารายการของคำตอบที่ส่งจากฟีเจอร์ตอบแชทอัตโนมัติ</li><li>อ่านรายละเอียดของแต่ละรายการ</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>มีรายการครบทุกคำตอบที่ส่ง พร้อมข้อความและเวลาที่ส่ง</li><li>บอกได้ว่ามาจากฟีเจอร์อัตโนมัติ ไม่ใช่พิมพ์เอง</li><li>ไม่มีคุกกี้หรือข้อมูลลับโผล่ในรายการ</li></ul><div class="hint" style="margin-top:6px">ที่มา: รายงาน MVP1+2 (Windows)</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
@@ -2747,11 +2747,11 @@ td.status-win{white-space:nowrap}
 <tr class="detail"><td colspan="8"><div class="card">
   <div class="h-title">ระบบร่างคำตอบล่ม แชทปกติต้องไม่พังตาม 🆕 edge</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Exception/Error</b> <span class="hint">(เน็ตหลุด · โปรเซสตาย · error แล้วต้องกู้คืน)</span> · ฟีเจอร์ใหม่ ก.ย. — auto chat-reply (LLM · Epic 22) + keyword ตอบกลับอัตโนมัติ (Epic 23)</div>
-  <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>ประสานทีมให้ทำให้ระบบร่างคำตอบใช้ไม่ได้ชั่วคราว</li></ul></div>
-  <div class="sec"><h4>Test Data</h4><ul><li>ระบบร่างคำตอบใช้ไม่ได้ชั่วคราว</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Rerun (Windows)</li><li>ล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>ไปที่เมนู "บัญชีไลฟ์"</li><li>เลือกบัญชีไลฟ์ที่ต้องการ</li><li>เปิดแท็บ "AUTO"</li><li>เปิดโหมดร่างคำตอบขณะที่ระบบร่างใช้ไม่ได้</li><li>ให้ผู้ทดสอบอีกคนพิมพ์คำถามในห้องไลฟ์ TikTok</li><li>ดูแผงแชทในแอปว่าแชทปกติยังทำงานอยู่หรือไม่</li><li>ทดลองพิมพ์ตอบด้วยมือในช่อง "ตอบแชท" แล้วกด "ส่ง"</li><li>ตรวจสอบผลลัพธ์</li></ol></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun บนเครื่อง แล้วล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>ประสานทีมให้ทำให้ระบบ AI ตอบใช้ไม่ได้ชั่วคราว (เช่น คีย์ AI ใช้ไม่ได้)</li></ul></div>
+  <div class="sec"><h4>Test Data</h4><ul><li>ระบบ AI ตอบใช้ไม่ได้ชั่วคราว</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Rerun (Windows)</li><li>ล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>ไปที่เมนู "บัญชีไลฟ์"</li><li>เลือกบัญชีไลฟ์ที่ต้องการ</li><li>เปิดหน้าไลฟ์ของบัญชี (ปุ่ม "สถานะ") แล้วดูแผงแชท</li><li>เปิด "ตอบด้วย AI" ขณะที่ระบบ AI ใช้ไม่ได้</li><li>ให้ผู้ทดสอบอีกคนพิมพ์คำถามในห้องไลฟ์ TikTok</li><li>ดูแผงแชทในแอปว่าแชทปกติยังทำงานอยู่หรือไม่</li><li>ทดลองพิมพ์ตอบด้วยมือในช่อง "ตอบแชท" แล้วกด "ส่ง"</li><li>ตรวจสอบผลลัพธ์</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>แผงแชทยังแสดงคอมเมนต์ที่เข้ามาตามปกติ</li><li>ตอบด้วยมือยังทำได้</li><li>มีข้อความบอกว่าร่างคำตอบไม่ได้ตอนนี้ แทนที่จะเงียบหรือค้าง</li></ul><div class="hint" style="margin-top:6px">ที่มา: รายงาน MVP1+2 (Windows)</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>แผงแชทยังแสดงคอมเมนต์ที่เข้ามาตามปกติ</li><li>ตอบด้วยมือยังทำได้</li><li>แถบแจ้งเตือนบนแผงแชทบอกตามจริงว่า AI ตอบไม่ได้ตอนนี้ (และคีย์เวิร์ดตอบแทนหรือไม่) แทนที่จะเงียบหรือค้าง</li></ul><div class="hint" style="margin-top:6px">ที่มา: รายงาน MVP1+2 (Windows)</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
@@ -2791,9 +2791,9 @@ td.status-win{white-space:nowrap}
   <div class="h-title">เปิดแท็บ "ถามตอบ" ในหน้าบัญชีไลฟ์ แล้วเห็นองค์ประกอบครบ</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · ฟีเจอร์ใหม่ ก.ย. — auto chat-reply (LLM · Epic 22) + keyword ตอบกลับอัตโนมัติ (Epic 23)</div>
   <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอป Takra Rerun และล็อกอินด้วยบัญชี UAT แล้ว</li><li>มีบัญชี TikTok ที่เพิ่มไว้อย่างน้อย 1 บัญชี</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Rerun (Windows)</li><li>ล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>ที่หน้า "บัญชีไลฟ์" คลิกเข้าไปที่บัญชีหนึ่ง</li><li>ดูแถบแท็บด้านบนของหน้าบัญชี (ไลฟ์ · วิดีโอ · โอเวอร์เลย์ · ตะกร้าสินค้า · ตารางปัก · AUTO · ถามตอบ · พร็อกซี)</li><li>คลิกแท็บ "ถามตอบ"</li><li>ไล่ดูองค์ประกอบในแท็บจากบนลงล่าง</li><li>ตรวจสอบผลลัพธ์</li></ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Rerun (Windows)</li><li>ล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>ที่หน้า "บัญชีไลฟ์" คลิกเข้าไปที่บัญชีหนึ่ง</li><li>ดูแถบแท็บของหน้าบัญชี (ไลฟ์ · วิดีโอ · โอเวอร์เลย์ · ตะกร้าสินค้า · ตารางปัก · AUTO · ถามตอบ · พราง · พร็อกซี)</li><li>คลิกแท็บ "ถามตอบ"</li><li>ไล่ดูองค์ประกอบในแท็บจากบนลงล่าง</li><li>ตรวจสอบผลลัพธ์</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>มีแท็บ "ถามตอบ" (ไอคอนข้อความ) อยู่ในแถบแท็บ</li><li>ด้านบนมีสวิตช์ "เปิดใช้งานตอบกลับอัตโนมัติ" พร้อมคำอธิบาย "ปิดอยู่ = ไม่มีการตอบกลับอัตโนมัติ แม้จะตั้งคีย์เวิร์ดไว้"</li><li>มีหัวข้อ "คีย์เวิร์ดตอบกลับ (ถามตอบ)" พร้อมคำอธิบายว่าใช้กับทุกไลฟ์ของบัญชีนี้ (คลิปเดี่ยวหรือเพลย์ลิสต์)</li><li>มีกล่องเพิ่มคีย์เวิร์ด (ช่องคีย์เวิร์ด + ช่องข้อความตอบกลับ + ปุ่ม "เพิ่มคีย์เวิร์ด")</li><li>ด้านล่างมีหมายเหตุพับเก็บ "ทำไมบางครั้งไม่ตอบ?"</li></ul><div class="hint" style="margin-top:6px">ที่มา: รายงาน MVP1+2 (Windows)</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>มีแท็บ "ถามตอบ" (ไอคอนข้อความ) อยู่ในแถบแท็บ</li><li>แท็บเปิดมาเป็น 2 สวิตช์ — บนสุด "เปิดใช้งานตอบด้วย AI" ถัดลงมา "เปิดใช้งานตอบกลับอัตโนมัติ" (คีย์เวิร์ด) พร้อมคำอธิบาย "ตอบคำถามที่ถามบ่อยด้วยข้อความสำเร็จรูป · ปิดอยู่ = ไม่ตอบ แม้จะตั้งคีย์เวิร์ดไว้"</li><li>มีหัวข้อ "คีย์เวิร์ดตอบกลับ (ถามตอบ)" พร้อมคำอธิบายว่าใช้กับทุกไลฟ์ของบัญชีนี้ (คลิปเดี่ยวหรือเพลย์ลิสต์)</li><li>มีส่วน "เพิ่มคีย์เวิร์ดใหม่" (ช่องคีย์เวิร์ด + ช่องข้อความตอบกลับ + ปุ่ม "เพิ่มคีย์เวิร์ด")</li><li>ในส่วนตอบด้วย AI มีหมายเหตุพับเก็บ "ทำไมบางครั้งไม่ตอบ?"</li></ul><div class="hint" style="margin-top:6px">ที่มา: รายงาน MVP1+2 (Windows)</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
@@ -2833,9 +2833,9 @@ td.status-win{white-space:nowrap}
   <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · ฟีเจอร์ใหม่ ก.ย. — auto chat-reply (LLM · Epic 22) + keyword ตอบกลับอัตโนมัติ (Epic 23)</div>
   <div class="sec"><h4>Precondition</h4><ul><li>อยู่ที่แท็บ "ถามตอบ" ของบัญชีหนึ่ง</li></ul></div>
   <div class="sec"><h4>Test Data</h4><ul><li>คีย์เวิร์ด: ราคา</li><li>ข้อความตอบกลับ: ชิ้นละ 199 บาทค่ะ</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Rerun (Windows)</li><li>ล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>ไปที่เมนู "บัญชีไลฟ์"</li><li>เลือกบัญชีไลฟ์ที่ต้องการ</li><li>เปิดแท็บ "ถามตอบ"</li><li>ในกล่องเพิ่มคีย์เวิร์ด พิมพ์คำในช่องที่มี placeholder "คีย์เวิร์ด เช่น ราคา"</li><li>พิมพ์ข้อความในช่องที่มี placeholder "ข้อความตอบกลับ เช่น ชิ้นละ 199 บาทค่ะ"</li><li>กดปุ่ม "เพิ่มคีย์เวิร์ด"</li><li>สังเกตแถวคีย์เวิร์ดที่เพิ่มขึ้นในรายการ</li></ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Rerun (Windows)</li><li>ล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>ไปที่เมนู "บัญชีไลฟ์"</li><li>เลือกบัญชีไลฟ์ที่ต้องการ</li><li>เปิดแท็บ "ถามตอบ"</li><li>ในส่วน "เพิ่มคีย์เวิร์ดใหม่" พิมพ์คำในช่องคีย์เวิร์ดที่มี placeholder "เช่น ราคา"</li><li>พิมพ์ข้อความในช่องที่มี placeholder "ข้อความตอบกลับ เช่น ชิ้นละ 199 บาทค่ะ"</li><li>กดปุ่ม "เพิ่มคีย์เวิร์ด"</li><li>สังเกตแถวคีย์เวิร์ดที่เพิ่มขึ้นในรายการ</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>มีข้อความแจ้ง "เพิ่มคีย์เวิร์ดแล้ว"</li><li>คีย์เวิร์ดใหม่ปรากฏเป็นแถว: ช่องคีย์เวิร์ด · ช่องข้อความตอบกลับ · สวิตช์เปิดใช้ · ปุ่มลบ</li><li>ช่องกรอกในกล่องเพิ่มถูกล้างให้ว่าง พร้อมเพิ่มคำถัดไป</li></ul><div class="hint" style="margin-top:6px">ที่มา: รายงาน MVP1+2 (Windows)</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>มีข้อความแจ้ง "เพิ่มคีย์เวิร์ดแล้ว"</li><li>คีย์เวิร์ดใหม่ปรากฏเป็นแถว: ช่องคีย์เวิร์ด · ช่องข้อความตอบกลับ · ตัวเลือก "วิธีจับคำ" (มีคำนี้ / ตรงตัว) · สวิตช์เปิดใช้ · ปุ่มลบ</li><li>ช่องกรอกในกล่องเพิ่มถูกล้างให้ว่าง พร้อมเพิ่มคำถัดไป</li></ul><div class="hint" style="margin-top:6px">ที่มา: รายงาน MVP1+2 (Windows)</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
@@ -2998,9 +2998,9 @@ td.status-win{white-space:nowrap}
   <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · ฟีเจอร์ใหม่ ก.ย. — auto chat-reply (LLM · Epic 22) + keyword ตอบกลับอัตโนมัติ (Epic 23)</div>
   <div class="sec"><h4>Precondition</h4><ul><li>เปิดบัญชีที่ยังไม่เคยตั้งค่าตอบกลับอัตโนมัติ · อยู่ที่แท็บ "ถามตอบ"</li></ul></div>
   <div class="sec"><h4>Test Data</h4><ul><li>ขอบเขตตามเอกสาร: FR-Q6 · default OFF · gated (รอ TikTok ToS + legal)</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Rerun (Windows)</li><li>ล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>ดูสวิตช์หลัก "เปิดใช้งานตอบกลับอัตโนมัติ" ด้านบนสุดของแท็บ</li><li>อ่านคำอธิบายใต้สวิตช์</li><li>ลองเปิดสวิตช์หลักแล้วดูผล</li><li>ตรวจสอบผลลัพธ์</li></ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Rerun (Windows)</li><li>ล็อกอินด้วยบัญชี UAT ที่มีแพ็กเกจใช้งานอยู่</li><li>ดูสวิตช์หลัก "เปิดใช้งานตอบกลับอัตโนมัติ" (กล่องคีย์เวิร์ด อยู่ถัดจากส่วน "ตอบด้วย AI")</li><li>อ่านคำอธิบายใต้สวิตช์</li><li>ลองเปิดสวิตช์หลักแล้วดูผล</li><li>ตรวจสอบผลลัพธ์</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>สวิตช์หลักเป็น "ปิด" โดยค่าเริ่มต้น</li><li>คำอธิบายระบุว่า ปิดอยู่ = ไม่มีการตอบกลับอัตโนมัติ แม้จะตั้งคีย์เวิร์ดไว้</li><li>สวิตช์หลักเป็นของระดับบัญชี (ควบคุมทั้งฟีเจอร์) — ต้องเปิดสวิตช์หลัก + เปิดสวิตช์รายคีย์เวิร์ด จึงจะตอบ</li></ul><div class="hint" style="margin-top:6px">ที่มา: รายงาน MVP1+2 (Windows)</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>สวิตช์หลักเป็น "ปิด" โดยค่าเริ่มต้น</li><li>คำอธิบายระบุว่า "ตอบคำถามที่ถามบ่อยด้วยข้อความสำเร็จรูป · ปิดอยู่ = ไม่ตอบ แม้จะตั้งคีย์เวิร์ดไว้"</li><li>สวิตช์หลักเป็นของระดับบัญชี (ควบคุมทั้งฟีเจอร์) — ต้องเปิดสวิตช์หลัก + เปิดสวิตช์รายคีย์เวิร์ด จึงจะตอบ</li></ul><div class="hint" style="margin-top:6px">ที่มา: รายงาน MVP1+2 (Windows)</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>

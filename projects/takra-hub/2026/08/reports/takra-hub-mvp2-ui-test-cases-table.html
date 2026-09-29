@@ -777,10 +777,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="h-title">มอบ role เพิ่ม/ถอนออกจากชิปในรายชื่อ → toast "มอบ … แล้ว"/"ถอน … แล้ว" และเมนูฝั่งเจ้าตัวเปลี่ยนทันทีหลัง refresh</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · MVP-2 · A</div>
   <div class="sec"><h4>Precondition</h4><ul><li>บัญชี admin</li><li>บัญชีพนักงาน role cs (เช่นจาก M2-A.2) ล็อกอินค้างไว้ในเบราว์เซอร์ที่สอง</li></ul></div>
-  <div class="sec"><h4>Test Data</h4><ul><li>role ที่ใช้ทดสอบ: compliance (ถือสิทธิ์เปิดเมนู "เอกสารกฎหมาย" และ "บัญชีพนักงาน")</li></ul></div>
+  <div class="sec"><h4>Test Data</h4><ul><li>role ที่ใช้ทดสอบ: compliance (ถือสิทธิ์เปิดเมนู "เอกสารกฎหมาย" · "บัญชีพนักงาน" · "บันทึกสิทธิ์")</li></ul></div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) แล้วเข้าสู่ระบบด้วยบัญชี admin ไปที่เมนู "บัญชีพนักงาน"</li><li>ที่การ์ดของพนักงานทดสอบ กดชิป "compliance" (ยังไม่ติด) แล้วรอ toast</li><li>สลับไปเบราว์เซอร์พนักงาน refresh หน้า แล้วดูเมนูด้านซ้าย</li><li>กลับเบราว์เซอร์ admin กดชิป "compliance" ซ้ำเพื่อถอน แล้วรอ toast</li><li>เบราว์เซอร์พนักงาน refresh อีกครั้ง สังเกตเมนู</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>กดมอบ → toast "มอบ compliance แล้ว" ชิปเปลี่ยนเป็นแบบติด (กรอบทึบ) ทันที ไม่ต้อง refresh ฝั่ง admin</li><li>ฝั่งพนักงาน refresh แล้วมีเมนู "เอกสารกฎหมาย" และ "บัญชีพนักงาน" เพิ่มขึ้น — มีผลทันที ไม่ต้อง deploy</li><li>กดถอน → toast "ถอน compliance แล้ว" ชิปกลับเป็นเส้นประ</li><li>ฝั่งพนักงาน refresh แล้วเมนูสองอันหายไป เหลือเมนูตาม role cs เดิม</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 Story 1.5 + 1.6 · FR15 (TKH-100)</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>กดมอบ → toast "มอบ compliance แล้ว" ชิปเปลี่ยนเป็นแบบติด (กรอบทึบ) ทันที ไม่ต้อง refresh ฝั่ง admin</li><li>ฝั่งพนักงาน refresh แล้วมีเมนู "เอกสารกฎหมาย" "บัญชีพนักงาน" และ "บันทึกสิทธิ์" เพิ่มขึ้น — มีผลทันที ไม่ต้อง deploy</li><li>กดถอน → toast "ถอน compliance แล้ว" ชิปกลับเป็นเส้นประ</li><li>ฝั่งพนักงาน refresh แล้วเมนูสามอันหายไป เหลือเมนูตาม role cs เดิม</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 Story 1.5 + 1.6 · FR15 (TKH-100)</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -842,7 +842,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Precondition</h4><ul><li>บัญชี admin</li><li>บัญชีพนักงานทดสอบที่มี role อย่างน้อย 1 ตัว (ไม่ใช่บัญชี admin ที่ใช้เทส)</li></ul></div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) แล้วเข้าสู่ระบบด้วยบัญชี admin ไปที่เมนู "บัญชีพนักงาน"</li><li>ที่การ์ดพนักงานทดสอบ กด "เอาออกจากทีมงาน" แล้วดู toast และการ์ด</li><li>เปิดเบราว์เซอร์ที่สอง ล็อกอินด้วยบัญชีพนักงานคนนั้น แล้วดูเมนูด้านซ้าย</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>toast "เอาออกจากทีมงานแล้ว — ยัง login ได้ในฐานะผู้ใช้ทั่วไป"</li><li>การ์ดคนนั้น: ชิป role ดับทุกตัว และขึ้น badge "ไม่มีสิทธิ์แล้ว" · ปุ่ม "เอาออกจากทีมงาน" หายไป (ไม่มี role ให้ถอน)</li><li>เจ้าตัวยังล็อกอินได้ปกติ เห็นเฉพาะเมนูลูกค้าทั่วไป ("แดชบอร์ด" "บริการ" "ดาวน์โหลด") ไม่มีเมนูพนักงาน</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 Story 1.5 · FR15</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>toast "เอาออกจากทีมงานแล้ว — ยัง login ได้ในฐานะผู้ใช้ทั่วไป"</li><li>การ์ดคนนั้น: ชิป role ดับทุกตัว และขึ้น badge "ไม่มีสิทธิ์แล้ว" · ปุ่ม "เอาออกจากทีมงาน" หายไป (ไม่มี role ให้ถอน)</li><li>เจ้าตัวยังล็อกอินได้ปกติ เห็นเฉพาะเมนูลูกค้าทั่วไป ("แดชบอร์ด" "บริการ" "ดาวน์โหลด" "Affiliate") ไม่มีเมนูพนักงาน</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 Story 1.5 · FR15</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -955,14 +955,14 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 <tr class="trow" data-feat="m2a" data-level="ui" data-prio="P0" data-kind="permission" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">M2-A.9</td>
-  <td class="ctitle">role compliance เปิด /staff ได้แบบอ่านอย่างเดียว: มีแถบบอกสิทธิ์ ไม่มีฟอร์มสร้าง/ปุ่มจัดการ ชิปกดไม่ได้พร้อมเหตุผลใน tooltip <span class="kd kd-perm">Permission</span></td>
+  <td class="ctitle">role compliance เปิด /admin/staff ได้แบบอ่านอย่างเดียว: มีแถบบอกสิทธิ์ ไม่มีฟอร์มสร้าง/ปุ่มจัดการ ชิปกดไม่ได้พร้อมเหตุผลใน tooltip <span class="kd kd-perm">Permission</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
   <td class="status" data-uid="tc-7009"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-7009"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">role compliance เปิด /staff ได้แบบอ่านอย่างเดียว: มีแถบบอกสิทธิ์ ไม่มีฟอร์มสร้าง/ปุ่มจัดการ ชิปกดไม่ได้พร้อมเหตุผลใน tooltip</div>
+  <div class="h-title">role compliance เปิด /admin/staff ได้แบบอ่านอย่างเดียว: มีแถบบอกสิทธิ์ ไม่มีฟอร์มสร้าง/ปุ่มจัดการ ชิปกดไม่ได้พร้อมเหตุผลใน tooltip</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Permission</b> <span class="hint">(role ไหนทำได้ / ทำไม่ได้)</span> · MVP-2 · A</div>
   <div class="sec"><h4>Precondition</h4><ul><li>บัญชีพนักงาน role compliance (ไม่มี role admin) — ให้ admin มอบไว้ก่อนตาม M2-A.3</li></ul></div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) แล้วเข้าสู่ระบบด้วยบัญชี compliance</li><li>กดเมนู "บัญชีพนักงาน" แล้วอ่านแถบเตือนเหนือรายชื่อ</li><li>มองหาฟอร์ม "สร้างบัญชีพนักงาน" และปุ่ม "สุ่มรหัสผ่านใหม่" / "เอาออกจากทีมงาน" ในการ์ดรายชื่อ</li><li>เอาเมาส์ชี้ชิป role ของพนักงานคนหนึ่ง อ่าน tooltip แล้วลองกด</li></ol></div>
@@ -1050,19 +1050,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="featrow" data-featkey="authz-ui"><td colspan="7">📁 authz-ui · หน้าจอตามสิทธิ์จริง — เมนูตาม role · ปุ่มล็อกบอกเหตุผล · หน้า 403 <span class="rp"><span class="lv lvl-ui">🌐 5</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="authz-ui"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
 <tr class="trow" data-feat="m2a" data-level="ui" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">M2-A.12</td>
-  <td class="ctitle">เมนู sidebar กรองตามสิทธิ์จริง: ลูกค้าเห็น 3 เมนูฐาน · cs เพิ่ม "ตรวจสลิป" · admin เห็นครบรวม "เอกสารกฎหมาย" + "บัญชีพนักงาน" <span class="kd kd-happy">Happy Path</span></td>
+  <td class="ctitle">เมนู sidebar กรองตามสิทธิ์จริง: ลูกค้าเห็น 4 เมนูฐาน · cs ได้กลุ่ม "คอนโซลพนักงาน" · admin เห็นครบทุกเมนู <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
   <td class="status" data-uid="tc-7012"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-7012"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">เมนู sidebar กรองตามสิทธิ์จริง: ลูกค้าเห็น 3 เมนูฐาน · cs เพิ่ม "ตรวจสลิป" · admin เห็นครบรวม "เอกสารกฎหมาย" + "บัญชีพนักงาน"</div>
+  <div class="h-title">เมนู sidebar กรองตามสิทธิ์จริง: ลูกค้าเห็น 4 เมนูฐาน · cs ได้กลุ่ม "คอนโซลพนักงาน" · admin เห็นครบทุกเมนู</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · MVP-2 · A</div>
   <div class="sec"><h4>Precondition</h4><ul><li>บัญชีลูกค้า · บัญชี CS (role cs) · บัญชี admin</li></ul></div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) แล้วเข้าสู่ระบบด้วยบัญชีลูกค้า จดเมนูด้านซ้ายทั้งหมด แล้วออกจากระบบ</li><li>เข้าสู่ระบบด้วยบัญชี CS จดเมนูทั้งหมด แล้วออกจากระบบ</li><li>เข้าสู่ระบบด้วยบัญชี admin จดเมนูทั้งหมด แล้วเทียบสามชุด</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ลูกค้า: เห็นเฉพาะ "แดชบอร์ด" "บริการ" "ดาวน์โหลด" (+ "ขอความช่วยเหลือ" ที่มีทุกคน) — ไม่มีเมนูพนักงานสักอัน</li><li>CS: เพิ่ม "ตรวจสลิป" · ไม่มี "เอกสารกฎหมาย" และ "บัญชีพนักงาน"</li><li>admin: เห็นครบ "ตรวจสลิป" "เอกสารกฎหมาย" "บัญชีพนักงาน"</li><li>ไม่มีบัญชีใดเห็นเมนู "Admin" (ปิดชั่วคราว — ดู M1-H.1)</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 Story 1.6 · FR15 (TKH-76/100)</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ลูกค้า: เห็นเฉพาะ "แดชบอร์ด" "บริการ" "ดาวน์โหลด" "Affiliate" (+ "คู่มือการใช้งาน" และ "ขอความช่วยเหลือ" ท้ายเมนูที่มีทุกคน) — ไม่มีเมนูพนักงานและหัวข้อกลุ่ม "คอนโซลพนักงาน" สักอัน</li><li>CS: เพิ่มกลุ่ม "คอนโซลพนักงาน" = "ตรวจสลิป" · "เนื้อหาหน้าเว็บ" · "โค้ดส่วนลด" (content:read/promotion:read ของ role cs) · ไม่มี "เอกสารกฎหมาย" "บัญชีพนักงาน" "บันทึกสิทธิ์"</li><li>admin: เห็นครบ "ตรวจสลิป" "เอกสารกฎหมาย" "เนื้อหาหน้าเว็บ" "บัญชีพนักงาน" "โค้ดส่วนลด" "ภาษีและค่าธรรมเนียม" "บันทึกสิทธิ์"</li><li>ไม่มีบัญชีใดเห็นเมนู "Admin" (ปิดชั่วคราว — ดู M1-H.1)</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 Story 1.6 · FR15 (TKH-76/100)</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1090,7 +1090,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">ปุ่มที่ไม่มีสิทธิ์แสดงแบบล็อกพร้อมเหตุผล ไม่ถูกซ่อน: คลิก/กด Enter ขึ้นคำเตือนเดียวกัน กดรัวไม่ต่อคิว toast</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · MVP-2 · A</div>
-  <div class="sec"><h4>Precondition</h4><ul><li>บัญชี admin (ใช้ปุ่มล็อกในแถวตัวเองของหน้า /staff เป็นตัวแทนพฤติกรรม)</li></ul></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>บัญชี admin (ใช้ปุ่มล็อกในแถวตัวเองของหน้า /admin/staff เป็นตัวแทนพฤติกรรม)</li></ul></div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) แล้วเข้าสู่ระบบด้วยบัญชี admin ไปที่เมนู "บัญชีพนักงาน" แล้วหาการ์ดตัวเอง ("(คุณ)")</li><li>คลิกปุ่ม "เอาออกจากทีมงาน" ที่แสดงแบบจาง อ่านคำเตือนที่ขึ้น</li><li>กด Tab จนโฟกัสไปถึงปุ่มเดิม แล้วกด Enter และ Space</li><li>คลิกปุ่มเดิมรัว ๆ หลายครั้งติดกัน นับจำนวน toast</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ปุ่มยังมองเห็นอยู่ (ไม่ถูกซ่อน) แต่จางและเมาส์เป็นรูปห้าม — คลิกแล้วขึ้นคำเตือนบอกเหตุผลภาษาไทยว่าทำไมทำไม่ได้</li><li>ใช้คีย์บอร์ด (Enter/Space) ได้ผลเดียวกับคลิก และหน้าไม่เลื่อนเองตอนกด Space</li><li>กดรัวแล้วคำเตือนทับใบเดิม ไม่ต่อคิวเป็นหลายใบ</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 Story 1.6 AC2 · UX-DR9 · FR15</div></div>
@@ -1122,7 +1122,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="h-title">สิทธิ์ถูกถอนขณะเปิดหน้าค้างไว้: ปุ่มเดิมยังกดได้แต่ server ปฏิเสธ · refresh แล้วหน้าปรับตามสิทธิ์ที่เหลือ</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Permission</b> <span class="hint">(role ไหนทำได้ / ทำไม่ได้)</span> · MVP-2 · A</div>
   <div class="sec"><h4>Precondition</h4><ul><li>บัญชี admin 2 บัญชี (A และ B) · เบราว์เซอร์ 2 ตัว</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เบราว์เซอร์แรก: เปิดเว็บ TAKRA Hub (UAT) เข้าสู่ระบบด้วย admin A แล้วเปิดหน้า "บัญชีพนักงาน" ทิ้งไว้ (ห้าม refresh)</li><li>เบราว์เซอร์ที่สอง: เข้าสู่ระบบด้วย admin B ไปหน้า "บัญชีพนักงาน" แล้วกดชิป "admin" ในการ์ดของ A เพื่อถอน</li><li>กลับเบราว์เซอร์แรก (ยังไม่ refresh) กดชิปมอบ role ให้พนักงานคนใดคนหนึ่ง สังเกตผล</li><li>refresh หน้า /staff ของ A แล้วดูว่าหน้าเป็นแบบไหน</li></ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เบราว์เซอร์แรก: เปิดเว็บ TAKRA Hub (UAT) เข้าสู่ระบบด้วย admin A แล้วเปิดหน้า "บัญชีพนักงาน" ทิ้งไว้ (ห้าม refresh)</li><li>เบราว์เซอร์ที่สอง: เข้าสู่ระบบด้วย admin B ไปหน้า "บัญชีพนักงาน" แล้วกดชิป "admin" ในการ์ดของ A เพื่อถอน</li><li>กลับเบราว์เซอร์แรก (ยังไม่ refresh) กดชิปมอบ role ให้พนักงานคนใดคนหนึ่ง สังเกตผล</li><li>refresh หน้า /admin/staff ของ A แล้วดูว่าหน้าเป็นแบบไหน</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>หน้าที่เปิดค้างของ A ยังแสดงปุ่ม/ชิปกดได้ตามสิทธิ์เก่า (ยอมรับได้ — UI เป็นแค่เครื่องสำอาง)</li><li>กดมอบ role แล้วถูกปฏิเสธ ขึ้นข้อความผิดพลาด — ไม่มีการมอบสิทธิ์เกิดขึ้นจริง (ฝั่ง B ตรวจซ้ำได้ว่าชิปไม่เปลี่ยน)</li><li>refresh แล้วหน้าของ A เปลี่ยนตามสิทธิ์ที่เหลือ — ไม่มี role ที่อ่านรายชื่อได้ = เจอหน้า "ไม่มีสิทธิ์เข้าถึง"</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 Story 1.6 AC4 · FR15/FR17</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
@@ -1143,19 +1143,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 <tr class="trow" data-feat="m2a" data-level="ui" data-prio="P0" data-kind="permission" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">M2-A.15</td>
-  <td class="ctitle">ลูกค้า/cs เข้า /staff และ /legal-admin ตรง ๆ ทาง URL → หน้า "ไม่มีสิทธิ์เข้าถึง" (403) พร้อมปุ่ม "กลับสู่แดชบอร์ด" <span class="kd kd-perm">Permission</span></td>
+  <td class="ctitle">ลูกค้า/cs เข้า /admin/staff และ /admin/legal ตรง ๆ ทาง URL → หน้า "ไม่มีสิทธิ์เข้าถึง" (403) พร้อมปุ่ม "กลับสู่แดชบอร์ด" <span class="kd kd-perm">Permission</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
   <td class="status" data-uid="tc-7015"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-7015"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">ลูกค้า/cs เข้า /staff และ /legal-admin ตรง ๆ ทาง URL → หน้า "ไม่มีสิทธิ์เข้าถึง" (403) พร้อมปุ่ม "กลับสู่แดชบอร์ด"</div>
+  <div class="h-title">ลูกค้า/cs เข้า /admin/staff และ /admin/legal ตรง ๆ ทาง URL → หน้า "ไม่มีสิทธิ์เข้าถึง" (403) พร้อมปุ่ม "กลับสู่แดชบอร์ด"</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Permission</b> <span class="hint">(role ไหนทำได้ / ทำไม่ได้)</span> · MVP-2 · A</div>
   <div class="sec"><h4>Precondition</h4><ul><li>บัญชีลูกค้า และบัญชี CS (role cs)</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) แล้วเข้าสู่ระบบด้วยบัญชีลูกค้า</li><li>พิมพ์ URL /staff เข้าไปตรง ๆ แล้วพิมพ์ /legal-admin ต่อ</li><li>กดปุ่ม "กลับสู่แดชบอร์ด" หนึ่งครั้ง</li><li>ออกจากระบบ แล้วทำซ้ำทั้งสอง URL ด้วยบัญชี CS</li></ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) แล้วเข้าสู่ระบบด้วยบัญชีลูกค้า</li><li>พิมพ์ URL /admin/staff เข้าไปตรง ๆ แล้วพิมพ์ /admin/legal ต่อ</li><li>กดปุ่ม "กลับสู่แดชบอร์ด" หนึ่งครั้ง</li><li>ออกจากระบบ แล้วทำซ้ำทั้งสอง URL ด้วยบัญชี CS</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ทั้ง /staff และ /legal-admin ขึ้นหน้า "ไม่มีสิทธิ์เข้าถึง" ข้อความ "คุณไม่มีสิทธิ์เข้าถึงหน้านี้ (403) — หากคิดว่าเป็นข้อผิดพลาด กรุณาติดต่อผู้ดูแลระบบ" — ไม่ใช่หน้าขาว/error 500</li><li>ปุ่ม "กลับสู่แดชบอร์ด" พากลับหน้าแดชบอร์ดได้</li><li>บัญชี CS ได้ผลเดียวกันทั้งสองหน้า (role cs ไม่ถือสิทธิ์ authz:role:read / legal:read_versions)</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 Story 1.4/1.6 · FR15 (TKH-48 forbidden.tsx)</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ทั้ง /admin/staff และ /admin/legal ขึ้นหน้า "ไม่มีสิทธิ์เข้าถึง" ข้อความ "คุณไม่มีสิทธิ์เข้าถึงหน้านี้ (403) — หากคิดว่าเป็นข้อผิดพลาด กรุณาติดต่อผู้ดูแลระบบ" — ไม่ใช่หน้าขาว/error 500</li><li>ปุ่ม "กลับสู่แดชบอร์ด" พากลับหน้าแดชบอร์ดได้</li><li>บัญชี CS ได้ผลเดียวกันทั้งสองหน้า (role cs ไม่ถือสิทธิ์ authz:role:read / legal:read_versions)</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 Story 1.4/1.6 · FR15 (TKH-48 forbidden.tsx)</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1209,19 +1209,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="featrow" data-featkey="legal-admin"><td colspan="7">📁 legal-admin · หน้า "เอกสารกฎหมาย" (/legal-admin) — publish เวอร์ชันใหม่ · ย้อนกลับ · ผลต่อ consent gate <span class="rp"><span class="lv lvl-ui">🌐 8</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="legal-admin"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
 <tr class="trow" data-feat="m2l" data-level="ui" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">M2-L.1</td>
-  <td class="ctitle">เปิดหน้า "เอกสารกฎหมาย (Terms / Privacy)" เห็นสองการ์ดครบ: badge active · ช่องเนื้อหา Markdown · version · ตัวอย่าง · ประวัติเวอร์ชัน <span class="kd kd-happy">Happy Path</span></td>
+  <td class="ctitle">เปิดหน้า "เอกสารกฎหมาย" เห็นแท็บ Terms/Privacy ครบ: ป้าย "ใช้อยู่" · ช่องเนื้อหา Markdown · version ใหม่ · ตัวอย่าง · ประวัติเวอร์ชัน <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
   <td class="status" data-uid="tc-7017"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-7017"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">เปิดหน้า "เอกสารกฎหมาย (Terms / Privacy)" เห็นสองการ์ดครบ: badge active · ช่องเนื้อหา Markdown · version · ตัวอย่าง · ประวัติเวอร์ชัน</div>
+  <div class="h-title">เปิดหน้า "เอกสารกฎหมาย" เห็นแท็บ Terms/Privacy ครบ: ป้าย "ใช้อยู่" · ช่องเนื้อหา Markdown · version ใหม่ · ตัวอย่าง · ประวัติเวอร์ชัน</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · MVP-2 · L</div>
   <div class="sec"><h4>Precondition</h4><ul><li>บัญชี admin (หรือพนักงาน role compliance)</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) แล้วเข้าสู่ระบบด้วยบัญชี admin</li><li>กดเมนู "เอกสารกฎหมาย" แล้วอ่านหัวเรื่องและคำอธิบายใต้หัวเรื่อง</li><li>ไล่ดูการ์ด "ข้อกำหนดการใช้งาน (Terms)" และ "นโยบายความเป็นส่วนตัว (Privacy)": badge มุมขวา ช่องเนื้อหา ช่อง version ปุ่มต่าง ๆ และรายการประวัติ</li><li>พิมพ์ข้อความ Markdown สั้น ๆ เพิ่มในช่องเนื้อหา ดูกล่อง "ตัวอย่าง" แล้วกด "ซ่อนตัวอย่าง" และ "ดูตัวอย่าง" สลับกัน (อย่ากด Publish)</li></ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) แล้วเข้าสู่ระบบด้วยบัญชี admin</li><li>กดเมนู "เอกสารกฎหมาย" แล้วอ่านหัวเรื่องและคำอธิบายใต้หัวเรื่อง</li><li>สลับแท็บ "ข้อกำหนดการใช้งาน" / "นโยบายความเป็นส่วนตัว": ป้าย "ใช้อยู่" ช่อง "เนื้อหา (Markdown)" ช่อง "version ใหม่" ปุ่ม "Publish" และการ์ด "ประวัติเวอร์ชัน"</li><li>พิมพ์ข้อความ Markdown สั้น ๆ เพิ่มในช่องเนื้อหา ดูบล็อก "ตัวอย่างที่ลูกค้าจะเห็น" แล้วกด "ซ่อน" และ "แสดงตัวอย่าง" สลับกัน (อย่ากด Publish)</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>หัวเรื่อง "เอกสารกฎหมาย (Terms / Privacy)" + คำอธิบายว่าแก้แล้ว "เปลี่ยนทันทีบนหน้าเว็บ ไม่ต้อง deploy" และ "publish เวอร์ชันใหม่ = user เดิมต้องยอมรับใหม่ (consent gate)"</li><li>แต่ละการ์ดมี badge "active: &lt;เวอร์ชัน&gt;" (หรือ "ยังไม่มี active") · ช่อง "เนื้อหา (Markdown)" แสดงเนื้อหาเวอร์ชัน active · ช่อง "version ใหม่ (ISO date)" placeholder 2026-07-28 · ปุ่ม "Publish"</li><li>กล่อง "ตัวอย่าง" render Markdown ตามที่พิมพ์แบบสด · ปุ่มสลับ "ดูตัวอย่าง"/"ซ่อนตัวอย่าง" ทำงาน</li><li>"ประวัติเวอร์ชัน" เรียงเวอร์ชันพร้อมป้าย active และมีคำเตือนผลของการย้อนกลับต่อผู้ใช้</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 Story 1.7 · NOFR8 (TKH-77/39)</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>หัวเรื่อง "เอกสารกฎหมาย" + คำอธิบาย "แก้เนื้อหา (Markdown) แล้ว publish — เปลี่ยนทันทีบนหน้าเว็บ ไม่ต้อง deploy · publish เวอร์ชันใหม่ = ผู้ใช้เดิมต้องกดยอมรับใหม่ (consent gate)"</li><li>มีแท็บ "ข้อกำหนดการใช้งาน" / "นโยบายความเป็นส่วนตัว" (แสดงทีละฉบับ) · ฉบับที่เปิดมีป้าย "ใช้อยู่: &lt;เวอร์ชัน&gt;" (หรือ "ยังไม่มีเวอร์ชันที่ใช้อยู่") · ช่อง "เนื้อหา (Markdown)" แสดงเนื้อหาเวอร์ชันที่ใช้อยู่ · ช่อง "version ใหม่" placeholder 2026-07-28 · ปุ่ม "Publish"</li><li>บล็อก "ตัวอย่างที่ลูกค้าจะเห็น" เรนเดอร์ Markdown ตามที่พิมพ์แบบสดคู่กับช่องพิมพ์ · ปุ่มสลับ "แสดงตัวอย่าง"/"ซ่อน" ทำงาน · แก้เนื้อหาแล้วขึ้นป้าย "แก้ไขแล้วยังไม่ publish"</li><li>"ประวัติเวอร์ชัน (N)" เรียงเวอร์ชันพร้อม "publish เมื่อ &lt;วันที่&gt;" ป้าย "ใช้อยู่" ปุ่ม "ย้อนกลับมาใช้เวอร์ชันนี้" และคำเตือนผลของการย้อนกลับต่อผู้ใช้</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 Story 1.7 · NOFR8 (TKH-77/39)</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1240,20 +1240,20 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 <tr class="trow" data-feat="m2l" data-level="ui" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">M2-L.2</td>
-  <td class="ctitle">publish Terms เวอร์ชันใหม่ → toast สำเร็จ badge เปลี่ยน หน้า /terms อัปเดตทันที และเวอร์ชันเดิมยังอยู่ในประวัติ <span class="kd kd-happy">Happy Path</span></td>
+  <td class="ctitle">publish Terms เวอร์ชันใหม่ → toast สำเร็จ ป้าย "ใช้อยู่" เปลี่ยน หน้า /terms อัปเดตทันที และเวอร์ชันเดิมยังอยู่ในประวัติ <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
   <td class="status" data-uid="tc-7018"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-7018"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">publish Terms เวอร์ชันใหม่ → toast สำเร็จ badge เปลี่ยน หน้า /terms อัปเดตทันที และเวอร์ชันเดิมยังอยู่ในประวัติ</div>
+  <div class="h-title">publish Terms เวอร์ชันใหม่ → toast สำเร็จ ป้าย "ใช้อยู่" เปลี่ยน หน้า /terms อัปเดตทันที และเวอร์ชันเดิมยังอยู่ในประวัติ</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · MVP-2 · L</div>
   <div class="sec"><h4>Precondition</h4><ul><li>บัญชี admin หรือ compliance</li><li>จดเวอร์ชันที่ active อยู่ก่อนเริ่ม (จาก badge)</li></ul></div>
   <div class="sec"><h4>Test Data</h4><ul><li>version ใหม่ = วันที่วันนี้รูปแบบ YYYY-MM-DD · บรรทัดทดสอบ: "(ทดสอบ UAT &lt;วันเวลา&gt;)"</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) แล้วเข้าสู่ระบบด้วยบัญชี admin ไปที่เมนู "เอกสารกฎหมาย"</li><li>ที่การ์ด "ข้อกำหนดการใช้งาน (Terms)" เติมบรรทัดทดสอบต่อท้ายช่อง "เนื้อหา (Markdown)" และกรอก "version ใหม่ (ISO date)" เป็นวันที่วันนี้</li><li>ตรวจกล่อง "ตัวอย่าง" ว่าแสดงบรรทัดใหม่ แล้วกด "Publish"</li><li>ดู badge และ "ประวัติเวอร์ชัน" หลังสำเร็จ</li><li>เปิดแท็บใหม่ไปหน้า /terms ดูเนื้อหาและบรรทัด "เวอร์ชัน: …"</li></ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) แล้วเข้าสู่ระบบด้วยบัญชี admin ไปที่เมนู "เอกสารกฎหมาย"</li><li>ที่แท็บ "ข้อกำหนดการใช้งาน" เติมบรรทัดทดสอบต่อท้ายช่อง "เนื้อหา (Markdown)" และกรอก "version ใหม่" เป็นวันที่วันนี้</li><li>ตรวจบล็อก "ตัวอย่างที่ลูกค้าจะเห็น" ว่าแสดงบรรทัดใหม่ แล้วกด "Publish"</li><li>ดูป้าย "ใช้อยู่" และ "ประวัติเวอร์ชัน" หลังสำเร็จ</li><li>เปิดแท็บใหม่ไปหน้า /terms ดูเนื้อหาและบรรทัด "เวอร์ชัน …"</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ระหว่างส่งปุ่มเป็น "กำลัง publish…" · สำเร็จแล้ว toast "publish สำเร็จ — เนื้อหาบนหน้าเว็บอัปเดตแล้ว" และช่อง version ถูกล้าง</li><li>badge เปลี่ยนเป็น "active: &lt;เวอร์ชันใหม่&gt;" · "ประวัติเวอร์ชัน" ยังมีเวอร์ชันเดิมอยู่ (ไม่ถูกลบ) พร้อมปุ่ม "ย้อนกลับมาใช้เวอร์ชันนี้"</li><li>หน้า /terms แสดงบรรทัดทดสอบที่เพิ่ม และ "เวอร์ชัน: &lt;เวอร์ชันใหม่&gt;" ทันทีโดยไม่ต้อง deploy</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 Story 1.7 AC1 · NOFR8 (TKH-77)</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ระหว่างส่งปุ่มเป็น "กำลัง publish…" · สำเร็จแล้ว toast "publish สำเร็จ — เนื้อหาบนหน้าเว็บอัปเดตแล้ว" และช่อง version ถูกล้าง</li><li>ป้ายเปลี่ยนเป็น "ใช้อยู่: &lt;เวอร์ชันใหม่&gt;" · "ประวัติเวอร์ชัน" ยังมีเวอร์ชันเดิมอยู่ (ไม่ถูกลบ) พร้อมปุ่ม "ย้อนกลับมาใช้เวอร์ชันนี้"</li><li>หน้า /terms แสดงบรรทัดทดสอบที่เพิ่ม และ "เวอร์ชัน &lt;เวอร์ชันใหม่&gt;" ทันทีโดยไม่ต้อง deploy</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 Story 1.7 AC1 · NOFR8 (TKH-77)</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1303,19 +1303,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 <tr class="trow" data-feat="m2l" data-level="ui" data-prio="P1" data-kind="happy" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">M2-L.4</td>
-  <td class="ctitle">ย้อนกลับเวอร์ชันเก่า: กล่องยืนยันเตือนผลกระทบ → active กลับเป็นเวอร์ชันเก่า /terms เปลี่ยนตาม และลูกค้าเจอ consent gate อีกรอบ <span class="kd kd-happy">Happy Path</span></td>
+  <td class="ctitle">ย้อนกลับเวอร์ชันเก่า: กล่องยืนยันเตือนผลกระทบ → ป้าย "ใช้อยู่" กลับเป็นเวอร์ชันเก่า /terms เปลี่ยนตาม และลูกค้าเจอ consent gate อีกรอบ <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
   <td class="status" data-uid="tc-7020"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-7020"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">ย้อนกลับเวอร์ชันเก่า: กล่องยืนยันเตือนผลกระทบ → active กลับเป็นเวอร์ชันเก่า /terms เปลี่ยนตาม และลูกค้าเจอ consent gate อีกรอบ</div>
+  <div class="h-title">ย้อนกลับเวอร์ชันเก่า: กล่องยืนยันเตือนผลกระทบ → ป้าย "ใช้อยู่" กลับเป็นเวอร์ชันเก่า /terms เปลี่ยนตาม และลูกค้าเจอ consent gate อีกรอบ</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · MVP-2 · L</div>
   <div class="sec"><h4>Precondition</h4><ul><li>ทำ M2-L.2 แล้ว — Terms มีอย่างน้อย 2 เวอร์ชันในประวัติ</li><li>บัญชีลูกค้าที่เพิ่งยอมรับเวอร์ชันล่าสุดไปแล้ว (จาก M2-L.3)</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) แล้วเข้าสู่ระบบด้วยบัญชี admin ไปที่เมนู "เอกสารกฎหมาย" ดู "ประวัติเวอร์ชัน" ของ Terms</li><li>กด "ย้อนกลับมาใช้เวอร์ชันนี้" ที่เวอร์ชันเก่า อ่านกล่องยืนยัน แล้วกดยกเลิก (Cancel) หนึ่งรอบ</li><li>กดปุ่มเดิมอีกครั้ง คราวนี้กดตกลง (OK)</li><li>ดู badge/ประวัติ แล้วเปิด /terms ในแท็บใหม่</li><li>ให้ลูกค้าที่ยอมรับเวอร์ชันล่าสุดไปแล้ว refresh หน้าแอป</li></ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) แล้วเข้าสู่ระบบด้วยบัญชี admin ไปที่เมนู "เอกสารกฎหมาย" ดู "ประวัติเวอร์ชัน" ของ Terms</li><li>กด "ย้อนกลับมาใช้เวอร์ชันนี้" ที่เวอร์ชันเก่า อ่านกล่องยืนยัน แล้วกด "ไม่ใช่ตอนนี้" หนึ่งรอบ</li><li>กดปุ่มเดิมอีกครั้ง คราวนี้กด "ยืนยันย้อนกลับ"</li><li>ดูป้าย "ใช้อยู่"/ประวัติ แล้วเปิด /terms ในแท็บใหม่</li><li>ให้ลูกค้าที่ยอมรับเวอร์ชันล่าสุดไปแล้ว refresh หน้าแอป</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>กล่องยืนยันถาม "ย้อนกลับไปใช้เวอร์ชัน …?" พร้อมเตือน "ผู้ใช้ที่ยอมรับเวอร์ชันใหม่ไปแล้วจะต้องกดยอมรับใหม่ทุกคน" · กดยกเลิกแล้วไม่มีอะไรเปลี่ยน</li><li>ยืนยันแล้ว toast "ย้อนกลับไปเวอร์ชัน … แล้ว" badge เป็น "active: &lt;เวอร์ชันเก่า&gt;" · เวอร์ชันที่ถูกแทนยังอยู่ในประวัติ ไม่หาย</li><li>หน้า /terms แสดงเนื้อหา + "เวอร์ชัน: &lt;เวอร์ชันเก่า&gt;"</li><li>ลูกค้า refresh แล้วเจอ "ก่อนเริ่มใช้งาน" อีกรอบ — เป็นพฤติกรรมที่ตั้งใจ ไม่ใช่บั๊ก</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 Story 1.7 AC3 · NOFR8 (TKH-77)</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>กล่องยืนยันถาม "ย้อนกลับไปใช้เวอร์ชัน …?" พร้อมเตือน "ผู้ใช้ที่ยอมรับเวอร์ชันใหม่ไปแล้วจะต้องกดยอมรับใหม่ทุกคน" และปุ่ม "ไม่ใช่ตอนนี้" / "ยืนยันย้อนกลับ" · กด "ไม่ใช่ตอนนี้" แล้วไม่มีอะไรเปลี่ยน</li><li>ยืนยันแล้ว toast "ย้อนกลับไปเวอร์ชัน … แล้ว" ป้ายเป็น "ใช้อยู่: &lt;เวอร์ชันเก่า&gt;" · เวอร์ชันที่ถูกแทนยังอยู่ในประวัติ ไม่หาย</li><li>หน้า /terms แสดงเนื้อหา + "เวอร์ชัน &lt;เวอร์ชันเก่า&gt;"</li><li>ลูกค้า refresh แล้วเจอ "ก่อนเริ่มใช้งาน" อีกรอบ — เป็นพฤติกรรมที่ตั้งใจ ไม่ใช่บั๊ก</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 Story 1.7 AC3 · NOFR8 (TKH-77)</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1344,9 +1344,9 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="h-title">publish โดย version ว่าง / เนื้อหาว่าง / version ซ้ำกับ active → toast เตือนสามแบบ และไม่มีการ publish</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Validation</b> <span class="hint">(format · required · character · length)</span> · MVP-2 · L</div>
   <div class="sec"><h4>Precondition</h4><ul><li>บัญชี admin</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) แล้วเข้าสู่ระบบด้วยบัญชี admin ไปที่เมนู "เอกสารกฎหมาย" การ์ด "นโยบายความเป็นส่วนตัว (Privacy)"</li><li>เว้นช่อง "version ใหม่ (ISO date)" ว่างไว้ แล้วกด "Publish"</li><li>กรอก version ใหม่ แต่ลบช่อง "เนื้อหา (Markdown)" จนว่าง แล้วกด "Publish"</li><li>กด refresh ให้เนื้อหากลับมา แล้วกรอก version ให้ตรงกับเลขใน badge "active: …" เป๊ะ กด "Publish"</li><li>ดู badge และประวัติว่าไม่มีอะไรเปลี่ยน</li></ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) แล้วเข้าสู่ระบบด้วยบัญชี admin ไปที่เมนู "เอกสารกฎหมาย" แท็บ "นโยบายความเป็นส่วนตัว"</li><li>เว้นช่อง "version ใหม่" ว่างไว้ แล้วกด "Publish"</li><li>กรอก version ใหม่ แต่ลบช่อง "เนื้อหา (Markdown)" จนว่าง แล้วกด "Publish"</li><li>กด refresh ให้เนื้อหากลับมา แล้วกรอก version ให้ตรงกับเลขบนป้าย "ใช้อยู่: …" เป๊ะ กด "Publish"</li><li>ดูป้าย "ใช้อยู่" และประวัติว่าไม่มีอะไรเปลี่ยน</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>version ว่าง → toast "กรุณาระบุ version (เช่น 2026-07-28)"</li><li>เนื้อหาว่าง → toast "เนื้อหาว่าง"</li><li>version ซ้ำกับ active → toast "version ซ้ำกับที่ active อยู่ — ตั้งเวอร์ชันใหม่"</li><li>ทั้งสามกรณีไม่มีการ publish — badge และ "ประวัติเวอร์ชัน" เท่าเดิม</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 Story 1.7 AC2 · NOFR8</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>version ว่าง → toast "กรุณาระบุ version (เช่น 2026-07-28)"</li><li>เนื้อหาว่าง → toast "เนื้อหาว่าง"</li><li>version ซ้ำกับ active → toast "version ซ้ำกับที่ active อยู่ — ตั้งเวอร์ชันใหม่"</li><li>ทั้งสามกรณีไม่มีการ publish — ป้าย "ใช้อยู่" และ "ประวัติเวอร์ชัน" เท่าเดิม</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 Story 1.7 AC2 · NOFR8</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1396,20 +1396,20 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 <tr class="trow" data-feat="m2l" data-level="ui" data-prio="P0" data-kind="permission" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">M2-L.7</td>
-  <td class="ctitle">role compliance ครบวง: เห็นเมนู "เอกสารกฎหมาย" + "บัญชีพนักงาน" (ไม่มี "ตรวจสลิป") และ publish ได้เองโดยไม่ต้องพึ่ง admin/dev <span class="kd kd-perm">Permission</span></td>
+  <td class="ctitle">role compliance ครบวง: เห็นเมนู "เอกสารกฎหมาย" + "บัญชีพนักงาน" + "บันทึกสิทธิ์" (ไม่มี "ตรวจสลิป") และ publish ได้เองโดยไม่ต้องพึ่ง admin/dev <span class="kd kd-perm">Permission</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
   <td class="status" data-uid="tc-7023"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-7023"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">role compliance ครบวง: เห็นเมนู "เอกสารกฎหมาย" + "บัญชีพนักงาน" (ไม่มี "ตรวจสลิป") และ publish ได้เองโดยไม่ต้องพึ่ง admin/dev</div>
+  <div class="h-title">role compliance ครบวง: เห็นเมนู "เอกสารกฎหมาย" + "บัญชีพนักงาน" + "บันทึกสิทธิ์" (ไม่มี "ตรวจสลิป") และ publish ได้เองโดยไม่ต้องพึ่ง admin/dev</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Permission</b> <span class="hint">(role ไหนทำได้ / ทำไม่ได้)</span> · MVP-2 · L</div>
   <div class="sec"><h4>Precondition</h4><ul><li>บัญชีพนักงาน role compliance ล้วน (ไม่มี admin) — ให้ admin มอบไว้ก่อน</li></ul></div>
   <div class="sec"><h4>Test Data</h4><ul><li>version ใหม่ = วันที่วันนี้ YYYY-MM-DD</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) แล้วเข้าสู่ระบบด้วยบัญชี compliance จดเมนูด้านซ้ายทั้งหมด</li><li>กดเมนู "เอกสารกฎหมาย" แล้ว publish เวอร์ชันใหม่ของ Privacy (แก้เนื้อหาเล็กน้อย + version วันนี้)</li><li>กดเมนู "บัญชีพนักงาน" ดูว่าหน้าเป็นโหมดไหน</li><li>พิมพ์ URL /cs/payments เข้าไปตรง ๆ</li></ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) แล้วเข้าสู่ระบบด้วยบัญชี compliance จดเมนูด้านซ้ายทั้งหมด</li><li>กดเมนู "เอกสารกฎหมาย" แล้ว publish เวอร์ชันใหม่ของ Privacy (แก้เนื้อหาเล็กน้อย + version วันนี้)</li><li>กดเมนู "บัญชีพนักงาน" ดูว่าหน้าเป็นโหมดไหน</li><li>พิมพ์ URL /admin/payments เข้าไปตรง ๆ (path เดิม /cs/payments ถูก redirect มาที่นี่)</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>เมนูของ compliance: มี "เอกสารกฎหมาย" และ "บัญชีพนักงาน" · ไม่มี "ตรวจสลิป"</li><li>publish สำเร็จด้วยตัวเอง toast "publish สำเร็จ — เนื้อหาบนหน้าเว็บอัปเดตแล้ว" — ไม่ต้องให้ admin/dev ทำแทน</li><li>หน้า "บัญชีพนักงาน" เปิดได้แบบอ่านอย่างเดียว (แถบเตือนตาม M2-A.9)</li><li>/cs/payments ขึ้น "ไม่มีสิทธิ์เข้าถึง" (403)</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 Story 1.7 AC1/AC4 · NOFR8 · FR15</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>เมนูของ compliance: มี "เอกสารกฎหมาย" "บัญชีพนักงาน" และ "บันทึกสิทธิ์" · ไม่มี "ตรวจสลิป"</li><li>publish สำเร็จด้วยตัวเอง toast "publish สำเร็จ — เนื้อหาบนหน้าเว็บอัปเดตแล้ว" — ไม่ต้องให้ admin/dev ทำแทน</li><li>หน้า "บัญชีพนักงาน" เปิดได้แบบอ่านอย่างเดียว (แถบเตือนตาม M2-A.9)</li><li>/admin/payments ขึ้น "ไม่มีสิทธิ์เข้าถึง" (403)</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 Story 1.7 AC1/AC4 · NOFR8 · FR15</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1438,9 +1438,9 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="h-title">publish ด้วยเลข version ที่ซ้ำกับเวอร์ชันเก่าในประวัติ (ไม่ใช่ active) → ถูกระบบปฏิเสธ ไม่เกิดเวอร์ชันซ้ำ</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Data</b> <span class="hint">(empty · null · duplicate · existing · non-existing)</span> · MVP-2 · L</div>
   <div class="sec"><h4>Precondition</h4><ul><li>บัญชี admin</li><li>Terms มีอย่างน้อย 2 เวอร์ชันในประวัติ (จาก M2-L.2/L.4)</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) แล้วเข้าสู่ระบบด้วยบัญชี admin ไปที่เมนู "เอกสารกฎหมาย" ดู "ประวัติเวอร์ชัน" ของ Terms จดเลขเวอร์ชันเก่าที่ไม่ใช่ active</li><li>กรอก "version ใหม่ (ISO date)" เป็นเลขเวอร์ชันเก่านั้น และแก้เนื้อหาเล็กน้อย</li><li>กด "Publish" แล้วอ่านผล</li><li>ดู badge และ "ประวัติเวอร์ชัน"</li></ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) แล้วเข้าสู่ระบบด้วยบัญชี admin ไปที่เมนู "เอกสารกฎหมาย" ดู "ประวัติเวอร์ชัน" ของ Terms จดเลขเวอร์ชันเก่าที่ไม่ใช่ active</li><li>กรอก "version ใหม่" เป็นเลขเวอร์ชันเก่านั้น และแก้เนื้อหาเล็กน้อย</li><li>กด "Publish" แล้วอ่านผล</li><li>ดูป้าย "ใช้อยู่" และ "ประวัติเวอร์ชัน"</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ถูกปฏิเสธ — ขึ้นข้อความผิดพลาดจากระบบ (สเปก: duplicate_version) ไม่ใช่ publish สำเร็จ</li><li>badge active ไม่เปลี่ยน และ "ประวัติเวอร์ชัน" ไม่มีเลขเวอร์ชันซ้ำสองแถว</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 Story 1.7 AC2 · NOFR8</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ถูกปฏิเสธ — ขึ้นข้อความผิดพลาดจากระบบ (สเปก: duplicate_version) ไม่ใช่ publish สำเร็จ</li><li>ป้าย "ใช้อยู่" ไม่เปลี่ยน และ "ประวัติเวอร์ชัน" ไม่มีเลขเวอร์ชันซ้ำสองแถว</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 Story 1.7 AC2 · NOFR8</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1708,7 +1708,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Data</h4><ul><li>—</li></ul></div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) แล้วไปที่หน้า "แพ็กเกจและราคา" โดยยังไม่ต้องเข้าสู่ระบบ</li><li>เลื่อนดูหมายเหตุใต้ตารางราคา แล้วอ่านข้อความกำกับเรื่อง VAT</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>มีข้อความ "ราคายังไม่รวม VAT · รายปีลด 2 เดือน (~17%) ทุก tier · ฟีเจอร์บางส่วน (M2/M3) ตาม roadmap" กำกับไว้</li><li>ราคาบนการ์ดแต่ละ tier แสดงเป็นสกุลบาท (฿) อ่านชัดเจน</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 Story 2.1 · FR19</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>มีข้อความ "ราคายังไม่รวมภาษีมูลค่าเพิ่ม · รายปีลด 2 เดือน (~17%) ทุก tier" กำกับใต้ตาราง และเมื่อระบบเปิดเก็บ VAT จริง ใต้ราคาแต่ละการ์ดมีหมายเหตุ "ราคายังไม่รวมภาษีมูลค่าเพิ่ม" ด้วย (TKH-203/219)</li><li>ราคาบนการ์ดแต่ละ tier แสดงเป็นสกุลบาท (฿) อ่านชัดเจน</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 Story 2.1 · FR19</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1740,7 +1740,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Data</h4><ul><li>แพ็กเกจแบบชำระเงิน 1 รายการ · จดยอดทุกจุดไว้เทียบ</li></ul></div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) แล้วเข้าสู่ระบบด้วยบัญชีลูกค้า (เจ้าของทีม)</li><li>ไปที่เมนู "บริการ" กด "เลือกซื้อ" แล้วจดราคาที่แสดงในกล่อง "ยืนยันการสั่งซื้อ" ก่อนกดยืนยัน</li><li>ที่หน้าชำระเงิน ดู "ยอดที่ต้องโอน" แล้วเทียบกับที่จดไว้</li><li>สลับบัญชี CS เปิดเมนูตรวจสลิป หารายการนี้ด้วยรหัสอ้างอิง แล้วเทียบยอดจุดที่สาม</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ยอดทั้งสามจุด (กล่องยืนยัน · หน้าชำระเงิน · ฝั่ง CS) ตรงกันทุกสตางค์</li><li>"ยอดที่ต้องโอน" แสดงแบบทศนิยม 2 ตำแหน่ง (เช่น ฿12,000.00) พร้อมปุ่ม "คัดลอก"</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 Story 2.1 · FR19 NOFR7</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ยอดทั้งสามจุด (กล่องยืนยัน · หน้าชำระเงิน · ฝั่ง CS ที่หัว "ราคารวมทั้งหมด") ตรงกันทุกสตางค์</li><li>"ยอดที่ต้องโอน" แสดงแบบทศนิยม 2 ตำแหน่ง (เช่น ฿12,000.00) พร้อมปุ่ม "คัดลอก"</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 Story 2.1 · FR19 NOFR7</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -2194,20 +2194,20 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="featrow" data-featkey="affiliate-hub"><td colspan="7">📁 affiliate-hub · การ์ดโปรแกรมผู้แนะนำบนโปรไฟล์ · ลิงก์ชวนสมัคร/พอร์ทัลนักขาย · ผูกยอดตอนสมัคร (?ref) <span class="rp"><span class="lv lvl-ui">🌐 9</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="affiliate-hub"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
 <tr class="trow" data-feat="m2x" data-level="ui" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">M2-X.1</td>
-  <td class="ctitle">โปรไฟล์: การ์ด "โปรแกรมผู้แนะนำ" กด "สมัครเป็นผู้แนะนำ" → ส่งใบสมัครสำเร็จ ป้ายเปลี่ยนเป็น "รออนุมัติ" <span class="kd kd-happy">Happy Path</span></td>
+  <td class="ctitle">หน้า "Affiliate": การ์ด "สถานะการสมัคร" กด "สมัครเป็น Affiliate" → ส่งใบสมัครสำเร็จ ป้ายเปลี่ยนเป็น "รออนุมัติ" <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
   <td class="status" data-uid="tc-7047"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-7047"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">โปรไฟล์: การ์ด "โปรแกรมผู้แนะนำ" กด "สมัครเป็นผู้แนะนำ" → ส่งใบสมัครสำเร็จ ป้ายเปลี่ยนเป็น "รออนุมัติ"</div>
+  <div class="h-title">หน้า "Affiliate": การ์ด "สถานะการสมัคร" กด "สมัครเป็น Affiliate" → ส่งใบสมัครสำเร็จ ป้ายเปลี่ยนเป็น "รออนุมัติ"</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · MVP-2 · X</div>
   <div class="sec"><h4>Precondition</h4><ul><li>บัญชีลูกค้า (เจ้าของทีม) ที่ยังไม่เคยสมัครเป็นผู้แนะนำ</li></ul></div>
   <div class="sec"><h4>Test Data</h4><ul><li>บัญชีมีชื่อ-นามสกุลในโปรไฟล์ครบ (Hub ส่งชื่อและอีเมลไปเปิดบัญชีให้)</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) แล้วเข้าสู่ระบบด้วยบัญชีลูกค้าที่ยังไม่เคยสมัครผู้แนะนำ</li><li>ไปที่หน้าโปรไฟล์ เลื่อนหาการ์ด "โปรแกรมผู้แนะนำ" (คำโปรย "แนะนำ TAKRA ให้คนอื่นแล้วรับค่าตอบแทน")</li><li>กด "สมัครเป็นผู้แนะนำ" สังเกตปุ่มระหว่างส่งและ toast ที่ขึ้น</li><li>ดูป้ายสถานะและข้อความบนการ์ดหลังสมัครเสร็จ</li></ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) แล้วเข้าสู่ระบบด้วยบัญชีลูกค้าที่ยังไม่เคยสมัครผู้แนะนำ</li><li>กดเมนู "Affiliate" ที่แถบเมนูด้านซ้าย (ย้ายออกจากหน้าโปรไฟล์แล้ว — #376) แล้วดูการ์ด "สถานะการสมัคร" (คำโปรย "แนะนำ TAKRA ให้คนอื่นแล้วรับค่าตอบแทน" อยู่ที่หัวหน้า)</li><li>กด "สมัครเป็น Affiliate" สังเกตปุ่มระหว่างส่งและ toast ที่ขึ้น</li><li>ดูป้ายสถานะและข้อความบนการ์ดหลังสมัครเสร็จ</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ระหว่างส่ง ปุ่มเปลี่ยนเป็น "กำลังส่งใบสมัคร…" และกดซ้ำไม่ได้</li><li>ได้ toast "ส่งใบสมัครแล้ว — รอแพลตฟอร์มพันธมิตรอนุมัติ" (ถ้าพันธมิตรอนุมัติทันทีจะเป็น "สมัครสำเร็จ — ใช้รหัสผู้แนะนำได้เลย")</li><li>การ์ดแสดงป้าย "รออนุมัติ" พร้อมคำอธิบายว่ารหัสผู้แนะนำจะออกให้เมื่ออนุมัติแล้ว และจะมีอีเมลบอกวิธีตั้งรหัสผ่านครั้งแรก</li><li>ไม่ต้องออกไปกรอกฟอร์มที่เว็บพันธมิตรเอง</li></ul><div class="hint" style="margin-top:6px">ที่มา: mvp2-scope-draft §1 · TKH-97</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ระหว่างส่ง ปุ่มเปลี่ยนเป็น "กำลังส่งใบสมัคร…" และกดซ้ำไม่ได้</li><li>ได้ toast "ส่งใบสมัครแล้ว — รอแพลตฟอร์มพันธมิตรอนุมัติ" (ถ้าพันธมิตรอนุมัติทันทีจะเป็น "สมัครสำเร็จ — ใช้รหัส Affiliate ได้เลย")</li><li>การ์ดแสดงป้าย "รออนุมัติ" พร้อมคำอธิบายว่ารหัส Affiliate จะออกให้เมื่ออนุมัติแล้ว และจะมีอีเมลบอกวิธีตั้งรหัสผ่านครั้งแรก</li><li>ไม่ต้องออกไปกรอกฟอร์มที่เว็บพันธมิตรเอง</li></ul><div class="hint" style="margin-top:6px">ที่มา: mvp2-scope-draft §1 · TKH-97</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -2226,20 +2226,20 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 <tr class="trow" data-feat="m2x" data-level="ui" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">M2-X.2</td>
-  <td class="ctitle">บัญชีที่อนุมัติแล้ว: เห็น "รหัสผู้แนะนำของคุณ" + "ลิงก์ชวนสมัคร (ประกอบรหัสให้แล้ว)" คัดลอกได้ครบไม่ถูกตัดท้าย <span class="kd kd-happy">Happy Path</span></td>
+  <td class="ctitle">บัญชีที่อนุมัติแล้ว: เห็น "รหัส Affiliate ของคุณ" + "ลิงก์ชวนลูกค้าซื้อ" + "ลิงก์ชวนเพื่อนเข้าทีม" คัดลอกได้ครบไม่ถูกตัดท้าย <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
   <td class="status" data-uid="tc-7048"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-7048"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">บัญชีที่อนุมัติแล้ว: เห็น "รหัสผู้แนะนำของคุณ" + "ลิงก์ชวนสมัคร (ประกอบรหัสให้แล้ว)" คัดลอกได้ครบไม่ถูกตัดท้าย</div>
+  <div class="h-title">บัญชีที่อนุมัติแล้ว: เห็น "รหัส Affiliate ของคุณ" + "ลิงก์ชวนลูกค้าซื้อ" + "ลิงก์ชวนเพื่อนเข้าทีม" คัดลอกได้ครบไม่ถูกตัดท้าย</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · MVP-2 · X</div>
   <div class="sec"><h4>Precondition</h4><ul><li>บัญชีที่สมัครผู้แนะนำแล้วและได้รับอนุมัติ (การ์ดแสดงป้าย "ใช้งานได้")</li></ul></div>
   <div class="sec"><h4>Test Data</h4><ul><li>notepad/ช่องข้อความสำหรับวางค่าเทียบ</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) แล้วเข้าสู่ระบบด้วยบัญชีผู้แนะนำที่อนุมัติแล้ว</li><li>ไปที่หน้าโปรไฟล์ ดูการ์ด "โปรแกรมผู้แนะนำ" ว่ามีแถวรหัสและแถวลิงก์ครบ</li><li>กด "คัดลอก" ท้ายแถว "รหัสผู้แนะนำของคุณ" แล้ววางลง notepad เทียบกับที่แสดง</li><li>กด "คัดลอก" ท้ายแถว "ลิงก์ชวนสมัคร (ประกอบรหัสให้แล้ว)" แล้ววางเทียบว่าได้ URL เต็ม</li></ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) แล้วเข้าสู่ระบบด้วยบัญชีผู้แนะนำที่อนุมัติแล้ว</li><li>ไปที่เมนู "Affiliate" ดูการ์ด "รหัสและลิงก์แนะนำของคุณ" ว่ามีแถวรหัสและลิงก์ครบ</li><li>กด "คัดลอก" ท้ายแถว "รหัส Affiliate ของคุณ" แล้ววางลง notepad เทียบกับที่แสดง</li><li>กด "คัดลอก" ท้ายแถว "ลิงก์ชวนเพื่อนเข้าทีม" และ "ลิงก์ชวนลูกค้าซื้อ" แล้ววางเทียบว่าได้ URL เต็ม</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>การ์ดแสดงป้าย "ใช้งานได้" พร้อมแถว "รหัสผู้แนะนำของคุณ" และ "ลิงก์ชวนสมัคร (ประกอบรหัสให้แล้ว)"</li><li>ลิงก์เป็นรูปแบบ https://…/register?ref=&lt;รหัส&gt; และแสดงเต็มแบบตัดขึ้นบรรทัดใหม่ ไม่ถูกตัดท้ายด้วย … (TKH-107)</li><li>กด "คัดลอก" แล้วปุ่มเปลี่ยนเป็น "คัดลอกแล้ว" ครู่หนึ่ง (~1.5 วินาที) และค่าที่วางออกมาครบตรงกับของจริงทุกตัวอักษร</li><li>ถ้าเบราว์เซอร์คัดลอกอัตโนมัติไม่ได้ (เช่น webview) จะมี toast "คัดลอกอัตโนมัติไม่ได้ — กดค้างที่ข้อความเพื่อเลือกแล้วคัดลอกเอง"</li></ul><div class="hint" style="margin-top:6px">ที่มา: mvp2-scope-draft §1 · TKH-106 TKH-107</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>การ์ด "รหัสและลิงก์แนะนำของคุณ" แสดงป้าย "ใช้งานได้" พร้อมแถว "รหัส Affiliate ของคุณ" · "ลิงก์ชวนลูกค้าซื้อ" · "ลิงก์ชวนเพื่อนเข้าทีม" (TKH-180)</li><li>"ลิงก์ชวนเพื่อนเข้าทีม" เป็นรูปแบบ https://…/register?ref=&lt;รหัส&gt; · "ลิงก์ชวนลูกค้าซื้อ" พก ?ref=&lt;รหัสเดียวกัน&gt; และแสดงเต็มแบบตัดขึ้นบรรทัดใหม่ ไม่ถูกตัดท้ายด้วย … (TKH-107)</li><li>กด "คัดลอก" แล้วปุ่มเปลี่ยนเป็น "คัดลอกแล้ว" ครู่หนึ่ง (~1.5 วินาที) และค่าที่วางออกมาครบตรงกับของจริงทุกตัวอักษร</li><li>ถ้าเบราว์เซอร์คัดลอกอัตโนมัติไม่ได้ (เช่น webview) จะมี toast "คัดลอกอัตโนมัติไม่ได้ — กดค้างที่ข้อความเพื่อเลือกแล้วคัดลอกเอง"</li></ul><div class="hint" style="margin-top:6px">ที่มา: mvp2-scope-draft §1 · TKH-106 TKH-107</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -2258,18 +2258,18 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 <tr class="trow" data-feat="m2x" data-level="ui" data-prio="P1" data-kind="happy" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">M2-X.3</td>
-  <td class="ctitle">กด "เปิดหน้านักขายของฉัน" → เปิดแท็บใหม่เข้าพอร์ทัลแพลตฟอร์มพันธมิตรให้ทันทีโดยไม่ต้องกรอกรหัสผ่านซ้ำ <span class="kd kd-happy">Happy Path</span></td>
+  <td class="ctitle">กด "เปิดหน้า Affiliate ของฉัน" → เปิดแท็บใหม่เข้าพอร์ทัลแพลตฟอร์มพันธมิตรให้ทันทีโดยไม่ต้องกรอกรหัสผ่านซ้ำ <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
   <td class="status" data-uid="tc-7049"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-7049"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">กด "เปิดหน้านักขายของฉัน" → เปิดแท็บใหม่เข้าพอร์ทัลแพลตฟอร์มพันธมิตรให้ทันทีโดยไม่ต้องกรอกรหัสผ่านซ้ำ</div>
+  <div class="h-title">กด "เปิดหน้า Affiliate ของฉัน" → เปิดแท็บใหม่เข้าพอร์ทัลแพลตฟอร์มพันธมิตรให้ทันทีโดยไม่ต้องกรอกรหัสผ่านซ้ำ</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · MVP-2 · X</div>
   <div class="sec"><h4>Precondition</h4><ul><li>บัญชีผู้แนะนำที่อนุมัติแล้ว (ป้าย "ใช้งานได้")</li></ul></div>
   <div class="sec"><h4>Test Data</h4><ul><li>—</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) แล้วเข้าสู่ระบบด้วยบัญชีผู้แนะนำที่อนุมัติแล้ว</li><li>ไปที่หน้าโปรไฟล์ การ์ด "โปรแกรมผู้แนะนำ" แล้วกด "เปิดหน้านักขายของฉัน"</li><li>สังเกตปุ่มระหว่างรอ และแท็บใหม่ที่เปิดขึ้น</li></ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) แล้วเข้าสู่ระบบด้วยบัญชีผู้แนะนำที่อนุมัติแล้ว</li><li>ไปที่เมนู "Affiliate" แล้วกด "เปิดหน้า Affiliate ของฉัน" ที่การ์ด "รหัสและลิงก์แนะนำของคุณ"</li><li>สังเกตปุ่มระหว่างรอ และแท็บใหม่ที่เปิดขึ้น</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ระหว่างรอ ปุ่มแสดง "กำลังเปิด…"</li><li>เปิดแท็บใหม่ไปยังพอร์ทัลนักขายของแพลตฟอร์มพันธมิตรและเข้าสู่ระบบให้อัตโนมัติ</li><li>ใต้ปุ่มมีคำอธิบาย "เปิดแท็บใหม่ไปยังแพลตฟอร์มพันธมิตร · ครั้งแรกที่จะแก้บัญชีธนาคารหรือขอถอนเงิน ระบบจะให้ตั้ง/ยืนยันรหัสผ่านของคุณก่อน"</li></ul><div class="hint" style="margin-top:6px">ที่มา: mvp2-scope-draft §1 · TKH-97</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
@@ -2301,9 +2301,9 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · MVP-2 · X</div>
   <div class="sec"><h4>Precondition</h4><ul><li>มีลิงก์ชวนสมัครจากบัญชีผู้แนะนำที่อนุมัติแล้ว (จากเคส M2-X.2)</li><li>บัญชี CS (role cs) สำหรับตรวจผล</li></ul></div>
   <div class="sec"><h4>Test Data</h4><ul><li>อีเมลใหม่: qa+ref&lt;วันที่&gt;@realfactory.co.th · ลิงก์ ?ref= ของผู้แนะนำ</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์หน้าต่างใหม่แบบไม่ระบุตัวตน วางลิงก์ชวนสมัคร (?ref=…) แล้วเปิด</li><li>สมัครสมาชิกด้วยอีเมลใหม่ โดยปล่อยช่อง "รหัสผู้แนะนำ (ถ้ามี)" ว่างไว้</li><li>ใช้บัญชีใหม่นี้กดสั่งซื้อแพ็กเกจ 1 รายการ (ถึงขั้นสร้างรายการชำระเงิน)</li><li>สลับบัญชี CS เปิดเมนูตรวจสลิป เข้าดูรายละเอียดรายการนั้น แล้วดูแถว "Affiliate ref"</li></ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์หน้าต่างใหม่แบบไม่ระบุตัวตน วางลิงก์ชวนสมัคร (?ref=…) แล้วเปิด</li><li>สมัครสมาชิกด้วยอีเมลใหม่ โดยไม่แก้ช่อง "รหัสแนะนำ (ถ้ามี)" ที่ถูกเติมรหัสให้จากลิงก์</li><li>ใช้บัญชีใหม่นี้กดสั่งซื้อแพ็กเกจ 1 รายการ (ถึงขั้นสร้างรายการชำระเงิน)</li><li>สลับบัญชี CS เปิดเมนูตรวจสลิป เข้าดูรายละเอียดรายการนั้น แล้วดูแถว "Affiliate ref"</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>หน้าสมัครเปิดได้ปกติ — ช่องรหัสผู้แนะนำไม่ถูกเติมให้เห็น (ระบบจำรหัสจากลิงก์ไว้ฝั่งระบบเอง 30 วัน)</li><li>สมัครสำเร็จโดยไม่ต้องกรอกรหัสเอง</li><li>ฝั่ง CS รายละเอียดรายการชำระเงินแสดง "Affiliate ref" เป็นรหัสของผู้แนะนำ (ไม่ใช่ "—") — ยืนยันว่าผูกยอดสำเร็จ</li></ul><div class="hint" style="margin-top:6px">ที่มา: mvp2-scope-draft §1 · TKH-97</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>หน้าสมัครเปิดได้ปกติ — ช่อง "รหัสแนะนำ (ถ้ามี)" ถูกเติมรหัสจากลิงก์ให้เห็น (prefill) และระบบยังจำ last-click ไว้ฝั่งเซิร์ฟเวอร์อีกชั้น</li><li>สมัครสำเร็จโดยไม่ต้องกรอกรหัสเอง</li><li>ฝั่ง CS รายละเอียดรายการชำระเงินแสดง "Affiliate ref" เป็นรหัสของผู้แนะนำ (ไม่ใช่ "—") — ยืนยันว่าผูกยอดสำเร็จ</li></ul><div class="hint" style="margin-top:6px">ที่มา: mvp2-scope-draft §1 · TKH-97</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -2322,20 +2322,20 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 <tr class="trow" data-feat="m2x" data-level="ui" data-prio="P1" data-kind="validation" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">M2-X.5</td>
-  <td class="ctitle">กรอกรหัสผู้แนะนำผิดรูปแบบตอนสมัคร → ถูกเตือนชัดเจน ไม่ปล่อยผ่านเงียบ ๆ จนเสีย attribution <span class="kd kd-val">Validation</span></td>
+  <td class="ctitle">กรอกรหัสแนะนำผิดรูปแบบตอนสมัคร → ถูกเตือนชัดเจน ไม่ปล่อยผ่านเงียบ ๆ จนเสีย attribution <span class="kd kd-val">Validation</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
   <td class="status" data-uid="tc-7051"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-7051"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">กรอกรหัสผู้แนะนำผิดรูปแบบตอนสมัคร → ถูกเตือนชัดเจน ไม่ปล่อยผ่านเงียบ ๆ จนเสีย attribution</div>
+  <div class="h-title">กรอกรหัสแนะนำผิดรูปแบบตอนสมัคร → ถูกเตือนชัดเจน ไม่ปล่อยผ่านเงียบ ๆ จนเสีย attribution</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Validation</b> <span class="hint">(format · required · character · length)</span> · MVP-2 · X</div>
   <div class="sec"><h4>Precondition</h4><ul><li>ยังไม่เข้าสู่ระบบ — ใช้หน้า "สมัครสมาชิก"</li></ul></div>
   <div class="sec"><h4>Test Data</h4><ul><li>ค่าไม่ถูกรูปแบบ: TK-97@!# · ค่ายาวเกิน: ตัวอักษร 40 ตัว</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) แล้วไปหน้า "สมัครสมาชิก" กรอกชื่อ นามสกุล อีเมลใหม่ และรหัสผ่านให้ครบ</li><li>ที่ช่อง "รหัสผู้แนะนำ (ถ้ามี)" กรอกค่าที่มีอักขระพิเศษ เช่น TK-97@!#</li><li>ติ๊กยอมรับข้อกำหนด แล้วกดปุ่มสมัคร สังเกตข้อความเตือน</li><li>แก้รหัสให้ถูกรูปแบบหรือลบทิ้ง แล้วสมัครต่อ</li></ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) แล้วไปหน้า "สมัครสมาชิก" กรอกชื่อ นามสกุล อีเมลใหม่ เบอร์โทร และรหัสผ่านให้ครบ</li><li>ที่ช่อง "รหัสแนะนำ (ถ้ามี)" กรอกค่าที่มีอักขระพิเศษ เช่น TK-97@!#</li><li>ติ๊กยอมรับข้อกำหนด แล้วกดปุ่มสมัคร สังเกตข้อความเตือน</li><li>แก้รหัสให้ถูกรูปแบบหรือลบทิ้ง แล้วสมัครต่อ</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ขึ้นข้อความ "รหัสผู้แนะนำไม่ถูกต้อง (ตัวอักษร/ตัวเลข/. _ - ไม่เกิน 32 ตัว)" และยังไม่สมัครให้</li><li>ช่องพิมพ์ได้สูงสุด 32 ตัวอักษร (ส่วนเกินถูกตัดตั้งแต่ตอนพิมพ์)</li><li>แก้รหัสให้ถูกหรือเว้นว่างแล้วสมัครสำเร็จตามปกติ</li></ul><div class="hint" style="margin-top:6px">ที่มา: mvp2-scope-draft §1 · TKH-97</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ขึ้นข้อความ "รหัสแนะนำไม่ถูกต้อง (ตัวอักษร/ตัวเลข/. _ - ไม่เกิน 32 ตัว)" และยังไม่สมัครให้</li><li>ช่องพิมพ์ได้สูงสุด 32 ตัวอักษร (ส่วนเกินถูกตัดตั้งแต่ตอนพิมพ์)</li><li>แก้รหัสให้ถูกหรือเว้นว่างแล้วสมัครสำเร็จตามปกติ</li></ul><div class="hint" style="margin-top:6px">ที่มา: mvp2-scope-draft §1 · TKH-97</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -2418,20 +2418,20 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 <tr class="trow" data-feat="m2x" data-level="ui" data-prio="P1" data-kind="data" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">M2-X.8</td>
-  <td class="ctitle">พิมพ์รหัสผู้แนะนำในฟอร์มสมัคร: รหัสจริงเห็นชื่อเจ้าของรหัส · รหัสไม่มีจริงเห็น "ไม่พบรหัสนี้ — ตรวจสอบอีกครั้ง" <span class="kd kd-data">Data</span></td>
+  <td class="ctitle">พิมพ์รหัสแนะนำในฟอร์มสมัคร: รหัสจริงเห็นชื่อเจ้าของรหัส · รหัสไม่มีจริงเห็น "ไม่พบรหัสนี้ — ตรวจสอบอีกครั้ง" <span class="kd kd-data">Data</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
   <td class="status" data-uid="tc-7054"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-7054"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">พิมพ์รหัสผู้แนะนำในฟอร์มสมัคร: รหัสจริงเห็นชื่อเจ้าของรหัส · รหัสไม่มีจริงเห็น "ไม่พบรหัสนี้ — ตรวจสอบอีกครั้ง"</div>
+  <div class="h-title">พิมพ์รหัสแนะนำในฟอร์มสมัคร: รหัสจริงเห็นชื่อเจ้าของรหัส · รหัสไม่มีจริงเห็น "ไม่พบรหัสนี้ — ตรวจสอบอีกครั้ง"</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Data</b> <span class="hint">(empty · null · duplicate · existing · non-existing)</span> · MVP-2 · X</div>
-  <div class="sec"><h4>Precondition</h4><ul><li>ยังไม่เข้าสู่ระบบ — ใช้หน้า "สมัครสมาชิก"</li><li>มีรหัสผู้แนะนำที่ใช้งานได้จริง 1 รหัส</li></ul></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>ยังไม่เข้าสู่ระบบ — ใช้หน้า "สมัครสมาชิก"</li><li>มีรหัส Affiliate ที่ใช้งานได้จริง 1 รหัส</li></ul></div>
   <div class="sec"><h4>Test Data</h4><ul><li>รหัสจริง 1 รหัส · รหัสมั่วถูกรูปแบบ: TK-ZZZZZZZZZZ</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) ไปหน้า "สมัครสมาชิก" แล้วดูช่อง "รหัสผู้แนะนำ (ถ้ามี)" (ตัวอย่างในช่อง "เช่น TK-YXA7814RYQ")</li><li>พิมพ์รหัสจริงให้ครบทั้งรหัส แล้วรอข้อความใต้ช่องเปลี่ยน</li><li>ลบทิ้ง แล้วพิมพ์รหัสที่ถูกรูปแบบแต่ไม่มีอยู่จริง (เช่น TK-ZZZZZZZZZZ) แล้วสังเกต</li><li>ลบเหลือ 1–2 ตัวอักษร สังเกตว่าระบบยังไม่เช็ค</li></ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) ไปหน้า "สมัครสมาชิก" แล้วดูช่อง "รหัสแนะนำ (ถ้ามี)" (ตัวอย่างในช่อง "เช่น TK-YXA7814RYQ")</li><li>พิมพ์รหัสจริงให้ครบทั้งรหัส แล้วรอข้อความใต้ช่องเปลี่ยน</li><li>ลบทิ้ง แล้วพิมพ์รหัสที่ถูกรูปแบบแต่ไม่มีอยู่จริง (เช่น TK-ZZZZZZZZZZ) แล้วสังเกต</li><li>ลบเหลือ 1–2 ตัวอักษร สังเกตว่าระบบยังไม่เช็ค</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ระหว่างเช็คขึ้น "กำลังตรวจสอบรหัส…" แล้วเปลี่ยนเป็น "ผู้แนะนำ: &lt;ชื่อเจ้าของรหัส&gt;" เมื่อพบ</li><li>รหัสไม่มีจริงขึ้น "ไม่พบรหัสนี้ — ตรวจสอบอีกครั้ง" โดยไม่บล็อกการสมัคร</li><li>พิมพ์ยังไม่ถึง 3 ตัวอักษร ระบบยังไม่เช็คและไม่มีข้อความใด</li></ul><div class="hint" style="margin-top:6px">ที่มา: mvp2-scope-draft §1 · TKH-97</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ระหว่างเช็คขึ้น "กำลังตรวจสอบรหัส…" แล้วเปลี่ยนเป็น "ผู้แนะนำ: &lt;ชื่อเจ้าของรหัส&gt;" เมื่อพบ</li><li>รหัสไม่มีจริงขึ้น "ไม่พบรหัสนี้ — ตรวจสอบอีกครั้ง หรือติ๊กเพื่อยืนยันว่าจะใช้รหัสนี้" — กดสมัครต่อได้เมื่อติ๊กยืนยัน (TKH-112)</li><li>พิมพ์ยังไม่ถึง 3 ตัวอักษร ระบบยังไม่เช็คและไม่มีข้อความใด</li></ul><div class="hint" style="margin-top:6px">ที่มา: mvp2-scope-draft §1 · TKH-97</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -3537,9 +3537,9 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · MVP-2 · G</div>
   <div class="sec"><h4>Precondition</h4><ul><li>บัญชีลูกค้า (เจ้าของทีม) · ทีมมีแพ็กเกจที่ได้ที่นั่งมากกว่า 1 และยังมีที่นั่งว่างอย่างน้อย 1</li></ul></div>
   <div class="sec"><h4>Test Data</h4><ul><li>ทีมที่มีแพ็กเกจหลายที่นั่ง เช่น ทีมหลักของบัญชีลูกค้า UAT</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) แล้วเข้าสู่ระบบด้วยบัญชีลูกค้า (เจ้าของทีม) เปิดตัวสลับทีมมุมล่างซ้าย กด "ตั้งค่าทีม"</li><li>จดตัวเลข "ใช้ไป N จาก M ที่นั่ง" ที่การ์ด "ที่นั่ง (Seats)" ไว้ก่อน</li><li>กด "เชิญสมาชิก" เลือก "เชิญเป็น role" = "สมาชิก" กด "สร้างลิงก์เชิญ" แล้วกด "เสร็จสิ้น" (ยังไม่ต้องให้ใครเปิดลิงก์)</li><li>ดูตัวเลขที่นั่งและแถบความคืบหน้าอีกครั้ง</li><li>ที่การ์ด "ลิงก์เชิญที่ค้างอยู่ (1)" กด "ยกเลิก" ของลิงก์นั้น แล้วสังเกตตัวเลขที่นั่งอีกรอบ</li></ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) แล้วเข้าสู่ระบบด้วยบัญชีลูกค้า (เจ้าของทีม) เปิดตัวสลับทีมมุมล่างซ้าย กด "ตั้งค่าทีม"</li><li>จดตัวเลข "N / M ที่นั่ง" (ตัวเลขใหญ่) และบรรทัด "เหลืออีก X ที่นั่ง" ที่การ์ด "ที่นั่ง (Seats)" ไว้ก่อน</li><li>กด "เชิญสมาชิก" เลือก "เชิญเป็น role" = "สมาชิก" กด "สร้างลิงก์เชิญ" แล้วกด "เสร็จสิ้น" (ยังไม่ต้องให้ใครเปิดลิงก์)</li><li>ดูตัวเลขที่นั่งและแถบความคืบหน้าอีกครั้ง</li><li>ที่การ์ด "ลิงก์เชิญที่ค้างอยู่ (1)" กด "ยกเลิก" ของลิงก์นั้น แล้วสังเกตตัวเลขที่นั่งอีกรอบ</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>สร้างลิงก์เสร็จ ตัวเลขเปลี่ยนเป็น "ใช้ไป N+1 จาก M ที่นั่ง" ทันที ทั้งที่ยังไม่มีใครตอบรับ — คำเชิญที่ค้างถูกนับเป็นที่นั่งด้วย</li><li>แถบความคืบหน้าของที่นั่งยาวขึ้นตามจำนวนที่จอง</li><li>กด "ยกเลิก" แล้ว toast "ยกเลิก invite แล้ว" ลิงก์หายจากรายการ และตัวเลขกลับมาเป็น "ใช้ไป N จาก M ที่นั่ง" เท่าเดิม</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 7 Story 7.2 · Story 7.4 · NOFR1 · UX-DR12</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>สร้างลิงก์เสร็จ ตัวเลขเปลี่ยนเป็น "N+1 / M ที่นั่ง" ทันที ทั้งที่ยังไม่มีใครตอบรับ — คำเชิญที่ค้างถูกนับเป็นที่นั่งด้วย</li><li>แถบความคืบหน้าของที่นั่งยาวขึ้นตามจำนวนที่จอง</li><li>กด "ยกเลิก" แล้ว toast "ยกเลิก invite แล้ว" ลิงก์หายจากรายการ และตัวเลขกลับมาเป็น "N / M ที่นั่ง" เท่าเดิม</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 7 Story 7.2 · Story 7.4 · NOFR1 · UX-DR12</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -3695,7 +3695,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Boundary</b> <span class="hint">(min · max · ก่อนขอบ · ตรงขอบ · เกินขอบ)</span> · MVP-2 · G</div>
   <div class="sec"><h4>Precondition</h4><ul><li>ทีมที่แพ็กเกจหลายที่นั่ง (เช่น 5 ที่นั่ง) เพิ่งหมดอายุและยังอยู่ในช่วงผ่อนผัน (grace) · ทีมมีสมาชิกมากกว่า 1 คน — อาจต้องให้ทีม dev เตรียมทีมสภาพนี้บน UAT</li></ul></div>
   <div class="sec"><h4>Test Data</h4><ul><li>ทีมแพ็กเกจ 5 ที่นั่ง สมาชิก 3 คน ที่เพิ่งหมดอายุ (อยู่ใน grace)</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) แล้วเข้าสู่ระบบด้วยบัญชีลูกค้า (เจ้าของทีมที่อยู่ในช่วงผ่อนผัน) เปิดตัวสลับทีมเลือกทีมนั้น แล้วเปิด "ตั้งค่าทีม"</li><li>อ่านตัวเลข "ใช้ไป N จาก M ที่นั่ง" ที่การ์ด "ที่นั่ง (Seats)"</li><li>ไล่ดูการ์ด "สมาชิก (N)" ว่ารายชื่อครบทุกคนหรือไม่</li></ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) แล้วเข้าสู่ระบบด้วยบัญชีลูกค้า (เจ้าของทีมที่อยู่ในช่วงผ่อนผัน) เปิดตัวสลับทีมเลือกทีมนั้น แล้วเปิด "ตั้งค่าทีม"</li><li>อ่านตัวเลข "N / M ที่นั่ง" ที่การ์ด "ที่นั่ง (Seats)"</li><li>ไล่ดูการ์ด "สมาชิก (N)" ว่ารายชื่อครบทุกคนหรือไม่</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>M (ที่นั่งทั้งหมด) ยังเท่ากับจำนวนที่นั่งของแพ็กเกจ (เช่น 5) — ไม่ลดลงเหลือ 1 ระหว่างช่วงผ่อนผัน</li><li>รายชื่อสมาชิกยังครบ ไม่มีใครถูกกันออกจากทีมเพราะแพ็กเกจหมดอายุ</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 7 Story 7.2 · NOFR1</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>

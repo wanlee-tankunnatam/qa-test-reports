@@ -573,7 +573,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Precondition</h4><ul><li>บัญชี admin</li><li>บัญชีพนักงานทดสอบที่มี role อยู่ และรู้รหัสผ่าน</li></ul></div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) เข้าสู่ระบบด้วยบัญชี admin แล้วไปที่เมนู "บัญชีพนักงาน"</li><li>ที่การ์ดของพนักงานทดสอบ กด "เอาออกจากทีมงาน"</li><li>เปิดเบราว์เซอร์ที่สองล็อกอินด้วยบัญชีพนักงานคนนั้น แล้วดูเมนูด้านซ้าย</li><li>สังเกตว่าเข้าหน้าทั่วไป (แดชบอร์ด · โปรไฟล์) ได้หรือไม่</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ขึ้น toast "เอาออกจากทีมงานแล้ว — ยัง login ได้ในฐานะผู้ใช้ทั่วไป" และชิปสิทธิ์ทุกตัวของการ์ดนั้นดับ</li><li>การ์ดขึ้นป้าย "ไม่มีสิทธิ์แล้ว"</li><li>เจ้าตัวยังล็อกอินได้ และยังเข้า "แดชบอร์ด" กับ "โปรไฟล์" ได้ปกติ</li><li>เมนูของพนักงาน ("ตรวจสลิป" · "เอกสารกฎหมาย" · "บัญชีพนักงาน" · "บันทึกสิทธิ์") หายไปทั้งหมด — ตรงกับที่กล่องเตือนบนหน้าบอกไว้</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 · Story 1.5 · FR15</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ขึ้น toast "เอาออกจากทีมงานแล้ว — ยัง login ได้ในฐานะผู้ใช้ทั่วไป" และชิปสิทธิ์ทุกตัวของการ์ดนั้นดับ</li><li>การ์ดขึ้นป้าย "ไม่มีสิทธิ์แล้ว"</li><li>เจ้าตัวยังล็อกอินได้ และยังเข้า "แดชบอร์ด" กับ "โปรไฟล์" ได้ปกติ</li><li>เมนูกลุ่ม "คอนโซลพนักงาน" ("ตรวจสลิป" · "เอกสารกฎหมาย" · "บัญชีพนักงาน" · "บันทึกสิทธิ์" ฯลฯ) หายไปทั้งหมดรวมหัวข้อกลุ่ม — ตรงกับที่กล่องเตือนบนหน้าบอกไว้</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 · Story 1.5 · FR15</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -687,14 +687,14 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 <tr class="trow" data-feat="r1a" data-level="ui" data-prio="P0" data-kind="permission" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">E1-A.9</td>
-  <td class="ctitle">role compliance เปิด /staff ได้แบบอ่านอย่างเดียว: ไม่มีฟอร์มสร้าง · มีแถบบอกว่าต้องมี authz:role:assign · ชิปกดไม่ได้ <span class="kd kd-perm">Permission</span></td>
+  <td class="ctitle">role compliance เปิด /admin/staff ได้แบบอ่านอย่างเดียว: ไม่มีฟอร์มสร้าง · มีแถบบอกว่าต้องมี authz:role:assign · ชิปกดไม่ได้ <span class="kd kd-perm">Permission</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
   <td class="status" data-uid="tc-7509"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-7509"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">role compliance เปิด /staff ได้แบบอ่านอย่างเดียว: ไม่มีฟอร์มสร้าง · มีแถบบอกว่าต้องมี authz:role:assign · ชิปกดไม่ได้</div>
+  <div class="h-title">role compliance เปิด /admin/staff ได้แบบอ่านอย่างเดียว: ไม่มีฟอร์มสร้าง · มีแถบบอกว่าต้องมี authz:role:assign · ชิปกดไม่ได้</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Permission</b> <span class="hint">(role ไหนทำได้ / ทำไม่ได้)</span> · Epic 1 · A</div>
   <div class="sec"><h4>Precondition</h4><ul><li>บัญชีพนักงาน role compliance (ไม่มี admin)</li></ul></div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) แล้วเข้าสู่ระบบด้วยบัญชี role compliance</li><li>กดเมนู "บัญชีพนักงาน"</li><li>มองหาฟอร์ม "สร้างบัญชีพนักงาน" · ปุ่ม "สุ่มรหัสผ่านใหม่" · ปุ่ม "เอาออกจากทีมงาน" ในรายชื่อ</li><li>ลองกดชิปสิทธิ์ของพนักงานคนอื่น และเอาเมาส์ชี้ค้างเพื่ออ่านคำอธิบาย</li></ol></div>
@@ -718,17 +718,17 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 <tr class="trow" data-feat="r1a" data-level="ui" data-prio="P0" data-kind="permission" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">E1-A.10</td>
-  <td class="ctitle">cs และลูกค้าเปิด /staff ตรง ๆ ทาง URL → หน้า "ไม่มีสิทธิ์เข้าถึง" (403) พร้อมปุ่ม "กลับสู่แดชบอร์ด" <span class="kd kd-perm">Permission</span></td>
+  <td class="ctitle">cs และลูกค้าเปิด /admin/staff ตรง ๆ ทาง URL → หน้า "ไม่มีสิทธิ์เข้าถึง" (403) พร้อมปุ่ม "กลับสู่แดชบอร์ด" <span class="kd kd-perm">Permission</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
   <td class="status" data-uid="tc-7510"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-7510"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">cs และลูกค้าเปิด /staff ตรง ๆ ทาง URL → หน้า "ไม่มีสิทธิ์เข้าถึง" (403) พร้อมปุ่ม "กลับสู่แดชบอร์ด"</div>
+  <div class="h-title">cs และลูกค้าเปิด /admin/staff ตรง ๆ ทาง URL → หน้า "ไม่มีสิทธิ์เข้าถึง" (403) พร้อมปุ่ม "กลับสู่แดชบอร์ด"</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Permission</b> <span class="hint">(role ไหนทำได้ / ทำไม่ได้)</span> · Epic 1 · A</div>
   <div class="sec"><h4>Precondition</h4><ul><li>บัญชีพนักงาน role cs</li><li>บัญชีลูกค้าทั่วไป</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) แล้วเข้าสู่ระบบด้วยบัญชี role cs</li><li>พิมพ์ที่อยู่หน้า /staff บนแถบที่อยู่ของเบราว์เซอร์แล้วกด Enter</li><li>กด "กลับสู่แดชบอร์ด" แล้วออกจากระบบ</li><li>เข้าสู่ระบบด้วยบัญชีลูกค้าทั่วไป แล้วพิมพ์ /staff อีกครั้ง สังเกตหน้าที่ได้</li></ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) แล้วเข้าสู่ระบบด้วยบัญชี role cs</li><li>พิมพ์ที่อยู่หน้า /admin/staff บนแถบที่อยู่ของเบราว์เซอร์แล้วกด Enter</li><li>กด "กลับสู่แดชบอร์ด" แล้วออกจากระบบ</li><li>เข้าสู่ระบบด้วยบัญชีลูกค้าทั่วไป แล้วพิมพ์ /admin/staff อีกครั้ง สังเกตหน้าที่ได้</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ทั้งสองบัญชีเห็นหน้า "ไม่มีสิทธิ์เข้าถึง" พร้อมข้อความ "คุณไม่มีสิทธิ์เข้าถึงหน้านี้ (403) — หากคิดว่าเป็นข้อผิดพลาด กรุณาติดต่อผู้ดูแลระบบ"</li><li>มีปุ่ม "กลับสู่แดชบอร์ด" และกดแล้วกลับไปหน้าแดชบอร์ดได้</li><li>ไม่มีข้อมูลรายชื่อพนักงานหลุดมาแสดงบนหน้า 403 เลย</li><li>cs ไม่เห็นเมนู "บัญชีพนักงาน" ที่แถบเมนูด้านซ้ายอยู่แล้ว</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 · Story 1.4/1.6 · FR15 (TKH-48 forbidden)</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
@@ -924,7 +924,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Precondition</h4><ul><li>บัญชีลูกค้าทั่วไป (ไม่มี role พนักงาน)</li></ul></div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) แล้วเข้าสู่ระบบด้วยบัญชีลูกค้าทั่วไป</li><li>อ่านรายการเมนูที่แถบเมนูด้านซ้ายจากบนลงล่าง</li><li>สังเกตว่ามีเมนูของพนักงานปรากฏหรือไม่</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>เห็นเมนู "แดชบอร์ด" "บริการ" "ดาวน์โหลด" และปุ่ม "ขอความช่วยเหลือ" ที่ท้ายเมนู</li><li>ไม่เห็น "ตรวจสลิป" · "เอกสารกฎหมาย" · "บัญชีพนักงาน" · "บันทึกสิทธิ์"</li><li>ด้านล่างมีตัวสลับทีม (workspace) ตามปกติ</li><li>เมนูถูกกรองจากสิทธิ์จริงที่ระบบส่งมา ไม่ใช่จากค่าเดิมสองตัว (admin/cs)</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 · Story 1.6 · FR15 (TKH-76/100)</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>เห็นเมนู "แดชบอร์ด" "บริการ" "ดาวน์โหลด" "Affiliate" และท้ายเมนูมี "คู่มือการใช้งาน" กับ "ขอความช่วยเหลือ"</li><li>ไม่เห็น "ตรวจสลิป" · "เอกสารกฎหมาย" · "บัญชีพนักงาน" · "บันทึกสิทธิ์" และไม่เห็นหัวข้อกลุ่ม "คอนโซลพนักงาน"</li><li>ด้านล่างมีตัวสลับทีม (workspace) ตามปกติ</li><li>เมนูถูกกรองจากสิทธิ์จริงที่ระบบส่งมา ไม่ใช่จากค่าเดิมสองตัว (admin/cs)</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 · Story 1.6 · FR15 (TKH-76/100)</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -943,19 +943,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 <tr class="trow" data-feat="r1b" data-level="ui" data-prio="P0" data-kind="permission" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">E1-B.2</td>
-  <td class="ctitle">cs เห็นเพิ่มแค่ "ตรวจสลิป" · finance เห็น "ตรวจสลิป" เช่นกัน แต่ทั้งคู่ไม่เห็นเมนูจัดการสิทธิ์ <span class="kd kd-perm">Permission</span></td>
+  <td class="ctitle">cs เห็นกลุ่ม "คอนโซลพนักงาน" เป็น "ตรวจสลิป" "เนื้อหาหน้าเว็บ" "โค้ดส่วนลด" · finance เห็น "ตรวจสลิป" "โค้ดส่วนลด" "ภาษีและค่าธรรมเนียม" — ทั้งคู่ไม่เห็นเมนูจัดการสิทธิ์ <span class="kd kd-perm">Permission</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
   <td class="status" data-uid="tc-7517"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-7517"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">cs เห็นเพิ่มแค่ "ตรวจสลิป" · finance เห็น "ตรวจสลิป" เช่นกัน แต่ทั้งคู่ไม่เห็นเมนูจัดการสิทธิ์</div>
+  <div class="h-title">cs เห็นกลุ่ม "คอนโซลพนักงาน" เป็น "ตรวจสลิป" "เนื้อหาหน้าเว็บ" "โค้ดส่วนลด" · finance เห็น "ตรวจสลิป" "โค้ดส่วนลด" "ภาษีและค่าธรรมเนียม" — ทั้งคู่ไม่เห็นเมนูจัดการสิทธิ์</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Permission</b> <span class="hint">(role ไหนทำได้ / ทำไม่ได้)</span> · Epic 1 · B</div>
   <div class="sec"><h4>Precondition</h4><ul><li>บัญชีพนักงาน role cs</li><li>บัญชีพนักงาน role finance</li></ul></div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) แล้วเข้าสู่ระบบด้วยบัญชี role cs แล้วอ่านเมนูด้านซ้าย</li><li>ออกจากระบบ แล้วเข้าสู่ระบบด้วยบัญชี role finance แล้วอ่านเมนูด้านซ้ายอีกครั้ง</li><li>จดว่าแต่ละบัญชีเห็นเมนูอะไรต่างจากลูกค้าทั่วไป</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>cs เห็นเมนูฐานของลูกค้า + "ตรวจสลิป"</li><li>finance เห็นเมนูฐาน + "ตรวจสลิป" (ถือสิทธิ์อ่านรายการชำระเงินเช่นกัน)</li><li>ทั้ง cs และ finance ไม่เห็น "บัญชีพนักงาน" "บันทึกสิทธิ์" "เอกสารกฎหมาย"</li><li>เมนูที่เห็นตรงกับหน้าที่เปิดได้จริง — กดแล้วไม่เจอ 403</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 · Story 1.6 · FR15 (TKH-100)</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>cs เห็นเมนูฐานของลูกค้า + กลุ่ม "คอนโซลพนักงาน": "ตรวจสลิป" · "เนื้อหาหน้าเว็บ" · "โค้ดส่วนลด" (role cs ถือ content:read + promotion:read — TKH-209/TKH-70)</li><li>finance เห็นเมนูฐาน + "ตรวจสลิป" · "โค้ดส่วนลด" · "ภาษีและค่าธรรมเนียม" (billing:config:read — TKH-198)</li><li>ทั้ง cs และ finance ไม่เห็น "บัญชีพนักงาน" "บันทึกสิทธิ์" "เอกสารกฎหมาย"</li><li>เมนูที่เห็นตรงกับหน้าที่เปิดได้จริง — กดแล้วไม่เจอ 403</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 · Story 1.6 · FR15 (TKH-100)</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -984,9 +984,9 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="h-title">compliance เห็น "เอกสารกฎหมาย" · "บัญชีพนักงาน" · "บันทึกสิทธิ์" แต่ไม่เห็น "ตรวจสลิป"</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Permission</b> <span class="hint">(role ไหนทำได้ / ทำไม่ได้)</span> · Epic 1 · B</div>
   <div class="sec"><h4>Precondition</h4><ul><li>บัญชีพนักงาน role compliance</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) แล้วเข้าสู่ระบบด้วยบัญชี role compliance</li><li>อ่านรายการเมนูที่แถบเมนูด้านซ้าย</li><li>กดเข้าไปทีละเมนูที่เห็น เพื่อยืนยันว่าเข้าได้จริงทุกอัน</li><li>พิมพ์ /cs/payments บนแถบที่อยู่ แล้วสังเกตผล</li></ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) แล้วเข้าสู่ระบบด้วยบัญชี role compliance</li><li>อ่านรายการเมนูที่แถบเมนูด้านซ้าย</li><li>กดเข้าไปทีละเมนูที่เห็น เพื่อยืนยันว่าเข้าได้จริงทุกอัน</li><li>พิมพ์ /admin/payments (path เดิม /cs/payments ถูก redirect มาที่นี่) บนแถบที่อยู่ แล้วสังเกตผล</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>เห็นเมนู "เอกสารกฎหมาย" · "บัญชีพนักงาน" · "บันทึกสิทธิ์" เพิ่มจากเมนูฐาน</li><li>ไม่เห็นเมนู "ตรวจสลิป"</li><li>ทุกเมนูที่เห็นกดเข้าได้จริง ไม่มีอันไหนพาไปหน้า 403</li><li>พิมพ์ /cs/payments เข้าไปตรง ๆ ได้หน้า "ไม่มีสิทธิ์เข้าถึง" (403)</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 · Story 1.6 · FR15 (TKH-72/75/77)</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>เห็นเมนู "เอกสารกฎหมาย" · "บัญชีพนักงาน" · "บันทึกสิทธิ์" เพิ่มจากเมนูฐาน</li><li>ไม่เห็นเมนู "ตรวจสลิป"</li><li>ทุกเมนูที่เห็นกดเข้าได้จริง ไม่มีอันไหนพาไปหน้า 403</li><li>พิมพ์ /admin/payments เข้าไปตรง ๆ ได้หน้า "ไม่มีสิทธิ์เข้าถึง" (403)</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 · Story 1.6 · FR15 (TKH-72/75/77)</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1017,7 +1017,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Precondition</h4><ul><li>บัญชี admin</li></ul></div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) แล้วเข้าสู่ระบบด้วยบัญชี admin</li><li>อ่านรายการเมนูด้านซ้ายทั้งหมด</li><li>กดเข้าทุกเมนูทีละอันเพื่อยืนยันว่าเปิดได้ไม่ติด 403</li><li>สังเกตว่าไม่มีเมนู "Admin" ในรายการ (ปิดชั่วคราวอยู่)</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>เห็น "แดชบอร์ด" "บริการ" "ดาวน์โหลด" "ตรวจสลิป" "เอกสารกฎหมาย" "บัญชีพนักงาน" "บันทึกสิทธิ์" และ "ขอความช่วยเหลือ"</li><li>ทุกเมนูเปิดได้จริง ไม่มีอันไหนเจอ 403</li><li>ไม่มีเมนู "Admin" ปรากฏในรายการ</li><li>admin ถือสิทธิ์ครบทุกตัว รวมสิทธิ์ที่เพิ่มใหม่ในภายหลัง โดยไม่ต้องมอบเพิ่มทีละอัน</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 · Story 1.1/1.6 · FR15 (admin = wildcard)</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>เห็นเมนูลูกค้า ("แดชบอร์ด" "บริการ" "ดาวน์โหลด" "Affiliate") + กลุ่ม "คอนโซลพนักงาน" ครบ: "ตรวจสลิป" "เอกสารกฎหมาย" "เนื้อหาหน้าเว็บ" "บัญชีพนักงาน" "โค้ดส่วนลด" "ภาษีและค่าธรรมเนียม" "บันทึกสิทธิ์" และท้ายเมนู "คู่มือการใช้งาน" + "ขอความช่วยเหลือ"</li><li>ทุกเมนูเปิดได้จริง ไม่มีอันไหนเจอ 403</li><li>ไม่มีเมนู "Admin" ปรากฏในรายการ</li><li>admin ถือสิทธิ์ครบทุกตัว รวมสิทธิ์ที่เพิ่มใหม่ในภายหลัง โดยไม่ต้องมอบเพิ่มทีละอัน</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 · Story 1.1/1.6 · FR15 (admin = wildcard)</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1079,7 +1079,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Precondition</h4><ul><li>บัญชี admin (เบราว์เซอร์ A)</li><li>บัญชีพนักงาน role cs (เบราว์เซอร์ B)</li></ul></div>
   <div class="sec"><h4>Test Steps</h4><ol><li>ที่เบราว์เซอร์ B เข้าสู่ระบบด้วยบัญชี role cs แล้วเปิดหน้า "ตรวจสลิป" ค้างไว้ ยังไม่รีเฟรช</li><li>ที่เบราว์เซอร์ A เข้าสู่ระบบด้วย admin ไปที่ "บัญชีพนักงาน" แล้วกด "เอาออกจากทีมงาน" ที่การ์ดของ cs คนนั้น</li><li>กลับไปเบราว์เซอร์ B (ยังไม่รีเฟรช) กดเปิดสลิปใบใดใบหนึ่งหรือกดปุ่มบนหน้า แล้วอ่านข้อความที่ขึ้น</li><li>รีเฟรชหน้าที่เบราว์เซอร์ B แล้วสังเกตเมนูและหน้าที่ได้</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>หน้าที่เปิดค้างไว้ยังแสดงปุ่มเดิม (หน้าเว็บเป็นแค่เครื่องสำอาง ไม่ใช่ด่านจริง)</li><li>กดแล้วระบบปฏิเสธ ขึ้นข้อความ "คุณไม่มีสิทธิ์ใช้งานส่วนนี้" และไม่มีอะไรถูกเปลี่ยนแปลง</li><li>รีเฟรชแล้วเมนู "ตรวจสลิป" หายไป และเปิด /cs/payments ได้หน้า "ไม่มีสิทธิ์เข้าถึง" (403)</li><li>ด่านจริงอยู่ที่ระบบหลังบ้าน — ปุ่มที่ค้างอยู่บนจอไม่ทำให้ทำอะไรเกินสิทธิ์ได้</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 · Story 1.6 AC4 · FR15/FR17</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>หน้าที่เปิดค้างไว้ยังแสดงปุ่มเดิม (หน้าเว็บเป็นแค่เครื่องสำอาง ไม่ใช่ด่านจริง)</li><li>กดแล้วระบบปฏิเสธ ขึ้นข้อความ "คุณไม่มีสิทธิ์ใช้งานส่วนนี้" และไม่มีอะไรถูกเปลี่ยนแปลง</li><li>รีเฟรชแล้วเมนู "ตรวจสลิป" หายไป และเปิด /admin/payments ได้หน้า "ไม่มีสิทธิ์เข้าถึง" (403)</li><li>ด่านจริงอยู่ที่ระบบหลังบ้าน — ปุ่มที่ค้างอยู่บนจอไม่ทำให้ทำอะไรเกินสิทธิ์ได้</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 · Story 1.6 AC4 · FR15/FR17</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1108,7 +1108,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="h-title">ลูกค้าเปิดหน้าของพนักงานทุกหน้าตรงทาง URL → ได้ "ไม่มีสิทธิ์เข้าถึง" (403) ทุกหน้า ไม่มีข้อมูลหลุด</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Permission</b> <span class="hint">(role ไหนทำได้ / ทำไม่ได้)</span> · Epic 1 · B</div>
   <div class="sec"><h4>Precondition</h4><ul><li>บัญชีลูกค้าทั่วไป</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) แล้วเข้าสู่ระบบด้วยบัญชีลูกค้าทั่วไป</li><li>พิมพ์ /cs/payments บนแถบที่อยู่แล้วกด Enter</li><li>ทำซ้ำกับ /legal-admin · /staff · /authz-log ทีละหน้า</li><li>กด "กลับสู่แดชบอร์ด" แล้วสังเกตว่ากลับมาใช้งานปกติได้</li></ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) แล้วเข้าสู่ระบบด้วยบัญชีลูกค้าทั่วไป</li><li>พิมพ์ /admin/payments บนแถบที่อยู่แล้วกด Enter</li><li>ทำซ้ำกับ /admin/legal · /admin/staff · /admin/authz-log ทีละหน้า</li><li>กด "กลับสู่แดชบอร์ด" แล้วสังเกตว่ากลับมาใช้งานปกติได้</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ทั้ง 4 หน้าให้หน้า "ไม่มีสิทธิ์เข้าถึง" พร้อมข้อความ 403 เหมือนกัน</li><li>ไม่มีเนื้อหาของหน้าจริง (รายชื่อพนักงาน · คิวสลิป · เนื้อหาเอกสารกฎหมาย · บันทึกสิทธิ์) แสดงแม้แวบเดียว</li><li>ปุ่ม "กลับสู่แดชบอร์ด" ใช้ได้ และกลับมาใช้งานส่วนของลูกค้าได้ตามปกติ</li><li>ไม่ถูกเด้งออกจากระบบ (ยังล็อกอินอยู่)</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 · Story 1.4/1.6 · FR15 (TKH-48)</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
@@ -1270,7 +1270,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · Epic 1 · C</div>
   <div class="sec"><h4>Precondition</h4><ul><li>บัญชี compliance</li><li>บัญชี role cs (สำหรับสร้างการปฏิเสธ)</li></ul></div>
   <div class="sec"><h4>Test Data</h4><ul><li>อีเมลของบัญชี cs ที่ใช้ยิงคำขอ</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ที่สอง เข้าสู่ระบบด้วยบัญชี role cs แล้วพิมพ์ /authz-log บนแถบที่อยู่ จนเจอหน้า "ไม่มีสิทธิ์เข้าถึง"</li><li>ที่บัญชี cs เดิม เปิดหน้า "ตรวจสลิป" แล้วลองกดปุ่มที่ต้องใช้สิทธิ์เกินตัว (เช่น ปุ่มที่ถูกล็อกไว้) จนระบบปฏิเสธ</li><li>กลับไปเบราว์เซอร์แรก เข้าสู่ระบบด้วย compliance แล้วเปิดเมนู "บันทึกสิทธิ์"</li><li>เลือก "ผลการตัดสิน" = "ปฏิเสธ" กรอก "อีเมลผู้ทำ" เป็นอีเมลของ cs แล้วกด "ค้นหา" แล้วอ่านแถวบนสุด</li></ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ที่สอง เข้าสู่ระบบด้วยบัญชี role cs แล้วพิมพ์ /admin/authz-log บนแถบที่อยู่ จนเจอหน้า "ไม่มีสิทธิ์เข้าถึง"</li><li>ที่บัญชี cs เดิม เปิดหน้า "ตรวจสลิป" แล้วลองกดปุ่มที่ต้องใช้สิทธิ์เกินตัว (เช่น ปุ่มที่ถูกล็อกไว้) จนระบบปฏิเสธ</li><li>กลับไปเบราว์เซอร์แรก เข้าสู่ระบบด้วย compliance แล้วเปิดเมนู "บันทึกสิทธิ์"</li><li>เลือก "ผลการตัดสิน" = "ปฏิเสธ" กรอก "อีเมลผู้ทำ" เป็นอีเมลของ cs แล้วกด "ค้นหา" แล้วอ่านแถวบนสุด</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>มีแถวใหม่ที่คอลัมน์ "ผู้ทำ" เป็นอีเมลของ cs และคอลัมน์ "ผล" เป็นป้ายสีแดง "ปฏิเสธ"</li><li>คอลัมน์ "เหตุผล" อ่านเป็นภาษาไทยเช่น "ไม่มีสิทธิ์" — ไม่ใช่รหัสภาษาอังกฤษดิบ</li><li>คอลัมน์ "สิทธิ์" บอกชื่อสิทธิ์ที่ถูกขอ และ "เส้นทาง" บอกจุดที่ถูกเรียก</li><li>"เวลา" ตรงกับเวลาที่เพิ่งกด และบรรทัดสรุปเปลี่ยนเป็น "พบ N รายการ" ตามผลกรอง</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 · Story 1.2 · FR17</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
@@ -1428,9 +1428,9 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Data</b> <span class="hint">(empty · null · duplicate · existing · non-existing)</span> · Epic 1 · C</div>
   <div class="sec"><h4>Precondition</h4><ul><li>บัญชี compliance</li><li>บัญชีลูกค้าทั่วไป</li></ul></div>
   <div class="sec"><h4>Test Data</h4><ul><li>อีเมลของบัญชีลูกค้า</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ที่สอง เข้าสู่ระบบด้วยบัญชีลูกค้า แล้วพิมพ์ /staff จนเจอหน้า "ไม่มีสิทธิ์เข้าถึง" ทำซ้ำ 3 ครั้ง</li><li>กลับมาที่บัญชี compliance เปิดเมนู "บันทึกสิทธิ์"</li><li>กรอก "อีเมลผู้ทำ" เป็นอีเมลของบัญชีลูกค้า เลือก "ผลการตัดสิน" = "ปฏิเสธ" แล้วกด "ค้นหา"</li><li>อ่านผลที่ได้เทียบกับกล่องคำเตือนข้อแรกบนหน้า</li></ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ที่สอง เข้าสู่ระบบด้วยบัญชีลูกค้า แล้วพิมพ์ /admin/staff จนเจอหน้า "ไม่มีสิทธิ์เข้าถึง" ทำซ้ำ 3 ครั้ง</li><li>กลับมาที่บัญชี compliance เปิดเมนู "บันทึกสิทธิ์"</li><li>กรอก "อีเมลผู้ทำ" เป็นอีเมลของบัญชีลูกค้า เลือก "ผลการตัดสิน" = "ปฏิเสธ" แล้วกด "ค้นหา"</li><li>อ่านผลที่ได้เทียบกับกล่องคำเตือนข้อแรกบนหน้า</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ไม่มีแถวของการเปิด /staff 3 ครั้งนั้นในตาราง (ขึ้น "ไม่พบรายการตามเงื่อนไขนี้")</li><li>ตรงกับกล่องคำเตือนข้อ 1 ที่ระบุว่าเมนูที่ถูกซ่อนหรือหน้าที่ขึ้น 403 ก่อนเรียกระบบหลังบ้านจะไม่มีแถวที่นี่</li><li>QA ต้องไม่สรุปว่า "ไม่มีใครพยายามเข้า" จากตารางนี้</li><li>การปฏิเสธที่เกิดจากการเรียกระบบหลังบ้านจริงยังถูกบันทึกครบตามปกติ</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 · Story 1.2 (ขอบเขตของ log) · FR17</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ไม่มีแถวของการเปิด /admin/staff 3 ครั้งนั้นในตาราง (ขึ้น "ไม่พบรายการตามเงื่อนไขนี้")</li><li>ตรงกับกล่องคำเตือนข้อ 1 ที่ระบุว่าเมนูที่ถูกซ่อนหรือหน้าที่ขึ้น 403 ก่อนเรียกระบบหลังบ้านจะไม่มีแถวที่นี่</li><li>QA ต้องไม่สรุปว่า "ไม่มีใครพยายามเข้า" จากตารางนี้</li><li>การปฏิเสธที่เกิดจากการเรียกระบบหลังบ้านจริงยังถูกบันทึกครบตามปกติ</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 · Story 1.2 (ขอบเขตของ log) · FR17</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1555,9 +1555,9 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="h-title">คนที่ไม่ถือสิทธิ์อ่านบันทึกเข้าไม่ได้และไม่เห็นเมนู: cs · finance · marketing · ลูกค้า</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Permission</b> <span class="hint">(role ไหนทำได้ / ทำไม่ได้)</span> · Epic 1 · C</div>
   <div class="sec"><h4>Precondition</h4><ul><li>บัญชี role cs · finance · marketing · ลูกค้าทั่วไป</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) เข้าสู่ระบบด้วยบัญชี role cs แล้วตรวจว่าเมนู "บันทึกสิทธิ์" มีหรือไม่</li><li>พิมพ์ /authz-log บนแถบที่อยู่แล้วกด Enter</li><li>ทำซ้ำขั้นตอนเดียวกันกับบัญชี finance · marketing · ลูกค้าทั่วไป</li><li>จดผลของแต่ละบัญชี</li></ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) เข้าสู่ระบบด้วยบัญชี role cs แล้วตรวจว่าเมนู "บันทึกสิทธิ์" มีหรือไม่</li><li>พิมพ์ /admin/authz-log บนแถบที่อยู่แล้วกด Enter</li><li>ทำซ้ำขั้นตอนเดียวกันกับบัญชี finance · marketing · ลูกค้าทั่วไป</li><li>จดผลของแต่ละบัญชี</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ทั้ง 4 บัญชีไม่เห็นเมนู "บันทึกสิทธิ์" ในแถบเมนู</li><li>เปิด /authz-log ตรง ๆ ได้หน้า "ไม่มีสิทธิ์เข้าถึง" (403) ทุกบัญชี</li><li>ไม่มีแถวของบันทึกหลุดมาแสดงบนหน้า 403</li><li>compliance และ admin ยังเข้าได้ตามปกติ</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 · Story 1.2 (authz:log:read) · FR17</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ทั้ง 4 บัญชีไม่เห็นเมนู "บันทึกสิทธิ์" ในแถบเมนู</li><li>เปิด /admin/authz-log ตรง ๆ ได้หน้า "ไม่มีสิทธิ์เข้าถึง" (403) ทุกบัญชี</li><li>ไม่มีแถวของบันทึกหลุดมาแสดงบนหน้า 403</li><li>compliance และ admin ยังเข้าได้ตามปกติ</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 · Story 1.2 (authz:log:read) · FR17</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1683,8 +1683,8 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="h-title">CS ที่เป็นสมาชิกทีมเจ้าของสลิป กด "ยืนยันการชำระเงิน" → ถูกปฏิเสธ "คุณเกี่ยวข้องกับรายการนี้ ต้องให้คนอื่นเป็นผู้ตรวจ"</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Permission</b> <span class="hint">(role ไหนทำได้ / ทำไม่ได้)</span> · Epic 1 · D</div>
   <div class="sec"><h4>Precondition</h4><ul><li>บัญชีพนักงาน role cs ที่เป็นสมาชิกของทีม (workspace) หนึ่ง</li><li>สลิปสถานะรอตรวจของทีมเดียวกันนั้น (ให้เจ้าของทีมสั่งซื้อและแนบสลิปไว้)</li></ul></div>
-  <div class="sec"><h4>Test Data</h4><ul><li>ยอดที่กรอก = ยอดที่ต้องโอน (ให้ตรงกัน เพื่อพิสูจน์ว่าไม่ได้ถูกปฏิเสธเพราะยอด)</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) แล้วเข้าสู่ระบบด้วยบัญชี role cs ที่อยู่ในทีมเดียวกับเจ้าของสลิป</li><li>กดเมนู "ตรวจสลิป" แล้วเปิดรายการสลิปของทีมตัวเอง</li><li>กรอก "ยอดที่โอนจริง (จากสลิป)" ให้ตรงกับ "ยอดที่ต้องโอน" แล้วกด "ยืนยันการชำระเงิน"</li><li>อ่านข้อความที่ขึ้น แล้วกลับไปดูสถานะของสลิปใบนั้นในคิว</li></ol></div>
+  <div class="sec"><h4>Test Data</h4><ul><li>ยอดที่กรอก = "ราคารวมทั้งหมด" (ให้ตรงกัน เพื่อพิสูจน์ว่าไม่ได้ถูกปฏิเสธเพราะยอด)</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) แล้วเข้าสู่ระบบด้วยบัญชี role cs ที่อยู่ในทีมเดียวกับเจ้าของสลิป</li><li>กดเมนู "ตรวจสลิป" แล้วเปิดรายการสลิปของทีมตัวเอง</li><li>กรอก "ยอดที่โอนจริง (จากสลิป)" ให้ตรงกับ "ราคารวมทั้งหมด" แล้วกด "ยืนยันการชำระเงิน"</li><li>อ่านข้อความที่ขึ้น แล้วกลับไปดูสถานะของสลิปใบนั้นในคิว</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ขึ้นข้อความ "คุณเกี่ยวข้องกับรายการนี้ ต้องให้คนอื่นเป็นผู้ตรวจ"</li><li>สลิปยังอยู่สถานะรอตรวจ ไม่ถูกยืนยัน และ subscription ไม่ถูกเปิดใช้งาน</li><li>ไม่ถูกเด้งกลับไปหน้าคิว (ยังอยู่หน้ารายละเอียดให้ลองอ่านเหตุผลได้)</li><li>คนเดียวสั่งจ่ายแล้วอนุมัติจ่ายให้ทีมตัวเองครบวงจรไม่ได้</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 · Story 1.9 · FR16 (rbac-abac-spec §5.2 · TKH-114)</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
@@ -1715,8 +1715,8 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="h-title">CS อีกคนที่ไม่เกี่ยวกับทีมนั้น ยืนยันสลิปใบเดียวกันได้ปกติ — กติกานี้ต้องไม่ทำให้งานตรวจสลิปสะดุด</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · Epic 1 · D</div>
   <div class="sec"><h4>Precondition</h4><ul><li>สลิปใบเดิมจากเคส E1-D.1 (ยังรอตรวจ)</li><li>บัญชีพนักงาน role cs อีกคนที่ไม่ได้เป็นสมาชิกทีมนั้นและไม่ได้แนบสลิปใบนั้น</li></ul></div>
-  <div class="sec"><h4>Test Data</h4><ul><li>ยอดที่กรอก = ยอดที่ต้องโอน</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) แล้วเข้าสู่ระบบด้วยบัญชี role cs คนที่สอง (ไม่เกี่ยวกับทีมเจ้าของสลิป)</li><li>กดเมนู "ตรวจสลิป" แล้วเปิดสลิปใบเดิม</li><li>กรอก "ยอดที่โอนจริง (จากสลิป)" ให้ตรงกับ "ยอดที่ต้องโอน" แล้วกด "ยืนยันการชำระเงิน"</li><li>สังเกต toast และสถานะของรายการหลังถูกพากลับไปหน้าคิว</li></ol></div>
+  <div class="sec"><h4>Test Data</h4><ul><li>ยอดที่กรอก = "ราคารวมทั้งหมด"</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) แล้วเข้าสู่ระบบด้วยบัญชี role cs คนที่สอง (ไม่เกี่ยวกับทีมเจ้าของสลิป)</li><li>กดเมนู "ตรวจสลิป" แล้วเปิดสลิปใบเดิม</li><li>กรอก "ยอดที่โอนจริง (จากสลิป)" ให้ตรงกับ "ราคารวมทั้งหมด" แล้วกด "ยืนยันการชำระเงิน"</li><li>สังเกต toast และสถานะของรายการหลังถูกพากลับไปหน้าคิว</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ขึ้นข้อความยอดตรงกัน ("· ตรงกัน ✓") ก่อนกดยืนยัน</li><li>กดแล้วขึ้น toast "ยืนยันการชำระเงินแล้ว — เปิดใช้งาน subscription" และถูกพากลับไปหน้าคิว</li><li>สลิปเปลี่ยนเป็นสถานะยืนยันแล้ว และสิทธิ์ของลูกค้าเปิดใช้งาน</li><li>แสดงว่ากติกาห้ามอนุมัติรายการของตัวเองไม่ได้บล็อกงานตรวจสลิปปกติ</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 · Story 1.9 AC1 · FR16 (TKH-114)</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
@@ -1812,9 +1812,9 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Validation</b> <span class="hint">(format · required · character · length)</span> · Epic 1 · D</div>
   <div class="sec"><h4>Precondition</h4><ul><li>บัญชี role cs ที่ไม่เกี่ยวกับทีมเจ้าของสลิป</li><li>สลิปสถานะรอตรวจ 1 ใบ</li></ul></div>
   <div class="sec"><h4>Test Data</h4><ul><li>เหตุผล: (ว่าง) → ข้อความยาว 600 ตัว → "ยอดไม่ตรง"</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) เข้าสู่ระบบด้วยบัญชี role cs แล้วไปที่เมนู "ตรวจสลิป" เปิดสลิปที่รอตรวจ</li><li>กด "ปฏิเสธสลิป" แล้วกด "ยืนยันการปฏิเสธ" ทันทีโดยไม่กรอกช่อง "เหตุผลที่ปฏิเสธ"</li><li>วางข้อความยาวเกิน 500 ตัวลงในช่องเหตุผล แล้วกด "ยืนยันการปฏิเสธ" อีกครั้ง</li><li>กรอกเหตุผลสั้น ๆ ที่สมเหตุสมผลแล้วกดยืนยัน แล้วสังเกตสถานะของสลิป</li></ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) เข้าสู่ระบบด้วยบัญชี role cs แล้วไปที่เมนู "ตรวจสลิป" เปิดสลิปที่รอตรวจ</li><li>กด "ปฏิเสธสลิป" แล้วกด "ยืนยันการปฏิเสธ" ทันทีโดยไม่กรอกช่อง "เหตุผลที่ปฏิเสธ"</li><li>วางข้อความยาวเกิน 500 ตัวลงในช่องเหตุผล แล้วกด "ยืนยันการปฏิเสธ" อีกครั้ง</li><li>กรอกเหตุผลสั้น ๆ แล้วกด "ยืนยันการปฏิเสธ" → อ่านกล่องยืนยัน "ปฏิเสธสลิปและปิดรายการนี้?" แล้วกด "ปฏิเสธและปิดรายการ" แล้วสังเกตสถานะของรายการ</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ไม่กรอกเหตุผล → ขึ้น "กรุณาระบุเหตุผล" และสลิปไม่ถูกปฏิเสธ</li><li>เหตุผลยาวเกิน → ขึ้น "เหตุผลยาวเกินไป (สูงสุด 500 ตัว)" และช่องรับตัวอักษรได้ไม่เกินเพดาน</li><li>กรอกเหตุผลถูกต้อง → ขึ้น toast "ปฏิเสธสลิปแล้ว — ลูกค้าแนบใหม่ได้" และถูกพากลับหน้าคิว</li><li>เหตุผลที่กรอกถูกเก็บไว้ให้ตรวจย้อนหลังได้ (แสดงในประวัติของรายการ)</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 · Story 1.9 (reason_required) · FR16</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ไม่กรอกเหตุผล → ขึ้น "กรุณาระบุเหตุผล" และสลิปไม่ถูกปฏิเสธ</li><li>เหตุผลยาวเกิน → ขึ้น "เหตุผลยาวเกินไป (สูงสุด 500 ตัว)" และช่องรับตัวอักษรได้ไม่เกินเพดาน</li><li>กรอกเหตุผลถูกต้อง → มีกล่องยืนยัน "ปฏิเสธสลิปและปิดรายการนี้?" เตือนว่าปิดถาวร-ย้อนกลับไม่ได้ → กด "ปฏิเสธและปิดรายการ" แล้วขึ้น toast "ปฏิเสธและปิดรายการแล้ว — ลูกค้าสั่งซื้อใหม่ได้ทันที" และถูกพากลับหน้าคิว</li><li>เหตุผลที่กรอกถูกเก็บไว้ให้ตรวจย้อนหลังได้ (แสดงในประวัติของรายการ)</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 · Story 1.9 (reason_required) · FR16</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1876,9 +1876,9 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · Epic 1 · D</div>
   <div class="sec"><h4>Precondition</h4><ul><li>บัญชี role cs ที่ไม่ได้เป็นสมาชิกทีมเจ้าของสลิปและไม่ได้แนบสลิปใบนั้น</li><li>สลิปสถานะรอตรวจ 1 ใบ</li></ul></div>
   <div class="sec"><h4>Test Data</h4><ul><li>เหตุผลที่ปฏิเสธ: "ยอดไม่ตรง"</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) เข้าสู่ระบบด้วยบัญชี role cs ที่ไม่เกี่ยวกับทีมเจ้าของสลิป</li><li>กดเมนู "ตรวจสลิป" แล้วเปิดสลิปที่รอตรวจ</li><li>กด "ปฏิเสธสลิป" กรอก "เหตุผลที่ปฏิเสธ" ว่า "ยอดไม่ตรง" แล้วกด "ยืนยันการปฏิเสธ"</li><li>สังเกต toast และสถานะของรายการหลังถูกพากลับหน้าคิว</li></ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) เข้าสู่ระบบด้วยบัญชี role cs ที่ไม่เกี่ยวกับทีมเจ้าของสลิป</li><li>กดเมนู "ตรวจสลิป" แล้วเปิดสลิปที่รอตรวจ</li><li>กด "ปฏิเสธสลิป" กรอก "เหตุผลที่ปฏิเสธ" ว่า "ยอดไม่ตรง" แล้วกด "ยืนยันการปฏิเสธ" และกด "ปฏิเสธและปิดรายการ" ในกล่องยืนยัน</li><li>สังเกต toast และสถานะของรายการหลังถูกพากลับหน้าคิว</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ปฏิเสธได้สำเร็จ ไม่ติดข้อความ "คุณเกี่ยวข้องกับรายการนี้ ต้องให้คนอื่นเป็นผู้ตรวจ"</li><li>ขึ้น toast "ปฏิเสธสลิปแล้ว — ลูกค้าแนบใหม่ได้"</li><li>ถูกพากลับไปหน้าคิวตรวจสลิป และรายการเปลี่ยนสถานะตามจริง</li><li>กติกานี้จับเฉพาะการยืนยัน ไม่ได้ทำให้ปฏิเสธสลิปไม่ได้</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 · Story 1.9 AC1 · FR16 (TKH-114)</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ปฏิเสธได้สำเร็จ ไม่ติดข้อความ "คุณเกี่ยวข้องกับรายการนี้ ต้องให้คนอื่นเป็นผู้ตรวจ"</li><li>ขึ้น toast "ปฏิเสธและปิดรายการแล้ว — ลูกค้าสั่งซื้อใหม่ได้ทันที"</li><li>ถูกพากลับไปหน้าคิวตรวจสลิป และรายการเปลี่ยนสถานะตามจริง</li><li>กติกานี้จับเฉพาะการยืนยัน ไม่ได้ทำให้ปฏิเสธสลิปไม่ได้</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 · Story 1.9 AC1 · FR16 (TKH-114)</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1897,19 +1897,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 <tr class="trow" data-feat="r1d" data-level="ui" data-prio="P1" data-kind="data" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">E1-D.10</td>
-  <td class="ctitle">หลังถูกปฏิเสธ ลูกค้าเจ้าของรายการแนบสลิปใหม่ได้จริงตามที่ระบบแจ้ง <span class="kd kd-data">Data</span></td>
+  <td class="ctitle">หลังถูกปฏิเสธ รายการถูกปิดจริงตามที่ระบบแจ้ง — ลูกค้าสั่งซื้อใหม่ได้ทันทีและได้รหัสอ้างอิงใหม่ <span class="kd kd-data">Data</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
   <td class="status" data-uid="tc-7547"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-7547"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">หลังถูกปฏิเสธ ลูกค้าเจ้าของรายการแนบสลิปใหม่ได้จริงตามที่ระบบแจ้ง</div>
+  <div class="h-title">หลังถูกปฏิเสธ รายการถูกปิดจริงตามที่ระบบแจ้ง — ลูกค้าสั่งซื้อใหม่ได้ทันทีและได้รหัสอ้างอิงใหม่</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Data</b> <span class="hint">(empty · null · duplicate · existing · non-existing)</span> · Epic 1 · D</div>
   <div class="sec"><h4>Precondition</h4><ul><li>สลิปที่เพิ่งถูกปฏิเสธจากเคส E1-D.9</li><li>บัญชีลูกค้าเจ้าของรายการนั้น</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) แล้วเข้าสู่ระบบด้วยบัญชีลูกค้าเจ้าของรายการที่ถูกปฏิเสธ</li><li>เปิดรายการค้างชำระ/หน้าชำระเงินของรายการนั้น</li><li>อ่านสถานะที่แสดงให้ลูกค้าเห็น</li><li>แนบสลิปใหม่อีกครั้งแล้วสังเกตผล</li></ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) แล้วเข้าสู่ระบบด้วยบัญชีลูกค้าเจ้าของรายการที่ถูกปฏิเสธ</li><li>ดูสถานะของ product นั้นที่หน้า "แดชบอร์ด" / "บริการ" แล้วลองเปิดลิงก์หน้าชำระเงินใบเดิม</li><li>อ่านสถานะที่แสดงให้ลูกค้าเห็น</li><li>กดสั่งซื้อแพ็กเกจใหม่อีกครั้ง แล้วเทียบรหัสอ้างอิงกับใบเดิม</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ลูกค้าเห็นว่ารายการยังไม่สำเร็จและแนบสลิปใหม่ได้</li><li>แนบสลิปใหม่ได้จริง ไม่ถูกบล็อกจากการถูกปฏิเสธครั้งก่อน</li><li>รายการกลับเข้าคิวรอตรวจของฝั่ง CS อีกครั้ง</li><li>ยอดและรหัสอ้างอิงของรายการไม่เปลี่ยนจากการปฏิเสธ</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 · Story 1.9 · FR16 (ต่อเนื่องจากการปฏิเสธที่บังคับเหตุผล)</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ใบเดิมแสดงเป็นถูกปิด/ยกเลิกแล้ว — ไม่มีช่องให้แนบสลิปซ้ำที่รายการเดิม และไม่โชว์เลขบัญชี/ยอดให้โอนต่อ</li><li>ลูกค้าสั่งซื้อใหม่ได้ทันที ไม่ถูกบล็อกจากการถูกปฏิเสธครั้งก่อน</li><li>รายการใหม่ได้รหัสอ้างอิงใหม่ (ไม่ใช่เลขเดิม) และเข้าคิวรอตรวจของ CS ตามปกติ</li><li>ตรงกับคำเตือนฝั่ง CS: "ปฏิเสธแล้วรายการนี้จะถูกปิด — ลูกค้าต้องสั่งซื้อใหม่และได้รหัสอ้างอิงใหม่"</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 · Story 1.9 · FR16 (ต่อเนื่องจากการปฏิเสธที่บังคับเหตุผล)</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1932,19 +1932,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="featrow" data-featkey="rbac-legal-admin"><td colspan="7">📁 rbac-legal-admin · หน้า "เอกสารกฎหมาย (Terms / Privacy)" — publish · ย้อนกลับ · ผลต่อการขอความยินยอมของลูกค้า <span class="rp"><span class="lv lvl-ui">🌐 10</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="rbac-legal-admin"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
 <tr class="trow" data-feat="r1l" data-level="ui" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">E1-L.1</td>
-  <td class="ctitle">compliance เปิดหน้า "เอกสารกฎหมาย" เห็นสองการ์ดครบ: ป้าย active · ช่องเนื้อหา Markdown · version · ตัวอย่าง · ประวัติเวอร์ชัน <span class="kd kd-happy">Happy Path</span></td>
+  <td class="ctitle">compliance เปิดหน้า "เอกสารกฎหมาย" เห็นแท็บ Terms/Privacy ครบ: ป้าย "ใช้อยู่" · ช่องเนื้อหา Markdown · version ใหม่ · ตัวอย่าง · ประวัติเวอร์ชัน <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
   <td class="status" data-uid="tc-7548"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-7548"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">compliance เปิดหน้า "เอกสารกฎหมาย" เห็นสองการ์ดครบ: ป้าย active · ช่องเนื้อหา Markdown · version · ตัวอย่าง · ประวัติเวอร์ชัน</div>
+  <div class="h-title">compliance เปิดหน้า "เอกสารกฎหมาย" เห็นแท็บ Terms/Privacy ครบ: ป้าย "ใช้อยู่" · ช่องเนื้อหา Markdown · version ใหม่ · ตัวอย่าง · ประวัติเวอร์ชัน</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · Epic 1 · L</div>
   <div class="sec"><h4>Precondition</h4><ul><li>บัญชีพนักงาน role compliance</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) แล้วเข้าสู่ระบบด้วยบัญชี role compliance</li><li>กดเมนู "เอกสารกฎหมาย" ที่แถบเมนูด้านซ้าย</li><li>อ่านหัวเรื่องและคำอธิบายใต้หัวเรื่อง</li><li>ไล่ดูทั้งสองการ์ดให้ครบทุกส่วน แล้วเลื่อนลงดูรายการ "ประวัติเวอร์ชัน"</li></ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) แล้วเข้าสู่ระบบด้วยบัญชี role compliance</li><li>กดเมนู "เอกสารกฎหมาย" ที่แถบเมนูด้านซ้าย</li><li>อ่านหัวเรื่องและคำอธิบายใต้หัวเรื่อง</li><li>สลับแท็บ "ข้อกำหนดการใช้งาน" / "นโยบายความเป็นส่วนตัว" ไล่ดูส่วนประกอบให้ครบ แล้วเลื่อนลงดูการ์ด "ประวัติเวอร์ชัน"</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>หัวเรื่อง "เอกสารกฎหมาย (Terms / Privacy)" พร้อมคำอธิบายว่าแก้เนื้อหา (Markdown) + publish เปลี่ยนทันทีบนหน้าเว็บ ไม่ต้อง deploy</li><li>มีสองการ์ด: "ข้อกำหนดการใช้งาน (Terms)" และ "นโยบายความเป็นส่วนตัว (Privacy)" แต่ละการ์ดมีป้าย "active: &lt;version&gt;"</li><li>แต่ละการ์ดมีช่อง "เนื้อหา (Markdown)" · ช่อง "version ใหม่ (ISO date)" · ปุ่ม "ซ่อนตัวอย่าง"/"ดูตัวอย่าง" · ปุ่ม "Publish"</li><li>มีบล็อก "ตัวอย่าง" แสดงเนื้อหาที่เรนเดอร์แล้ว และรายการ "ประวัติเวอร์ชัน" พร้อมคำเตือนว่าย้อนกลับแล้วผู้ใช้ต้องกดยอมรับใหม่ทุกคน</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 · Story 1.7 · NOFR8 (TKH-77/39)</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>หัวเรื่อง "เอกสารกฎหมาย" พร้อมคำอธิบาย "แก้เนื้อหา (Markdown) แล้ว publish — เปลี่ยนทันทีบนหน้าเว็บ ไม่ต้อง deploy · publish เวอร์ชันใหม่ = ผู้ใช้เดิมต้องกดยอมรับใหม่ (consent gate)"</li><li>มีแท็บ "ข้อกำหนดการใช้งาน" และ "นโยบายความเป็นส่วนตัว" (แสดงทีละฉบับ) พร้อมเลขเวอร์ชันกำกับบนแท็บ</li><li>ฉบับที่เปิดอยู่มีป้าย "ใช้อยู่: &lt;version&gt;" (หรือ "ยังไม่มีเวอร์ชันที่ใช้อยู่") · ช่อง "เนื้อหา (Markdown)" แสดงเนื้อหาเวอร์ชันที่ใช้อยู่ · ช่อง "version ใหม่" placeholder 2026-07-28 · ปุ่ม "Publish"</li><li>บล็อก "ตัวอย่างที่ลูกค้าจะเห็น" เรนเดอร์ Markdown คู่กับช่องพิมพ์ (ปุ่ม "ซ่อน" / "แสดงตัวอย่าง" สลับได้) · พิมพ์แก้เนื้อหาแล้วขึ้นป้าย "แก้ไขแล้วยังไม่ publish"</li><li>การ์ด "ประวัติเวอร์ชัน (N)" เรียงเวอร์ชันพร้อม "publish เมื่อ &lt;วันที่&gt;" ป้าย "ใช้อยู่" และปุ่ม "ย้อนกลับมาใช้เวอร์ชันนี้" พร้อมคำเตือนว่าย้อนกลับแล้วผู้ใช้ต้องกดยอมรับใหม่ทุกคน</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 · Story 1.7 · NOFR8 (TKH-77/39)</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1963,20 +1963,20 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 <tr class="trow" data-feat="r1l" data-level="ui" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">E1-L.2</td>
-  <td class="ctitle">publish Terms เวอร์ชันใหม่ → toast "publish สำเร็จ…" ป้าย active เปลี่ยน หน้า /terms อัปเดตทันที และเวอร์ชันเดิมยังอยู่ในประวัติ <span class="kd kd-happy">Happy Path</span></td>
+  <td class="ctitle">publish Terms เวอร์ชันใหม่ → toast "publish สำเร็จ…" ป้าย "ใช้อยู่" เปลี่ยน หน้า /terms อัปเดตทันที และเวอร์ชันเดิมยังอยู่ในประวัติ <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
   <td class="status" data-uid="tc-7549"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-7549"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">publish Terms เวอร์ชันใหม่ → toast "publish สำเร็จ…" ป้าย active เปลี่ยน หน้า /terms อัปเดตทันที และเวอร์ชันเดิมยังอยู่ในประวัติ</div>
+  <div class="h-title">publish Terms เวอร์ชันใหม่ → toast "publish สำเร็จ…" ป้าย "ใช้อยู่" เปลี่ยน หน้า /terms อัปเดตทันที และเวอร์ชันเดิมยังอยู่ในประวัติ</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · Epic 1 · L</div>
   <div class="sec"><h4>Precondition</h4><ul><li>บัญชี role compliance</li></ul></div>
   <div class="sec"><h4>Test Data</h4><ul><li>version: วันที่วันนี้ (รูปแบบ ปปปป-ดด-วว) · เนื้อหา: ต่อท้ายบรรทัด "ทดสอบ QA &lt;วันที่&gt;"</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) เข้าสู่ระบบด้วย compliance แล้วไปที่เมนู "เอกสารกฎหมาย"</li><li>ที่การ์ด "ข้อกำหนดการใช้งาน (Terms)" แก้ข้อความในช่อง "เนื้อหา (Markdown)" โดยเติมบรรทัดที่จำง่าย เช่น "ทดสอบ QA &lt;วันที่&gt;"</li><li>กรอก "version ใหม่ (ISO date)" เป็นวันที่วันนี้ แล้วกด "Publish"</li><li>เปิดแท็บใหม่ไปที่หน้า /terms แล้วเทียบเนื้อหา · กลับมาดูป้าย active และรายการ "ประวัติเวอร์ชัน"</li></ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) เข้าสู่ระบบด้วย compliance แล้วไปที่เมนู "เอกสารกฎหมาย"</li><li>ที่แท็บ "ข้อกำหนดการใช้งาน" แก้ข้อความในช่อง "เนื้อหา (Markdown)" โดยเติมบรรทัดที่จำง่าย เช่น "ทดสอบ QA &lt;วันที่&gt;"</li><li>กรอก "version ใหม่" เป็นวันที่วันนี้ แล้วกด "Publish"</li><li>เปิดแท็บใหม่ไปที่หน้า /terms แล้วเทียบเนื้อหา · กลับมาดูป้าย "ใช้อยู่" และการ์ด "ประวัติเวอร์ชัน"</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ขึ้น toast "publish สำเร็จ — เนื้อหาบนหน้าเว็บอัปเดตแล้ว" และช่อง version ถูกล้างค่า</li><li>ป้ายบนการ์ดเปลี่ยนเป็น "active: &lt;version ใหม่&gt;"</li><li>หน้า /terms แสดงเนื้อหาใหม่รวมบรรทัดที่เพิ่ม โดยไม่ต้อง deploy</li><li>"ประวัติเวอร์ชัน" มีทั้งเวอร์ชันใหม่ (ป้าย active) และเวอร์ชันเดิมที่ยังอยู่ ไม่ถูกลบ</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 · Story 1.7 AC1 · NOFR8 (TKH-77)</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ขึ้น toast "publish สำเร็จ — เนื้อหาบนหน้าเว็บอัปเดตแล้ว" และช่อง version ถูกล้างค่า</li><li>ป้ายเปลี่ยนเป็น "ใช้อยู่: &lt;version ใหม่&gt;"</li><li>หน้า /terms แสดงเนื้อหาใหม่รวมบรรทัดที่เพิ่ม โดยไม่ต้อง deploy</li><li>"ประวัติเวอร์ชัน" มีทั้งเวอร์ชันใหม่ (ป้าย "ใช้อยู่") และเวอร์ชันเดิมที่ยังอยู่ ไม่ถูกลบ</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 · Story 1.7 AC1 · NOFR8 (TKH-77)</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -2037,9 +2037,9 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · Epic 1 · L</div>
   <div class="sec"><h4>Precondition</h4><ul><li>มี Terms อย่างน้อย 2 เวอร์ชันในประวัติ</li><li>บัญชี role compliance</li><li>บัญชีลูกค้าที่ยอมรับเวอร์ชันล่าสุดไปแล้ว</li></ul></div>
   <div class="sec"><h4>Test Data</h4><ul><li>เวอร์ชันที่ย้อนกลับไป: เวอร์ชันก่อนหน้าในประวัติ</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) เข้าสู่ระบบด้วย compliance แล้วไปที่เมนู "เอกสารกฎหมาย"</li><li>ที่ "ประวัติเวอร์ชัน" ของการ์ด Terms กด "ย้อนกลับมาใช้เวอร์ชันนี้" ที่เวอร์ชันเก่า แล้วอ่านกล่องยืนยันก่อนกดตกลง</li><li>ยืนยันการย้อนกลับ แล้วดูป้าย active และเปิดหน้า /terms เทียบเนื้อหา</li><li>เปิดเบราว์เซอร์ที่สองด้วยบัญชีลูกค้าที่ยอมรับเวอร์ชันล่าสุดไว้ แล้วรีเฟรช</li></ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) เข้าสู่ระบบด้วย compliance แล้วไปที่เมนู "เอกสารกฎหมาย"</li><li>ที่ "ประวัติเวอร์ชัน" ของแท็บ "ข้อกำหนดการใช้งาน" กด "ย้อนกลับมาใช้เวอร์ชันนี้" ที่เวอร์ชันเก่า แล้วอ่านกล่องยืนยันแล้วกด "ไม่ใช่ตอนนี้" หนึ่งรอบ ก่อนกดปุ่มเดิมซ้ำแล้วกด "ยืนยันย้อนกลับ"</li><li>ยืนยันการย้อนกลับ แล้วดูป้าย "ใช้อยู่" และเปิดหน้า /terms เทียบเนื้อหา</li><li>เปิดเบราว์เซอร์ที่สองด้วยบัญชีลูกค้าที่ยอมรับเวอร์ชันล่าสุดไว้ แล้วรีเฟรช</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>กล่องยืนยันถามว่า "ย้อนกลับไปใช้เวอร์ชัน &lt;version&gt;?" และเตือนว่าผู้ใช้ที่ยอมรับเวอร์ชันใหม่ไปแล้วจะต้องกดยอมรับใหม่ทุกคน</li><li>ยืนยันแล้วขึ้น toast "ย้อนกลับไปเวอร์ชัน &lt;version&gt; แล้ว" และป้าย active เปลี่ยนเป็นเวอร์ชันนั้น</li><li>หน้า /terms แสดงเนื้อหาของเวอร์ชันเก่า</li><li>ลูกค้าที่รีเฟรชเจอหน้า "ก่อนเริ่มใช้งาน" ให้ยอมรับอีกครั้ง</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 · Story 1.7 AC3 · NOFR8 (TKH-77)</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>กล่องยืนยัน "ย้อนกลับไปใช้เวอร์ชัน &lt;version&gt;?" เตือนว่าเอกสารจะเปลี่ยนทันทีและผู้ใช้ที่ยอมรับเวอร์ชันใหม่ไปแล้วจะต้องกดยอมรับใหม่ทุกคน — มีปุ่ม "ไม่ใช่ตอนนี้" / "ยืนยันย้อนกลับ"</li><li>ยืนยันแล้วขึ้น toast "ย้อนกลับไปเวอร์ชัน &lt;version&gt; แล้ว" และป้าย "ใช้อยู่" เปลี่ยนเป็นเวอร์ชันนั้น</li><li>หน้า /terms แสดงเนื้อหาของเวอร์ชันเก่า</li><li>ลูกค้าที่รีเฟรชเจอหน้า "ก่อนเริ่มใช้งาน" ให้ยอมรับอีกครั้ง</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 · Story 1.7 AC3 · NOFR8 (TKH-77)</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -2069,9 +2069,9 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Validation</b> <span class="hint">(format · required · character · length)</span> · Epic 1 · L</div>
   <div class="sec"><h4>Precondition</h4><ul><li>บัญชี role compliance</li></ul></div>
   <div class="sec"><h4>Test Data</h4><ul><li>version: ว่าง → วันที่ใหม่ (เนื้อหาว่าง) → เลขเดียวกับ active</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) เข้าสู่ระบบด้วย compliance แล้วไปที่เมนู "เอกสารกฎหมาย"</li><li>ที่การ์ด Terms เว้นช่อง "version ใหม่ (ISO date)" ว่างไว้แล้วกด "Publish"</li><li>กรอก version เป็นวันที่ใหม่ แต่ลบเนื้อหาในช่อง "เนื้อหา (Markdown)" ให้ว่าง แล้วกด "Publish"</li><li>ใส่เนื้อหากลับ แล้วกรอก version ให้ตรงกับที่แสดงบนป้าย active แล้วกด "Publish" แล้วดูป้าย active หลังทั้งสามครั้ง</li></ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) เข้าสู่ระบบด้วย compliance แล้วไปที่เมนู "เอกสารกฎหมาย"</li><li>ที่แท็บ "ข้อกำหนดการใช้งาน" เว้นช่อง "version ใหม่" ว่างไว้แล้วกด "Publish"</li><li>กรอก version เป็นวันที่ใหม่ แต่ลบเนื้อหาในช่อง "เนื้อหา (Markdown)" ให้ว่าง แล้วกด "Publish"</li><li>ใส่เนื้อหากลับ แล้วกรอก version ให้ตรงกับที่แสดงบนป้าย "ใช้อยู่" แล้วกด "Publish" แล้วดูป้าย "ใช้อยู่" หลังทั้งสามครั้ง</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>version ว่าง → ขึ้น "กรุณาระบุ version (เช่น 2026-07-28)"</li><li>เนื้อหาว่าง → ขึ้น "เนื้อหาว่าง"</li><li>version ซ้ำกับ active → ขึ้น "version ซ้ำกับที่ active อยู่ — ตั้งเวอร์ชันใหม่"</li><li>ทั้งสามกรณีป้าย active ไม่เปลี่ยน และ "ประวัติเวอร์ชัน" ไม่มีรายการเพิ่ม</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 · Story 1.7 AC2 · NOFR8</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>version ว่าง → ขึ้น "กรุณาระบุ version (เช่น 2026-07-28)"</li><li>เนื้อหาว่าง → ขึ้น "เนื้อหาว่าง"</li><li>version ซ้ำกับ active → ขึ้น "version ซ้ำกับที่ active อยู่ — ตั้งเวอร์ชันใหม่"</li><li>ทั้งสามกรณีป้าย "ใช้อยู่" ไม่เปลี่ยน และ "ประวัติเวอร์ชัน" ไม่มีรายการเพิ่ม</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 · Story 1.7 AC2 · NOFR8</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -2103,7 +2103,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Data</h4><ul><li>version = เลขของเวอร์ชันเก่าในประวัติ</li></ul></div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) เข้าสู่ระบบด้วย compliance แล้วไปที่เมนู "เอกสารกฎหมาย"</li><li>จดเลข version ของเวอร์ชันเก่าที่อยู่ใน "ประวัติเวอร์ชัน" (ไม่ใช่อันที่ active)</li><li>แก้เนื้อหาเล็กน้อย แล้วกรอก "version ใหม่" ด้วยเลขเดิมที่จดไว้ แล้วกด "Publish"</li><li>อ่านข้อความที่ขึ้น แล้วนับจำนวนรายการใน "ประวัติเวอร์ชัน"</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ระบบปฏิเสธและขึ้นข้อความผิดพลาดเป็นภาษาไทย ไม่ publish ให้</li><li>"ประวัติเวอร์ชัน" ไม่มีรายการเพิ่ม และไม่มีเลข version ซ้ำกันสองรายการ</li><li>ป้าย active ไม่เปลี่ยน</li><li>หน้า /terms ยังเป็นเนื้อหาเดิม</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 · Story 1.7 AC2 (duplicate_version) · NOFR8</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ระบบปฏิเสธและขึ้นข้อความผิดพลาดเป็นภาษาไทย ไม่ publish ให้</li><li>"ประวัติเวอร์ชัน" ไม่มีรายการเพิ่ม และไม่มีเลข version ซ้ำกันสองรายการ</li><li>ป้าย "ใช้อยู่" ไม่เปลี่ยน</li><li>หน้า /terms ยังเป็นเนื้อหาเดิม</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 · Story 1.7 AC2 (duplicate_version) · NOFR8</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -2122,20 +2122,20 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 <tr class="trow" data-feat="r1l" data-level="ui" data-prio="P1" data-kind="happy" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">E1-L.7</td>
-  <td class="ctitle">"ดูตัวอย่าง" / "ซ่อนตัวอย่าง": พิมพ์ Markdown แล้วบล็อก "ตัวอย่าง" เรนเดอร์ตามทันทีโดยยังไม่ publish <span class="kd kd-happy">Happy Path</span></td>
+  <td class="ctitle">"แสดงตัวอย่าง" / "ซ่อน": พิมพ์ Markdown แล้วบล็อก "ตัวอย่างที่ลูกค้าจะเห็น" เรนเดอร์ตามทันทีโดยยังไม่ publish <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
   <td class="status" data-uid="tc-7554"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-7554"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">"ดูตัวอย่าง" / "ซ่อนตัวอย่าง": พิมพ์ Markdown แล้วบล็อก "ตัวอย่าง" เรนเดอร์ตามทันทีโดยยังไม่ publish</div>
+  <div class="h-title">"แสดงตัวอย่าง" / "ซ่อน": พิมพ์ Markdown แล้วบล็อก "ตัวอย่างที่ลูกค้าจะเห็น" เรนเดอร์ตามทันทีโดยยังไม่ publish</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · Epic 1 · L</div>
   <div class="sec"><h4>Precondition</h4><ul><li>บัญชี role compliance</li></ul></div>
   <div class="sec"><h4>Test Data</h4><ul><li>เนื้อหา Markdown: "## หัวข้อทดสอบ" + "- ข้อหนึ่ง"</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) เข้าสู่ระบบด้วย compliance แล้วไปที่เมนู "เอกสารกฎหมาย"</li><li>ที่ช่อง "เนื้อหา (Markdown)" ของการ์ด Privacy พิมพ์หัวข้อและรายการ เช่น "## หัวข้อทดสอบ" เว้นบรรทัด แล้ว "- ข้อหนึ่ง"</li><li>อ่านบล็อก "ตัวอย่าง" ด้านล่างว่าเรนเดอร์เป็นหัวข้อและรายการหรือไม่</li><li>กด "ซ่อนตัวอย่าง" แล้วกด "ดูตัวอย่าง" กลับ แล้วเปิดหน้า /privacy เทียบว่ายังเป็นเนื้อหาเดิม</li></ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) เข้าสู่ระบบด้วย compliance แล้วไปที่เมนู "เอกสารกฎหมาย"</li><li>ที่ช่อง "เนื้อหา (Markdown)" ของแท็บ "นโยบายความเป็นส่วนตัว" พิมพ์หัวข้อและรายการ เช่น "## หัวข้อทดสอบ" เว้นบรรทัด แล้ว "- ข้อหนึ่ง"</li><li>อ่านบล็อก "ตัวอย่างที่ลูกค้าจะเห็น" ข้างช่องพิมพ์ว่าเรนเดอร์เป็นหัวข้อและรายการหรือไม่</li><li>กด "ซ่อน" แล้วกด "แสดงตัวอย่าง" กลับ แล้วเปิดหน้า /privacy เทียบว่ายังเป็นเนื้อหาเดิม</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>บล็อก "ตัวอย่าง" แสดงหัวข้อเป็นตัวใหญ่และรายการเป็นบุลเลต ตามที่พิมพ์</li><li>กด "ซ่อนตัวอย่าง" แล้วบล็อกตัวอย่างหายไป และปุ่มเปลี่ยนเป็น "ดูตัวอย่าง"</li><li>หน้า /privacy ยังเป็นเนื้อหาเดิม เพราะยังไม่ได้กด "Publish"</li><li>ออกจากหน้าโดยไม่ publish แล้วกลับมา เนื้อหาในช่องกลับเป็นของเวอร์ชัน active</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 · Story 1.7 · NOFR8 (TKH-39)</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>บล็อก "ตัวอย่างที่ลูกค้าจะเห็น" แสดงหัวข้อเป็นตัวใหญ่และรายการเป็นบุลเลต ตามที่พิมพ์</li><li>กด "ซ่อน" แล้วบล็อกตัวอย่างหายไป และมีปุ่ม "แสดงตัวอย่าง" ให้เปิดกลับ</li><li>หน้า /privacy ยังเป็นเนื้อหาเดิม เพราะยังไม่ได้กด "Publish"</li><li>ออกจากหน้าโดยไม่ publish แล้วกลับมา เนื้อหาในช่องกลับเป็นของเวอร์ชันที่ใช้อยู่</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 · Story 1.7 · NOFR8 (TKH-39)</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -2186,20 +2186,20 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 <tr class="trow" data-feat="r1l" data-level="ui" data-prio="P1" data-kind="permission" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">E1-L.9</td>
-  <td class="ctitle">compliance ทำได้ครบวงโดยไม่ต้องพึ่ง admin · cs เปิด /legal-admin ไม่ได้ <span class="kd kd-perm">Permission</span></td>
+  <td class="ctitle">compliance ทำได้ครบวงโดยไม่ต้องพึ่ง admin · cs เปิด /admin/legal ไม่ได้ <span class="kd kd-perm">Permission</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
   <td class="status" data-uid="tc-7556"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-7556"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">compliance ทำได้ครบวงโดยไม่ต้องพึ่ง admin · cs เปิด /legal-admin ไม่ได้</div>
+  <div class="h-title">compliance ทำได้ครบวงโดยไม่ต้องพึ่ง admin · cs เปิด /admin/legal ไม่ได้</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Permission</b> <span class="hint">(role ไหนทำได้ / ทำไม่ได้)</span> · Epic 1 · L</div>
   <div class="sec"><h4>Precondition</h4><ul><li>บัญชี role compliance (ไม่มี admin)</li><li>บัญชี role cs</li></ul></div>
   <div class="sec"><h4>Test Data</h4><ul><li>Privacy version ใหม่ = วันที่วันนี้</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) แล้วเข้าสู่ระบบด้วยบัญชี role compliance</li><li>ไปที่เมนู "เอกสารกฎหมาย" publish Privacy เวอร์ชันใหม่ให้สำเร็จโดยไม่ต้องขอให้ admin ช่วย</li><li>ออกจากระบบ แล้วเข้าสู่ระบบด้วยบัญชี role cs</li><li>ตรวจว่ามีเมนู "เอกสารกฎหมาย" ไหม แล้วพิมพ์ /legal-admin บนแถบที่อยู่</li></ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) แล้วเข้าสู่ระบบด้วยบัญชี role compliance</li><li>ไปที่เมนู "เอกสารกฎหมาย" publish Privacy เวอร์ชันใหม่ให้สำเร็จโดยไม่ต้องขอให้ admin ช่วย</li><li>ออกจากระบบ แล้วเข้าสู่ระบบด้วยบัญชี role cs</li><li>ตรวจว่ามีเมนู "เอกสารกฎหมาย" ไหม แล้วพิมพ์ /admin/legal บนแถบที่อยู่ (path เดิม /legal-admin ถูก redirect มาที่นี่)</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>compliance publish ได้สำเร็จด้วยตัวเอง ขึ้น toast "publish สำเร็จ — เนื้อหาบนหน้าเว็บอัปเดตแล้ว"</li><li>cs ไม่เห็นเมนู "เอกสารกฎหมาย" ในแถบเมนู</li><li>cs เปิด /legal-admin ตรง ๆ ได้หน้า "ไม่มีสิทธิ์เข้าถึง" (403)</li><li>ไม่มีเนื้อหาเอกสารหลุดมาแสดงบนหน้า 403</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 · Story 1.7 AC1/AC4 · NOFR8 · FR15</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>compliance publish ได้สำเร็จด้วยตัวเอง ขึ้น toast "publish สำเร็จ — เนื้อหาบนหน้าเว็บอัปเดตแล้ว"</li><li>cs ไม่เห็นเมนู "เอกสารกฎหมาย" ในแถบเมนู</li><li>cs เปิด /admin/legal ตรง ๆ ได้หน้า "ไม่มีสิทธิ์เข้าถึง" (403)</li><li>ไม่มีเนื้อหาเอกสารหลุดมาแสดงบนหน้า 403</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 · Story 1.7 AC1/AC4 · NOFR8 · FR15</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -2218,20 +2218,20 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 <tr class="trow" data-feat="r1l" data-level="ui" data-prio="P1" data-kind="data" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">E1-L.11</td>
-  <td class="ctitle">publish Privacy แล้ว Terms ต้องไม่ถูกแตะ — สองการ์ดแยกกันจริง <span class="kd kd-data">Data</span></td>
+  <td class="ctitle">publish Privacy แล้ว Terms ต้องไม่ถูกแตะ — สองแท็บแยกกันจริง <span class="kd kd-data">Data</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
   <td class="status" data-uid="tc-7557"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-7557"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">publish Privacy แล้ว Terms ต้องไม่ถูกแตะ — สองการ์ดแยกกันจริง</div>
+  <div class="h-title">publish Privacy แล้ว Terms ต้องไม่ถูกแตะ — สองแท็บแยกกันจริง</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Data</b> <span class="hint">(empty · null · duplicate · existing · non-existing)</span> · Epic 1 · L</div>
   <div class="sec"><h4>Precondition</h4><ul><li>บัญชี role compliance</li></ul></div>
   <div class="sec"><h4>Test Data</h4><ul><li>Privacy version ใหม่ = วันที่วันนี้</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) เข้าสู่ระบบด้วย compliance ไปที่เมนู "เอกสารกฎหมาย" แล้วจดเลข active ของทั้ง Terms และ Privacy</li><li>ที่การ์ด "นโยบายความเป็นส่วนตัว (Privacy)" แก้เนื้อหาเล็กน้อยและกรอก version ใหม่ แล้วกด "Publish"</li><li>อ่านป้าย active ของทั้งสองการ์ดอีกครั้ง</li><li>เปิดหน้า /terms และ /privacy เทียบเนื้อหากับก่อนหน้า</li></ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) เข้าสู่ระบบด้วย compliance ไปที่เมนู "เอกสารกฎหมาย" แล้วจดเลขบนป้าย "ใช้อยู่" ของทั้งสองแท็บ (Terms และ Privacy)</li><li>ที่แท็บ "นโยบายความเป็นส่วนตัว" แก้เนื้อหาเล็กน้อยและกรอก version ใหม่ แล้วกด "Publish"</li><li>อ่านป้าย "ใช้อยู่" ของทั้งสองแท็บอีกครั้ง</li><li>เปิดหน้า /terms และ /privacy เทียบเนื้อหากับก่อนหน้า</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ป้าย active ของการ์ด Privacy เปลี่ยนเป็นเวอร์ชันใหม่</li><li>ป้าย active ของการ์ด Terms ยังเป็นเลขเดิมที่จดไว้</li><li>หน้า /privacy เปลี่ยนตามเนื้อหาใหม่ · หน้า /terms ไม่เปลี่ยน</li><li>"ประวัติเวอร์ชัน" ของ Terms ไม่มีรายการเพิ่ม</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 · Story 1.7 · NOFR8 (TKH-77/39)</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ป้าย "ใช้อยู่" ของแท็บ "นโยบายความเป็นส่วนตัว" เปลี่ยนเป็นเวอร์ชันใหม่</li><li>ป้าย "ใช้อยู่" ของแท็บ "ข้อกำหนดการใช้งาน" ยังเป็นเลขเดิมที่จดไว้</li><li>หน้า /privacy เปลี่ยนตามเนื้อหาใหม่ · หน้า /terms ไม่เปลี่ยน</li><li>"ประวัติเวอร์ชัน" ของ Terms ไม่มีรายการเพิ่ม</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 · Story 1.7 · NOFR8 (TKH-77/39)</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -2254,19 +2254,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="featrow" data-featkey="aff-account-card"><td colspan="7">📁 aff-account-card · หน้า "โปรไฟล์" → การ์ด "โปรแกรมผู้แนะนำ" — สถานะบัญชีผู้แนะนำและของที่เอาไปแจกได้จริง <span class="rp"><span class="lv lvl-ui">🌐 11</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="aff-account-card"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
 <tr class="trow" data-feat="raf" data-level="ui" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">AFF-F.1</td>
-  <td class="ctitle">บัญชีที่ยังไม่สมัคร: การ์ด "โปรแกรมผู้แนะนำ" ชวนสมัครพร้อมปุ่ม "สมัครเป็นผู้แนะนำ" และไม่มีรหัส/ลิงก์โผล่มาก่อน <span class="kd kd-happy">Happy Path</span></td>
+  <td class="ctitle">บัญชีที่ยังไม่สมัคร: หน้า "Affiliate" การ์ด "สถานะการสมัคร" ชวนสมัครพร้อมปุ่ม "สมัครเป็น Affiliate" และไม่มีรหัส/ลิงก์โผล่มาก่อน <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
   <td class="status" data-uid="tc-7558"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-7558"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">บัญชีที่ยังไม่สมัคร: การ์ด "โปรแกรมผู้แนะนำ" ชวนสมัครพร้อมปุ่ม "สมัครเป็นผู้แนะนำ" และไม่มีรหัส/ลิงก์โผล่มาก่อน</div>
+  <div class="h-title">บัญชีที่ยังไม่สมัคร: หน้า "Affiliate" การ์ด "สถานะการสมัคร" ชวนสมัครพร้อมปุ่ม "สมัครเป็น Affiliate" และไม่มีรหัส/ลิงก์โผล่มาก่อน</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · Aff Account · F</div>
   <div class="sec"><h4>Precondition</h4><ul><li>บัญชีลูกค้าบน UAT ที่ยังไม่เคยสมัครเป็นผู้แนะนำ</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) แล้วเข้าสู่ระบบด้วยบัญชีลูกค้าที่ยังไม่เคยสมัครผู้แนะนำ</li><li>กดรูปบัญชีที่มุมขวาบนแล้วเลือกเมนูไปหน้า "โปรไฟล์"</li><li>เลื่อนหาการ์ด "โปรแกรมผู้แนะนำ" ที่อยู่ใต้การ์ด "ข้อมูลส่วนตัว"</li><li>อ่านทุกบรรทัดในการ์ดและดูว่ามีปุ่มอะไรบ้าง</li></ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) แล้วเข้าสู่ระบบด้วยบัญชีลูกค้าที่ยังไม่เคยสมัครผู้แนะนำ</li><li>กดเมนู "Affiliate" ที่แถบเมนูด้านซ้าย (แยกออกจากหน้าโปรไฟล์แล้ว — #376)</li><li>อ่านหัวหน้า "Affiliate" (คำโปรย "แนะนำ TAKRA ให้คนอื่นแล้วรับค่าตอบแทน") และการ์ด "สถานะการสมัคร"</li><li>อ่านทุกบรรทัดในการ์ดและดูว่ามีปุ่มอะไรบ้าง</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>มีการ์ดหัวข้อ "โปรแกรมผู้แนะนำ" พร้อมคำโปรย "แนะนำ TAKRA ให้คนอื่นแล้วรับค่าตอบแทน"</li><li>มีข้อความอธิบายว่า "สมัครได้จากที่นี่เลย ไม่ต้องกรอกฟอร์มที่อื่น — เราจะส่งชื่อและอีเมลในโปรไฟล์ของคุณไปให้ แพลตฟอร์มพันธมิตรเปิดบัญชีให้"</li><li>มีปุ่ม "สมัครเป็นผู้แนะนำ" ปุ่มเดียว</li><li>ยังไม่มีป้ายสถานะ ไม่มี "รหัสผู้แนะนำของคุณ" ไม่มี "ลิงก์ชวนสมัคร" และไม่มีปุ่ม "เปิดหน้านักขายของฉัน"</li></ul><div class="hint" style="margin-top:6px">ที่มา: MVP-2 scope-draft §1 · TKH-97 (F-REF-8/F-REF-9)</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>หน้า "Affiliate" แสดงการ์ด "สถานะการสมัคร" (คำโปรย "แนะนำ TAKRA ให้คนอื่นแล้วรับค่าตอบแทน" อยู่ที่หัวหน้า ไม่ใช่หัวการ์ด)</li><li>มีข้อความอธิบายว่า "สมัครได้จากที่นี่เลย ไม่ต้องกรอกฟอร์มที่อื่น — เราจะส่งชื่อและอีเมลในโปรไฟล์ของคุณไปให้ แพลตฟอร์มพันธมิตรเปิดบัญชีให้"</li><li>มีปุ่ม "สมัครเป็น Affiliate" ปุ่มเดียว</li><li>ยังไม่มีป้ายสถานะ ไม่มี "รหัส Affiliate ของคุณ" ไม่มีลิงก์ชวน และไม่มีปุ่ม "เปิดหน้า Affiliate ของฉัน"</li></ul><div class="hint" style="margin-top:6px">ที่มา: MVP-2 scope-draft §1 · TKH-97 (F-REF-8/F-REF-9)</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -2285,19 +2285,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 <tr class="trow" data-feat="raf" data-level="ui" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">AFF-F.2</td>
-  <td class="ctitle">กด "สมัครเป็นผู้แนะนำ" → ปุ่มเป็น "กำลังส่งใบสมัคร…" แล้วได้ป้าย "รออนุมัติ" พร้อมคำอธิบายว่ารหัสจะออกเมื่ออนุมัติ <span class="kd kd-happy">Happy Path</span></td>
+  <td class="ctitle">กด "สมัครเป็น Affiliate" → ปุ่มเป็น "กำลังส่งใบสมัคร…" แล้วได้ป้าย "รออนุมัติ" พร้อมคำอธิบายว่ารหัสจะออกเมื่ออนุมัติ <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
   <td class="status" data-uid="tc-7559"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-7559"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">กด "สมัครเป็นผู้แนะนำ" → ปุ่มเป็น "กำลังส่งใบสมัคร…" แล้วได้ป้าย "รออนุมัติ" พร้อมคำอธิบายว่ารหัสจะออกเมื่ออนุมัติ</div>
+  <div class="h-title">กด "สมัครเป็น Affiliate" → ปุ่มเป็น "กำลังส่งใบสมัคร…" แล้วได้ป้าย "รออนุมัติ" พร้อมคำอธิบายว่ารหัสจะออกเมื่ออนุมัติ</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · Aff Account · F</div>
   <div class="sec"><h4>Precondition</h4><ul><li>บัญชีลูกค้าที่ยังไม่เคยสมัครผู้แนะนำ และกรอกชื่อ-นามสกุลในโปรไฟล์ไว้แล้ว</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) เข้าสู่ระบบด้วยบัญชีลูกค้า แล้วไปที่หน้า "โปรไฟล์"</li><li>ที่การ์ด "โปรแกรมผู้แนะนำ" กด "สมัครเป็นผู้แนะนำ"</li><li>สังเกตข้อความบนปุ่มระหว่างรอ และ toast ที่ขึ้นหลังเสร็จ</li><li>อ่านป้ายสถานะมุมขวาบนของการ์ดและข้อความในการ์ดหลังสมัครเสร็จ แล้วรีเฟรชหน้าเพื่อยืนยันว่าสถานะยังอยู่</li></ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) เข้าสู่ระบบด้วยบัญชีลูกค้า แล้วไปที่เมนู "Affiliate"</li><li>ที่การ์ด "สถานะการสมัคร" กด "สมัครเป็น Affiliate"</li><li>สังเกตข้อความบนปุ่มระหว่างรอ และ toast ที่ขึ้นหลังเสร็จ</li><li>อ่านป้ายสถานะมุมขวาบนของการ์ดและข้อความในการ์ดหลังสมัครเสร็จ แล้วรีเฟรชหน้าเพื่อยืนยันว่าสถานะยังอยู่</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ระหว่างรอ ปุ่มเปลี่ยนเป็น "กำลังส่งใบสมัคร…" และกดซ้ำไม่ได้</li><li>ขึ้น toast "ส่งใบสมัครแล้ว — รอแพลตฟอร์มพันธมิตรอนุมัติ"</li><li>การ์ดขึ้นป้าย "รออนุมัติ" และข้อความ "ทีมงานของแพลตฟอร์มพันธมิตรกำลังตรวจใบสมัคร — รหัสผู้แนะนำจะออกให้เมื่ออนุมัติแล้ว และจะมีอีเมลบอกวิธีตั้งรหัสผ่านครั้งแรก"</li><li>รีเฟรชแล้วยังเป็น "รออนุมัติ" · ยังไม่มีรหัสและลิงก์ให้คัดลอก (ต้องไม่สมมติว่าได้รหัสทันที)</li></ul><div class="hint" style="margin-top:6px">ที่มา: MVP-2 scope-draft §1 · TKH-97 (contract §4)</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ระหว่างรอ ปุ่มเปลี่ยนเป็น "กำลังส่งใบสมัคร…" และกดซ้ำไม่ได้</li><li>ขึ้น toast "ส่งใบสมัครแล้ว — รอแพลตฟอร์มพันธมิตรอนุมัติ"</li><li>การ์ดขึ้นป้าย "รออนุมัติ" และข้อความ "ทีมงานของแพลตฟอร์มพันธมิตรกำลังตรวจใบสมัคร — รหัส Affiliate จะออกให้เมื่ออนุมัติแล้ว และจะมีอีเมลบอกวิธีตั้งรหัสผ่านครั้งแรก"</li><li>รีเฟรชแล้วยังเป็น "รออนุมัติ" · ยังไม่มีรหัสและลิงก์ให้คัดลอก (ต้องไม่สมมติว่าได้รหัสทันที)</li></ul><div class="hint" style="margin-top:6px">ที่มา: MVP-2 scope-draft §1 · TKH-97 (contract §4)</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -2316,19 +2316,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 <tr class="trow" data-feat="raf" data-level="ui" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">AFF-F.3</td>
-  <td class="ctitle">บัญชีที่อนุมัติแล้ว: ป้าย "ใช้งานได้" + "รหัสผู้แนะนำของคุณ" + "ลิงก์ชวนสมัคร (ประกอบรหัสให้แล้ว)" + ปุ่มเข้าพอร์ทัล <span class="kd kd-happy">Happy Path</span></td>
+  <td class="ctitle">บัญชีที่อนุมัติแล้ว: ป้าย "ใช้งานได้" + "รหัส Affiliate ของคุณ" + "ลิงก์ชวนลูกค้าซื้อ" + "ลิงก์ชวนเพื่อนเข้าทีม" + ปุ่มเข้าพอร์ทัล <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
   <td class="status" data-uid="tc-7560"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-7560"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">บัญชีที่อนุมัติแล้ว: ป้าย "ใช้งานได้" + "รหัสผู้แนะนำของคุณ" + "ลิงก์ชวนสมัคร (ประกอบรหัสให้แล้ว)" + ปุ่มเข้าพอร์ทัล</div>
+  <div class="h-title">บัญชีที่อนุมัติแล้ว: ป้าย "ใช้งานได้" + "รหัส Affiliate ของคุณ" + "ลิงก์ชวนลูกค้าซื้อ" + "ลิงก์ชวนเพื่อนเข้าทีม" + ปุ่มเข้าพอร์ทัล</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · Aff Account · F</div>
   <div class="sec"><h4>Precondition</h4><ul><li>บัญชีผู้แนะนำที่ผ่านการอนุมัติแล้ว (สถานะใช้งานได้ และมีรหัส)</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) แล้วเข้าสู่ระบบด้วยบัญชีผู้แนะนำที่อนุมัติแล้ว</li><li>ไปที่หน้า "โปรไฟล์" แล้วเลื่อนไปที่การ์ด "โปรแกรมผู้แนะนำ"</li><li>อ่านป้ายสถานะ แถวรหัส แถวลิงก์ และปุ่มด้านล่างให้ครบ</li><li>อ่านข้อความอธิบายใต้ปุ่มเข้าพอร์ทัล</li></ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) แล้วเข้าสู่ระบบด้วยบัญชีผู้แนะนำที่อนุมัติแล้ว</li><li>ไปที่เมนู "Affiliate" ดูการ์ด "รหัสและลิงก์แนะนำของคุณ"</li><li>อ่านป้ายสถานะ แถวรหัส สองแถวลิงก์ และปุ่มด้านล่างให้ครบ</li><li>อ่านข้อความอธิบายใต้ปุ่มเข้าพอร์ทัล</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ป้ายมุมขวาบนของการ์ดเป็น "ใช้งานได้"</li><li>มีแถว "รหัสผู้แนะนำของคุณ" แสดงรหัสเต็ม พร้อมปุ่ม "คัดลอก"</li><li>มีแถว "ลิงก์ชวนสมัคร (ประกอบรหัสให้แล้ว)" แสดงลิงก์เต็ม (ขึ้นบรรทัดใหม่ได้ ไม่ถูกตัดท้ายด้วย …) พร้อมปุ่ม "คัดลอก"</li><li>มีปุ่ม "เปิดหน้านักขายของฉัน" และข้อความใต้ปุ่มว่า "เปิดแท็บใหม่ไปยังแพลตฟอร์มพันธมิตร · ครั้งแรกที่จะแก้บัญชีธนาคารหรือขอถอนเงิน ระบบจะให้ตั้ง/ยืนยันรหัสผ่านของคุณก่อน"</li></ul><div class="hint" style="margin-top:6px">ที่มา: MVP-2 scope-draft §1 · TKH-97/106/107</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ป้ายมุมขวาบนของการ์ดเป็น "ใช้งานได้" และหัวการ์ดเป็น "รหัสและลิงก์แนะนำของคุณ"</li><li>มีแถว "รหัส Affiliate ของคุณ" แสดงรหัสเต็มพร้อมปุ่มคัดลอก และคำอธิบาย "ให้ผู้สมัครกรอกรหัสนี้ในหน้าสมัคร — ยอดนับให้เหมือนกับมาทางลิงก์"</li><li>มีแถว "ลิงก์ชวนลูกค้าซื้อ" (ส่งให้ลูกค้า — รับค่าคอมมิชชันจากยอดซื้อ) และ "ลิงก์ชวนเพื่อนเข้าทีม" (สมัครผ่านลิงก์นี้เข้ามาเป็นทีมชั้น 1) — ลิงก์แสดงเต็ม ไม่ถูกตัดท้ายด้วย … และคัดลอกได้ทุกแถว (TKH-106/107/180)</li><li>มีปุ่ม "เปิดหน้า Affiliate ของฉัน" และข้อความใต้ปุ่มว่า "เปิดแท็บใหม่ไปยังแพลตฟอร์มพันธมิตร · ครั้งแรกที่จะแก้บัญชีธนาคารหรือขอถอนเงิน ระบบจะให้ตั้ง/ยืนยันรหัสผ่านของคุณก่อน"</li></ul><div class="hint" style="margin-top:6px">ที่มา: MVP-2 scope-draft §1 · TKH-97/106/107</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -2347,19 +2347,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 <tr class="trow" data-feat="raf" data-level="ui" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">AFF-F.4</td>
-  <td class="ctitle">คัดลอกได้ครบทั้งสองแถว: ปุ่มเปลี่ยนเป็น "คัดลอกแล้ว" ชั่วครู่ และค่าที่วางได้เป็นค่าเต็ม ลงท้ายด้วย /register?ref=&lt;รหัส&gt; <span class="kd kd-happy">Happy Path</span></td>
+  <td class="ctitle">คัดลอกได้ครบทุกแถว: ปุ่มเปลี่ยนเป็น "คัดลอกแล้ว" ชั่วครู่ · "ลิงก์ชวนเพื่อนเข้าทีม" ลงท้าย /register?ref=&lt;รหัส&gt; · "ลิงก์ชวนลูกค้าซื้อ" พก ?ref=&lt;รหัสเดียวกัน&gt; <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
   <td class="status" data-uid="tc-7561"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-7561"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">คัดลอกได้ครบทั้งสองแถว: ปุ่มเปลี่ยนเป็น "คัดลอกแล้ว" ชั่วครู่ และค่าที่วางได้เป็นค่าเต็ม ลงท้ายด้วย /register?ref=&lt;รหัส&gt;</div>
+  <div class="h-title">คัดลอกได้ครบทุกแถว: ปุ่มเปลี่ยนเป็น "คัดลอกแล้ว" ชั่วครู่ · "ลิงก์ชวนเพื่อนเข้าทีม" ลงท้าย /register?ref=&lt;รหัส&gt; · "ลิงก์ชวนลูกค้าซื้อ" พก ?ref=&lt;รหัสเดียวกัน&gt;</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · Aff Account · F</div>
   <div class="sec"><h4>Precondition</h4><ul><li>บัญชีผู้แนะนำที่อนุมัติแล้ว</li><li>เปิดเว็บผ่าน https (ปุ่มคัดลอกทำงานได้)</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) เข้าสู่ระบบด้วยบัญชีผู้แนะนำ แล้วไปที่หน้า "โปรไฟล์"</li><li>ที่แถว "รหัสผู้แนะนำของคุณ" กด "คัดลอก" แล้ววางลงในช่องข้อความใดก็ได้เพื่อเทียบกับที่เห็นบนจอ</li><li>ที่แถว "ลิงก์ชวนสมัคร (ประกอบรหัสให้แล้ว)" กด "คัดลอก" แล้ววางเทียบเช่นกัน</li><li>สังเกตข้อความบนปุ่มหลังกด และรอประมาณ 2 วินาทีแล้วดูว่ากลับเป็นเดิมไหม</li></ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) เข้าสู่ระบบด้วยบัญชีผู้แนะนำ แล้วไปที่เมนู "Affiliate"</li><li>ที่แถว "รหัส Affiliate ของคุณ" กด "คัดลอก" แล้ววางลงในช่องข้อความใดก็ได้เพื่อเทียบกับที่เห็นบนจอ</li><li>ที่แถว "ลิงก์ชวนเพื่อนเข้าทีม" และ "ลิงก์ชวนลูกค้าซื้อ" กด "คัดลอก" แล้ววางเทียบเช่นกัน</li><li>สังเกตข้อความบนปุ่มหลังกด และรอประมาณ 2 วินาทีแล้วดูว่ากลับเป็นเดิมไหม</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>กดแล้วปุ่มเปลี่ยนเป็น "คัดลอกแล้ว" พร้อมเครื่องหมายถูก แล้วกลับเป็น "คัดลอก" เองภายในไม่กี่วินาที</li><li>ค่าที่วางจากแถวรหัส ตรงกับรหัสบนจอทุกตัวอักษร</li><li>ค่าที่วางจากแถวลิงก์เป็น URL เต็มของ TAKRA Hub และลงท้ายด้วย /register?ref=&lt;รหัสเดียวกับแถวบน&gt; — ไม่มี … หรือส่วนที่ขาดหาย</li><li>ลิงก์ที่ได้ไม่ชี้กลับเครื่องตัวเอง (ไม่ใช่ localhost หรือ 127.0.0.1)</li></ul><div class="hint" style="margin-top:6px">ที่มา: MVP-2 scope-draft §1 · TKH-106 (ปุ่มคัดลอก) · TKH-107 (ลิงก์ไม่ถูกตัดท้าย)</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>กดแล้วปุ่มเปลี่ยนเป็น "คัดลอกแล้ว" พร้อมเครื่องหมายถูก แล้วกลับเป็น "คัดลอก" เองภายในไม่กี่วินาที</li><li>ค่าที่วางจากแถวรหัส ตรงกับรหัสบนจอทุกตัวอักษร</li><li>ค่าที่วางจาก "ลิงก์ชวนเพื่อนเข้าทีม" เป็น URL เต็มของ TAKRA Hub ลงท้าย /register?ref=&lt;รหัสเดียวกับแถวบน&gt; · "ลิงก์ชวนลูกค้าซื้อ" เป็น URL หน้าแรกที่พก ?ref=&lt;รหัสเดียวกัน&gt; — ไม่มี … หรือส่วนที่ขาดหาย</li><li>ลิงก์ที่ได้ไม่ชี้กลับเครื่องตัวเอง (ไม่ใช่ localhost หรือ 127.0.0.1)</li></ul><div class="hint" style="margin-top:6px">ที่มา: MVP-2 scope-draft §1 · TKH-106 (ปุ่มคัดลอก) · TKH-107 (ลิงก์ไม่ถูกตัดท้าย)</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -2378,19 +2378,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 <tr class="trow" data-feat="raf" data-level="ui" data-prio="P1" data-kind="happy" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">AFF-F.5</td>
-  <td class="ctitle">กด "เปิดหน้านักขายของฉัน" → เปิดแท็บใหม่เข้าพอร์ทัลพันธมิตรได้เลยโดยไม่ต้องกรอกรหัสผ่านซ้ำ แท็บเดิมยังอยู่ <span class="kd kd-happy">Happy Path</span></td>
+  <td class="ctitle">กด "เปิดหน้า Affiliate ของฉัน" → เปิดแท็บใหม่เข้าพอร์ทัลพันธมิตรได้เลยโดยไม่ต้องกรอกรหัสผ่านซ้ำ แท็บเดิมยังอยู่ <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
   <td class="status" data-uid="tc-7562"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-7562"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">กด "เปิดหน้านักขายของฉัน" → เปิดแท็บใหม่เข้าพอร์ทัลพันธมิตรได้เลยโดยไม่ต้องกรอกรหัสผ่านซ้ำ แท็บเดิมยังอยู่</div>
+  <div class="h-title">กด "เปิดหน้า Affiliate ของฉัน" → เปิดแท็บใหม่เข้าพอร์ทัลพันธมิตรได้เลยโดยไม่ต้องกรอกรหัสผ่านซ้ำ แท็บเดิมยังอยู่</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · Aff Account · F</div>
   <div class="sec"><h4>Precondition</h4><ul><li>บัญชีผู้แนะนำที่อนุมัติแล้ว</li><li>อนุญาตให้เว็บเปิดแท็บใหม่ (ไม่ได้บล็อกป๊อปอัป)</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) เข้าสู่ระบบด้วยบัญชีผู้แนะนำ แล้วไปที่หน้า "โปรไฟล์"</li><li>กดปุ่ม "เปิดหน้านักขายของฉัน" ที่การ์ด "โปรแกรมผู้แนะนำ"</li><li>สังเกตข้อความบนปุ่มระหว่างรอ และแท็บใหม่ที่เปิดขึ้น</li><li>กลับมาที่แท็บเดิมแล้วดูว่าหน้าโปรไฟล์ยังอยู่ครบและปุ่มกลับมากดได้</li></ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) เข้าสู่ระบบด้วยบัญชีผู้แนะนำ แล้วไปที่เมนู "Affiliate"</li><li>กดปุ่ม "เปิดหน้า Affiliate ของฉัน" ที่การ์ด "รหัสและลิงก์แนะนำของคุณ"</li><li>สังเกตข้อความบนปุ่มระหว่างรอ และแท็บใหม่ที่เปิดขึ้น</li><li>กลับมาที่แท็บเดิมแล้วดูว่าหน้า "Affiliate" ยังอยู่ครบและปุ่มกลับมากดได้</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ปุ่มเปลี่ยนเป็น "กำลังเปิด…" ระหว่างรอ แล้วกลับเป็นข้อความเดิมเมื่อเสร็จ</li><li>เปิดแท็บใหม่ไปหน้าของแพลตฟอร์มพันธมิตร และเข้าถึงบัญชีผู้แนะนำได้โดยไม่ต้องกรอกรหัสผ่านซ้ำ</li><li>แท็บเดิมยังอยู่ที่หน้า "โปรไฟล์" ไม่ถูกพาออกไป</li><li>กดปุ่มซ้ำอีกครั้งยังเปิดได้ (ขอลิงก์ใหม่ทุกครั้งที่กด)</li></ul><div class="hint" style="margin-top:6px">ที่มา: MVP-2 scope-draft §1 · TKH-97 (contract §5 · ลิงก์ใช้ครั้งเดียว)</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ปุ่มเปลี่ยนเป็น "กำลังเปิด…" ระหว่างรอ แล้วกลับเป็นข้อความเดิมเมื่อเสร็จ</li><li>เปิดแท็บใหม่ไปหน้าของแพลตฟอร์มพันธมิตร และเข้าถึงบัญชีผู้แนะนำได้โดยไม่ต้องกรอกรหัสผ่านซ้ำ</li><li>แท็บเดิมยังอยู่ที่หน้า "Affiliate" ไม่ถูกพาออกไป</li><li>กดปุ่มซ้ำอีกครั้งยังเปิดได้ (ขอลิงก์ใหม่ทุกครั้งที่กด)</li></ul><div class="hint" style="margin-top:6px">ที่มา: MVP-2 scope-draft §1 · TKH-97 (contract §5 · ลิงก์ใช้ครั้งเดียว)</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -2419,7 +2419,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="h-title">เบราว์เซอร์บล็อกแท็บใหม่ → ต้องไม่เงียบ: พาไปพอร์ทัลในแท็บเดิมแทน และปุ่มไม่ค้างที่ "กำลังเปิด…"</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Exception</b> <span class="hint">(API fail · network fail · server error · timeout)</span> · Aff Account · F</div>
   <div class="sec"><h4>Precondition</h4><ul><li>บัญชีผู้แนะนำที่อนุมัติแล้ว</li><li>ตั้งเบราว์เซอร์ให้บล็อกป๊อปอัปของเว็บนี้</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>ตั้งค่าเบราว์เซอร์ให้บล็อกป๊อปอัป/แท็บใหม่ของเว็บ TAKRA Hub (UAT)</li><li>เข้าสู่ระบบด้วยบัญชีผู้แนะนำ แล้วไปที่หน้า "โปรไฟล์"</li><li>กด "เปิดหน้านักขายของฉัน"</li><li>สังเกตว่ามีอะไรเกิดขึ้นบ้าง และปุ่มกลับมากดได้หรือไม่</li></ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>ตั้งค่าเบราว์เซอร์ให้บล็อกป๊อปอัป/แท็บใหม่ของเว็บ TAKRA Hub (UAT)</li><li>เข้าสู่ระบบด้วยบัญชีผู้แนะนำ แล้วไปที่เมนู "Affiliate"</li><li>กด "เปิดหน้า Affiliate ของฉัน"</li><li>สังเกตว่ามีอะไรเกิดขึ้นบ้าง และปุ่มกลับมากดได้หรือไม่</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ไม่เกิดอาการ "กดแล้วไม่มีอะไรเกิดขึ้น" — ผู้ใช้ต้องรู้ผลเสมอ</li><li>เบราว์เซอร์พาไปหน้าพอร์ทัลพันธมิตรในแท็บเดิมแทน (หรือขึ้นข้อความบอกให้อนุญาตแท็บใหม่)</li><li>ปุ่มไม่ค้างอยู่ที่ "กำลังเปิด…"</li><li>ไม่เห็นแท็บเปล่าค้างอยู่โดยไม่มีเนื้อหา</li></ul><div class="hint" style="margin-top:6px">ที่มา: MVP-2 scope-draft §1 · TKH-97</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
@@ -2503,19 +2503,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 <tr class="trow" data-feat="raf" data-level="ui" data-prio="P1" data-kind="data" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">AFF-F.14</td>
-  <td class="ctitle">รีเฟรชหน้าโปรไฟล์แล้วสถานะการ์ด "โปรแกรมผู้แนะนำ" ยังคงเดิม ไม่กลับไปเป็นยังไม่สมัคร <span class="kd kd-data">Data</span></td>
+  <td class="ctitle">รีเฟรชหน้าโปรไฟล์แล้วสถานะการ์ดหน้า "Affiliate" ยังคงเดิม ไม่กลับไปเป็นยังไม่สมัคร <span class="kd kd-data">Data</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
   <td class="status" data-uid="tc-7566"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-7566"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">รีเฟรชหน้าโปรไฟล์แล้วสถานะการ์ด "โปรแกรมผู้แนะนำ" ยังคงเดิม ไม่กลับไปเป็นยังไม่สมัคร</div>
+  <div class="h-title">รีเฟรชหน้าโปรไฟล์แล้วสถานะการ์ดหน้า "Affiliate" ยังคงเดิม ไม่กลับไปเป็นยังไม่สมัคร</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Data</b> <span class="hint">(empty · null · duplicate · existing · non-existing)</span> · Aff Account · F</div>
-  <div class="sec"><h4>Precondition</h4><ul><li>บัญชีที่กด "สมัครเป็นผู้แนะนำ" ไปแล้ว (สถานะ "รออนุมัติ" หรือ "ใช้งานได้")</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) เข้าสู่ระบบด้วยบัญชีผู้แนะนำ แล้วไปที่หน้า "โปรไฟล์" จดป้ายสถานะบนการ์ด</li><li>รีเฟรชหน้าแล้วดูป้ายสถานะอีกครั้ง</li><li>ออกจากระบบแล้วเข้าสู่ระบบใหม่ด้วยบัญชีเดิม แล้วกลับมาหน้า "โปรไฟล์"</li><li>ตรวจว่าปุ่ม "สมัครเป็นผู้แนะนำ" กลับมาให้กดซ้ำหรือไม่</li></ol></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>บัญชีที่กด "สมัครเป็น Affiliate" ไปแล้ว (สถานะ "รออนุมัติ" หรือ "ใช้งานได้")</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) เข้าสู่ระบบด้วยบัญชีผู้แนะนำ แล้วไปที่เมนู "Affiliate" จดป้ายสถานะบนการ์ด</li><li>รีเฟรชหน้าแล้วดูป้ายสถานะอีกครั้ง</li><li>ออกจากระบบแล้วเข้าสู่ระบบใหม่ด้วยบัญชีเดิม แล้วกลับมาหน้า "Affiliate"</li><li>ตรวจว่าปุ่ม "สมัครเป็น Affiliate" กลับมาให้กดซ้ำหรือไม่</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>รีเฟรชแล้วป้ายสถานะเหมือนเดิมทุกครั้ง</li><li>ออกจากระบบแล้วเข้าใหม่ สถานะยังคงเดิม</li><li>ไม่มีปุ่ม "สมัครเป็นผู้แนะนำ" กลับมาให้กดซ้ำเมื่อสมัครไปแล้ว</li><li>ถ้าสถานะเป็น "ใช้งานได้" รหัสและลิงก์ยังแสดงครบเหมือนเดิม</li></ul><div class="hint" style="margin-top:6px">ที่มา: MVP-2 scope-draft §1 · TKH-97</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>รีเฟรชแล้วป้ายสถานะเหมือนเดิมทุกครั้ง</li><li>ออกจากระบบแล้วเข้าใหม่ สถานะยังคงเดิม</li><li>ไม่มีปุ่ม "สมัครเป็น Affiliate" กลับมาให้กดซ้ำเมื่อสมัครไปแล้ว</li><li>ถ้าสถานะเป็น "ใช้งานได้" รหัสและลิงก์ยังแสดงครบเหมือนเดิม</li></ul><div class="hint" style="margin-top:6px">ที่มา: MVP-2 scope-draft §1 · TKH-97</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -2565,17 +2565,17 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 <tr class="trow" data-feat="raf" data-level="ui" data-prio="P1" data-kind="happy" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">AFF-F.16</td>
-  <td class="ctitle">รหัสที่คัดลอกจากการ์ด เอาไปกรอกในช่อง "รหัสผู้แนะนำ" หน้าสมัคร แล้วขึ้นชื่อเจ้าของรหัสตรงกับตัวเอง <span class="kd kd-happy">Happy Path</span></td>
+  <td class="ctitle">รหัสที่คัดลอกจากการ์ด เอาไปกรอกในช่อง "รหัสแนะนำ" หน้าสมัคร แล้วขึ้นชื่อเจ้าของรหัสตรงกับตัวเอง <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
   <td class="status" data-uid="tc-7568"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-7568"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">รหัสที่คัดลอกจากการ์ด เอาไปกรอกในช่อง "รหัสผู้แนะนำ" หน้าสมัคร แล้วขึ้นชื่อเจ้าของรหัสตรงกับตัวเอง</div>
+  <div class="h-title">รหัสที่คัดลอกจากการ์ด เอาไปกรอกในช่อง "รหัสแนะนำ" หน้าสมัคร แล้วขึ้นชื่อเจ้าของรหัสตรงกับตัวเอง</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · Aff Account · F</div>
   <div class="sec"><h4>Precondition</h4><ul><li>บัญชีผู้แนะนำสถานะ "ใช้งานได้" ที่รู้ชื่อ-นามสกุลในโปรไฟล์</li><li>หน้าต่างส่วนตัวของเบราว์เซอร์</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) เข้าสู่ระบบด้วยบัญชีผู้แนะนำ ไปที่ "โปรไฟล์" กด "คัดลอก" ที่แถว "รหัสผู้แนะนำของคุณ"</li><li>เปิดหน้าต่างส่วนตัวแล้วไปที่หน้าสมัครสมาชิกของ TAKRA Hub</li><li>วางรหัสที่คัดลอกลงในช่อง "รหัสผู้แนะนำ (ถ้ามี)" แล้วรอสักครู่</li><li>อ่านข้อความที่ขึ้นใต้ช่องแล้วเทียบกับชื่อในโปรไฟล์ของบัญชีผู้แนะนำ</li></ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) เข้าสู่ระบบด้วยบัญชีผู้แนะนำ ไปที่เมนู "Affiliate" กด "คัดลอก" ที่แถว "รหัส Affiliate ของคุณ"</li><li>เปิดหน้าต่างส่วนตัวแล้วไปที่หน้าสมัครสมาชิกของ TAKRA Hub</li><li>วางรหัสที่คัดลอกลงในช่อง "รหัสแนะนำ (ถ้ามี)" แล้วรอสักครู่</li><li>อ่านข้อความที่ขึ้นใต้ช่องแล้วเทียบกับชื่อในโปรไฟล์ของบัญชีผู้แนะนำ</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ระหว่างตรวจขึ้น "กำลังตรวจสอบรหัส…"</li><li>จากนั้นขึ้นบรรทัด "ผู้แนะนำ: &lt;ชื่อ&gt;" พร้อมเครื่องหมายถูก</li><li>ชื่อที่ขึ้นตรงกับชื่อ-นามสกุลในโปรไฟล์ของบัญชีผู้แนะนำ</li><li>รหัสที่คัดลอกจากการ์ดใช้กรอกมือได้จริง ไม่ต้องพึ่งลิงก์อย่างเดียว</li></ul><div class="hint" style="margin-top:6px">ที่มา: MVP-2 scope-draft §1 · TKH-97/106</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
@@ -2600,20 +2600,20 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="featrow" data-featkey="aff-attribution"><td colspan="7">📁 aff-attribution · หน้า "สมัครสมาชิก" + หน้ารายละเอียดสลิปของ CS — ยอดของใครต้องเข้าของคนนั้น <span class="rp"><span class="lv lvl-ui">🌐 11</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="aff-attribution"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
 <tr class="trow" data-feat="rag" data-level="ui" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">AFF-G.1</td>
-  <td class="ctitle">เปิดลิงก์ชวนสมัคร ?ref=&lt;รหัส&gt; แล้วสมัครโดยไม่ต้องกรอกรหัสเอง → ระบบจำรหัสให้ในเบราว์เซอร์ <span class="kd kd-happy">Happy Path</span></td>
+  <td class="ctitle">เปิดลิงก์ชวนสมัคร ?ref=&lt;รหัส&gt; แล้วสมัครโดยไม่ต้องกรอกรหัสเอง → ช่องรหัสถูกเติมให้จากลิงก์ (prefill) <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
   <td class="status" data-uid="tc-7569"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-7569"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">เปิดลิงก์ชวนสมัคร ?ref=&lt;รหัส&gt; แล้วสมัครโดยไม่ต้องกรอกรหัสเอง → ระบบจำรหัสให้ในเบราว์เซอร์</div>
+  <div class="h-title">เปิดลิงก์ชวนสมัคร ?ref=&lt;รหัส&gt; แล้วสมัครโดยไม่ต้องกรอกรหัสเอง → ช่องรหัสถูกเติมให้จากลิงก์ (prefill)</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · Aff Account · G</div>
   <div class="sec"><h4>Precondition</h4><ul><li>ลิงก์ชวนสมัครของผู้แนะนำที่อนุมัติแล้ว (คัดลอกจากเคส AFF-F.4)</li><li>อีเมลใหม่ที่ยังไม่เคยสมัคร</li></ul></div>
   <div class="sec"><h4>Test Data</h4><ul><li>ลิงก์: https://&lt;hub-uat&gt;/register?ref=&lt;รหัสผู้แนะนำ&gt; · อีเมลใหม่: qa+ref&lt;วันที่&gt;@example.com</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดหน้าต่างส่วนตัวของเบราว์เซอร์ (ไม่มีคุกกี้เก่า) แล้ววางลิงก์ชวนสมัครที่คัดลอกไว้ กด Enter</li><li>อ่านหน้าที่ได้ แล้วดูช่อง "รหัสผู้แนะนำ (ถ้ามี)" ว่ามีค่าเติมไว้ให้หรือไม่</li><li>กรอกอีเมลใหม่ รหัสผ่าน ชื่อ-นามสกุล ติ๊กยอมรับเอกสาร แล้วกดสมัคร โดยไม่กรอกช่องรหัสผู้แนะนำ</li><li>ทำตามขั้นตอนยืนยันอีเมลจนเข้าสู่ระบบได้ แล้วสังเกตว่าใช้งานได้ปกติ</li></ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดหน้าต่างส่วนตัวของเบราว์เซอร์ (ไม่มีคุกกี้เก่า) แล้ววางลิงก์ชวนสมัครที่คัดลอกไว้ กด Enter</li><li>อ่านหน้าที่ได้ แล้วดูช่อง "รหัสแนะนำ (ถ้ามี)" ว่ามีค่าเติมไว้ให้หรือไม่</li><li>กรอกอีเมลใหม่ รหัสผ่าน ชื่อ-นามสกุล เบอร์โทร ติ๊กยอมรับเอกสาร แล้วกดสมัคร โดยไม่แก้ช่องรหัสแนะนำ</li><li>ทำตามขั้นตอนยืนยันอีเมลจนเข้าสู่ระบบได้ แล้วสังเกตว่าใช้งานได้ปกติ</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>เปิดลิงก์แล้วเข้าหน้าสมัครสมาชิกตามปกติ ไม่มีข้อผิดพลาด</li><li>ช่อง "รหัสผู้แนะนำ (ถ้ามี)" ว่าง — ระบบจำรหัสไว้ในเบราว์เซอร์เอง ผู้สมัครไม่ต้องกรอก</li><li>สมัครสำเร็จโดยไม่ต้องกรอกรหัส และเข้าใช้งานได้</li><li>การผูกยอดของบัญชีนี้กับผู้แนะนำจะไปยืนยันต่อที่หน้ารายละเอียดสลิปฝั่ง CS (เคส AFF-G.9)</li></ul><div class="hint" style="margin-top:6px">ที่มา: MVP-2 scope-draft §1 · TKH-97 (last-click capture)</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>เปิดลิงก์แล้วเข้าหน้าสมัครสมาชิกตามปกติ ไม่มีข้อผิดพลาด</li><li>ช่อง "รหัสแนะนำ (ถ้ามี)" ถูกเติมรหัสจากลิงก์ให้แล้ว (prefill) และเมื่อตรวจเจอขึ้น "ผู้แนะนำ: &lt;ชื่อเจ้าของรหัส&gt;" ใต้ช่อง — ผู้สมัครไม่ต้องกรอกเอง</li><li>สมัครสำเร็จโดยไม่ต้องกรอกรหัส และเข้าใช้งานได้</li><li>การผูกยอดของบัญชีนี้กับผู้แนะนำจะไปยืนยันต่อที่หน้ารายละเอียดสลิปฝั่ง CS (เคส AFF-G.9)</li></ul><div class="hint" style="margin-top:6px">ที่มา: MVP-2 scope-draft §1 · TKH-97 (last-click capture)</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -2632,20 +2632,20 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 <tr class="trow" data-feat="rag" data-level="ui" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">AFF-G.2</td>
-  <td class="ctitle">กรอก "รหัสผู้แนะนำ" เองในหน้าสมัคร: พิมพ์รหัสจริงแล้วขึ้นชื่อเจ้าของรหัสให้ยืนยันก่อนสมัคร <span class="kd kd-happy">Happy Path</span></td>
+  <td class="ctitle">กรอก "รหัสแนะนำ" เองในหน้าสมัคร: พิมพ์รหัสจริงแล้วขึ้นชื่อเจ้าของรหัสให้ยืนยันก่อนสมัคร <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
   <td class="status" data-uid="tc-7570"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-7570"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">กรอก "รหัสผู้แนะนำ" เองในหน้าสมัคร: พิมพ์รหัสจริงแล้วขึ้นชื่อเจ้าของรหัสให้ยืนยันก่อนสมัคร</div>
+  <div class="h-title">กรอก "รหัสแนะนำ" เองในหน้าสมัคร: พิมพ์รหัสจริงแล้วขึ้นชื่อเจ้าของรหัสให้ยืนยันก่อนสมัคร</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · Aff Account · G</div>
-  <div class="sec"><h4>Precondition</h4><ul><li>รหัสผู้แนะนำที่ใช้งานได้จริง</li><li>อีเมลใหม่ที่ยังไม่เคยสมัคร</li></ul></div>
-  <div class="sec"><h4>Test Data</h4><ul><li>รหัสผู้แนะนำที่ใช้งานได้ (ตัวอย่างในช่อง: TK-YXA7814RYQ)</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) ที่หน้าสมัครสมาชิก (ไม่ผ่านลิงก์ชวนสมัคร)</li><li>กรอกอีเมล รหัสผ่าน ชื่อ-นามสกุลตามปกติ</li><li>ที่ช่อง "รหัสผู้แนะนำ (ถ้ามี)" พิมพ์รหัสจริงให้ครบ แล้วรอสักครู่</li><li>อ่านข้อความที่ขึ้นใต้ช่อง แล้วติ๊กยอมรับเอกสารและกดสมัครให้เสร็จ</li></ol></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>รหัส Affiliate ที่ใช้งานได้จริง</li><li>อีเมลใหม่ที่ยังไม่เคยสมัคร</li></ul></div>
+  <div class="sec"><h4>Test Data</h4><ul><li>รหัส Affiliate ที่ใช้งานได้ (ตัวอย่างในช่อง: TK-YXA7814RYQ)</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) ที่หน้าสมัครสมาชิก (ไม่ผ่านลิงก์ชวนสมัคร)</li><li>กรอกอีเมล รหัสผ่าน ชื่อ-นามสกุล เบอร์โทรตามปกติ</li><li>ที่ช่อง "รหัสแนะนำ (ถ้ามี)" พิมพ์รหัสจริงให้ครบ แล้วรอสักครู่</li><li>อ่านข้อความที่ขึ้นใต้ช่อง แล้วติ๊กยอมรับเอกสารและกดสมัครให้เสร็จ</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ช่องมีคำอธิบาย "รหัสผู้แนะนำ (ถ้ามี)" และตัวอย่างในช่องว่าง เช่น "เช่น TK-YXA7814RYQ"</li><li>ระหว่างตรวจสอบขึ้นข้อความ "กำลังตรวจสอบรหัส…"</li><li>เมื่อเจอ ขึ้นบรรทัดสีเขียว "ผู้แนะนำ: &lt;ชื่อเจ้าของรหัส&gt;" พร้อมเครื่องหมายถูก</li><li>สมัครสำเร็จโดยรหัสที่กรอกถูกบันทึกไว้ผูกกับบัญชีใหม่</li></ul><div class="hint" style="margin-top:6px">ที่มา: MVP-2 scope-draft §1 · TKH-97</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ช่องมีคำอธิบาย "รหัสแนะนำ (ถ้ามี)" และตัวอย่างในช่องว่าง เช่น "เช่น TK-YXA7814RYQ"</li><li>ระหว่างตรวจสอบขึ้นข้อความ "กำลังตรวจสอบรหัส…"</li><li>เมื่อเจอ ขึ้นบรรทัดสีเขียว "ผู้แนะนำ: &lt;ชื่อเจ้าของรหัส&gt;" พร้อมเครื่องหมายถูก</li><li>สมัครสำเร็จโดยรหัสที่กรอกถูกบันทึกไว้ผูกกับบัญชีใหม่</li></ul><div class="hint" style="margin-top:6px">ที่มา: MVP-2 scope-draft §1 · TKH-97</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -2664,20 +2664,20 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 <tr class="trow" data-feat="rag" data-level="ui" data-prio="P1" data-kind="data" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">AFF-G.3</td>
-  <td class="ctitle">พิมพ์รหัสที่ไม่มีอยู่จริง → "ไม่พบรหัสนี้ — ตรวจสอบอีกครั้ง" แต่ยังสมัครต่อได้ <span class="kd kd-data">Data</span></td>
+  <td class="ctitle">พิมพ์รหัสที่ไม่มีอยู่จริง → "ไม่พบรหัสนี้ — ตรวจสอบอีกครั้ง หรือติ๊กเพื่อยืนยันว่าจะใช้รหัสนี้" — ต้องติ๊กยืนยันก่อนจึงสมัครต่อได้ <span class="kd kd-data">Data</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
   <td class="status" data-uid="tc-7571"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-7571"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">พิมพ์รหัสที่ไม่มีอยู่จริง → "ไม่พบรหัสนี้ — ตรวจสอบอีกครั้ง" แต่ยังสมัครต่อได้</div>
+  <div class="h-title">พิมพ์รหัสที่ไม่มีอยู่จริง → "ไม่พบรหัสนี้ — ตรวจสอบอีกครั้ง หรือติ๊กเพื่อยืนยันว่าจะใช้รหัสนี้" — ต้องติ๊กยืนยันก่อนจึงสมัครต่อได้</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Data</b> <span class="hint">(empty · null · duplicate · existing · non-existing)</span> · Aff Account · G</div>
   <div class="sec"><h4>Precondition</h4><ul><li>อีเมลใหม่ที่ยังไม่เคยสมัคร</li></ul></div>
   <div class="sec"><h4>Test Data</h4><ul><li>รหัสที่ไม่มีจริง: ZZ-NOTEXIST99</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) ที่หน้าสมัครสมาชิก</li><li>กรอกข้อมูลส่วนอื่นให้ครบ</li><li>ที่ช่อง "รหัสผู้แนะนำ (ถ้ามี)" พิมพ์รหัสที่ถูกรูปแบบแต่ไม่มีอยู่จริง เช่น ZZ-NOTEXIST99 แล้วรอ</li><li>อ่านข้อความใต้ช่อง แล้วลองกดสมัครดูว่าถูกบล็อกหรือไม่</li></ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) ที่หน้าสมัครสมาชิก</li><li>กรอกข้อมูลส่วนอื่นให้ครบ</li><li>ที่ช่อง "รหัสแนะนำ (ถ้ามี)" พิมพ์รหัสที่ถูกรูปแบบแต่ไม่มีอยู่จริง เช่น ZZ-NOTEXIST99 แล้วรอ</li><li>อ่านข้อความใต้ช่อง กดสมัครหนึ่งครั้งโดยยังไม่ติ๊ก แล้วติ๊กยืนยันและกดสมัครอีกครั้ง</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ขึ้นข้อความ "ไม่พบรหัสนี้ — ตรวจสอบอีกครั้ง" ใต้ช่อง</li><li>ข้อความเป็นสีจาง ไม่ใช่ข้อความผิดพลาดสีแดงที่ทำให้เข้าใจว่าสมัครไม่ได้</li><li>ยังกดสมัครต่อได้จนสำเร็จ (รหัสผิดไม่บล็อกการสมัคร)</li><li>ลบรหัสออกจากช่องแล้วข้อความหายไป</li></ul><div class="hint" style="margin-top:6px">ที่มา: MVP-2 scope-draft §1 · TKH-97</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ใต้ช่องขึ้นช่องติ๊กพร้อมข้อความ "ไม่พบรหัสนี้ — ตรวจสอบอีกครั้ง หรือติ๊กเพื่อยืนยันว่าจะใช้รหัสนี้" (ข้อความสีจาง ไม่ใช่ error สีแดง)</li><li>กดสมัครโดยยังไม่ติ๊ก → ถูกกันด้วยข้อความ "ไม่พบรหัสแนะนำนี้ — ตรวจสอบอีกครั้ง หรือติ๊กยืนยันว่าจะใช้รหัสนี้" (TKH-112 กันรหัสพิมพ์ผิดหลุดไปเงียบ ๆ)</li><li>ติ๊กยืนยันแล้วสมัครต่อได้จนสำเร็จ</li><li>ลบรหัสออกจากช่องแล้วข้อความ/ช่องติ๊กหายไป</li></ul><div class="hint" style="margin-top:6px">ที่มา: MVP-2 scope-draft §1 · TKH-97</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -2696,20 +2696,20 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 <tr class="trow" data-feat="rag" data-level="ui" data-prio="P1" data-kind="validation" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">AFF-G.4</td>
-  <td class="ctitle">รหัสผิดรูปแบบ → กดสมัครแล้วขึ้น "รหัสผู้แนะนำไม่ถูกต้อง (ตัวอักษร/ตัวเลข/. _ - ไม่เกิน 32 ตัว)" <span class="kd kd-val">Validation</span></td>
+  <td class="ctitle">รหัสผิดรูปแบบ → กดสมัครแล้วขึ้น "รหัสแนะนำไม่ถูกต้อง (ตัวอักษร/ตัวเลข/. _ - ไม่เกิน 32 ตัว)" <span class="kd kd-val">Validation</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
   <td class="status" data-uid="tc-7572"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-7572"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">รหัสผิดรูปแบบ → กดสมัครแล้วขึ้น "รหัสผู้แนะนำไม่ถูกต้อง (ตัวอักษร/ตัวเลข/. _ - ไม่เกิน 32 ตัว)"</div>
+  <div class="h-title">รหัสผิดรูปแบบ → กดสมัครแล้วขึ้น "รหัสแนะนำไม่ถูกต้อง (ตัวอักษร/ตัวเลข/. _ - ไม่เกิน 32 ตัว)"</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Validation</b> <span class="hint">(format · required · character · length)</span> · Aff Account · G</div>
   <div class="sec"><h4>Precondition</h4><ul><li>อีเมลใหม่ที่ยังไม่เคยสมัคร</li></ul></div>
   <div class="sec"><h4>Test Data</h4><ul><li>รหัสผิดรูปแบบ: "TK YXA 78" และ "รหัสไทย"</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) ที่หน้าสมัครสมาชิก แล้วกรอกข้อมูลส่วนอื่นให้ครบ</li><li>ที่ช่อง "รหัสผู้แนะนำ (ถ้ามี)" พิมพ์ค่าที่ผิดรูปแบบ เช่น มีช่องว่างคั่น หรือเป็นภาษาไทย</li><li>ติ๊กยอมรับเอกสารแล้วกดปุ่มสมัคร</li><li>อ่านข้อความที่ขึ้น แล้วแก้รหัสให้ถูกรูปแบบ (หรือลบทิ้ง) แล้วกดสมัครอีกครั้ง</li></ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) ที่หน้าสมัครสมาชิก แล้วกรอกข้อมูลส่วนอื่นให้ครบ</li><li>ที่ช่อง "รหัสแนะนำ (ถ้ามี)" พิมพ์ค่าที่ผิดรูปแบบ เช่น มีช่องว่างคั่น หรือเป็นภาษาไทย</li><li>ติ๊กยอมรับเอกสารแล้วกดปุ่มสมัคร</li><li>อ่านข้อความที่ขึ้น แล้วแก้รหัสให้ถูกรูปแบบ (หรือลบทิ้ง) แล้วกดสมัครอีกครั้ง</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ขึ้นข้อความ "รหัสผู้แนะนำไม่ถูกต้อง (ตัวอักษร/ตัวเลข/. _ - ไม่เกิน 32 ตัว)" และไม่ส่งฟอร์ม</li><li>ไม่มีบัญชีถูกสร้างขึ้นจากการกดครั้งนั้น</li><li>แก้ให้ถูกรูปแบบหรือลบทิ้งแล้วสมัครผ่านได้</li><li>ข้อความไม่ปนกับข้อผิดพลาดของช่องอื่น (อีเมล/รหัสผ่าน)</li></ul><div class="hint" style="margin-top:6px">ที่มา: MVP-2 scope-draft §1 · TKH-97</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ขึ้นข้อความ "รหัสแนะนำไม่ถูกต้อง (ตัวอักษร/ตัวเลข/. _ - ไม่เกิน 32 ตัว)" และไม่ส่งฟอร์ม</li><li>ไม่มีบัญชีถูกสร้างขึ้นจากการกดครั้งนั้น</li><li>แก้ให้ถูกรูปแบบหรือลบทิ้งแล้วสมัครผ่านได้</li><li>ข้อความไม่ปนกับข้อผิดพลาดของช่องอื่น (อีเมล/รหัสผ่าน)</li></ul><div class="hint" style="margin-top:6px">ที่มา: MVP-2 scope-draft §1 · TKH-97</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -2918,20 +2918,20 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 <tr class="trow" data-feat="rag" data-level="ui" data-prio="P1" data-kind="data" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">AFF-G.15</td>
-  <td class="ctitle">พิมพ์รหัสผู้แนะนำแล้วลบทิ้งจนว่าง → ข้อความใต้ช่องหายไป และสมัครได้โดยไม่ผูกผู้แนะนำ <span class="kd kd-data">Data</span></td>
+  <td class="ctitle">พิมพ์รหัสแนะนำแล้วลบทิ้งจนว่าง → ข้อความใต้ช่องหายไป และสมัครได้โดยไม่ผูกผู้แนะนำ <span class="kd kd-data">Data</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
   <td class="status" data-uid="tc-7579"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-7579"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">พิมพ์รหัสผู้แนะนำแล้วลบทิ้งจนว่าง → ข้อความใต้ช่องหายไป และสมัครได้โดยไม่ผูกผู้แนะนำ</div>
+  <div class="h-title">พิมพ์รหัสแนะนำแล้วลบทิ้งจนว่าง → ข้อความใต้ช่องหายไป และสมัครได้โดยไม่ผูกผู้แนะนำ</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Data</b> <span class="hint">(empty · null · duplicate · existing · non-existing)</span> · Aff Account · G</div>
   <div class="sec"><h4>Precondition</h4><ul><li>หน้าสมัครสมาชิกเปิดได้</li><li>อีเมลใหม่ที่ยังไม่เคยสมัคร</li></ul></div>
   <div class="sec"><h4>Test Data</h4><ul><li>รหัสที่ไม่มีจริง: ZZ-NOTEXIST99 → ลบออกจนว่าง</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) ที่หน้าสมัครสมาชิก แล้วกรอกข้อมูลส่วนอื่นให้ครบ</li><li>พิมพ์รหัสที่ไม่มีอยู่จริงลงในช่อง "รหัสผู้แนะนำ (ถ้ามี)" จนขึ้นข้อความ "ไม่พบรหัสนี้ — ตรวจสอบอีกครั้ง"</li><li>ลบข้อความในช่องออกจนว่าง แล้วสังเกตข้อความใต้ช่อง</li><li>ติ๊กยอมรับเอกสารแล้วกดสมัครจนเสร็จ</li></ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ TAKRA Hub (UAT) ที่หน้าสมัครสมาชิก แล้วกรอกข้อมูลส่วนอื่นให้ครบ</li><li>พิมพ์รหัสที่ไม่มีอยู่จริงลงในช่อง "รหัสแนะนำ (ถ้ามี)" จนขึ้นข้อความ "ไม่พบรหัสนี้ — ตรวจสอบอีกครั้ง หรือติ๊กเพื่อยืนยันว่าจะใช้รหัสนี้"</li><li>ลบข้อความในช่องออกจนว่าง แล้วสังเกตข้อความใต้ช่อง</li><li>ติ๊กยอมรับเอกสารแล้วกดสมัครจนเสร็จ</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ลบรหัสจนว่างแล้วข้อความ "ไม่พบรหัสนี้ — ตรวจสอบอีกครั้ง" หายไป</li><li>ไม่มีข้อความค้างหรือคำเตือนสีแดงเหลืออยู่</li><li>กดสมัครได้สำเร็จโดยไม่ติดเรื่องรหัสผู้แนะนำ</li><li>บัญชีที่ได้ไม่ถูกผูกกับผู้แนะนำคนใด</li></ul><div class="hint" style="margin-top:6px">ที่มา: MVP-2 scope-draft §1 · TKH-97</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ลบรหัสจนว่างแล้วข้อความและช่องติ๊กยืนยันหายไป</li><li>ไม่มีข้อความค้างหรือคำเตือนสีแดงเหลืออยู่</li><li>กดสมัครได้สำเร็จโดยไม่ติดเรื่องรหัสผู้แนะนำ</li><li>บัญชีที่ได้ไม่ถูกผูกกับผู้แนะนำคนใด</li></ul><div class="hint" style="margin-top:6px">ที่มา: MVP-2 scope-draft §1 · TKH-97</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -2997,9 +2997,9 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="h-prio">Priority: <b>P0</b> · E2E · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · 🔄 Full E2E Flow — วิ่งครบลูป (มอบสิทธิ์ → ใช้สิทธิ์ → ตรวจย้อนหลัง · ผู้แนะนำ → ยอดเข้า)</div>
   <div class="sec"><h4>Precondition</h4><ul><li>บัญชีลูกค้าที่จะสมัครเป็นผู้แนะนำ (ยังไม่เคยสมัคร)</li><li>อีเมลใหม่สำหรับผู้ถูกชวน</li><li>บัญชี role cs ที่ไม่ใช่สมาชิกทีมของทั้งสองบัญชี</li></ul></div>
   <div class="sec"><h4>Test Data</h4><ul><li>อีเมลผู้ถูกชวน: qa+ref&lt;วันที่&gt;@example.com · แพ็กเกจราคาต่ำสุดบน UAT</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เบราว์เซอร์ A: เข้าสู่ระบบด้วยบัญชีผู้แนะนำ ไปที่ "โปรไฟล์" กด "สมัครเป็นผู้แนะนำ" แล้วรอจนสถานะเป็น "ใช้งานได้" จากนั้นกด "คัดลอก" ที่แถว "ลิงก์ชวนสมัคร (ประกอบรหัสให้แล้ว)"</li><li>เบราว์เซอร์ B (หน้าต่างส่วนตัว): วางลิงก์นั้นเปิดหน้าสมัคร แล้วสมัครด้วยอีเมลใหม่จนเข้าใช้งานได้ โดยไม่กรอกช่อง "รหัสผู้แนะนำ (ถ้ามี)"</li><li>เบราว์เซอร์ B: เลือกแพ็กเกจจากเมนู "บริการ" ทำรายการสั่งซื้อ แล้วแนบสลิปการโอนให้เรียบร้อย</li><li>เบราว์เซอร์ C: เข้าสู่ระบบด้วยบัญชี role cs ไปที่เมนู "ตรวจสลิป" เปิดสลิปใบนั้น กรอก "ยอดที่โอนจริง (จากสลิป)" ให้ตรงแล้วกด "ยืนยันการชำระเงิน"</li><li>เบราว์เซอร์ C: เปิดรายละเอียดสลิปใบเดิมอีกครั้ง แล้วอ่านการ์ด "Affiliate" ทั้งการ์ด</li></ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เบราว์เซอร์ A: เข้าสู่ระบบด้วยบัญชีผู้แนะนำ ไปที่เมนู "Affiliate" กด "สมัครเป็น Affiliate" แล้วรอจนสถานะเป็น "ใช้งานได้" จากนั้นกด "คัดลอก" ที่แถว "ลิงก์ชวนเพื่อนเข้าทีม"</li><li>เบราว์เซอร์ B (หน้าต่างส่วนตัว): วางลิงก์นั้นเปิดหน้าสมัคร แล้วสมัครด้วยอีเมลใหม่จนเข้าใช้งานได้ โดยไม่ต้องแก้ช่อง "รหัสแนะนำ (ถ้ามี)" ที่ถูกเติมรหัสให้จากลิงก์</li><li>เบราว์เซอร์ B: เลือกแพ็กเกจจากเมนู "บริการ" ทำรายการสั่งซื้อ แล้วแนบสลิปการโอนให้เรียบร้อย</li><li>เบราว์เซอร์ C: เข้าสู่ระบบด้วยบัญชี role cs ไปที่เมนู "ตรวจสลิป" เปิดสลิปใบนั้น กรอก "ยอดที่โอนจริง (จากสลิป)" ให้ตรงแล้วกด "ยืนยันการชำระเงิน"</li><li>เบราว์เซอร์ C: เปิดรายละเอียดสลิปใบเดิมอีกครั้ง แล้วอ่านการ์ด "Affiliate" ทั้งการ์ด</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ผู้แนะนำได้สถานะ "ใช้งานได้" พร้อม "รหัสผู้แนะนำของคุณ" และ "ลิงก์ชวนสมัคร (ประกอบรหัสให้แล้ว)" ที่คัดลอกได้ครบ</li><li>ผู้ถูกชวนสมัครผ่านลิงก์ได้โดยไม่ต้องกรอกรหัสเอง และซื้อ/แนบสลิปได้ตามปกติ</li><li>CS ยืนยันสลิปสำเร็จ ขึ้น toast "ยืนยันการชำระเงินแล้ว — เปิดใช้งาน subscription"</li><li>การ์ด "Affiliate" แสดง "Affiliate ref" เป็นรหัสของผู้แนะนำคนนั้น สถานะ "ซิงค์แล้ว" และมี "event_id"</li><li>ยอดของผู้แนะนำถูกบันทึกครบวงตั้งแต่คลิกลิงก์จนถึงยืนยันการชำระเงิน</li></ul><div class="hint" style="margin-top:6px">ที่มา: MVP-2 scope-draft §1 · TKH-97/106/107 (affiliate-payment-v2-plan Phase 1)</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ผู้แนะนำได้สถานะ "ใช้งานได้" พร้อม "รหัส Affiliate ของคุณ" · "ลิงก์ชวนลูกค้าซื้อ" · "ลิงก์ชวนเพื่อนเข้าทีม" ที่คัดลอกได้ครบ</li><li>ผู้ถูกชวนสมัครผ่านลิงก์ได้โดยไม่ต้องกรอกรหัสเอง และซื้อ/แนบสลิปได้ตามปกติ</li><li>CS ยืนยันสลิปสำเร็จ ขึ้น toast "ยืนยันการชำระเงินแล้ว — เปิดใช้งาน subscription"</li><li>การ์ด "Affiliate" แสดง "Affiliate ref" เป็นรหัสของผู้แนะนำคนนั้น สถานะ "ซิงค์แล้ว" และมี "event_id"</li><li>ยอดของผู้แนะนำถูกบันทึกครบวงตั้งแต่คลิกลิงก์จนถึงยืนยันการชำระเงิน</li></ul><div class="hint" style="margin-top:6px">ที่มา: MVP-2 scope-draft §1 · TKH-97/106/107 (affiliate-payment-v2-plan Phase 1)</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -3028,7 +3028,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="h-title">E2E · ABAC ครบวง: CS ในทีมเดียวกับลูกค้ายืนยันเองไม่ได้ → CS อีกคนยืนยันสำเร็จ → compliance เห็นทั้งการปฏิเสธและการอนุญาตในบันทึก</div>
   <div class="h-prio">Priority: <b>P1</b> · E2E · ประเภท: <b>Permission</b> <span class="hint">(role ไหนทำได้ / ทำไม่ได้)</span> · 🔄 Full E2E Flow — วิ่งครบลูป (มอบสิทธิ์ → ใช้สิทธิ์ → ตรวจย้อนหลัง · ผู้แนะนำ → ยอดเข้า)</div>
   <div class="sec"><h4>Precondition</h4><ul><li>บัญชี role cs ที่เป็นสมาชิกทีมของลูกค้า (CS-1)</li><li>บัญชี role cs อีกคนที่ไม่เกี่ยวกับทีมนั้น (CS-2)</li><li>บัญชี compliance</li><li>สลิปรอตรวจของทีมนั้น 1 ใบ</li></ul></div>
-  <div class="sec"><h4>Test Data</h4><ul><li>ยอดที่กรอก = ยอดที่ต้องโอน ทั้งสองครั้ง</li></ul></div>
+  <div class="sec"><h4>Test Data</h4><ul><li>ยอดที่กรอก = "ราคารวมทั้งหมด" ทั้งสองครั้ง</li></ul></div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เบราว์เซอร์ A: เข้าสู่ระบบด้วย CS-1 ไปที่เมนู "ตรวจสลิป" เปิดสลิปของทีมตัวเอง กรอกยอดให้ตรงแล้วกด "ยืนยันการชำระเงิน" แล้วจดข้อความที่ขึ้น</li><li>เบราว์เซอร์ B: เข้าสู่ระบบด้วย CS-2 เปิดสลิปใบเดียวกัน กรอกยอดให้ตรงแล้วกด "ยืนยันการชำระเงิน"</li><li>เบราว์เซอร์ C: เข้าสู่ระบบด้วย compliance เปิดเมนู "บันทึกสิทธิ์" กรอก "สิทธิ์ (ขึ้นต้นด้วย)" = payment: แล้วกด "ค้นหา"</li><li>อ่านแถวที่เกี่ยวข้องทั้งของ CS-1 และ CS-2 แล้วเทียบเวลากับที่กดจริง</li><li>ตรวจว่าลูกค้าได้สิทธิ์ใช้งานหลัง CS-2 ยืนยัน</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>CS-1 ถูกปฏิเสธด้วยข้อความ "คุณเกี่ยวข้องกับรายการนี้ ต้องให้คนอื่นเป็นผู้ตรวจ" และสลิปยังรอตรวจ</li><li>CS-2 ยืนยันสำเร็จ ขึ้น toast "ยืนยันการชำระเงินแล้ว — เปิดใช้งาน subscription"</li><li>หน้า "บันทึกสิทธิ์" มีแถวของ CS-1 ผลเป็น "ปฏิเสธ" เหตุผล "เกี่ยวข้องกับรายการเอง ต้องให้คนอื่นตรวจ"</li><li>และมีแถวของ CS-2 ผลเป็น "อนุญาต" ในสิทธิ์เดียวกัน</li><li>ลูกค้าได้สิทธิ์ใช้งานจริงหลังการยืนยันของ CS-2</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 · Story 1.9 · Story 1.2 · FR16/FR17 (TKH-114)</div></div>

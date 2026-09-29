@@ -240,18 +240,18 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="featrow" data-featkey="fm-login"><td colspan="7">📁 เข้าสู่ระบบ <span class="rp"><span class="lv lvl-ui">🌐 2</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="fm-login"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
 <tr class="trow" data-feat="fmA" data-level="ui" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">FM-A.1</td>
-  <td class="ctitle">เข้าสู่ระบบด้วยชื่อผู้ใช้และรหัสผ่านที่ได้รับ <span class="kd kd-happy">Happy Path</span></td>
+  <td class="ctitle">เข้าสู่ระบบด้วยอีเมลและรหัสผ่านของบัญชี <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
   <td class="status" data-uid="tc-16001"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-16001"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">เข้าสู่ระบบด้วยชื่อผู้ใช้และรหัสผ่านที่ได้รับ</div>
+  <div class="h-title">เข้าสู่ระบบด้วยอีเมลและรหัสผ่านของบัญชี</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · A · เข้าสู่ระบบ — เข้าใช้แอปด้วยบัญชีที่ได้รับ</div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป TAKRA Post บนเครื่อง PC ครั้งแรกบนเครื่องที่ยังไม่เคยเข้าสู่ระบบ</li><li>อ่านคำแนะนำบนหน้าเข้าสู่ระบบ</li><li>กรอก "ชื่อผู้ใช้" และ "รหัสผ่าน" ที่ได้รับ แล้วกด "เข้าสู่ระบบ"</li><li>สังเกตหน้าจอหลังเข้าสำเร็จ</li></ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป TAKRA Post บนเครื่อง PC ครั้งแรกบนเครื่องที่ยังไม่เคยเข้าสู่ระบบ (ต้องต่ออินเทอร์เน็ต)</li><li>อ่านคำแนะนำบนหน้าเข้าสู่ระบบ</li><li>กรอก "อีเมล" และ "รหัสผ่าน" ของบัญชีที่ใช้ทดสอบ แล้วกด "เข้าสู่ระบบ"</li><li>สังเกตหน้าจอหลังเข้าสำเร็จ</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>หน้าเข้าสู่ระบบมีคำแนะนำ "เข้าสู่ระบบด้วยชื่อผู้ใช้และรหัสผ่านที่ได้รับ"</li><li>มีช่อง "ชื่อผู้ใช้" · "รหัสผ่าน" และปุ่ม "เข้าสู่ระบบ"</li><li>เข้าสำเร็จแล้วเข้าหน้าหลักของแอปและเห็นเมนูซ้ายครบ</li></ul><div class="hint" style="margin-top:6px">ที่มา: docs/prd.md §1 (ผู้ใช้ = operator) · i18n login.*</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>หน้าเข้าสู่ระบบมีคำแนะนำ "เข้าสู่ระบบด้วยอีเมลและรหัสผ่านของคุณ — ต้องต่ออินเทอร์เน็ตครั้งแรก"</li><li>มีช่อง "อีเมล" · "รหัสผ่าน" ปุ่ม "เข้าสู่ระบบ" และลิงก์ "ยังไม่มีบัญชี? สมัครสมาชิก" กับ "ลืมรหัสผ่าน"</li><li>เข้าสำเร็จแล้วเข้าหน้าหลักของแอปและเห็นเมนูซ้ายครบ</li></ul><div class="hint" style="margin-top:6px">ที่มา: docs/prd.md §1 (ผู้ใช้ = operator) · i18n login.*</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -279,9 +279,9 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">ออกจากระบบแล้วกลับมาหน้าเข้าสู่ระบบ</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Permission</b> <span class="hint">(สิทธิ์ / โหมดที่จำกัดการทำงาน)</span> · A · เข้าสู่ระบบ — เข้าใช้แอปด้วยบัญชีที่ได้รับ</div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป TAKRA Post บนเครื่อง PC แล้วเข้าสู่ระบบด้วยบัญชีที่ได้รับ</li><li>กด "ออกจากระบบ"</li><li>สังเกตหน้าจอหลังออกจากระบบ แล้วลองเข้าใหม่</li></ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป TAKRA Post บนเครื่อง PC แล้วเข้าสู่ระบบด้วยบัญชีที่ได้รับ</li><li>กด "ออกจากระบบ" แล้วอ่านกล่องยืนยันก่อนกดยืนยัน</li><li>สังเกตหน้าจอหลังออกจากระบบ แล้วลองเข้าใหม่</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>กลับมาที่หน้า "เข้าสู่ระบบ"</li><li>เข้าสู่ระบบใหม่ได้ตามปกติด้วยบัญชีเดิม</li><li>ข้อมูลที่ตั้งค่าไว้ในเครื่องไม่ถูกลบ</li></ul><div class="hint" style="margin-top:6px">ที่มา: i18n login.signout</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>มีกล่องยืนยันหัวข้อ "ออกจากระบบ?" บอกว่าสิทธิ์ของเครื่องนี้ยังอยู่ แต่การเข้าสู่ระบบครั้งถัดไปต้องมีอินเทอร์เน็ต</li><li>ยืนยันแล้วกลับมาที่หน้า "เข้าสู่ระบบ"</li><li>เข้าสู่ระบบใหม่ได้ตามปกติด้วยบัญชีเดิม</li><li>ข้อมูลที่ตั้งค่าไว้ในเครื่องไม่ถูกลบ</li></ul><div class="hint" style="margin-top:6px">ที่มา: i18n login.signout</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -822,18 +822,18 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 <tr class="trow" data-feat="fmD" data-level="ui" data-prio="P0" data-kind="boundary" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">FM-D.4</td>
-  <td class="ctitle">เปลี่ยนชื่อช่องแล้วต้องเตือนเรื่องโฟลเดอร์คอนเทนต์ที่จะถูกเปลี่ยนตาม <span class="kd kd-bnd">Boundary/Edge</span></td>
+  <td class="ctitle">เปลี่ยนชื่อช่องแล้วข้อมูลตามไปกับชื่อใหม่ โดยโฟลเดอร์ไม่ถูกแตะ <span class="kd kd-bnd">Boundary/Edge</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
   <td class="status" data-uid="tc-16020"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-16020"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">เปลี่ยนชื่อช่องแล้วต้องเตือนเรื่องโฟลเดอร์คอนเทนต์ที่จะถูกเปลี่ยนตาม</div>
+  <div class="h-title">เปลี่ยนชื่อช่องแล้วข้อมูลตามไปกับชื่อใหม่ โดยโฟลเดอร์ไม่ถูกแตะ</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Boundary/Edge</b> <span class="hint">(min / max / ก่อน-ตรง-เกินขอบ)</span> · D · ลงทะเบียนเครื่อง &amp; ความเข้ากันได้ — ทำให้เครื่องพร้อมโพสต์</div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป TAKRA Post บนเครื่อง PC แล้วเข้าสู่ระบบด้วยบัญชีที่ได้รับ แล้วเปิดแผงตัวตนของเครื่องที่ลงทะเบียนแล้ว</li><li>แก้ชื่อบัญชีเป็นชื่อใหม่ แล้วกดบันทึก</li><li>อ่านหัวข้อและข้อความในกล่องยืนยันให้ครบก่อนกดยืนยัน</li><li>ยืนยันแล้วอ่านข้อความแจ้งผล</li></ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป TAKRA Post บนเครื่อง PC แล้วเข้าสู่ระบบด้วยบัญชีที่ได้รับ แล้วเปิดแผงตัวตนของเครื่องที่ลงทะเบียนแล้ว</li><li>แก้ชื่อบัญชีเป็นชื่อใหม่ แล้วกดบันทึก</li><li>อ่านหัวข้อและข้อความในกล่องยืนยันให้ครบก่อนกดยืนยัน</li><li>ยืนยันแล้วอ่านข้อความแจ้งผล และดูโฟลเดอร์คอนเทนต์เดิมในเครื่อง</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>กล่องยืนยันมีหัวข้อ "เปลี่ยนชื่อช่องนี้?"</li><li>ข้อความอธิบายว่าโฟลเดอร์คอนเทนต์บน Google Drive และในเครื่องจะถูกเปลี่ยนชื่อตามให้ตรงกัน ส่วนคลิป คิวงาน และประวัติการโพสต์ยังอยู่กับช่องเหมือนเดิม</li><li>ยืนยันแล้วขึ้นข้อความบอกว่าเปลี่ยนชื่อจากอะไรเป็นอะไร และเปลี่ยนชื่อโฟลเดอร์คอนเทนต์ให้ตรงกันกี่รายการ</li><li>ถ้าเปลี่ยนบน Drive ไม่ได้ จะขึ้นข้อความว่าเปลี่ยนในเครื่องแล้วแต่โฟลเดอร์บน Drive ยังไม่ได้เปลี่ยนพร้อมเหตุผล</li></ul><div class="hint" style="margin-top:6px">ที่มา: i18n register.rename_* · docs/CONTENT-DB-MIGRATION.md</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>กล่องยืนยันมีหัวข้อ "เปลี่ยนชื่อช่องนี้?"</li><li>ข้อความอธิบายว่าทุกหน้าจะเรียกช่องนี้ด้วยชื่อใหม่ คลิป คิวงาน และประวัติการโพสต์ยังอยู่กับช่องเหมือนเดิม และโฟลเดอร์ในเครื่องไม่ถูกแตะ</li><li>ยืนยันแล้วขึ้นข้อความบอกว่าเปลี่ยนชื่อจากอะไรเป็นอะไรแล้ว</li><li>โฟลเดอร์คอนเทนต์ในเครื่องยังชื่อเดิม ไม่ถูกเปลี่ยนชื่อหรือย้าย</li></ul><div class="hint" style="margin-top:6px">ที่มา: i18n register.rename_* (commit 7efb31b · 13 ก.ย. — เปลี่ยนชื่อเฉพาะช่อง ไม่แตะ Drive/ดิสก์)</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -989,9 +989,9 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">เปิดเมนูปั้นคอนเทนต์แล้วเห็นรายชื่อช่องและค้นหาได้</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · F · ปั้นคอนเทนต์ — ช่อง &amp; คลังไฟล์ (เชื่อมโยงโฟลเดอร์</div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป TAKRA Post บนเครื่อง PC แล้วเข้าสู่ระบบด้วยบัญชีที่ได้รับ</li><li>กดเมนู "ปั้นคอนเทนต์" ที่แถบซ้าย</li><li>ดูรายการ "ช่อง" ทางซ้าย แล้วพิมพ์บางส่วนของชื่อช่องลงในช่องค้นหา</li><li>เลือกช่องหนึ่งแล้วดูตัวเลขจำนวน record ของช่องนั้น</li></ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป TAKRA Post บนเครื่อง PC แล้วเข้าสู่ระบบด้วยบัญชีที่ได้รับ</li><li>กดเมนู "ปั้นคอนเทนต์" ที่แถบซ้าย</li><li>ดูรายการ "ช่อง" ทางซ้าย แล้วพิมพ์บางส่วนของชื่อช่องลงในช่องค้นหา</li><li>เลือกช่องหนึ่งแล้วดูตัวเลขจำนวนคอนเทนต์ของช่องนั้น</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>เห็นหัวข้อ "ปั้นคอนเทนต์" และรายการ "ช่อง" พร้อมช่องค้นหาที่มีข้อความตัวอย่าง "ค้นหาช่อง…"</li><li>พิมพ์คำค้นแล้วรายชื่อช่องเหลือเฉพาะที่ตรง</li><li>เลือกช่องแล้วเห็นข้อความบอกจำนวน record ในช่องนั้น</li><li>ถ้ายังไม่มีช่องเลยจะขึ้นว่ายังไม่มีช่อง — ให้ลงทะเบียน persona และแพลตฟอร์มก่อน</li></ul><div class="hint" style="margin-top:6px">ที่มา: docs/CONTENT-STUDIO-PRD.md · i18n studio.channels/search_channel/no_channels</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>เห็นหัวข้อ "ปั้นคอนเทนต์" และรายการ "ช่อง" พร้อมช่องค้นหาที่มีข้อความตัวอย่าง "ค้นหาช่อง…"</li><li>พิมพ์คำค้นแล้วรายชื่อช่องเหลือเฉพาะที่ตรง</li><li>เลือกช่องแล้วเห็นข้อความบอกจำนวนแบบ "N คอนเทนต์ในช่องนี้"</li><li>ถ้ายังไม่มีช่องเลยจะขึ้นว่า "ยังไม่มีช่อง — ลงทะเบียนบัญชีผู้โพสต์และแพลตฟอร์มที่หน้าอุปกรณ์ก่อน"</li></ul><div class="hint" style="margin-top:6px">ที่มา: docs/CONTENT-STUDIO-PRD.md · i18n studio.channels/search_channel/no_channels</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1111,7 +1111,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · F · ปั้นคอนเทนต์ — ช่อง &amp; คลังไฟล์ (เชื่อมโยงโฟลเดอร์</div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป TAKRA Post บนเครื่อง PC แล้วเข้าสู่ระบบด้วยบัญชีที่ได้รับ แล้วเข้าเมนู "ปั้นคอนเทนต์" เลือกช่องที่มีคอนเทนต์</li><li>อ่านบรรทัดสรุปจำนวนด้านบนรายการ</li><li>เปลี่ยนตัวกรอง "สถานะ" และตัวเลือก "เรียง" ทีละแบบ</li><li>เลือกตัวกรองที่ไม่มีรายการตรง แล้วอ่านข้อความที่ขึ้น</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>บรรทัดสรุปบอกจำนวน record ทั้งหมด · จำนวนที่พร้อมโพสต์ · จำนวนที่ต้องจัดการ</li><li>ตัวเลือกเรียงมี "เพิ่มล่าสุด" · "ชื่อไฟล์" · "สถานะ" และเปลี่ยนลำดับได้จริง</li><li>กรองแล้วไม่มีรายการตรงจะขึ้น "ไม่มีรายการที่ตรงกับตัวกรองนี้"</li></ul><div class="hint" style="margin-top:6px">ที่มา: i18n studio.summary/sort_*/none_in_filter</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>บรรทัดสรุปบอกจำนวนคอนเทนต์ทั้งหมด · จำนวนที่พร้อมโพสต์ · จำนวนที่ต้องจัดการ</li><li>ตัวเลือกเรียงมี "เพิ่มล่าสุด" · "ชื่อไฟล์" · "สถานะ" และเปลี่ยนลำดับได้จริง</li><li>กรองแล้วไม่มีรายการตรงจะขึ้น "ไม่มีรายการที่ตรงกับตัวกรองนี้"</li></ul><div class="hint" style="margin-top:6px">ที่มา: i18n studio.summary/sort_*/none_in_filter</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1141,7 +1141,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Data</b> <span class="hint">(empty · null · duplicate · existing · non-existing)</span> · F · ปั้นคอนเทนต์ — ช่อง &amp; คลังไฟล์ (เชื่อมโยงโฟลเดอร์</div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป TAKRA Post บนเครื่อง PC แล้วเข้าสู่ระบบด้วยบัญชีที่ได้รับ แล้วเข้าเมนู "ปั้นคอนเทนต์" เลือกช่องที่มีคอนเทนต์หลายสถานะ</li><li>ไล่ดูป้ายสถานะของคลิปในรายการ</li><li>หาคลิปที่ยังไม่ได้ใส่แคปชั่น และคลิปที่ไฟล์ต้นทางถูกย้าย/ลบไปแล้ว</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ป้ายสถานะเป็นภาษาคน: "พร้อมโพสต์" · "ยังไม่มีแคปชั่น" · "อยู่ในคิว" · "โพสต์แล้ว" · "ไฟล์หาย"</li><li>คลิปที่ยังไม่มีแคปชั่นขึ้นสถานะยังไม่มีแคปชั่น ไม่ใช่พร้อมโพสต์</li><li>คลิปที่ไฟล์ต้นทางหายขึ้นสถานะไฟล์หาย พร้อมบอก path ที่หาไม่เจอ</li></ul><div class="hint" style="margin-top:6px">ที่มา: i18n studio.state.* · studio.file_missing_at</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ป้ายสถานะเป็นภาษาคน: "พร้อมโพสต์" · "ยังไม่มีแคปชั่น" · "ยังไม่ใส่ลิงก์สินค้า" · "บันทึกแบบร่างแล้ว" · "อยู่ในคิว" · "โพสต์แล้ว" · "ไฟล์หาย"</li><li>คลิปที่ยังไม่มีแคปชั่นขึ้นสถานะยังไม่มีแคปชั่น และคลิปที่มีแคปชั่นแต่ยังไม่ใส่ลิงก์สินค้าขึ้น "ยังไม่ใส่ลิงก์สินค้า" — ทั้งสองแบบไม่ใช่พร้อมโพสต์</li><li>คลิปที่ไฟล์ต้นทางหายขึ้นสถานะไฟล์หาย พร้อมบอก path ที่หาไม่เจอ</li></ul><div class="hint" style="margin-top:6px">ที่มา: i18n studio.state.* · studio.file_missing_at</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1164,18 +1164,18 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="featrow" data-featkey="fm-studio-edit"><td colspan="7">📁 แก้คอนเทนต์ <span class="rp"><span class="lv lvl-ui">🌐 6</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="fm-studio-edit"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
 <tr class="trow" data-feat="fmG" data-level="ui" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">FM-G.1</td>
-  <td class="ctitle">ใส่แคปชั่นและชื่อสินค้าแล้วคลิปเปลี่ยนเป็นพร้อมโพสต์ <span class="kd kd-happy">Happy Path</span></td>
+  <td class="ctitle">ใส่แคปชั่น ชื่อสินค้า และลิงก์สินค้า แล้วคลิปเปลี่ยนเป็นพร้อมโพสต์ <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
   <td class="status" data-uid="tc-16031"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-16031"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">ใส่แคปชั่นและชื่อสินค้าแล้วคลิปเปลี่ยนเป็นพร้อมโพสต์</div>
+  <div class="h-title">ใส่แคปชั่น ชื่อสินค้า และลิงก์สินค้า แล้วคลิปเปลี่ยนเป็นพร้อมโพสต์</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · G · ปั้นคอนเทนต์ — แคปชั่น</div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป TAKRA Post บนเครื่อง PC แล้วเข้าสู่ระบบด้วยบัญชีที่ได้รับ แล้วเข้าเมนู "ปั้นคอนเทนต์" เลือกช่องที่มีคลิปยังไม่มีแคปชั่น</li><li>กด "แก้ไข" ที่คลิปนั้น</li><li>พิมพ์แคปชั่นลงในช่อง แล้วกรอกชื่อสินค้า</li><li>กด "บันทึกคอนเทนต์" แล้วดูสถานะของคลิปในรายการ</li></ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป TAKRA Post บนเครื่อง PC แล้วเข้าสู่ระบบด้วยบัญชีที่ได้รับ แล้วเข้าเมนู "ปั้นคอนเทนต์" เลือกช่องที่มีคลิปยังไม่มีแคปชั่น</li><li>กด "แก้ไข" ที่คลิปนั้น</li><li>พิมพ์แคปชั่นลงในช่อง แล้วกรอกชื่อสินค้า</li><li>วางลิงก์สินค้าลงในช่องลิงก์</li><li>กด "บันทึกคอนเทนต์" แล้วดูสถานะของคลิปในรายการ</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>หน้าต่างมีหัวข้อ "แก้ไขคอนเทนต์"</li><li>ช่องแคปชั่นมีป้ายกำกับบอกให้ใส่ #แฮชแท็ก ต่อท้ายได้เลย และมีข้อความตัวอย่างในช่อง</li><li>ช่องชื่อสินค้าเป็นไม่บังคับ และมีคำอธิบายว่าไว้แสดงคู่กับชื่อไฟล์</li><li>บันทึกแล้วสถานะคลิปเปลี่ยนจาก "ยังไม่มีแคปชั่น" เป็น "พร้อมโพสต์"</li></ul><div class="hint" style="margin-top:6px">ที่มา: docs/CONTENT-STUDIO-PRD.md · i18n studio.edit_title/caption_*/product_*</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>หน้าต่างมีหัวข้อ "แก้ไขคอนเทนต์"</li><li>ช่องแคปชั่นมีป้ายกำกับบอกให้ใส่ #แฮชแท็ก ต่อท้ายได้เลย และมีข้อความตัวอย่างในช่อง</li><li>ช่องชื่อสินค้าเป็นไม่บังคับ และมีคำอธิบายว่าไว้แสดงคู่กับชื่อไฟล์</li><li>บันทึกแล้วสถานะคลิปเปลี่ยนจาก "ยังไม่มีแคปชั่น" เป็น "พร้อมโพสต์"</li><li>ถ้ามีแคปชั่นแต่ยังไม่ใส่ลิงก์สินค้า สถานะจะเป็น "ยังไม่ใส่ลิงก์สินค้า" ไม่ใช่พร้อมโพสต์</li></ul><div class="hint" style="margin-top:6px">ที่มา: docs/CONTENT-STUDIO-PRD.md · i18n studio.edit_title/caption_*/product_*/state.nolink</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1254,18 +1254,18 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 <tr class="trow" data-feat="fmG" data-level="ui" data-prio="P0" data-kind="validation" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">FM-G.4</td>
-  <td class="ctitle">วางลิงก์สินค้าหลายอันพร้อมกัน ระบบต้องคัดลิงก์เสียออก <span class="kd kd-val">Validation</span></td>
+  <td class="ctitle">ใส่ลิงก์สินค้าได้ 1 ลิงก์ต่อคลิป และลิงก์ที่อ่านไม่ออกต้องถูกปฏิเสธ <span class="kd kd-val">Validation</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
   <td class="status" data-uid="tc-16034"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-16034"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">วางลิงก์สินค้าหลายอันพร้อมกัน ระบบต้องคัดลิงก์เสียออก</div>
+  <div class="h-title">ใส่ลิงก์สินค้าได้ 1 ลิงก์ต่อคลิป และลิงก์ที่อ่านไม่ออกต้องถูกปฏิเสธ</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Validation</b> <span class="hint">(format · required · character · length)</span> · G · ปั้นคอนเทนต์ — แคปชั่น</div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป TAKRA Post บนเครื่อง PC แล้วเข้าสู่ระบบด้วยบัญชีที่ได้รับ แล้วเปิดหน้าต่างแก้ไขคอนเทนต์ของคลิปหนึ่ง</li><li>ที่ส่วนติดสินค้าเลือก "วางลิงก์" แล้วกด "วางหลายลิงก์พร้อมกัน…"</li><li>วางข้อความที่มีทั้งลิงก์ที่ถูกและข้อความมั่วปนกัน แล้วกด "เพิ่มลิงก์ทั้งหมด"</li><li>อ่านข้อความสรุปผล และดูจำนวนลิงก์ที่ถูกเพิ่ม</li></ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป TAKRA Post บนเครื่อง PC แล้วเข้าสู่ระบบด้วยบัญชีที่ได้รับ แล้วเปิดหน้าต่างแก้ไขคอนเทนต์ของคลิปหนึ่ง</li><li>ดูช่องลิงก์สินค้าในส่วน "ติดสินค้า" แล้วอ่านคำอธิบายใต้ช่อง</li><li>วางข้อความมั่วที่ไม่ใช่ลิงก์ แล้วอ่านข้อความที่ระบบแจ้ง</li><li>วางลิงก์สินค้าที่ถูกต้องโดยไม่ใส่ https:// นำหน้า แล้วกด "บันทึกคอนเทนต์"</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ช่องวางลิงก์อธิบายว่าขึ้นบรรทัดใหม่ เว้นวรรค หรือจุลภาคก็ได้ และระบบเติม https:// ให้เอง</li><li>ผลสรุปบอกจำนวนที่พบ · เพิ่ม · ซ้ำที่ข้าม</li><li>ถ้ามีลิงก์อ่านไม่ออกจะขึ้นข้อความบอกจำนวนพร้อมตัวอย่างรูปแบบที่ถูก</li><li>ถ้าไม่พบลิงก์เลยจะขึ้นว่าไม่พบลิงก์ในข้อความที่วาง</li><li>มีคำอธิบายว่าลิงก์ที่ 1 คือสินค้าหลักของโพสต์ ที่เหลือเรียงตามลำดับ</li></ul><div class="hint" style="margin-top:6px">ที่มา: i18n studio.link_*</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ช่องลิงก์มีข้อความตัวอย่าง "เช่น vt.tiktok.com/… หรือ shp.ee/… (ไม่ต้องใส่ https://)"</li><li>มีคำอธิบาย "ลิงก์สินค้าของโพสต์นี้ (1 ลิงก์ต่อคลิป)"</li><li>ข้อความที่ไม่ใช่ลิงก์ถูกปฏิเสธ ขึ้นว่า "ลิงก์นี้อ่านไม่ออก — ต้องเป็นที่อยู่เว็บ เช่น shopee.co.th/product/123"</li><li>ลิงก์ที่ถูกต้องถูกรับและระบบเติม https:// ให้เอง</li><li>คลิปเก่าที่เคยมีหลายลิงก์จะมีคำเตือนว่าบันทึกแล้วจะเหลือเฉพาะลิงก์แรก</li></ul><div class="hint" style="margin-top:6px">ที่มา: i18n studio.link_* (commit 5a4f0f1 · 11 ก.ย. — เหลือ 1 ลิงก์ต่อคลิป ถอดวางหลายลิงก์พร้อมกัน)</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1295,7 +1295,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · G · ปั้นคอนเทนต์ — แคปชั่น</div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป TAKRA Post บนเครื่อง PC แล้วเข้าสู่ระบบด้วยบัญชีที่ได้รับ แล้วเข้าเมนู "ปั้นคอนเทนต์" เลือกคลิปหนึ่ง</li><li>กด "โคลน…" แล้วอ่านหัวข้อและคำอธิบายในหน้าต่าง</li><li>เลือกช่องปลายทางหลายช่อง แล้วกด "โคลน"</li><li>อ่านข้อความสรุปผล แล้วไปดูช่องปลายทาง</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>หน้าต่างมีหัวข้อบอกว่าใช้ไฟล์นี้กับช่องอื่น และอธิบายว่าจะได้ record ใหม่ต่อช่อง ชี้ไฟล์เดิม — ตัวไฟล์ไม่ถูกคัดลอกหรือย้าย</li><li>ช่องที่มีคลิปนี้อยู่แล้วถูกกำกับว่า "มีอยู่แล้ว"</li><li>โคลนเสร็จขึ้นข้อความบอกจำนวนช่องที่โคลนไป และคลิปโผล่ในช่องปลายทาง</li></ul><div class="hint" style="margin-top:6px">ที่มา: i18n studio.clone*</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>หน้าต่างมีหัวข้อบอกว่าใช้ไฟล์นี้กับช่องอื่น และอธิบายว่าจะได้คอนเทนต์ใหม่ต่อช่อง ชี้ไฟล์เดิม — ตัวไฟล์ไม่ถูกคัดลอกหรือย้าย</li><li>ช่องที่มีคลิปนี้อยู่แล้วถูกกำกับว่า "มีอยู่แล้ว"</li><li>โคลนเสร็จขึ้นข้อความบอกจำนวนช่องที่โคลนไป และคลิปโผล่ในช่องปลายทาง</li></ul><div class="hint" style="margin-top:6px">ที่มา: i18n studio.clone*</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1419,7 +1419,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · H · สร้าง Task</div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป TAKRA Post บนเครื่อง PC แล้วเข้าสู่ระบบด้วยบัญชีที่ได้รับ แล้วเข้าแท็บ "Task" ของช่องที่มี task รออยู่</li><li>เลือก task หนึ่งแล้วกด "ตั้งเวลา…"</li><li>อ่านหัวข้อและคำอธิบายในหน้าต่าง แล้วเลือกวันเวลาในอนาคตและยืนยัน</li><li>สังเกตสถานะของ task แล้วกด "เอาออกจากคิวเวลา"</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>หน้าต่างตั้งเวลาบอกว่ากำลังตั้งให้ task รหัสไหนรันเมื่อไร</li><li>มีคำอธิบายว่าตั้งล่วงหน้าได้หลายวัน จนกว่าจะถึงเวลาที่ตั้งไว้ task จะรออยู่เฉย ๆ ไม่โพสต์อะไร</li><li>ตั้งแล้ว task แสดงเวลาที่กำหนดรัน</li><li>กดเอาออกจากคิวเวลาแล้ว task กลับมาเป็นยังไม่กำหนดเวลา</li></ul><div class="hint" style="margin-top:6px">ที่มา: docs/AUTO-SCHEDULE-SPEC.md · i18n studio.schedule*/unschedule/runs_at</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>หน้าต่างตั้งเวลาบอกว่ากำลังตั้งให้ task รหัสไหนรันเมื่อไร</li><li>มีคำอธิบายว่าตั้งล่วงหน้าได้หลายวัน จนกว่าจะถึงเวลาที่ตั้งไว้ task จะรออยู่เฉย ๆ ไม่โพสต์อะไร</li><li>ตั้งแล้ว task แสดงเวลาแบบ "เริ่มได้ตั้งแต่ …" พร้อมคำอธิบายว่าเป็นเวลาเริ่มเร็วสุด — จะเริ่มจริงเมื่อระยะห่างของช่องหมดและมือถือว่าง</li><li>กดเอาออกจากคิวเวลาแล้ว task กลับมาเป็นยังไม่กำหนดเวลา</li></ul><div class="hint" style="margin-top:6px">ที่มา: docs/AUTO-SCHEDULE-SPEC.md · i18n studio.schedule*/unschedule/runs_at</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1479,7 +1479,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Negative</b> <span class="hint">(ข้อมูลผิด / action ผิด)</span> · H · สร้าง Task</div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป TAKRA Post บนเครื่อง PC แล้วเข้าสู่ระบบด้วยบัญชีที่ได้รับ แล้วเข้าแท็บ "Task"</li><li>เลือก task ที่ยังไม่รันแล้วกด "ยกเลิก task" จากนั้นดูสถานะ</li><li>ลอง "ลบ" task นั้น แล้วดูรายการ</li><li>เลือก task ที่โพสต์ไปแล้ว แล้วสังเกตว่าลบได้หรือไม่</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ยกเลิกแล้วสถานะ task เปลี่ยนเป็น "ยกเลิกแล้ว"</li><li>ลบแล้ว task หายจากรายการ</li><li>task ที่โพสต์ไปแล้วมีข้อความกำกับว่าเก็บไว้เป็นประวัติ</li><li>สถานะ task ที่เป็นไปได้อ่านรู้เรื่อง: "รอรัน" · "กำลังรัน" · "จบแล้ว" · "ล้มเหลว" · "ยกเลิกแล้ว"</li></ul><div class="hint" style="margin-top:6px">ที่มา: i18n studio.task_cancel/task_delete/task_kept/task_state.*</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ยกเลิกแล้วสถานะ task เปลี่ยนเป็น "ยกเลิกแล้ว"</li><li>ลบแล้ว task หายจากรายการ</li><li>task ที่โพสต์ไปแล้วมีข้อความกำกับว่าเก็บไว้เป็นประวัติ</li><li>สถานะ task ที่เป็นไปได้อ่านรู้เรื่อง: "รอรัน" · "กำลังรัน" · "งานจบแล้ว" (ทั้งงานที่สำเร็จและที่มีล้มเหลว — ดูตัวเลข "สำเร็จ N / ล้มเหลว N" ประกอบ) · "ยกเลิกแล้ว"</li></ul><div class="hint" style="margin-top:6px">ที่มา: i18n studio.task_cancel/task_delete/task_kept/task_state.*</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1509,7 +1509,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · H · สร้าง Task</div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป TAKRA Post บนเครื่อง PC แล้วเข้าสู่ระบบด้วยบัญชีที่ได้รับ แล้วเข้าเมนู "ปั้นคอนเทนต์" เลือกช่องหนึ่ง</li><li>เปิดหน้าต่างกติกาการโพสต์ของช่องนั้น</li><li>อ่านหัวข้อและคำอธิบายของช่วงระยะห่าง แล้วตั้งค่าช่วงเวลา</li><li>บันทึกแล้วอ่านหมายเหตุท้ายหน้าต่าง</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>หน้าต่างมีหัวข้อบอกว่าเป็นกติกาการโพสต์ของช่องไหน</li><li>มีช่อง "ระยะห่างระหว่างโพสต์" พร้อมคำอธิบายว่าเป็นหน่วยนาที สุ่มใหม่จากช่วงนี้ทุกครั้งหลังโพสต์ เพราะระยะห่างเท่ากันเป๊ะคือสัญญาณว่าไม่ใช่คนทำ</li><li>มีหมายเหตุว่าช่องมีกติกาแค่ข้อนี้ข้อเดียว ส่วนจะโพสต์อะไรและเมื่อไรตัดสินจาก task ที่สร้าง</li></ul><div class="hint" style="margin-top:6px">ที่มา: i18n studio.plan_*/plan_gap*</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>หน้าต่างมีหัวข้อบอกว่าเป็นกติกาการโพสต์ของช่องไหน</li><li>มีช่อง "ระยะห่างระหว่างโพสต์" พร้อมคำอธิบายว่าเป็นหน่วยนาที สุ่มใหม่จากช่วงนี้ทุกครั้งหลังโพสต์ เพราะระยะห่างเท่ากันเป๊ะคือสัญญาณว่าไม่ใช่คนทำ</li><li>มีช่อง "จำนวนโพสต์ต่อวัน" พร้อมคำอธิบายว่าเปิดแล้วช่องจะหยุดเมื่อครบจำนวนต่อวัน และหน้าภาพรวมใช้เลขนี้คำนวณว่าคอนเทนต์พอไปอีกกี่วัน</li><li>มีหมายเหตุว่าช่องมีกติกาแค่สองข้อนี้ ส่วนจะโพสต์อะไรและเมื่อไรตัดสินจาก task ที่สร้าง</li></ul><div class="hint" style="margin-top:6px">ที่มา: i18n studio.plan_*/plan_gap*/plan_per_day*</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1571,9 +1571,9 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">ดูงานที่กำลังรันแบบสดพร้อมขั้นตอนที่กำลังทำ</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · I · มอนิเตอร์งานที่กำลังรัน</div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป TAKRA Post บนเครื่อง PC แล้วเข้าสู่ระบบด้วยบัญชีที่ได้รับ แล้วเข้าเมนู "ปั้นคอนเทนต์" สลับไปแท็บ "มอนิเตอร์"</li><li>สั่งรัน task หนึ่ง (แนะนำให้ใช้โหมดจำลองก่อน) แล้วกลับมาดูแท็บนี้</li><li>ดูกลุ่มสถานะของงานและขั้นตอนที่กำลังเดิน</li><li>ดูส่วน log สดและจอเครื่องที่ผูกกับช่องนั้น</li></ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป TAKRA Post บนเครื่อง PC แล้วเข้าสู่ระบบด้วยบัญชีที่ได้รับ แล้วเข้าเมนู "ปั้นคอนเทนต์" สลับไปแท็บ "มอนิเตอร์"</li><li>สั่งรัน task หนึ่ง (แนะนำให้ตั้ง "โหมดการโพสต์" เป็น "บันทึกแบบร่าง" ที่หน้าตั้งค่าก่อน กันโพสต์จริง) แล้วกลับมาดูแท็บนี้</li><li>ดูกลุ่มสถานะของงานและขั้นตอนที่กำลังเดิน</li><li>ดูส่วน "ความเคลื่อนไหวสด" และจอเครื่องที่ผูกกับช่องนั้น</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>งานถูกจัดกลุ่มเป็น "กำลังโพสต์" · "รอถึงเวลา" · "จบแล้ววันนี้"</li><li>เห็นขั้นตอนที่กำลังทำเป็นภาษาคน เช่น "เปิดแอป" · "เลือกวิดีโอ" · "ใส่แคปชั่น" · "กดโพสต์" · "ตรวจสอบผล"</li><li>มีตัวเลขความคืบหน้าของงานนี้และของโพสต์นี้ พร้อมเวลาที่อยู่ขั้นนี้มา</li><li>ส่วน log สดมีบรรทัดเดินเมื่องานเดิน ถ้ายังไม่มีจะขึ้นว่ายังไม่มีอะไร</li></ul><div class="hint" style="margin-top:6px">ที่มา: docs/CONTENT-DISPATCH.md · i18n studio.tab_monitor/step.*/live_log</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>งานถูกจัดกลุ่มเป็น "กำลังโพสต์" · "รอถึงเวลา" · "จบแล้ววันนี้"</li><li>เห็นขั้นตอนที่กำลังทำเป็นภาษาคน เช่น "เปิดแอป" · "เลือกวิดีโอ" · "ใส่แคปชั่น" · "กดโพสต์" · "ตรวจสอบผล"</li><li>มีตัวเลขความคืบหน้าของงานนี้และของโพสต์นี้ พร้อมเวลาที่อยู่ขั้นนี้มา</li><li>ส่วน "ความเคลื่อนไหวสด" มีบรรทัดเดินเมื่องานเดิน ถ้ายังไม่มีจะขึ้น "ยังไม่มีอะไร — บรรทัดจะขึ้นเมื่องานเดิน"</li></ul><div class="hint" style="margin-top:6px">ที่มา: docs/CONTENT-DISPATCH.md · i18n studio.tab_monitor/step.*/live_log</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1603,7 +1603,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Data</b> <span class="hint">(empty · null · duplicate · existing · non-existing)</span> · I · มอนิเตอร์งานที่กำลังรัน</div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป TAKRA Post บนเครื่อง PC แล้วเข้าสู่ระบบด้วยบัญชีที่ได้รับ แล้วเข้าแท็บ "มอนิเตอร์" ในช่วงที่ไม่มีงานรันและไม่มีงานตั้งเวลา</li><li>อ่านข้อความที่ขึ้นแทนรายการงาน</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ขึ้นข้อความว่าไม่มีงานที่กำลังรันและไม่มีงานที่ตั้งเวลาไว้</li><li>ถ้ามีงานล่าสุดอยู่ ระบบบอกว่ากำลังแสดงงานล่าสุดแทน</li></ul><div class="hint" style="margin-top:6px">ที่มา: i18n studio.monitor_quiet/monitor_empty</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ขึ้นข้อความว่าไม่มีงานที่กำลังรันและไม่มีงานที่ตั้งเวลาไว้</li><li>ถ้าวันนี้ยังไม่มีงานเลย ระบบบอกว่า "วันนี้ยังไม่มีงานที่รัน รอคิว หรือจบ — กำลังแสดงงานของวันที่เลือกไว้" และเลือกวันย้อนหลังเพื่อดูงานที่จบได้</li></ul><div class="hint" style="margin-top:6px">ที่มา: i18n studio.monitor_quiet/monitor_empty/day_pick_title</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1757,7 +1757,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · J · ตั้งค่า (ภาษา</div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป TAKRA Post บนเครื่อง PC แล้วเข้าสู่ระบบด้วยบัญชีที่ได้รับ แล้วกดเมนู "ตั้งค่า"</li><li>ที่การ์ด "ธีมหน้าจอ" เลือก "สว่าง" แล้วดูหน้าจอ</li><li>เลือก "มืด" แล้วอ่านคำอธิบายใต้ตัวเลือก</li><li>ปิดแอปแล้วเปิดใหม่ สังเกตธีม</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ตัวเลือกมี "มืด" และ "สว่าง"</li><li>มีคำอธิบายว่าโหมดมืดช่วยได้เวลาหน้าผนังจอเต็มไปด้วยจอมือถือที่กำลังทำงาน และระบบจะจดจำค่าไว้ในเครื่องนี้</li><li>เปลี่ยนแล้วหน้าจอเปลี่ยนทันที และเปิดแอปใหม่ยังเป็นธีมเดิม</li></ul><div class="hint" style="margin-top:6px">ที่มา: i18n setting.theme.*</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ตัวเลือกมี "มืด" · "สว่าง" · "ตามระบบ"</li><li>มีคำอธิบายว่าเลือกสว่าง มืด หรือให้ตามค่าของเครื่อง โหมดมืดช่วยได้เวลาหน้าจอเต็มไปด้วยจอมือถือที่กำลังทำงาน และระบบจะจดจำค่าไว้ในเครื่องนี้</li><li>เปลี่ยนแล้วหน้าจอเปลี่ยนทันที และเปิดแอปใหม่ยังเป็นธีมเดิม</li></ul><div class="hint" style="margin-top:6px">ที่มา: i18n setting.theme.*</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1776,18 +1776,18 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 <tr class="trow" data-feat="fmJ" data-level="ui" data-prio="P0" data-kind="permission" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">FM-J.3</td>
-  <td class="ctitle">ตั้งโหมดการโพสต์เป็น Draft เท่านั้น เพื่อกันโพสต์จริงตอนทดสอบ <span class="kd kd-perm">Permission</span></td>
+  <td class="ctitle">ตั้งโหมดการโพสต์เป็นบันทึกแบบร่าง เพื่อกันโพสต์จริงตอนทดสอบ <span class="kd kd-perm">Permission</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
   <td class="status" data-uid="tc-16051"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-16051"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">ตั้งโหมดการโพสต์เป็น Draft เท่านั้น เพื่อกันโพสต์จริงตอนทดสอบ</div>
+  <div class="h-title">ตั้งโหมดการโพสต์เป็นบันทึกแบบร่าง เพื่อกันโพสต์จริงตอนทดสอบ</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Permission</b> <span class="hint">(สิทธิ์ / โหมดที่จำกัดการทำงาน)</span> · J · ตั้งค่า (ภาษา</div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป TAKRA Post บนเครื่อง PC แล้วเข้าสู่ระบบด้วยบัญชีที่ได้รับ แล้วกดเมนู "ตั้งค่า"</li><li>ที่การ์ด "โหมดการโพสต์" เลือก "Draft เท่านั้น" แล้วอ่านคำอธิบาย</li><li>สั่งรันงานโพสต์หนึ่งงาน แล้วดูจอมือถือจนจบขั้นตอน</li><li>สลับกลับเป็น "โพสต์จริง" แล้วอ่านคำอธิบายอีกครั้ง</li></ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป TAKRA Post บนเครื่อง PC แล้วเข้าสู่ระบบด้วยบัญชีที่ได้รับ แล้วกดเมนู "ตั้งค่า"</li><li>ที่การ์ด "โหมดการโพสต์" เลือก "บันทึกแบบร่าง" แล้วอ่านคำอธิบาย</li><li>สั่งรันงานโพสต์หนึ่งงาน แล้วดูจอมือถือจนจบขั้นตอน</li><li>สลับกลับเป็น "โพสต์ทันที" แล้วอ่านคำอธิบายอีกครั้ง</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ตัวเลือกมี "โพสต์จริง" และ "Draft เท่านั้น"</li><li>คำอธิบายระบุว่าโหมด draft จะขับมือถือครบทุกขั้นแต่ไม่กดปุ่มโพสต์สุดท้าย และมีผลกับทุกงานตามตารางของเครื่องนี้</li><li>รันในโหมด draft แล้วเครื่องเดินครบทุกขั้นแต่ไม่มีโพสต์ออกจริง</li></ul><div class="hint" style="margin-top:6px">ที่มา: i18n setting.publish.*</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ตัวเลือกมี "โพสต์ทันที" และ "บันทึกแบบร่าง"</li><li>คำอธิบายระบุว่าบันทึกแบบร่างจะเตรียมคลิปครบทุกขั้นแล้วกด "บันทึกแบบร่าง" แทนปุ่มโพสต์ คลิปไปรออยู่ในแบบร่างของแอปบนมือถือให้กดโพสต์เอง และเป็นค่าเริ่มต้นของทุกแพลตฟอร์มบนเครื่องนี้</li><li>ถ้ามีช่องมากกว่าหนึ่งแพลตฟอร์ม มีตัวเลือก "ตั้งแยกตามแพลตฟอร์ม" ให้แต่ละแพลตฟอร์มเลือก "ตามค่าเริ่มต้น" หรือกำหนดเองได้</li><li>รันในโหมดบันทึกแบบร่างแล้วเครื่องเดินครบทุกขั้นแต่ไม่มีโพสต์ออกจริง — คลิปไปอยู่ในแบบร่างของแอป และสถานะคลิปเป็น "บันทึกแบบร่างแล้ว"</li></ul><div class="hint" style="margin-top:6px">ที่มา: i18n setting.publish.* (TF-62 ตั้งแยกตามแพลตฟอร์ม · commit 4fa009c)</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1840,18 +1840,18 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="featrow" data-featkey="fm-agent"><td colspan="7">📁 รัน flow เดี่ยว <span class="rp"><span class="lv lvl-ui">🌐 2</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="fm-agent"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
 <tr class="trow" data-feat="fmK" data-level="ui" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">FM-K.1</td>
-  <td class="ctitle">เลือกเครื่องและ workflow แล้วสั่งรัน flow <span class="kd kd-happy">Happy Path</span></td>
+  <td class="ctitle">เลือกเครื่องและลำดับที่เครื่องทำงานจริง แล้วสั่งรันบนเครื่อง <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
   <td class="status" data-uid="tc-16053"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-16053"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">เลือกเครื่องและ workflow แล้วสั่งรัน flow</div>
+  <div class="h-title">เลือกเครื่องและลำดับที่เครื่องทำงานจริง แล้วสั่งรันบนเครื่อง</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · K · ทดสอบ Agent Flow — เครื่องมือ QA ภายใน</div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป TAKRA Post บนเครื่อง PC แล้วเข้าสู่ระบบด้วยบัญชีที่ได้รับ (ต่อมือถือ Android ที่เปิด USB debugging แล้วอย่างน้อย 2 เครื่อง)</li><li>กดเมนู "ทดสอบ Agent Flow"</li><li>เลือกเครื่องจากช่อง "เครื่อง" และเลือก workflow จากช่อง "Workflow"</li><li>กด "รัน flow" แล้วรอจนจบ อ่านผลลัพธ์ในกล่อง log</li></ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป TAKRA Post บนเครื่อง PC แล้วเข้าสู่ระบบด้วยบัญชีที่ได้รับ (ต่อมือถือ Android ที่เปิด USB debugging แล้วอย่างน้อย 2 เครื่อง)</li><li>กดเมนู "ทดสอบ Agent Flow"</li><li>เลือกเครื่องจากช่อง "เครื่อง" และเลือกลำดับงานจากช่อง "ลำดับที่เครื่องทำงานจริง"</li><li>กด "รันบนเครื่อง" แล้วรอจนจบ อ่านผลลัพธ์ในกล่อง log</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>หน้ามีหัวข้อ "ทดสอบ Agent Flow" พร้อมคำอธิบาย "เลือกเครื่องและ workflow แล้วสั่งรันผ่าน agent"</li><li>ช่องเลือกเครื่องมีข้อความตัวอย่าง "เลือกเครื่องที่เชื่อมต่อ" และช่อง workflow มี "เลือก workflow"</li><li>ระหว่างรันปุ่มเปลี่ยนเป็น "กำลังรัน…"</li><li>จบแล้วมีบรรทัดสรุปว่า flow จบแล้วพร้อมรหัส exit</li></ul><div class="hint" style="margin-top:6px">ที่มา: docs/prd.md §1.2 (/agent-test) · i18n agent_test.*</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>หน้ามีหัวข้อ "ทดสอบ Agent Flow" พร้อมคำอธิบาย "เลือกเครื่องและลำดับที่เครื่องทำงานจริง แล้วสั่งรัน"</li><li>ช่องเลือกเครื่องมีข้อความตัวอย่าง "เลือกเครื่องที่เชื่อมต่อ" และช่องลำดับงานมี "เลือกลำดับที่เครื่องทำงานจริง"</li><li>ระหว่างรันปุ่มเปลี่ยนเป็น "กำลังรัน…"</li><li>จบแล้วมีบรรทัดสรุป "จบแล้ว (exit …)" พร้อมรหัส exit</li></ul><div class="hint" style="margin-top:6px">ที่มา: docs/prd.md §1.2 (/agent-test) · i18n agent_test.*</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1881,7 +1881,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Data</b> <span class="hint">(empty · null · duplicate · existing · non-existing)</span> · K · ทดสอบ Agent Flow — เครื่องมือ QA ภายใน</div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป TAKRA Post บนเครื่อง PC แล้วเข้าสู่ระบบด้วยบัญชีที่ได้รับ โดยไม่ต่อมือถือเครื่องใดเลย</li><li>กดเมนู "ทดสอบ Agent Flow"</li><li>ดูช่องเลือกเครื่องและลองกดรัน</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ช่องเลือกเครื่องขึ้นว่า "ไม่มีเครื่องเชื่อมต่อ"</li><li>กดรันไม่ได้ หรือระบบไม่เริ่มรันเพราะยังไม่มีเครื่องเป้าหมาย</li><li>กล่อง log ขึ้นว่ายังไม่มีผลลัพธ์ — เลือกเครื่อง + workflow แล้วกดรัน</li></ul><div class="hint" style="margin-top:6px">ที่มา: i18n agent_test.no_device/log_empty</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ช่องเลือกเครื่องขึ้นว่า "ไม่มีเครื่องเชื่อมต่อ"</li><li>กดรันไม่ได้ หรือระบบไม่เริ่มรันเพราะยังไม่มีเครื่องเป้าหมาย</li><li>กล่อง log ขึ้นว่า "ยังไม่มีผลลัพธ์ — เลือกเครื่องและลำดับที่เครื่องทำงานจริง แล้วกดรัน"</li></ul><div class="hint" style="margin-top:6px">ที่มา: i18n agent_test.no_device/log_empty</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
