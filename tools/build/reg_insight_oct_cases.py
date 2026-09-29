@@ -4,13 +4,13 @@
 
 3 ก้อน (~70 เคส):
   1. Live Readiness ทั้งชุด 33 เคส — import EPICS จาก insight_live_readiness_cases.py ตรง ๆ (เนื้อหาไม่แก้)
-  2. จุดที่เคย FAIL ของ Dashboard / Reports / Membership (กลุ่ม 'rifail') — อ่าน store-data
+  2. จุดที่เคย FAIL ของ Dashboard / Reports / Membership (กลุ่มนี้ถูกตัดออก — roles/permission) (กลุ่ม 'rifail') — อ่าน store-data
      จากรายงานที่เผยแพร่ projects/takra-insight/2026/09/reports/takra-insight-mvp2-{dashboard,reports,membership}-ui-test-cases-table.html
      · รูป store key ที่พบจริง: key เป็น `tc-N` เฉย ๆ (ไม่มี suffix -mac/-win) — Mac เก็บใน store[uid].st
        และ Windows เก็บใน store[uid].stw (ตามกลไก os_cols ของ build_hub_report.py)
      · เอาเคสที่ st=='fail' หรือ stw=='fail' → ดึงเคสเต็มจากโมดูลต้นทาง insight_mvp2_{dashboard,reports,membership}_cases.py
        ตาม id (เนื้อหาไม่แก้ · เติมบรรทัด "ผลรอบก่อน: …" ต่อท้าย src เพราะ harness ไม่ render ฟิลด์ note ต่อเคส)
-     · id ระหว่างโมดูลไม่ชนกัน (TC-LR-* / TC-DASH-* / TC-RPT-* / TC-MEM-* / TC-BYOK-*) จึงไม่ต้องเติม prefix
+     · id ระหว่างโมดูลไม่ชนกัน (TC-LR-* / TC-DASH-* / TC-RPT-* / TC-BYOK-*) จึงไม่ต้องเติม prefix
   3. BYOK smoke (กลุ่ม 'ribyok') — เฉพาะ P0 จาก insight_mvp2_byok_cases.py (เนื้อหาไม่แก้)
 
 ผล fail รอบก่อน (สแนปช็อตตอน generate โมดูลนี้ · 2026-09-29):
