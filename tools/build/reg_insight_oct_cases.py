@@ -107,6 +107,16 @@ _RIBYOK = dict(key='ribyok', chip='🔑 RI·BYOK smoke', emoji='🔑',
 # ── EPICS = LR ทั้งชุด (ไม่แก้) + rifail + ribyok ──
 EPICS = list(_lr.EPICS) + [_RIFAIL, _RIBYOK]
 
+# ── ตัดเรื่อง roles/permission ออกจากรอบ Insight (สั่ง 2026-09-29) ──
+# Membership ทั้งกลุ่ม (บทบาทจาก Hub · เมนูตามบทบาท · ถูกเอาออกจากทีม) + DASH role gate 2 เคส
+# หมายเหตุ: dev ยกเลิก role gate ของเมนูแดชบอร์ดแล้ว (Story 6.3 rework) — สอดคล้องกับการตัดชุดนี้
+EXCLUDE_ROLES = {'TC-DASH-A.3', 'TC-DASH-A.4'}
+EPICS = [e2 for e2 in (
+    dict(_e0, feats=[f2 for f2 in (
+        dict(_f0, cases=[c for c in _f0['cases'] if c['id'] not in EXCLUDE_ROLES and not c['id'].startswith('TC-MEM')])
+        for _f0 in _e0['feats']) if f2['cases']])
+    for _e0 in EPICS) if e2['feats']]
+
 _n_lr = sum(len(f['cases']) for e in _lr.EPICS for f in e['feats'])
 _n_fail = len(FAIL_PREV)
 _n_byok = sum(len(f['cases']) for f in _byok_feats)
