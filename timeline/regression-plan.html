@@ -92,7 +92,7 @@
   .gantt-wrap{overflow-x:auto; background:var(--panel); border:1px solid var(--border); border-radius:14px; margin-bottom:8px}
   .gantt{position:relative; min-width:max-content; font-size:.8rem}
   .g-row{display:grid; grid-template-columns:var(--lcols) var(--track); align-items:stretch}
-  .g-lcol{display:grid; grid-template-columns:44px 300px 92px; position:sticky; left:0; z-index:5; background:var(--panel); box-shadow:4px 0 6px -4px rgba(0,0,0,.18)}
+  .g-lcol{display:grid; grid-template-columns:44px 92px 300px; position:sticky; left:0; z-index:5; background:var(--panel); box-shadow:4px 0 6px -4px rgba(0,0,0,.18)}
   .g-id,.g-name,.g-own{background:var(--panel); border-bottom:1px solid var(--border)}
   .g-id{width:44px; display:flex; align-items:center; justify-content:center; font-weight:700; color:var(--muted); font-variant-numeric:tabular-nums}
   .g-name{width:300px; padding:0 12px; font-weight:600; border-right:1px solid var(--border); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; line-height:34px}
@@ -230,15 +230,15 @@ document.getElementById('rows').innerHTML = PLAN.map(p => {
   const todayCol = col(TODAY);
   const daysHtml = days.map((x, k) => { const we = x.getDay() === 0 || x.getDay() === 6;
     return `<div class="g-day${we ? ' we' : ''}${k === todayCol ? ' today' : ''}"><b>${x.getDate()} ${TH_MON[x.getMonth()]}</b>${WD[x.getDay()]}</div>`; }).join('');
-  let html = `<div class="g-row g-head"><div class="g-lcol"><div class="g-id" style="height:44px">ID</div><div class="g-name" style="height:44px;line-height:44px">สโคป</div><div class="g-own" style="height:44px">ผู้เทส</div></div><div class="g-days">${daysHtml}</div></div>`;
+  let html = `<div class="g-row g-head"><div class="g-lcol"><div class="g-id" style="height:44px">ID</div><div class="g-own" style="height:44px">ผู้เทส</div><div class="g-name" style="height:44px;line-height:44px">สโคป</div></div><div class="g-days">${daysHtml}</div></div>`;
   let n = 0;
   PLAN.forEach(p => {
-    html += `<div class="g-row g-proj"><div class="g-lcol"><div class="g-id" style="color:${p.color}">●</div><div class="g-name">${p.emoji} ${esc(p.name)}</div><div class="g-own">${esc(p.owner)}</div></div><div class="g-track"></div></div>`;
+    html += `<div class="g-row g-proj"><div class="g-lcol"><div class="g-id" style="color:${p.color}">●</div><div class="g-own">${esc(p.owner)}</div><div class="g-name">${p.emoji} ${esc(p.name)}</div></div><div class="g-track"></div></div>`;
     p.items.forEach(it => {
       n++;
       const a = col(it.start), b = col(it.end);
-      const bar = `<div class="g-bar" style="left:${a * DW + 3}px;width:${(b - a + 1) * DW - 6}px;background:${p.color}" title="${esc(it.name)} · ${fmt(it.start)}${it.end !== it.start ? '–' + fmt(it.end) : ''}">${it.os ? (it.os === 'win' ? '🪟 WIN · ' : '🍎 MAC · ') : ''}${esc(it.owner || p.owner)} · ${esc(it.cases)} เคส${it.status === 'risk' ? ' ⚠️' : ''}</div>`;
-      html += `<div class="g-row"><div class="g-lcol"><div class="g-id">${String(n).padStart(2, '0')}</div><div class="g-name" title="${esc(it.name)}">${it.os ? (it.os === 'win' ? '🪟 ' : '🍎 ') : ''}${esc(it.name)}</div><div class="g-own">${esc(it.owner || p.owner)}</div></div><div class="g-track">${bar}</div></div>`;
+      const bar = `<div class="g-bar" style="left:${a * DW + 3}px;width:${(b - a + 1) * DW - 6}px;background:${p.color}" title="${esc(it.name)} · ${fmt(it.start)}${it.end !== it.start ? '–' + fmt(it.end) : ''}">${esc(it.owner || p.owner)} · ${it.os ? (it.os === 'win' ? '🪟 WIN · ' : '🍎 MAC · ') : ''}${esc(it.cases)} เคส${it.status === 'risk' ? ' ⚠️' : ''}</div>`;
+      html += `<div class="g-row"><div class="g-lcol"><div class="g-id">${String(n).padStart(2, '0')}</div><div class="g-own">${esc(it.owner || p.owner)}</div><div class="g-name" title="${esc(it.name)}">${it.os ? (it.os === 'win' ? '🪟 ' : '🍎 ') : ''}${esc(it.name)}</div></div><div class="g-track">${bar}</div></div>`;
     });
   });
   days.forEach((x, k) => { if (x.getDay() === 0 || x.getDay() === 6) html += `<div class="g-shade" style="left:${L + k * DW}px"></div>`; });
