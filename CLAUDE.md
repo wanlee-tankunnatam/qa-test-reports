@@ -83,7 +83,7 @@ repo นี้เก็บรายงาน manual test case (UI) ของท�
 
 > **แผน Regression ทุกโปรเจกต์ (รอบ 5–9 ต.ค. 2569)** (29 ก.ย. 2026) — `timeline/regression-plan.html` (#timeline Gantt สัปดาห์ · #plan ตารางแผน) ดีไซน์เดียวกับ feature-status · ข้อมูลแก้มือใน array `PLAN` ในไฟล์ · ยังไม่ผูก Jira/test case ตามที่ตกลง — จะผูกตอนใกล้รอบ
 >
-> **รายงานรอบ regression 5–9 ต.ค.** (29 ก.ย.) — 9 ไฟล์ใหม่ใต้ `projects/<proj>/2026/10/reports/*-regression-oct0509-*` (store แยกจากชุดหลัก) build ด้วย `python3 tools/build/build_hub_report.py <key>`: regai1 (Live happy 141) · regai2 (Live fail 70+ฟีเจอร์ ก.ย. 110) · regrerun (82 · os_cols) · reginsight (70 · os_cols) · reghub (53) · regradar (130) · regfarm (59) · reglipsync (21) · regclip (27) — โมดูล `tools/build/reg_*_oct_cases.py` คัดจากชุดหลัก อย่าแก้เคสในโมดูล reg ให้แก้ชุดหลักแล้ว build ใหม่ · ลิงก์แปะครบทุกแถวในหน้าแผนแล้ว
+> **รายงานรอบ regression 5–9 ต.ค.** (29 ก.ย.) — 7 ไฟล์ใต้ `projects/<proj>/2026/10/reports/*-regression-oct0509-*` (store แยกจากชุดหลัก) build ด้วย `python3 tools/build/build_hub_report.py <key>`: regai1 (Live happy 137) · regai2 (Live fail+ฟีเจอร์ ก.ย. 165) · regrerun (80 · os_cols) · reginsight (66 · os_cols) · reghub (46) · regradar (130) · regfarm (54) — โมดูล `tools/build/reg_*_oct_cases.py` คัดจากชุดหลัก อย่าแก้เคสในโมดูล reg ให้แก้ชุดหลักแล้ว build ใหม่ · ลิงก์แปะครบทุกแถวในหน้าแผนแล้ว · Lib-Sync + Clip ถูกตัดออกจากรอบ (29 ก.ย.)
 >
 > Jira เป็นลิงก์อ้างอิงสำหรับคน — ไม่มี API token ใน repo นี้ ถ้าต้องดึงสถานะใบงานให้ผู้ใช้ export/แปะข้อมูลมา
 
