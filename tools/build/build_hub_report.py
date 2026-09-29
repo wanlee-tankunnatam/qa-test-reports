@@ -11,6 +11,7 @@ harness (CSS + JS ปุ่ม ☁️ เซฟ/ตัวกรอง/Jira/owner
       insighte46 = insight_mvp2_e46_cases.py (TAKRA Insight · MVP-2 Epic 4 เครดิต AI + Epic 6 AI Insights)
       insightbyok = insight_mvp2_byok_cases.py (TAKRA Insight · MVP-2 Epic 4 Metered LLM Proxy → AI Provider BYOK)
       insightdash / insightrpt / insightmem = insight_mvp2_{dashboard,reports,membership}_cases.py (TAKRA Insight · MVP-2 Epic 5 / 7 / 9)
+      insightai = insight_mvp2_ai_insights_cases.py (TAKRA Insight · MVP-2 Epic 6 AI Insights · rework PR #595)
       lrready = insight_live_readiness_cases.py (TAKRA Insight · Live Readiness คุณภาพบนไลฟ์จริง)
       rerunquality = rerun_quality_cases.py (TAKRA Rerun · คุณภาพ/ประสิทธิภาพการไลฟ์รีรัน)
       aiquality = ai_quality_cases.py (TAKRA AI · คุณภาพไลฟ์รีรัน ท่อส่ง+เนื้อหา)
@@ -36,6 +37,7 @@ MODULES = {'mvp1': 'hub_cases', 'mvp2': 'hub_mvp2_cases', 'mvp2rbac': 'hub_mvp2_
            'insightdash': 'insight_mvp2_dashboard_cases',
            'insightrpt': 'insight_mvp2_reports_cases',
            'insightmem': 'insight_mvp2_membership_cases',
+           'insightai': 'insight_mvp2_ai_insights_cases',
            'lrready': 'insight_live_readiness_cases',
            'rerunquality': 'rerun_quality_cases',
            'aiquality': 'ai_quality_cases',
