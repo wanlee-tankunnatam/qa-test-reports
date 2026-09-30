@@ -5,7 +5,8 @@
 - ดึงบั๊กที่ยังไม่ปิด (issuetype = Bug, statusCategory != Done) ของทุกโปรเจกต์ในหน้า
 - แถวเดิม: คง "รอบ" + "Dev" ที่จัดมือไว้ อัปเดตเฉพาะ ระดับ/ชื่อ/สถานะ จาก Jira
 - ใบที่ปิดแล้ว/หายจาก Jira → เอาออก
-- ใบใหม่ → รอบ "ยังไม่มีรอบ" · Dev = ชื่อเล่นในวงเล็บของ assignee (ไม่มีคนรับถ้าว่าง) — รอ QA จัดรอบเอง
+- ใบใหม่/ใบที่ยังไม่มีรอบ → ใส่รอบส่งถัดไปที่ใกล้ที่สุด (รอบที่มีอยู่แล้วในหน้า ที่วันยังไม่ถึง) ให้อัตโนมัติ
+  · Dev = ชื่อเล่นในวงเล็บของ assignee (ไม่มีคนรับถ้าว่าง) · ถ้าไม่มีรอบอนาคตเหลือ → "ยังไม่มีรอบ"
 - แก้เฉพาะ ROWS + บรรทัด "ข้อมูล ณ" แล้ว commit+push ถ้ามีการเปลี่ยน
 auth: ~/.config/jira-auth ผ่าน ~/.claude/scripts/jira.py (ห้าม print token)
 """
@@ -80,7 +81,23 @@ def main():
         info = jira[k]
         out.append([NO_ROUND, info['dev'], k, info['prio'], info['title'], info['status']])
 
-    if not (changed or added or removed):
+    # ใบที่ไม่มีรอบกำกับ → ดึงเข้ารอบส่งถัดไปที่ใกล้ที่สุด (จากรอบที่มีอยู่แล้วในหน้า)
+    MON = dict(JAN=1, FEB=2, MAR=3, APR=4, MAY=5, JUN=6, JUL=7, AUG=8, SEP=9, OCT=10, NOV=11, DEC=12)
+    today = datetime.date.today()
+
+    def round_date(r):
+        m2 = re.match(r'^(\d{1,2})-([A-Z]{3})$', r)
+        return datetime.date(today.year, MON[m2.group(2)], int(m2.group(1))) if m2 and m2.group(2) in MON else None
+
+    future = sorted((d, r) for r in {r[0] for r in out} if (d := round_date(r)) and d > today)
+    next_round = future[0][1] if future else None
+    pulled = []
+    if next_round:
+        for r in out:
+            if r[0] == NO_ROUND:
+                r[0] = next_round; pulled.append(r[2])
+
+    if not (changed or added or removed or pulled):
         print(f'{datetime.datetime.now():%F %H:%M} ไม่มีอะไรเปลี่ยน (ข้าม ไม่ commit)'); return
 
     lines = [json.dumps(r, ensure_ascii=False).replace('</', '<\\/') + ',' for r in out]
@@ -102,6 +119,7 @@ def main():
     summary = ' · '.join(x for x in [
         f'อัปเดต {len(changed)}' if changed else '',
         f'เพิ่ม {len(added)} ({", ".join(added[:6])}{"…" if len(added) > 6 else ""})' if added else '',
+        f'ดึงเข้ารอบ {next_round} {len(pulled)} ใบ ({", ".join(pulled[:6])}{"…" if len(pulled) > 6 else ""})' if pulled else '',
         f'ปิดแล้วเอาออก {len(removed)} ({", ".join(removed[:6])}{"…" if len(removed) > 6 else ""})' if removed else ''] if x) or 'refresh เวลา'
     git('add', 'timeline/open-bugs.html')
     git('commit', '-m', f'chore(open-bugs): อัปเดตจาก Jira {now:%d/%m %H:%M} — {summary}')
