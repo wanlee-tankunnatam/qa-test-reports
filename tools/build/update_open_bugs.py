@@ -25,7 +25,9 @@ j = importlib.util.module_from_spec(spec); spec.loader.exec_module(j)
 def fetch_open_bugs(key):
     issues, token = {}, None
     while True:
-        body = {'jql': f'project = {key} AND issuetype = Bug AND statusCategory != Done ORDER BY key ASC',
+        # ห้ามกรองด้วย statusCategory — TF ตั้งหมวดกลับด้าน ("Done" อยู่หมวด In Progress,
+        # "Ready to Test" อยู่หมวด Done) → ดึงทั้งหมดแล้วกรองด้วยชื่อสถานะเอง
+        body = {'jql': f'project = {key} AND issuetype = Bug ORDER BY key ASC',
                 'maxResults': 100, 'fields': ['summary', 'status', 'priority', 'assignee']}
         if token:
             body['nextPageToken'] = token
@@ -34,8 +36,8 @@ def fetch_open_bugs(key):
             raise RuntimeError(f'{key}: Jira HTTP {s} {str(r)[:200]}')
         for i in r.get('issues', []):
             f = i['fields']
-            # TF ตั้งสถานะ "Done" ไว้หมวด In Progress ใน Jira — กรองชื่อสถานะซ้ำอีกชั้น
-            if f['status']['name'] in ('Done', 'Closed', 'Cancelled', 'CANCELLED'):
+            # ปิดจริง = ชื่อสถานะเหล่านี้ (สำรวจครบทุกโปรเจกต์ 30 ก.ย.)
+            if f['status']['name'].upper() in ('DONE', 'CLOSED', 'CANCEL', 'CANCELLED'):
                 continue
             name = (f.get('assignee') or {}).get('displayName') or ''
             m = re.search(r'\(([^)]+)\)\s*$', name)
