@@ -38,10 +38,15 @@ def fetch_open_bugs(key):
                 continue
             name = (f.get('assignee') or {}).get('displayName') or ''
             m = re.search(r'\(([^)]+)\)\s*$', name)
+            # แต่ละโปรเจกต์สะกดสถานะไม่เหมือนกัน — รวมให้เป็นชิปเดียวในหน้า
+            canon = {'IN REVIEW': 'IN REVIEW', 'READY TO TEST': 'READY TO TEST',
+                     'TO DO': 'To Do', 'IN PROGRESS': 'In Progress', 'TESTING': 'TESTING',
+                     'NEED ADVISE': 'Need Advise'}
+            status = canon.get(f['status']['name'].upper(), f['status']['name'])
             issues[i['key']] = dict(
                 prio=(f.get('priority') or {}).get('name') or 'Medium',
                 title=f.get('summary') or '',
-                status=f['status']['name'],
+                status=status,
                 dev=(m.group(1) if m else name).strip() or 'ไม่มีคนรับ')
         token = r.get('nextPageToken')
         if not token:
