@@ -41,10 +41,11 @@ META = dict(
           '📎 <b>ที่มาของเคส:</b> <code>_bmad-output/planning-artifacts/epics-mvp2.md</code> Epic 6 (FR98 แก้ 24 ก.ย. · FR99) + '
           '<code>_bmad-output/implementation-artifacts/m2-6-{3,4,6,7}-*.md</code> · คำบนจอลอกจาก <code>i18n/th.js</code> '
           '(<code>aiInsights.*</code> / <code>anomalyAlerts.*</code>) ของแอป (origin/develop 2026-09-28 · 9f66e433)<br>'
-          '🧪 <b>ข้อมูลที่ต้องเตรียม:</b> workspace ที่มีไลฟ่สะสม ≥5 ไลฟ่ต่อสมาชิก×ช่องทาง (ภายใน 10 ไลฟ่ล่าสุดหรือ 30 วัน) '
-          'เพื่อให้พ้นสถานะ "กำลังสะสมฐานเทียบ" · อย่างน้อย 1 คู่ที่ตัวเลขเบี่ยงผ่านเกณฑ์ (ดูตัวอย่างเกณฑ์ในสเปก) · '
-          'อย่างน้อย 1 ไลฟ่ที่บันทึกเสีย (เช่น หน้าไลฟ่หลุดกลางไลฟ่) · บัญชี UAT ที่มีบทบาทต่างกัน (เจ้าของ/ผู้จัดการแบรนด์/โฮสต์) '
-          'อย่างน้อย 2 บัญชี เพื่อเทสว่าไม่มีด่าน role แล้วจริง<br>'
+          '🧪 <b>ข้อมูลที่เตรียมไว้บน UAT (30 ก.ย.):</b> ทุกเคสระบุ <b>บัญชี · workspace · ช่วงเวลา</b> ไว้ในส่วน Test Data แล้ว · '
+          '<b>ทีม A</b> = ไลฟ์ seed TI-579 ของ qa hostb (ช่อง @qa.*) + ไลฟ์จริงของ qa owner/qa bm — ข้ามวันต้อง seed ใหม่ · '
+          '<b>ทีมของ B</b> (qa.multi) = @qa.flat: 7 วันไม่มีเรื่องเด่น / 30 วันได้การ์ด HOT 7 ใบ · '
+          '<b>ทีมของ qa bm</b> (qa.bm) = @qa.recent มีไลฟ์แค่ 7 วันล่าสุด · <b>ทีมของ qa hosta / qa hostb</b> = ไม่มีไลฟ์ · '
+          'รหัสผ่านอยู่ใน <code>apps/desktop/desktop/.env.development</code> ของ takra-insight (ไม่ใส่ในรายงาน)<br>'
           '💸 <b>ค่าใช้จ่าย:</b> ทุกครั้งที่กด "สร้างการ์ด" หรือ "เขียนใหม่" จะเรียก AI provider จริงด้วย key ของบัญชีเจ้าของ workspace '
           '(ดูหน้า "ผู้ให้บริการ AI" คนละรายงาน — ต้องตั้งค่าไว้ก่อนถึงจะกดสร้างการ์ดได้)<br>'
           '🔗 <b>ที่มาเก่า อย่าอิง:</b> รายงาน takra-insight-mvp2-epic4-6-ui-test-cases-table.html (กลุ่ม G "การ์ด Insight" · '
@@ -293,3 +294,64 @@ EPICS.append(E('aiiI', 'I · ความผิดปกติ', '🚨', 'I · �
     pre=['มีบล็อกช่องทางที่ยังไม่ครบฐานเทียบ (สถานะ "กำลังสะสม")']),
  ]),
 ]))
+
+# ───────────────── บัญชี + workspace + ช่วงเวลาที่ใช้ต่อเคส (UAT) — เพิ่ม 30 ก.ย. 2569 ─────────────────
+# ข้อมูลที่เตรียมไว้แล้วบน UAT (ไม่เก็บรหัสผ่าน — ดูบัญชีใน apps/desktop/desktop/.env.development ของ takra-insight):
+#   · ทีม A        — ไลฟ์สังเคราะห์จาก seeder TI-579 ในนาม qa.hostb (ช่อง @qa.*) + ไลฟ์จริงของ qa.owner / qa.bm
+#                    ตารางผลที่ควรเห็นใช้ได้เฉพาะวันที่ seed → วันอื่นต้อง seed ใหม่ก่อนเทียบ
+#   · ทีมของ B     — r093 ในนาม qa.multi: @qa.flat 7 วัน = ไม่มีเรื่องเด่น · 30 วัน = การ์ด HOT workspace 7 ใบ
+#   · ทีมของ qa bm — r093 ในนาม qa.bm: @qa.recent มีไลฟ์แค่ 7 วันล่าสุด (ช่วงก่อนหน้าว่าง)
+#   · ทีมของ qa hosta / ทีมของ qa hostb — ไม่มีไลฟ์ (สถานะว่าง)
+_HOSTA = ('qa.hosta@realfactory.co.th', 'โฮสต์')
+_BM = ('qa.bm@realfactory.co.th', 'เจ้าของ (ทีมส่วนตัวของ qa bm)')
+_MULTI = ('qa.multi@realfactory.co.th', 'เจ้าของ')
+KEY_OK = 'ต้องตั้ง key ที่ใช้ได้จริงในหน้า "ผู้ให้บริการ AI" ของบัญชีนี้บนเครื่องที่เทส (กด "สร้างการ์ด" จะเรียก AI จริง)'
+KEY_ANY = 'ต้องตั้ง key ในหน้า "ผู้ให้บริการ AI" ก่อน (key หมดอายุก็ได้ — เคสนี้ไม่เรียก AI) ไม่งั้นแถบบนจะขึ้น "ยังไม่ได้เชื่อมต่อผู้ให้บริการ AI" แทน'
+_SEED_A = 'ไลฟ์ seed TI-579 ของ qa hostb ในทีม A (ถ้าไม่ใช่วันที่ seed ให้ seed ใหม่ก่อน)'
+SEED_A = 'ข้อมูล: ' + _SEED_A
+
+CASE_ACCOUNTS = {
+    'TC-AII-A.1': (_HOSTA, 'ทีม A', '7 วันล่าสุด', []),
+    'TC-AII-A.2': (_HOSTA, 'ทีม A', '7 วันล่าสุด', ['แฟลก AI เป็นระดับแอป ไม่ใช่ต่อ workspace — เปิดแอปด้วย env LHM_AI=0']),
+    'TC-AII-A.3': (_HOSTA, 'ทีม A', '7 วันล่าสุด ↔ 30 วันล่าสุด', [SEED_A]),
+    'TC-AII-B.1': (_HOSTA, 'ทีมของ qa hosta (ไม่มีไลฟ์)', '7 วันล่าสุด', ['ห้ามใช้ "ทีมของ qa bm" — มีไลฟ์ seed แล้ว']),
+    'TC-AII-B.2': (_HOSTA, 'ทีม A', '7 วันล่าสุด', []),
+    'TC-AII-B.3': (_HOSTA, 'ทีม A', '7 วันล่าสุด', []),
+    'TC-AII-C.1': (_HOSTA, 'ทีม A', '7 วันล่าสุด', [KEY_ANY, SEED_A]),
+    'TC-AII-C.2': (_MULTI, 'ทีมของ B', '7 วันล่าสุด', [KEY_ANY, 'ข้อมูล: ไลฟ์ seed r093 ช่อง @qa.flat (7 vs 7 ไลฟ์ · ตัวควบคุม: "30 วันล่าสุด" ต้องมีกล่องเชิญสร้างการ์ด)']),
+    'TC-AII-C.3': (_HOSTA, 'ทีม A', '7 วันล่าสุด', [KEY_OK, SEED_A]),
+    'TC-AII-C.4': (_HOSTA, 'ทีม A', '7 วันล่าสุด', [KEY_OK, SEED_A]),
+    'TC-AII-C.5': (_MULTI, 'ทีมของ B', '30 วันล่าสุด', [KEY_OK, 'ข้อมูล: สร้างการ์ดชุด 30 วันก่อน แล้วให้ QA ยิงไลฟ์ seed "stale" ของ r093 เพิ่ม 1 ไลฟ์ → กด "รีเฟรช"']),
+    'TC-AII-C.7': (_HOSTA, 'ทีม A', '7 วันล่าสุด', [KEY_ANY, 'จำลองฝั่งเทส: ให้ GET /dashboard/member-baselines ตอบ 503 membership_unavailable (hook net.request ใน main ห้ามแก้โค้ดแอป)']),
+    'TC-AII-D.1': (_HOSTA, 'ทีม A', '7 วันล่าสุด', [KEY_OK, SEED_A]),
+    'TC-AII-D.2': (_MULTI, 'ทีมของ B', '7 วันล่าสุด', ['ข้อมูล: ไลฟ์ seed r093 ช่อง @qa.flat (7 vs 7 ไลฟ์ ยอดรวมเท่าเดิม)']),
+    'TC-AII-D.3': (_BM, 'ทีมของ qa bm', '7 วันล่าสุด และ 30 วันล่าสุด', ['ข้อมูล: ไลฟ์ seed r093 ช่อง @qa.recent มีแค่ใน 7 วันล่าสุด (ช่วงก่อนหน้า 0 ไลฟ์)']),
+    'TC-AII-D.4': (_MULTI, 'ทีมของ B', '30 วันล่าสุด', [KEY_OK, 'ข้อมูล: ไลฟ์ seed r093 ช่อง @qa.flat 30 vs 10 ไลฟ์ → การ์ด HOT ระดับ workspace 7 ใบ']),
+    'TC-AII-E.1': (_HOSTA, 'ทีม A', '7 วันล่าสุด', [KEY_OK, 'ควรเห็น section qa hostb / qa owner / qa bm (qa hosta ไม่มีไลฟ์ในช่วงจึงไม่มี section ตัวเอง)']),
+    'TC-AII-E.2': (_BM, 'ทีมของ qa bm', '7 วันล่าสุด', ['ข้อมูล (ยังไม่เตรียม): เพิ่มบัญชี QA อีกคนเข้าทีมใน Hub → seed ไลฟ์ "leaver" ของ r093 ในนามบัญชีนั้น → ลบบัญชีนั้นออกจากทีม']),
+    'TC-AII-F.1': (_HOSTA, 'ทีม A', '7 วันล่าสุด', [KEY_OK, 'ดูบล็อก @qa.new ของ qa hostb (สะสม 3/5) · ' + _SEED_A]),
+    'TC-AII-F.2': (_HOSTA, 'ทีม A', '7 วันล่าสุด', ['ดูบล็อก @qa.shop / @qa.calm ของ qa hostb · ' + _SEED_A]),
+    'TC-AII-G.1': (_HOSTA, 'ทีม A', '7 วันล่าสุด', [KEY_OK, SEED_A]),
+    'TC-AII-G.2': (_HOSTA, 'ทีม A', '7 วันล่าสุด', [KEY_OK, SEED_A]),
+    'TC-AII-G.3': (_HOSTA, 'ทีม A', '7 วันล่าสุด', [KEY_OK, 'การ์ด HOST ของ qa hostb ช่อง @qa.shop · ' + _SEED_A]),
+    'TC-AII-H.1': (_HOSTA, 'ทีม A', '7 วันล่าสุด', [KEY_OK, 'ดูบล็อก @qa.capture.a ของ qa hostb และ @winwincenter1 ของ qa owner · ' + _SEED_A]),
+    'TC-AII-H.2': (_HOSTA, 'ทีม A', '7 วันล่าสุด', [KEY_ANY, 'ยังไม่มีชุดการ์ดในช่วงนี้บนเครื่องที่เทส · ' + _SEED_A]),
+    'TC-AII-I.1': (_HOSTA, 'ทีม A', '7 วันล่าสุด', ['ดูบล็อก @qa.mood (HIGH 4 แถว) และ @qa.shop (HIGH + MED) ของ qa hostb · ' + _SEED_A]),
+    'TC-AII-I.2': (_HOSTA, 'ทีม A', '7 วันล่าสุด', ['ดูบล็อก @qa.mood ของ qa hostb · ' + _SEED_A]),
+    'TC-AII-I.3': (_HOSTA, 'ทีม A', '7 วันล่าสุด', ['ดูบล็อก @qa.new ของ qa hostb (สะสม 3/5) · ' + _SEED_A]),
+}
+
+
+def _apply_case_accounts(epics):
+    ids = [c['id'] for ep in epics for f in ep['feats'] for c in f['cases']]
+    missing = [i for i in ids if i not in CASE_ACCOUNTS]
+    assert not missing, f'ไม่มีบัญชีกำกับ: {missing}'
+    for ep in epics:
+        for f in ep['feats']:
+            for c in f['cases']:
+                (email, role), ws, period, extra = CASE_ACCOUNTS[c['id']]
+                head = [f'บัญชีที่ใช้ (UAT): {email} · บทบาท "{role}"', f'workspace: "{ws}" · ช่วงเวลา: "{period}"']
+                c['data'] = head + extra + [d for d in (c.get('data') or []) if 'บัญชีที่ใช้' not in d]
+
+
+_apply_case_accounts(EPICS)
