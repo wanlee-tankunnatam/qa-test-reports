@@ -80,6 +80,9 @@ def main():
         info = jira[k]
         out.append([NO_ROUND, info['dev'], k, info['prio'], info['title'], info['status']])
 
+    if not (changed or added or removed):
+        print(f'{datetime.datetime.now():%F %H:%M} ไม่มีอะไรเปลี่ยน (ข้าม ไม่ commit)'); return
+
     lines = [json.dumps(r, ensure_ascii=False).replace('</', '<\\/') + ',' for r in out]
     html = html[:m.start()] + 'const ROWS = [\n' + '\n'.join(lines) + '\n];' + html[m.end():]
 
