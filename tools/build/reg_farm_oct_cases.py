@@ -12,9 +12,9 @@ META = dict(
     title='[REG 5–9 ต.ค.] TAKRA Post (farm) — Regression Test Cases',
     emoji='📱', uid_start=16001, download='takra-farm-regression-oct0509-ui-test-cases.html',
     back='https://wanlee-tankunnatam.github.io/qa-test-reports/?project=farm',
-    sub='รอบ Regression <b>จ 5 – ศ 9 ต.ค. 2569</b> · ชุดเต็ม 59 เคส Desktop UI รอบ 8 ต.ค. (3 ฟีเจอร์หลัก + เคสค้าง + re-test TF-1)',
+    sub='รอบ Regression <b>จ 5 – ศ 9 ต.ค. 2569</b> · ชุดเต็ม 59 เคส Desktop UI รอบ 8 ต.ค. (3 ฟีเจอร์หลัก + เคสค้าง + re-test TF-1) + กลุ่ม L · Shopee 15 เคส (เพิ่ม 5 ต.ค.)',
     groups_label=_base.META.get('groups_label', ''),
-    note='🧪 <b>รอบ Regression 5–9 ต.ค. 2569</b> — ชุดเต็ม 59 เคส Desktop UI รอบ 8 ต.ค. (3 ฟีเจอร์หลัก + เคสค้าง + re-test TF-1)<br>📎 เคสคัดจากชุดหลัก (<code>farm_cases.py</code>) · ผลรอบนี้บันทึกแยกจากรายงานชุดหลัก · แผนรวม: <a href="https://wanlee-tankunnatam.github.io/qa-test-reports/timeline/regression-plan.html#plan">regression-plan</a>',
+    note='🧪 <b>รอบ Regression 5–9 ต.ค. 2569</b> — ชุดเต็ม 59 เคส Desktop UI รอบ 8 ต.ค. (3 ฟีเจอร์หลัก + เคสค้าง + re-test TF-1) + กลุ่ม L · Shopee 15 เคส (เพิ่ม 5 ต.ค.)<br>📎 เคสคัดจากชุดหลัก (<code>farm_cases.py</code>) · ผลรอบนี้บันทึกแยกจากรายงานชุดหลัก · แผนรวม: <a href="https://wanlee-tankunnatam.github.io/qa-test-reports/timeline/regression-plan.html#plan">regression-plan</a>',
     footer='Regression 5–9 ต.ค. 2569 · takra-farm',
 )
 
