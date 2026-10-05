@@ -277,6 +277,36 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   "tc-13037": {
     "actual": "UAT 5 ต.ค. 69 (ws ทีมของ QA Tester, Owner): กด 'อัปเดตคลังเสียง' → ปุ่มเปลี่ยนเป็น 'กำลังอัปเดต…' ราว 1.7 วินาที → ขึ้น 'อัปเดตคลังเสียงแล้ว 59 เสียง' และ 'อัปเดตล่าสุด' เปลี่ยนจาก 25 ก.ย. 2569 14:20 เป็น 5 ต.ค. 2569 21:25 (ตรงสเปก). แต่จำนวนไม่สอดคล้อง: toast แจ้ง 59 เสียง แต่ตาราง 'เสียงของระบบ' แสดง 36 แถว + ซ่อนไว้ 25 (กด 'แสดงทั้งหมด' ได้ครบ 61 แถว). สาเหตุ: API มี active 59 + unpublished 2 เสียง ('google_chirp-tts', 'google_chirp3-stt') ซึ่งยังแสดงในตารางแต่ไม่ถูกนับในจำนวนที่แจ้ง (ฟังก์ชันอัปเดตทำงานได้, ผิดเฉพาะข้อความ 'จำนวนแถวสอดคล้องกับจำนวนที่แจ้ง')",
     "st": "fail"
+  },
+  "tc-13045": {
+    "st": "pass"
+  },
+  "tc-13046": {
+    "st": "pass"
+  },
+  "tc-13047": {
+    "st": "pass"
+  },
+  "tc-13048": {
+    "st": "pass"
+  },
+  "tc-13049": {
+    "st": "pass"
+  },
+  "tc-13171": {
+    "st": "pass"
+  },
+  "tc-13172": {
+    "st": "pass"
+  },
+  "tc-13173": {
+    "st": "pass"
+  },
+  "tc-13174": {
+    "st": "pass"
+  },
+  "tc-13175": {
+    "st": "pass"
   }
 }
 </script>
@@ -300,15 +330,15 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="runsum">
     <h3>📊 สรุปผล Manual Test</h3>
     <div class="sumchips">
-      <span class="cnt pass">PASS <b id="sum-pass">0</b></span>
-      <span class="cnt fail">FAIL <b id="sum-fail">0</b></span>
-      <span class="cnt hold">HOLD <b id="sum-hold">0</b></span>
-      <span class="cnt block">BLOCKED <b id="sum-block">0</b></span>
+      <span class="cnt pass">PASS <b id="sum-pass">39</b></span>
+      <span class="cnt fail">FAIL <b id="sum-fail">3</b></span>
+      <span class="cnt hold">HOLD <b id="sum-hold">2</b></span>
+      <span class="cnt block">BLOCKED <b id="sum-block">1</b></span>
       <span class="cnt skip">SKIP <b id="sum-skip">0</b></span>
-      <span class="cnt pending">รอเทส <b id="sum-pending">216</b></span>
+      <span class="cnt pending">รอเทส <b id="sum-pending">171</b></span>
     </div>
-    <div class="progress"><div id="sumbar" class="progressbar" style="width:0%"></div></div>
-    <div class="hint" id="sumpct" style="margin-top:5px">0% ทดสอบแล้ว (0/216)</div>
+    <div class="progress"><div id="sumbar" class="progressbar" style="width: 21%;"></div></div>
+    <div class="hint" id="sumpct" style="margin-top:5px">21% ทดสอบแล้ว (45/216)</div>
   </div>
 
   <div class="toolbar">
@@ -316,7 +346,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <button class="btn" onclick="toggleAll(false)">▾ ยุบทั้งหมด</button>
     <span class="hint">💡 คลิกแถว → ดู Steps / Expected (UI only)</span>
     <span style="margin-left:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-      <span id="save-status" class="hint" style="white-space: nowrap; color: var(--muted);">✓ ตรงกับ GitHub</span>
+      <span id="save-status" class="hint" style="white-space: nowrap; color: var(--hold);">● ยังไม่ได้บันทึก</span>
       <label class="hint" style="display:flex;gap:4px;align-items:center;white-space:nowrap;cursor:pointer" title="บันทึกขึ้น GitHub อัตโนมัติหลังหยุดแก้ ~5 วินาที"><input type="checkbox" id="chk-autosave" checked=""> auto-save</label>
       <button class="btn" id="btn-token" title="ใส่/เปลี่ยน GitHub token (ถ้าเซฟไม่ขึ้น/token เสีย กดอันนี้)">🔑 Token</button>
       <button class="btn" id="btn-refresh" title="ดึงผลล่าสุดจาก GitHub มา merge (ไม่ต้อง reload)">🔄 ดึงล่าสุด</button>
@@ -365,7 +395,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">เปิด Live ตอนยังไม่ล็อกอิน แล้วถูกพาไปหน้าเข้าสู่ระบบของ TAKRA Hub <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
-  <td class="status" data-uid="tc-13001"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13001"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13001"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -379,7 +409,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13001" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13001" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13001" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13001" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13001" data-st="block">BLOCKED</span>
@@ -397,7 +427,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">เข้าสู่ระบบที่ TAKRA Hub แล้วกด "เปิดแอป" ที่ TAKRA AI เข้า Live ได้โดยไม่ต้องล็อกอินซ้ำ <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
-  <td class="status" data-uid="tc-13002"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13002"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13002"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -411,7 +441,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13002" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13002" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13002" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13002" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13002" data-st="block">BLOCKED</span>
@@ -429,7 +459,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">เปิด URL ของ Live ตรง ๆ แล้วเข้าสู่ระบบที่หน้าของ TAKRA Hub จนกลับเข้า Live ได้ <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
-  <td class="status" data-uid="tc-13003"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13003"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13003"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -443,7 +473,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13003" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13003" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13003" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13003" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13003" data-st="block">BLOCKED</span>
@@ -493,7 +523,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">ออกจากระบบแบบปกติแล้วกลับไปหน้าเข้าสู่ระบบ <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13005"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13005"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13005"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -507,7 +537,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13005" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13005" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13005" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13005" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13005" data-st="block">BLOCKED</span>
@@ -526,7 +556,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">Workspace ที่มีแพ็กเกจอยู่แล้วเข้าใช้งานได้ตามปกติโดยไม่ติดหน้าตรวจสิทธิ์ <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13006"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13006"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13006"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -540,7 +570,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13006" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13006" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13006" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13006" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13006" data-st="block">BLOCKED</span>
@@ -559,7 +589,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">เปิดหน้าตั้งค่า Workspace จากหน้าภาพรวมได้ <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
-  <td class="status" data-uid="tc-13007"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13007"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13007"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -570,10 +600,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "ภาพรวม" ในแถบข้างซ้าย แล้วดูแถบด้านบนที่แสดงชื่อ workspace</li><li>กดปุ่ม "แก้ไข Workspace" แล้วรอจนฟอร์มตั้งค่าโหลดเสร็จ</li><li>ไล่ดูหัวข้อและส่วนต่างๆ ในหน้าตั้งค่า</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>แถบด้านบนแสดงชื่อ workspace พร้อมตัวเลข "ทีมงาน" · "ไลฟ์สัปดาห์นี้" · "ชั่วโมงอวาตาร์" (ช่องชั่วโมงอวาตาร์แสดง "—" เพราะหน้านี้ยังไม่มีแหล่งข้อมูลการใช้งาน)</li><li>กดแล้วเปิดหน้าตั้งค่าที่มีหัวข้อ "โทนเสียงแบรนด์" และ "ค่าเริ่มต้นของ Workspace"</li><li>กล่องบนสุดของฟอร์มแสดง "ชื่อ Workspace" พร้อมบรรทัด "สิทธิ์ของคุณ: เจ้าของ"</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 · Story 1.5 · FR1</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13007" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13007" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13007" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13007" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13007" data-st="block">BLOCKED</span>
@@ -591,7 +621,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">ตั้งโทนเสียงแบรนด์และแนวทางการพูดแล้วบันทึกสำเร็จ <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
-  <td class="status" data-uid="tc-13008"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13008"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13008"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -602,10 +632,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "ภาพรวม" แล้วกดปุ่ม "แก้ไข Workspace" เพื่อเปิดหน้าตั้งค่า</li><li>ในหัวข้อ "โทนเสียงแบรนด์" เลือกตัวเลือก "เป็นกันเอง" ใน "โทนแบรนด์" แล้วพิมพ์ข้อความลงช่อง "แนวทางการพูด" เช่น "พูดกับลูกค้าเหมือนเพื่อน ใช้ค่ะ/นะคะ · ห้ามการันตีผลเกินจริง"</li><li>กดปุ่ม "บันทึกการตั้งค่า" แล้วสังเกตปุ่มและข้อความแจ้งผล</li><li>รีเฟรชหน้าแล้วดูค่าที่บันทึกไว้</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ระหว่างบันทึก ปุ่มเปลี่ยนเป็น "กำลังบันทึก…" และกดซ้ำไม่ได้</li><li>เห็นข้อความแจ้งผล "บันทึกแล้ว" พร้อมรายละเอียดที่ระบุชื่อ workspace</li><li>หลังรีเฟรช โทนแบรนด์ที่เลือกและข้อความแนวทางการพูดยังอยู่ครบทั้ง 2 ช่อง</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 · Story 1.5 · FR1</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13008" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13008" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13008" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13008" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13008" data-st="block">BLOCKED</span>
@@ -623,7 +653,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">ตั้งค่าเริ่มต้นของ Workspace (ภาษา · หมวดธุรกิจ · แพลตฟอร์ม) แล้วค่าคงอยู่ <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13009"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13009"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13009"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -634,10 +664,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "ภาพรวม" แล้วกดปุ่ม "แก้ไข Workspace" เพื่อเปิดหน้าตั้งค่า</li><li>ในหัวข้อ "ค่าเริ่มต้นของ Workspace" เลือก "ภาษาสคริปต์เริ่มต้น" เป็น "ไทยปนอังกฤษ" · เลือก "หมวดธุรกิจ" เป็น "Beauty / Skincare" · เลือกแพลตฟอร์มใน "แพลตฟอร์มที่ใช้ Live" เช่น Shopee กับ TikTok</li><li>กดปุ่ม "บันทึกการตั้งค่า" แล้วรีเฟรชหน้า และดูค่าทั้งสามส่วนอีกครั้ง</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ตัวเลือก "หมวดธุรกิจ" มี 12 หมวดตรงกับหมวดของคลังคำเสี่ยง (Beauty / Skincare · Health / Wellness · Supplement / อาหารเสริม · Fashion / Apparel · Jewelry / Accessories · Mom &amp; Baby · Food / Beverage · Home / Living · Electronics · Auto / Mobility · Services / บริการ · อื่นๆ)</li><li>ตัวเลือกภาษามี "ไทยล้วน" และ "ไทยปนอังกฤษ"</li><li>หลังบันทึกและรีเฟรช ค่าทั้ง 3 ส่วน (ภาษา · หมวดธุรกิจ · แพลตฟอร์ม) ยังเป็นค่าที่เพิ่งตั้ง</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 · Story 1.5 · FR1</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13009" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13009" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13009" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13009" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13009" data-st="block">BLOCKED</span>
@@ -655,7 +685,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">ชื่อ Workspace · สมาชิก · แพ็กเกจ เป็นข้อมูลอ่านอย่างเดียวพร้อมลิงก์ไป TAKRA Hub <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13010"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13010"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13010"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -665,10 +695,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "ภาพรวม" แล้วกดปุ่ม "แก้ไข Workspace" เพื่อเปิดหน้าตั้งค่า</li><li>ดูกล่องข้อมูลบนสุดที่แสดง "ชื่อ Workspace" แล้วลองคลิกที่ชื่อเพื่อพิมพ์ทับ</li><li>อ่านหมายเหตุใต้กล่อง แล้วกดลิงก์ "จัดการที่ TAKRA Hub"</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ชื่อ Workspace แสดงเป็นข้อความอ่านอย่างเดียว ไม่ใช่ช่องกรอกที่พิมพ์ทับได้</li><li>มีหมายเหตุ "เปลี่ยนชื่อ · จัดการสมาชิก · แพ็กเกจและการชำระเงิน ทำได้ที่ TAKRA Hub"</li><li>ลิงก์ "จัดการที่ TAKRA Hub" เปิดไปยัง Hub ในแท็บใหม่</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 · Story 1.5 · FR1</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13010" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13010" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13010" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13010" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13010" data-st="block">BLOCKED</span>
@@ -686,7 +716,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">หน้าสร้าง Workspace ใหม่ชี้ไป TAKRA Hub ไม่มีฟอร์มสร้างในแอป <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
-  <td class="status" data-uid="tc-13011"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13011"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13011"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -697,10 +727,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชีทดสอบ</li><li>กดที่ชื่อ workspace ที่หัวแถบข้างซ้ายเพื่อเปิดตัวสลับ Workspace</li><li>ดูตัวเลือกท้ายรายการ แล้วตรวจว่ามีช่องกรอกสำหรับสร้าง workspace ตรงนี้หรือไม่</li><li>กด "เพิ่ม Workspace ใหม่" แล้วดูปลายทาง</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>เห็นตัวเลือก "เพิ่ม Workspace ใหม่" พร้อมป้ายรอง "จัดการที่ TAKRA Hub"</li><li>ไม่มีฟอร์มหรือช่องกรอกสร้าง workspace ในแอปนี้</li><li>กดแล้วเปิดแท็บใหม่ไปยัง TAKRA Hub (ไม่ใช่ฟอร์มในแอปนี้)</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 · Story 1.5 · FR1</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13011" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13011" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13011" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13011" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13011" data-st="block">BLOCKED</span>
@@ -719,7 +749,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">สลับ Workspace ผ่านตัวสลับแล้วบริบทการทำงานเปลี่ยนตาม <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
-  <td class="status" data-uid="tc-13012"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13012"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13012"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -730,10 +760,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชีที่เป็นสมาชิกทั้ง workspace A และ B (เริ่มที่ A)</li><li>ไปที่เมนู "ภาพรวม" แล้วจดตัวเลขในการ์ด "เครื่องมือ Workspace" ไว้</li><li>กดที่ชื่อ workspace ที่หัวแถบข้างซ้ายเพื่อเปิดตัวสลับ แล้วเลือก workspace B</li><li>อ่านหน้าต่างยืนยัน แล้วกดปุ่ม "เปลี่ยนพื้นที่ทำงาน"</li><li>สังเกตชื่อ workspace และตัวเลขบนหน้าภาพรวมหลังสลับเสร็จ</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>หน้าต่างยืนยันแสดงหัวข้อ "คุณต้องการเปลี่ยนพื้นที่ทำงานใช่หรือไม่?" พร้อมคำอธิบาย "การเปลี่ยนพื้นที่ทำงานจะทำให้ข้อมูลและบริบทการทำงานเปลี่ยนไป"</li><li>หลังยืนยัน ชื่อ workspace ที่หัวแถบซ้ายและบนหน้าภาพรวมเปลี่ยนเป็น B</li><li>ตัวเลขในการ์ด "เครื่องมือ Workspace" (คลังเสียง/คลังอวาตาร์/คลังสินค้า/คำเสี่ยง/ทีมงาน) เปลี่ยนเป็นข้อมูลของ workspace B</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 · Story 1.9 · FR4</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13012" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13012" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13012" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13012" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13012" data-st="block">BLOCKED</span>
@@ -751,7 +781,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">ข้อมูลในทุกคลังถูกจำกัดเฉพาะ Workspace ที่กำลังใช้งาน <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
-  <td class="status" data-uid="tc-13013"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13013"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13013"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -762,10 +792,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชีที่เป็นสมาชิกทั้ง workspace A และ B (เริ่มที่ A)</li><li>เปิดเมนู "คลังสินค้า" · "คลังสคริปต์" · "คำเสี่ยง" ทีละหน้า แล้วจดชื่อรายการที่เห็น</li><li>กดที่ชื่อ workspace ที่หัวแถบข้างซ้าย เลือก workspace B แล้วกดยืนยัน "เปลี่ยนพื้นที่ทำงาน"</li><li>เปิดสามเมนูเดิมอีกครั้งแล้วเทียบรายการกับที่จดไว้</li><li>พิมพ์ชื่อรายการเฉพาะของ workspace A (เช่น "A-ONLY-Serum") ในช่องค้นหาของแต่ละหน้า ขณะอยู่ workspace B</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>รายการที่แสดงใน workspace B ไม่มีข้อมูลของ workspace A ปนเลย</li><li>ค้นหาชื่อรายการของ A ขณะอยู่ B แล้วไม่พบผลลัพธ์</li><li>ตัวเลขสรุปของแต่ละหน้าสอดคล้องกับ workspace ที่เลือกอยู่</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 · Story 1.9 · FR6</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13013" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13013" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13013" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13013" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13013" data-st="block">BLOCKED</span>
@@ -783,7 +813,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">Workspace ที่เลือกไว้ยังคงเดิมหลังรีเฟรชและเปิดแท็บใหม่ <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13014"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13014"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13014"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -793,10 +823,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชีที่เป็นสมาชิก workspace อย่างน้อย 2 แห่ง</li><li>กดที่ชื่อ workspace ที่หัวแถบข้างซ้าย สลับไป workspace B แล้วกดยืนยัน "เปลี่ยนพื้นที่ทำงาน"</li><li>กดรีเฟรชหน้า (F5) แล้วดูชื่อ workspace ที่แสดง</li><li>เปิดแท็บใหม่แล้วพิมพ์ https://uat-live.takra.ai เพื่อเข้าแอปอีกครั้ง</li><li>ปิดเบราว์เซอร์ทั้งหมดแล้วเปิดใหม่ เข้าแอปอีกครั้งโดยยังล็อกอินอยู่ แล้วสังเกตชื่อ workspace</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>หลังรีเฟรช workspace ที่แสดงยังเป็น B</li><li>แท็บใหม่เปิดมาที่ workspace B เช่นกัน (ไม่รีเซ็ตกลับค่าเริ่มต้น)</li><li>หลังเปิดเบราว์เซอร์ใหม่และยังล็อกอินอยู่ ก็ยังอยู่ที่ workspace B</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 · Story 1.9 · FR4</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13014" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13014" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13014" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13014" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13014" data-st="block">BLOCKED</span>
@@ -1070,7 +1100,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">เปิดหน้าแพ็กเกจและการใช้งานแล้วเห็นโควตาครบภายในเวลาที่กำหนด <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
-  <td class="status" data-uid="tc-13023"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13023"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13023"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -1081,10 +1111,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>กดเมนู "แพ็กเกจและการใช้งาน" ในแถบด้านซ้าย (หมวด "พื้นที่ทำงาน") พร้อมจับเวลาตั้งแต่กดจนตัวเลขการใช้งานแสดงครบ</li><li>อ่านหัวข้อ "การใช้งานรอบนี้" คำกำกับใต้หัวข้อ และรายการโควตาแต่ละแถว</li><li>ดูค่าที่ใช้ไปเทียบโควตา หน่วย และแถบความคืบหน้าของแต่ละรายการ</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ตัวเลขการใช้งานแสดงครบภายใน 3 วินาที</li><li>เห็นโควตาครบ 3 รายการ: "ชั่วโมงอวาตาร์" · "เครดิตสร้างสคริปต์ AI" · "คอมเมนต์ที่ดึงมา"</li><li>แต่ละรายการแสดงค่าที่ใช้ไปเทียบโควตาทั้งหมดพร้อมหน่วย (ชม. / เครดิต / ข้อความ) — ถ้าชั่วโมงอวาตาร์ที่ใช้ไปยังไม่ถึง 1 ชม. ค่าที่ใช้ไปแสดงเป็นนาที เช่น "25 นาที" หรือ "&lt;1 นาที" (ไม่ใช่ทศนิยมยาว) มีแถบความคืบหน้า และหมายเหตุ "รีเซ็ต &lt;วันที่&gt;" (รอบโควตาอิงวันเริ่มแพ็กเกจ ไม่ใช่เดือนปฏิทิน)</li><li>มีคำกำกับ "โควต้าการใช้งานของแพ็กเกจปัจจุบัน — แสดงผลอย่างเดียว" (ไม่มีการตัดการใช้งานอัตโนมัติใน MVP-1)</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 · Story 1.10 · FR5 · TAKRA-1146</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13023" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13023" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13023" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13023" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13023" data-st="block">BLOCKED</span>
@@ -1102,7 +1132,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">หน้าภาพรวมแสดงชั่วโมงอวาตาร์ที่ใช้เทียบโควตาให้เห็นทันที <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13024"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13024"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13024"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -1112,10 +1142,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "ภาพรวม" ในแถบด้านซ้าย</li><li>ดูแถบสรุปด้านบนของหน้า อ่านค่าในช่อง "ชั่วโมงอวาตาร์" รวมถึงค่า "ทีมงาน" และ "ไลฟ์สัปดาห์นี้"</li><li>ไปที่เมนู "แพ็กเกจและการใช้งาน" แล้วดูยอดชั่วโมงอวาตาร์ที่ใช้ไปเทียบโควตาในหัวข้อ "การใช้งานรอบนี้"</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>แถบด้านบนของหน้าภาพรวมมีช่อง "ชั่วโมงอวาตาร์" ซึ่งตอนนี้แสดง "—" (หน้าภาพรวมยังไม่มีแหล่งข้อมูลการใช้งาน — ต้องไม่แสดง 0 หรือตัวเลขสมมติ)</li><li>แสดงจำนวน "ทีมงาน" (คน) และ "ไลฟ์สัปดาห์นี้" (รอบ) ควบคู่กันในแถบเดียวกัน</li><li>ยอดชั่วโมงอวาตาร์ที่ใช้ไปเทียบโควตาดูได้ที่หน้า "แพ็กเกจและการใช้งาน" (แถว "ชั่วโมงอวาตาร์" มีค่าที่ใช้ไป / โควตา ชม. และแถบความคืบหน้า)</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 · Story 1.10 · FR5</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13024" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13024" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13024" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13024" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13024" data-st="block">BLOCKED</span>
@@ -1133,7 +1163,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">การเปลี่ยนแพ็กเกจและการชำระเงินชี้ไป TAKRA Hub ทั้งหมด <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13025"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13025"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13025"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -1143,10 +1173,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "แพ็กเกจและการใช้งาน" แล้วดูการ์ดแพ็กเกจด้านบนของหน้า (ส่วน "เปรียบเทียบแพ็กเกจ" ถูกถอดออกแล้ว — TAKRA-1172)</li><li>ดูป้าย "แพ็กเกจปัจจุบัน" ราคาป้าย และปุ่มที่พาไป TAKRA Hub</li><li>เลือกหมวด "การเรียกเก็บเงิน" จากเมนูการตั้งค่าด้านซ้าย อ่านคำอธิบาย แล้วกดปุ่มที่ระบบให้มาและดูปลายทาง</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>การ์ดแพ็กเกจแสดง "แพ็กเกจปัจจุบัน" พร้อมราคาป้าย และหมายเหตุ "รายละเอียดและยอดชำระจริงดูที่ TAKRA Hub"</li><li>มีปุ่ม "จัดการแพ็กเกจที่ TAKRA Hub" ซึ่งพาออกไปที่ TAKRA Hub (ไม่มีตารางเทียบแพ็กเกจ/ปุ่มเปลี่ยนแพ็กเกจในแอปนี้แล้ว)</li><li>หมวดการเรียกเก็บเงินแสดงการ์ด "การเรียกเก็บเงินอยู่ที่ TAKRA Hub" พร้อมปุ่ม "ไปที่การเรียกเก็บเงินบน TAKRA Hub"</li><li>ไม่มีขั้นตอนกรอกบัตร/ชำระเงินอยู่ในแอปนี้เลย</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 · Story 1.10 · FR5</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13025" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13025" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13025" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13025" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13025" data-st="block">BLOCKED</span>
@@ -1165,7 +1195,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">ผู้ใช้ใหม่เห็นเช็กลิสต์ 3 ขั้นก่อนไลฟ์แรกพร้อมทางไปแต่ละขั้น <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
-  <td class="status" data-uid="tc-13026"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13026"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13026"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -1176,10 +1206,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบครั้งแรกด้วยบัญชีทดสอบ (workspace ยังว่าง) — ระบบพาเข้าหน้าต้อนรับอัตโนมัติ</li><li>อ่านหัวข้อต้อนรับ คำบรรยาย และรายการทั้ง 3 ขั้นในเช็กลิสต์</li><li>ดูตัวเลขและแถบความคืบหน้าของเช็กลิสต์</li><li>กดปุ่ม "เลือก Avatar / Voice" ของขั้นแรก แล้วดูหน้าปลายทาง</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>เห็นหัวข้อต้อนรับ "ยินดีต้อนรับสู่ takra·ai" และเช็กลิสต์ "3 ขั้นก่อนไลฟ์แรก" พร้อมคำบรรยาย "ทำ 3 ขั้นนี้ให้ครบ แล้วคุณก็พร้อมเริ่มไลฟ์รอบแรกได้เลย"</li><li>3 ขั้นคือ "เตรียม Avatar และ Voice" · "เพิ่มสินค้าเข้าคลัง" · "สร้าง Live แรก" พร้อมคำอธิบายสั้นของแต่ละขั้น</li><li>แสดงความคืบหน้า "เสร็จแล้ว 0/3 ขั้น"</li><li>ปุ่มของขั้นแรกพาไปหน้าคลังอวาตาร์จริง</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 · Story 1.11</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13026" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13026" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13026" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13026" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13026" data-st="block">BLOCKED</span>
@@ -1197,7 +1227,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">ทำขั้นตอนเสร็จแล้วเช็กลิสต์อัปเดตความคืบหน้าให้เห็น <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13027"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13027"><span class="stb hold">HOLD</span></td>
   <td class="jira-cell" data-uid="tc-13027"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -1208,12 +1238,12 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชีทดสอบที่ยังทำเช็กลิสต์ไม่ครบ จากนั้นเปิดหน้าเช็กลิสต์เริ่มต้นใช้งาน (https://uat-live.takra.ai/onboarding)</li><li>กดปุ่ม "เพิ่มสินค้า" ของขั้น "เพิ่มสินค้าเข้าคลัง" — ระบบพาไปหน้าคลังสินค้า</li><li>เพิ่มสินค้าใหม่ 1 รายการให้สำเร็จ แล้วย้อนกลับมาที่หน้าเช็กลิสต์</li><li>สังเกตสถานะของขั้นที่เพิ่งทำ ตัวเลขและแถบความคืบหน้า</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ขั้นที่ทำเสร็จติดป้าย "เสร็จแล้ว" และปุ่มเปลี่ยนเป็น "ดูอีกครั้ง"</li><li>ตัวเลขความคืบหน้า "เสร็จแล้ว X/3 ขั้น" เพิ่มขึ้นตามจริง (เช่น 1/3 → 2/3)</li><li>แถบความคืบหน้าขยับสอดคล้องกับตัวเลข</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 · Story 1.11</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-13027" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13027" data-st="fail">FAIL</span>
-    <span class="opt hold" data-uid="tc-13027" data-st="hold">HOLD</span>
+    <span class="opt hold sel" data-uid="tc-13027" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13027" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-13027" data-st="skip">SKIP</span>
   </div></div>
@@ -1229,7 +1259,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">ทำครบทุกขั้นแล้วระบบชี้ไปสร้างไลฟ์แรก <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13028"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13028"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13028"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -1239,10 +1269,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชีทดสอบที่ทำครบทั้ง 3 ขั้นแล้ว</li><li>เปิดหน้าเช็กลิสต์เริ่มต้นใช้งาน (https://uat-live.takra.ai/onboarding)</li><li>อ่านข้อความสรุปที่แสดงเมื่อครบทุกขั้น</li><li>กดปุ่มที่ระบบแนะนำ แล้วดูหน้าปลายทาง</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>เห็นข้อความสรุป "พร้อมแล้ว! 🎉" พร้อมคำอธิบาย "คุณเตรียมทุกอย่างครบแล้ว เริ่มไลฟ์รอบแรกได้เลย"</li><li>มีปุ่ม "สร้าง Live แรกเลย" กดแล้วพาเข้าฝั่งระบบไลฟ์เพื่อสร้างไลฟ์แรกจริง</li><li>ทุกขั้นในเช็กลิสต์ติดสถานะ "เสร็จแล้ว" ไม่มีขั้นใดค้างสถานะไม่เสร็จทั้งที่ทำครบแล้ว</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 1 · Story 1.11</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13028" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13028" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13028" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13028" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13028" data-st="block">BLOCKED</span>
@@ -1261,7 +1291,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">หน้าตั้งค่าบัญชีมีส่วนลบบัญชีพร้อมคำเตือนผลกระทบครบ <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13029"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13029"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13029"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -1275,7 +1305,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13029" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13029" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13029" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13029" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13029" data-st="block">BLOCKED</span>
@@ -1297,7 +1327,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">เปิดคลังอวาตาร์แล้วเห็นอวาตาร์ที่ทีม Ops จัดเตรียมให้ครบ <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
-  <td class="status" data-uid="tc-13030"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13030"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13030"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -1308,10 +1338,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังอวาตาร์" ในแถบด้านซ้าย (หมวด "คลังข้อมูล") แล้วรอจนโครงร่างสีเทาระหว่างโหลดหายไป</li><li>อ่านหัวข้อหน้าและคำบรรยายใต้หัวข้อ แล้วไล่ดูการ์ดอวาตาร์ใต้หัวข้อกลุ่ม "อวาตาร์ที่ทีมจัดเตรียมให้"</li><li>เอาเมาส์ชี้ค้างที่การ์ดอวาตาร์ใบหนึ่ง แล้วสังเกตการเปลี่ยนแปลงบนการ์ด</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>เห็นหัวข้อ "คลังอวาตาร์" พร้อมคำบรรยาย "เลือกอวาตาร์ที่จะใช้ในห้องไลฟ์ของคุณ" และเมนู "คลังอวาตาร์" ในแถบด้านซ้ายถูกไฮไลต์</li><li>ใต้หัวข้อกลุ่ม "อวาตาร์ที่ทีมจัดเตรียมให้" มีการ์ดอวาตาร์ที่ Ops จัดเตรียมแสดงครบเป็นตาราง แต่ละใบเห็นชื่ออวาตาร์</li><li>เมื่อชี้เมาส์ค้าง วิดีโอตัวอย่างของอวาตาร์ตัวนั้นเริ่มเล่นแทนรูปนิ่ง และปุ่ม "ดูตัวอย่าง" โผล่ขึ้นมาบนการ์ด</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · Story 2.1 · FR7</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13030" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13030" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13030" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13030" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13030" data-st="block">BLOCKED</span>
@@ -1329,7 +1359,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">กรองอวาตาร์ตามสไตล์และเพศ แล้วล้างตัวกรองกลับมาดูทั้งหมด <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13031"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13031"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13031"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -1340,10 +1370,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังอวาตาร์" รอจนรายการโหลดเสร็จ แล้วจดตัวเลขบนปุ่ม "ทั้งหมด" ไว้</li><li>คลิกปุ่มกรองสไตล์ "พรีเซ็นเตอร์" แล้วนับจำนวนการ์ดที่เหลือเทียบกับตัวเลขบนปุ่มนั้น</li><li>เลือกตัวกรอง "เพศ" เป็น "หญิง" แล้วอ่านข้อความสรุปใต้แถวตัวกรอง</li><li>กด "ล้างตัวกรอง" แล้วสังเกตรายการ</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ปุ่ม "พรีเซ็นเตอร์" เปลี่ยนเป็นสถานะถูกเลือก ตารางเหลือเฉพาะอวาตาร์สไตล์นั้น และจำนวนการ์ดตรงกับตัวเลขบนปุ่ม</li><li>เมื่อเลือกเพศ "หญิง" เพิ่ม ตัวเลขบนปุ่มสไตล์แต่ละปุ่มปรับลดตามเพศที่เลือก และตารางกรองซ้อนสองเงื่อนไขถูกต้อง</li><li>เห็นข้อความสรุป "แสดง X จาก Y ตัว" พร้อมลิงก์ "ล้างตัวกรอง"</li><li>หลังกด "ล้างตัวกรอง" รายการกลับมาแสดงครบเท่าตัวเลขเดิมของปุ่ม "ทั้งหมด"</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · Story 2.1</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13031" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13031" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13031" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13031" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13031" data-st="block">BLOCKED</span>
@@ -1361,7 +1391,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">เปิดหน้าต่างพรีวิวอวาตาร์แล้วเห็นข้อมูลครบและปิดด้วย Esc ได้ <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13032"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13032"><span class="stb block">BLOCKED</span></td>
   <td class="jira-cell" data-uid="tc-13032"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -1372,13 +1402,13 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังอวาตาร์" ชี้เมาส์ที่การ์ดอวาตาร์ใบแรกจนปุ่ม "ดูตัวอย่าง" ปรากฏ แล้วคลิก</li><li>รอให้หน้าต่างพรีวิวเปิดและวิดีโอเริ่มเล่น แล้วเลื่อนอ่านข้อมูลในกล่องใต้วิดีโอให้ครบทุกหัวข้อ</li><li>กดปุ่มเล่นบนแถบคลื่นเสียงในหัวข้อเสียง แล้วฟังเสียงตัวอย่าง</li><li>กดปุ่ม Esc บนคีย์บอร์ด แล้วสังเกตหน้าต่างพรีวิว</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>หน้าต่างพรีวิวเปิดขึ้นพร้อมวิดีโอตัวอย่าง และแสดงหัวข้อ "คาแรกเตอร์" · "เสียง (กำหนดโดย Ops)" · "โทนการพูด (กำหนดโดย Ops)" ครบเป็นข้อมูลอ่านอย่างเดียว</li><li>หัวข้อที่ Ops กำหนดมีวงเล็บ "(กำหนดโดย Ops)" กำกับชัดเจน</li><li>กดเล่นบนแถบคลื่นเสียงแล้วได้ยินตัวอย่างเสียงจริง และปุ่มเปลี่ยนเป็นปุ่มหยุด</li><li>มีปุ่ม "ใช้ในห้องไลฟ์" สำหรับนำอวาตาร์ตัวนั้นไปใช้ต่อ และกด Esc แล้วหน้าต่างปิดกลับมาที่หน้าคลังตามเดิม</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · Story 2.1 · FR8</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-13032" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13032" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13032" data-st="hold">HOLD</span>
-    <span class="opt block" data-uid="tc-13032" data-st="block">BLOCKED</span>
+    <span class="opt block sel" data-uid="tc-13032" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-13032" data-st="skip">SKIP</span>
   </div></div>
   <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
@@ -1393,7 +1423,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">กดอัปเดตคลังอวาตาร์แล้วดึงรายการล่าสุดพร้อมแจ้งจำนวนที่ได้ <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13033"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13033"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-13033"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -1403,11 +1433,11 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังอวาตาร์" แล้วจดเวลาที่แสดงตรง "อัปเดตล่าสุด" ไว้</li><li>กดปุ่ม "อัปเดตคลังอวาตาร์" แล้วสังเกตสถานะปุ่มระหว่างทำงาน</li><li>อ่านข้อความแจ้งผลเมื่อเสร็จ แล้วดูเวลา "อัปเดตล่าสุด" อีกครั้ง</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ระหว่างทำงาน ปุ่มเปลี่ยนเป็น "กำลังอัปเดต…" และกดซ้ำไม่ได้</li><li>เมื่อเสร็จ เห็นข้อความ "อัปเดตคลังอวาตาร์แล้ว" พร้อมจำนวนที่ดึงมาได้ทำนอง "N avatar"</li><li>เวลา "อัปเดตล่าสุด" เปลี่ยนเป็นเวลาปัจจุบัน และจำนวนการ์ดในหน้าสอดคล้องกับจำนวนที่แจ้ง</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · Story 2.1</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-13033" data-st="pass">PASS</span>
-    <span class="opt fail" data-uid="tc-13033" data-st="fail">FAIL</span>
+    <span class="opt fail sel" data-uid="tc-13033" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13033" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13033" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-13033" data-st="skip">SKIP</span>
@@ -1584,7 +1614,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">เปิดคลังเสียงแล้วเห็นเสียงที่ Ops จัดเตรียมพร้อมข้อความ PDPA <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
-  <td class="status" data-uid="tc-13034"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13034"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13034"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -1595,10 +1625,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังเสียง" ในแถบด้านซ้าย (หมวด "คลังข้อมูล")</li><li>อ่านหัวข้อหน้าและคำบรรยายใต้หัวข้อ แล้วเลื่อนลงไปที่หัวข้อย่อย "เสียงของระบบ"</li><li>ดูหัวคอลัมน์ของตารางเสียงและข้อมูลในแต่ละแถว</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>เห็นหัวข้อ "คลังเสียง" พร้อมคำบรรยาย "เสียงทั้งหมดที่ workspace นี้ใช้ออกอากาศได้ — ทั้งเสียงที่คุณอัปโหลดเองและเสียงที่ทีม TAKRA Ops เตรียมให้"</li><li>มีหัวข้อย่อย "เสียงของระบบ" พร้อมคำบรรยาย "เสียงพากย์สำเร็จรูปที่ทีม TAKRA Ops จัดเตรียมและดูแลให้ — พร้อมยินยอม PDPA"</li><li>ตารางใต้หัวข้อนั้นมีคอลัมน์ "ชื่อเสียง" · "เพศ" · "ความยินยอม PDPA" · "อวาตาร์ที่ใช้"</li><li>มีปุ่ม "อัปเดตคลังเสียง" พร้อมเวลา "อัปเดตล่าสุด" แสดงอยู่ด้านบน</li><li>ถ้า Ops ยังไม่ได้จัดเตรียมเสียงให้ จะเห็น "ทีมงานกำลังเตรียมเสียงให้" พร้อมปุ่ม "ติดต่อทีม Ops" แทนตาราง</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · Story 2.2 · FR9</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13034" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13034" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13034" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13034" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13034" data-st="block">BLOCKED</span>
@@ -1616,7 +1646,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">กรองเสียงตามความยินยอม PDPA และภาษา แล้วล้างตัวกรองได้ <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13035"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13035"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13035"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -1626,10 +1656,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังเสียง" ที่หัวข้อย่อย "เสียงของฉัน" เลือกตัวกรอง "ความยินยอม PDPA" ค่าใดค่าหนึ่ง (เช่น "พร้อมใช้") แล้วอ่านข้อความสรุปจำนวนในแถวตัวกรอง</li><li>กด "ล้างตัวกรอง" แล้วสังเกตรายการในหัวข้อ "เสียงของฉัน"</li><li>เลื่อนลงไปที่หัวข้อย่อย "เสียงของระบบ" รอจนรายการโหลดเสร็จ เลือกตัวกรอง "ภาษา" หนึ่งค่า แล้วอ่านข้อความสรุปจำนวนในแถวตัวกรอง</li><li>กด "ล้างตัวกรอง" แล้วสังเกตรายการในหัวข้อ "เสียงของระบบ"</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ในหัวข้อ "เสียงของฉัน" ตัวกรอง "ความยินยอม PDPA" มีตัวเลือก "ทั้งหมด" · "รอยืนยัน consent" · "รอ clone" · "พร้อมใช้" · "ถอนความยินยอม" และตารางเหลือเฉพาะเสียงที่ตรงค่าที่เลือก</li><li>ในหัวข้อ "เสียงของระบบ" เมื่อเลือก "ภาษา" ตารางเหลือเฉพาะเสียงของภาษานั้น</li><li>แต่ละหัวข้อเห็นข้อความสรุป "แสดง X จาก Y เสียง" พร้อมลิงก์ "ล้างตัวกรอง"</li><li>ถ้าไม่มีเสียงตรงเงื่อนไข จะเห็น "ไม่พบเสียงตามตัวกรอง" พร้อมคำแนะนำ "ลองปรับหรือล้างตัวกรองเพื่อดูเสียงทั้งหมด"</li><li>หลังล้างตัวกรอง รายการเสียงของหัวข้อนั้นกลับมาแสดงครบเท่าเดิม</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · Story 2.2</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13035" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13035" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13035" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13035" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13035" data-st="block">BLOCKED</span>
@@ -1647,7 +1677,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">แผงรายละเอียดเสียงแสดงบันทึกความยินยอม PDPA ที่ตรวจสอบย้อนหลังได้ <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
-  <td class="status" data-uid="tc-13036"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13036"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13036"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -1657,10 +1687,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังเสียง" แล้วคลิกแถวเสียงหนึ่งเพื่อเปิดแผงรายละเอียดด้านข้าง</li><li>เลื่อนไปหัวข้อ "ความยินยอม PDPA" อ่านค่าของแต่ละบรรทัดและหมายเหตุใต้ส่วนนี้</li><li>ลองคลิกที่ค่าต่าง ๆ เพื่อดูว่าแก้ไขได้หรือไม่</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>เห็นบรรทัด "เอกสารยินยอม PDPA" ค่า "มีในระบบ" · "ยืนยันตัวตน" ค่า "ยืนยันแล้ว" · "จัดเตรียมเมื่อ" พร้อมวันที่ชัดเจน</li><li>มีหมายเหตุ "บันทึกความยินยอมและการยืนยันตัวตนดำเนินการโดยทีม TAKRA Ops ตอนจัดเตรียมเสียง (ตรวจสอบย้อนหลังได้) — ไม่สามารถแก้ไขในแอป"</li><li>ทุกค่าเป็นข้อความอ่านอย่างเดียว คลิกแล้วไม่เปลี่ยนเป็นช่องแก้ไข</li><li>แผงเดียวกันมีหัวข้อ "อวาตาร์ที่ใช้เสียงนี้" และ "ตัวอย่างเสียง" แสดงอยู่ด้วย</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · Story 2.2 · FR10</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13036" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13036" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13036" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13036" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13036" data-st="block">BLOCKED</span>
@@ -1678,7 +1708,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">กดอัปเดตคลังเสียงแล้วดึงรายการล่าสุดพร้อมแจ้งจำนวน <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13037"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13037"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-13037"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -1688,11 +1718,11 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังเสียง" แล้วจดเวลา "อัปเดตล่าสุด" ไว้</li><li>กดปุ่ม "อัปเดตคลังเสียง" แล้วสังเกตสถานะปุ่มระหว่างทำงาน</li><li>อ่านข้อความแจ้งผลเมื่อเสร็จ แล้วเทียบจำนวนแถวในตารางกับจำนวนที่แจ้ง</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ระหว่างทำงาน ปุ่มเปลี่ยนเป็น "กำลังอัปเดต…"</li><li>เมื่อเสร็จ เห็นข้อความ "อัปเดตคลังเสียงแล้ว" พร้อมจำนวนทำนอง "N เสียง" และจำนวนแถวในตารางสอดคล้องกัน</li><li>เวลา "อัปเดตล่าสุด" เปลี่ยนเป็นเวลาปัจจุบัน</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · Story 2.2</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-13037" data-st="pass">PASS</span>
-    <span class="opt fail" data-uid="tc-13037" data-st="fail">FAIL</span>
+    <span class="opt fail sel" data-uid="tc-13037" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13037" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13037" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-13037" data-st="skip">SKIP</span>
@@ -1995,7 +2025,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">เปิดคลังสินค้าแล้วเห็นตัวเลขสรุปและรายการสินค้าครบ <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
-  <td class="status" data-uid="tc-13038"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13038"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13038"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -2006,10 +2036,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังสินค้า" ในแถบด้านซ้าย (หมวด "คลังข้อมูล")</li><li>อ่านหัวข้อหน้าและคำบรรยาย แล้วดูการ์ดตัวเลขสรุปด้านบน</li><li>ไล่ตรวจข้อมูลของแต่ละแถวในตาราง และมองหาปุ่มสำหรับเพิ่มสินค้า</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>เห็นหัวข้อ "คลังสินค้า" พร้อมคำบรรยาย "จัดการสินค้าและข้อมูลที่ AI ใช้ขาย · เติมจุดเด่น / Claims / FAQ ให้ครบก่อนนำไปไลฟ์"</li><li>มีการ์ดสรุป "พร้อมขาย" · "ต้องเติมข้อมูล" · "ฉบับร่าง" พร้อมจำนวนรายการของแต่ละกลุ่ม</li><li>แต่ละแถวแสดงชื่อสินค้า · หมวด · ราคา · สถานะ · "ความพร้อมขาย"</li><li>มีปุ่ม "เพิ่มสินค้า" อยู่ในตำแหน่งที่หาเจอง่าย</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · Story 2.3 · FR12</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13038" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13038" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13038" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13038" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13038" data-st="block">BLOCKED</span>
@@ -2027,7 +2057,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">เพิ่มสินค้าใหม่พร้อมประเภทสินค้าแล้วบันทึกเข้าคลังสำเร็จ <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
-  <td class="status" data-uid="tc-13039"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13039"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13039"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -2038,10 +2068,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังสินค้า" แล้วกดปุ่ม "เพิ่มสินค้า"</li><li>กรอก "ชื่อสินค้า" และ "คำโปรย" ตาม Test Data แล้วเลือก "ประเภทสินค้า" จากรายการ พร้อมอ่านคำอธิบายที่ขึ้นใต้ช่อง</li><li>อัปโหลดรูปสินค้าอย่างน้อย 1 รูป (ปุ่ม "เพิ่มรูป") แล้วเลือกสถานะเป็น "เปิดใช้"</li><li>กดปุ่ม "เพิ่มสินค้า" ท้ายฟอร์ม แล้วกลับมาดูรายการในคลัง</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ฟอร์มมีสารบัญด้านข้าง: "ข้อมูลสินค้า" · "SKU &amp; ราคา" · "ข้อมูลให้ AI" · "Risk Words"</li><li>เมื่อเลือกประเภทสินค้าแล้ว มีคำอธิบายว่าระบบจะดึงชุดคำเสี่ยงของหมวดมาคุมการพูดของ AI โดยอัตโนมัติ</li><li>หลังบันทึก เห็นข้อความ "เพิ่มสินค้าแล้ว" พร้อมชื่อสินค้าและข้อความว่าถูกเพิ่มเข้าแคตตาล็อก</li><li>สินค้าใหม่ปรากฏในรายการคลังทันทีพร้อมสถานะ "เปิดใช้" ที่เลือกไว้</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · Story 2.3 · FR12</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13039" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13039" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13039" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13039" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13039" data-st="block">BLOCKED</span>
@@ -2059,7 +2089,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">เพิ่ม SKU หลายตัวเลือกพร้อมราคาให้สินค้าหนึ่งชิ้น <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13040"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13040"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13040"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -2070,10 +2100,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังสินค้า" กดเมนูตัวเลือกของสินค้าทดสอบ แล้วเลือก "แก้ไข"</li><li>เลื่อนไปหัวข้อ "SKU &amp; ราคา" กด "เพิ่ม SKU" แล้วกรอก "ขนาด / ตัวเลือก" กับ "ราคา (฿)" ตาม Test Data</li><li>เพิ่ม SKU ตัวที่สองด้วยราคาต่างกัน แล้วลองลบ SKU ตัวที่สองออกและเพิ่มกลับใหม่</li><li>กด "บันทึกการเปลี่ยนแปลง" แล้วเปิดหน้ารายละเอียดสินค้า ดูหัวข้อ SKU</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>เพิ่ม SKU ได้หลายรายการ แต่ละรายการมีช่อง "ขนาด / ตัวเลือก" และ "ราคา (฿)" แยกของตัวเอง</li><li>ปุ่มลบ SKU ลบเฉพาะแถวนั้น แถวอื่นไม่กระทบ</li><li>หลังบันทึก หน้ารายละเอียดแสดงจำนวนตัวเลือกและราคาครบตามที่กรอก (เช่น "2 ตัวเลือก · ขนาดและราคา")</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · Story 2.3 · FR12</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13040" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13040" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13040" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13040" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13040" data-st="block">BLOCKED</span>
@@ -2091,7 +2121,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">ติดหมวดเพิ่มเติมให้สินค้าหนึ่งชิ้น แล้วชุดคำเสี่ยงรวมจากทุกหมวด <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
-  <td class="status" data-uid="tc-13041"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13041"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13041"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -2102,10 +2132,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังสินค้า" เปิดฟอร์มแก้ไขสินค้าที่เลือกประเภทหลักไว้แล้ว (เมนูตัวเลือก → "แก้ไข") แล้วจดจำนวนคำบนการ์ดชุดคำเสี่ยงของหมวดหลักในหัวข้อ Risk Words ไว้</li><li>ในช่อง "หมวดเพิ่มเติม" เลือกเพิ่มอีก 1 หมวดตาม Test Data แล้วอ่านคำอธิบายใต้ช่อง</li><li>ดูการ์ดชุดคำเสี่ยงใต้หัวข้อ Risk Words อีกครั้ง</li><li>กด "บันทึกการเปลี่ยนแปลง" แล้วเปิดหน้ารายละเอียดสินค้า ดูส่วน Risk Words</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ช่อง "หมวดเพิ่มเติม" มีคำอธิบาย "ถ้าสินค้าอยู่ได้หลายหมวด — เลือกเพิ่มได้ เช่น อาหารเสริมบำรุงผิว (รวมคำเสี่ยงทุกหมวด)"</li><li>หลังเลือกหมวดเพิ่ม หัวข้อ Risk Words แสดงการ์ดชุดคำเสี่ยงครบทุกหมวดที่ติดไว้</li><li>หมวดเพิ่มเติมถูกบันทึกติดไปกับสินค้า และหน้ารายละเอียดแสดง "ชุดคำเสี่ยงรวมจาก N หมวด" โดย N ตรงกับจำนวนหมวดที่เลือก</li><li>ชุดคำที่ใช้เป็นการรวมจากทุกหมวด (union) ไม่ใช่เฉพาะหมวดเดียว</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · Story 2.3 · FR12</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13041" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13041" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13041" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13041" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13041" data-st="block">BLOCKED</span>
@@ -2123,7 +2153,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">อัปโหลดรูปสินค้าได้หลายรูปและรูปแรกถูกใช้เป็นปก <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13042"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13042"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13042"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -2137,7 +2167,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13042" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13042" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13042" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13042" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13042" data-st="block">BLOCKED</span>
@@ -2155,7 +2185,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">เก็บถาวรสินค้าแล้วหายจากตัวเลือกที่ใช้งานและกู้คืนได้ <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13043"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13043"><span class="stb hold">HOLD</span></td>
   <td class="jira-cell" data-uid="tc-13043"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -2170,7 +2200,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-13043" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13043" data-st="fail">FAIL</span>
-    <span class="opt hold" data-uid="tc-13043" data-st="hold">HOLD</span>
+    <span class="opt hold sel" data-uid="tc-13043" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13043" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-13043" data-st="skip">SKIP</span>
   </div></div>
@@ -2186,7 +2216,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">ค้นหา กรองสถานะ เรียงลำดับ และทำงานหลายรายการพร้อมกันในคลังสินค้า <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13044"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13044"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-13044"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -2201,7 +2231,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-13044" data-st="pass">PASS</span>
-    <span class="opt fail" data-uid="tc-13044" data-st="fail">FAIL</span>
+    <span class="opt fail sel" data-uid="tc-13044" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13044" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13044" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-13044" data-st="skip">SKIP</span>
@@ -2410,7 +2440,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">เพิ่มจุดเด่นสินค้าแล้วแสดงในหน้ารายละเอียดครบทุกข้อ <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
-  <td class="status" data-uid="tc-13045"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13045"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13045"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -2421,10 +2451,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังสินค้า" เปิดฟอร์มแก้ไขสินค้าทดสอบ (เมนูตัวเลือก → "แก้ไข") แล้วเลื่อนไปหัวข้อ "ข้อมูลให้ AI"</li><li>กด "เพิ่มจุดเด่น" กรอกข้อความจุดเด่นข้อแรก แล้วเพิ่มจนครบ 3 ข้อตาม Test Data</li><li>ลองลบจุดเด่น 1 ข้อแล้วเพิ่มกลับ เพื่อดูว่าข้ออื่นไม่หาย</li><li>กด "บันทึกการเปลี่ยนแปลง" แล้วเปิดหน้ารายละเอียดสินค้า</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ช่อง "จุดเด่นสินค้า" มีคำแนะนำ "จุดขายที่ AI พูดถึงได้ — แนะนำอย่างน้อย 3 ข้อ"</li><li>เพิ่ม/ลบจุดเด่นได้รายข้อโดยข้ออื่นไม่หาย</li><li>หลังบันทึก หน้ารายละเอียดแสดงหัวข้อ "Key Benefits" (จุดเด่นที่ AI พูดได้) พร้อมจุดเด่นครบ 3 ข้อตามที่กรอก</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · Story 2.4 · FR13</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13045" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13045" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13045" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13045" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13045" data-st="block">BLOCKED</span>
@@ -2442,7 +2472,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">เพิ่ม Claims ที่อนุมัติแล้วสินค้าแสดงข้อความที่พูดได้ <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
-  <td class="status" data-uid="tc-13046"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13046"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13046"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -2453,10 +2483,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังสินค้า" เปิดฟอร์มแก้ไขสินค้าที่ยังไม่มี Claims แล้วเลื่อนไปหัวข้อ "ข้อมูลให้ AI"</li><li>กด "เพิ่ม Claim" กรอกข้อความเคลมตาม Test Data แล้วอ่านคำอธิบายใต้ช่อง "Claims ที่อนุมัติ"</li><li>กด "บันทึกการเปลี่ยนแปลง" แล้วเปิดหน้ารายละเอียดสินค้า</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>คำอธิบายระบุ "ข้อความเคลมที่ผ่านการตรวจ — AI พูดได้เฉพาะที่อยู่ในรายการนี้"</li><li>หลังบันทึก หน้ารายละเอียดมีหัวข้อ "Claims ที่พูดได้" พร้อมข้อความเคลมที่กรอก</li><li>Claims แสดงแยกส่วนของตัวเอง ไม่ถูกนำไปปนกับจุดเด่นหรือ FAQ</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · Story 2.4 · FR13</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13046" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13046" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13046" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13046" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13046" data-st="block">BLOCKED</span>
@@ -2474,7 +2504,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">เพิ่ม FAQ คำถาม-คำตอบให้สินค้าและนับจำนวนถูกต้อง <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13047"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13047"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13047"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -2485,10 +2515,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังสินค้า" เปิดฟอร์มแก้ไขสินค้าทดสอบ แล้วเลื่อนไปส่วน FAQ ในหัวข้อ "ข้อมูลให้ AI"</li><li>กด "เพิ่ม FAQ" แล้วกรอก "คำถาม" และ "คำตอบ" ตาม Test Data</li><li>เพิ่ม FAQ อีก 1 รายการ แล้วลบรายการแรกออก</li><li>กด "บันทึกการเปลี่ยนแปลง" แล้วเปิดหน้ารายละเอียดสินค้า ดูหัวข้อ FAQ</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ฟอร์ม FAQ มีช่อง "คำถาม" และ "คำตอบ" แยกกันชัดเจน พร้อมคำแนะนำ "คำถามที่ลูกค้าถามบ่อย — ช่วย AI ตอบคอมเมนต์ระหว่างไลฟ์"</li><li>ลบ FAQ รายข้อได้โดยรายการอื่นไม่หาย</li><li>หน้ารายละเอียดแสดงจำนวนคำถามตรงกับที่เหลืออยู่จริง (เช่น "1 คำถามพบบ่อย")</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · Story 2.4 · FR13</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13047" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13047" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13047" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13047" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13047" data-st="block">BLOCKED</span>
@@ -2506,7 +2536,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">เพิ่มคำเสี่ยงเฉพาะสินค้านี้และแสดงแยกจากชุดของหมวด <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
-  <td class="status" data-uid="tc-13048"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13048"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13048"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -2517,10 +2547,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังสินค้า" เปิดฟอร์มแก้ไขสินค้าที่เลือกประเภทสินค้าไว้แล้ว จากนั้นเลื่อนไปหัวข้อ Risk Words</li><li>อ่านคำอธิบายของหัวข้อ แล้วกดการ์ดชุดคำเสี่ยงของหมวดเพื่อเปิดดูรายการคำ จากนั้นปิด</li><li>พิมพ์คำเสี่ยง 2 คำตาม Test Data ลงช่อง "เพิ่มคำเสี่ยงเฉพาะสินค้านี้" (พิมพ์แล้วกด Enter ทีละคำ)</li><li>กด "บันทึกการเปลี่ยนแปลง" แล้วเปิดหน้ารายละเอียดสินค้า ดูส่วน Risk Words</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>คำอธิบายหัวข้อระบุ "คำที่ห้าม AI พูดถึงสินค้านี้ — รวมจากชุดของประเภทสินค้า + คำที่เพิ่มเองด้านล่าง"</li><li>การ์ดชุดคำเสี่ยงของหมวดกดเปิดดูรายการคำได้ และเป็นแบบอ่านอย่างเดียว (ไม่มีปุ่มแก้/ลบคำของหมวด)</li><li>คำที่พิมพ์ปรากฏเป็นชิปและลบได้ทีละคำ</li><li>หน้ารายละเอียดแสดง "คำเสี่ยงเฉพาะสินค้านี้" แยกออกจากการ์ดชุดของหมวด</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · Story 2.4 · FR13</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13048" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13048" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13048" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13048" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13048" data-st="block">BLOCKED</span>
@@ -2538,7 +2568,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">ความพร้อมขายของสินค้าเปลี่ยนตามความครบของข้อมูล <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13049"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13049"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13049"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -2549,10 +2579,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังสินค้า" สร้างสินค้าใหม่ที่มีข้อมูลขั้นต่ำตาม Precondition แล้วดูป้าย "ความพร้อมขาย" ของสินค้านั้นในรายการคลัง</li><li>เปิดฟอร์มแก้ไข เพิ่ม SKU พร้อมราคา กด "บันทึกการเปลี่ยนแปลง" แล้วดูป้ายอีกครั้ง</li><li>เพิ่มจุดเด่น 3 ข้อ + Claims + FAQ แล้วบันทึก</li><li>ดูป้ายความพร้อมขายในรายการ และเปิดหน้ารายละเอียดอ่านข้อความสรุปความพร้อม พร้อมเทียบการ์ดสรุปด้านบนของคลัง</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ตอนข้อมูลน้อย ป้ายแสดงระดับต่ำ ("ยังขายไม่ได้" หรือ "ข้อมูลไม่ครบ")</li><li>เมื่อเติมข้อมูลครบขึ้น ป้ายเลื่อนระดับขึ้นตามจนถึง "พร้อมขาย"</li><li>เมื่อครบทุกด้าน หน้ารายละเอียดแสดง "พร้อมขายแล้ว" พร้อมคำอธิบาย "ข้อมูลครบทุกด้าน — AI พร้อมพูดขายสินค้านี้ได้เต็มที่"</li><li>การ์ดสรุปด้านบนของคลังสินค้า ("พร้อมขาย" / "ต้องเติมข้อมูล" / "ฉบับร่าง") อัปเดตจำนวนตามระดับที่เปลี่ยนไป</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · Story 2.4</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13049" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13049" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13049" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13049" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13049" data-st="block">BLOCKED</span>
@@ -2570,7 +2600,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">แก้ไขจุดเด่นและ FAQ ที่มีอยู่ และลบ Claims กับคำเสี่ยงเฉพาะสินค้าออกจนหมด <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13171"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13171"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13171"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -2581,10 +2611,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังสินค้า" ในแถบด้านซ้าย กดเมนูตัวเลือก (⋯) ของสินค้าตาม Precondition แล้วเลือก "แก้ไข" และเลื่อนไปหัวข้อ "ข้อมูลให้ AI"</li><li>แก้ข้อความจุดเด่นข้อแรกตาม Test Data แล้วที่ FAQ ข้อแรก (ถ้ายังไม่กางอยู่ให้กดหัวข้อเพื่อเปิด) แก้ "คำตอบ" ตาม Test Data</li><li>กดปุ่ม × ข้างทุกข้อใน "Claims ที่อนุมัติ" จนไม่เหลือ แล้วเลื่อนไปหัวข้อ Risk Words และกด × บนชิปคำเสี่ยงเฉพาะสินค้าจนหมด</li><li>กด "บันทึกการเปลี่ยนแปลง" แล้วดูหน้ารายละเอียดสินค้าที่ถูกพาไป</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>แก้ข้อความจุดเด่นและคำตอบ FAQ ได้ในช่องเดิมโดยข้ออื่นไม่หาย</li><li>เมื่อลบชิปคำเสี่ยงหมด ใต้ช่องขึ้น "ยังไม่มีคำเสี่ยงเฉพาะสินค้านี้"</li><li>หลังบันทึก เห็นข้อความ "บันทึกการแก้ไขแล้ว" หน้ารายละเอียดแสดงจุดเด่นและคำตอบ FAQ เป็นข้อความใหม่</li><li>ส่วน "Claims ที่พูดได้" แสดง "ยังไม่มี Claims ที่อนุมัติ — AI จะพูดถึงสรรพคุณไม่ได้"</li><li>ส่วน "คำเสี่ยงเฉพาะสินค้านี้" แสดง "ยังไม่มีคำเสี่ยงเฉพาะสินค้านี้ — ใช้ชุดคำเสี่ยงของหมวดเป็นค่าตั้งต้น"</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · Story 2.4 · FR13</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13171" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13171" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13171" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13171" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13171" data-st="block">BLOCKED</span>
@@ -2602,7 +2632,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">Claim ยาวเกิน 500 ตัวอักษรบันทึกไม่ได้ และข้อความบอกข้อที่ผิดกับความยาวจริง <span class="kd kd-val">Validation</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13172"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13172"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13172"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -2613,10 +2643,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังสินค้า" ในแถบด้านซ้าย กดเมนูตัวเลือก (⋯) ของสินค้าทดสอบแล้วเลือก "แก้ไข" และเลื่อนไปหัวข้อ "ข้อมูลให้ AI"</li><li>กด "เพิ่ม Claim" กรอก Claim ข้อแรกเป็นข้อความสั้น แล้วกด "เพิ่ม Claim" อีกครั้งและวางข้อความยาว 505 ตัวอักษรเป็นข้อที่ 2</li><li>กด "บันทึกการเปลี่ยนแปลง" แล้วอ่านข้อความแจ้งผล</li><li>ย่อ Claim ข้อที่ 2 ให้ไม่เกิน 500 ตัวอักษร แล้วกด "บันทึกการเปลี่ยนแปลง" อีกครั้ง และสังเกตผล</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>บันทึกไม่ผ่าน — ขึ้นข้อความ "บันทึกไม่สำเร็จ" พร้อม "Claims ที่อนุมัติ ข้อที่ 2 ยาวเกิน 500 ตัวอักษร (ตอนนี้ 505) — ย่อให้สั้นลงแล้วบันทึกอีกครั้ง"</li><li>ยังอยู่ที่ฟอร์มแก้ไข และข้อมูลที่กรอกไว้ทุกช่องไม่หาย</li><li>หลังย่อข้อความ บันทึกได้ เห็น "บันทึกการแก้ไขแล้ว" และหน้ารายละเอียดแสดง Claims ครบ 2 ข้อ</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · Story 2.4 · FR13 (field enrichment เกิน limit เช่น claims → validate + error ไม่ persist ข้อมูลพัง) · TAKRA-1204</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13172" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13172" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13172" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13172" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13172" data-st="block">BLOCKED</span>
@@ -2634,7 +2664,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">ช่องจุดเด่น/Claim ที่เว้นว่าง และ FAQ ที่มีแต่คำถาม ไม่ถูกบันทึกและไม่ทำให้บันทึกล้ม <span class="kd kd-data">Data</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13173"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13173"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13173"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -2645,10 +2675,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังสินค้า" ในแถบด้านซ้าย กดเมนูตัวเลือก (⋯) ของสินค้าทดสอบแล้วเลือก "แก้ไข" และเลื่อนไปหัวข้อ "ข้อมูลให้ AI"</li><li>กด "เพิ่มจุดเด่น" 2 ครั้ง กรอกข้อแรกตาม Test Data และปล่อยข้อที่ 2 ว่าง แล้วกด "เพิ่ม Claim" 1 ครั้งโดยไม่กรอก</li><li>กด "เพิ่ม FAQ" 2 ครั้ง ข้อแรกกรอกทั้ง "คำถาม" และ "คำตอบ" ส่วนข้อที่ 2 กรอกแค่ "คำถาม"</li><li>กด "บันทึกการเปลี่ยนแปลง" แล้วดูหน้ารายละเอียดสินค้า จากนั้นกด "แก้ไขสินค้า" เพื่อเปิดฟอร์มอีกครั้ง</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>บันทึกสำเร็จ เห็นข้อความ "บันทึกการแก้ไขแล้ว" (ไม่มีข้อความผิดพลาดจากช่องที่เว้นว่าง)</li><li>หน้ารายละเอียดแสดงจุดเด่นเพียง 1 ข้อ และ "Claims ที่พูดได้" แสดง "ยังไม่มี Claims ที่อนุมัติ — AI จะพูดถึงสรรพคุณไม่ได้"</li><li>ส่วน FAQ แสดง "1 คำถามพบบ่อย" — FAQ ที่มีแต่คำถามไม่ถูกบันทึก</li><li>เปิดฟอร์มแก้ไขอีกครั้ง ไม่มีแถวจุดเด่น/Claim ว่าง และไม่มี FAQ ข้อที่ 2 ค้างอยู่</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · Story 2.4 · FR13 (field enrichment ว่าง → validate · ไม่ persist ข้อมูลพัง)</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13173" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13173" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13173" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13173" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13173" data-st="block">BLOCKED</span>
@@ -2666,7 +2696,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">คำเสี่ยงเฉพาะสินค้าที่ซ้ำ — พิมพ์คำเดิมซ้ำไม่เกิดชิปซ้ำ และคำที่อยู่ในชุดของหมวดถูกบอกว่าคุมอยู่แล้ว <span class="kd kd-val">Validation</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13174"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13174"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13174"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -2677,10 +2707,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังสินค้า" ในแถบด้านซ้าย กดเมนูตัวเลือก (⋯) ของสินค้าทดสอบแล้วเลือก "แก้ไข" กดการ์ด "ชุดคำเสี่ยงของ “&lt;หมวด&gt;”" ใต้ช่องหมวดเพื่อเปิดรายการ แล้วจดคำ 1 คำจากรายการ จากนั้นปิด</li><li>เลื่อนไปหัวข้อ Risk Words พิมพ์คำใหม่ตาม Test Data ลงช่อง "เพิ่มคำเสี่ยงเฉพาะสินค้านี้" แล้วกด Enter และพิมพ์คำเดิมซ้ำแล้วกด Enter อีกครั้ง</li><li>พิมพ์คำที่จดไว้จากชุดของหมวดแล้วกด Enter สังเกตสีของชิปและข้อความใต้ชิป</li><li>กด "บันทึกการเปลี่ยนแปลง" แล้วดูส่วน Risk Words ในหน้ารายละเอียดสินค้า</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>พิมพ์คำเดิมซ้ำแล้วกด Enter ไม่เกิดชิปที่สอง (ยังมีชิปคำนั้นแค่ 1 ชิป และช่องพิมพ์ถูกล้าง)</li><li>คำที่อยู่ในชุดของหมวดอยู่แล้วแสดงเป็นชิปสีจาง (ชี้แล้วเห็น "อยู่ในชุดคำเสี่ยงของหมวดอยู่แล้ว") และใต้ชิปขึ้น "1 คำที่กรอกไว้อยู่ในชุดของหมวดอยู่แล้ว — ระบบคุมให้อัตโนมัติ ไม่ต้องเพิ่มซ้ำ"</li><li>หลังบันทึก ส่วน "คำเสี่ยงเฉพาะสินค้านี้" ในหน้ารายละเอียดแสดงเฉพาะคำใหม่ และมีข้อความ "อีก 1 คำที่กรอกไว้อยู่ในชุดของหมวดอยู่แล้ว — ระบบคุมให้อัตโนมัติ"</li><li>จำนวนคำบนการ์ดชุดคำเสี่ยงของหมวดไม่เพิ่มขึ้นจากคำที่ซ้ำ (ไม่นับซ้ำ)</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · Story 2.4 · FR13 (per-product risk word ซ้ำกับ library → dedupe/merge ไม่เกิด entry ซ้ำ) · TAKRA-612</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13174" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13174" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13174" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13174" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13174" data-st="block">BLOCKED</span>
@@ -2698,7 +2728,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">ป้ายความพร้อมขายที่หัวฟอร์มอัปเดตทันทีระหว่างเติมข้อมูล ก่อนกดบันทึก <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13175"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13175"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13175"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -2709,10 +2739,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังสินค้า" ในแถบด้านซ้าย กดเมนูตัวเลือก (⋯) ของสินค้าตาม Precondition แล้วเลือก "แก้ไข" และอ่านป้ายความพร้อมใต้ชื่อสินค้าที่หัวฟอร์ม</li><li>ในหัวข้อ "ข้อมูลให้ AI" เพิ่มจุดเด่น 3 ข้อ แล้วดูป้ายที่หัวฟอร์มอีกครั้ง</li><li>เพิ่ม FAQ 2 ข้อโดยกรอกแค่ "คำถาม" ดูป้าย แล้วกรอก "คำตอบ" ให้ครบทั้ง 2 ข้อและดูป้ายอีกครั้ง</li><li>เพิ่ม Claims 2 ข้อ ดูป้ายที่หัวฟอร์ม แล้วกด "บันทึกการเปลี่ยนแปลง" และดูส่วน "ความพร้อมขาย" ในหน้ารายละเอียด</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ตอนเปิดฟอร์ม ป้ายแสดง "ยังขายไม่ได้ · ความพร้อมขาย 1/4"</li><li>หลังเพิ่มจุดเด่น 3 ข้อ ป้ายเปลี่ยนเป็น "ข้อมูลไม่ครบ · ความพร้อมขาย 2/4" ทันทีโดยยังไม่ต้องบันทึก</li><li>FAQ ที่มีแต่คำถามไม่ทำให้คะแนนขึ้น — เมื่อกรอกคำตอบครบ 2 ข้อ ป้ายขึ้นเป็น 3/4</li><li>เมื่อเพิ่ม Claims 2 ข้อ ป้ายเป็น "พร้อมขาย · ความพร้อมขาย 4/4" และหลังบันทึก หน้ารายละเอียดแสดง "พร้อมขายแล้ว"</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · Story 2.4 · FR13</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13175" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13175" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13175" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13175" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13175" data-st="block">BLOCKED</span>
