@@ -342,7 +342,8 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     "actual": "QA-SC-C: แท็บเก็บถาวร → ⋯ → \"กู้คืนเป็นฉบับร่าง\" → toast \"กู้คืนแล้ว “QA-SC-C สำหรับเก็บถาวร” กลับมาเป็นฉบับร่าง\" · หายจากแท็บเก็บถาวร (1→0) ไปแท็บ ร่าง สถานะ \"ฉบับร่าง\" · API approver=null / approvedAt=null (ล้างแล้ว) · \"อนุมัติเมื่อ\" แสดง \"—\" · ปุ่มท้ายแผง \"ส่งขออนุมัติ\" + \"แก้ไข\" · กด \"ส่งขออนุมัติ\" → toast \"ส่งขออนุมัติแล้ว…\" เข้าส่วน \"รอการอนุมัติ\" (status=pendingReview) ✓ — ❌ ช่อง \"ผู้อนุมัติ\" ในแผงขึ้น \"—\" (คาดหวัง \"(ยังไม่อนุมัติ)\") ทั้งที่ API ล้างค่าแล้ว; หลังรีโหลดหน้าขึ้น \"(ยังไม่อนุมัติ)\" ถูกต้อง ⇒ แผงรายละเอียดค้างค่าเก่า/ค่าสำรองจากแคชหลังกู้คืน (สคริปต์ที่ไม่เคยอนุมัติ เช่น QA-SC-B ขึ้น \"(ยังไม่อนุมัติ)\" ปกติ) · ความรุนแรงต่ำ (แสดงผลเท่านั้น ฟังก์ชันกู้คืน/ล้างข้อมูลอนุมัติ/ส่งใหม่ทำงานถูกต้อง)"
   },
   "tc-13185": {
-    "actual": "QA-SC-A (อนุมัติแล้ว): หน้าแก้ไขแถบล่างมีป้าย \"อนุมัติแล้ว\" ✓ · แก้เฉพาะชื่อ → toast \"บันทึกการแก้ไขแล้ว อัปเดต “…(แก้ชื่อ)” เรียบร้อย\" → ยัง approved (v2) อยู่กลุ่ม \"ใช้งานในระบบ\" ผู้อนุมัติ/เวลาอนุมัติเดิมคงอยู่ · แก้ข้อความ Content 1 → บันทึก → ย้ายไปแท็บ \"ร่าง\" สถานะ \"ฉบับร่าง\" (v3) ผู้อนุมัติ \"(ยังไม่อนุมัติ)\" อนุมัติเมื่อ \"—\" · การ์ด \"ใช้งานในระบบ\" 5→4 (ลด 1) · API approver=null approvedAt=null"
+    "actual": "QA-SC-A (อนุมัติแล้ว): หน้าแก้ไขแถบล่างมีป้าย \"อนุมัติแล้ว\" ✓ · แก้เฉพาะชื่อ → toast \"บันทึกการแก้ไขแล้ว อัปเดต “…(แก้ชื่อ)” เรียบร้อย\" → ยัง approved (v2) อยู่กลุ่ม \"ใช้งานในระบบ\" ผู้อนุมัติ/เวลาอนุมัติเดิมคงอยู่ · แก้ข้อความ Content 1 → บันทึก → ย้ายไปแท็บ \"ร่าง\" สถานะ \"ฉบับร่าง\" (v3) ผู้อนุมัติ \"(ยังไม่อนุมัติ)\" อนุมัติเมื่อ \"—\" · การ์ด \"ใช้งานในระบบ\" 5→4 (ลด 1) · API approver=null approvedAt=null",
+    "st": "pass"
   },
   "tc-13186": {
     "st": "block",
@@ -378,15 +379,15 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="runsum">
     <h3>📊 สรุปผล Manual Test</h3>
     <div class="sumchips">
-      <span class="cnt pass">PASS <b id="sum-pass">45</b></span>
+      <span class="cnt pass">PASS <b id="sum-pass">46</b></span>
       <span class="cnt fail">FAIL <b id="sum-fail">4</b></span>
       <span class="cnt hold">HOLD <b id="sum-hold">2</b></span>
       <span class="cnt block">BLOCKED <b id="sum-block">2</b></span>
       <span class="cnt skip">SKIP <b id="sum-skip">0</b></span>
-      <span class="cnt pending">รอเทส <b id="sum-pending">205</b></span>
+      <span class="cnt pending">รอเทส <b id="sum-pending">204</b></span>
     </div>
     <div class="progress"><div id="sumbar" class="progressbar" style="width: 21%;"></div></div>
-    <div class="hint" id="sumpct" style="margin-top:5px">21% ทดสอบแล้ว (53/258)</div>
+    <div class="hint" id="sumpct" style="margin-top:5px">21% ทดสอบแล้ว (54/258)</div>
   </div>
 
   <div class="toolbar">
@@ -4046,7 +4047,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">แก้เนื้อหาสคริปต์ที่อนุมัติแล้วทำให้กลับเป็นฉบับร่าง ส่วนแก้แค่ชื่อไม่กระทบการอนุมัติ <span class="kd kd-data">Data</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
-  <td class="status" data-uid="tc-13185"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13185"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13185"></td>
 </tr>
 <tr class="detail show"><td colspan="7"><div class="card">
@@ -4059,7 +4060,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13185" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13185" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13185" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13185" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13185" data-st="block">BLOCKED</span>
