@@ -400,6 +400,14 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   "tc-13179": {
     "actual": "UAT 5 ต.ค. 2569 · ws ทีมของ QA Tester (Owner qa@takra.ai) — ทดสอบตามขั้นตอนของเคส (บันทึกสคริปต์ไม่ได้เมื่อข้อมูลบังคับไม่ครบ และระบบชี้ช่องที่ต้องแก้) ผลตรงตาม Expected ทุกข้อ ไม่พบความผิดปกติ",
     "st": "pass"
+  },
+  "tc-13180": {
+    "actual": "UAT 5 ต.ค. 2569 · ws ทีมของ QA Tester (Owner qa@takra.ai) — FAIL เฉพาะส่วน ปิด/เปิดใช้ Content: กดปุ่มวงกลม \"ปิด Content N\" แล้วกดบันทึก → สถานะ \"ปิดใช้\" ของ Content ไม่ถูกเก็บ (หลังบันทึกและเปิดแก้ไขซ้ำ Content กลับเป็นเปิดใช้) · ทำซ้ำด้วยการคลิกจริง (ไม่ใช่ artifact ของสคริปต์ automation) และดักจับ request: PATCH /api/v1/workspaces/{ws}/scripts/{id} ไม่มีฟิลด์สถานะเปิด/ปิดของ Content อยู่ใน body และ schema ของสคริปต์จาก GET ก็ไม่มีฟิลด์นี้ → เป็นข้อบกพร่องของระบบ ไม่ใช่ข้อมูลทดสอบ · ใช้สคริปต์ที่ seed ผ่าน API ให้มี Content เดียวเป็น precondition",
+    "st": "fail"
+  },
+  "tc-13181": {
+    "actual": "UAT 5 ต.ค. 2569 · ws ทีมของ QA Tester (Owner qa@takra.ai) — ทดสอบตามขั้นตอนของเคส (จัดการบล็อก: เพิ่มบล็อก ตั้งชื่อ/ประเภท ลดจำนวน Content และลบบล็อก) — ปุ่ม \"ลบบล็อก\" แสดงเฉพาะเมื่อมีมากกว่า 1 บล็อก · ลบบล็อกแล้วกด \"บันทึกการแก้ไข\" สำเร็จ สคริปต์เหลือ 1 บล็อก \"เนื้อหา\" (4 Content) ตรงกับค่าใน API → ผลตรงตาม Expected",
+    "st": "pass"
   }
 }
 </script>
@@ -423,15 +431,15 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="runsum">
     <h3>📊 สรุปผล Manual Test</h3>
     <div class="sumchips">
-      <span class="cnt pass">PASS <b id="sum-pass">59</b></span>
-      <span class="cnt fail">FAIL <b id="sum-fail">4</b></span>
+      <span class="cnt pass">PASS <b id="sum-pass">60</b></span>
+      <span class="cnt fail">FAIL <b id="sum-fail">5</b></span>
       <span class="cnt hold">HOLD <b id="sum-hold">2</b></span>
       <span class="cnt block">BLOCKED <b id="sum-block">2</b></span>
       <span class="cnt skip">SKIP <b id="sum-skip">0</b></span>
-      <span class="cnt pending">รอเทส <b id="sum-pending">191</b></span>
+      <span class="cnt pending">รอเทส <b id="sum-pending">189</b></span>
     </div>
-    <div class="progress"><div id="sumbar" class="progressbar" style="width: 26%;"></div></div>
-    <div class="hint" id="sumpct" style="margin-top:5px">26% ทดสอบแล้ว (67/258)</div>
+    <div class="progress"><div id="sumbar" class="progressbar" style="width: 27%;"></div></div>
+    <div class="hint" id="sumpct" style="margin-top:5px">27% ทดสอบแล้ว (69/258)</div>
   </div>
 
   <div class="toolbar">
@@ -439,7 +447,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <button class="btn" onclick="toggleAll(false)">▾ ยุบทั้งหมด</button>
     <span class="hint">💡 คลิกแถว → ดู Steps / Expected (UI only)</span>
     <span style="margin-left:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-      <span id="save-status" class="hint" style="white-space: nowrap; color: var(--hold);">● ยังไม่ได้บันทึก</span>
+      <span id="save-status" class="hint" style="white-space: nowrap; color: var(--muted);">✓ ตรงกับ GitHub</span>
       <label class="hint" style="display:flex;gap:4px;align-items:center;white-space:nowrap;cursor:pointer" title="บันทึกขึ้น GitHub อัตโนมัติหลังหยุดแก้ ~5 วินาที"><input type="checkbox" id="chk-autosave" checked=""> auto-save</label>
       <button class="btn" id="btn-token" title="ใส่/เปลี่ยน GitHub token (ถ้าเซฟไม่ขึ้น/token เสีย กดอันนี้)">🔑 Token</button>
       <button class="btn" id="btn-refresh" title="ดึงผลล่าสุดจาก GitHub มา merge (ไม่ต้อง reload)">🔄 ดึงล่าสุด</button>
@@ -3771,15 +3779,15 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 </div></td></tr>
 
-<tr class="trow" data-feat="rg2" data-level="ui" data-prio="P1" data-kind="happy" data-ui="yes" onclick="tg(this)">
+<tr class="trow open" data-feat="rg2" data-level="ui" data-prio="P1" data-kind="happy" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-SL.11</td>
   <td class="ctitle">จัดการ Content ในบล็อกเอง — เพิ่มจนเต็ม ปิด/เปิดใช้ และลบ <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13180"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13180"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-13180"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail show"><td colspan="7"><div class="card">
   <div class="h-title">จัดการ Content ในบล็อกเอง — เพิ่มจนเต็ม ปิด/เปิดใช้ และลบ</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · ขั้นที่ 2 คลังของ Workspace — Avatar/Voice/สินค้า/คำเสี่ยง/สคริปต์ · Epic 2</div>
   <div class="sec"><h4>Precondition</h4><ul><li>ล็อกอินเป็น Owner</li><li>มีสคริปต์ฉบับร่างที่บล็อกแรกมี Content เพียง 1 อัน</li></ul></div>
@@ -3787,11 +3795,11 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังสคริปต์" ในแถบด้านซ้าย กดเมนูตัวเลือก (⋯) ของสคริปต์ตาม Precondition เลือก "แก้ไข" แล้วที่ขั้น "เขียนเนื้อหา" ดูบล็อกแรก (กดลูกศรเพื่อขยายถ้ายังย่ออยู่)</li><li>ในบล็อกแรกกดปุ่ม "พิมพ์เอง" ในช่องเพิ่ม Content ซ้ำจนครบ 5 อัน แล้วพิมพ์บทพูดให้ทุก Content</li><li>กดวงกลมหน้า Content 2 เพื่อปิดใช้ แล้วกดไอคอนถังขยะของ Content 5 เพื่อลบ</li><li>กด "บันทึกการแก้ไข" จากนั้นเปิด "แก้ไข" สคริปต์เดิมอีกครั้ง แล้วดูจำนวน Content และสถานะเปิด/ปิดของ Content 2</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ตอนมี Content อันเดียว ปุ่มถังขยะของ Content กดไม่ได้และมีข้อความ "ลบไม่ได้ — บล็อกต้องมีอย่างน้อย 1 สคริปต์" พร้อมคำแนะนำ "เนื้อหายิ่งน้อย ระบบยิ่งต้องพูดซ้ำถี่ขึ้น — …"</li><li>ตัวนับใต้ปุ่มเปลี่ยนตามจำนวน เช่น "มี 5 จาก 5 สคริปต์" — เมื่อครบ 5 ขึ้น "เต็มแล้ว — สูงสุด 5 ต่อบล็อก" และปุ่ม "พิมพ์เอง" กดไม่ได้</li><li>Content ที่ปิดขึ้นข้อความ "ปิดอยู่ · AI ไม่หยิบไปพูด" และหัวบล็อกแสดง "ใช้จริง 3 จาก 4 สคริปต์" หลังลบ Content 5</li><li>หลังบันทึกและเปิดใหม่ บล็อกมี 4 Content และ Content 2 ยังอยู่สถานะปิด ("ปิดอยู่ · AI ไม่หยิบไปพูด")</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 6 · FR29d (1-5 Contents ต่อ slot) · FR33e · TAKRA-290 · TAKRA-1001</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-13180" data-st="pass">PASS</span>
-    <span class="opt fail" data-uid="tc-13180" data-st="fail">FAIL</span>
+    <span class="opt fail sel" data-uid="tc-13180" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13180" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13180" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-13180" data-st="skip">SKIP</span>
@@ -3803,15 +3811,15 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 </div></td></tr>
 
-<tr class="trow" data-feat="rg2" data-level="ui" data-prio="P1" data-kind="happy" data-ui="yes" onclick="tg(this)">
+<tr class="trow open" data-feat="rg2" data-level="ui" data-prio="P1" data-kind="happy" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-SL.12</td>
   <td class="ctitle">จัดการบล็อกเอง — เพิ่มบล็อก ตั้งชื่อ/ประเภท ลดจำนวน Content และลบบล็อก <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13181"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13181"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13181"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail show"><td colspan="7"><div class="card">
   <div class="h-title">จัดการบล็อกเอง — เพิ่มบล็อก ตั้งชื่อ/ประเภท ลดจำนวน Content และลบบล็อก</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · ขั้นที่ 2 คลังของ Workspace — Avatar/Voice/สินค้า/คำเสี่ยง/สคริปต์ · Epic 2</div>
   <div class="sec"><h4>Precondition</h4><ul><li>ล็อกอินเป็น Owner</li><li>มีสคริปต์ฉบับร่างที่มี 1 บล็อก</li></ul></div>
@@ -3819,10 +3827,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังสคริปต์" ในแถบด้านซ้าย กดเมนูตัวเลือก (⋯) ของสคริปต์ตาม Precondition เลือก "แก้ไข" แล้วที่ขั้น "เขียนเนื้อหา" ตรงช่อง "เพิ่มบล็อกใหม่" กด "พิมพ์เอง"</li><li>ในบล็อกใหม่ แก้ชื่อบล็อกเป็น QA บล็อกถาม-ตอบ เลือก "ประเภท:" เป็น "ถาม-ตอบ" ตั้ง "จำนวนสคริปต์:" เป็น 3 สคริปต์ แล้วพิมพ์บทพูดให้ครบทั้ง 3 Content</li><li>เปลี่ยน "จำนวนสคริปต์:" เป็น 1 สคริปต์ อ่านกล่องยืนยัน กด "ยกเลิก" แล้วทำซ้ำและกด "ลบและลดจำนวน"</li><li>กด "บันทึกการแก้ไข" แล้วเปิด "แก้ไข" สคริปต์เดิมอีกครั้ง ตรวจชื่อ/ประเภท/จำนวน Content ของบล็อกที่เพิ่ม</li><li>กดไอคอนถังขยะ ("ลบบล็อก") ที่หัวบล็อกที่เพิ่มใหม่ กด "บันทึกการแก้ไข" แล้วสังเกตแถบสรุป "บล็อกเนื้อหา · …" เมื่อเปิดแก้ไขอีกครั้ง</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>กด "พิมพ์เอง" แล้วมีบล็อกใหม่ต่อท้าย และแถบสรุปเปลี่ยนเป็น "บล็อกเนื้อหา · 2 บล็อก · ~X วินาที"</li><li>ลดจำนวนจาก 3 เหลือ 1 ขึ้นกล่องยืนยัน "ลดจำนวนสคริปต์จาก 3 เหลือ 1?" พร้อม "จะลบ 2 สคริปต์ โดย 2 สคริปต์มีข้อความแล้ว — ลบแล้วกู้คืนไม่ได้" — กด "ยกเลิก" แล้ว Content ยังครบ 3 / กด "ลบและลดจำนวน" แล้วเหลือ 1</li><li>หลังบันทึกและเปิดใหม่ บล็อกที่เพิ่มยังมีชื่อ QA บล็อกถาม-ตอบ ประเภท "ถาม-ตอบ" และมี 1 Content</li><li>ปุ่ม "ลบบล็อก" แสดงเฉพาะเมื่อมีมากกว่า 1 บล็อก — ลบแล้วบันทึก แถบสรุปกลับเป็น "บล็อกเนื้อหา · 1 บล็อก · ~X วินาที"</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · Story 2.7 · FR69 · FR29 (ประเภท 8 แบบ) · FR29d · TAKRA-290 (ยืนยันก่อนลดจำนวน)</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13181" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13181" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13181" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13181" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13181" data-st="block">BLOCKED</span>
