@@ -473,6 +473,33 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   "tc-13128": {
     "st": "pass",
     "actual": "UAT · ws ทีมของ QA Tester (แพ็กเกจ Pro ใช้งาน AI ได้) · เลือกโทนเสียงที่ขั้น \"กลุ่มเป้าหมาย\" แล้วร่าง → ข้อความแจ้งผลระบุโทนที่เลือก และสำนวนเนื้อหาต่างกันตามโทน ตรงตาม Expected Result · ข้อสังเกต: โทน \"ทางการ\" ยังมีคำอุทานปนอยู่"
+  },
+  "tc-13129": {
+    "actual": "UAT · ws ทีมของ QA Tester (แพ็กเกจ Pro ใช้งาน AI ได้) · ขั้น \"กลุ่มเป้าหมาย\" ข้ามได้และร่างได้ตามปกติ · ตั้งค่าช่วงอายุ/ระดับการซื้อ/เพศกลุ่มเป้าหมายแล้วร่าง → ค่าถูกใช้เป็นบริบทในการร่าง ตรงตาม Expected Result",
+    "st": "pass"
+  },
+  "tc-13130": {
+    "actual": "UAT · ws ทีมของ QA Tester (แพ็กเกจ Pro ใช้งาน AI ได้) · เลือกภาษา \"ไทยปนอังกฤษ\" และ \"ไทยล้วน\" แล้วร่าง → ผลต่างกันตามที่เลือก ตรงตาม Expected Result · ข้อสังเกต: โหมดไทยปนอังกฤษ อังกฤษปนเฉพาะชื่อแบรนด์/วัสดุ (เช่น \"Hello Polo\", \"EVA\") ไม่มีวลีอังกฤษอื่น · โหมดไทยล้วน ชื่อสินค้าถูกถอดเป็นไทย (เช่น \"เฮลโล โปโล\")",
+    "st": "pass"
+  },
+  "tc-13261": {
+    "actual": "UAT · ws ทีมของ QA Tester (Pro) · ติ๊ก \"กำหนดบล็อกเอง\" ตั้งแผน 4 บล็อกตาม Test Data (ฮุก 2 · นำเสนอ 3 · ถาม-ตอบ 2 · ปิดการขาย 4) แล้วร่าง → ได้บล็อกเรียงตามแผน ประเภทและจำนวนสคริปต์ตรงที่ตั้ง ตรงตาม Expected Result · หมายเหตุการเทส: รอบแรกมีข้อความโจทย์เก่าค้างในช่องบล็อกที่ 4 (ล้างด้วย ctrl+a+Delete ไม่หมด) ทำให้ผลปนจึงเทสซ้ำรอบใหม่ด้วยช่องที่ล้างสะอาด",
+    "st": "pass"
+  },
+  "tc-13262": {
+    "actual": "UAT · ws ทีมของ QA Tester (Pro) · กด \"+ เพิ่มบล็อก\" ได้ถึง 6 แถวแล้วปุ่มกดไม่ได้ · ลบจนเหลือ 1 แถวแล้วปุ่มลบแถวสุดท้ายกดไม่ได้ · เลขลำดับเรียงใหม่ต่อเนื่อง · ปุ่มเพิ่มกลับมากดได้เมื่อต่ำกว่า 6 แถว ตรงตาม Expected Result",
+    "st": "pass"
+  },
+  "tc-13263": {
+    "actual": "UAT · ws ทีมของ QA Tester (Pro) · ทดสอบด้วยหัวข้อ \"ฮุก\" เลือกให้ครบ 3 บล็อก → หัวข้อที่ครบแล้วไม่ขึ้นให้เลือกในแถวอื่น (แถวที่ใช้อยู่ยังเห็นหัวข้อของตัวเอง) · เปลี่ยนแถวใดแถวหนึ่งออกแล้วหัวข้อนั้นกลับมาให้เลือก · ไม่มี error ตอนกด \"ร่างสคริปต์\" ตรงตาม Expected Result",
+    "st": "pass"
+  },
+  "tc-13264": {
+    "actual": "UAT · ws ทีมของ QA Tester (Pro) · ช่องโจทย์รายบล็อกมี placeholder \"อยากให้บล็อกนี้เน้นอะไรเป็นพิเศษ (ไม่บังคับ)\" รับได้ไม่เกิน 200 ตัวอักษร · ใส่โจทย์เฉพาะบล็อกที่ต้องการแล้วร่าง → เนื้อหาบล็อกนั้นสะท้อนโจทย์ ส่วนบล็อกที่ไม่ใส่โจทย์ร่างตามหัวข้อปกติ ไม่มี error ตรงตาม Expected Result",
+    "st": "pass"
+  },
+  "tc-13265": {
+    "actual": "UAT · ws ทีมของ QA Tester (Pro) · ตั้ง \"จำนวนสคริปต์ต่อบล็อก\" เป็น 5 สคริปต์ โดยไม่ติ๊ก \"กำหนดบล็อกเอง\" แล้วร่าง → ได้แผนเดิม 3 บล็อก บล็อกละ 5 สคริปต์ ข้อความแจ้งผลระบุ 3 บล็อก ตรงตาม Expected Result"
   }
 }
 </script>
@@ -496,15 +523,15 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="runsum">
     <h3>📊 สรุปผล Manual Test</h3>
     <div class="sumchips">
-      <span class="cnt pass">PASS <b id="sum-pass">67</b></span>
+      <span class="cnt pass">PASS <b id="sum-pass">73</b></span>
       <span class="cnt fail">FAIL <b id="sum-fail">5</b></span>
       <span class="cnt hold">HOLD <b id="sum-hold">7</b></span>
       <span class="cnt block">BLOCKED <b id="sum-block">3</b></span>
       <span class="cnt skip">SKIP <b id="sum-skip">0</b></span>
-      <span class="cnt pending">รอเทส <b id="sum-pending">176</b></span>
+      <span class="cnt pending">รอเทส <b id="sum-pending">170</b></span>
     </div>
-    <div class="progress"><div id="sumbar" class="progressbar" style="width: 32%;"></div></div>
-    <div class="hint" id="sumpct" style="margin-top:5px">32% ทดสอบแล้ว (82/258)</div>
+    <div class="progress"><div id="sumbar" class="progressbar" style="width: 34%;"></div></div>
+    <div class="hint" id="sumpct" style="margin-top:5px">34% ทดสอบแล้ว (88/258)</div>
   </div>
 
   <div class="toolbar">
@@ -8210,7 +8237,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">ตั้งกลุ่มเป้าหมาย (อายุ · ระดับการซื้อ · เพศ) เป็น context ให้ AI <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13129"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13129"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13129"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -8224,7 +8251,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13129" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13129" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13129" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13129" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13129" data-st="block">BLOCKED</span>
@@ -8242,7 +8269,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">เลือกภาษาที่ใช้สร้างสคริปต์ (ไทยล้วน / ไทยปนอังกฤษ / ค่าเริ่มต้น workspace) <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13130"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13130"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13130"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -8253,10 +8280,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังสคริปต์" กดปุ่ม "สร้างสคริปต์" ที่ขั้น "เลือกสินค้า" กรอก "ชื่อสคริปต์" เลือกสินค้า กด "ถัดไป" แล้วที่ขั้น "เขียนเนื้อหา" กด "ให้ AI ร่างทั้งชุด"</li><li>ดูตัวเลือกในส่วน "ภาษา" (ช่อง "ภาษาที่ใช้สร้าง") ของแผงช่วยร่าง</li><li>เลือก "ไทยปนอังกฤษ" กด "ร่างสคริปต์" แล้วอ่านเนื้อหาที่ได้</li><li>กด "ให้ AI ร่างทั้งชุด" เพื่อเปิดแผงช่วยร่างอีกครั้ง แล้วเปลี่ยนกลับเป็นตัวเลือกค่าเริ่มต้น workspace แล้วดูว่าภาษาที่ระบุกำกับตรงกับที่ workspace ตั้งไว้หรือไม่</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ตัวเลือกภาษามีครบ: "ค่าเริ่มต้น workspace" (มีภาษาที่ตั้งไว้แสดงกำกับ เช่น "ค่าเริ่มต้น workspace (ไทยล้วน)") · "ไทยล้วน" · "ไทยปนอังกฤษ"</li><li>เลือก "ไทยปนอังกฤษ" แล้วเนื้อหาที่ร่างมีภาษาอังกฤษปนตามที่เลือก</li><li>ตัวเลือกค่าเริ่มต้น workspace แสดงภาษาตรงกับที่ตั้งไว้ของ workspace</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 6 · Story 6.2 · FR29c · UI ตาม TAKRA-1220</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13130" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13130" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13130" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13130" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13130" data-st="block">BLOCKED</span>
@@ -8274,7 +8301,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">กำหนดบล็อกเอง: เพิ่มบล็อก เลือกหัวข้อและจำนวนสคริปต์รายบล็อก แล้ว AI ร่างตามแผนที่ตั้ง <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
-  <td class="status" data-uid="tc-13261"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13261"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13261"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -8285,10 +8312,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังสคริปต์" กดปุ่ม "สร้างสคริปต์" แล้วที่ขั้น "เลือกสินค้า" กรอก "ชื่อสคริปต์" เลือกสินค้าอย่างน้อย 1 รายการ กด "ถัดไป" และที่ขั้น "กลุ่มเป้าหมาย" กด "ข้าม"</li><li>ที่ขั้น "เขียนเนื้อหา" กด "ให้ AI ร่างทั้งชุด" แล้วติ๊ก "กำหนดบล็อกเอง" อ่านคำอธิบายและดูแถวบล็อกที่ขึ้นมา</li><li>กด "+ เพิ่มบล็อก" 1 ครั้ง แล้วตั้งหัวข้อและจำนวนสคริปต์ของแต่ละบล็อกตาม Test Data จากนั้นกด "ร่างสคริปต์"</li><li>รอจนร่างเสร็จ แล้วสังเกตข้อความแจ้งผล ลำดับ ประเภท และจำนวนสคริปต์ของแต่ละบล็อก</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ติ๊กแล้วขึ้นคำอธิบาย "เลือกได้ว่าจะร่างกี่บล็อก แต่ละบล็อกเป็นหัวข้ออะไร และแต่ละบล็อกมีกี่สคริปต์ (ไม่เกิน 6 บล็อก) · ไม่เปิดก็ได้แผนเดิม เปิดไลฟ์ · นำเสนอสินค้า · ปิดการขาย" และมีแถวเริ่มต้น 3 แถว "ฮุก" · "นำเสนอ" · "ปิดการขาย" แต่ละแถวมีจำนวนสคริปต์เท่ากับค่า "จำนวนสคริปต์ต่อบล็อก" (เริ่มต้น "3 สคริปต์") ช่องโจทย์รายบล็อก และปุ่มลบ</li><li>หัวข้อของแต่ละบล็อกเลือกได้จาก "ฮุก" · "เปิดไลฟ์" · "นำเสนอ" · "ถาม-ตอบ" · "รับมือข้อโต้แย้ง" · "กระตุ้นซื้อ" · "ปิดการขาย" · "ปิดไลฟ์" และจำนวนสคริปต์เลือกได้ "1 สคริปต์" ถึง "5 สคริปต์"</li><li>ร่างเสร็จได้ 4 บล็อกเรียงตามแผน ประเภทของแต่ละบล็อกตรงกับหัวข้อที่ตั้ง และจำนวนสคริปต์ในแต่ละบล็อกตรงกับที่ตั้ง</li><li>ข้อความแจ้งผล "AI ร่างสคริปต์ให้แล้ว" พร้อม "โทน เป็นกันเอง · 4 บล็อก — ตรวจทานและปรับได้" (ถ้าบางบล็อกได้ไม่ครบ ขึ้น "AI ร่างสคริปต์ให้แล้ว แต่บางบล็อกไม่ครบ" พร้อมบอกบล็อกที่ได้ "… ได้ X จาก Y")</li><li>เนื้อหาของแต่ละบล็อกตรงกับหัวข้อ เช่น บล็อก "ปิดการขาย" มีประโยคชวนกดสั่งซื้อในไลฟ์ ไม่ใช่เนื้อหาแบบบล็อกนำเสนอ</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 6 · Story 6.3 · FR29d · TAKRA-1317 ส่วนที่ 2 (มติ BA: 1–6 บล็อก · หัวข้อจาก 8 ประเภท + โจทย์รายบล็อก ≤200 ตัวอักษร · ประเภทเดียวกัน ≤3 บล็อก · 1–5 สคริปต์ต่อบล็อก · แผน 3 บล็อกเดิมเป็นค่าเริ่มต้น)</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13261" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13261" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13261" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13261" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13261" data-st="block">BLOCKED</span>
@@ -8306,7 +8333,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">กำหนดบล็อกเอง: เพิ่มได้สูงสุด 6 บล็อก และต้องเหลืออย่างน้อย 1 บล็อก <span class="kd kd-bnd">Boundary</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13262"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13262"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13262"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -8316,10 +8343,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังสคริปต์" กดปุ่ม "สร้างสคริปต์" แล้วที่ขั้น "เลือกสินค้า" กรอก "ชื่อสคริปต์" เลือกสินค้าอย่างน้อย 1 รายการ กด "ถัดไป" และที่ขั้น "กลุ่มเป้าหมาย" กด "ข้าม"</li><li>ที่ขั้น "เขียนเนื้อหา" กด "ให้ AI ร่างทั้งชุด" แล้วติ๊ก "กำหนดบล็อกเอง"</li><li>กด "+ เพิ่มบล็อก" จนมีครบ 6 แถว แล้วลองกด "+ เพิ่มบล็อก" อีกครั้ง</li><li>กดปุ่มลบ (✕) ท้ายแถวทีละแถวจนเหลือ 1 แถว แล้วลองกดปุ่มลบของแถวที่เหลือ</li><li>สังเกตปุ่ม "+ เพิ่มบล็อก" ปุ่มลบ และเลขลำดับหน้าแถว</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>เพิ่มได้ถึง 6 แถว เมื่อครบ 6 แถวปุ่ม "+ เพิ่มบล็อก" จางลงและกดไม่ได้ (ไม่มีแถวที่ 7)</li><li>ลบได้จนเหลือ 1 แถว ปุ่มลบของแถวสุดท้ายจางลงและกดไม่ได้</li><li>หลังลบ เลขลำดับหน้าแถวเรียงใหม่ต่อเนื่อง (1. 2. …) และปุ่ม "+ เพิ่มบล็อก" กลับมากดได้เมื่อต่ำกว่า 6 แถว</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 6 · Story 6.3 · FR29d · TAKRA-1317 ส่วนที่ 2 (มติ BA: 1–6 บล็อก · หัวข้อจาก 8 ประเภท + โจทย์รายบล็อก ≤200 ตัวอักษร · ประเภทเดียวกัน ≤3 บล็อก · 1–5 สคริปต์ต่อบล็อก · แผน 3 บล็อกเดิมเป็นค่าเริ่มต้น)</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13262" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13262" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13262" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13262" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13262" data-st="block">BLOCKED</span>
@@ -8337,7 +8364,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">กำหนดบล็อกเอง: หัวข้อเดียวกันใช้ได้ไม่เกิน 3 บล็อก หัวข้อที่ครบแล้วไม่ขึ้นให้เลือกในแถวอื่น <span class="kd kd-bnd">Boundary</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13263"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13263"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13263"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -8347,10 +8374,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังสคริปต์" กดปุ่ม "สร้างสคริปต์" แล้วที่ขั้น "เลือกสินค้า" กรอก "ชื่อสคริปต์" เลือกสินค้าอย่างน้อย 1 รายการ กด "ถัดไป" และที่ขั้น "กลุ่มเป้าหมาย" กด "ข้าม"</li><li>ที่ขั้น "เขียนเนื้อหา" กด "ให้ AI ร่างทั้งชุด" ติ๊ก "กำหนดบล็อกเอง" แล้วกด "+ เพิ่มบล็อก" 1 ครั้งให้มี 4 แถว</li><li>เปลี่ยนหัวข้อของบล็อกที่ 1 และบล็อกที่ 3 เป็น "นำเสนอ" (รวมกับบล็อกที่ 2 เป็น "นำเสนอ" ครบ 3 บล็อก) แล้วเปิดตัวเลือกหัวข้อของบล็อกที่ 4 ดูรายการ</li><li>เปลี่ยนบล็อกที่ 3 กลับเป็น "ปิดการขาย" แล้วเปิดตัวเลือกหัวข้อของบล็อกที่ 4 อีกครั้ง</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>เมื่อมี "นำเสนอ" ครบ 3 บล็อก ตัวเลือกหัวข้อของบล็อกที่ 4 ไม่มี "นำเสนอ" ให้เลือก (บล็อกที่เป็น "นำเสนอ" อยู่แล้วยังเห็นหัวข้อของตัวเองตามปกติ)</li><li>เปลี่ยนบล็อกที่ 3 ออกจาก "นำเสนอ" แล้ว "นำเสนอ" กลับมาให้เลือกในบล็อกที่ 4</li><li>ไม่มีจังหวะไหนที่ตั้งหัวข้อเดียวกันเกิน 3 บล็อกได้ จึงไม่มี error ตอนกด "ร่างสคริปต์"</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 6 · Story 6.3 · FR29d · TAKRA-1317 ส่วนที่ 2 (มติ BA: 1–6 บล็อก · หัวข้อจาก 8 ประเภท + โจทย์รายบล็อก ≤200 ตัวอักษร · ประเภทเดียวกัน ≤3 บล็อก · 1–5 สคริปต์ต่อบล็อก · แผน 3 บล็อกเดิมเป็นค่าเริ่มต้น)</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13263" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13263" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13263" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13263" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13263" data-st="block">BLOCKED</span>
@@ -8368,7 +8395,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">กำหนดบล็อกเอง: ใส่โจทย์เฉพาะรายบล็อก แล้วเนื้อหาของบล็อกนั้นเน้นตามโจทย์ (ไม่เกิน 200 ตัวอักษร) <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13264"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13264"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13264"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -8379,10 +8406,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังสคริปต์" กดปุ่ม "สร้างสคริปต์" แล้วที่ขั้น "เลือกสินค้า" กรอก "ชื่อสคริปต์" เลือกสินค้าอย่างน้อย 1 รายการ กด "ถัดไป" และที่ขั้น "กลุ่มเป้าหมาย" กด "ข้าม"</li><li>ที่ขั้น "เขียนเนื้อหา" กด "ให้ AI ร่างทั้งชุด" แล้วติ๊ก "กำหนดบล็อกเอง"</li><li>ที่ช่อง "อยากให้บล็อกนี้เน้นอะไรเป็นพิเศษ (ไม่บังคับ)" ใต้บล็อกที่ 2 พิมพ์โจทย์ตาม Test Data และลองวางข้อความยาวเกิน 200 ตัวอักษรในช่องของบล็อกที่ 3 แล้วลบช่องบล็อกที่ 3 ให้ว่าง</li><li>กด "ร่างสคริปต์" รอจนเสร็จ แล้วอ่านเนื้อหาของบล็อกที่ 2 เทียบกับบล็อกอื่น</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ทุกแถวมีช่องโจทย์รายบล็อกที่ขึ้นข้อความ "อยากให้บล็อกนี้เน้นอะไรเป็นพิเศษ (ไม่บังคับ)" ไม่กรอกก็ร่างได้</li><li>ช่องรับได้ไม่เกิน 200 ตัวอักษร ส่วนที่เกินพิมพ์/วางไม่เข้า</li><li>ร่างเสร็จแล้วเนื้อหาของบล็อกที่ 2 สะท้อนโจทย์ที่ใส่ ส่วนบล็อกที่ไม่ได้ใส่โจทย์ร่างตามหัวข้อตามปกติ และไม่มี error</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 6 · Story 6.3 · FR29d · TAKRA-1317 ส่วนที่ 2 (มติ BA: 1–6 บล็อก · หัวข้อจาก 8 ประเภท + โจทย์รายบล็อก ≤200 ตัวอักษร · ประเภทเดียวกัน ≤3 บล็อก · 1–5 สคริปต์ต่อบล็อก · แผน 3 บล็อกเดิมเป็นค่าเริ่มต้น)</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13264" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13264" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13264" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13264" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13264" data-st="block">BLOCKED</span>
@@ -8410,7 +8437,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังสคริปต์" กดปุ่ม "สร้างสคริปต์" แล้วที่ขั้น "เลือกสินค้า" กรอก "ชื่อสคริปต์" เลือกสินค้าอย่างน้อย 1 รายการ กด "ถัดไป" และที่ขั้น "กลุ่มเป้าหมาย" กด "ข้าม"</li><li>ที่ขั้น "เขียนเนื้อหา" กด "ให้ AI ร่างทั้งชุด" แล้วที่ "จำนวนสคริปต์ต่อบล็อก" ดูตัวเลือกและเลือก "5 สคริปต์"</li><li>ติ๊ก "กำหนดบล็อกเอง" ดูจำนวนสคริปต์ของแต่ละแถว แล้วเอาติ๊กออก</li><li>กด "ร่างสคริปต์" รอจนเสร็จ แล้วสังเกตจำนวนบล็อก ประเภท และตัวนับ "มี … จาก 5 สคริปต์" ของแต่ละบล็อก</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>"จำนวนสคริปต์ต่อบล็อก" มีตัวเลือก "1 สคริปต์" ถึง "5 สคริปต์" ค่าเริ่มต้น "3 สคริปต์" และ "กำหนดบล็อกเอง" เริ่มต้นแบบไม่ติ๊ก</li><li>ติ๊ก "กำหนดบล็อกเอง" หลังเลือก "5 สคริปต์" แล้วทุกแถวเริ่มที่ "5 สคริปต์" · เอาติ๊กออกแล้วแถวบล็อกหายไปทั้งหมด</li><li>ร่างเสร็จได้ 3 บล็อกตามแผนเดิม (เปิดไลฟ์ · นำเสนอสินค้า · ปิดการขาย) แต่ละบล็อกขึ้น "มี 5 จาก 5 สคริปต์" และข้อความแจ้งผลระบุ "3 บล็อก"</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 6 · Story 6.3 · FR29d · TAKRA-1317 ส่วนที่ 2 (มติ BA: 1–6 บล็อก · หัวข้อจาก 8 ประเภท + โจทย์รายบล็อก ≤200 ตัวอักษร · ประเภทเดียวกัน ≤3 บล็อก · 1–5 สคริปต์ต่อบล็อก · แผน 3 บล็อกเดิมเป็นค่าเริ่มต้น)</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-13265" data-st="pass">PASS</span>
