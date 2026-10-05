@@ -137,7 +137,20 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 .chk{margin-top:4px;padding:6px 8px;border-left:3px solid #16a34a;background:rgba(22,163,74,.07)}
 .noui{display:inline-block;margin-left:6px;padding:0 6px;border-radius:4px;font-size:9.5px;font-weight:700;vertical-align:middle;color:#991b1b;background:#fee2e2;border:1px solid #fca5a5;white-space:nowrap}
 </style>
-</head>
+<style id="claude-agent-animation-styles">
+      @keyframes claude-pulse {
+        0%, 100% { opacity: 0.6; }
+        50% { opacity: 1; }
+      }
+      #claude-agent-glow-border-inner {
+        animation: claude-pulse 2s ease-in-out infinite;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        #claude-agent-glow-border-inner {
+          animation: none;
+        }
+      }
+    </style></head>
 <body>
 <a id="hub-back-btn" href="https://wanlee-tankunnatam.github.io/qa-test-reports/?project=ai" title="กลับไปหน้ารวมรายงาน (Hub)" style="position:fixed;top:12px;right:14px;z-index:99999;display:inline-flex;align-items:center;gap:7px;padding:10px 18px;border-radius:999px;background:#ffffff;color:#1e3a8a;font-size:14px;font-weight:800;text-decoration:none;box-shadow:0 4px 16px rgba(0,0,0,.35);border:2px solid #1e3a8a;font-family:'Segoe UI','Sarabun',system-ui,sans-serif">🏠 รายงานทั้งหมด</a>
 
@@ -321,93 +334,9 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     "actual": "UAT workspace “ทีมของ QA Tester” (Owner qa@takra.ai) สินค้าทดสอบ QA Enrich A/B/C (เก็บถาวรแล้วหลังทดสอบ). ตอนเปิดฟอร์มป้ายเป็น “ยังขายไม่ได้ · ความพร้อมขาย 1/4”; หลังเพิ่มจุดเด่น 3 ข้อเป็น “ข้อมูลไม่ครบ · 2/4” ทันทีโดยยังไม่บันทึก; FAQ ที่มีแต่คำถามไม่ทำให้คะแนนขึ้น เมื่อกรอกคำตอบครบ 2 ข้อเป็น 3/4; เพิ่ม Claims 2 ข้อป้ายเป็น “พร้อมขาย · 4/4” และหลังบันทึกหน้ารายละเอียดแสดง “พร้อมขายแล้ว” ตรง expected",
     "st": "pass"
   },
-  "tc-13062": {
+  "tc-13065": {
     "st": "pass",
-    "actual": "เทสบน UAT 5 ต.ค. 69 ws Wanlee Qa (Owner) · สคริปต์ร่างไม่มีคำเสี่ยง (QA-SC-A, QA-SC-B): ⋯ → \"ส่งขออนุมัติ\" → toast \"ส่งขออนุมัติแล้ว “QA-SC-B สำหรับตีกลับ” เข้าคิวรอรีวิว\" · สคริปต์หายจากแท็บ ร่าง (5→4) ไปอยู่ส่วน \"รอการอนุมัติ\" สถานะ \"รอรีวิว\" · การ์ด \"รอรีวิว\" 1→2 (+1) · API status=pendingReview"
-  },
-  "tc-13063": {
-    "st": "pass"
-  },
-  "tc-13064": {
-    "st": "pass"
-  },
-  "tc-13183": {
-    "st": "pass"
-  },
-  "tc-13184": {
-    "st": "fail"
-  },
-  "tc-13185": {
-    "st": "pass"
-  },
-  "tc-13186": {
-    "st": "block"
-  },
-  "tc-13187": {
-    "st": "pass"
-  },
-  "tc-13214": {
-    "st": "pass"
-  },
-  "tc-13182": {
-    "actual": "UAT 5 ต.ค. 2569 · ws ทีมของ QA Tester (Owner) — สร้างสคริปต์ \"QA — กู้ร่าง SL0510\" (สินค้า Hello Polo, ประเภท นำเสนอ) → ถัดไป → ข้าม → เขียนเอง พิมพ์ Content 1 \"ทดสอบกู้ร่าง SL0510 บทพูดชั่วคราว\" — แถบด้านล่างขึ้น \"· ยังไม่ได้บันทึก\" · กด F5 รีเฟรชหน้า (navigation type = reload) → ขึ้น toast \"กู้ร่างที่ยังไม่ได้บันทึกกลับมาแล้ว\" และฟิลด์กลับมาครบ: ชื่อสคริปต์, สินค้า (เลือกแล้ว 1 สินค้า), ประเภท, ข้อความ Content 1; ws ยังเป็นทีมของ QA Tester หลังรีเฟรช · รีเฟรชซ้ำอีกครั้งก็กู้ได้เหมือนเดิม · กด \"ยกเลิก\" → กลับหน้าคลังสคริปต์ (ร่างยังเท่าเดิม 19 รายการ, API ไม่มีสคริปต์ชื่อ \"กู้ร่าง\" ถูกสร้าง) · กด \"สร้างสคริปต์\" ใหม่ → ฟอร์มว่าง ไม่มีข้อความกู้ร่าง และไม่มีข้อมูลเดิมค้างในช่องใด ๆ → ผลตรง Expected",
-    "st": "pass"
-  },
-  "tc-13212": {
-    "actual": "UAT 5 ต.ค. 2569 · ws ทีมของ QA Tester (Owner) — สร้างสคริปต์ \"QA — กระดิ่ง SL0510\" (สินค้า Hello Polo, เขียนเอง) พิมพ์ Content 1 \"วันนี้มีของดีมาฝากค่ะ \" เคอร์เซอร์ท้ายข้อความ แล้วกดไอคอนกระดิ่ง (tooltip \"เลือกเสียงกระดิ่งแทรกตรงเคอร์เซอร์ — ดังเฉพาะไลฟ์ที่ส่งตรงเข้า TikTok\") → รายการ \"เสียงที่ 1 {{bell}}\" … \"เสียงที่ 10 {{bell10}}\" รวม 10 รายการ แต่ละรายการแสดงแท็กของตัวเองและมีปุ่มฟัง (▶) · กดฟัง เสียงที่ 1 → หน้าเว็บเรียกเล่นไฟล์ /sfx/bell.mp3 (HTTP 200, audio/mpeg ~23.5 KB) · กดเลือก \"เสียงที่ 1\" → แทรก {{bell}} ตรงเคอร์เซอร์ (\"วันนี้มีของดีมาฝากค่ะ {{bell}}\") พิมพ์ต่อ \" รีบกดตะกร้าเลยนะคะ\" · เพิ่ม Content 2 ใส่แค่ {{bell}} → กดบันทึกไม่ได้ บล็อกขึ้น \"สคริปต์ที่มี {{bell}} ต้องมีคำพูดด้วย — มีแต่กระดิ่งอย่างเดียวไม่ได้\" · แก้เป็น \"ลดราคาแล้วค่ะ {{bel}}\" → บันทึกไม่ได้ ขึ้น \"แท็กไม่ถูกต้อง: {{bel}} — ใช้ได้เฉพาะ {{bell}}, {{bell2}}, {{bell3}}, … {{bell10}}\" (ระบบแสดงรายการแท็กครบทีละตัว ไม่ได้ย่อด้วย \"…\") · แก้เป็น \"ลดราคาแล้วค่ะ {{bell2}}\" → บันทึกได้ ขึ้น toast \"บันทึกสคริปต์แล้ว\" · API เก็บ Content 1 = \"วันนี้มีของดีมาฝากค่ะ {{bell}} รีบกดตะกร้าเลยนะคะ\", Content 2 = \"ลดราคาแล้วค่ะ {{bell2}}\" → ผลตรง Expected (หมายเหตุ: ยืนยันการเล่นเสียงจากการเรียก play() ของไฟล์ที่โหลดได้ ไม่ได้ฟังด้วยหูจริง)",
-    "st": "pass"
-  },
-  "tc-13213": {
-    "actual": "UAT 5 ต.ค. 2569 · ws ทีมของ QA Tester (Owner) — เมนู ⋯ ของสคริปต์ที่มีเนื้อหา (\"QA — กระดิ่ง SL0510\", 2 Content) → แก้ไข → ขั้น \"เขียนเนื้อหา\": แถบเครื่องมือมีเฉพาะ \"ให้ AI ร่างทั้งชุด\" / \"เขียนเอง\"; หัวบล็อกแสดง \"1 · นำเสนอ | เนื้อหา | ~3s avg · ใช้จริง 2 จาก 2 สคริปต์\" ไม่มีสถานะแท็กเสียง; Content แต่ละอันมีไอคอนกระดิ่ง/ขยาย/ลบตามปกติ · ค้นข้อความทั้งหน้าไม่พบ \"ใส่แท็กเสียง\", \"แท็กเสียง\", \"กำลังใส่แท็ก\", \"อยู่ในคิว\" (คำว่า \"เสร็จแล้ว\" ที่พบเป็นป้ายสถานะของขั้น \"เลือกสินค้า\" เท่านั้น) · กดยกเลิก แล้วกด \"สร้างสคริปต์\" ไปถึงขั้น \"เขียนเนื้อหา\" (เขียนเอง): ไม่มีปุ่ม/ข้อความเกี่ยวกับแท็กเสียงเช่นกัน ยังมีปุ่ม AI ปรับสคริปต์ / พิมพ์เอง / ให้ AI เขียน แสดงปกติ → ผลตรง Expected",
-    "st": "pass"
-  },
-  "tc-13056": {
-    "actual": "UAT 5 ต.ค. 2569 · ws ทีมของ QA Tester (Owner qa@takra.ai) — ทดสอบตามขั้นตอนของเคส (เปิดคลังสคริปต์: ตัวเลขสรุป แท็บสถานะ และคิวรออนุมัติ) ผลตรงตาม Expected ทุกข้อ ไม่พบความผิดปกติ",
-    "st": "pass"
-  },
-  "tc-13057": {
-    "actual": "UAT 5 ต.ค. 2569 · ws ทีมของ QA Tester (Owner qa@takra.ai) — ทดสอบตามขั้นตอนของเคส (ค้นหาและกรองสคริปต์ตามประเภทและโฟลเดอร์) ผลตรงตาม Expected ทุกข้อ ไม่พบความผิดปกติ",
-    "st": "pass"
-  },
-  "tc-13058": {
-    "actual": "UAT 5 ต.ค. 2569 · ws ทีมของ QA Tester (Owner qa@takra.ai) — ทดสอบตามขั้นตอนของเคส (สร้างสคริปต์ใหม่พร้อมบล็อกและเนื้อหา แล้วบันทึกสำเร็จ) ผลตรงตาม Expected ทุกข้อ ไม่พบความผิดปกติ",
-    "st": "pass"
-  },
-  "tc-13059": {
-    "actual": "UAT 5 ต.ค. 2569 · ws ทีมของ QA Tester (Owner qa@takra.ai) — ทดสอบตามขั้นตอนของเคส (แก้ไขสคริปต์แล้วบันทึกการเปลี่ยนแปลงสำเร็จ) ผลตรงตาม Expected ทุกข้อ ไม่พบความผิดปกติ",
-    "st": "pass"
-  },
-  "tc-13060": {
-    "actual": "UAT 5 ต.ค. 2569 · ws ทีมของ QA Tester (Owner qa@takra.ai) — ทดสอบตามขั้นตอนของเคส (ทำซ้ำสคริปต์ได้ฉบับร่างใหม่ที่แก้แล้ว ไม่กระทบต้นฉบับ) ผลตรงตาม Expected ทุกข้อ ไม่พบความผิดปกติ",
-    "st": "pass"
-  },
-  "tc-13061": {
-    "actual": "UAT 5 ต.ค. 2569 · ws ทีมของ QA Tester (Owner qa@takra.ai) — ทดสอบตามขั้นตอนของเคส (สร้างโฟลเดอร์และจัดสคริปต์เข้ากลุ่ม) ผลตรงตาม Expected ทุกข้อ ไม่พบความผิดปกติ",
-    "st": "pass"
-  },
-  "tc-13176": {
-    "actual": "UAT 5 ต.ค. 2569 · ws ทีมของ QA Tester (Owner qa@takra.ai) — ทดสอบตามขั้นตอนของเคส (ลบสคริปต์ผ่านกล่องยืนยัน แล้วสคริปต์หายจากทุกแท็บ) ผลตรงตาม Expected ทุกข้อ ไม่พบความผิดปกติ",
-    "st": "pass"
-  },
-  "tc-13177": {
-    "actual": "UAT 5 ต.ค. 2569 · ws ทีมของ QA Tester (Owner qa@takra.ai) — ทดสอบตามขั้นตอนของเคส (ลบโฟลเดอร์ สคริปต์ในโฟลเดอร์ไม่ถูกลบและกลายเป็นไม่ได้จัดโฟลเดอร์) ผลตรงตาม Expected ทุกข้อ ไม่พบความผิดปกติ",
-    "st": "pass"
-  },
-  "tc-13178": {
-    "actual": "UAT 5 ต.ค. 2569 · ws ทีมของ QA Tester (Owner qa@takra.ai) — ทดสอบตามขั้นตอนของเคส (ย้ายสคริปต์ไปโฟลเดอร์อื่นและเอาออกจากโฟลเดอร์) ผลตรงตาม Expected ทุกข้อ ไม่พบความผิดปกติ",
-    "st": "pass"
-  },
-  "tc-13179": {
-    "actual": "UAT 5 ต.ค. 2569 · ws ทีมของ QA Tester (Owner qa@takra.ai) — ทดสอบตามขั้นตอนของเคส (บันทึกสคริปต์ไม่ได้เมื่อข้อมูลบังคับไม่ครบ และระบบชี้ช่องที่ต้องแก้) ผลตรงตาม Expected ทุกข้อ ไม่พบความผิดปกติ",
-    "st": "pass"
-  },
-  "tc-13180": {
-    "actual": "UAT 5 ต.ค. 2569 · ws ทีมของ QA Tester (Owner qa@takra.ai) — FAIL เฉพาะส่วน ปิด/เปิดใช้ Content: กดปุ่มวงกลม \"ปิด Content N\" แล้วกดบันทึก → สถานะ \"ปิดใช้\" ของ Content ไม่ถูกเก็บ (หลังบันทึกและเปิดแก้ไขซ้ำ Content กลับเป็นเปิดใช้) · ทำซ้ำด้วยการคลิกจริง (ไม่ใช่ artifact ของสคริปต์ automation) และดักจับ request: PATCH /api/v1/workspaces/{ws}/scripts/{id} ไม่มีฟิลด์สถานะเปิด/ปิดของ Content อยู่ใน body และ schema ของสคริปต์จาก GET ก็ไม่มีฟิลด์นี้ → เป็นข้อบกพร่องของระบบ ไม่ใช่ข้อมูลทดสอบ · ใช้สคริปต์ที่ seed ผ่าน API ให้มี Content เดียวเป็น precondition",
-    "st": "fail"
-  },
-  "tc-13181": {
-    "actual": "UAT 5 ต.ค. 2569 · ws ทีมของ QA Tester (Owner qa@takra.ai) — ทดสอบตามขั้นตอนของเคส (จัดการบล็อก: เพิ่มบล็อก ตั้งชื่อ/ประเภท ลดจำนวน Content และลบบล็อก) — ปุ่ม \"ลบบล็อก\" แสดงเฉพาะเมื่อมีมากกว่า 1 บล็อก · ลบบล็อกแล้วกด \"บันทึกการแก้ไข\" สำเร็จ สคริปต์เหลือ 1 บล็อก \"เนื้อหา\" (4 Content) ตรงกับค่าใน API → ผลตรงตาม Expected",
-    "st": "pass"
+    "actual": "ทดสอบบน UAT (wanlee 01 · Owner qa@takra.ai) 5 ต.ค. 2569: ผูกสคริปต์ QA-SBTS-1005-X (อนุมัติแล้ว) จากคลังเข้าฉากใน Studio แล้วแถวสคริปต์ขึ้นในรายการของฉาก ขยายดูมีข้อความ \"script จากคลังกลาง · แก้ไม่ได้ที่นี่\" · แก้ต้นฉบับในคลัง v1→v2 แล้วเปิด Studio อีกครั้ง เนื้อหาในฉากยังเป็นสำเนาเดิม (ข้อความเวอร์ชันแรก) ไม่เปลี่ยนเอง และแถวขึ้นแถบ \"ล้าสมัย (v1→v2)\" พร้อมปุ่ม \"อัปเดต snapshot\" (หมายเหตุ: การแก้ต้นฉบับ seed ผ่าน API PATCH ซึ่งให้ผลเท่ากับแก้จากหน้าคลัง)"
   }
 }
 </script>
@@ -431,15 +360,15 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="runsum">
     <h3>📊 สรุปผล Manual Test</h3>
     <div class="sumchips">
-      <span class="cnt pass">PASS <b id="sum-pass">60</b></span>
-      <span class="cnt fail">FAIL <b id="sum-fail">5</b></span>
+      <span class="cnt pass">PASS <b id="sum-pass">40</b></span>
+      <span class="cnt fail">FAIL <b id="sum-fail">3</b></span>
       <span class="cnt hold">HOLD <b id="sum-hold">2</b></span>
-      <span class="cnt block">BLOCKED <b id="sum-block">2</b></span>
+      <span class="cnt block">BLOCKED <b id="sum-block">1</b></span>
       <span class="cnt skip">SKIP <b id="sum-skip">0</b></span>
-      <span class="cnt pending">รอเทส <b id="sum-pending">189</b></span>
+      <span class="cnt pending">รอเทส <b id="sum-pending">212</b></span>
     </div>
-    <div class="progress"><div id="sumbar" class="progressbar" style="width: 27%;"></div></div>
-    <div class="hint" id="sumpct" style="margin-top:5px">27% ทดสอบแล้ว (69/258)</div>
+    <div class="progress"><div id="sumbar" class="progressbar" style="width: 18%;"></div></div>
+    <div class="hint" id="sumpct" style="margin-top:5px">18% ทดสอบแล้ว (46/258)</div>
   </div>
 
   <div class="toolbar">
@@ -447,7 +376,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <button class="btn" onclick="toggleAll(false)">▾ ยุบทั้งหมด</button>
     <span class="hint">💡 คลิกแถว → ดู Steps / Expected (UI only)</span>
     <span style="margin-left:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-      <span id="save-status" class="hint" style="white-space: nowrap; color: var(--muted);">✓ ตรงกับ GitHub</span>
+      <span id="save-status" class="hint" style="white-space: nowrap; color: var(--hold);">● ยังไม่ได้บันทึก</span>
       <label class="hint" style="display:flex;gap:4px;align-items:center;white-space:nowrap;cursor:pointer" title="บันทึกขึ้น GitHub อัตโนมัติหลังหยุดแก้ ~5 วินาที"><input type="checkbox" id="chk-autosave" checked=""> auto-save</label>
       <button class="btn" id="btn-token" title="ใส่/เปลี่ยน GitHub token (ถ้าเซฟไม่ขึ้น/token เสีย กดอันนี้)">🔑 Token</button>
       <button class="btn" id="btn-refresh" title="ดึงผลล่าสุดจาก GitHub มา merge (ไม่ต้อง reload)">🔄 ดึงล่าสุด</button>
@@ -3460,15 +3389,15 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 </div></td></tr>
 
 <tr class="featrow" data-featkey="script-library"><td colspan="7">📁 script-library <span class="rp"><span class="lv lvl-ui">🌐 15</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="script-library"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
-<tr class="trow open" data-feat="rg2" data-level="ui" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
+<tr class="trow" data-feat="rg2" data-level="ui" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-SL.1</td>
   <td class="ctitle">เปิดคลังสคริปต์แล้วเห็นตัวเลขสรุป แท็บสถานะ และคิวรออนุมัติ <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
-  <td class="status" data-uid="tc-13056"><span class="stb pass">PASS</span></td>
+  <td class="status" data-uid="tc-13056"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-13056"></td>
 </tr>
-<tr class="detail show"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">เปิดคลังสคริปต์แล้วเห็นตัวเลขสรุป แท็บสถานะ และคิวรออนุมัติ</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · ขั้นที่ 2 คลังของ Workspace — Avatar/Voice/สินค้า/คำเสี่ยง/สคริปต์ · Epic 2</div>
   <div class="sec"><h4>Precondition</h4><ul><li>ล็อกอินเป็น Owner</li><li>คลังมีสคริปต์หลายสถานะ (ร่าง · รอรีวิว · อนุมัติแล้ว)</li></ul></div>
@@ -3476,10 +3405,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังสคริปต์" ในแถบด้านซ้าย แล้วอ่านหัวข้อและคำบรรยาย</li><li>ดูการ์ดตัวเลขสรุป 4 ใบด้านบน</li><li>ดูส่วน "รอการอนุมัติ" แล้วไล่กดแท็บ "ใช้งาน" / "ร่าง" / "เก็บถาวร"</li><li>ดูหัวคอลัมน์ของตารางรายการสคริปต์</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>เห็นหัวข้อ "คลังสคริปต์" และคำบรรยาย "บล็อกสคริปต์ใช้ซ้ำได้สำหรับไลฟ์ · รีวิว–อนุมัติก่อนใช้ · ตรวจคำเสี่ยงอัตโนมัติ"</li><li>การ์ดสรุปแสดง "รอรีวิว" · "ต้องแก้ก่อนอนุมัติ" · "ใช้งานในระบบ" · "ฉบับร่าง" พร้อมจำนวน</li><li>ส่วน "รอการอนุมัติ" มีคำกำกับ "ต้องรีวิวก่อนนำไปใช้ในไลฟ์" และแท็บทั้ง 3 กรองรายการตามสถานะถูกต้อง</li><li>ตารางมีคอลัมน์ "สคริปต์" · "ประเภท" · "ความยาว" · "ใช้ในไลฟ์" · "อัปเดตล่าสุด"</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · Story 2.7 · FR67</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass sel" data-uid="tc-13056" data-st="pass">PASS</span>
+    <span class="opt pass" data-uid="tc-13056" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13056" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13056" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13056" data-st="block">BLOCKED</span>
@@ -3492,15 +3421,15 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 </div></td></tr>
 
-<tr class="trow open" data-feat="rg2" data-level="ui" data-prio="P1" data-kind="happy" data-ui="yes" onclick="tg(this)">
+<tr class="trow" data-feat="rg2" data-level="ui" data-prio="P1" data-kind="happy" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-SL.2</td>
   <td class="ctitle">ค้นหาและกรองสคริปต์ตามประเภทและโฟลเดอร์ <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13057"><span class="stb pass">PASS</span></td>
+  <td class="status" data-uid="tc-13057"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-13057"></td>
 </tr>
-<tr class="detail show"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">ค้นหาและกรองสคริปต์ตามประเภทและโฟลเดอร์</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · ขั้นที่ 2 คลังของ Workspace — Avatar/Voice/สินค้า/คำเสี่ยง/สคริปต์ · Epic 2</div>
   <div class="sec"><h4>Precondition</h4><ul><li>อยู่ที่หน้า "คลังสคริปต์" (เมนู "คลังสคริปต์") ที่มีสคริปต์หลายประเภทและหลายโฟลเดอร์</li></ul></div>
@@ -3508,10 +3437,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังสคริปต์" แล้วพิมพ์คำค้นที่ตรงกับชื่อสคริปต์บางรายการในช่อง "ค้นหาชื่อสคริปต์ เนื้อหา หรือสินค้า"</li><li>เลือกตัวกรอง "ประเภท" เป็นค่าหนึ่ง (เช่น เปิดไลฟ์) และเลือกตัวกรองโฟลเดอร์</li><li>พิมพ์คำค้นที่ไม่มีทางตรง แล้วอ่านข้อความที่แสดง</li><li>ล้างเงื่อนไขทั้งหมด แล้วดูรายการ</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ช่องค้นหาระบุขอบเขต "ค้นหาชื่อสคริปต์ เนื้อหา หรือสินค้า" และผลกรองตรงตามคำค้น</li><li>ตัวกรอง "ประเภท" (ทั้งหมด / เปิดไลฟ์ / นำเสนอ / ถาม-ตอบ / กระตุ้นซื้อ / ปิดไลฟ์) และตัวกรองโฟลเดอร์ ใช้ร่วมกับคำค้นได้ถูกต้อง</li><li>เมื่อไม่พบผลลัพธ์ เห็นข้อความ "ไม่พบสคริปต์ที่ตรงกับเงื่อนไข"</li><li>ล้างเงื่อนไขแล้วรายการกลับมาครบ</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · Story 2.7 · FR68</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass sel" data-uid="tc-13057" data-st="pass">PASS</span>
+    <span class="opt pass" data-uid="tc-13057" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13057" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13057" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13057" data-st="block">BLOCKED</span>
@@ -3524,15 +3453,15 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 </div></td></tr>
 
-<tr class="trow open" data-feat="rg2" data-level="ui" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
+<tr class="trow" data-feat="rg2" data-level="ui" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-SL.3</td>
   <td class="ctitle">สร้างสคริปต์ใหม่ในคลังพร้อมบล็อกและเนื้อหาแล้วบันทึกสำเร็จ <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
-  <td class="status" data-uid="tc-13058"><span class="stb pass">PASS</span></td>
+  <td class="status" data-uid="tc-13058"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-13058"></td>
 </tr>
-<tr class="detail show"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">สร้างสคริปต์ใหม่ในคลังพร้อมบล็อกและเนื้อหาแล้วบันทึกสำเร็จ</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · ขั้นที่ 2 คลังของ Workspace — Avatar/Voice/สินค้า/คำเสี่ยง/สคริปต์ · Epic 2</div>
   <div class="sec"><h4>Precondition</h4><ul><li>อยู่ที่หน้า "คลังสคริปต์" ในฐานะ Owner</li><li>มีสินค้าในคลังอย่างน้อย 1 รายการ</li></ul></div>
@@ -3540,10 +3469,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังสคริปต์" กดปุ่ม "สร้างสคริปต์" — ที่ขั้น "เลือกสินค้า" กรอก "ชื่อสคริปต์" เป็น QA — เปิดไลฟ์ทดสอบ เลือก "สินค้าที่เกี่ยวข้อง" อย่างน้อย 1 รายการ แล้วกด "ถัดไป"</li><li>ที่ขั้น "กลุ่มเป้าหมาย" กด "ข้าม" แล้วที่ขั้น "เขียนเนื้อหา" ตรงคำถาม "จะเริ่มสคริปต์นี้อย่างไร" เลือก "เขียนเอง"</li><li>ที่บล็อกแรก เลือก "ประเภท:" ของบล็อก แล้วพิมพ์บทพูดลงในช่อง Content แรก (เพิ่มบล็อกได้จากช่อง "เพิ่มบล็อกใหม่" → "พิมพ์เอง") แล้วกด "ถัดไป"</li><li>ดูขั้น "ตรวจคำเสี่ยง" แล้วกดปุ่ม "บันทึก" ที่แถบด้านล่าง จากนั้นกลับมาดูรายการในคลังที่แท็บ "ร่าง"</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>หน้าสร้างสคริปต์แบ่งเป็นขั้น "เลือกสินค้า" · "กลุ่มเป้าหมาย" · "เขียนเนื้อหา" · "ตรวจคำเสี่ยง" — ขั้นถัดไปล็อกไว้พร้อมเหตุผล "รอชื่อสคริปต์และสินค้าจากขั้นที่ 1" จนกว่าจะกรอกชื่อและเลือกสินค้า</li><li>ขั้น "เลือกสินค้า" มีช่อง "ชื่อสคริปต์" · "สินค้าที่เกี่ยวข้อง" ("เลือกได้หลายสินค้า") · "ประเภทสคริปต์" และ "โฟลเดอร์" (ไม่บังคับ) อยู่ใต้ "ตัวเลือกเพิ่มเติม"</li><li>แถบสรุปบล็อกแสดง "บล็อกเนื้อหา · N บล็อก · ~X วินาที" ตามที่กรอก และขั้น "ตรวจคำเสี่ยง" ขึ้น "ครบแล้ว — กด “บันทึก” ที่แถบด้านล่าง สคริปต์จะเข้าคลังพร้อมใช้งาน"</li><li>หลังบันทึก เห็นข้อความ "บันทึกสคริปต์แล้ว" พร้อมชื่อสคริปต์</li><li>สคริปต์ใหม่ปรากฏในคลังในกลุ่ม "ฉบับร่าง"</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · Story 2.7 · FR69 · TAKRA-1220</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass sel" data-uid="tc-13058" data-st="pass">PASS</span>
+    <span class="opt pass" data-uid="tc-13058" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13058" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13058" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13058" data-st="block">BLOCKED</span>
@@ -3556,15 +3485,15 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 </div></td></tr>
 
-<tr class="trow open" data-feat="rg2" data-level="ui" data-prio="P1" data-kind="happy" data-ui="yes" onclick="tg(this)">
+<tr class="trow" data-feat="rg2" data-level="ui" data-prio="P1" data-kind="happy" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-SL.4</td>
   <td class="ctitle">แก้ไขสคริปต์ในคลังแล้วบันทึกการเปลี่ยนแปลงสำเร็จ <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13059"><span class="stb pass">PASS</span></td>
+  <td class="status" data-uid="tc-13059"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-13059"></td>
 </tr>
-<tr class="detail show"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">แก้ไขสคริปต์ในคลังแล้วบันทึกการเปลี่ยนแปลงสำเร็จ</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · ขั้นที่ 2 คลังของ Workspace — Avatar/Voice/สินค้า/คำเสี่ยง/สคริปต์ · Epic 2</div>
   <div class="sec"><h4>Precondition</h4><ul><li>มีสคริปต์ในคลังที่สถานะฉบับร่าง</li></ul></div>
@@ -3572,10 +3501,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังสคริปต์" กดเมนูตัวเลือก (⋯) ของสคริปต์ฉบับร่าง แล้วเลือก "แก้ไข"</li><li>แก้ชื่อสคริปต์และเนื้อหาในบล็อกแรก แล้วกดปุ่ม "บันทึกการแก้ไข"</li><li>กดเมนูตัวเลือก (⋯) ของสคริปต์นั้น เลือก "ดูรายละเอียด" แล้วดูเนื้อหากับบรรทัดข้อมูล (เวอร์ชัน v… · แก้ไขล่าสุด)</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>หลังบันทึก เห็นข้อความ "บันทึกการแก้ไขแล้ว" พร้อม "อัปเดต "ชื่อสคริปต์" เรียบร้อย"</li><li>แผงรายละเอียดแสดงเนื้อหาที่แก้ใหม่ และเวลาแก้ไขล่าสุดเปลี่ยนตาม</li><li>หมายเลขเวอร์ชัน (vN) ในบรรทัดข้อมูลของสคริปต์เพิ่มขึ้นจากเดิม</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · Story 2.7 · FR69</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass sel" data-uid="tc-13059" data-st="pass">PASS</span>
+    <span class="opt pass" data-uid="tc-13059" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13059" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13059" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13059" data-st="block">BLOCKED</span>
@@ -3588,25 +3517,25 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 </div></td></tr>
 
-<tr class="trow open" data-feat="rg2" data-level="ui" data-prio="P1" data-kind="happy" data-ui="yes" onclick="tg(this)">
+<tr class="trow" data-feat="rg2" data-level="ui" data-prio="P1" data-kind="happy" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-SL.5</td>
   <td class="ctitle">ทำซ้ำสคริปต์แล้วได้ฉบับร่างใหม่ที่แก้แล้วไม่กระทบต้นฉบับ <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13060"><span class="stb pass">PASS</span></td>
+  <td class="status" data-uid="tc-13060"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-13060"></td>
 </tr>
-<tr class="detail show"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">ทำซ้ำสคริปต์แล้วได้ฉบับร่างใหม่ที่แก้แล้วไม่กระทบต้นฉบับ</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · ขั้นที่ 2 คลังของ Workspace — Avatar/Voice/สินค้า/คำเสี่ยง/สคริปต์ · Epic 2</div>
   <div class="sec"><h4>Precondition</h4><ul><li>มีสคริปต์ที่สถานะ "อนุมัติแล้ว" อยู่ในคลัง</li></ul></div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังสคริปต์" กดเมนูตัวเลือก (⋯) ของสคริปต์ที่สถานะ "อนุมัติแล้ว" เลือก "ทำซ้ำ" แล้วอ่านข้อความแจ้งผล</li><li>ที่แท็บ "ร่าง" เปิดสำเนาที่เพิ่งสร้าง กดเมนู (⋯) เลือก "แก้ไข" แก้เนื้อหา แล้วกด "บันทึกการแก้ไข"</li><li>เปิดสคริปต์ต้นฉบับเพื่อตรวจเนื้อหาและสถานะว่าเปลี่ยนตามหรือไม่</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>เห็นข้อความ "ทำซ้ำสคริปต์แล้ว" พร้อม "สร้าง "ชื่อสำเนา" เป็นฉบับร่าง"</li><li>สำเนาอยู่ในสถานะฉบับร่าง (ไม่สืบทอดสถานะอนุมัติจากต้นฉบับ)</li><li>แก้สำเนาแล้ว ต้นฉบับยังคงเนื้อหาเดิมและสถานะ "อนุมัติแล้ว" เหมือนเดิม</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · Story 2.7</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass sel" data-uid="tc-13060" data-st="pass">PASS</span>
+    <span class="opt pass" data-uid="tc-13060" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13060" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13060" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13060" data-st="block">BLOCKED</span>
@@ -3619,15 +3548,15 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 </div></td></tr>
 
-<tr class="trow open" data-feat="rg2" data-level="ui" data-prio="P1" data-kind="happy" data-ui="yes" onclick="tg(this)">
+<tr class="trow" data-feat="rg2" data-level="ui" data-prio="P1" data-kind="happy" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-SL.6</td>
   <td class="ctitle">สร้างโฟลเดอร์และจัดสคริปต์เข้ากลุ่มได้ <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13061"><span class="stb pass">PASS</span></td>
+  <td class="status" data-uid="tc-13061"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-13061"></td>
 </tr>
-<tr class="detail show"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">สร้างโฟลเดอร์และจัดสคริปต์เข้ากลุ่มได้</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · ขั้นที่ 2 คลังของ Workspace — Avatar/Voice/สินค้า/คำเสี่ยง/สคริปต์ · Epic 2</div>
   <div class="sec"><h4>Precondition</h4><ul><li>อยู่ที่หน้า "คลังสคริปต์" (เมนู "คลังสคริปต์")</li></ul></div>
@@ -3635,10 +3564,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังสคริปต์" กดเมนูตัวเลือก (⋯) ของสคริปต์ที่จะจัดกลุ่ม แล้วเลือก "แก้ไข"</li><li>ที่ขั้น "เลือกสินค้า" กด "ตัวเลือกเพิ่มเติม" แล้วที่ช่อง "โฟลเดอร์" เลือก "สร้างโฟลเดอร์ใหม่" พิมพ์ชื่อ QA-Campaign แล้วกด "สร้าง"</li><li>กด "บันทึกการแก้ไข" แล้วกลับมาที่คลัง เลือกตัวกรองโฟลเดอร์เป็น QA-Campaign</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>เห็นข้อความ "สร้างโฟลเดอร์สำเร็จ" และเลือกโฟลเดอร์นั้นให้สคริปต์ได้</li><li>หลังบันทึก กรองด้วยโฟลเดอร์ QA-Campaign แล้วเห็นสคริปต์ที่จัดเข้าไป</li><li>สคริปต์ที่ยังไม่ได้จัดโฟลเดอร์แสดงเป็น "ไม่ได้จัดโฟลเดอร์" ในแผงรายละเอียด</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · Story 2.7 · FR68 · TAKRA-1220</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass sel" data-uid="tc-13061" data-st="pass">PASS</span>
+    <span class="opt pass" data-uid="tc-13061" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13061" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13061" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13061" data-st="block">BLOCKED</span>
@@ -3651,15 +3580,15 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 </div></td></tr>
 
-<tr class="trow open" data-feat="rg2" data-level="ui" data-prio="P1" data-kind="happy" data-ui="yes" onclick="tg(this)">
+<tr class="trow" data-feat="rg2" data-level="ui" data-prio="P1" data-kind="happy" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-SL.7</td>
   <td class="ctitle">ลบสคริปต์ออกจากคลังผ่านกล่องยืนยัน แล้วสคริปต์หายจากทุกแท็บ <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13176"><span class="stb pass">PASS</span></td>
+  <td class="status" data-uid="tc-13176"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-13176"></td>
 </tr>
-<tr class="detail show"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">ลบสคริปต์ออกจากคลังผ่านกล่องยืนยัน แล้วสคริปต์หายจากทุกแท็บ</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · ขั้นที่ 2 คลังของ Workspace — Avatar/Voice/สินค้า/คำเสี่ยง/สคริปต์ · Epic 2</div>
   <div class="sec"><h4>Precondition</h4><ul><li>ล็อกอินเป็น Owner</li><li>มีสคริปต์ฉบับร่างที่ยังไม่ผูกกับไลฟ์ใด (คอลัมน์ "ใช้ในไลฟ์" แสดง "ยังไม่ผูกไลฟ์")</li></ul></div>
@@ -3667,10 +3596,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังสคริปต์" ในแถบด้านซ้าย ที่แท็บ "ร่าง" กดเมนูตัวเลือก (⋯) ของสคริปต์ตาม Precondition เลือก "แก้ไข" คัดลอก URL หน้าแก้ไขเก็บไว้ แล้วกด "ยกเลิก" กลับมาที่คลัง</li><li>กดเมนูตัวเลือก (⋯) ของสคริปต์เดิม เลือก "ลบ" อ่านข้อความในกล่องยืนยัน แล้วกด "ยกเลิก"</li><li>กดเมนูตัวเลือก (⋯) เลือก "ลบ" อีกครั้ง แล้วกด "ลบสคริปต์" — อ่านข้อความแจ้งผล แล้วไล่ดูแท็บ "ใช้งาน" / "ร่าง" / "เก็บถาวร" และการ์ดสรุป "ฉบับร่าง"</li><li>วาง URL หน้าแก้ไขที่คัดลอกไว้ลงแถบที่อยู่ของเบราว์เซอร์ แล้วสังเกตหน้าที่เปิดขึ้น</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>กล่องยืนยันหัวข้อ "ลบสคริปต์นี้?" แสดงชื่อสคริปต์ตามด้วย "จะถูกลบออกจากคลังถาวร — รอบไลฟ์ที่อ้างถึงสคริปต์นี้จะหาไม่เจอ" มีปุ่ม "ยกเลิก" และ "ลบสคริปต์"</li><li>กด "ยกเลิก" แล้วกล่องปิด สคริปต์ยังอยู่ในแท็บ "ร่าง" ตามเดิม</li><li>กด "ลบสคริปต์" แล้วเห็นข้อความ "ลบสคริปต์แล้ว" พร้อม "“ชื่อสคริปต์” ถูกลบออกจากคลังถาวร"</li><li>สคริปต์หายจากทุกแท็บ (รวมแท็บ "เก็บถาวร" — ไม่ได้ถูกย้ายไปเก็บถาวร) และตัวเลขการ์ด "ฉบับร่าง" ลดลง 1</li><li>เปิด URL หน้าแก้ไขเดิมแล้วเห็น "ไม่พบสคริปต์นี้" และ "สคริปต์อาจถูกลบไปแล้ว หรือลิงก์ไม่ถูกต้อง"</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · Story 2.7 · FR69 · TAKRA-855 (ลบ = ลบถาวร)</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass sel" data-uid="tc-13176" data-st="pass">PASS</span>
+    <span class="opt pass" data-uid="tc-13176" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13176" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13176" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13176" data-st="block">BLOCKED</span>
@@ -3683,15 +3612,15 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 </div></td></tr>
 
-<tr class="trow open" data-feat="rg2" data-level="ui" data-prio="P1" data-kind="happy" data-ui="yes" onclick="tg(this)">
+<tr class="trow" data-feat="rg2" data-level="ui" data-prio="P1" data-kind="happy" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-SL.8</td>
   <td class="ctitle">ลบโฟลเดอร์สคริปต์แล้วสคริปต์ในโฟลเดอร์ไม่ถูกลบ แต่กลายเป็นไม่ได้จัดโฟลเดอร์ <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13177"><span class="stb pass">PASS</span></td>
+  <td class="status" data-uid="tc-13177"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-13177"></td>
 </tr>
-<tr class="detail show"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">ลบโฟลเดอร์สคริปต์แล้วสคริปต์ในโฟลเดอร์ไม่ถูกลบ แต่กลายเป็นไม่ได้จัดโฟลเดอร์</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · ขั้นที่ 2 คลังของ Workspace — Avatar/Voice/สินค้า/คำเสี่ยง/สคริปต์ · Epic 2</div>
   <div class="sec"><h4>Precondition</h4><ul><li>ล็อกอินเป็น Owner</li><li>มีโฟลเดอร์ทดสอบ (เช่น QA-Campaign) ที่มีสคริปต์อยู่อย่างน้อย 1 รายการ</li></ul></div>
@@ -3699,10 +3628,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังสคริปต์" ในแถบด้านซ้าย กดเมนูตัวเลือก (⋯) ของสคริปต์ใดก็ได้ เลือก "แก้ไข" แล้วที่ขั้น "เลือกสินค้า" กด "ตัวเลือกเพิ่มเติม" และกดช่อง "โฟลเดอร์" เพื่อเปิดรายการโฟลเดอร์</li><li>กดไอคอนถังขยะท้ายชื่อโฟลเดอร์ QA-Campaign อ่านข้อความในกล่องยืนยัน กด "ยกเลิก" หนึ่งครั้ง แล้วกดไอคอนถังขยะอีกครั้งและกด "ลบโฟลเดอร์"</li><li>กด "ยกเลิก" ที่แถบด้านล่างเพื่อกลับไปที่คลัง เปิดตัวกรองโฟลเดอร์ ("ทุกโฟลเดอร์") แล้วดูรายชื่อโฟลเดอร์</li><li>เปิดแผงรายละเอียด ("ดูรายละเอียด") ของสคริปต์ที่เคยอยู่ในโฟลเดอร์นั้น แล้วดูหัวข้อ "โฟลเดอร์"</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>กล่องยืนยันหัวข้อ "ลบโฟลเดอร์นี้?" แสดงชื่อโฟลเดอร์ตามด้วย "มี N สคริปต์ — สคริปต์จะไม่ถูกลบ แต่จะกลายเป็น “ไม่มีโฟลเดอร์”" (ถ้าโฟลเดอร์ว่างจะแสดง "คุณต้องการลบโฟลเดอร์นี้ใช่หรือไม่?") มีปุ่ม "ยกเลิก" และ "ลบโฟลเดอร์"</li><li>กด "ยกเลิก" แล้วโฟลเดอร์ยังอยู่ในรายการ — กด "ลบโฟลเดอร์" แล้วเห็นข้อความ "ลบโฟลเดอร์สำเร็จ" และโฟลเดอร์หายจากรายการ</li><li>ตัวกรองโฟลเดอร์ในคลังไม่มี QA-Campaign อีกต่อไป</li><li>สคริปต์ที่เคยอยู่ในโฟลเดอร์ยังอยู่ในคลังครบ และแผงรายละเอียดแสดง "ไม่ได้จัดโฟลเดอร์"</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · Story 2.7 · FR68 · TAKRA-339</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass sel" data-uid="tc-13177" data-st="pass">PASS</span>
+    <span class="opt pass" data-uid="tc-13177" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13177" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13177" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13177" data-st="block">BLOCKED</span>
@@ -3715,15 +3644,15 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 </div></td></tr>
 
-<tr class="trow open" data-feat="rg2" data-level="ui" data-prio="P1" data-kind="happy" data-ui="yes" onclick="tg(this)">
+<tr class="trow" data-feat="rg2" data-level="ui" data-prio="P1" data-kind="happy" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-SL.9</td>
   <td class="ctitle">ย้ายสคริปต์ไปโฟลเดอร์อื่นและเอาออกจากโฟลเดอร์ได้ <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13178"><span class="stb pass">PASS</span></td>
+  <td class="status" data-uid="tc-13178"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-13178"></td>
 </tr>
-<tr class="detail show"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">ย้ายสคริปต์ไปโฟลเดอร์อื่นและเอาออกจากโฟลเดอร์ได้</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · ขั้นที่ 2 คลังของ Workspace — Avatar/Voice/สินค้า/คำเสี่ยง/สคริปต์ · Epic 2</div>
   <div class="sec"><h4>Precondition</h4><ul><li>ล็อกอินเป็น Owner</li><li>มีโฟลเดอร์อย่างน้อย 2 โฟลเดอร์ (เช่น QA-A และ QA-B) และมีสคริปต์ที่อยู่ในโฟลเดอร์ QA-A</li></ul></div>
@@ -3731,10 +3660,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังสคริปต์" ในแถบด้านซ้าย กดเมนูตัวเลือก (⋯) ของสคริปต์ที่อยู่ใน QA-A เลือก "แก้ไข" แล้วที่ขั้น "เลือกสินค้า" กด "ตัวเลือกเพิ่มเติม" ที่ช่อง "โฟลเดอร์" เลือก QA-B แล้วกด "บันทึกการแก้ไข"</li><li>กลับมาที่คลัง เลือกตัวกรองโฟลเดอร์เป็น QA-A แล้วเปลี่ยนเป็น QA-B ดูว่าสคริปต์อยู่ที่ไหน</li><li>กดเมนู (⋯) ของสคริปต์เดิม เลือก "แก้ไข" ที่ช่อง "โฟลเดอร์" เลือก "— ไม่มีโฟลเดอร์ —" แล้วกด "บันทึกการแก้ไข"</li><li>เปิดแผงรายละเอียดของสคริปต์นั้น แล้วดูหัวข้อ "โฟลเดอร์" สถานะของสคริปต์ และบรรทัดชื่อโฟลเดอร์ใต้ชื่อสคริปต์ในตาราง</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>หลังบันทึกครั้งแรก เห็นข้อความ "บันทึกการแก้ไขแล้ว" — กรอง QA-A ไม่พบสคริปต์นั้นแล้ว (ขึ้น "ไม่พบสคริปต์ที่ตรงกับเงื่อนไข" ถ้าโฟลเดอร์ว่าง) ส่วนกรอง QA-B พบสคริปต์ และใต้ชื่อสคริปต์แสดงชื่อโฟลเดอร์ QA-B</li><li>หลังเลือก "— ไม่มีโฟลเดอร์ —" และบันทึก แผงรายละเอียดแสดง "ไม่ได้จัดโฟลเดอร์" และใต้ชื่อสคริปต์ในตารางไม่มีชื่อโฟลเดอร์</li><li>การย้ายโฟลเดอร์ไม่เปลี่ยนสถานะของสคริปต์ (สคริปต์ "อนุมัติแล้ว" ยังอยู่กลุ่ม "ใช้งานในระบบ")</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · Story 2.7 · FR68 · TAKRA-1220</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass sel" data-uid="tc-13178" data-st="pass">PASS</span>
+    <span class="opt pass" data-uid="tc-13178" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13178" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13178" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13178" data-st="block">BLOCKED</span>
@@ -3747,15 +3676,15 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 </div></td></tr>
 
-<tr class="trow open" data-feat="rg2" data-level="ui" data-prio="P1" data-kind="validation" data-ui="yes" onclick="tg(this)">
+<tr class="trow" data-feat="rg2" data-level="ui" data-prio="P1" data-kind="validation" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-SL.10</td>
   <td class="ctitle">บันทึกสคริปต์ไม่ได้เมื่อข้อมูลบังคับไม่ครบ และระบบชี้ช่องที่ต้องแก้ <span class="kd kd-val">Validation</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13179"><span class="stb pass">PASS</span></td>
+  <td class="status" data-uid="tc-13179"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-13179"></td>
 </tr>
-<tr class="detail show"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">บันทึกสคริปต์ไม่ได้เมื่อข้อมูลบังคับไม่ครบ และระบบชี้ช่องที่ต้องแก้</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Validation</b> <span class="hint">(format · required · character · length)</span> · ขั้นที่ 2 คลังของ Workspace — Avatar/Voice/สินค้า/คำเสี่ยง/สคริปต์ · Epic 2</div>
   <div class="sec"><h4>Precondition</h4><ul><li>ล็อกอินเป็น Owner</li><li>มีสินค้าในคลังอย่างน้อย 1 รายการ</li></ul></div>
@@ -3763,10 +3692,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังสคริปต์" ในแถบด้านซ้าย กดปุ่ม "สร้างสคริปต์" แล้วกดปุ่ม "บันทึก" ที่แถบด้านล่างทันทีโดยยังไม่กรอกอะไร — อ่านข้อความใต้ช่อง "ชื่อสคริปต์" และ "สินค้าที่เกี่ยวข้อง"</li><li>กรอก "ชื่อสคริปต์" และเลือก "สินค้าที่เกี่ยวข้อง" 1 รายการ กด "ถัดไป" ที่ขั้น "กลุ่มเป้าหมาย" กด "ข้าม" แล้วที่ขั้น "เขียนเนื้อหา" เลือก "เขียนเอง"</li><li>พิมพ์บทพูดลงช่อง Content 1 ของบล็อกแรก แล้วลบข้อความในช่องชื่อบล็อกให้ว่าง กด "บันทึก" แล้วอ่านข้อความใต้หัวบล็อก</li><li>ตั้งชื่อบล็อกกลับ แล้วกดวงกลมหน้า Content 1 เพื่อปิด Content เดียวของบล็อก กด "บันทึก" อีกครั้งแล้วอ่านป้ายและข้อความที่บล็อก</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>กด "บันทึก" ตอนฟอร์มว่าง สคริปต์ไม่ถูกบันทึก ระบบพากลับไปขั้น "เลือกสินค้า" และแสดง "กรุณากรอกชื่อสคริปต์" ใต้ช่องชื่อ กับ "เลือกสินค้าอย่างน้อย 1 รายการ" ใต้ช่องสินค้า</li><li>บล็อกที่ชื่อว่าง แสดงข้อความ "กรุณาตั้งชื่อบล็อกนี้" ใต้หัวบล็อก และยังบันทึกไม่ได้</li><li>บล็อกที่ปิด Content หมดทุกตัว หัวบล็อกขึ้นป้าย "ไม่มีสคริปต์เปิดใช้" Content ขึ้น "ปิดอยู่ · AI ไม่หยิบไปพูด" และใต้หัวบล็อกแสดง "บล็อกนี้ต้องมีสคริปต์อย่างน้อย 1 อันที่เปิดใช้งานและไม่ว่าง" — ยังบันทึกไม่ได้</li><li>ตลอดเคสไม่มีสคริปต์ใหม่โผล่ในคลัง (ไม่เห็นข้อความ "บันทึกสคริปต์แล้ว")</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · Story 2.7 · FR69 · FR29d · TAKRA-1220 (D2 สินค้าบังคับ) · TAKRA-290</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass sel" data-uid="tc-13179" data-st="pass">PASS</span>
+    <span class="opt pass" data-uid="tc-13179" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13179" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13179" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13179" data-st="block">BLOCKED</span>
@@ -3779,15 +3708,15 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 </div></td></tr>
 
-<tr class="trow open" data-feat="rg2" data-level="ui" data-prio="P1" data-kind="happy" data-ui="yes" onclick="tg(this)">
+<tr class="trow" data-feat="rg2" data-level="ui" data-prio="P1" data-kind="happy" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-SL.11</td>
   <td class="ctitle">จัดการ Content ในบล็อกเอง — เพิ่มจนเต็ม ปิด/เปิดใช้ และลบ <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13180"><span class="stb fail">FAIL</span></td>
+  <td class="status" data-uid="tc-13180"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-13180"></td>
 </tr>
-<tr class="detail show"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">จัดการ Content ในบล็อกเอง — เพิ่มจนเต็ม ปิด/เปิดใช้ และลบ</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · ขั้นที่ 2 คลังของ Workspace — Avatar/Voice/สินค้า/คำเสี่ยง/สคริปต์ · Epic 2</div>
   <div class="sec"><h4>Precondition</h4><ul><li>ล็อกอินเป็น Owner</li><li>มีสคริปต์ฉบับร่างที่บล็อกแรกมี Content เพียง 1 อัน</li></ul></div>
@@ -3795,11 +3724,11 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังสคริปต์" ในแถบด้านซ้าย กดเมนูตัวเลือก (⋯) ของสคริปต์ตาม Precondition เลือก "แก้ไข" แล้วที่ขั้น "เขียนเนื้อหา" ดูบล็อกแรก (กดลูกศรเพื่อขยายถ้ายังย่ออยู่)</li><li>ในบล็อกแรกกดปุ่ม "พิมพ์เอง" ในช่องเพิ่ม Content ซ้ำจนครบ 5 อัน แล้วพิมพ์บทพูดให้ทุก Content</li><li>กดวงกลมหน้า Content 2 เพื่อปิดใช้ แล้วกดไอคอนถังขยะของ Content 5 เพื่อลบ</li><li>กด "บันทึกการแก้ไข" จากนั้นเปิด "แก้ไข" สคริปต์เดิมอีกครั้ง แล้วดูจำนวน Content และสถานะเปิด/ปิดของ Content 2</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ตอนมี Content อันเดียว ปุ่มถังขยะของ Content กดไม่ได้และมีข้อความ "ลบไม่ได้ — บล็อกต้องมีอย่างน้อย 1 สคริปต์" พร้อมคำแนะนำ "เนื้อหายิ่งน้อย ระบบยิ่งต้องพูดซ้ำถี่ขึ้น — …"</li><li>ตัวนับใต้ปุ่มเปลี่ยนตามจำนวน เช่น "มี 5 จาก 5 สคริปต์" — เมื่อครบ 5 ขึ้น "เต็มแล้ว — สูงสุด 5 ต่อบล็อก" และปุ่ม "พิมพ์เอง" กดไม่ได้</li><li>Content ที่ปิดขึ้นข้อความ "ปิดอยู่ · AI ไม่หยิบไปพูด" และหัวบล็อกแสดง "ใช้จริง 3 จาก 4 สคริปต์" หลังลบ Content 5</li><li>หลังบันทึกและเปิดใหม่ บล็อกมี 4 Content และ Content 2 ยังอยู่สถานะปิด ("ปิดอยู่ · AI ไม่หยิบไปพูด")</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 6 · FR29d (1-5 Contents ต่อ slot) · FR33e · TAKRA-290 · TAKRA-1001</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-13180" data-st="pass">PASS</span>
-    <span class="opt fail sel" data-uid="tc-13180" data-st="fail">FAIL</span>
+    <span class="opt fail" data-uid="tc-13180" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13180" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13180" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-13180" data-st="skip">SKIP</span>
@@ -3811,15 +3740,15 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 </div></td></tr>
 
-<tr class="trow open" data-feat="rg2" data-level="ui" data-prio="P1" data-kind="happy" data-ui="yes" onclick="tg(this)">
+<tr class="trow" data-feat="rg2" data-level="ui" data-prio="P1" data-kind="happy" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-SL.12</td>
   <td class="ctitle">จัดการบล็อกเอง — เพิ่มบล็อก ตั้งชื่อ/ประเภท ลดจำนวน Content และลบบล็อก <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13181"><span class="stb pass">PASS</span></td>
+  <td class="status" data-uid="tc-13181"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-13181"></td>
 </tr>
-<tr class="detail show"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">จัดการบล็อกเอง — เพิ่มบล็อก ตั้งชื่อ/ประเภท ลดจำนวน Content และลบบล็อก</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · ขั้นที่ 2 คลังของ Workspace — Avatar/Voice/สินค้า/คำเสี่ยง/สคริปต์ · Epic 2</div>
   <div class="sec"><h4>Precondition</h4><ul><li>ล็อกอินเป็น Owner</li><li>มีสคริปต์ฉบับร่างที่มี 1 บล็อก</li></ul></div>
@@ -3827,10 +3756,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังสคริปต์" ในแถบด้านซ้าย กดเมนูตัวเลือก (⋯) ของสคริปต์ตาม Precondition เลือก "แก้ไข" แล้วที่ขั้น "เขียนเนื้อหา" ตรงช่อง "เพิ่มบล็อกใหม่" กด "พิมพ์เอง"</li><li>ในบล็อกใหม่ แก้ชื่อบล็อกเป็น QA บล็อกถาม-ตอบ เลือก "ประเภท:" เป็น "ถาม-ตอบ" ตั้ง "จำนวนสคริปต์:" เป็น 3 สคริปต์ แล้วพิมพ์บทพูดให้ครบทั้ง 3 Content</li><li>เปลี่ยน "จำนวนสคริปต์:" เป็น 1 สคริปต์ อ่านกล่องยืนยัน กด "ยกเลิก" แล้วทำซ้ำและกด "ลบและลดจำนวน"</li><li>กด "บันทึกการแก้ไข" แล้วเปิด "แก้ไข" สคริปต์เดิมอีกครั้ง ตรวจชื่อ/ประเภท/จำนวน Content ของบล็อกที่เพิ่ม</li><li>กดไอคอนถังขยะ ("ลบบล็อก") ที่หัวบล็อกที่เพิ่มใหม่ กด "บันทึกการแก้ไข" แล้วสังเกตแถบสรุป "บล็อกเนื้อหา · …" เมื่อเปิดแก้ไขอีกครั้ง</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>กด "พิมพ์เอง" แล้วมีบล็อกใหม่ต่อท้าย และแถบสรุปเปลี่ยนเป็น "บล็อกเนื้อหา · 2 บล็อก · ~X วินาที"</li><li>ลดจำนวนจาก 3 เหลือ 1 ขึ้นกล่องยืนยัน "ลดจำนวนสคริปต์จาก 3 เหลือ 1?" พร้อม "จะลบ 2 สคริปต์ โดย 2 สคริปต์มีข้อความแล้ว — ลบแล้วกู้คืนไม่ได้" — กด "ยกเลิก" แล้ว Content ยังครบ 3 / กด "ลบและลดจำนวน" แล้วเหลือ 1</li><li>หลังบันทึกและเปิดใหม่ บล็อกที่เพิ่มยังมีชื่อ QA บล็อกถาม-ตอบ ประเภท "ถาม-ตอบ" และมี 1 Content</li><li>ปุ่ม "ลบบล็อก" แสดงเฉพาะเมื่อมีมากกว่า 1 บล็อก — ลบแล้วบันทึก แถบสรุปกลับเป็น "บล็อกเนื้อหา · 1 บล็อก · ~X วินาที"</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · Story 2.7 · FR69 · FR29 (ประเภท 8 แบบ) · FR29d · TAKRA-290 (ยืนยันก่อนลดจำนวน)</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass sel" data-uid="tc-13181" data-st="pass">PASS</span>
+    <span class="opt pass" data-uid="tc-13181" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13181" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13181" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13181" data-st="block">BLOCKED</span>
@@ -3843,15 +3772,15 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 </div></td></tr>
 
-<tr class="trow open" data-feat="rg2" data-level="ui" data-prio="P1" data-kind="data" data-ui="yes" onclick="tg(this)">
+<tr class="trow" data-feat="rg2" data-level="ui" data-prio="P1" data-kind="data" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-SL.13</td>
   <td class="ctitle">ร่างที่ยังไม่บันทึกถูกกู้กลับหลังรีเฟรช และกดยกเลิกแล้วร่างถูกทิ้ง <span class="kd kd-data">Data</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13182"><span class="stb pass">PASS</span></td>
+  <td class="status" data-uid="tc-13182"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-13182"></td>
 </tr>
-<tr class="detail show"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">ร่างที่ยังไม่บันทึกถูกกู้กลับหลังรีเฟรช และกดยกเลิกแล้วร่างถูกทิ้ง</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Data</b> <span class="hint">(empty · null · duplicate · existing · non-existing)</span> · ขั้นที่ 2 คลังของ Workspace — Avatar/Voice/สินค้า/คำเสี่ยง/สคริปต์ · Epic 2</div>
   <div class="sec"><h4>Precondition</h4><ul><li>ล็อกอินเป็น Owner</li><li>มีสินค้าในคลังอย่างน้อย 1 รายการ</li></ul></div>
@@ -3859,10 +3788,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังสคริปต์" ในแถบด้านซ้าย กดปุ่ม "สร้างสคริปต์" กรอก "ชื่อสคริปต์" เลือก "สินค้าที่เกี่ยวข้อง" กด "ถัดไป" → "ข้าม" แล้วที่ขั้น "เขียนเนื้อหา" เลือก "เขียนเอง" และพิมพ์บทพูดลงช่อง Content 1 — ดูแถบด้านล่าง</li><li>กดรีเฟรชหน้าเบราว์เซอร์ (แท็บเดิม) แล้วอ่านข้อความแจ้งผลและดูช่องที่กรอกไว้</li><li>กด "ยกเลิก" ที่แถบด้านล่าง แล้วดูรายการในคลังที่แท็บ "ร่าง"</li><li>กดปุ่ม "สร้างสคริปต์" อีกครั้ง แล้วสังเกตฟอร์ม</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ระหว่างกรอก แถบด้านล่างแสดง "· ยังไม่ได้บันทึก"</li><li>หลังรีเฟรช เห็นข้อความ "กู้ร่างที่ยังไม่ได้บันทึกกลับมาแล้ว" พร้อม "นี่คือสิ่งที่กรอกไว้ก่อนหน้า — ตรวจทานแล้วกด “บันทึก” เพื่อเก็บเข้าคลัง" และชื่อสคริปต์ สินค้า และบทพูดที่พิมพ์ไว้กลับมาครบ</li><li>กด "ยกเลิก" แล้วกลับไปหน้าคลัง และไม่มีสคริปต์ QA — กู้ร่าง ในคลัง</li><li>เปิด "สร้างสคริปต์" ใหม่แล้วฟอร์มว่าง ไม่มีข้อความกู้ร่างขึ้นอีก</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · Story 2.7 · FR69 · TAKRA-859 §4.5 · TAKRA-951</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass sel" data-uid="tc-13182" data-st="pass">PASS</span>
+    <span class="opt pass" data-uid="tc-13182" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13182" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13182" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13182" data-st="block">BLOCKED</span>
@@ -3875,15 +3804,15 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 </div></td></tr>
 
-<tr class="trow open" data-feat="rg2" data-level="ui" data-prio="P1" data-kind="validation" data-ui="yes" onclick="tg(this)">
+<tr class="trow" data-feat="rg2" data-level="ui" data-prio="P1" data-kind="validation" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-SL.14</td>
   <td class="ctitle">แทรกเสียงกระดิ่งในสคริปต์ด้วยปุ่มกระดิ่ง ฟังตัวอย่างได้ และบันทึก Content ที่มีแต่กระดิ่งหรือแท็กผิดไม่ได้ <span class="kd kd-val">Validation</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13212"><span class="stb pass">PASS</span></td>
+  <td class="status" data-uid="tc-13212"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-13212"></td>
 </tr>
-<tr class="detail show"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">แทรกเสียงกระดิ่งในสคริปต์ด้วยปุ่มกระดิ่ง ฟังตัวอย่างได้ และบันทึก Content ที่มีแต่กระดิ่งหรือแท็กผิดไม่ได้</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Validation</b> <span class="hint">(format · required · character · length)</span> · ขั้นที่ 2 คลังของ Workspace — Avatar/Voice/สินค้า/คำเสี่ยง/สคริปต์ · Epic 2</div>
   <div class="sec"><h4>Precondition</h4><ul><li>มีสินค้าในคลังอย่างน้อย 1 รายการ</li></ul></div>
@@ -3891,10 +3820,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังสคริปต์" กดปุ่ม "สร้างสคริปต์" — ที่ขั้น "เลือกสินค้า" กรอก "ชื่อสคริปต์" เลือกสินค้า แล้วกด "ถัดไป" · ที่ขั้น "กลุ่มเป้าหมาย" กด "ข้าม" แล้วที่ขั้น "เขียนเนื้อหา" เลือก "เขียนเอง" และเลือก "ประเภท:" ของบล็อก</li><li>พิมพ์ "วันนี้มีของดีมาฝากค่ะ " ลงใน Content แรก วางเคอร์เซอร์ท้ายข้อความ แล้วกดไอคอนกระดิ่งของ Content นั้น อ่านรายการเสียงที่ขึ้น และกดปุ่มฟัง (▶) ข้าง "เสียงที่ 1"</li><li>กด "เสียงที่ 1" แล้วพิมพ์ต่อ " รีบกดตะกร้าเลยนะคะ" จากนั้นเพิ่ม Content ที่ 2 ในบล็อกเดียวกันแล้วใส่แค่ {{bell}} อย่างเดียว และกด "ถัดไป"/"บันทึก"</li><li>แก้ Content ที่ 2 เป็น "ลดราคาแล้วค่ะ {{bel}}" แล้วกดบันทึกอีกครั้ง จากนั้นแก้ให้เป็น "ลดราคาแล้วค่ะ {{bell2}}" แล้วกดบันทึก และสังเกตผล</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ไอคอนกระดิ่งมีคำอธิบาย "เลือกเสียงกระดิ่งแทรกตรงเคอร์เซอร์ — ดังเฉพาะไลฟ์ที่ส่งตรงเข้า TikTok" และรายการ "เสียงที่ 1" … "เสียงที่ 10" แต่ละรายการแสดงแท็กของตัวเอง (เสียงที่ 1 = {{bell}} · เสียงที่ 2 = {{bell2}} …) พร้อมปุ่มฟัง</li><li>กดฟังแล้วได้ยินเสียงกระดิ่งตัวอย่าง · กดเลือก "เสียงที่ 1" แล้ว {{bell}} ถูกแทรกตรงตำแหน่งเคอร์เซอร์ใน Content</li><li>Content ที่มีแต่ {{bell}} บันทึกไม่ได้ และบล็อกขึ้น "สคริปต์ที่มี {{bell}} ต้องมีคำพูดด้วย — มีแต่กระดิ่งอย่างเดียวไม่ได้"</li><li>แท็กสะกดผิดบันทึกไม่ได้ และขึ้น "แท็กไม่ถูกต้อง: {{bel}} — ใช้ได้เฉพาะ {{bell}}, {{bell2}}, … {{bell10}}" · แก้เป็น {{bell2}} แล้วบันทึกได้ เห็น "บันทึกสคริปต์แล้ว"</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · Story 2.7 · FR69 · TAKRA-1215 (แท็ก {{bell}} ในสคริปต์)</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass sel" data-uid="tc-13212" data-st="pass">PASS</span>
+    <span class="opt pass" data-uid="tc-13212" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13212" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13212" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13212" data-st="block">BLOCKED</span>
@@ -3907,25 +3836,25 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 </div></td></tr>
 
-<tr class="trow open" data-feat="rg2" data-level="ui" data-prio="P1" data-kind="negative" data-ui="yes" onclick="tg(this)">
+<tr class="trow" data-feat="rg2" data-level="ui" data-prio="P1" data-kind="negative" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-SL.15</td>
   <td class="ctitle">หน้าแก้ไขสคริปต์ไม่มีปุ่ม "ใส่แท็กเสียง" แล้ว — แท็กเสียงถูกใส่ให้อัตโนมัติตอนเริ่มไลฟ์ <span class="kd kd-neg">Negative</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13213"><span class="stb pass">PASS</span></td>
+  <td class="status" data-uid="tc-13213"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-13213"></td>
 </tr>
-<tr class="detail show"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">หน้าแก้ไขสคริปต์ไม่มีปุ่ม "ใส่แท็กเสียง" แล้ว — แท็กเสียงถูกใส่ให้อัตโนมัติตอนเริ่มไลฟ์</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Negative</b> <span class="hint">(ข้อมูลผิด / action ผิด)</span> · ขั้นที่ 2 คลังของ Workspace — Avatar/Voice/สินค้า/คำเสี่ยง/สคริปต์ · Epic 2</div>
   <div class="sec"><h4>Precondition</h4><ul><li>บัญชี Owner</li><li>มีสคริปต์ในคลังที่มีเนื้อหาแล้วอย่างน้อย 1 ตัว</li></ul></div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังสคริปต์" กดเมนูตัวเลือก (⋯) ของสคริปต์ที่มีเนื้อหา แล้วเลือก "แก้ไข"</li><li>ไปที่ขั้น "เขียนเนื้อหา" แล้วไล่ดูแถบเครื่องมือเหนือรายการบล็อกและหัวของแต่ละบล็อก</li><li>กดปุ่ม "สร้างสคริปต์" ที่หน้าคลังสคริปต์เพื่อเปิดสคริปต์ใหม่ ไปถึงขั้น "เขียนเนื้อหา" แล้วสังเกตจุดเดียวกัน</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ทั้งหน้าแก้ไขและหน้าสร้างสคริปต์ ไม่มีปุ่ม "ใส่แท็กเสียง" และไม่มีข้อความเกี่ยวกับการใส่แท็กเสียง (เช่น "กำลังใส่แท็กเสียง…")</li><li>หัวบล็อกไม่มีสถานะแท็กเสียง ("อยู่ในคิว" / "กำลังใส่แท็ก" / "เสร็จแล้ว")</li><li>เครื่องมืออื่นในขั้น "เขียนเนื้อหา" ยังใช้งานได้ตามปกติ</li></ul><div class="hint" style="margin-top:6px">ที่มา: TAKRA-1380 (ลบปุ่ม "ใส่แท็กเสียง" ออกจากหน้าสคริปต์ — AI ใส่แท็กให้ตอนยืนยัน/เริ่มไลฟ์แทน)</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass sel" data-uid="tc-13213" data-st="pass">PASS</span>
+    <span class="opt pass" data-uid="tc-13213" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13213" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13213" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13213" data-st="block">BLOCKED</span>
@@ -3939,25 +3868,25 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 </div></td></tr>
 
 <tr class="featrow" data-featkey="script-lifecycle"><td colspan="7">📁 script-lifecycle <span class="rp"><span class="lv lvl-ui">🌐 9</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="script-lifecycle"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
-<tr class="trow open" data-feat="rg2" data-level="ui" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
+<tr class="trow" data-feat="rg2" data-level="ui" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-SC.1</td>
   <td class="ctitle">ส่งสคริปต์ขออนุมัติแล้วสถานะเปลี่ยนเป็นรอรีวิวและเข้าคิว <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
-  <td class="status" data-uid="tc-13062"><span class="stb pass">PASS</span></td>
+  <td class="status" data-uid="tc-13062"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-13062"></td>
 </tr>
-<tr class="detail show"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">ส่งสคริปต์ขออนุมัติแล้วสถานะเปลี่ยนเป็นรอรีวิวและเข้าคิว</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · ขั้นที่ 2 คลังของ Workspace — Avatar/Voice/สินค้า/คำเสี่ยง/สคริปต์ · Epic 2</div>
   <div class="sec"><h4>Precondition</h4><ul><li>มีสคริปต์สถานะฉบับร่างที่ไม่มีคำเสี่ยง</li></ul></div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังสคริปต์" ที่แท็บ "ร่าง" กดเมนูตัวเลือก (⋯) ของสคริปต์ฉบับร่างที่ไม่มีคำเสี่ยง แล้วเลือก "ส่งขออนุมัติ"</li><li>อ่านข้อความแจ้งผล</li><li>ดูสถานะของสคริปต์ ส่วน "รอการอนุมัติ" ด้านบน และตัวเลขการ์ดสรุป "รอรีวิว"</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>เห็นข้อความ "ส่งขออนุมัติแล้ว" พร้อม ""ชื่อสคริปต์" เข้าคิวรอรีวิว"</li><li>สถานะของสคริปต์เปลี่ยนเป็น "รอรีวิว" และสคริปต์ปรากฏในส่วน "รอการอนุมัติ"</li><li>ตัวเลขการ์ดสรุป "รอรีวิว" เพิ่มขึ้น 1</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · Story 2.8 · FR70</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass sel" data-uid="tc-13062" data-st="pass">PASS</span>
+    <span class="opt pass" data-uid="tc-13062" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13062" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13062" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13062" data-st="block">BLOCKED</span>
@@ -3970,25 +3899,25 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 </div></td></tr>
 
-<tr class="trow open" data-feat="rg2" data-level="ui" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
+<tr class="trow" data-feat="rg2" data-level="ui" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-SC.2</td>
   <td class="ctitle">ผู้มีสิทธิ์อนุมัติกดอนุมัติแล้วสคริปต์พร้อมใช้งานในไลฟ์ <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
-  <td class="status" data-uid="tc-13063"><span class="stb pass">PASS</span></td>
+  <td class="status" data-uid="tc-13063"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-13063"></td>
 </tr>
-<tr class="detail show"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">ผู้มีสิทธิ์อนุมัติกดอนุมัติแล้วสคริปต์พร้อมใช้งานในไลฟ์</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · ขั้นที่ 2 คลังของ Workspace — Avatar/Voice/สินค้า/คำเสี่ยง/สคริปต์ · Epic 2</div>
   <div class="sec"><h4>Precondition</h4><ul><li>มีสคริปต์สถานะรอรีวิวที่ผ่านการตรวจคำเสี่ยง</li><li>ล็อกอินด้วยผู้ที่มีสิทธิ์อนุมัติ</li></ul></div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชีผู้ที่มีสิทธิ์อนุมัติ (Owner)</li><li>ไปที่เมนู "คลังสคริปต์" ในส่วน "รอการอนุมัติ" เปิดแผงรายละเอียดของสคริปต์ที่รอรีวิว</li><li>กดปุ่ม "อนุมัติ" อ่านข้อความในกล่องยืนยัน "อนุมัติสคริปต์นี้?" แล้วกดยืนยัน "อนุมัติ"</li><li>ดูข้อความแจ้งผล แล้วที่กลุ่ม "ใช้งานในระบบ" เปิดแผงรายละเอียดของสคริปต์นั้นอีกครั้ง ดูช่อง "ผู้อนุมัติ" และ "อนุมัติเมื่อ"</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>กล่องยืนยันระบุ "จะเปลี่ยนเป็นสถานะ "อนุมัติแล้ว" พร้อมให้หยิบไปใช้ในไลฟ์"</li><li>หลังยืนยัน เห็นข้อความ "อนุมัติแล้ว" พร้อม ""ชื่อสคริปต์" พร้อมใช้งานในไลฟ์"</li><li>แผงแสดงชื่อผู้อนุมัติในช่อง "ผู้อนุมัติ" (เป็นชื่อคน ไม่ใช่รหัสผู้ใช้ — ถ้าระบุชื่อไม่ได้แสดง "—") และเวลา "อนุมัติเมื่อ"</li><li>สคริปต์ย้ายไปกลุ่ม "ใช้งานในระบบ"</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · Story 2.8 · FR32</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass sel" data-uid="tc-13063" data-st="pass">PASS</span>
+    <span class="opt pass" data-uid="tc-13063" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13063" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13063" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13063" data-st="block">BLOCKED</span>
@@ -4001,25 +3930,25 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 </div></td></tr>
 
-<tr class="trow open" data-feat="rg2" data-level="ui" data-prio="P1" data-kind="happy" data-ui="yes" onclick="tg(this)">
+<tr class="trow" data-feat="rg2" data-level="ui" data-prio="P1" data-kind="happy" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-SC.3</td>
   <td class="ctitle">ตีกลับสคริปต์แล้วกลับเป็นฉบับร่างให้ผู้เขียนแก้ <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13064"><span class="stb pass">PASS</span></td>
+  <td class="status" data-uid="tc-13064"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-13064"></td>
 </tr>
-<tr class="detail show"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">ตีกลับสคริปต์แล้วกลับเป็นฉบับร่างให้ผู้เขียนแก้</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · ขั้นที่ 2 คลังของ Workspace — Avatar/Voice/สินค้า/คำเสี่ยง/สคริปต์ · Epic 2</div>
   <div class="sec"><h4>Precondition</h4><ul><li>มีสคริปต์สถานะรอรีวิว</li><li>ล็อกอินด้วยผู้ที่มีสิทธิ์อนุมัติ</li></ul></div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชีผู้ที่มีสิทธิ์อนุมัติ (Owner)</li><li>ไปที่เมนู "คลังสคริปต์" ในส่วน "รอการอนุมัติ" หาแถวของสคริปต์ที่ "รอรีวิว"</li><li>กดปุ่ม "ตีกลับ" ที่แถวนั้น อ่านข้อความในกล่องยืนยัน "ตีกลับสคริปต์นี้?" แล้วกดยืนยัน "ตีกลับ"</li><li>ดูสถานะของสคริปต์และส่วน "รอการอนุมัติ"</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>กล่องยืนยันระบุ "จะถูกส่งกลับเป็นฉบับร่างให้ผู้เขียนแก้ไขใหม่"</li><li>หลังยืนยัน เห็นข้อความ "ตีกลับแล้ว" พร้อม "ส่ง "ชื่อสคริปต์" กลับให้ผู้เขียนแก้ไข"</li><li>สถานะเปลี่ยนเป็นฉบับร่าง และหายจากคิว "รอการอนุมัติ" — ยังแก้ไขต่อและส่งขออนุมัติใหม่ได้</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · Story 2.8 · FR32</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass sel" data-uid="tc-13064" data-st="pass">PASS</span>
+    <span class="opt pass" data-uid="tc-13064" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13064" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13064" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13064" data-st="block">BLOCKED</span>
@@ -4032,25 +3961,25 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 </div></td></tr>
 
-<tr class="trow open" data-feat="rg2" data-level="ui" data-prio="P1" data-kind="happy" data-ui="yes" onclick="tg(this)">
+<tr class="trow" data-feat="rg2" data-level="ui" data-prio="P1" data-kind="happy" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-SC.4</td>
   <td class="ctitle">เก็บสคริปต์ที่อนุมัติแล้วเข้าคลัง แล้วย้ายไปแท็บเก็บถาวร <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13183"><span class="stb pass">PASS</span></td>
+  <td class="status" data-uid="tc-13183"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-13183"></td>
 </tr>
-<tr class="detail show"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">เก็บสคริปต์ที่อนุมัติแล้วเข้าคลัง แล้วย้ายไปแท็บเก็บถาวร</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · ขั้นที่ 2 คลังของ Workspace — Avatar/Voice/สินค้า/คำเสี่ยง/สคริปต์ · Epic 2</div>
   <div class="sec"><h4>Precondition</h4><ul><li>ล็อกอินเป็น Owner</li><li>มีสคริปต์สถานะ "อนุมัติแล้ว" ที่ไม่ได้ใช้ในไลฟ์ที่ยังไม่จบ</li></ul></div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังสคริปต์" ในแถบด้านซ้าย เปิดเมนูตัวเลือก (⋯) ของสคริปต์ฉบับร่างหนึ่งรายการ และของสคริปต์ในกลุ่ม "ใช้งานในระบบ" เปรียบเทียบรายการเมนู</li><li>ที่สคริปต์ในกลุ่ม "ใช้งานในระบบ" เลือก "เก็บเข้าคลัง" แล้วอ่านข้อความแจ้งผล</li><li>ไปที่แท็บ "เก็บถาวร" กดเมนูตัวเลือก (⋯) ของสคริปต์นั้น แล้วเปิด "ดูรายละเอียด" ดูปุ่มที่ท้ายแผง</li><li>ดูตัวเลขการ์ด "ใช้งานในระบบ" และตัวเลขบนแท็บ "เก็บถาวร"</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>เมนู "เก็บเข้าคลัง" มีเฉพาะสคริปต์ที่อนุมัติแล้ว — เมนูของสคริปต์ฉบับร่าง/รอรีวิวไม่มีตัวเลือกนี้</li><li>หลังกด เห็นข้อความ "เก็บเข้าคลังแล้ว" พร้อม "“ชื่อสคริปต์” ถูกย้ายไปเก็บถาวร"</li><li>สคริปต์หายจากกลุ่ม "ใช้งานในระบบ" และไปอยู่แท็บ "เก็บถาวร" (คำกำกับ "ปิดการใช้งานแล้ว — เก็บไว้อ้างอิง") แผงรายละเอียดแสดงสถานะ "เก็บถาวร"</li><li>สคริปต์ที่เก็บถาวรไม่มีเมนู "แก้ไข" และแผงรายละเอียดมีแค่ "ปิด" กับ "กู้คืน" — เมนู (⋯) มี "กู้คืนเป็นฉบับร่าง"</li><li>ตัวเลข "ใช้งานในระบบ" ลดลง 1 และตัวเลขแท็บ "เก็บถาวร" เพิ่มขึ้น 1</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · Story 2.8 · FR32 (Owner manual archive) · FR70</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass sel" data-uid="tc-13183" data-st="pass">PASS</span>
+    <span class="opt pass" data-uid="tc-13183" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13183" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13183" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13183" data-st="block">BLOCKED</span>
@@ -4063,26 +3992,26 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 </div></td></tr>
 
-<tr class="trow open" data-feat="rg2" data-level="ui" data-prio="P1" data-kind="happy" data-ui="yes" onclick="tg(this)">
+<tr class="trow" data-feat="rg2" data-level="ui" data-prio="P1" data-kind="happy" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-SC.5</td>
   <td class="ctitle">กู้คืนสคริปต์จากเก็บถาวรเป็นฉบับร่าง และต้องขออนุมัติใหม่ <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13184"><span class="stb fail">FAIL</span></td>
+  <td class="status" data-uid="tc-13184"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-13184"></td>
 </tr>
-<tr class="detail show"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">กู้คืนสคริปต์จากเก็บถาวรเป็นฉบับร่าง และต้องขออนุมัติใหม่</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · ขั้นที่ 2 คลังของ Workspace — Avatar/Voice/สินค้า/คำเสี่ยง/สคริปต์ · Epic 2</div>
   <div class="sec"><h4>Precondition</h4><ul><li>ล็อกอินเป็น Owner</li><li>มีสคริปต์ในแท็บ "เก็บถาวร" ที่เคยอนุมัติแล้ว (เช่น จาก TC-SC.4)</li></ul></div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังสคริปต์" ในแถบด้านซ้าย ไปแท็บ "เก็บถาวร" กดเมนูตัวเลือก (⋯) ของสคริปต์ตาม Precondition แล้วเลือก "กู้คืนเป็นฉบับร่าง"</li><li>อ่านข้อความแจ้งผล แล้วไปที่แท็บ "ร่าง" เปิดแผงรายละเอียดของสคริปต์นั้น</li><li>ดูสถานะ ช่อง "ผู้อนุมัติ" และ "อนุมัติเมื่อ" รวมทั้งปุ่มที่ท้ายแผง</li><li>กด "ส่งขออนุมัติ" ในแผง แล้วดูส่วน "รอการอนุมัติ" ที่แท็บ "ใช้งาน"</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>เห็นข้อความ "กู้คืนแล้ว" พร้อม "“ชื่อสคริปต์” กลับมาเป็นฉบับร่าง"</li><li>สคริปต์หายจากแท็บ "เก็บถาวร" และอยู่แท็บ "ร่าง" สถานะ "ฉบับร่าง"</li><li>ข้อมูลการอนุมัติเดิมถูกล้าง: "ผู้อนุมัติ" แสดง "(ยังไม่อนุมัติ)" และ "อนุมัติเมื่อ" แสดง "—" — แผงมีปุ่ม "ส่งขออนุมัติ" และ "แก้ไข"</li><li>ส่งขออนุมัติแล้วสคริปต์เข้าส่วน "รอการอนุมัติ" (ต้องผ่านการอนุมัติใหม่ก่อนนำไปใช้ในไลฟ์)</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · Story 2.8 · FR32 · FR70 · TAKRA-337</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-13184" data-st="pass">PASS</span>
-    <span class="opt fail sel" data-uid="tc-13184" data-st="fail">FAIL</span>
+    <span class="opt fail" data-uid="tc-13184" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13184" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13184" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-13184" data-st="skip">SKIP</span>
@@ -4094,25 +4023,25 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 </div></td></tr>
 
-<tr class="trow open" data-feat="rg2" data-level="ui" data-prio="P0" data-kind="data" data-ui="yes" onclick="tg(this)">
+<tr class="trow" data-feat="rg2" data-level="ui" data-prio="P0" data-kind="data" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-SC.6</td>
   <td class="ctitle">แก้เนื้อหาสคริปต์ที่อนุมัติแล้วทำให้กลับเป็นฉบับร่าง ส่วนแก้แค่ชื่อไม่กระทบการอนุมัติ <span class="kd kd-data">Data</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
-  <td class="status" data-uid="tc-13185"><span class="stb pass">PASS</span></td>
+  <td class="status" data-uid="tc-13185"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-13185"></td>
 </tr>
-<tr class="detail show"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">แก้เนื้อหาสคริปต์ที่อนุมัติแล้วทำให้กลับเป็นฉบับร่าง ส่วนแก้แค่ชื่อไม่กระทบการอนุมัติ</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Data</b> <span class="hint">(empty · null · duplicate · existing · non-existing)</span> · ขั้นที่ 2 คลังของ Workspace — Avatar/Voice/สินค้า/คำเสี่ยง/สคริปต์ · Epic 2</div>
   <div class="sec"><h4>Precondition</h4><ul><li>ล็อกอินเป็น Owner</li><li>มีสคริปต์สถานะ "อนุมัติแล้ว" ในกลุ่ม "ใช้งานในระบบ"</li></ul></div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังสคริปต์" ในแถบด้านซ้าย กดเมนูตัวเลือก (⋯) ของสคริปต์ที่อนุมัติแล้ว เลือก "แก้ไข" ดูป้ายสถานะที่แถบด้านล่าง แล้วแก้เฉพาะ "ชื่อสคริปต์" และกด "บันทึกการแก้ไข"</li><li>ดูว่าสคริปต์ยังอยู่กลุ่ม "ใช้งานในระบบ" หรือไม่ แล้วเปิดแผงรายละเอียดดู "ผู้อนุมัติ"</li><li>กดเมนู (⋯) ของสคริปต์เดิม เลือก "แก้ไข" อีกครั้ง แก้ข้อความใน Content 1 ของบล็อกแรก แล้วกด "บันทึกการแก้ไข"</li><li>ไปที่แท็บ "ร่าง" เปิดแผงรายละเอียดของสคริปต์นั้น ดูสถานะ "ผู้อนุมัติ" "อนุมัติเมื่อ" และตัวเลขการ์ด "ใช้งานในระบบ"</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>หน้าแก้ไขแสดงป้ายสถานะ "อนุมัติแล้ว" ที่แถบด้านล่าง</li><li>แก้แค่ชื่อแล้วบันทึก เห็น "บันทึกการแก้ไขแล้ว" — สคริปต์ยังอยู่กลุ่ม "ใช้งานในระบบ" สถานะ "อนุมัติแล้ว" และชื่อผู้อนุมัติเดิมยังอยู่</li><li>แก้ข้อความ Content แล้วบันทึก สคริปต์ย้ายไปแท็บ "ร่าง" สถานะ "ฉบับร่าง" — "ผู้อนุมัติ" แสดง "(ยังไม่อนุมัติ)" และ "อนุมัติเมื่อ" แสดง "—"</li><li>ตัวเลขการ์ด "ใช้งานในระบบ" ลดลง 1 — ต้องส่งขออนุมัติและอนุมัติใหม่ก่อนนำไปใช้ในไลฟ์</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · Story 2.8 · FR32 (contentEdit) · FR70</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass sel" data-uid="tc-13185" data-st="pass">PASS</span>
+    <span class="opt pass" data-uid="tc-13185" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13185" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13185" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13185" data-st="block">BLOCKED</span>
@@ -4125,28 +4054,28 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 </div></td></tr>
 
-<tr class="trow open" data-feat="rg2" data-level="ui" data-prio="P0" data-kind="permission" data-ui="yes" onclick="tg(this)">
+<tr class="trow" data-feat="rg2" data-level="ui" data-prio="P0" data-kind="permission" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-SC.7</td>
   <td class="ctitle">Live Operator ที่ไม่มีสิทธิ์ Script Approve ส่งขออนุมัติได้ แต่อนุมัติหรือตีกลับไม่ได้ <span class="kd kd-perm">Permission</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
-  <td class="status" data-uid="tc-13186"><span class="stb block">BLOCKED</span></td>
+  <td class="status" data-uid="tc-13186"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-13186"></td>
 </tr>
-<tr class="detail show"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">Live Operator ที่ไม่มีสิทธิ์ Script Approve ส่งขออนุมัติได้ แต่อนุมัติหรือตีกลับไม่ได้</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Permission</b> <span class="hint">(role/สิทธิ์ ไหนทำได้ / ทำไม่ได้)</span> · ขั้นที่ 2 คลังของ Workspace — Avatar/Voice/สินค้า/คำเสี่ยง/สคริปต์ · Epic 2</div>
   <div class="sec"><h4>Precondition</h4><ul><li>มีบัญชี Live Operator ที่ตอบรับคำเชิญแล้วและยังไม่มีสิทธิ์ Script Approve (ตรวจที่เมนู "ทีมงาน")</li><li>มีสคริปต์สถานะรอรีวิวที่ไม่มีคำเสี่ยง และมีสคริปต์ฉบับร่างที่ไม่มีคำเสี่ยง</li></ul></div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Live Operator ที่ไม่มีสิทธิ์ Script Approve</li><li>ไปที่เมนู "คลังสคริปต์" ในแถบด้านซ้าย ที่แท็บ "ร่าง" กดเมนูตัวเลือก (⋯) ของสคริปต์ฉบับร่าง แล้วเลือก "ส่งขออนุมัติ"</li><li>ที่ส่วน "รอการอนุมัติ" กดปุ่ม "อนุมัติ" ที่แถวของสคริปต์รอรีวิว แล้วกดยืนยัน "อนุมัติ" ในกล่อง "อนุมัติสคริปต์นี้?" — อ่านข้อความแจ้งผล</li><li>กดปุ่ม "ตีกลับ" ที่แถวเดิม แล้วกดยืนยัน "ตีกลับ" — อ่านข้อความแจ้งผล</li><li>ดูสถานะของสคริปต์แถวนั้นและส่วน "รอการอนุมัติ"</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>Live Operator ส่งขออนุมัติได้ — เห็น "ส่งขออนุมัติแล้ว" และสคริปต์เข้าส่วน "รอการอนุมัติ"</li><li>กดอนุมัติแล้วไม่สำเร็จ — เห็นข้อความ "อนุมัติไม่สำเร็จ"</li><li>กดตีกลับแล้วไม่สำเร็จ — เห็นข้อความ "ตีกลับไม่สำเร็จ"</li><li>สคริปต์ยังอยู่ในส่วน "รอการอนุมัติ" สถานะ "รอรีวิว" ไม่เปลี่ยน และไม่มีชื่อผู้อนุมัติ</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · Story 2.8 (negative test: user ไม่มีสิทธิ์ approve ไม่ได้) · FR3a · FR32 · FR70</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-13186" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13186" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13186" data-st="hold">HOLD</span>
-    <span class="opt block sel" data-uid="tc-13186" data-st="block">BLOCKED</span>
+    <span class="opt block" data-uid="tc-13186" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-13186" data-st="skip">SKIP</span>
   </div></div>
   <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
@@ -4156,15 +4085,15 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 </div></td></tr>
 
-<tr class="trow open" data-feat="rg2" data-level="ui" data-prio="P1" data-kind="validation" data-ui="yes" onclick="tg(this)">
+<tr class="trow" data-feat="rg2" data-level="ui" data-prio="P1" data-kind="validation" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-SC.8</td>
   <td class="ctitle">สคริปต์ที่มีคำต้องห้ามส่งขออนุมัติจากแผงรายละเอียดไม่ได้ และอนุมัติในคิวไม่ได้ <span class="kd kd-val">Validation</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13187"><span class="stb pass">PASS</span></td>
+  <td class="status" data-uid="tc-13187"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-13187"></td>
 </tr>
-<tr class="detail show"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">สคริปต์ที่มีคำต้องห้ามส่งขออนุมัติจากแผงรายละเอียดไม่ได้ และอนุมัติในคิวไม่ได้</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Validation</b> <span class="hint">(format · required · character · length)</span> · ขั้นที่ 2 คลังของ Workspace — Avatar/Voice/สินค้า/คำเสี่ยง/สคริปต์ · Epic 2</div>
   <div class="sec"><h4>Precondition</h4><ul><li>ล็อกอินเป็น Owner</li><li>มีคำทดสอบระดับบล็อกในเมนู "คำเสี่ยง"</li><li>มีสคริปต์ฉบับร่าง 1 รายการ และสคริปต์รอรีวิว 1 รายการ ที่มีคำทดสอบนั้นอยู่ในเนื้อหา (เช่น ส่งขออนุมัติก่อน แล้วจึงเพิ่มคำในเมนู "คำเสี่ยง")</li></ul></div>
@@ -4172,10 +4101,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังสคริปต์" ในแถบด้านซ้าย ดูการ์ด "ต้องแก้ก่อนอนุมัติ" แล้วที่ส่วน "รอการอนุมัติ" ดูแถวของสคริปต์รอรีวิวที่มีคำต้องห้าม (ป้ายใต้ชื่อ และปุ่ม "อนุมัติ")</li><li>กดชื่อสคริปต์แถวนั้นเพื่อเปิดแผงรายละเอียด อ่านกล่องแจ้งเตือนสีแดงและปุ่มท้ายแผง แล้วกด "แก้ไขสคริปต์"</li><li>กดย้อนกลับมาที่คลัง ไปแท็บ "ร่าง" เปิดแผงรายละเอียดของสคริปต์ฉบับร่างที่มีคำต้องห้าม</li><li>ดูปุ่ม "ส่งขออนุมัติ" และข้อความใต้ปุ่มท้ายแผง</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>การ์ด "ต้องแก้ก่อนอนุมัติ" นับรวมสคริปต์ที่มีคำต้องห้าม</li><li>แถวในคิวมีป้าย "คำต้องห้าม N" ข้อความ "ต้องแก้ก่อนอนุมัติ: &lt;คำที่พบ&gt;" และปุ่ม "อนุมัติ" กดไม่ได้ (ชี้แล้วขึ้น "ต้องแก้รายการที่ติดในสคริปต์ก่อนจึงจะอนุมัติได้") — ปุ่ม "ตีกลับ" ยังกดได้</li><li>แผงรายละเอียดแสดง "ต้องแก้ N รายการก่อนอนุมัติ" พร้อมคำที่พบ และ "อนุมัติไม่ได้จนกว่าจะแก้รายการข้างบนในสคริปต์" — ปุ่ม "อนุมัติ" กดไม่ได้ ส่วน "แก้ไขสคริปต์" พาไปหน้าแก้ไขสคริปต์นั้น</li><li>สคริปต์ฉบับร่างที่มีคำต้องห้าม ปุ่ม "ส่งขออนุมัติ" ในแผงกดไม่ได้ และแสดง "ส่งขออนุมัติไม่ได้จนกว่าจะแก้คำเสี่ยง — กด “แก้ไข” เพื่อไปแก้"</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · Story 2.8 (flagged block approval) · FR33 · FR70 · TAKRA-1030 F3</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass sel" data-uid="tc-13187" data-st="pass">PASS</span>
+    <span class="opt pass" data-uid="tc-13187" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13187" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13187" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13187" data-st="block">BLOCKED</span>
@@ -4188,15 +4117,15 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 </div></td></tr>
 
-<tr class="trow open" data-feat="rg2" data-level="ui" data-prio="P1" data-kind="validation" data-ui="yes" onclick="tg(this)">
+<tr class="trow" data-feat="rg2" data-level="ui" data-prio="P1" data-kind="validation" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-SC.9</td>
   <td class="ctitle">สคริปต์ที่มีลิงก์ถูกกันอนุมัติ ส่วนสำนวนที่แค่อ่านได้ว่าชวนคุยนอกไลฟ์ขึ้นเป็น "ข้อแนะนำ" และยังส่งขออนุมัติได้ <span class="kd kd-val">Validation</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13214"><span class="stb pass">PASS</span></td>
+  <td class="status" data-uid="tc-13214"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-13214"></td>
 </tr>
-<tr class="detail show"><td colspan="7"><div class="card">
+<tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">สคริปต์ที่มีลิงก์ถูกกันอนุมัติ ส่วนสำนวนที่แค่อ่านได้ว่าชวนคุยนอกไลฟ์ขึ้นเป็น "ข้อแนะนำ" และยังส่งขออนุมัติได้</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Validation</b> <span class="hint">(format · required · character · length)</span> · ขั้นที่ 2 คลังของ Workspace — Avatar/Voice/สินค้า/คำเสี่ยง/สคริปต์ · Epic 2</div>
   <div class="sec"><h4>Precondition</h4><ul><li>ล็อกอินเป็น Owner</li><li>คลังสินค้ามีสินค้าสถานะเปิดใช้อย่างน้อย 1 รายการ</li></ul></div>
@@ -4204,10 +4133,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังสคริปต์" กด "สร้างสคริปต์" → "เขียนเอง" ตั้งชื่อ "QA-ลิงก์" เลือกสินค้า แล้วที่ขั้น "เขียนเนื้อหา" พิมพ์ประโยค A ตาม Test Data อ่านข้อความในขั้น "ตรวจคำเสี่ยง" แล้วกด "บันทึก"</li><li>สร้างสคริปต์อีกใบชื่อ "QA-หลังบ้าน" ด้วยวิธีเดียวกันโดยพิมพ์ประโยค B แล้วกด "บันทึก"</li><li>ที่แท็บ "ร่าง" กดชื่อ "QA-ลิงก์" เพื่อเปิดแผงรายละเอียด อ่านกล่องแจ้งเตือนและปุ่ม "ส่งขออนุมัติ" แล้วทำซ้ำกับ "QA-หลังบ้าน"</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ขั้น "ตรวจคำเสี่ยง" (เมื่อไม่พบคำในคลังคำเสี่ยง) แสดง "ตรวจคำเสี่ยงจากคลังแล้ว — ไม่พบคำต้องห้าม" เป็นตัวหนังสือสีเทา ไม่มีเครื่องหมายถูกสีเขียว และมีบรรทัด "ยังไม่ได้ตรวจเนื้อหาที่ห้ามออกอากาศ (ลิงก์ · ชวนคุยนอกไลฟ์ · สั่งซื้อนอกไลฟ์) — ระบบตรวจให้ตอนบันทึก · …"</li><li>"QA-ลิงก์": กล่องแดง "ต้องแก้ 1 รายการก่อนอนุมัติ" มีป้าย "ลิงก์ («…»)" ข้อความ "อนุมัติไม่ได้จนกว่าจะแก้รายการข้างบนในสคริปต์" และคำแนะนำ "• เอาลิงก์และชื่อเว็บออก แล้วบอกให้ผู้ชมกดตะกร้าในไลฟ์แทน" — ปุ่ม "ส่งขออนุมัติ" กดไม่ได้</li><li>"QA-หลังบ้าน": ไม่มีกล่องแดง มีกล่องสีเหลือง "ข้อแนะนำ" ที่ขึ้น "การชวนไปคุยนอกไลฟ์ («…») — ประโยคนี้อ่านได้ว่าชวนไปคุยนอกไลฟ์ — อนุมัติได้ …" และ "ไม่บล็อกการอนุมัติ — แก้หรือไม่แก้ก็อนุมัติและออกอากาศได้" — ปุ่ม "ส่งขออนุมัติ" กดได้</li></ul><div class="hint" style="margin-top:6px">ที่มา: TAKRA-1289 (ด่านการขายจับสำนวนเปลี่ยนคำ · สำนวนแบบอ่านได้ว่าชวนออกนอกไลฟ์เป็นคำเตือน อนุมัติได้) · TAKRA-1332 (ด่านการขายรุ่นสอง) · Epic 2 · Story 2.8 · FR33</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass sel" data-uid="tc-13214" data-st="pass">PASS</span>
+    <span class="opt pass" data-uid="tc-13214" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13214" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13214" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13214" data-st="block">BLOCKED</span>
@@ -4226,7 +4155,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">ผูกสคริปต์จากคลังเข้าฉากใน Studio แล้วเล่นจากสำเนาที่แช่ไว้ <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
-  <td class="status" data-uid="tc-13065"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13065"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13065"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -4237,10 +4166,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "แพลตฟอร์มไลฟ์" กดปุ่ม "เปลี่ยนแพลตฟอร์ม" เพื่อสลับไปฝั่งไลฟ์ จากนั้นที่เมนู "แดชบอร์ด" กดปุ่ม "เริ่มไลฟ์ใหม่" เพื่อเปิด Studio</li><li>ที่แผงด้านขวา ส่วน "สคริปต์" กดปุ่ม "ผูกสคริปต์จากคลัง" — ในหน้าต่าง "ผูกสคริปต์เข้าฉาก" แท็บ "เลือกจากคลัง" ค้นหาสคริปต์ที่อนุมัติแล้ว แล้วกดผูกเข้าฉาก</li><li>ปิดหน้าต่างแล้วดูรายการสคริปต์ในฉาก (กดขยายดูรายละเอียด)</li><li>สลับกลับไปแก้เนื้อหาต้นฉบับที่เมนู "คลังสคริปต์" (ฝั่งหลังบ้าน) บันทึก แล้วกลับมาดูรายการสคริปต์ในฉากอีกครั้ง</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>สคริปต์ถูกผูกเข้าฉากและแสดงในรายการสคริปต์ของฉาก</li><li>เมื่อขยายดู สคริปต์จากคลังมีข้อความกำกับ "script จากคลังกลาง · แก้ไม่ได้ที่นี่" (ไลฟ์เล่นจากสำเนา snapshot ไม่ใช่ master)</li><li>แก้ต้นฉบับในคลังแล้ว เนื้อหาในฉากยังเป็นสำเนาเดิม ไม่เปลี่ยนตามอัตโนมัติ</li><li>แถวสคริปต์ในฉากขึ้นแถบ "ล้าสมัย (vN→vN+1)" พร้อมปุ่ม "อัปเดต snapshot" เป็นทางอัปเดต</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · Story 2.9 · FR71</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13065" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13065" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13065" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13065" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13065" data-st="block">BLOCKED</span>
@@ -9271,4 +9200,22 @@ document.querySelectorAll('.feat-owner').forEach(function(sel){var e=sel.dataset
 </script>
 
 
-</body></html>
+<div id="claude-agent-glow-border" style="position: fixed; inset: 0px; pointer-events: none; z-index: 2147483646; opacity: 1; transition: opacity 0.3s ease-in-out;"><div id="claude-agent-glow-border-inner" style="position: absolute; inset: 0px; will-change: opacity; box-shadow: rgba(217, 119, 87, 0.7) 0px 0px 15px inset, rgba(217, 119, 87, 0.5) 0px 0px 25px inset, rgba(217, 119, 87, 0.2) 0px 0px 35px inset;"></div></div><div id="claude-static-indicator-container" style="position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%); display: inline-flex; align-items: center; justify-content: center; padding: 6px 6px 6px 16px; background: rgb(250, 249, 245); border: 0.5px solid rgba(31, 30, 29, 0.3); border-radius: 14px; box-shadow: rgba(0, 0, 0, 0.15) 0px 40px 80px 0px; z-index: 2147483647; pointer-events: none; white-space: nowrap; user-select: none; font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, sans-serif;">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 16px; height: 16px; display: inline-block; vertical-align: middle; flex-shrink: 0; margin-right: 8px;">
+        <path d="M3.13946 10.6399L6.28757 8.87462L6.37405 8.73821L6.28757 8.6339H6.13189L5.60432 8.6018L3.80541 8.55366L2.24865 8.48947L0.735135 8.40923H0.492973L0.354595 8.32899L0.181622 8.1685L0.0345946 8.01605L0 7.85557L0.0345946 7.62287L0.138378 7.44634L0.224865 7.40622H0.354595L0.812973 7.44634L1.82486 7.51856L3.34703 7.62287L4.44541 7.68706L6.08 7.85557H6.33946L6.37405 7.75125L6.28757 7.68706L6.21838 7.62287L4.64432 6.55567L2.94054 5.4323L2.04973 4.78235L1.57405 4.45336L1.33189 4.14845L1.22811 3.92377L1.17622 3.69107L1.22811 3.47442L1.33189 3.28185L1.46162 3.13741L1.66054 2.99298H1.87676L2.24865 3.0331L2.39568 3.07322L2.99243 3.53059L4.26378 4.51755L5.92432 5.73721L6.16649 5.93781H6.27892V5.82548L6.16649 5.64092L5.26703 4.01204L4.30703 2.35105L3.87459 1.66098L3.76216 1.25176C3.7391 1.16082 3.69297 0.977332 3.69297 0.970913V0.762287L3.77946 0.505517L3.93513 0.240722L4.18595 0.0882648L4.4627 0H4.67892L4.83459 0.0240722L5.12865 0.0882648L5.4054 0.328987L5.82054 1.27583L6.48649 2.76028L7.52432 4.78235L7.82703 5.38415L7.99135 5.93781L8.05189 6.10632H8.15567V6.01003L8.24216 4.87061L8.39784 3.47442L8.55351 1.67703L8.6054 1.17151L8.85622 0.561685L8.9773 0.417252L9.21946 0.232698H9.35784L9.74703 0.417252L9.97189 0.665998L10.067 0.874624L10.0238 1.17151L9.83351 2.40722L9.46162 4.34102L9.21946 5.64092H9.35784L9.52216 5.47242L10.1795 4.60582L11.2778 3.22568L11.7622 2.68004L12.333 2.07823L12.6962 1.78937L13.0162 1.67703L13.3881 1.78937L13.7168 2.06219L13.8897 2.54363V2.76028L13.6649 3.32197L12.9557 4.22066L12.3676 4.98295L12.0043 5.56871L11.0011 7.02106V7.08526H11.1741L13.0768 6.67603L14.1059 6.49147L15.3341 6.28285L15.5762 6.34704L15.8876 6.53962L15.9481 6.80441L15.8876 7.12538L15.7319 7.34203L14.4173 7.66299L12.8778 7.97593L10.5854 8.51559C10.5705 8.51909 10.56 8.53236 10.56 8.54764C10.56 8.56468 10.573 8.57891 10.59 8.58044L11.6238 8.67402L12.0649 8.69809H13.1459L15.1611 8.85055L15.6886 9.19559L15.9481 9.39619L16 9.62086L15.9481 9.94985L15.8443 10.1023L15.4119 10.3029L15.1351 10.3591L14.0454 10.1023L11.4941 9.49248L10.6205 9.27583H10.4995V9.34804L11.2259 10.0622L12.5665 11.2658L14.2357 12.8225L14.3222 13.0953V13.2076L14.1059 13.5125L13.9243 13.5206L13.8811 13.4804L12.4108 12.3731L12.2984 12.325L11.84 11.8756L10.56 10.7924H10.4735V10.9047L10.7676 11.338L12.333 13.6891L12.4108 14.4112L12.2984 14.6439L11.8919 14.7884L11.667 14.7563L11.4508 14.7081L11.2605 14.5396L10.5254 13.4162L9.5827 11.9719L8.82162 10.672H8.79342C8.76039 10.672 8.73278 10.6972 8.7297 10.73L8.27676 15.5667L8.06919 15.8154L7.6454 16H7.58486L7.17838 15.6951L6.96216 15.1976L7.17838 14.2106L7.43784 12.9268L7.6454 11.9077L7.83567 10.6399L7.95187 10.2164C7.9548 10.2057 7.95069 10.1944 7.94161 10.1881C7.91157 10.1672 7.87034 10.1741 7.84878 10.2037L6.89297 11.5145L5.44 13.4804L4.28973 14.7081L4.01297 14.8205H3.80541L3.5373 14.5717V14.4514L3.58054 14.1304L3.84865 13.7372L5.44 11.7151L6.4 10.4554L7.01872 9.73222C7.04511 9.70139 7.04245 9.65523 7.0127 9.62763C7.00333 9.61894 6.98925 9.61773 6.97854 9.62471L2.75027 12.3811L1.99784 12.4774L1.66919 12.1725L1.71243 11.675L1.86811 11.5145L3.13946 10.6399Z" fill="#D97757"></path>
+      </svg>
+      <span style="vertical-align: middle; color: #141413; font-size: 14px; display: inline-block;">Claude is active in this tab group</span>
+      <div style="display: inline-block; width: 0.5px; height: 32px; background: rgba(31, 30, 29, 0.15); margin: 0 8px; vertical-align: middle;"></div>
+      <button id="claude-static-chat-button" style="position: relative; display: inline-flex; align-items: center; justify-content: center; padding: 6px; background: transparent; border: none; cursor: pointer; pointer-events: auto; vertical-align: middle; width: 32px; height: 32px; border-radius: 8px; transition: background 0.2s;">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="#141413" xmlns="http://www.w3.org/2000/svg" style="width: 20px; height: 20px; display: block;">
+          <path d="M10 2.5C14.1421 2.5 17.5 5.85786 17.5 10C17.5 14.1421 14.1421 17.5 10 17.5H3C2.79779 17.5 2.61549 17.3782 2.53809 17.1914C2.4607 17.0046 2.50349 16.7895 2.64648 16.6465L4.35547 14.9365C3.20124 13.6175 2.5 11.8906 2.5 10C2.5 5.85786 5.85786 2.5 10 2.5ZM10 3.5C6.41015 3.5 3.5 6.41015 3.5 10C3.5 11.7952 4.22659 13.4199 5.40332 14.5967L5.46582 14.6729C5.52017 14.7544 5.5498 14.8508 5.5498 14.9502C5.5498 15.0828 5.49709 15.2099 5.40332 15.3037L4.20703 16.5H10C13.5899 16.5 16.5 13.5899 16.5 10C16.5 6.41015 13.5899 3.5 10 3.5ZM13.29 9.30371C13.3986 9.05001 13.6925 8.93174 13.9463 9.04004C14.2 9.14863 14.3183 9.44253 14.21 9.69629C13.8506 10.536 13.1645 11.25 12.25 11.25C11.6372 11.25 11.128 10.9289 10.75 10.4648C10.372 10.9289 9.86276 11.25 9.25 11.25C8.63724 11.25 8.12801 10.9289 7.75 10.4648C7.37198 10.9289 6.86276 11.25 6.25 11.25C5.97386 11.25 5.75 11.0261 5.75 10.75C5.75 10.4739 5.97386 10.25 6.25 10.25C6.58764 10.25 7.00448 9.97056 7.29004 9.30371L7.32422 9.2373C7.41431 9.09121 7.5749 9 7.75 9C7.9501 9 8.13123 9.11975 8.20996 9.30371L8.32227 9.53516C8.59804 10.0359 8.95442 10.25 9.25 10.25C9.58764 10.25 10.0045 9.97056 10.29 9.30371L10.3242 9.2373C10.4143 9.09121 10.5749 9 10.75 9C10.9501 9 11.1312 9.11975 11.21 9.30371L11.3223 9.53516C11.598 10.0359 11.9544 10.25 12.25 10.25C12.5876 10.25 13.0045 9.97056 13.29 9.30371Z"></path>
+        </svg>
+        <span id="claude-static-chat-tooltip" style="position: absolute; bottom: calc(100% + 12px); left: 50%; transform: translateX(-50%); padding: 6px 12px; background: #30302E; color: #FAF9F5; border-radius: 6px; font-size: 12px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.2s; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;">Open chat</span>
+      </button>
+      <button id="claude-static-close-button" style="position: relative; display: inline-flex; align-items: center; justify-content: center; padding: 6px; background: transparent; border: none; cursor: pointer; pointer-events: auto; vertical-align: middle; width: 32px; height: 32px; margin-left: 4px; border-radius: 8px; transition: background 0.2s;">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 20px; height: 20px; display: block;">
+          <path d="M15.1464 4.14642C15.3417 3.95121 15.6582 3.95118 15.8534 4.14642C16.0486 4.34168 16.0486 4.65822 15.8534 4.85346L10.7069 9.99997L15.8534 15.1465C16.0486 15.3417 16.0486 15.6583 15.8534 15.8535C15.6826 16.0244 15.4186 16.0461 15.2245 15.918L15.1464 15.8535L9.99989 10.707L4.85338 15.8535C4.65813 16.0486 4.34155 16.0486 4.14634 15.8535C3.95115 15.6583 3.95129 15.3418 4.14634 15.1465L9.29286 9.99997L4.14634 4.85346C3.95129 4.65818 3.95115 4.34162 4.14634 4.14642C4.34154 3.95128 4.65812 3.95138 4.85338 4.14642L9.99989 9.29294L15.1464 4.14642Z" fill="#141413"></path>
+        </svg>
+        <span id="claude-static-close-tooltip" style="position: absolute; bottom: calc(100% + 12px); left: 50%; transform: translateX(-50%); padding: 6px 12px; background: #30302E; color: #FAF9F5; border-radius: 6px; font-size: 12px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.2s; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;">Dismiss</span>
+      </button>
+    </div></body></html>
