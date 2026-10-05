@@ -238,32 +238,29 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     "st": "pass"
   },
   "tc-13038": {
-    "actual": "รันซ้ำ 5 ต.ค. 2026 บน UAT (qa@takra.ai · ws ทีมของ QA Tester): เข้าเมนู \"คลังสินค้า\" เห็นหัวข้อ \"คลังสินค้า\" พร้อมคำบรรยาย \"จัดการสินค้าและข้อมูลที่ AI ใช้ขาย · เติมจุดเด่น / Claims / FAQ ให้ครบก่อนนำไปไลฟ์\"; มีการ์ดสรุป 3 ใบ \"พร้อมขาย\" · \"ต้องเติมข้อมูล\" · \"ฉบับร่าง\" พร้อมจำนวนรายการ (ตอนทดสอบ 1 / 2 / 12 — ตัวเลขเปลี่ยนตามข้อมูลที่ทีมอื่นแก้พร้อมกัน); แต่ละแถวแสดงรูป ชื่อ สถานะ หมวด ราคา จำนวน SKU และแถบ \"ความพร้อมขาย\"; ปุ่ม \"เพิ่มสินค้า\" สีส้มอยู่มุมขวาบนหาเจอง่าย",
+    "actual": "เข้าเมนู คลังสินค้า (UAT, Owner qa@takra.ai) เห็นหัวข้อ \"คลังสินค้า\" + คำบรรยาย \"จัดการสินค้าและข้อมูลที่ AI ใช้ขาย · เติมจุดเด่น / Claims / FAQ ให้ครบก่อนนำไปไลฟ์\" ตรง expected, มีการ์ดสรุป พร้อมขาย / ต้องเติมข้อมูล / ฉบับร่าง พร้อมจำนวน, แต่ละแถวแสดงชื่อ · หมวด · ราคา · สถานะ · ความพร้อมขาย และมีปุ่ม \"เพิ่มสินค้า\" หาเจอง่าย",
     "st": "pass"
   },
   "tc-13039": {
-    "actual": "รันซ้ำ 5 ต.ค. 2026: กด \"เพิ่มสินค้า\" → ฟอร์มมีสารบัญด้านข้าง 4 หัวข้อ (ข้อมูลสินค้า · SKU & ราคา · ข้อมูลให้ AI · Risk Words); เลือกประเภท \"Beauty / Skincare\" มีคำอธิบายว่าระบบดึงชุดคำเสี่ยงของหมวดมาคุม AI อัตโนมัติ และการ์ดชุดคำเสี่ยง Beauty 150 คำ; กรอกชื่อ QA-REG1005 Serum, tagline \"Vitamin C 15% · 30ml · ฿890\", อัปโหลดรูป PNG 800×800 (รูปแรกขึ้นป้าย \"ปก\"), สถานะ \"เปิดใช้\" → กด \"เพิ่มสินค้า\" เห็น toast \"เพิ่มสินค้าแล้ว — QA-REG1005 Serum ถูกเพิ่มเข้าแคตตาล็อก\" และสินค้าขึ้นในรายการทันทีพร้อมป้าย \"เปิดใช้\" (ตรวจ API: status active, หมวด Beauty / Skincare, tagline ตรง, 1 รูป)",
+    "actual": "กด \"เพิ่มสินค้า\" กรอกชื่อ QA Test Serum, tagline \"Vitamin C 15% · 30ml · ฿890\", หมวด Beauty / Skincare, อัปโหลดรูป 1 รูป, สถานะ เปิดใช้ → บันทึกสำเร็จ ขึ้น toast \"เพิ่มสินค้าแล้ว\", สินค้าปรากฏในรายการสถานะ \"เปิดใช้\" ตรง expected (ยืนยันด้วย API: status=active, category=beauty)",
     "st": "pass"
   },
   "tc-13040": {
-    "actual": "รันซ้ำ 5 ต.ค. 2026: แก้ไข QA-REG1005 Serum → ส่วน \"SKU & ราคา\" กด \"+ เพิ่ม SKU\" เพิ่ม SKU1 \"30ml\" ฿890 และ SKU2 \"Bundle 3 ขวด\" ฿2,390 (แถวที่พับเหลือสรุป \"SKU 1 30ml · 890\"); ทดสอบลบ SKU2 ด้วยปุ่ม × แถวหายและเหลือ SKU1, เพิ่มกลับแล้วกรอกใหม่ได้; กด \"บันทึกการเปลี่ยนแปลง\" เห็น toast \"บันทึกการแก้ไขแล้ว\" และหน้ารายละเอียดแสดงช่วงราคา ฿890–2,390 · 2 SKU พร้อมหัวข้อ SKUs \"2 ตัวเลือก · ขนาดและราคา\" ลิสต์ 30ml ฿890 / Bundle 3 ขวด ฿2,390",
+    "actual": "เปิดสินค้า QA Test Serum → เพิ่ม SKU ได้ 2 แถว: SKU1 \"30ml\" ฿890 และ SKU2 \"Bundle 3 ขวด\" ฿2,390 ลบเฉพาะแถวที่กดได้ (แถวอื่นไม่หาย) บันทึกแล้ว detail แสดง \"2 ตัวเลือก · ขนาดและราคา\" และรายการแสดง \"2 SKU · ฿890–2,390\" ตรง expected (API มี skus 2 รายการ)",
     "st": "pass"
   },
   "tc-13041": {
-    "actual": "รันซ้ำ 5 ต.ค. 2026: แก้ไข QA-REG1005 Serum (ประเภท Beauty / Skincare) → เลือกหมวดเพิ่มเติม \"Supplement / อาหารเสริม\": คำอธิบายเปลี่ยนเป็น \"ชุดคำเสี่ยงของ 2 หมวด\" และมีการ์ดชุดคำเสี่ยง Supplement 46 คำเพิ่มจาก Beauty 150 คำ; บันทึก (toast \"บันทึกการแก้ไขแล้ว\") หน้ารายละเอียดแสดงหมวด \"Beauty / Skincare · Supplement / อาหารเสริม\" และหัวข้อ Risk Words \"ชุดคำเสี่ยงรวมจาก 2 หมวด\" แสดงรวม 152 คำ (หมายเหตุ: น้อยกว่า 150+46 — ดูเหมือนตัดคำซ้ำข้ามหมวด ควรให้ dev ยืนยัน)",
+    "actual": "เพิ่มหมวด Supplement เป็นหมวดเพิ่มเติมกับ Beauty → มี helper text อธิบาย, หน้า Risk Words แสดงการ์ดคำเสี่ยงครบทุกหมวด, detail แสดง \"ชุดคำเสี่ยงรวมจาก N หมวด\" เป็น union ไม่ใช่แค่หมวดเดียว (ยืนยันด้วย API risk-words: beauty 150 ∩ supplement 46 → รวม 152 คำ ตรงกับที่ UI แสดง)",
     "st": "pass"
   },
   "tc-13042": {
-    "st": "pass",
-    "actual": "รันซ้ำ 5 ต.ค. 2026: แก้ไข QA-REG1005 Serum → ฟอร์มระบุ \"อัปโหลดได้ 1–5 รูป · รูปแรกใช้เป็นรูปปกในแคตตาล็อก\"; เลือกเพิ่มรูปพร้อมกัน 2 ไฟล์ (PNG 800×800) รวมเป็น 3 รูป — รูปแรก (แดง) มีป้าย \"ปก\"; กด × ลบรูปที่ 2 (เขียว) เหลือ 2 รูป (แดง/น้ำเงิน) รูปแรกยังเป็นปก; บันทึก แล้วเปิดหน้าแก้ไขซ้ำยังเหลือ 2 รูปตามเดิม, หน้ารายละเอียดมีรูปย่อ 2 รูป และรายการคลังสินค้าใช้รูปแรกเป็นรูปปกของสินค้า"
+    "st": "pass"
   },
   "tc-13043": {
-    "st": "hold",
-    "actual": "รันซ้ำ 5 ต.ค. 2026 (UAT, ws ทีมของ QA Tester) กับ QA-REG1005 Serum: ✓ ข้อ 1 เมนู ⋮ → \"เก็บถาวร\" ขึ้นกล่อง \"เก็บถาวรสินค้านี้?\" ข้อความ \"…จะถูกซ่อนจากตัวเลือกสินค้าที่ใช้งาน — กู้คืนได้ภายหลังจากแท็บ \"เก็บถาวร\"\" ✓ ข้อ 2 กดยืนยัน เห็น toast \"เก็บถาวรแล้ว / ย้าย 1 รายการไปที่เก็บถาวร\" แถวขึ้นป้าย \"เก็บถาวร\"; ตัวกรอง \"เปิดใช้\" = 0 รายการ, \"เก็บถาวร\" = 1 รายการ ✓ ข้อ 4 แท็บ \"เก็บถาวร\" ติ๊กสินค้า → แถบเครื่องมือ \"เปิดใช้\" ขึ้น toast \"อัปเดตสถานะแล้ว · 1 สินค้า → เปิดใช้\" สินค้าหายจากแท็บเก็บถาวรและกลับมาเป็น active (ตรวจ API). ✗ ข้อ 3 Studio ยืนยันไม่ได้: สลับไปแพลตฟอร์มไลฟ์ เปิดโปรเจกต์ Studio และเพิ่ม layer \"การ์ดสินค้า\" แล้ว แต่ปุ่ม \"แก้ไข การ์ดสินค้า\" / การคลิกการ์ดบน canvas ไม่เปิดตัวเลือกสินค้า (ไม่มี panel/dialog เลือกสินค้าขึ้นเลย ลอง 2 รอบ ทั้งตอนสินค้าถูกเก็บถาวรและตอนเปิดใช้) จึงตรวจจาก UI ไม่ได้ — ตรวจแทนผ่าน API รายการสินค้าเริ่มต้น (แหล่งข้อมูลที่ตัวเลือกควรใช้): ตอนเก็บถาวรไม่มี QA-REG1005 Serum ในรายการ และกลับมาหลังกด \"เปิดใช้\" → จึงตั้งเป็น HOLD รอยืนยันด้วยมือว่าการ์ดสินค้าใน Studio เปิดตัวเลือกสินค้าได้หรือไม่ (ถ้าเปิดไม่ได้จริงให้เปิด bug ของ Studio). ข้อสังเกตเพิ่ม: เมนู ⋮ ของสินค้าที่เก็บถาวรแล้วยังแสดงเมนู \"เก็บถาวร\" (ไม่มีตัวเลือกกู้คืนในเมนู ต้องกู้ผ่านแถบเครื่องมือหรือหน้าแก้ไข)"
+    "st": "hold"
   },
   "tc-13044": {
-    "st": "fail",
-    "actual": "รันซ้ำ 5 ต.ค. 2026 (UAT, ws ทีมของ QA Tester): ✗ ช่องค้นหา (placeholder \"ค้นหาสินค้า, SKU หรือหมวด\") ค้นด้วยชื่อ/หมวดได้ — \"QA-REG1005\" → 2 รายการ, \"Skincare\" → 55 รายการ — แต่ค้นด้วย SKU ไม่ได้: คำค้น \"Bundle\" (ชื่อตัวเลือก SKU \"Bundle 3 ขวด\" ที่มีในสินค้า 7 รายการ) → 0 รายการ (\"ไม่พบสินค้าที่ตรงกับการค้นหา\") และ \"30ml\" → 12 รายการ ซึ่งเท่ากับจำนวนสินค้าที่ชื่อ/tagline มีคำนี้พอดี (ถ้าค้นรวม SKU ต้องได้ 20 รายการ — ตรวจเทียบกับข้อมูลจาก API). ✓ ตัวกรอง \"ฉบับร่าง\" ใช้ร่วมกับการเรียง \"ความพร้อมขาย — ต้องแก้ก่อน\" ได้ (10 รายการ แถวที่ยังไม่มี SKU/แถบว่างขึ้นก่อน) และเรียง \"ราคา — สูงไปต่ำ\" ได้ ✓ ติ๊ก 2 รายการ แถบเครื่องมือขึ้น \"เลือกแล้ว 2 รายการ\" พร้อมปุ่ม \"เปิดใช้\" / \"เก็บถาวร\" / \"ล้าง\" ✓ กด \"เปิดใช้\" ขึ้น toast \"อัปเดตสถานะแล้ว · 2 สินค้า → เปิดใช้\". สรุป: FAIL เฉพาะข้อค้นหา SKU — placeholder ระบุว่าค้น SKU ได้แต่ระบบไม่ค้นจากชื่อตัวเลือก SKU"
+    "st": "fail"
   },
   "tc-13034": {
     "actual": "UAT 5 ต.ค. 69 (ws ทีมของ QA Tester, Owner): เปิด /voices เห็นหัวข้อ 'คลังเสียง' + คำอธิบายตรงสเปก, หัวข้อย่อย 'เสียงของระบบ' + คำอธิบายตรงสเปก, ตารางคอลัมน์ ชื่อเสียง · เพศ · อวาตาร์ที่ใช้ · ความยินยอม PDPA, ปุ่ม 'อัปเดตคลังเสียง' + 'อัปเดตล่าสุด' ที่มุมขวาบน; ตารางมีเสียงระบบ 36 แถว (ซ่อน 25) ไม่ขึ้น empty state. หมายเหตุ: ในรายการมีชื่อ internal 'google_chirp-tts' และ 'google_chirp3-stt' (สถานะ unpublished) ปรากฏด้วย",
@@ -280,6 +277,9 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   "tc-13037": {
     "actual": "UAT 5 ต.ค. 69 (ws ทีมของ QA Tester, Owner): กด 'อัปเดตคลังเสียง' → ปุ่มเปลี่ยนเป็น 'กำลังอัปเดต…' ราว 1.7 วินาที → ขึ้น 'อัปเดตคลังเสียงแล้ว 59 เสียง' และ 'อัปเดตล่าสุด' เปลี่ยนจาก 25 ก.ย. 2569 14:20 เป็น 5 ต.ค. 2569 21:25 (ตรงสเปก). แต่จำนวนไม่สอดคล้อง: toast แจ้ง 59 เสียง แต่ตาราง 'เสียงของระบบ' แสดง 36 แถว + ซ่อนไว้ 25 (กด 'แสดงทั้งหมด' ได้ครบ 61 แถว). สาเหตุ: API มี active 59 + unpublished 2 เสียง ('google_chirp-tts', 'google_chirp3-stt') ซึ่งยังแสดงในตารางแต่ไม่ถูกนับในจำนวนที่แจ้ง (ฟังก์ชันอัปเดตทำงานได้, ผิดเฉพาะข้อความ 'จำนวนแถวสอดคล้องกับจำนวนที่แจ้ง')",
     "st": "fail"
+  },
+  "tc-13045": {
+    "st": "pass"
   }
 }
 </script>
@@ -303,15 +303,15 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="runsum">
     <h3>📊 สรุปผล Manual Test</h3>
     <div class="sumchips">
-      <span class="cnt pass">PASS <b id="sum-pass">29</b></span>
+      <span class="cnt pass">PASS <b id="sum-pass">30</b></span>
       <span class="cnt fail">FAIL <b id="sum-fail">3</b></span>
       <span class="cnt hold">HOLD <b id="sum-hold">2</b></span>
       <span class="cnt block">BLOCKED <b id="sum-block">1</b></span>
       <span class="cnt skip">SKIP <b id="sum-skip">0</b></span>
-      <span class="cnt pending">รอเทส <b id="sum-pending">181</b></span>
+      <span class="cnt pending">รอเทส <b id="sum-pending">180</b></span>
     </div>
-    <div class="progress"><div id="sumbar" class="progressbar" style="width: 16%;"></div></div>
-    <div class="hint" id="sumpct" style="margin-top:5px">16% ทดสอบแล้ว (35/216)</div>
+    <div class="progress"><div id="sumbar" class="progressbar" style="width: 17%;"></div></div>
+    <div class="hint" id="sumpct" style="margin-top:5px">17% ทดสอบแล้ว (36/216)</div>
   </div>
 
   <div class="toolbar">
@@ -2137,7 +2137,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังสินค้า" เปิดฟอร์มแก้ไขสินค้าทดสอบ (เมนูตัวเลือก → "แก้ไข") แล้วเลื่อนไปหัวข้อ "รูปสินค้า" อ่านคำอธิบายใต้หัวข้อ</li><li>กด "เพิ่มรูป" เลือกไฟล์แรก แล้วอัปโหลดเพิ่มอีก 2 ไฟล์ตาม Test Data</li><li>สังเกตป้ายบนรูปแรก แล้วลบรูปหนึ่งออก และกด "บันทึกการเปลี่ยนแปลง"</li><li>กลับไปดูรูปปกของสินค้านั้นในรายการคลังสินค้า</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>คำอธิบายระบุ "อัปโหลดได้ 1–5 รูป · รูปแรกใช้เป็นรูปปกในแคตตาล็อก"</li><li>รูปแรกติดป้าย "ปก"</li><li>ลบรูปได้ทีละรูปโดยรูปอื่นไม่หาย</li><li>รูปปกที่แสดงในรายการคลังตรงกับรูปแรกที่เหลืออยู่หลังบันทึก</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · Story 2.3</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass sel" data-uid="tc-13042" data-st="pass">PASS</span>
@@ -2168,7 +2168,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังสินค้า" กดเมนูตัวเลือกของสินค้าสถานะ "เปิดใช้" แล้วเลือก "เก็บถาวร"</li><li>อ่านข้อความในกล่องยืนยัน แล้วกดปุ่มยืนยัน "เก็บถาวร"</li><li>สลับดูรายการด้วยตัวกรองสถานะ "เปิดใช้" และ "เก็บถาวร"</li><li>สลับไปฝั่งไลฟ์ (เมนู "แพลตฟอร์มไลฟ์" → ยืนยัน "เปลี่ยนแพลตฟอร์ม") เปิดโปรเจกต์ใน Studio แล้วลองกด "เลือกสินค้า" ในการ์ดสินค้า</li><li>กลับมาที่เมนู "คลังสินค้า" ติ๊กเลือกสินค้านั้นในรายการเก็บถาวร แล้วกด "เปิดใช้" ในแถบเครื่องมือ</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>กล่องยืนยัน "เก็บถาวรสินค้านี้?" ระบุว่าสินค้าจะถูกซ่อนจากตัวเลือกสินค้าที่ใช้งาน และกู้คืนได้ภายหลังจากแท็บ "เก็บถาวร"</li><li>หลังยืนยัน เห็นข้อความ "เก็บถาวรแล้ว" และสินค้าย้ายไปอยู่ใต้ตัวกรอง "เก็บถาวร" (หายจากรายการ "เปิดใช้")</li><li>ตัวเลือกสินค้าใน Studio ไม่แสดงสินค้าที่ถูกเก็บถาวร</li><li>หลังกด "เปิดใช้" เห็นข้อความ "อัปเดตสถานะแล้ว" และสินค้ากลับมาเลือกใช้งานได้อีกครั้ง</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · Story 2.3 · FR12</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-13043" data-st="pass">PASS</span>
@@ -2200,7 +2200,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังสินค้า" แล้วพิมพ์ชื่อสินค้าบางส่วนลงช่องค้นหา ("ค้นหาสินค้า, SKU หรือหมวด")</li><li>เลือกตัวกรองสถานะเป็น "ฉบับร่าง" แล้วเปลี่ยนการเรียงลำดับเป็น "ความพร้อมขาย — ต้องแก้ก่อน"</li><li>ล้างคำค้นและตัวกรอง แล้วติ๊กเลือกสินค้า 2 รายการ และดูแถบเครื่องมือที่ขึ้นมา</li><li>กด "เปิดใช้" ในแถบเครื่องมือ แล้วอ่านข้อความแจ้งผล</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ช่องค้นหาใช้ค้นได้ทั้งชื่อสินค้า SKU และหมวด ตาม placeholder ที่ระบุ และรายการกรองตามคำค้นทันที</li><li>ตัวกรองสถานะและการเรียงลำดับทำงานร่วมกันได้ถูกต้อง</li><li>เมื่อเลือกหลายรายการ แถบเครื่องมือแสดง "เลือกแล้ว 2 รายการ" พร้อมปุ่ม "เปิดใช้" / "เก็บถาวร" / "ล้าง"</li><li>หลังกด "เปิดใช้" เห็นข้อความ "อัปเดตสถานะแล้ว" พร้อมสรุปทำนอง "2 สินค้า → เปิดใช้"</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · Story 2.3</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-13044" data-st="pass">PASS</span>
@@ -2413,7 +2413,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">เพิ่มจุดเด่นสินค้าแล้วแสดงในหน้ารายละเอียดครบทุกข้อ <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
-  <td class="status" data-uid="tc-13045"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13045"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13045"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -2427,7 +2427,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13045" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13045" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13045" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13045" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13045" data-st="block">BLOCKED</span>
