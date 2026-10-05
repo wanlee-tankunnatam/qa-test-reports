@@ -344,6 +344,9 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   },
   "tc-13187": {
     "st": "pass"
+  },
+  "tc-13214": {
+    "st": "pass"
   }
 }
 </script>
@@ -367,15 +370,15 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="runsum">
     <h3>📊 สรุปผล Manual Test</h3>
     <div class="sumchips">
-      <span class="cnt pass">PASS <b id="sum-pass">45</b></span>
+      <span class="cnt pass">PASS <b id="sum-pass">46</b></span>
       <span class="cnt fail">FAIL <b id="sum-fail">4</b></span>
       <span class="cnt hold">HOLD <b id="sum-hold">2</b></span>
       <span class="cnt block">BLOCKED <b id="sum-block">2</b></span>
       <span class="cnt skip">SKIP <b id="sum-skip">0</b></span>
-      <span class="cnt pending">รอเทส <b id="sum-pending">205</b></span>
+      <span class="cnt pending">รอเทส <b id="sum-pending">204</b></span>
     </div>
     <div class="progress"><div id="sumbar" class="progressbar" style="width: 21%;"></div></div>
-    <div class="hint" id="sumpct" style="margin-top:5px">21% ทดสอบแล้ว (53/258)</div>
+    <div class="hint" id="sumpct" style="margin-top:5px">21% ทดสอบแล้ว (54/258)</div>
   </div>
 
   <div class="toolbar">
@@ -4129,7 +4132,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">สคริปต์ที่มีลิงก์ถูกกันอนุมัติ ส่วนสำนวนที่แค่อ่านได้ว่าชวนคุยนอกไลฟ์ขึ้นเป็น "ข้อแนะนำ" และยังส่งขออนุมัติได้ <span class="kd kd-val">Validation</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13214"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13214"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13214"></td>
 </tr>
 <tr class="detail show"><td colspan="7"><div class="card">
@@ -4140,10 +4143,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังสคริปต์" กด "สร้างสคริปต์" → "เขียนเอง" ตั้งชื่อ "QA-ลิงก์" เลือกสินค้า แล้วที่ขั้น "เขียนเนื้อหา" พิมพ์ประโยค A ตาม Test Data อ่านข้อความในขั้น "ตรวจคำเสี่ยง" แล้วกด "บันทึก"</li><li>สร้างสคริปต์อีกใบชื่อ "QA-หลังบ้าน" ด้วยวิธีเดียวกันโดยพิมพ์ประโยค B แล้วกด "บันทึก"</li><li>ที่แท็บ "ร่าง" กดชื่อ "QA-ลิงก์" เพื่อเปิดแผงรายละเอียด อ่านกล่องแจ้งเตือนและปุ่ม "ส่งขออนุมัติ" แล้วทำซ้ำกับ "QA-หลังบ้าน"</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ขั้น "ตรวจคำเสี่ยง" (เมื่อไม่พบคำในคลังคำเสี่ยง) แสดง "ตรวจคำเสี่ยงจากคลังแล้ว — ไม่พบคำต้องห้าม" เป็นตัวหนังสือสีเทา ไม่มีเครื่องหมายถูกสีเขียว และมีบรรทัด "ยังไม่ได้ตรวจเนื้อหาที่ห้ามออกอากาศ (ลิงก์ · ชวนคุยนอกไลฟ์ · สั่งซื้อนอกไลฟ์) — ระบบตรวจให้ตอนบันทึก · …"</li><li>"QA-ลิงก์": กล่องแดง "ต้องแก้ 1 รายการก่อนอนุมัติ" มีป้าย "ลิงก์ («…»)" ข้อความ "อนุมัติไม่ได้จนกว่าจะแก้รายการข้างบนในสคริปต์" และคำแนะนำ "• เอาลิงก์และชื่อเว็บออก แล้วบอกให้ผู้ชมกดตะกร้าในไลฟ์แทน" — ปุ่ม "ส่งขออนุมัติ" กดไม่ได้</li><li>"QA-หลังบ้าน": ไม่มีกล่องแดง มีกล่องสีเหลือง "ข้อแนะนำ" ที่ขึ้น "การชวนไปคุยนอกไลฟ์ («…») — ประโยคนี้อ่านได้ว่าชวนไปคุยนอกไลฟ์ — อนุมัติได้ …" และ "ไม่บล็อกการอนุมัติ — แก้หรือไม่แก้ก็อนุมัติและออกอากาศได้" — ปุ่ม "ส่งขออนุมัติ" กดได้</li></ul><div class="hint" style="margin-top:6px">ที่มา: TAKRA-1289 (ด่านการขายจับสำนวนเปลี่ยนคำ · สำนวนแบบอ่านได้ว่าชวนออกนอกไลฟ์เป็นคำเตือน อนุมัติได้) · TAKRA-1332 (ด่านการขายรุ่นสอง) · Epic 2 · Story 2.8 · FR33</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13214" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13214" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13214" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13214" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13214" data-st="block">BLOCKED</span>
