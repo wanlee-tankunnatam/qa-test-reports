@@ -457,6 +457,22 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   "tc-13109": {
     "actual": "เปิดหน้า 'เครื่องมือ' (/live/tools) บน UAT ด้วย Owner qa@takra.ai: หัวข้อ 'เตรียมพร้อมก่อนไลฟ์' + คำอธิบาย 'ตรวจทุกชั้น — เน็ตเวิร์ก · ระบบ · ฮาร์ดแวร์ — ก่อนกด Go Live' มี 3 ส่วนเรียงกัน: 1 · เครือข่าย (ทดสอบเครือข่าย), 2 · ระบบ AI และเสียง (สุขภาพระบบ AI + ทดสอบเสียง Output), 3 · ฮาร์ดแวร์ (ความสามารถเครื่อง) พร้อมปุ่มเริ่ม/ทดสอบของแต่ละการ์ด ตรงตาม Expected",
     "st": "pass"
+  },
+  "tc-13110": {
+    "actual": "ทดสอบเครือข่าย: วัด Ping 55 ms · Download 657.6 Mbps · Upload 209.4 Mbps แล้วเก็บความเสถียรเป็นแท่งกราฟทีละ ~3 วินาที (Jitter 102 ms · Packet loss 0%) มีข้อความ 'วัดผ่าน Cloudflare · ทั้งหมดประมาณ 90 วินาที'. กด 'หยุด' ระหว่างรัน (20s/60s) → หยุดทันที แสดงผลบางส่วน 'ความเร็วพร้อมไลฟ์ HD — ยังไม่ได้เช็คความเสถียรเต็มรอบ' และปุ่มเปลี่ยนเป็น 'ทดสอบอีกครั้ง' ตรงตาม Expected (ค่า Jitter/แท่งแดงเป็นผลจากเครือข่ายจริงของเครื่องทดสอบ)",
+    "st": "pass"
+  },
+  "tc-13111": {
+    "actual": "กด 'เล่นเสียงทดสอบ' (อุปกรณ์ Default - MacBook Pro Speakers) → ปุ่มเป็น 'กำลังเล่น…' → ขึ้นกล่อง 'ได้ยินเสียงไหม?' (ยืนยันผลทดสอบเพื่อเช็คความพร้อมของระบบเสียง) ปุ่ม 'ไม่ได้ยิน' / 'ได้ยินชัด'. กด 'ไม่ได้ยิน' → แสดง '✗ ไม่ได้ยินเสียง — เช็คอย่างน้อย:' 3 ข้อ (ระบบเสียงเครื่องไม่ mute (Cmd/Ctrl + เลื่อน volume ขึ้น) · เลือก output device จาก dropdown ด้านบน · เบราว์เซอร์ไม่ได้ปิดเสียงแท็บนี้ (คลิกขวาที่แท็บ → Unmute)) และปุ่มเป็น 'เล่นอีกครั้ง'; เล่นซ้ำแล้วกด 'ได้ยินชัด' → '✓ ระบบเสียงพร้อมใช้งาน' ตรงตาม Expected. หมายเหตุ: ผู้ทดสอบปิดเสียงเล่นฝั่งหน้าเว็บ (ไม่ให้ลำโพงเครื่องดัง) จึงยืนยันเฉพาะ flow/UI ไม่ได้ยืนยันว่าเสียงออกลำโพงจริง",
+    "st": "pass"
+  },
+  "tc-13112": {
+    "actual": "กด 'เช็คตอนนี้' ในการ์ด 'สุขภาพระบบ AI' → แสดง 4 service: Avatar Render ✓ 25–44 ms · Text-to-Speech ✓ 185–852 ms · LLM (สนทนา) ✓ ~730 ms (ใน ws Wanlee Qa แสดง 'ยังไม่เปิดใช้งาน') · Chat Ingestion ✓ ~280–630 ms, ขึ้นแบนเนอร์เขียว 'ติดต่อทุก service ได้' และปุ่มเปลี่ยนเป็น 'เช็คอีกครั้ง'. จำลองความล้มเหลว (แก้ response ฝั่งหน้าเว็บ ไม่แตะระบบจริง): TTS down → แถว TTS ขึ้น '✗ ไม่ตอบ' และไม่มีแบนเนอร์เขียว; request ล้มทั้งก้อน → ข้อความแดง 'เช็คสถานะไม่สำเร็จ — แตะเพื่อลองใหม่' ตรงตาม Expected",
+    "st": "pass"
+  },
+  "tc-13113": {
+    "actual": "การ์ด 'ความสามารถเครื่อง' (เครื่องทดสอบ MacBook / Chrome): CPU cores 10 OK · หน่วยความจำ ≥ 16 GB OK (หมายเหตุ 'เบราว์เซอร์ปัดค่าเพื่อความเป็นส่วนตัว — ของจริงอาจมากกว่านี้') · WebGL 'ANGLE (Apple, ANGLE Metal Renderer: Apple M5…)' OK · JS benchmark 9 ms (ยิ่งน้อยยิ่งเร็ว) OK · ขนาดหน้าจอ 1420×749 · 1.0× OK → สรุปเขียว '✓ เครื่องพร้อม render avatar 1080p ลื่นไหล' ตรงตาม Expected (กรณีเครื่องไม่รองรับ/ข้อความ fallback 'เบราว์เซอร์ไม่บอก' ไม่ได้ทดสอบ เพราะเครื่องรองรับครบ)",
+    "st": "pass"
   }
 }
 </script>
@@ -480,15 +496,15 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="runsum">
     <h3>📊 สรุปผล Manual Test</h3>
     <div class="sumchips">
-      <span class="cnt pass">PASS <b id="sum-pass">64</b></span>
+      <span class="cnt pass">PASS <b id="sum-pass">68</b></span>
       <span class="cnt fail">FAIL <b id="sum-fail">5</b></span>
       <span class="cnt hold">HOLD <b id="sum-hold">7</b></span>
       <span class="cnt block">BLOCKED <b id="sum-block">2</b></span>
       <span class="cnt skip">SKIP <b id="sum-skip">0</b></span>
-      <span class="cnt pending">รอเทส <b id="sum-pending">180</b></span>
+      <span class="cnt pending">รอเทส <b id="sum-pending">176</b></span>
     </div>
-    <div class="progress"><div id="sumbar" class="progressbar" style="width: 30%;"></div></div>
-    <div class="hint" id="sumpct" style="margin-top:5px">30% ทดสอบแล้ว (78/258)</div>
+    <div class="progress"><div id="sumbar" class="progressbar" style="width: 32%;"></div></div>
+    <div class="hint" id="sumpct" style="margin-top:5px">32% ทดสอบแล้ว (82/258)</div>
   </div>
 
   <div class="toolbar">
@@ -6533,7 +6549,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">ทดสอบเครือข่ายแล้วเห็นผลความเร็วและความเสถียรพร้อมคำตัดสิน <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
-  <td class="status" data-uid="tc-13110"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13110"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13110"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -6544,10 +6560,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>พิมพ์ที่อยู่ https://uat-live.takra.ai/live/tools เพื่อเปิดหน้า "เตรียมพร้อมก่อนไลฟ์" (ยังไม่มีเมนูพาเข้า)</li><li>ที่ส่วน "1 · เครือข่าย" กดปุ่ม "เริ่มทดสอบ" แล้วสังเกตข้อความสถานะระหว่างวัดจนจบ (ประมาณ 90 วินาที)</li><li>อ่านค่าที่แสดงในส่วน "ความเร็ว" และ "ความเสถียร (60 วินาที)" พร้อมคำตัดสินสรุปท้ายผล</li><li>กดปุ่ม "ทดสอบอีกครั้ง" แล้วสังเกตว่าระบบเริ่มวัดใหม่</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ระหว่างวัด ข้อความสถานะเปลี่ยนตามเฟส: "กำลังวัด Ping…" → "กำลังวัด Download…" → "กำลังวัด Upload…" → "กำลังเช็คความเสถียร …" พร้อมปุ่ม "หยุด" ให้ยกเลิกได้</li><li>ส่วน "ความเร็ว" แสดงค่า Ping / Download / Upload และส่วน "ความเสถียร (60 วินาที)" แสดง Jitter / Packet Loss พร้อมกราฟช่วงเวลา</li><li>มีคำตัดสินสรุปพร้อมเหตุผล เช่น "✓ พร้อมไลฟ์ HD เต็มรูปแบบ" / "⚠ ไลฟ์ได้แต่อาจมี glitch บ้าง" / "✗ ไม่แนะนำให้ไลฟ์ตอนนี้"</li><li>กด "ทดสอบอีกครั้ง" แล้วระบบเริ่มวัดใหม่ตั้งแต่ต้นได้</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 4 · Story 4.1</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13110" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13110" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13110" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13110" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13110" data-st="block">BLOCKED</span>
@@ -6565,7 +6581,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">ทดสอบเสียง Output แล้วยืนยันผลว่าได้ยินหรือไม่ <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13111"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13111"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13111"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -6575,10 +6591,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner และเปิดลำโพงหรือหูฟังไว้</li><li>พิมพ์ที่อยู่ https://uat-live.takra.ai/live/tools เพื่อเปิดหน้า "เตรียมพร้อมก่อนไลฟ์" (ยังไม่มีเมนูพาเข้า) แล้วเลื่อนไปส่วน "2 · ระบบ AI และเสียง" การ์ด "ทดสอบเสียง Output"</li><li>เลือกอุปกรณ์จากช่อง "อุปกรณ์ Output" แล้วกดปุ่ม "เล่นเสียงทดสอบ" ฟังเสียงที่ดังขึ้น</li><li>ในหน้าต่าง "ได้ยินเสียงไหม?" กดปุ่ม "ได้ยินชัด" แล้วอ่านผลที่แสดง</li><li>กด "เล่นอีกครั้ง" แล้วคราวนี้กดปุ่ม "ไม่ได้ยิน" เพื่อดูคำแนะนำ</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>เลือกอุปกรณ์เสียง Output ได้จากช่อง "อุปกรณ์ Output" และระหว่างเล่นเสียงปุ่มเปลี่ยนเป็น "กำลังเล่น…" พร้อมได้ยินเสียงทดสอบสั้น ๆ</li><li>หลังเสียงจบ ขึ้นหน้าต่างยืนยัน "ได้ยินเสียงไหม?" พร้อมปุ่ม "ได้ยินชัด" และ "ไม่ได้ยิน"</li><li>กด "ได้ยินชัด" แล้วเห็นผล "✓ ระบบเสียงพร้อมใช้งาน"</li><li>กด "ไม่ได้ยิน" แล้วเห็น "✗ ไม่ได้ยินเสียง — เช็คอย่างน้อย:" พร้อมเช็กลิสต์ 3 ข้อ (ระบบเสียงเครื่องไม่ mute · เลือก output device ถูกต้อง · เบราว์เซอร์ไม่ได้ปิดเสียงแท็บนี้)</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 4 · Story 4.1</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13111" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13111" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13111" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13111" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13111" data-st="block">BLOCKED</span>
@@ -6596,7 +6612,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">ตรวจสุขภาพระบบ AI แล้วเห็นสถานะของแต่ละบริการ <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13112"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13112"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13112"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -6607,10 +6623,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>พิมพ์ที่อยู่ https://uat-live.takra.ai/live/tools เพื่อเปิดหน้า "เตรียมพร้อมก่อนไลฟ์" (ยังไม่มีเมนูพาเข้า) แล้วเลื่อนไปส่วน "2 · ระบบ AI และเสียง" การ์ด "สุขภาพระบบ AI"</li><li>กดปุ่ม "เช็คตอนนี้" แล้วสังเกตสถานะระหว่างเช็ค</li><li>เมื่อเช็คเสร็จ อ่านสถานะของแต่ละบริการทั้ง 4 รายการ</li><li>กดปุ่ม "เช็คอีกครั้ง" แล้วสังเกตว่าระบบเช็คซ้ำได้</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ระหว่างเช็คแสดงสถานะ "กำลังเช็ค…"</li><li>แสดงสถานะรายบริการครบทั้ง 4: Avatar Render · Text-to-Speech · LLM (สนทนา) · Chat Ingestion</li><li>ถ้าติดต่อได้ทุกบริการ เห็นข้อความ "ติดต่อทุก service ได้"</li><li>ถ้าบริการใดไม่ตอบ แสดง "✗ ไม่ตอบ" เฉพาะบริการนั้น และกด "เช็คอีกครั้ง" เพื่อเช็คซ้ำได้</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 4 · Story 4.8 · FR39 · TAKRA-1338</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13112" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13112" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13112" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13112" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13112" data-st="block">BLOCKED</span>
@@ -6628,7 +6644,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">ตรวจความสามารถเครื่อง (CPU/หน่วยความจำ/WebGL) แล้วเห็นคำตัดสิน <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13113"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13113"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13113"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -6638,10 +6654,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>พิมพ์ที่อยู่ https://uat-live.takra.ai/live/tools เพื่อเปิดหน้า "เตรียมพร้อมก่อนไลฟ์" (ยังไม่มีเมนูพาเข้า) แล้วเลื่อนไปส่วน "3 · ฮาร์ดแวร์" การ์ด "ความสามารถเครื่อง"</li><li>รอระหว่างสถานะ "กำลังตรวจ…" จนระบบตรวจเสร็จ</li><li>อ่านค่าแต่ละรายการและคำตัดสินสรุปด้านล่าง</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ตรวจและแสดงค่า CPU cores · "หน่วยความจำ" · WebGL ("พร้อม" หรือ "ไม่รองรับ") · JS benchmark · "ขนาดหน้าจอ"</li><li>รายการที่เบราว์เซอร์ไม่บอกค่า แสดงข้อความแทน เช่น "เบราว์เซอร์ไม่บอก" หรือ "ไม่ทราบ" ไม่ใช่ค่าว่าง</li><li>มีคำตัดสินสรุป: "✓ เครื่องพร้อม render avatar 1080p ลื่นไหล" / "⚠ เครื่องพอใช้ — แนะนำลดเป็น 720p ถ้าใช้นาน" / "✗ เครื่องอาจไม่แรงพอ — เสี่ยง avatar กระตุก"</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 4 · Story 4.1</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13113" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13113" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13113" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13113" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13113" data-st="block">BLOCKED</span>
