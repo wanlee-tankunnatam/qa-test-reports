@@ -401,6 +401,58 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   "tc-13245": {
     "st": "hold",
     "actual": "HOLD: เหตุผลเดียวกับ TC-RA.4 (ต้องไลฟ์ส่งตรงเข้า TikTok จริง + ผู้ชมพิมพ์คอมเมนต์ 3 ครั้ง) และต้องออกอากาศต่อเนื่องเกิน 12 นาที"
+  },
+  "tc-13050": {
+    "st": "pass",
+    "actual": "เปิดเมนู \"คำเสี่ยง\" (/risk-words) บน UAT (Owner, ws ทีมของ QA Tester) เห็นหัวข้อ \"หมวดหมู่/คำเสี่ยง\" และคำบรรยาย \"คำเสี่ยงจัดชุดตามประเภทธุรกิจ · สินค้าแต่ละตัวสืบทอดชุดคำของธุรกิจที่เลือกไปคุมการพูดของ AI\" · การ์ด \"ภาพรวมคำเสี่ยง\" แสดง คำเสี่ยงทั้งหมด / หมวดหมู่ทั้งหมด 12 หมวด / คำเสี่ยงใน script draft / การแจ้งเตือน (30 วัน) · ส่วน \"ประเภทธุรกิจทั้งหมด (12)\" ครบ Beauty/Skincare, Health/Wellness, Supplement, Fashion, Jewelry, Mom & Baby, Food, Home, Electronics, Auto, Services และมี \"อื่นๆ\" · ทุกการ์ดแสดง \"N คำเฉพาะหมวด · +N เพิ่มเอง (ถ้ามี) · สแกนจริง N\""
+  },
+  "tc-13051": {
+    "st": "pass",
+    "actual": "เพิ่มคำ QAWORD-CAT (โอ้อวดเกินจริง/กลาง/Warn) ในหมวด Beauty/Skincare → บันทึกสำเร็จ · สินค้า Beauty (Rosehip Facial Oil) เปิด \"คำเสี่ยงของหมวด\" ค้นหา QAWORD เจอ QAWORD-CAT · สินค้านอก Beauty (Hello Polo รองเท้าแตะ หมวด อื่นๆ ไม่มี beauty) ค้นหา QAWORD-CAT → \"ไม่พบคำเสี่ยง — ไม่มีคำที่ตรงกับ QAWORD-CAT ในหมวดนี้\" → คำระดับหมวดมีผลเฉพาะสินค้าในหมวดนั้น · ลบข้อมูลทดสอบแล้ว"
+  },
+  "tc-13052": {
+    "st": "pass",
+    "actual": "เพิ่ม QAWORD-GLOBAL ผ่านปุ่ม \"+ เพิ่มคำห้ามทั่วทั้ง Workspace\" (แผงระบุ \"ใช้กับทุกหมวด/ทุกสินค้า\") → toast เพิ่ม \"QAWORD-GLOBAL\" ใน ทั่วทั้ง Workspace (ทุกหมวด) แล้ว · คำขึ้นในกลุ่ม \"คำเฉพาะแบรนด์ (ทุกหมวด · Tier 1)\" (API scope global) · คำเสี่ยงทั้งหมด 176→177, Beauty สแกนจริง 151→152 · ค้นหาในลิ้นชักคำเสี่ยงเจอทั้งสินค้า Beauty (Rosehip) และสินค้านอก Beauty (Hello Polo) ส่วน QAWORD-CAT เจอเฉพาะสินค้า Beauty · ลบข้อมูลทดสอบแล้ว"
+  },
+  "tc-13053": {
+    "st": "pass",
+    "actual": "หมายเหตุ: ws ทดสอบมีคำเพิ่มเองในหมวด \"อื่นๆ\" อยู่ก่อนแล้ว 3 คำ (B1/R1/W1) จึงยืนยันสถานะ \"ก่อนเพิ่มคำ = ยังไม่มีคำ\" ไม่ได้ (ควรทดสอบซ้ำใน ws ว่าง) · การ์ดอื่นๆ แสดง \"0 คำเฉพาะหมวด · +3 เพิ่มเอง · สแกนจริง 48\" และหน้าหมวดมีเฉพาะชุดคำกลาง (universal 45) + คำเพิ่มเอง 3 คำ ไม่มีชุดสำเร็จเฉพาะหมวด · เพิ่ม QAWORD-OTHER → toast เพิ่ม \"QAWORD-OTHER\" ใน อื่นๆ แล้ว (สแกนจริง 48→49) · สินค้าหมวด อื่นๆ (Hello Polo) ค้นหา QAWORD เจอ QAWORD-OTHER · สินค้า Beauty (Rosehip) ไม่พบ QAWORD-OTHER (ไม่กลายเป็น global) · ลบข้อมูลทดสอบแล้ว"
+  },
+  "tc-13054": {
+    "st": "fail",
+    "actual": "เปิดหน้า \"คำเสี่ยง\" (ภาพรวมและหน้าหมวด Beauty) แล้วค้นข้อความในหน้า: ไม่พบหัวข้อ \"สถิติการกรอง (30 วันย้อนหลัง)\", ค่า \"คอมเมนต์ที่กรองทั้งหมด / ถูก block โดย Risk Word / Block rate (เป้า ≥95%)\" และส่วน Top Triggered (ไม่มีคำว่า สถิติ/Block rate/Top Triggered/ตัวอย่าง ในหน้า) · มีเพียงการ์ดสรุป \"การแจ้งเตือน (30 วัน) — ครั้ง\" ในภาพรวมคำเสี่ยง · ต้องให้ Dev/PO ยืนยันว่า section นี้ยังไม่ทำ/ถูกถอด หรือ spec เปลี่ยน"
+  },
+  "tc-13055": {
+    "st": "hold",
+    "actual": "ผ่านส่วนที่ตรวจได้: ชี้ตัวเลข \"สแกนจริง\" มี tooltip \"คำที่สินค้าหมวดนี้สแกนจริง = universal + หมวด − allowlist\" · หน้าหมวด Beauty: \"152 คำที่สินค้าหมวดนี้สแกน (universal 45 + หมวด 107)\" ตรงกับการ์ด 152 และผลรวมจำนวนในกลุ่มของ \"ชุดคำที่สแกน\" = 152 · ตรวจส่วน Allowlist ไม่ได้: ไม่พบกลุ่ม \"Allowlist (ยกเว้น)\" ในคอลัมน์ขวา ไม่มีบรรทัดแจกแจง allowlist ที่กรองออก และไม่พบตัวเลือกสร้าง allowlist ใน UI (เมนู ⋯ มีแค่ แก้ไข/เปลี่ยนเป็น Warn-Block/ลบ, แผงเพิ่มคำไม่มีตัวเลือก allowlist; scope ของคำใน API มีเพียง category/global) → HOLD รอข้อมูล/ฟีเจอร์ allowlist"
+  },
+  "tc-13148": {
+    "st": "pass",
+    "actual": "Beauty > \"+ เพิ่มคำเฉพาะหมวดนี้\" · ใต้ช่องมีคำแนะนำ \"พิมพ์ 1 คำต่อบรรทัด — เพิ่มหลายคำพร้อมกันได้\" · ก่อนพิมพ์ตัวอย่างขึ้น \"พิมพ์คำเสี่ยงด้านบนเพื่อดูตัวอย่าง\" · พิมพ์ QAMULTI-1/2/3 (บรรทัดละคำ) ตัวนับขึ้น \"3 คำ\", ตัวอย่างแสดง QAMULTI-1 \"และอีก 2 คำ\", ปุ่มเป็น \"เพิ่ม 3 คำเสี่ยง\" · บันทึก → toast \"เพิ่ม 3 คำเสี่ยงใน Beauty / Skincare แล้ว\" และทั้ง 3 คำขึ้นในแถบ \"คำเฉพาะหมวดนี้ (เพิ่มเอง)\" ป้าย Warn (API: false-claims/กลาง/warn) · สแกน 152→155"
+  },
+  "tc-13149": {
+    "st": "pass",
+    "actual": "พิมพ์ QAMULTI-1 (ซ้ำ) + QADUP-NEW → ขึ้น \"มีคำที่อยู่ในธุรกิจนี้แล้ว: QAMULTI-1 — ลบออกก่อนบันทึก\" และปุ่ม \"เพิ่ม 2 คำเสี่ยง\" กดไม่ได้ (disabled) · ลบบรรทัดคำซ้ำออก → ข้อความเตือนหาย ปุ่มกลับมากดได้ · กดยกเลิก (ไม่บันทึก) → API ไม่มี QADUP และ QAMULTI-1 ยังมีรายการเดียว"
+  },
+  "tc-13150": {
+    "st": "pass",
+    "actual": "เมนู ⋯ ของ QAMULTI-2 มี \"แก้ไข\" · \"เปลี่ยนเป็น Block\" · \"ลบ\" · แผง \"แก้ไขคำเสี่ยง\" ใต้หัวข้อ \"คำที่เพิ่มเอง\" มีช่อง คำเสี่ยง / ประเภทความเสี่ยง / ระดับความรุนแรง / การจัดการ · เปลี่ยนเป็นระดับ สูง + Block แล้วบันทึก → toast \"แก้ไขแล้ว (QAMULTI-2)\" ป้ายในแถบข้างเปลี่ยน Warn→Block ทันที และ API ตรง (high/block)"
+  },
+  "tc-13151": {
+    "st": "pass",
+    "actual": "QAMULTI-2 (Block) เมนู ⋯ > \"เปลี่ยนเป็น Warn\" → ป้ายเปลี่ยน Block→Warn ทันที เมนูเปลี่ยนเป็น \"เปลี่ยนเป็น Block\" → กดแล้วป้ายกลับเป็น Block (API high/block) · ไม่ได้ทดสอบกรณีเปลี่ยนไม่สำเร็จ (error path)"
+  },
+  "tc-13152": {
+    "st": "pass",
+    "actual": "ลบ QAMULTI-3: ⋯ > ลบ → กล่อง \"ลบคำเสี่ยง\" ข้อความ ลบ \"QAMULTI-3\" ออกจากรายการ? มีผลทันทีและย้อนกลับไม่ได้ · กดยกเลิก คำยังอยู่ · ทำซ้ำแล้วกดลบ → toast ลบ \"QAMULTI-3\" แล้ว คำหายจากแถบข้างทันที (API ไม่พบ) · QAWORD-GLOBAL ในกลุ่ม Tier 1 ยืนยันลบได้เหมือนกัน (toast ลบ \"QAWORD-GLOBAL\" แล้ว) และหายจากกลุ่ม · คำป้าย \"ชุดสำเร็จ\" ไม่มีปุ่ม ⋯ ให้ลบ · ไม่ได้ทดสอบกรณีลบจนไม่เหลือคำ (\"— ยังไม่มี —\")"
+  },
+  "tc-13153": {
+    "st": "pass",
+    "actual": "ค้นหา \"QAMULTI\" → หัวข้อ ผลการค้นหา \"QAMULTI\" เจอ 2 คำ อยู่ใต้กลุ่ม Beauty / Skincare (2) พร้อมป้ายระดับ/เพิ่มเอง · ค้นหา ZZZ-NOT-EXIST → \"ไม่พบคำเสี่ยงที่ตรงกับ ZZZ-NOT-EXIST\" + \"ลองพิมพ์คำสั้นลง หรือตรวจตัวสะกดอีกครั้ง\" · กด \"ล้างคำค้นหา\" กลับหน้ารายการหมวดปกติ"
+  },
+  "tc-13154": {
+    "st": "pass",
+    "actual": "ใช้บัญชี qa@takra.ai ที่เป็น \"สมาชิก\" ใน ws ทีมของ kachain bumrungta ครับ · หน้าคำเสี่ยง: ไม่มีปุ่ม \"เพิ่มคำห้ามทั่วทั้ง Workspace\" แต่ขึ้น \"เฉพาะเจ้าของ workspace เท่านั้นที่เพิ่ม แก้ไข หรือลบคำเสี่ยงได้\" · หน้าหมวด Beauty: ไม่มีปุ่ม \"เพิ่มคำเฉพาะหมวดนี้\" ขึ้นข้อความเดียวกัน · คำในแถบข้าง/กลุ่ม Tier 1/กลุ่มคำเฉพาะหมวดไม่มีปุ่ม ⋯ · ยังเปิดดูหมวดและรายการคำได้ปกติ (ทดสอบเฉพาะ UI ไม่ได้ยิง API เขียนด้วยสิทธิ์สมาชิก)"
   }
 }
 </script>
@@ -424,15 +476,15 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="runsum">
     <h3>📊 สรุปผล Manual Test</h3>
     <div class="sumchips">
-      <span class="cnt pass">PASS <b id="sum-pass">52</b></span>
-      <span class="cnt fail">FAIL <b id="sum-fail">4</b></span>
-      <span class="cnt hold">HOLD <b id="sum-hold">6</b></span>
+      <span class="cnt pass">PASS <b id="sum-pass">63</b></span>
+      <span class="cnt fail">FAIL <b id="sum-fail">5</b></span>
+      <span class="cnt hold">HOLD <b id="sum-hold">7</b></span>
       <span class="cnt block">BLOCKED <b id="sum-block">2</b></span>
       <span class="cnt skip">SKIP <b id="sum-skip">0</b></span>
-      <span class="cnt pending">รอเทส <b id="sum-pending">194</b></span>
+      <span class="cnt pending">รอเทส <b id="sum-pending">181</b></span>
     </div>
-    <div class="progress"><div id="sumbar" class="progressbar" style="width: 25%;"></div></div>
-    <div class="hint" id="sumpct" style="margin-top:5px">25% ทดสอบแล้ว (64/258)</div>
+    <div class="progress"><div id="sumbar" class="progressbar" style="width: 30%;"></div></div>
+    <div class="hint" id="sumpct" style="margin-top:5px">30% ทดสอบแล้ว (77/258)</div>
   </div>
 
   <div class="toolbar">
@@ -440,7 +492,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <button class="btn" onclick="toggleAll(false)">▾ ยุบทั้งหมด</button>
     <span class="hint">💡 คลิกแถว → ดู Steps / Expected (UI only)</span>
     <span style="margin-left:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-      <span id="save-status" class="hint" style="white-space: nowrap; color: var(--muted);">✓ ตรงกับ GitHub</span>
+      <span id="save-status" class="hint" style="white-space: nowrap; color: var(--hold);">● ยังไม่ได้บันทึก</span>
       <label class="hint" style="display:flex;gap:4px;align-items:center;white-space:nowrap;cursor:pointer" title="บันทึกขึ้น GitHub อัตโนมัติหลังหยุดแก้ ~5 วินาที"><input type="checkbox" id="chk-autosave" checked=""> auto-save</label>
       <button class="btn" id="btn-token" title="ใส่/เปลี่ยน GitHub token (ถ้าเซฟไม่ขึ้น/token เสีย กดอันนี้)">🔑 Token</button>
       <button class="btn" id="btn-refresh" title="ดึงผลล่าสุดจาก GitHub มา merge (ไม่ต้อง reload)">🔄 ดึงล่าสุด</button>
@@ -3042,7 +3094,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">เปิดคลังคำเสี่ยงแล้วเห็นหมวดตามประเภทธุรกิจครบพร้อมจำนวนคำ <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
-  <td class="status" data-uid="tc-13050"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13050"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13050"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -3053,10 +3105,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คำเสี่ยง" ในแถบด้านซ้าย แล้วอ่านหัวข้อและคำบรรยายใต้หัวข้อ</li><li>ดูการ์ดสรุป "ภาพรวมคำเสี่ยง" ด้านบน แล้วนับจำนวนหมวดในส่วน "ประเภทธุรกิจทั้งหมด"</li><li>ไล่ดูตัวเลขท้ายการ์ดแต่ละหมวด (จำนวน "คำเฉพาะหมวด" · "เพิ่มเอง" · "สแกนจริง")</li><li>สังเกตว่ามีหมวด "อื่นๆ" อยู่ในรายการหมวดด้วย</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>เห็นหัวข้อ "หมวดหมู่/คำเสี่ยง" และคำบรรยาย "คำเสี่ยงจัดชุดตามประเภทธุรกิจ · สินค้าแต่ละตัวสืบทอดชุดคำของธุรกิจที่เลือกไปคุมการพูดของ AI"</li><li>ส่วน "ประเภทธุรกิจทั้งหมด" แสดงหมวดประมาณ 12 หมวด ครอบคลุม Beauty / Skincare · Health / Wellness · Supplement · Fashion · Jewelry · Mom &amp; Baby และมีหมวด "อื่นๆ"</li><li>การ์ดแต่ละหมวดแสดงจำนวนคำในชุด ("คำเฉพาะหมวด") และจำนวนที่ "เพิ่มเอง" (ถ้ามี) พร้อมตัวเลข "สแกนจริง"</li><li>การ์ด "ภาพรวมคำเสี่ยง" แสดงค่า "คำเสี่ยงทั้งหมด" และ "หมวดหมู่ทั้งหมด"</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · Story 2.5 · FR46a</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13050" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13050" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13050" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13050" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13050" data-st="block">BLOCKED</span>
@@ -3074,7 +3126,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">เพิ่มคำเสี่ยงเฉพาะหมวดแล้วมีผลเฉพาะสินค้าที่ติดหมวดนั้น <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
-  <td class="status" data-uid="tc-13051"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13051"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13051"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -3085,10 +3137,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คำเสี่ยง" แล้วกดการ์ดหมวด Beauty / Skincare</li><li>กดปุ่ม "เพิ่มคำเฉพาะหมวดนี้" พิมพ์คำทดสอบ QAWORD-CAT เลือก "ประเภทความเสี่ยง" · "ระดับความรุนแรง" · "การจัดการ" แล้วกดปุ่ม "เพิ่มคำเสี่ยง"</li><li>ไปที่เมนู "คลังสินค้า" เปิดสินค้า A ที่ติดหมวด Beauty/Skincare กดการ์ด "ชุดคำเสี่ยงของ …" แล้วค้นหาคำทดสอบในหน้าต่าง "คำเสี่ยงของหมวด"</li><li>เปิดสินค้า B ที่อยู่หมวดอื่น แล้วค้นหาคำเดียวกันเทียบ</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>แผงเพิ่มคำระบุขอบเขตชัดว่า "เพิ่มเข้าธุรกิจ Beauty / Skincare"</li><li>หลังบันทึก เห็นข้อความยืนยัน "เพิ่ม "QAWORD-CAT" ใน Beauty / Skincare แล้ว" และคำใหม่แสดงในแถบข้าง "คำเฉพาะหมวดนี้ (เพิ่มเอง)" พร้อมติดป้าย "เพิ่มเอง" ในชุดคำที่สแกน</li><li>สินค้า A พบคำทดสอบในหน้าต่าง "คำเสี่ยงของหมวด"</li><li>สินค้า B ไม่พบคำนั้น (คำเฉพาะหมวดไม่ apply ข้ามหมวด)</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · Story 2.5 · FR46b1</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13051" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13051" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13051" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13051" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13051" data-st="block">BLOCKED</span>
@@ -3106,7 +3158,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">เพิ่มคำห้ามทั่วทั้ง Workspace ครั้งเดียวแล้วมีผลทุกหมวดทุกสินค้า <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
-  <td class="status" data-uid="tc-13052"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13052"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13052"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -3117,10 +3169,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คำเสี่ยง" แล้วกดปุ่ม "เพิ่มคำห้ามทั่วทั้ง Workspace"</li><li>อ่านคำอธิบายขอบเขตในแผงที่เปิดขึ้น พิมพ์คำทดสอบ QAWORD-GLOBAL เลือกประเภท/ระดับ แล้วกดปุ่ม "เพิ่มคำเสี่ยง"</li><li>ดูกลุ่ม "คำเฉพาะแบรนด์ (ทุกหมวด · Tier 1)" ที่คอลัมน์ขวาของหน้า</li><li>ไปที่เมนู "คลังสินค้า" เปิดสินค้า 2 ชิ้นที่อยู่คนละหมวด แล้วค้นหาคำทดสอบในหน้าต่าง "คำเสี่ยงของหมวด" ของแต่ละชิ้น</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>แผงระบุขอบเขต "ทั่วทั้ง Workspace (ทุกหมวด)" พร้อมคำอธิบาย "ใช้กับทุกหมวด/ทุกสินค้า" — เพิ่มครั้งเดียวไม่ต้องไล่เพิ่มทีละหมวด</li><li>หลังบันทึก เห็นข้อความยืนยัน "เพิ่ม "QAWORD-GLOBAL" ใน ทั่วทั้ง Workspace (ทุกหมวด) แล้ว"</li><li>คำใหม่ปรากฏในกลุ่ม "คำเฉพาะแบรนด์ (ทุกหมวด · Tier 1)"</li><li>สินค้าทั้ง 2 ชิ้นที่อยู่คนละหมวดพบคำนั้นทั้งคู่</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · Story 2.5 · FR46b2</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13052" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13052" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13052" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13052" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13052" data-st="block">BLOCKED</span>
@@ -3138,7 +3190,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">หมวด "อื่นๆ" ไม่มีชุดสำเร็จรูป ต้องเพิ่มคำเองและมีผลเฉพาะสินค้าในหมวดนั้น <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13053"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13053"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13053"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -3149,10 +3201,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คำเสี่ยง" ดูข้อความท้ายการ์ดหมวด "อื่นๆ" แล้วกดเปิดหมวด</li><li>อ่านส่วน "ชุดคำที่สแกน" และแถบข้าง "คำเฉพาะหมวดนี้ (เพิ่มเอง)" (ก่อนเพิ่มคำ) แล้วกด "เพิ่มคำเฉพาะหมวดนี้" เพิ่มคำทดสอบ QAWORD-OTHER</li><li>ไปที่เมนู "คลังสินค้า" เปิดสินค้าที่ติดหมวด "อื่นๆ" แล้วค้นหาคำทดสอบในหน้าต่าง "คำเสี่ยงของหมวด"</li><li>เปิดสินค้าที่ไม่ได้ติดหมวด "อื่นๆ" แล้วค้นหาคำเดียวกันเทียบ</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>หมวด "อื่นๆ" ไม่มีชุดคำสำเร็จรูปจากระบบ — ก่อนเพิ่มคำ การ์ดแสดง "0 คำเฉพาะหมวด · สแกนจริง N" (N = คำกลางที่ใช้ทุกหมวด) และในหมวด แถบข้าง "คำเฉพาะหมวดนี้ (เพิ่มเอง)" แสดง "— ยังไม่มี —" ส่วน "ชุดคำที่สแกน" มีเพียงกลุ่ม "คำกลางที่ใช้ทุกหมวด" (การ์ดจะแสดง "ยังไม่มีคำเสี่ยง — เพิ่มเอง" และในหมวดแสดง "— ยังไม่มีคำเสี่ยงในชุดนี้ —" เฉพาะเมื่อ workspace ยังไม่มีคำกลางเลย)</li><li>หลังเพิ่มคำ สินค้าที่ติดหมวด "อื่นๆ" พบคำนั้นในชุดคำเสี่ยงของสินค้า</li><li>สินค้าที่ไม่ได้ติดหมวด "อื่นๆ" ไม่พบคำนั้น (มีผลเฉพาะสินค้าที่ติดหมวดนี้ ไม่กลายเป็น global)</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · Story 2.5 · FR46b · TAKRA-1228</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13053" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13053" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13053" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13053" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13053" data-st="block">BLOCKED</span>
@@ -3170,7 +3222,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">ดูสถิติการกรอง 30 วันย้อนหลังพร้อมอัตราการบล็อกเทียบเป้า <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13054"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13054"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-13054"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -3181,11 +3233,11 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner จากนั้นไปที่เมนู "คำเสี่ยง"</li><li>เลื่อนไปที่หัวข้อ "สถิติการกรอง (30 วันย้อนหลัง)"</li><li>อ่านค่าแต่ละตัวและหน่วยที่แสดง</li><li>ดูค่าที่ระบุเป้าหมายอัตราการบล็อก</li><li>ดูส่วน Top Triggered และขอบเขตเวลาที่กำกับไว้</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>เห็นค่า คอมเมนต์ที่กรองทั้งหมด · ถูก block โดย Risk Word · Block rate</li><li>Block rate แสดงพร้อมเป้าหมาย ≥95%</li><li>มีส่วน Top Triggered ที่ระบุขอบเขต "ทั้ง workspace · 30 วันย้อนหลัง"</li><li>ถ้าข้อมูลยังเป็นค่าตัวอย่าง ต้องมีป้ายกำกับให้ผู้ใช้รู้ (เช่น ป้าย "ตัวอย่าง")</li></ul><div class="hint" style="margin-top:6px">ที่มา: MVP-1 (รายงานเดิม)</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-13054" data-st="pass">PASS</span>
-    <span class="opt fail" data-uid="tc-13054" data-st="fail">FAIL</span>
+    <span class="opt fail sel" data-uid="tc-13054" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13054" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13054" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-13054" data-st="skip">SKIP</span>
@@ -3202,7 +3254,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">ตรวจชุดคำที่สแกนจริงของหมวด = universal + คำของหมวด − allowlist <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13055"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13055"><span class="stb hold">HOLD</span></td>
   <td class="jira-cell" data-uid="tc-13055"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -3213,12 +3265,12 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คำเสี่ยง" เอาเมาส์ชี้ค้างที่ตัวเลข "สแกนจริง" ท้ายการ์ดหมวดที่จะทดสอบ แล้วอ่านคำอธิบาย</li><li>กดเปิดหมวดนั้น อ่านบรรทัดสรุปใต้ชื่อหมวดที่แจกแจงองค์ประกอบ (universal + หมวด · allowlist กรองออก)</li><li>นับจำนวนคำในส่วน "ชุดคำที่สแกน" เทียบกับตัวเลขสรุป</li><li>กลับมาหน้า "คำเสี่ยง" ดูกลุ่ม "Allowlist (ยกเว้น)" ที่คอลัมน์ขวา แล้วตรวจว่าคำในกลุ่มนี้ไม่ปรากฏในชุดคำที่สแกนของหมวด</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ตัวเลข "สแกนจริง" มีคำอธิบายเมื่อชี้เมาส์ค้าง: "คำที่สินค้าหมวดนี้สแกนจริง = universal + หมวด − allowlist"</li><li>หน้าในหมวดแสดงองค์ประกอบแยก: จำนวน universal + จำนวนของหมวด และจำนวน allowlist ที่ถูกกรองออก (เมื่อมี)</li><li>จำนวนคำในส่วน "ชุดคำที่สแกน" ตรงกับตัวเลข "สแกนจริง" บนการ์ดหมวด</li><li>คำที่อยู่ในกลุ่ม "Allowlist (ยกเว้น)" ยังเห็นอยู่ในรายการ allowlist แต่ถูกยกเว้น — ไม่ปรากฏในชุดคำที่สแกน</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · Story 2.5 · FR46e</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-13055" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13055" data-st="fail">FAIL</span>
-    <span class="opt hold" data-uid="tc-13055" data-st="hold">HOLD</span>
+    <span class="opt hold sel" data-uid="tc-13055" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13055" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-13055" data-st="skip">SKIP</span>
   </div></div>
@@ -3234,7 +3286,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">เพิ่มคำเสี่ยงหลายคำพร้อมกัน (1 คำต่อบรรทัด) พร้อมดูตัวอย่างก่อนบันทึก <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13148"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13148"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13148"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -3245,10 +3297,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คำเสี่ยง" ในแถบด้านซ้าย แล้วกดการ์ดหมวด Beauty / Skincare แล้วกด "เพิ่มคำเฉพาะหมวดนี้"</li><li>ในช่อง "คำเสี่ยง" พิมพ์คำทดสอบ 3 คำ บรรทัดละ 1 คำ แล้วดูตัวนับคำและส่วน "ตัวอย่างที่จะเพิ่ม"</li><li>เลือก "ประเภทความเสี่ยง" "ระดับความรุนแรง" และ "การจัดการ" แล้วกดปุ่ม "เพิ่ม 3 คำเสี่ยง"</li><li>สังเกตข้อความแจ้งผลและแถบข้าง "คำเฉพาะหมวดนี้ (เพิ่มเอง)"</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ใต้ช่องมีคำแนะนำ "พิมพ์ 1 คำต่อบรรทัด — เพิ่มหลายคำพร้อมกันได้" และตัวนับขึ้น "3 คำ"</li><li>ส่วน "ตัวอย่างที่จะเพิ่ม" แสดงคำที่จะเพิ่ม (ก่อนพิมพ์ขึ้น "พิมพ์คำเสี่ยงด้านบนเพื่อดูตัวอย่าง") และปุ่มเปลี่ยนเป็น "เพิ่ม 3 คำเสี่ยง"</li><li>บันทึกแล้วขึ้น "เพิ่ม 3 คำเสี่ยงใน Beauty / Skincare แล้ว" และทั้ง 3 คำขึ้นในแถบข้าง "คำเฉพาะหมวดนี้ (เพิ่มเอง)" พร้อมป้ายระดับการจัดการ</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · คลังคำเสี่ยงของ workspace (คำเพิ่มเอง) · TAKRA-656 (เฉพาะเจ้าของ workspace)</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13148" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13148" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13148" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13148" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13148" data-st="block">BLOCKED</span>
@@ -3266,7 +3318,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">เพิ่มคำที่มีอยู่แล้วในหมวด ต้องเตือนคำซ้ำและบันทึกไม่ได้จนกว่าจะเอาออก <span class="kd kd-val">Validation</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13149"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13149"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13149"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -3277,10 +3329,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คำเสี่ยง" ในแถบด้านซ้าย แล้วกดการ์ดหมวด Beauty / Skincare แล้วกด "เพิ่มคำเฉพาะหมวดนี้"</li><li>ในช่อง "คำเสี่ยง" พิมพ์คำที่มีอยู่แล้วในหมวด 1 คำ และคำใหม่อีก 1 คำ (บรรทัดละคำ) แล้วอ่านข้อความเตือน และดูปุ่มบันทึก</li><li>ลบบรรทัดคำที่ซ้ำออก แล้วสังเกตข้อความเตือนและปุ่มบันทึกอีกครั้ง</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ขึ้นข้อความเตือน "มีคำที่อยู่ในธุรกิจนี้แล้ว: QAMULTI-1 — ลบออกก่อนบันทึก" และปุ่มบันทึกกดไม่ได้</li><li>ลบคำซ้ำออกแล้วข้อความเตือนหาย และปุ่มบันทึกกลับมากดได้</li><li>ไม่มีคำซ้ำถูกเพิ่มเข้าแถบข้าง "คำเฉพาะหมวดนี้ (เพิ่มเอง)"</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · คลังคำเสี่ยงของ workspace (คำเพิ่มเอง) · TAKRA-656 (เฉพาะเจ้าของ workspace)</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13149" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13149" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13149" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13149" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13149" data-st="block">BLOCKED</span>
@@ -3298,7 +3350,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">แก้ไขคำเสี่ยงที่เพิ่มเอง (ประเภท ระดับ การจัดการ) แล้วค่าใหม่แสดงทันที <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
-  <td class="status" data-uid="tc-13150"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13150"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13150"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -3309,10 +3361,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คำเสี่ยง" ในแถบด้านซ้าย แล้วกดการ์ดหมวด Beauty / Skincare</li><li>ที่แถบข้าง "คำเฉพาะหมวดนี้ (เพิ่มเอง)" กดปุ่มตัวเลือก (⋯) ของคำทดสอบ แล้วเลือก "แก้ไข"</li><li>ในแผง "แก้ไขคำเสี่ยง" เปลี่ยน "ระดับความรุนแรง" และ "การจัดการ" แล้วกด "บันทึก"</li><li>สังเกตข้อความแจ้งผลและป้ายของคำนั้นในแถบข้าง</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>เมนูตัวเลือกมี "แก้ไข" · "เปลี่ยนเป็น Warn" หรือ "เปลี่ยนเป็น Block" · "ลบ"</li><li>แผงมีหัวข้อ "แก้ไขคำเสี่ยง" ใต้หัวข้อเขียนว่า "คำที่เพิ่มเอง" และมีช่อง "คำเสี่ยง" · "ประเภทความเสี่ยง" · "ระดับความรุนแรง" · "การจัดการ"</li><li>บันทึกแล้วขึ้น "แก้ไขแล้ว" และป้ายของคำในแถบข้างเปลี่ยนตามค่าใหม่ทันที</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · คลังคำเสี่ยงของ workspace (คำเพิ่มเอง) · TAKRA-656 (เฉพาะเจ้าของ workspace)</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13150" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13150" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13150" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13150" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13150" data-st="block">BLOCKED</span>
@@ -3330,7 +3382,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">เปลี่ยนการจัดการของคำเป็น Warn / Block ได้จากเมนูโดยไม่ต้องเปิดแผงแก้ไข <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13151"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13151"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13151"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -3340,10 +3392,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คำเสี่ยง" ในแถบด้านซ้าย แล้วกดการ์ดหมวดที่มีคำทดสอบ</li><li>ที่แถบข้าง "คำเฉพาะหมวดนี้ (เพิ่มเอง)" กดปุ่มตัวเลือก (⋯) ของคำที่เป็น Block แล้วเลือก "เปลี่ยนเป็น Warn"</li><li>สังเกตป้ายของคำนั้น แล้วเปิดเมนูอีกครั้งและเลือก "เปลี่ยนเป็น Block"</li><li>สังเกตป้ายของคำอีกครั้ง</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>เลือก "เปลี่ยนเป็น Warn" แล้วป้ายของคำเปลี่ยนจาก "Block" เป็น "Warn" ทันที</li><li>เมนูของคำที่เป็น Warn เปลี่ยนตัวเลือกเป็น "เปลี่ยนเป็น Block" และกดแล้วป้ายกลับเป็น "Block"</li><li>ถ้าเปลี่ยนไม่สำเร็จ ขึ้น "เปลี่ยนระดับไม่สำเร็จ — กู้คำเดิมกลับแล้ว" และป้ายกลับเป็นค่าเดิม</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · คลังคำเสี่ยงของ workspace (คำเพิ่มเอง) · TAKRA-656 (เฉพาะเจ้าของ workspace)</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13151" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13151" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13151" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13151" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13151" data-st="block">BLOCKED</span>
@@ -3361,7 +3413,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">ลบคำเสี่ยงที่เพิ่มเองต้องกดยืนยันก่อน และคำหายจากรายการทันที <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
-  <td class="status" data-uid="tc-13152"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13152"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13152"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -3372,10 +3424,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คำเสี่ยง" ในแถบด้านซ้าย แล้วกดการ์ดหมวดที่มีคำทดสอบ</li><li>ที่แถบข้าง "คำเฉพาะหมวดนี้ (เพิ่มเอง)" กดปุ่มตัวเลือก (⋯) ของคำทดสอบ เลือก "ลบ" อ่านกล่องยืนยันแล้วกด "ยกเลิก" ก่อน</li><li>ทำซ้ำแล้วกด "ลบ" ในกล่องยืนยัน และสังเกตข้อความแจ้งผลกับแถบข้าง</li><li>กลับมาหน้า "คำเสี่ยง" ลบคำทดสอบในกลุ่ม "คำเฉพาะแบรนด์ (ทุกหมวด · Tier 1)" ด้วยวิธีเดียวกัน แล้วสังเกตรายการ</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>กล่องยืนยันมีหัวข้อ "ลบคำเสี่ยง" และข้อความ "ลบ “…” ออกจากรายการ? มีผลทันทีและย้อนกลับไม่ได้" · กด "ยกเลิก" แล้วคำยังอยู่</li><li>ยืนยันลบแล้วขึ้น "ลบ “…” แล้ว" และคำหายจากแถบข้างทันที (ถ้าไม่เหลือคำเลยขึ้น "— ยังไม่มี —")</li><li>คำในกลุ่ม "คำเฉพาะแบรนด์ (ทุกหมวด · Tier 1)" ลบได้เหมือนกันและหายจากกลุ่มนั้น</li><li>คำที่ติดป้าย "ชุดสำเร็จ" ไม่มีปุ่มให้ลบ</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · คลังคำเสี่ยงของ workspace (คำเพิ่มเอง) · TAKRA-656 (เฉพาะเจ้าของ workspace)</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13152" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13152" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13152" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13152" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13152" data-st="block">BLOCKED</span>
@@ -3393,7 +3445,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">ค้นหาคำเสี่ยงทุกหมวดแล้วเจอคำที่เพิ่มเอง พร้อมบอกจำนวนและล้างคำค้นได้ <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13153"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13153"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13153"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -3404,10 +3456,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คำเสี่ยง" ในแถบด้านซ้าย แล้วพิมพ์คำทดสอบในช่อง "ค้นหาคำเสี่ยงทุกหมวด"</li><li>อ่านหัวข้อผลการค้นหาและจำนวนที่เจอ แล้วดูว่าคำอยู่ในกลุ่มใด</li><li>พิมพ์คำที่ไม่มีอยู่จริง แล้วอ่านข้อความ จากนั้นกด "ล้างคำค้นหา"</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ขึ้นหัวข้อ "ผลการค้นหา “QAMULTI”" พร้อม "เจอ N คำ" และคำที่เพิ่มเองแสดงอยู่ใต้หมวดของมัน</li><li>คำที่ไม่มีอยู่ขึ้น "ไม่พบคำเสี่ยงที่ตรงกับ “ZZZ-NOT-EXIST”" พร้อมคำแนะนำ "ลองพิมพ์คำสั้นลง หรือตรวจตัวสะกดอีกครั้ง"</li><li>กด "ล้างคำค้นหา" แล้วกลับมาหน้ารายการหมวดตามปกติ</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · คลังคำเสี่ยงของ workspace (คำเพิ่มเอง) · TAKRA-656 (เฉพาะเจ้าของ workspace)</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13153" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13153" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13153" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13153" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13153" data-st="block">BLOCKED</span>
@@ -3425,7 +3477,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">ผู้ใช้ที่ไม่ใช่ Owner ดูคำเสี่ยงได้ แต่เพิ่ม แก้ไข หรือลบไม่ได้ <span class="kd kd-perm">Permission</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13154"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13154"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13154"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -3436,10 +3488,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชีที่ไม่ใช่ Owner</li><li>ไปที่เมนู "คำเสี่ยง" ในแถบด้านซ้าย แล้วดูบริเวณที่เคยมีปุ่ม "เพิ่มคำห้ามทั่วทั้ง Workspace"</li><li>กดการ์ดหมวด Beauty / Skincare แล้วดูบริเวณที่เคยมีปุ่ม "เพิ่มคำเฉพาะหมวดนี้" และแถบข้าง "คำเฉพาะหมวดนี้ (เพิ่มเอง)"</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ไม่มีปุ่ม "เพิ่มคำห้ามทั่วทั้ง Workspace" และ "เพิ่มคำเฉพาะหมวดนี้" แต่ขึ้นข้อความ "เฉพาะเจ้าของ workspace เท่านั้นที่เพิ่ม แก้ไข หรือลบคำเสี่ยงได้" แทน</li><li>คำในแถบข้างและกลุ่มคำเพิ่มเองไม่มีปุ่มตัวเลือก (⋯) ให้แก้ไข/ลบ</li><li>ยังเปิดดูหมวดและคำเสี่ยงได้ตามปกติ</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · คลังคำเสี่ยงของ workspace (คำเพิ่มเอง) · TAKRA-656 (เฉพาะเจ้าของ workspace)</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13154" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13154" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13154" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13154" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13154" data-st="block">BLOCKED</span>
