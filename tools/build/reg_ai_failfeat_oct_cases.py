@@ -107,3 +107,38 @@ for _e in EPICS:
 EPICS = [e2 for e2 in (
     dict(_e0, feats=[f2 for f2 in (dict(_f0, cases=[c for c in _f0['cases'] if c['prio'] in ('P0', 'P1')]) for _f0 in _e0['feats']) if f2['cases']])
     for _e0 in EPICS) if e2['feats']]
+
+
+# ── รอบนี้ใช้อวาตาร์ Graham เท่านั้นในทุกเคสที่ใช้อวาตาร์ (สั่ง 2026-10-05) ──
+# ทำเป็นชั้นปรับเฉพาะรอบ regression นี้ — ไม่แก้โมดูลต้นทาง (ai_tickets_1223_cases / ai_autoreply_cases)
+# เพื่อไม่ให้รายงานเดี่ยวเดือน ก.ย. เปลี่ยนตาม · แก้แค่ข้อความ step + เพิ่มบรรทัด Test Data (uid/ลำดับเดิม)
+import copy as _copy
+import re as _re
+
+_GRAHAM = 'อวาตาร์: Graham เท่านั้น'
+_GRAHAM_STEPS = {
+    'TC-A2.3': [('การ์ดอวาตาร์ใบแรก', 'การ์ดอวาตาร์ Graham')],
+    'TC-LS.2': [('เลือกอวาตาร์ 1 ตัว', 'เลือกอวาตาร์ Graham')],
+    'TC-AV.1': [('เลือกอวาตาร์ 1 ตัว', 'เลือกอวาตาร์ Graham')],
+    'TC-AV.2': [('แล้วเลือกอวาตาร์ให้ฉาก', 'แล้วเลือกอวาตาร์ Graham ให้ฉาก')],
+    'TC-PF.2': [('เลือกอวาตาร์ให้ฉากที่ยังขาด', 'เลือกอวาตาร์ Graham ให้ฉากที่ยังขาด')],
+    'TC-E15-TGT-02': [('วัน-เวลาในอนาคต เลือกอวาตาร์ กรอก', 'วัน-เวลาในอนาคต เลือกอวาตาร์ Graham กรอก')],
+}
+# เคสที่ประกอบ/รันไลฟ์ (มีอวาตาร์บนจอหรืออวาตาร์พูด) — ไม่รวมเคสที่เข้า Studio/คลังเพื่อจัดการสคริปต์หรือตั้งค่าเท่านั้น
+_GRAHAM_SKIP = {'TC-A2.2', 'TC-ST.4', 'TC-AP.2', 'TC-RM.1', 'TC-TS.1', 'TC-SB.2', 'T1225.10', 'T1226.3', 'TC-E15-DFT-15', 'TC-GC.3'}
+_LIVE_RX = _re.compile(r'อวาตาร์|อวตาร|[Aa]vatar|ออกอากาศ|ห้องคุมไลฟ์|Studio|ไลฟ์ใหม่|รอบไลฟ์|เริ่มไลฟ์|กำลังไลฟ์')
+_UNFILTERED = [c for e in EPICS for f in e['feats'] for c in f['cases']]
+for _e in EPICS:
+    for _f in _e['feats']:
+        for _i, _c in enumerate(_f['cases']):
+            _txt = ' '.join(_c['pre'] + _c['steps'] + _c['data'])
+            if _c['id'] in _GRAHAM_SKIP or not (_c['id'] in _GRAHAM_STEPS or _LIVE_RX.search(_txt)):
+                continue
+            _c = _copy.deepcopy(_c)
+            for _old, _new in _GRAHAM_STEPS.get(_c['id'], []):
+                _hit = [j for j, s in enumerate(_c['steps']) if _old in s]
+                assert len(_hit) == 1, (_c['id'], _old, _hit)
+                _c['steps'][_hit[0]] = _c['steps'][_hit[0]].replace(_old, _new, 1)
+            if not any('Graham' in x for x in _c['data']):
+                _c['data'] = _c['data'] + [_GRAHAM]
+            _f['cases'][_i] = _c
