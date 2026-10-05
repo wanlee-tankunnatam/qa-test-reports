@@ -337,6 +337,26 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   "tc-13065": {
     "st": "pass",
     "actual": "ทดสอบบน UAT (wanlee 01 · Owner qa@takra.ai) 5 ต.ค. 2569: ผูกสคริปต์ QA-SBTS-1005-X (อนุมัติแล้ว) จากคลังเข้าฉากใน Studio แล้วแถวสคริปต์ขึ้นในรายการของฉาก ขยายดูมีข้อความ \"script จากคลังกลาง · แก้ไม่ได้ที่นี่\" · แก้ต้นฉบับในคลัง v1→v2 แล้วเปิด Studio อีกครั้ง เนื้อหาในฉากยังเป็นสำเนาเดิม (ข้อความเวอร์ชันแรก) ไม่เปลี่ยนเอง และแถวขึ้นแถบ \"ล้าสมัย (v1→v2)\" พร้อมปุ่ม \"อัปเดต snapshot\" (หมายเหตุ: การแก้ต้นฉบับ seed ผ่าน API PATCH ซึ่งให้ผลเท่ากับแก้จากหน้าคลัง)"
+  },
+  "tc-13066": {
+    "st": "pass",
+    "actual": "ทดสอบบน UAT (wanlee 01 · Owner qa@takra.ai) 5 ต.ค. 2569: คอลัมน์ \"ใช้ในไลฟ์\" ในคลังสคริปต์แสดงตามจริง: สคริปต์ที่ผูก 2 ไลฟ์ขึ้น \"ใช้ใน 2 ไลฟ์\", ผูก 1 ไลฟ์ขึ้น \"ใช้ใน 1 ไลฟ์\", ที่ยังไม่ผูกขึ้น \"ยังไม่ผูกไลฟ์\" · แผงรายละเอียดของสคริปต์ (2 ไลฟ์) ช่อง \"ใช้ในไลฟ์\" แสดง \"ใช้ใน 2 ไลฟ์\" ตรงกับคอลัมน์ · ผูกสคริปต์ B เข้าไลฟ์ที่ 2 ผ่าน Studio แล้ว B เปลี่ยนจาก \"ใช้ใน 1 ไลฟ์\" เป็น \"ใช้ใน 2 ไลฟ์\""
+  },
+  "tc-13188": {
+    "st": "pass",
+    "actual": "ทดสอบบน UAT (wanlee 01 · Owner qa@takra.ai) 5 ต.ค. 2569: ร่างไลฟ์ 2 ฉาก: เปิดหน้าต่าง \"ผูกสคริปต์เข้าฉาก\" แล้วติ๊กสคริปต์ที่อนุมัติแล้ว 2 รายการต่อเนื่องโดยหน้าต่างไม่ปิด ช่องที่ติ๊กมี tooltip \"ผูกกับฉากนี้แล้ว — กดเพื่อนำออก\" · แถบสรุปเปลี่ยนจาก \"สคริปต์ในไลฟ์นี้ 2 / 12 · ฉากนี้ 2 / 3\" เป็น \"3 / 12 · ฉากนี้ 1 / 3\" หลังสลับไปติ๊ก 1 รายการที่ฉาก 2 และตัวนับคอลัมน์ซ้ายขึ้น 2/3 กับ 1/3 ทันที · ฉาก 1 แสดง \"สคริปต์ (2/3)\" ครบ 2 รายการ เรียง 1, 2 พร้อมตัวปรับ \"จำนวนรอบของฉากนี้\" · ฉาก 2 แสดง \"สคริปต์ (1/3)\" เฉพาะรายการของฉากนั้น ไม่ปนกัน"
+  },
+  "tc-13189": {
+    "st": "pass",
+    "actual": "ทดสอบบน UAT (wanlee 01 · Owner qa@takra.ai) 5 ต.ค. 2569: ฉากที่ผูกไว้ 2 รายการ ผูกเพิ่มเป็นรายการที่ 3: แถบด้านบนหน้าต่างเปลี่ยนเป็น \"ฉากนี้ผูกสคริปต์ครบ 3 แล้ว — นำตัวอื่นออกก่อน\" ตัวนับฉากขึ้น 3/3 ช่องติ๊กของสคริปต์ที่ยังไม่ผูกถูกล็อก (disabled) · ปิดหน้าต่าง หัวข้อเป็น \"สคริปต์ (3/3)\" และปุ่มข้างหัวข้อเปลี่ยนจาก \"เพิ่ม\" เป็น \"จัดการ\" · กด \"จัดการ\" แล้วนำออก 1 รายการ แถบกลับเป็นสรุป \"สคริปต์ในไลฟ์นี้ 3 / 12 · ฉากนี้ 2 / 3\" และติ๊กสคริปต์ใบอื่นได้อีกครั้ง"
+  },
+  "tc-13190": {
+    "st": "pass",
+    "actual": "ทดสอบบน UAT (wanlee 01 · Owner qa@takra.ai) 5 ต.ค. 2569: สคริปต์สถานะรอรีวิวแสดงในหน้าต่างผูกพร้อมป้าย \"รออนุมัติ\" การ์ดเป็นสีจาง ช่องติ๊กถูกล็อก (tooltip \"รอ owner อนุมัติก่อน จึงจะผูกเข้าฉากได้\") กดแล้วไม่ผูก ตัวนับไม่เปลี่ยน · สคริปต์ฉบับร่างค้นแล้วขึ้น \"ไม่พบสคริปต์ที่ตรง\" (ไม่แสดงในหน้าต่าง) · ท้ายหน้าต่างมีข้อความ \"ผูกเข้าฉากได้เฉพาะ script ที่ approved · ใบที่ “รออนุมัติ” แสดงไว้ให้เห็นแต่ยังผูกไม่ได้ · script ใหม่จากตรงนี้จะส่ง owner approve ก่อน\" ตรงตาม Expected"
+  },
+  "tc-13191": {
+    "st": "pass",
+    "actual": "ทดสอบบน UAT (wanlee 01 · Owner qa@takra.ai) 5 ต.ค. 2569: ฉากที่ผูก 3 รายการ: กดไอคอน × ที่แถวลำดับ 2 แล้วหายจากรายการทันที ลำดับที่เหลือเรียงใหม่เป็น 1, 2 และหัวข้อเป็น \"สคริปต์ (2/3)\" · นำออกอีก 1 รายการจากหน้าต่างผูก (ติ๊กออก) หัวข้อเป็น \"สคริปต์ (1/3)\" เหลือเฉพาะตัวที่ยังผูก · ตรวจจากเซิร์ฟเวอร์ (bindings API) และออก/เปิดร่างใหม่ ฉากเหลือเฉพาะสคริปต์ที่ไม่ได้ปลด (บันทึกอัตโนมัติ) · สคริปต์ที่ปลดยังอยู่ในคลังสถานะ \"อนุมัติแล้ว\" ครบ (หมายเหตุ: ขั้น \"รีเฟรชหน้า\" ใช้ออก/เปิดร่างใหม่แทน F5 เพราะ Studio รีเซ็ต workspace หลังรีโหลดเต็มหน้า)"
   }
 }
 </script>
@@ -360,15 +380,15 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="runsum">
     <h3>📊 สรุปผล Manual Test</h3>
     <div class="sumchips">
-      <span class="cnt pass">PASS <b id="sum-pass">40</b></span>
+      <span class="cnt pass">PASS <b id="sum-pass">45</b></span>
       <span class="cnt fail">FAIL <b id="sum-fail">3</b></span>
       <span class="cnt hold">HOLD <b id="sum-hold">2</b></span>
       <span class="cnt block">BLOCKED <b id="sum-block">1</b></span>
       <span class="cnt skip">SKIP <b id="sum-skip">0</b></span>
-      <span class="cnt pending">รอเทส <b id="sum-pending">212</b></span>
+      <span class="cnt pending">รอเทส <b id="sum-pending">207</b></span>
     </div>
-    <div class="progress"><div id="sumbar" class="progressbar" style="width: 18%;"></div></div>
-    <div class="hint" id="sumpct" style="margin-top:5px">18% ทดสอบแล้ว (46/258)</div>
+    <div class="progress"><div id="sumbar" class="progressbar" style="width: 20%;"></div></div>
+    <div class="hint" id="sumpct" style="margin-top:5px">20% ทดสอบแล้ว (51/258)</div>
   </div>
 
   <div class="toolbar">
@@ -4187,7 +4207,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">คลังสคริปต์แสดงจำนวนไลฟ์ที่ใช้สคริปต์นั้นอยู่ <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13066"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13066"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13066"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -4197,10 +4217,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังสคริปต์" ดูคอลัมน์ "ใช้ในไลฟ์" ของสคริปต์ที่เคยถูกผูกเข้าไลฟ์</li><li>เปิดแผงรายละเอียดของสคริปต์นั้น แล้วดูค่าในช่อง "ใช้ในไลฟ์"</li><li>ไปผูกสคริปต์เดียวกันเข้าไลฟ์อีกรอบผ่าน Studio (เมนู "แพลตฟอร์มไลฟ์" → "แดชบอร์ด" → "เริ่มไลฟ์ใหม่" → "ผูกสคริปต์จากคลัง") แล้วกลับมาดูตัวเลข</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>คอลัมน์ "ใช้ในไลฟ์" แสดง "ใช้ใน N ไลฟ์" ตามจำนวนไลฟ์ที่ผูกอยู่จริง</li><li>สคริปต์ที่ยังไม่ถูกผูกแสดงเป็น "ยังไม่ผูกไลฟ์"</li><li>หลังผูกเพิ่มอีกรอบ ตัวเลขเพิ่มขึ้นตามจริง</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · Story 2.9 · FR71</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13066" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13066" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13066" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13066" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13066" data-st="block">BLOCKED</span>
@@ -4218,7 +4238,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">ผูกสคริปต์หลายตัวต่อเนื่องในหน้าต่างเดียว และเลือกฉากปลายทางได้เอง <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13188"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13188"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13188"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -4229,10 +4249,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "แพลตฟอร์มไลฟ์" ในแถบด้านซ้าย แล้วกดปุ่ม "เปลี่ยนแพลตฟอร์ม" ในกล่องยืนยัน จากนั้นเลือกเมนู "โปรเจกต์ของฉัน" แล้วกด "แก้ไขต่อ" ที่ร่างไลฟ์ตาม Precondition เพื่อเข้า Studio</li><li>เลือกฉากแรก แล้วที่แผงด้านขวา ส่วน "สคริปต์ (0/3)" กด "ผูกสคริปต์จากคลัง" — ในหน้าต่าง "ผูกสคริปต์เข้าฉาก" อ่านแถบสรุปด้านบน แล้วที่คอลัมน์ซ้าย "ผูกเข้าฉาก" เลือกฉากแรก และติ๊กสคริปต์ที่อนุมัติแล้ว 2 รายการติดกันโดยไม่ปิดหน้าต่าง</li><li>ที่คอลัมน์ซ้าย "ผูกเข้าฉาก" เปลี่ยนไปเลือกฉากที่สอง ติ๊กสคริปต์อีก 1 รายการ แล้วกด "ปิด"</li><li>ดูรายการสคริปต์ของฉากแรกในแผงด้านขวา แล้วสลับไปเลือกฉากที่สองและดูรายการอีกครั้ง</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>หน้าต่างยังเปิดค้างระหว่างติ๊กหลายรายการ ใบที่ติ๊กแล้วแสดงสถานะผูกแล้ว (ชี้เมาส์ที่ช่องติ๊กเห็น "ผูกกับฉากนี้แล้ว — กดเพื่อนำออก")</li><li>แถบสรุปด้านบนและตัวนับข้างชื่อฉากในคอลัมน์ "ผูกเข้าฉาก" อัปเดตทันที เช่น "สคริปต์ในไลฟ์นี้ 2 / 12 · ฉากนี้ 2 / 3" และฉากแรกขึ้น 2/3</li><li>ฉากแรกแสดง "สคริปต์ (2/3)" มีครบทั้ง 2 รายการ (ไม่หายไปรายการใดรายการหนึ่ง) เรียงลำดับ 1, 2 และมีตัวปรับ "จำนวนรอบของฉากนี้" ขึ้นเหนือรายการ</li><li>ฉากที่สองแสดง "สคริปต์ (1/3)" มีเฉพาะสคริปต์ที่ผูกให้ฉากนี้ ไม่ปนกับฉากแรก</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · Story 2.9 · FR71 · FR28b/FR33a (≤3 ต่อฉาก · ≤12 ต่อไลฟ์) · TAKRA-1336</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13188" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13188" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13188" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13188" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13188" data-st="block">BLOCKED</span>
@@ -4250,7 +4270,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">ฉากผูกสคริปต์ครบ 3 ตัวแล้ว ผูกเพิ่มไม่ได้จนกว่าจะนำตัวอื่นออก <span class="kd kd-val">Validation</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13189"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13189"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13189"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -4261,10 +4281,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "แพลตฟอร์มไลฟ์" ในแถบด้านซ้าย แล้วกดปุ่ม "เปลี่ยนแพลตฟอร์ม" ในกล่องยืนยัน จากนั้นเลือกเมนู "โปรเจกต์ของฉัน" แล้วกด "แก้ไขต่อ" ที่ร่างไลฟ์ตาม Precondition เพื่อเข้า Studio</li><li>เลือกฉากที่ผูกไว้ 2 รายการ ที่ส่วน "สคริปต์ (2/3)" กดปุ่ม "เพิ่ม" แล้วติ๊กสคริปต์ที่อนุมัติแล้วเพิ่มอีก 1 รายการ</li><li>อ่านแถบด้านบนของหน้าต่าง แล้วลองติ๊กสคริปต์ใบอื่นที่ยังไม่ได้ผูก จากนั้นกด "ปิด" และดูหัวข้อส่วนสคริปต์กับปุ่มข้างหัวข้อ</li><li>กดปุ่ม "จัดการ" แล้วกดช่องติ๊กของสคริปต์ที่ผูกไว้ 1 รายการเพื่อนำออก และสังเกตแถบด้านบนกับสคริปต์ใบอื่นอีกครั้ง</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>เมื่อผูกครบ 3 แถบด้านบนของหน้าต่างเปลี่ยนเป็น "ฉากนี้ผูกสคริปต์ครบ 3 แล้ว — นำตัวอื่นออกก่อน" และฉากนั้นในคอลัมน์ "ผูกเข้าฉาก" ขึ้น 3/3</li><li>สคริปต์ใบอื่นที่ยังไม่ผูกติ๊กไม่ได้ (ช่องติ๊กถูกล็อก) จำนวนในฉากไม่เกิน 3</li><li>หลังปิดหน้าต่าง หัวข้อแสดง "สคริปต์ (3/3)" และปุ่มข้างหัวข้อเปลี่ยนจาก "เพิ่ม" เป็น "จัดการ"</li><li>นำออก 1 รายการแล้ว แถบด้านบนกลับเป็นสรุป "สคริปต์ในไลฟ์นี้ … · ฉากนี้ 2 / 3" และติ๊กสคริปต์ใบอื่นได้อีกครั้ง</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 3 · FR28b · FR33a (≤3 script ต่อฉาก) · Story 2.9 · FR71 · TAKRA-857</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13189" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13189" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13189" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13189" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13189" data-st="block">BLOCKED</span>
@@ -4282,7 +4302,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">สคริปต์ที่ยังรออนุมัติแสดงในหน้าต่างผูกแต่ผูกเข้าฉากไม่ได้ <span class="kd kd-val">Validation</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13190"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13190"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13190"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -4293,10 +4313,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "แพลตฟอร์มไลฟ์" ในแถบด้านซ้าย แล้วกดปุ่ม "เปลี่ยนแพลตฟอร์ม" ในกล่องยืนยัน จากนั้นเลือกเมนู "โปรเจกต์ของฉัน" แล้วกด "แก้ไขต่อ" ที่ร่างไลฟ์ตาม Precondition เพื่อเข้า Studio</li><li>ที่แผงด้านขวา ส่วน "สคริปต์" กด "ผูกสคริปต์จากคลัง" (หรือ "เพิ่ม") แล้วในช่อง "ค้นหาสคริปต์" พิมพ์ชื่อสคริปต์ที่รอรีวิว</li><li>ดูป้ายบนการ์ดสคริปต์นั้น แล้วลองกดช่องติ๊กเพื่อผูก จากนั้นค้นหาชื่อสคริปต์ที่เป็นฉบับร่าง</li><li>อ่านข้อความท้ายหน้าต่าง แล้วกด "ปิด" และดูรายการสคริปต์ของฉาก</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>สคริปต์ที่รอรีวิวยังแสดงในรายการพร้อมป้าย "รออนุมัติ" แต่ช่องติ๊กถูกล็อก กดผูกไม่ได้</li><li>สคริปต์ที่เป็นฉบับร่างไม่แสดงในหน้าต่างนี้เลย (ค้นแล้วขึ้น "ไม่พบสคริปต์ที่ตรง")</li><li>ท้ายหน้าต่างแจ้งว่า "ผูกเข้าฉากได้เฉพาะ script ที่ approved · ใบที่ “รออนุมัติ” แสดงไว้ให้เห็นแต่ยังผูกไม่ได้ …"</li><li>รายการสคริปต์และตัวนับ "สคริปต์ (n/3)" ของฉากไม่เปลี่ยน</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · Story 2.8–2.9 · FR32 · FR70 · FR71 · TAKRA-586</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13190" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13190" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13190" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13190" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13190" data-st="block">BLOCKED</span>
@@ -4314,7 +4334,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">ปลดสคริปต์ออกจากฉากได้เองทั้งจากแถวในฉากและจากหน้าต่างผูก <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
-  <td class="status" data-uid="tc-13191"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13191"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13191"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -4324,10 +4344,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "แพลตฟอร์มไลฟ์" ในแถบด้านซ้าย แล้วกดปุ่ม "เปลี่ยนแพลตฟอร์ม" ในกล่องยืนยัน จากนั้นเลือกเมนู "โปรเจกต์ของฉัน" แล้วกด "แก้ไขต่อ" ที่ร่างไลฟ์ตาม Precondition เพื่อเข้า Studio</li><li>เลือกฉากที่ผูกไว้ 3 รายการ ชี้เมาส์ที่แถวสคริปต์ลำดับที่ 2 แล้วกดไอคอน "ปลดออกจากฉาก" (รูป ×)</li><li>กดปุ่ม "เพิ่ม" ที่ส่วนสคริปต์ แล้วในหน้าต่าง "ผูกสคริปต์เข้าฉาก" กดช่องติ๊กของสคริปต์ที่ยังผูกอยู่ 1 รายการ (ขึ้นคำกำกับ "ผูกกับฉากนี้แล้ว — กดเพื่อนำออก") เพื่อนำออก แล้วกด "ปิด"</li><li>ดูรายการสคริปต์และหัวข้อส่วนสคริปต์ จากนั้นรีเฟรชหน้าเบราว์เซอร์ เปิดฉากเดิม แล้วไปที่เมนู "หลังบ้าน" → "คลังสคริปต์" ค้นหาสคริปต์ที่ปลดออก</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>กดไอคอนแล้วสคริปต์หายจากรายการของฉากทันที ลำดับที่เหลือเรียงเลขใหม่ต่อกัน (1, 2) และหัวข้อเปลี่ยนเป็น "สคริปต์ (2/3)"</li><li>นำออกจากหน้าต่างผูกแล้ว หัวข้อเป็น "สคริปต์ (1/3)" เหลือเฉพาะสคริปต์ที่ยังผูกอยู่</li><li>หลังรีเฟรช ฉากยังเหลือเฉพาะสคริปต์ที่ไม่ได้ปลด (ระบบบันทึกอัตโนมัติ) — ถ้าปลดครบทุกตัว ส่วนสคริปต์กลับเป็นปุ่ม "ผูกสคริปต์จากคลัง"</li><li>สคริปต์ที่ปลดออกยังอยู่ในคลังสคริปต์ตามเดิม (การปลดไม่ลบต้นฉบับ)</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · Story 2.9 · FR71 · Epic 3 · Story 3.9 · FR33c</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13191" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13191" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13191" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13191" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13191" data-st="block">BLOCKED</span>
