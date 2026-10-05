@@ -357,6 +357,34 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   "tc-13191": {
     "st": "pass",
     "actual": "ทดสอบบน UAT (wanlee 01 · Owner qa@takra.ai) 5 ต.ค. 2569: ฉากที่ผูก 3 รายการ: กดไอคอน × ที่แถวลำดับ 2 แล้วหายจากรายการทันที ลำดับที่เหลือเรียงใหม่เป็น 1, 2 และหัวข้อเป็น \"สคริปต์ (2/3)\" · นำออกอีก 1 รายการจากหน้าต่างผูก (ติ๊กออก) หัวข้อเป็น \"สคริปต์ (1/3)\" เหลือเฉพาะตัวที่ยังผูก · ตรวจจากเซิร์ฟเวอร์ (bindings API) และออก/เปิดร่างใหม่ ฉากเหลือเฉพาะสคริปต์ที่ไม่ได้ปลด (บันทึกอัตโนมัติ) · สคริปต์ที่ปลดยังอยู่ในคลังสถานะ \"อนุมัติแล้ว\" ครบ (หมายเหตุ: ขั้น \"รีเฟรชหน้า\" ใช้ออก/เปิดร่างใหม่แทน F5 เพราะ Studio รีเซ็ต workspace หลังรีโหลดเต็มหน้า)"
+  },
+  "tc-13192": {
+    "st": "block",
+    "actual": "ทดสอบบน UAT (wanlee 01 · Owner qa@takra.ai) 5 ต.ค. 2569: ทดสอบได้ครึ่งเดียว — ส่วนที่ผ่าน: กดลบสคริปต์ A (ผูก 1 ไลฟ์) ขึ้นกล่อง \"ลบสคริปต์นี้?\" ข้อความ \"จะถูกลบออกจากคลังถาวร — รอบไลฟ์ที่อ้างถึงสคริปต์นี้จะหาไม่เจอ\" และแถบแดง \"ผูกอยู่กับ 1 ไลฟ์ — ถ้ามีไลฟ์ที่ยังไม่จบใช้อยู่ ระบบจะไม่ให้ลบ\" โดย N ตรงกับคอลัมน์ \"ใช้ในไลฟ์\" · สคริปต์ B ที่ผูกแค่ร่างไลฟ์ (3 ร่าง) ลบได้ ขึ้น \"ลบสคริปต์แล้ว\" และหายจากคลัง · ส่วนที่ทำไม่ได้ (BLOCKED): สคริปต์ A ผูกกับไลฟ์ที่ \"ตั้งเวลาไว้และยังไม่จบ\" แล้วลองลบ เพราะสร้างไลฟ์ตั้งเวลาไม่ได้ — wanlee 01 ไม่มีแพ็กเกจ TAKRA AI และ Wanlee Qa แพ็กเกจหมดอายุ 29 ส.ค. 2569 ทำให้ปุ่ม \"ตั้งเวลา\" ในหน้าต่างตรวจก่อนไลฟ์กดไม่ได้ (พรีไฟลต์ \"แพ็กเกจ TAKRA AI — ต้องแก้\") ต้องใช้ workspace ที่มีแพ็กเกจใช้งานได้เพื่อทดสอบส่วนนี้"
+  },
+  "tc-13067": {
+    "st": "block",
+    "actual": "ทดสอบบน UAT (wanlee 01 · Owner qa@takra.ai) 5 ต.ค. 2569: ทดสอบไม่ได้ตามขั้นตอน: ไม่มีทางสร้างสคริปต์ \"ที่สร้างเองในฉาก (ไม่ได้ผูกจากคลัง)\" ผ่าน UI — ในหน้าต่าง \"ผูกสคริปต์เข้าฉาก\" แท็บ \"สร้างใหม่\" กด \"ส่ง approve\" แล้วสคริปต์ไปอยู่ในคลังสถานะ \"รอการอนุมัติ\" (ประเภท \"นำเสนอ\") ทันทีและไม่ถูกผูกเข้าฉาก · สคริปต์ในฉากที่ seed ผ่าน API ให้ไม่มี sourceScriptId แล้วแถวขึ้นแค่ปุ่ม × ไม่มีไอคอน \"บันทึกเข้าคลัง\" แม้ปรับสถานะในฉากเป็น \"อนุมัติแล้ว\" (ไอคอนนี้ขึ้นเฉพาะแถวที่ผูกมาจากคลัง ตามที่เห็นใน TC-TS.6) · สงสัยว่าเคสนี้ล้าสมัยกับ UI ปัจจุบัน หรือมีเงื่อนไขการแสดงไอคอนที่เอกสารไม่ได้ระบุ ขอให้ทีมพัฒนายืนยัน"
+  },
+  "tc-13068": {
+    "st": "pass",
+    "actual": "ทดสอบบน UAT (wanlee 01 · Owner qa@takra.ai) 5 ต.ค. 2569: แก้ต้นฉบับ (v1→v2) แล้วเปิด Studio ของไลฟ์ที่ผูกไว้: แถวสคริปต์ขึ้นแถบ \"ล้าสมัย (v1→v2)\" ระบุเวอร์ชันเก่า→ใหม่ มีปุ่ม \"อัปเดต snapshot\" เนื้อหาในฉากยังเป็นเวอร์ชันเดิม ไม่ถูกเปลี่ยนเงียบ ๆ (ตรวจซ้ำผ่าน bindings API: sourceVersion=1, latestVersion=2, stale=true) (หมายเหตุ: แก้ต้นฉบับผ่าน API PATCH ให้ผลเท่ากับแก้จากหน้าคลัง)"
+  },
+  "tc-13069": {
+    "st": "pass",
+    "actual": "ทดสอบบน UAT (wanlee 01 · Owner qa@takra.ai) 5 ต.ค. 2569: ต้นฉบับอนุมัติแล้ว (v2) และสำเนาในฉากล้าสมัย กด \"อัปเดต snapshot\": ขึ้น \"อัปเดต snapshot แล้ว\" พร้อม \"ดึงเนื้อหาล่าสุดเข้าฉาก — ต้องอนุมัติสคริปต์ใหม่อีกครั้ง\" · เนื้อหาในฉากเป็นเวอร์ชันล่าสุด แถบล้าสมัยหาย · ป้ายสถานะของสคริปต์ในฉากเปลี่ยนจาก \"อนุมัติแล้ว\" เป็น \"ฉบับร่าง\" (รีเซ็ต) · พรีไฟลต์ของไลฟ์ (live-launch preflight) รายการ \"การอนุมัติสคริปต์\" ไม่ผ่าน \"1 สคริปต์ยังรออนุมัติ\" (ตรวจผ่าน API เพราะ workspace นี้ไม่มีแพ็กเกจ/อวาตาร์ จึงเปิดหน้าต่าง \"เริ่มไลฟ์\" ไม่ได้)"
+  },
+  "tc-13193": {
+    "st": "pass",
+    "actual": "ทดสอบบน UAT (wanlee 01 · Owner qa@takra.ai) 5 ต.ค. 2569: สคริปต์ Y เดียวกันผูกในร่างไลฟ์ A และ B แก้ Y จน v2 อนุมัติแล้ว ทั้งสองไลฟ์ขึ้น \"ล้าสมัย (v1→v2)\" · กด \"อัปเดต snapshot\" ที่ไลฟ์ A ขึ้น \"อัปเดต snapshot แล้ว\" แถบล้าสมัยของ A หาย · ออกไปเปิดไลฟ์ B ยังขึ้น \"ล้าสมัย (v1→v2)\" พร้อมปุ่ม \"อัปเดต snapshot\" ตามเดิม และเนื้อหาในไลฟ์ B ยังเป็นเวอร์ชันเดิม (ข้อความเวอร์ชันแรก) ไม่ตามไลฟ์ A"
+  },
+  "tc-13194": {
+    "st": "pass",
+    "actual": "ทดสอบบน UAT (wanlee 01 · Owner qa@takra.ai) 5 ต.ค. 2569: แก้เนื้อหาต้นฉบับ → ต้นฉบับกลับเป็น \"ฉบับร่าง\" (v2) และแถวในฉากขึ้น \"ล้าสมัย (v1→v2)\" · กด \"อัปเดต snapshot\" ขณะต้นฉบับยังไม่อนุมัติ ขึ้น \"อัปเดต snapshot ไม่สำเร็จ\" เหตุผล \"อัปเดต snapshot ได้เฉพาะสคริปต์ที่อนุมัติแล้ว (approved) เท่านั้น\" แถบล้าสมัยยังอยู่ เนื้อหาในฉากไม่เปลี่ยน · ส่งขออนุมัติและอนุมัติต้นฉบับ (ทำผ่าน API transition) แล้วกดอีกครั้ง ขึ้น \"อัปเดต snapshot แล้ว\" เนื้อหาในฉากเป็นเวอร์ชันใหม่ แถบล้าสมัยหาย"
+  },
+  "tc-13195": {
+    "st": "fail",
+    "actual": "ทดสอบบน UAT (wanlee 01 · Owner qa@takra.ai) 5 ต.ค. 2569: จากแถวสคริปต์ X ที่ผูกจากคลัง (อนุมัติแล้ว · ใช้ในไลฟ์ N=1) กดไอคอน \"บันทึกเข้าคลัง\" ขึ้น \"บันทึกเข้าคลังแล้ว\" / \"สร้าง master ใหม่ในคลังสคริปต์เรียบร้อย\" ตรงตาม Expected · ต้นฉบับ X ยังอยู่แท็บ \"ใช้งาน\" สถานะอนุมัติแล้ว และ \"ใช้ในไลฟ์\" เท่าเดิม (1) · แถวในฉากยังผูกต้นฉบับเดิม ไม่ขึ้นแถบล้าสมัย ไม่ถูกย้ายหรือนำออก · ผ่านทุกข้อ ยกเว้นชื่อ: master ใหม่ในแท็บ \"ร่าง\" (ฉบับร่าง · ยังไม่ผูกไลฟ์) ถูกตั้งชื่อ \"เปิดไลฟ์\" (ชื่อบล็อกแรก) ไม่ใช่ชื่อเดียวกับสคริปต์ต้นทาง \"QA-SBTS-1005-X\" ตามที่ Expected ระบุ \"สคริปต์ชื่อเดียวกัน\" — เสนอเปิด bug (ความรุนแรงต่ำ) หรือยืนยันกับ PO ว่าตั้งใจให้ใช้ชื่อบล็อก"
   }
 }
 </script>
@@ -380,15 +408,15 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="runsum">
     <h3>📊 สรุปผล Manual Test</h3>
     <div class="sumchips">
-      <span class="cnt pass">PASS <b id="sum-pass">45</b></span>
-      <span class="cnt fail">FAIL <b id="sum-fail">3</b></span>
+      <span class="cnt pass">PASS <b id="sum-pass">49</b></span>
+      <span class="cnt fail">FAIL <b id="sum-fail">4</b></span>
       <span class="cnt hold">HOLD <b id="sum-hold">2</b></span>
-      <span class="cnt block">BLOCKED <b id="sum-block">1</b></span>
+      <span class="cnt block">BLOCKED <b id="sum-block">3</b></span>
       <span class="cnt skip">SKIP <b id="sum-skip">0</b></span>
-      <span class="cnt pending">รอเทส <b id="sum-pending">207</b></span>
+      <span class="cnt pending">รอเทส <b id="sum-pending">200</b></span>
     </div>
-    <div class="progress"><div id="sumbar" class="progressbar" style="width: 20%;"></div></div>
-    <div class="hint" id="sumpct" style="margin-top:5px">20% ทดสอบแล้ว (51/258)</div>
+    <div class="progress"><div id="sumbar" class="progressbar" style="width: 22%;"></div></div>
+    <div class="hint" id="sumpct" style="margin-top:5px">22% ทดสอบแล้ว (58/258)</div>
   </div>
 
   <div class="toolbar">
@@ -4365,7 +4393,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">ลบสคริปต์ในคลังที่ผูกกับไลฟ์ที่ยังไม่จบไม่ได้ แต่ลบตัวที่ผูกแค่ร่างไลฟ์ได้ <span class="kd kd-val">Validation</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13192"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13192"><span class="stb block">BLOCKED</span></td>
   <td class="jira-cell" data-uid="tc-13192"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -4376,13 +4404,13 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังสคริปต์" ค้นหาสคริปต์ A แล้วดูคอลัมน์ "ใช้ในไลฟ์"</li><li>กดเมนู "ตัวเลือก" (⋯) ของสคริปต์ A เลือก "ลบ" อ่านกล่องยืนยัน แล้วกด "ลบสคริปต์"</li><li>ทำซ้ำกับสคริปต์ B: กดเมนู "ตัวเลือก" (⋯) เลือก "ลบ" แล้วกด "ลบสคริปต์"</li><li>สังเกตข้อความแจ้งผลของทั้ง 2 ครั้ง และรายการในคลังสคริปต์</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>กล่องยืนยัน "ลบสคริปต์นี้?" แจ้งว่า "จะถูกลบออกจากคลังถาวร — รอบไลฟ์ที่อ้างถึงสคริปต์นี้จะหาไม่เจอ" และมีแถบสีแดง "ผูกอยู่กับ N ไลฟ์ — ถ้ามีไลฟ์ที่ยังไม่จบใช้อยู่ ระบบจะไม่ให้ลบ" (N ตรงกับคอลัมน์ "ใช้ในไลฟ์")</li><li>สคริปต์ A ลบไม่ได้: ขึ้นข้อความ "ลบไม่สำเร็จ" พร้อมเหตุผลว่าสคริปต์นี้ถูกใช้อยู่ในไลฟ์ที่ยังไม่จบ ให้ถอดสคริปต์ออกจากไลฟ์เหล่านั้นหรือยกเลิกไลฟ์ก่อน และสคริปต์ A ยังอยู่ในคลัง</li><li>สคริปต์ B ลบได้: ขึ้นข้อความ "ลบสคริปต์แล้ว" / "“ชื่อสคริปต์” ถูกลบออกจากคลังถาวร" และหายจากรายการทุกแท็บ</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · Story 2.7 (ลบ script) · Story 2.9 (backlink "in use in N lives") · FR71 · TAKRA-855 · TAKRA-1244</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-13192" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13192" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13192" data-st="hold">HOLD</span>
-    <span class="opt block" data-uid="tc-13192" data-st="block">BLOCKED</span>
+    <span class="opt block sel" data-uid="tc-13192" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-13192" data-st="skip">SKIP</span>
   </div></div>
   <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
@@ -4398,7 +4426,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">บันทึกสคริปต์ที่เขียนใน Studio กลับเข้าคลังเป็นต้นฉบับใหม่ <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13067"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13067"><span class="stb block">BLOCKED</span></td>
   <td class="jira-cell" data-uid="tc-13067"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -4408,13 +4436,13 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "แพลตฟอร์มไลฟ์" กด "เปลี่ยนแพลตฟอร์ม" แล้วเปิด Studio ของไลฟ์ที่มีสคริปต์ซึ่งสร้างเองในฉาก (ไม่ได้ผูกมาจากคลัง)</li><li>ที่รายการสคริปต์ในฉาก กดปุ่ม "บันทึกเข้าคลัง" (ไอคอนรูปบันทึก) แล้วอ่านข้อความแจ้งผล</li><li>กลับฝั่งหลังบ้านผ่านเมนู "หลังบ้าน" ไปที่เมนู "คลังสคริปต์" ค้นหาสคริปต์ชื่อเดียวกัน แล้วเปิดแผงรายละเอียดเทียบเนื้อหากับใน Studio</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>เห็นข้อความ "บันทึกเข้าคลังแล้ว" พร้อม "สร้าง master ใหม่ในคลังสคริปต์เรียบร้อย"</li><li>สคริปต์ปรากฏในคลังพร้อมเนื้อหาตรงกับที่เขียนใน Studio</li><li>สคริปต์ในคลังเข้ากระบวนการรีวิว–อนุมัติตามปกติ (ไม่ข้ามการรีวิว)</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · Story 2.10 · FR72</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-13067" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13067" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13067" data-st="hold">HOLD</span>
-    <span class="opt block" data-uid="tc-13067" data-st="block">BLOCKED</span>
+    <span class="opt block sel" data-uid="tc-13067" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-13067" data-st="skip">SKIP</span>
   </div></div>
   <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
@@ -4429,7 +4457,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">ต้นฉบับในคลังถูกแก้แล้ว ฉากที่ผูกไว้ขึ้นป้ายว่าสำเนาล้าสมัย <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13068"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13068"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13068"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -4439,10 +4467,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังสคริปต์" กดเมนูตัวเลือก (⋯) ของสคริปต์ต้นฉบับที่ถูกผูกเข้าไลฟ์ไว้ เลือก "แก้ไข" แก้เนื้อหา แล้วกด "บันทึกการแก้ไข"</li><li>ไปที่เมนู "แพลตฟอร์มไลฟ์" กด "เปลี่ยนแพลตฟอร์ม" แล้วเปิด Studio ของไลฟ์ที่ผูกสคริปต์นั้นไว้</li><li>ดูรายการสคริปต์ในฉากและแถบแจ้งเตือนที่ขึ้นใหม่ที่แถวสคริปต์นั้น</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>แถวสคริปต์ในฉากขึ้นแถบ "ล้าสมัย (vN→vN+1)" ระบุเวอร์ชันเก่า→ใหม่</li><li>ในแถบมีปุ่ม "อัปเดต snapshot" ให้กดเมื่อพร้อม</li><li>เนื้อหาที่ยังแสดงในฉากเป็นของเวอร์ชันเดิม ไม่ถูกเปลี่ยนเงียบๆ</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · Story 2.10 · FR72</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13068" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13068" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13068" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13068" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13068" data-st="block">BLOCKED</span>
@@ -4460,7 +4488,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">กดอัปเดต snapshot แล้วต้องอนุมัติสคริปต์ใหม่อีกครั้ง <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
-  <td class="status" data-uid="tc-13069"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13069"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13069"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -4470,10 +4498,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "แพลตฟอร์มไลฟ์" กด "เปลี่ยนแพลตฟอร์ม" แล้วเปิด Studio ของไลฟ์ที่มีสคริปต์ในฉากขึ้นแถบ "ล้าสมัย"</li><li>กดปุ่ม "อัปเดต snapshot" ที่แถวสคริปต์นั้น แล้วอ่านข้อความแจ้งผล</li><li>ขยายดูเนื้อหาสคริปต์ในฉากและสถานะการอนุมัติของสคริปต์</li><li>กดปุ่มเริ่มไลฟ์เพื่อเปิดหน้าต่างที่มีส่วน "ตรวจก่อนไลฟ์" แล้วดูรายการ "การอนุมัติสคริปต์"</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>เห็นข้อความ "อัปเดต snapshot แล้ว" พร้อม "ดึงเนื้อหาล่าสุดเข้าฉาก — ต้องอนุมัติสคริปต์ใหม่อีกครั้ง"</li><li>เนื้อหาในฉากเปลี่ยนเป็นเวอร์ชันล่าสุดของต้นฉบับ และแถบล้าสมัยหายไป</li><li>สถานะการอนุมัติของสคริปต์ในฉากถูกรีเซ็ต (ไม่คงสถานะอนุมัติเดิม — ต้องรีวิว/อนุมัติใหม่ต่อไลฟ์)</li><li>รายการ "การอนุมัติสคริปต์" ในส่วนตรวจก่อนไลฟ์แสดงว่ายังไม่ผ่าน เช่น "N สคริปต์ยังรออนุมัติ"</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · Story 2.10 · FR72</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13069" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13069" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13069" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13069" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13069" data-st="block">BLOCKED</span>
@@ -4491,7 +4519,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">อัปเดต snapshot ในไลฟ์หนึ่งไม่ลามไปไลฟ์อื่นที่ผูกต้นฉบับเดียวกัน <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13193"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13193"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13193"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -4502,10 +4530,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "แพลตฟอร์มไลฟ์" ในแถบด้านซ้าย แล้วกดปุ่ม "เปลี่ยนแพลตฟอร์ม" ในกล่องยืนยัน จากนั้นเลือกเมนู "โปรเจกต์ของฉัน" แล้วกด "แก้ไขต่อ" ที่ไลฟ์ A เพื่อเข้า Studio</li><li>ที่แถวสคริปต์ซึ่งขึ้นแถบ "ล้าสมัย (vN→vN+1)" กดปุ่ม "อัปเดต snapshot" แล้วอ่านข้อความแจ้งผล</li><li>ออกจาก Studio กลับไปที่เมนู "โปรเจกต์ของฉัน" แล้วกด "แก้ไขต่อ" ที่ไลฟ์ B</li><li>ดูแถวสคริปต์เดียวกันในฉากของไลฟ์ B และกดขยายดูเนื้อหา</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ไลฟ์ A ขึ้นข้อความ "อัปเดต snapshot แล้ว" และแถบ "ล้าสมัย" ของไลฟ์ A หายไป</li><li>ไลฟ์ B ยังขึ้นแถบ "ล้าสมัย (vN→vN+1)" พร้อมปุ่ม "อัปเดต snapshot" ตามเดิม</li><li>เนื้อหาสคริปต์ในไลฟ์ B ยังเป็นเวอร์ชันเดิม ไม่ถูกอัปเดตตามไลฟ์ A (อัปเดตแยกต่อไลฟ์ ไม่อัปเดตอัตโนมัติทุกไลฟ์)</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · Story 2.10 · FR72 (push-update ต่อ Live · explicit · ไม่ auto-cascade)</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13193" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13193" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13193" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13193" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13193" data-st="block">BLOCKED</span>
@@ -4523,7 +4551,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">แก้เนื้อหาต้นฉบับแล้วยังไม่อนุมัติใหม่ กดอัปเดต snapshot ไม่สำเร็จ <span class="kd kd-val">Validation</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13194"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13194"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13194"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -4533,10 +4561,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังสคริปต์" กดเมนู "ตัวเลือก" (⋯) ของสคริปต์ต้นฉบับที่ผูกไว้ เลือก "แก้ไข" แก้ข้อความในเนื้อหา แล้วกด "บันทึกการแก้ไข" — ดูสถานะของสคริปต์หลังบันทึก</li><li>ไปที่เมนู "แพลตฟอร์มไลฟ์" ในแถบด้านซ้าย แล้วกดปุ่ม "เปลี่ยนแพลตฟอร์ม" ในกล่องยืนยัน จากนั้นเลือกเมนู "โปรเจกต์ของฉัน" แล้วกด "แก้ไขต่อ" ที่ไลฟ์ที่ผูกสคริปต์นั้น เพื่อเข้า Studio แล้วที่แถวสคริปต์ซึ่งขึ้นแถบ "ล้าสมัย" กดปุ่ม "อัปเดต snapshot" และอ่านข้อความแจ้งผล</li><li>กลับไปที่เมนู "หลังบ้าน" → "คลังสคริปต์" ส่งสคริปต์นั้นขออนุมัติ ("ส่งขออนุมัติ") แล้วกด "อนุมัติ" ให้เรียบร้อย</li><li>กลับเข้า Studio ของไลฟ์เดิม กด "อัปเดต snapshot" อีกครั้ง แล้วดูแถวสคริปต์</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>หลังแก้เนื้อหา ต้นฉบับในคลังกลับเป็นสถานะ "ฉบับร่าง" (ต้องอนุมัติใหม่) และแถวในฉากขึ้นแถบ "ล้าสมัย (vN→vN+1)"</li><li>กด "อัปเดต snapshot" ขณะต้นฉบับยังไม่อนุมัติ ขึ้นข้อความ "อัปเดต snapshot ไม่สำเร็จ" พร้อมเหตุผลว่าอัปเดตได้เฉพาะสคริปต์ที่อนุมัติแล้ว — แถบล้าสมัยยังอยู่และเนื้อหาในฉากไม่เปลี่ยน</li><li>หลังอนุมัติต้นฉบับแล้วกดอีกครั้ง ขึ้นข้อความ "อัปเดต snapshot แล้ว" เนื้อหาในฉากเป็นเวอร์ชันใหม่ และแถบล้าสมัยหายไป</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · Story 2.8 (แก้เนื้อหาที่อนุมัติแล้ว → ต้องอนุมัติใหม่) · Story 2.10 · FR70 · FR72 · TAKRA-202</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13194" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13194" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13194" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13194" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13194" data-st="block">BLOCKED</span>
@@ -4554,7 +4582,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">บันทึกเข้าคลังจากแถวที่ผูกมาจากคลัง ได้ต้นฉบับใหม่แยกต่างหาก ต้นฉบับเดิมไม่ถูกแตะ <span class="kd kd-data">Data</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13195"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13195"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-13195"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -4564,11 +4592,11 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "แพลตฟอร์มไลฟ์" ในแถบด้านซ้าย แล้วกดปุ่ม "เปลี่ยนแพลตฟอร์ม" ในกล่องยืนยัน จากนั้นเลือกเมนู "โปรเจกต์ของฉัน" แล้วกด "แก้ไขต่อ" ที่ร่างไลฟ์ตาม Precondition เพื่อเข้า Studio</li><li>ชี้เมาส์ที่แถวสคริปต์ X ในฉาก แล้วกดไอคอน "บันทึกเข้าคลัง" (รูปบันทึก) และอ่านข้อความแจ้งผล</li><li>ไปที่เมนู "หลังบ้าน" → "คลังสคริปต์" ค้นหาชื่อสคริปต์ X แล้วไล่ดูแท็บ "ใช้งาน" และ "ร่าง"</li><li>กลับเข้า Studio ของร่างไลฟ์เดิม แล้วดูแถวสคริปต์ X อีกครั้ง</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ขึ้นข้อความ "บันทึกเข้าคลังแล้ว" / "สร้าง master ใหม่ในคลังสคริปต์เรียบร้อย"</li><li>คลังมีสคริปต์ชื่อเดียวกันเพิ่มขึ้น 1 รายการในแท็บ "ร่าง" (สถานะ "ฉบับร่าง" · "ยังไม่ผูกไลฟ์") แยกจากต้นฉบับ</li><li>ต้นฉบับ X เดิมยังอยู่แท็บ "ใช้งาน" สถานะ "อนุมัติแล้ว" และค่า "ใช้ในไลฟ์" เท่าเดิม (N)</li><li>แถวสคริปต์ในฉากยังผูกกับต้นฉบับเดิม ไม่ขึ้นแถบ "ล้าสมัย" และไม่ถูกย้ายหรือนำออกจากฉาก</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · Story 2.10 · FR72 (pull-to-library = สร้าง master ใหม่ · ไม่ผูก ไม่ย้าย ไม่ลบสล็อตต้นทาง) · TAKRA-202</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-13195" data-st="pass">PASS</span>
-    <span class="opt fail" data-uid="tc-13195" data-st="fail">FAIL</span>
+    <span class="opt fail sel" data-uid="tc-13195" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13195" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13195" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-13195" data-st="skip">SKIP</span>
