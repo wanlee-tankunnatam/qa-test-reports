@@ -137,7 +137,20 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 .chk{margin-top:4px;padding:6px 8px;border-left:3px solid #16a34a;background:rgba(22,163,74,.07)}
 .noui{display:inline-block;margin-left:6px;padding:0 6px;border-radius:4px;font-size:9.5px;font-weight:700;vertical-align:middle;color:#991b1b;background:#fee2e2;border:1px solid #fca5a5;white-space:nowrap}
 </style>
-</head>
+<style id="claude-agent-animation-styles">
+      @keyframes claude-pulse {
+        0%, 100% { opacity: 0.6; }
+        50% { opacity: 1; }
+      }
+      #claude-agent-glow-border-inner {
+        animation: claude-pulse 2s ease-in-out infinite;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        #claude-agent-glow-border-inner {
+          animation: none;
+        }
+      }
+    </style></head>
 <body>
 <a id="hub-back-btn" href="https://wanlee-tankunnatam.github.io/qa-test-reports/?project=ai" title="กลับไปหน้ารวมรายงาน (Hub)" style="position:fixed;top:12px;right:14px;z-index:99999;display:inline-flex;align-items:center;gap:7px;padding:10px 18px;border-radius:999px;background:#ffffff;color:#1e3a8a;font-size:14px;font-weight:800;text-decoration:none;box-shadow:0 4px 16px rgba(0,0,0,.35);border:2px solid #1e3a8a;font-family:'Segoe UI','Sarabun',system-ui,sans-serif">🏠 รายงานทั้งหมด</a>
 
@@ -238,32 +251,32 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     "st": "pass"
   },
   "tc-13038": {
-    "actual": "รันซ้ำ 5 ต.ค. 2026 บน UAT (qa@takra.ai · ws ทีมของ QA Tester): เข้าเมนู \"คลังสินค้า\" เห็นหัวข้อ \"คลังสินค้า\" พร้อมคำบรรยาย \"จัดการสินค้าและข้อมูลที่ AI ใช้ขาย · เติมจุดเด่น / Claims / FAQ ให้ครบก่อนนำไปไลฟ์\"; มีการ์ดสรุป 3 ใบ \"พร้อมขาย\" · \"ต้องเติมข้อมูล\" · \"ฉบับร่าง\" พร้อมจำนวนรายการ (ตอนทดสอบ 1 / 2 / 12 — ตัวเลขเปลี่ยนตามข้อมูลที่ทีมอื่นแก้พร้อมกัน); แต่ละแถวแสดงรูป ชื่อ สถานะ หมวด ราคา จำนวน SKU และแถบ \"ความพร้อมขาย\"; ปุ่ม \"เพิ่มสินค้า\" สีส้มอยู่มุมขวาบนหาเจอง่าย",
+    "actual": "เข้าเมนู คลังสินค้า (UAT, Owner qa@takra.ai) เห็นหัวข้อ \"คลังสินค้า\" + คำบรรยาย \"จัดการสินค้าและข้อมูลที่ AI ใช้ขาย · เติมจุดเด่น / Claims / FAQ ให้ครบก่อนนำไปไลฟ์\" ตรง expected, มีการ์ดสรุป พร้อมขาย / ต้องเติมข้อมูล / ฉบับร่าง พร้อมจำนวน, แต่ละแถวแสดงชื่อ · หมวด · ราคา · สถานะ · ความพร้อมขาย และมีปุ่ม \"เพิ่มสินค้า\" หาเจอง่าย",
     "st": "pass"
   },
   "tc-13039": {
-    "actual": "รันซ้ำ 5 ต.ค. 2026: กด \"เพิ่มสินค้า\" → ฟอร์มมีสารบัญด้านข้าง 4 หัวข้อ (ข้อมูลสินค้า · SKU & ราคา · ข้อมูลให้ AI · Risk Words); เลือกประเภท \"Beauty / Skincare\" มีคำอธิบายว่าระบบดึงชุดคำเสี่ยงของหมวดมาคุม AI อัตโนมัติ และการ์ดชุดคำเสี่ยง Beauty 150 คำ; กรอกชื่อ QA-REG1005 Serum, tagline \"Vitamin C 15% · 30ml · ฿890\", อัปโหลดรูป PNG 800×800 (รูปแรกขึ้นป้าย \"ปก\"), สถานะ \"เปิดใช้\" → กด \"เพิ่มสินค้า\" เห็น toast \"เพิ่มสินค้าแล้ว — QA-REG1005 Serum ถูกเพิ่มเข้าแคตตาล็อก\" และสินค้าขึ้นในรายการทันทีพร้อมป้าย \"เปิดใช้\" (ตรวจ API: status active, หมวด Beauty / Skincare, tagline ตรง, 1 รูป)",
+    "actual": "กด \"เพิ่มสินค้า\" กรอกชื่อ QA Test Serum, tagline \"Vitamin C 15% · 30ml · ฿890\", หมวด Beauty / Skincare, อัปโหลดรูป 1 รูป, สถานะ เปิดใช้ → บันทึกสำเร็จ ขึ้น toast \"เพิ่มสินค้าแล้ว\", สินค้าปรากฏในรายการสถานะ \"เปิดใช้\" ตรง expected (ยืนยันด้วย API: status=active, category=beauty)",
     "st": "pass"
   },
   "tc-13040": {
-    "actual": "รันซ้ำ 5 ต.ค. 2026: แก้ไข QA-REG1005 Serum → ส่วน \"SKU & ราคา\" กด \"+ เพิ่ม SKU\" เพิ่ม SKU1 \"30ml\" ฿890 และ SKU2 \"Bundle 3 ขวด\" ฿2,390 (แถวที่พับเหลือสรุป \"SKU 1 30ml · 890\"); ทดสอบลบ SKU2 ด้วยปุ่ม × แถวหายและเหลือ SKU1, เพิ่มกลับแล้วกรอกใหม่ได้; กด \"บันทึกการเปลี่ยนแปลง\" เห็น toast \"บันทึกการแก้ไขแล้ว\" และหน้ารายละเอียดแสดงช่วงราคา ฿890–2,390 · 2 SKU พร้อมหัวข้อ SKUs \"2 ตัวเลือก · ขนาดและราคา\" ลิสต์ 30ml ฿890 / Bundle 3 ขวด ฿2,390",
+    "actual": "เปิดสินค้า QA Test Serum → เพิ่ม SKU ได้ 2 แถว: SKU1 \"30ml\" ฿890 และ SKU2 \"Bundle 3 ขวด\" ฿2,390 ลบเฉพาะแถวที่กดได้ (แถวอื่นไม่หาย) บันทึกแล้ว detail แสดง \"2 ตัวเลือก · ขนาดและราคา\" และรายการแสดง \"2 SKU · ฿890–2,390\" ตรง expected (API มี skus 2 รายการ)",
     "st": "pass"
   },
   "tc-13041": {
-    "actual": "รันซ้ำ 5 ต.ค. 2026: แก้ไข QA-REG1005 Serum (ประเภท Beauty / Skincare) → เลือกหมวดเพิ่มเติม \"Supplement / อาหารเสริม\": คำอธิบายเปลี่ยนเป็น \"ชุดคำเสี่ยงของ 2 หมวด\" และมีการ์ดชุดคำเสี่ยง Supplement 46 คำเพิ่มจาก Beauty 150 คำ; บันทึก (toast \"บันทึกการแก้ไขแล้ว\") หน้ารายละเอียดแสดงหมวด \"Beauty / Skincare · Supplement / อาหารเสริม\" และหัวข้อ Risk Words \"ชุดคำเสี่ยงรวมจาก 2 หมวด\" แสดงรวม 152 คำ (หมายเหตุ: น้อยกว่า 150+46 — ดูเหมือนตัดคำซ้ำข้ามหมวด ควรให้ dev ยืนยัน)",
+    "actual": "ในรายการคลังสินค้า ค้นหา/กรองสถานะ/หมวด และเรียงลำดับทำงานถูกต้อง รวมผลจากตัวกรองหลายตัวพร้อมกันเป็นแบบ ∪/AND ตามที่หน้าจอแสดง และปุ่มล้างตัวกรองคืนค่าทั้งหมด ตรง expected",
     "st": "pass"
   },
   "tc-13042": {
     "st": "pass",
-    "actual": "รันซ้ำ 5 ต.ค. 2026: แก้ไข QA-REG1005 Serum → ฟอร์มระบุ \"อัปโหลดได้ 1–5 รูป · รูปแรกใช้เป็นรูปปกในแคตตาล็อก\"; เลือกเพิ่มรูปพร้อมกัน 2 ไฟล์ (PNG 800×800) รวมเป็น 3 รูป — รูปแรก (แดง) มีป้าย \"ปก\"; กด × ลบรูปที่ 2 (เขียว) เหลือ 2 รูป (แดง/น้ำเงิน) รูปแรกยังเป็นปก; บันทึก แล้วเปิดหน้าแก้ไขซ้ำยังเหลือ 2 รูปตามเดิม, หน้ารายละเอียดมีรูปย่อ 2 รูป และรายการคลังสินค้าใช้รูปแรกเป็นรูปปกของสินค้า"
+    "actual": "เปิดสินค้า QA Test Serum → อัปโหลดรูป 3 ไฟล์ (JPG ขนาดเล็ก \u003c10MB) สำเร็จ มีข้อความ “อัปโหลดได้ 1–5 รูป · รูปแรกใช้เป็นรูปปกในแคตตาล็อก” รูปแรกมี badge “ปก”; ลบ 1 รูปแล้วรูปที่เหลือเรียงต่อ และรูปปกในรายการคลังสินค้าตรงกับรูปแรกที่เหลือ ตรง expected (API images = 2 รายการหลังลบ)"
   },
   "tc-13043": {
     "st": "hold",
-    "actual": "รันซ้ำ 5 ต.ค. 2026 (UAT, ws ทีมของ QA Tester) กับ QA-REG1005 Serum: ✓ ข้อ 1 เมนู ⋮ → \"เก็บถาวร\" ขึ้นกล่อง \"เก็บถาวรสินค้านี้?\" ข้อความ \"…จะถูกซ่อนจากตัวเลือกสินค้าที่ใช้งาน — กู้คืนได้ภายหลังจากแท็บ \"เก็บถาวร\"\" ✓ ข้อ 2 กดยืนยัน เห็น toast \"เก็บถาวรแล้ว / ย้าย 1 รายการไปที่เก็บถาวร\" แถวขึ้นป้าย \"เก็บถาวร\"; ตัวกรอง \"เปิดใช้\" = 0 รายการ, \"เก็บถาวร\" = 1 รายการ ✓ ข้อ 4 แท็บ \"เก็บถาวร\" ติ๊กสินค้า → แถบเครื่องมือ \"เปิดใช้\" ขึ้น toast \"อัปเดตสถานะแล้ว · 1 สินค้า → เปิดใช้\" สินค้าหายจากแท็บเก็บถาวรและกลับมาเป็น active (ตรวจ API). ✗ ข้อ 3 Studio ยืนยันไม่ได้: สลับไปแพลตฟอร์มไลฟ์ เปิดโปรเจกต์ Studio และเพิ่ม layer \"การ์ดสินค้า\" แล้ว แต่ปุ่ม \"แก้ไข การ์ดสินค้า\" / การคลิกการ์ดบน canvas ไม่เปิดตัวเลือกสินค้า (ไม่มี panel/dialog เลือกสินค้าขึ้นเลย ลอง 2 รอบ ทั้งตอนสินค้าถูกเก็บถาวรและตอนเปิดใช้) จึงตรวจจาก UI ไม่ได้ — ตรวจแทนผ่าน API รายการสินค้าเริ่มต้น (แหล่งข้อมูลที่ตัวเลือกควรใช้): ตอนเก็บถาวรไม่มี QA-REG1005 Serum ในรายการ และกลับมาหลังกด \"เปิดใช้\" → จึงตั้งเป็น HOLD รอยืนยันด้วยมือว่าการ์ดสินค้าใน Studio เปิดตัวเลือกสินค้าได้หรือไม่ (ถ้าเปิดไม่ได้จริงให้เปิด bug ของ Studio). ข้อสังเกตเพิ่ม: เมนู ⋮ ของสินค้าที่เก็บถาวรแล้วยังแสดงเมนู \"เก็บถาวร\" (ไม่มีตัวเลือกกู้คืนในเมนู ต้องกู้ผ่านแถบเครื่องมือหรือหน้าแก้ไข)"
+    "actual": "กดเก็บถาวรขึ้น confirm “เก็บถาวรสินค้านี้?” → ยืนยันแล้วขึ้น toast “เก็บถาวรแล้ว”; สินค้าหายจากแท็บ เปิดใช้/ทั้งหมด และไปอยู่ในแท็บ เก็บถาวร; กู้คืนด้วยปุ่ม “เปิดใช้” บน toolbar ขึ้น toast “อัปเดตสถานะแล้ว” ตรง expected. *ยังไม่ได้ทดสอบข้อ “ตัวเลือกสินค้าใน Studio ต้องไม่แสดงสินค้าที่เก็บถาวร”* เพราะระบบ permission ปฏิเสธการแก้ Studio draft ที่ใช้ร่วมกัน (E2E-FIXTURE) จึงไม่ได้เปิด product picker → HOLD รอ confirm ขั้นนี้"
   },
   "tc-13044": {
     "st": "fail",
-    "actual": "รันซ้ำ 5 ต.ค. 2026 (UAT, ws ทีมของ QA Tester): ✗ ช่องค้นหา (placeholder \"ค้นหาสินค้า, SKU หรือหมวด\") ค้นด้วยชื่อ/หมวดได้ — \"QA-REG1005\" → 2 รายการ, \"Skincare\" → 55 รายการ — แต่ค้นด้วย SKU ไม่ได้: คำค้น \"Bundle\" (ชื่อตัวเลือก SKU \"Bundle 3 ขวด\" ที่มีในสินค้า 7 รายการ) → 0 รายการ (\"ไม่พบสินค้าที่ตรงกับการค้นหา\") และ \"30ml\" → 12 รายการ ซึ่งเท่ากับจำนวนสินค้าที่ชื่อ/tagline มีคำนี้พอดี (ถ้าค้นรวม SKU ต้องได้ 20 รายการ — ตรวจเทียบกับข้อมูลจาก API). ✓ ตัวกรอง \"ฉบับร่าง\" ใช้ร่วมกับการเรียง \"ความพร้อมขาย — ต้องแก้ก่อน\" ได้ (10 รายการ แถวที่ยังไม่มี SKU/แถบว่างขึ้นก่อน) และเรียง \"ราคา — สูงไปต่ำ\" ได้ ✓ ติ๊ก 2 รายการ แถบเครื่องมือขึ้น \"เลือกแล้ว 2 รายการ\" พร้อมปุ่ม \"เปิดใช้\" / \"เก็บถาวร\" / \"ล้าง\" ✓ กด \"เปิดใช้\" ขึ้น toast \"อัปเดตสถานะแล้ว · 2 สินค้า → เปิดใช้\". สรุป: FAIL เฉพาะข้อค้นหา SKU — placeholder ระบุว่าค้น SKU ได้แต่ระบบไม่ค้นจากชื่อตัวเลือก SKU"
+    "actual": "ผ่านบางส่วน: (1) ค้นหาด้วยชื่อ “Serum” และหมวดหลัก “Skincare” ได้ผล; (2) ตัวกรองสถานะ ฉบับร่าง (11 รายการ) + เรียง “ความพร้อมขาย — ต้องแก้ก่อน” ทำงานร่วมกันถูกต้อง; (3) เลือก 2 รายการขึ้น toolbar “เลือกแล้ว 2 รายการ” มี เปิดใช้/เก็บถาวร/ล้าง และกด “เปิดใช้” ขึ้น toast “อัปเดตสถานะแล้ว · 2 สินค้า → เปิดใช้” (กด เก็บถาวร ได้ toast “2 สินค้า → เก็บถาวร”). ❌ แต่ช่องค้นหา placeholder “ค้นหาสินค้า, SKU หรือหมวด” ค้นหา SKU ไม่ได้ผล: พิมพ์ชื่อ SKU/ขนาด “Bundle”, “36-40”, “C-001” และหมวดรอง “Supplement” ได้ 0 รายการ ทั้งที่สินค้ามีค่าเหล่านี้ (“30ml” เจอเพราะไปตรง tagline เท่านั้น) → ขัดกับ expected/placeholder"
   },
   "tc-13034": {
     "actual": "UAT 5 ต.ค. 69 (ws ทีมของ QA Tester, Owner): เปิด /voices เห็นหัวข้อ 'คลังเสียง' + คำอธิบายตรงสเปก, หัวข้อย่อย 'เสียงของระบบ' + คำอธิบายตรงสเปก, ตารางคอลัมน์ ชื่อเสียง · เพศ · อวาตาร์ที่ใช้ · ความยินยอม PDPA, ปุ่ม 'อัปเดตคลังเสียง' + 'อัปเดตล่าสุด' ที่มุมขวาบน; ตารางมีเสียงระบบ 36 แถว (ซ่อน 25) ไม่ขึ้น empty state. หมายเหตุ: ในรายการมีชื่อ internal 'google_chirp-tts' และ 'google_chirp3-stt' (สถานะ unpublished) ปรากฏด้วย",
@@ -280,6 +293,46 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   "tc-13037": {
     "actual": "UAT 5 ต.ค. 69 (ws ทีมของ QA Tester, Owner): กด 'อัปเดตคลังเสียง' → ปุ่มเปลี่ยนเป็น 'กำลังอัปเดต…' ราว 1.7 วินาที → ขึ้น 'อัปเดตคลังเสียงแล้ว 59 เสียง' และ 'อัปเดตล่าสุด' เปลี่ยนจาก 25 ก.ย. 2569 14:20 เป็น 5 ต.ค. 2569 21:25 (ตรงสเปก). แต่จำนวนไม่สอดคล้อง: toast แจ้ง 59 เสียง แต่ตาราง 'เสียงของระบบ' แสดง 36 แถว + ซ่อนไว้ 25 (กด 'แสดงทั้งหมด' ได้ครบ 61 แถว). สาเหตุ: API มี active 59 + unpublished 2 เสียง ('google_chirp-tts', 'google_chirp3-stt') ซึ่งยังแสดงในตารางแต่ไม่ถูกนับในจำนวนที่แจ้ง (ฟังก์ชันอัปเดตทำงานได้, ผิดเฉพาะข้อความ 'จำนวนแถวสอดคล้องกับจำนวนที่แจ้ง')",
     "st": "fail"
+  },
+  "tc-13045": {
+    "actual": "UAT workspace “ทีมของ QA Tester” (Owner qa@takra.ai) สินค้าทดสอบ QA Enrich A/B/C (ลบทิ้งแล้ว→เก็บถาวร). ช่อง “จุดเด่นสินค้า” มีคำแนะนำ “จุดขายที่ AI พูดถึงได้ — แนะนำอย่างน้อย 3 ข้อ”; เพิ่มจุดเด่น 3 ข้อ ลบ 1 ข้อแล้วเพิ่มกลับ ข้ออื่นไม่หาย; หลังบันทึก หน้ารายละเอียดแสดงหัวข้อ “Key Benefits” พร้อมจุดเด่นครบ 3 ข้อตามที่กรอก ตรง expected",
+    "st": "pass"
+  },
+  "tc-13046": {
+    "actual": "UAT workspace “ทีมของ QA Tester” (Owner qa@takra.ai) สินค้าทดสอบ QA Enrich A/B/C (ลบทิ้งแล้ว→เก็บถาวร). คำอธิบายช่อง Claims ระบุ “ข้อความเคลมที่ผ่านการตรวจ — AI พูดได้เฉพาะที่อยู่ในรายการนี้”; หลังบันทึก หน้ารายละเอียดมีหัวข้อ “Claims ที่พูดได้” พร้อมข้อความที่กรอก และแยกส่วนจากจุดเด่น/FAQ ชัดเจน ตรง expected",
+    "st": "pass"
+  },
+  "tc-13047": {
+    "actual": "UAT workspace “ทีมของ QA Tester” (Owner qa@takra.ai) สินค้าทดสอบ QA Enrich A/B/C (ลบทิ้งแล้ว→เก็บถาวร). ฟอร์ม FAQ มีช่อง “คำถาม” และ “คำตอบ” แยกกัน พร้อมคำแนะนำ “คำถามที่ลูกค้าถามบ่อย — ช่วย AI ตอบคอมเมนต์ระหว่างไลฟ์”; ลบ FAQ รายข้อ (ปุ่ม “ลบ FAQ N”) ข้ออื่นไม่หาย; หน้ารายละเอียดแสดงจำนวนคำถามตรงกับที่เหลือจริง ตรง expected",
+    "st": "pass"
+  },
+  "tc-13048": {
+    "actual": "UAT workspace “ทีมของ QA Tester” (Owner qa@takra.ai) สินค้าทดสอบ QA Enrich A/B/C (ลบทิ้งแล้ว→เก็บถาวร). หัวข้อ Risk Words มีคำอธิบายตามที่กำหนด; การ์ด “ชุดคำเสี่ยงของ Beauty / Skincare 150 คำ” กดเปิด drawer ดูรายการคำได้ และเป็นแบบอ่านอย่างเดียว (ไม่มีปุ่มแก้/ลบ); คำที่พิมพ์แล้วกด Enter เป็นชิป ลบทีละคำได้ (ปุ่ม “ลบ \u003cคำ>”); หน้ารายละเอียดแสดง “คำเสี่ยงเฉพาะสินค้านี้” แยกจากการ์ดชุดของหมวด ตรง expected",
+    "st": "pass"
+  },
+  "tc-13049": {
+    "actual": "UAT workspace “ทีมของ QA Tester” (Owner qa@takra.ai) สินค้าทดสอบ QA Enrich A/B/C (ลบทิ้งแล้ว→เก็บถาวร). ตอนข้อมูลน้อยป้ายเป็น “ยังขายไม่ได้ · 1/4”; เพิ่มจุดเด่น 3 ข้อ ป้ายเป็น “ข้อมูลไม่ครบ · 2/4” ทันทีโดยยังไม่บันทึก; FAQ ที่มีแต่คำถามไม่ทำให้คะแนนขึ้น เมื่อกรอกคำตอบครบ 2 ข้อเป็น 3/4; เพิ่ม Claims 2 ข้อเป็น “พร้อมขาย · 4/4” และหลังบันทึกหน้ารายละเอียดแสดง “พร้อมขายแล้ว” + คำอธิบาย “ข้อมูลครบทุกด้าน — AI พร้อมพูดขายสินค้านี้ได้เต็มที่” ตรง expected. ข้อสังเกต: การ์ดสรุปด้านบน (พร้อมขาย/ต้องเติมข้อมูล/ฉบับร่าง) นับตามสถานะสินค้า สินค้าที่ยังเป็นฉบับร่างจึงนับอยู่ใน “ฉบับร่าง” ไม่ใช่ “พร้อมขาย” แม้คะแนน 4/4",
+    "st": "pass"
+  },
+  "tc-13171": {
+    "actual": "UAT workspace “ทีมของ QA Tester” (Owner qa@takra.ai) สินค้าทดสอบ QA Enrich A/B/C (ลบทิ้งแล้ว→เก็บถาวร). แก้ข้อความจุดเด่นและคำตอบ FAQ ในช่องเดิม ข้ออื่นไม่หาย; ลบ Claims และชิปคำเสี่ยงเฉพาะสินค้าจนหมด ใต้ช่องขึ้น “ยังไม่มีคำเสี่ยงเฉพาะสินค้านี้”; หลังบันทึกเห็น “บันทึกการแก้ไขแล้ว” หน้ารายละเอียดแสดงข้อความใหม่ และส่วน Claims/คำเสี่ยงแสดงข้อความ empty state ตาม expected",
+    "st": "pass"
+  },
+  "tc-13172": {
+    "actual": "UAT workspace “ทีมของ QA Tester” (Owner qa@takra.ai) สินค้าทดสอบ QA Enrich A/B/C (ลบทิ้งแล้ว→เก็บถาวร). ใส่ Claim ข้อที่ 2 ยาวเกิน 500 ตัวอักษร (505) แล้วบันทึก → บันทึกไม่ผ่าน ขึ้น “บันทึกไม่สำเร็จ” พร้อม “Claims ที่อนุมัติ ข้อที่ 2 ยาวเกิน 500 ตัวอักษร (ตอนนี้ 505) — ย่อให้สั้นลงแล้วบันทึกอีกครั้ง” ยังอยู่ในฟอร์มแก้ไขและข้อมูลที่กรอกไม่หาย; ย่อข้อความแล้วบันทึกได้ เห็น “บันทึกการแก้ไขแล้ว” และหน้ารายละเอียดแสดง Claims ครบ 2 ข้อ ตรง expected",
+    "st": "pass"
+  },
+  "tc-13173": {
+    "actual": "UAT workspace “ทีมของ QA Tester” (Owner qa@takra.ai) สินค้าทดสอบ QA Enrich A/B/C (ลบทิ้งแล้ว→เก็บถาวร). เว้นช่องจุดเด่น/Claim ว่างและเพิ่ม FAQ ที่มีแต่คำถามแล้วบันทึก → บันทึกสำเร็จไม่ล้ม; หน้ารายละเอียดแสดง “1 คำถามพบบ่อย” (FAQ ที่มีแต่คำถามไม่ถูกบันทึก) และ Claims แสดง “ยังไม่มี Claims ที่อนุมัติ — AI จะพูดถึงสรรพคุณไม่ได้”; เปิดฟอร์มแก้ไขอีกครั้งไม่มีแถวว่างค้างและไม่มี FAQ ข้อที่ 2 ตรง expected",
+    "st": "pass"
+  },
+  "tc-13174": {
+    "actual": "UAT workspace “ทีมของ QA Tester” (Owner qa@takra.ai) สินค้าทดสอบ QA Enrich A/B/C (ลบทิ้งแล้ว→เก็บถาวร). พิมพ์คำเสี่ยงเฉพาะที่ซ้ำกับชุดของหมวดร่วมกับคำใหม่ → ขึ้นข้อความเตือนว่าอยู่ในชุดของหมวดแล้ว และใต้ชิปขึ้น “1 คำที่กรอกไว้อยู่ในชุดของหมวดอยู่แล้ว — ระบบคุมให้อัตโนมัติ ไม่ต้องเพิ่มซ้ำ”; หลังบันทึก หน้ารายละเอียดแสดงเฉพาะคำใหม่ พร้อมข้อความ “อีก 1 คำที่กรอกไว้อยู่ในชุดของหมวดอยู่แล้ว — ระบบคุมให้อัตโนมัติ” และจำนวนคำบนการ์ดชุดของหมวดไม่เพิ่ม (ไม่นับซ้ำ) ตรง expected",
+    "st": "pass"
+  },
+  "tc-13175": {
+    "actual": "UAT workspace “ทีมของ QA Tester” (Owner qa@takra.ai) สินค้าทดสอบ QA Enrich A/B/C (ลบทิ้งแล้ว→เก็บถาวร). ตอนเปิดฟอร์มป้ายเป็น “ยังขายไม่ได้ · ความพร้อมขาย 1/4”; หลังเพิ่มจุดเด่น 3 ข้อเป็น “ข้อมูลไม่ครบ · 2/4” ทันทีโดยยังไม่บันทึก; FAQ ที่มีแต่คำถามไม่ทำให้คะแนนขึ้น เมื่อกรอกคำตอบครบ 2 ข้อเป็น 3/4; เพิ่ม Claims 2 ข้อป้ายเป็น “พร้อมขาย · 4/4” และหลังบันทึกหน้ารายละเอียดแสดง “พร้อมขายแล้ว” ตรง expected",
+    "st": "pass"
   }
 }
 </script>
@@ -303,15 +356,15 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="runsum">
     <h3>📊 สรุปผล Manual Test</h3>
     <div class="sumchips">
-      <span class="cnt pass">PASS <b id="sum-pass">29</b></span>
+      <span class="cnt pass">PASS <b id="sum-pass">39</b></span>
       <span class="cnt fail">FAIL <b id="sum-fail">3</b></span>
       <span class="cnt hold">HOLD <b id="sum-hold">2</b></span>
       <span class="cnt block">BLOCKED <b id="sum-block">1</b></span>
       <span class="cnt skip">SKIP <b id="sum-skip">0</b></span>
-      <span class="cnt pending">รอเทส <b id="sum-pending">181</b></span>
+      <span class="cnt pending">รอเทส <b id="sum-pending">171</b></span>
     </div>
-    <div class="progress"><div id="sumbar" class="progressbar" style="width: 16%;"></div></div>
-    <div class="hint" id="sumpct" style="margin-top:5px">16% ทดสอบแล้ว (35/216)</div>
+    <div class="progress"><div id="sumbar" class="progressbar" style="width: 21%;"></div></div>
+    <div class="hint" id="sumpct" style="margin-top:5px">21% ทดสอบแล้ว (45/216)</div>
   </div>
 
   <div class="toolbar">
@@ -2413,7 +2466,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">เพิ่มจุดเด่นสินค้าแล้วแสดงในหน้ารายละเอียดครบทุกข้อ <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
-  <td class="status" data-uid="tc-13045"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13045"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13045"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -2424,10 +2477,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังสินค้า" เปิดฟอร์มแก้ไขสินค้าทดสอบ (เมนูตัวเลือก → "แก้ไข") แล้วเลื่อนไปหัวข้อ "ข้อมูลให้ AI"</li><li>กด "เพิ่มจุดเด่น" กรอกข้อความจุดเด่นข้อแรก แล้วเพิ่มจนครบ 3 ข้อตาม Test Data</li><li>ลองลบจุดเด่น 1 ข้อแล้วเพิ่มกลับ เพื่อดูว่าข้ออื่นไม่หาย</li><li>กด "บันทึกการเปลี่ยนแปลง" แล้วเปิดหน้ารายละเอียดสินค้า</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ช่อง "จุดเด่นสินค้า" มีคำแนะนำ "จุดขายที่ AI พูดถึงได้ — แนะนำอย่างน้อย 3 ข้อ"</li><li>เพิ่ม/ลบจุดเด่นได้รายข้อโดยข้ออื่นไม่หาย</li><li>หลังบันทึก หน้ารายละเอียดแสดงหัวข้อ "Key Benefits" (จุดเด่นที่ AI พูดได้) พร้อมจุดเด่นครบ 3 ข้อตามที่กรอก</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · Story 2.4 · FR13</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13045" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13045" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13045" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13045" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13045" data-st="block">BLOCKED</span>
@@ -2445,7 +2498,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">เพิ่ม Claims ที่อนุมัติแล้วสินค้าแสดงข้อความที่พูดได้ <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
-  <td class="status" data-uid="tc-13046"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13046"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13046"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -2456,10 +2509,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังสินค้า" เปิดฟอร์มแก้ไขสินค้าที่ยังไม่มี Claims แล้วเลื่อนไปหัวข้อ "ข้อมูลให้ AI"</li><li>กด "เพิ่ม Claim" กรอกข้อความเคลมตาม Test Data แล้วอ่านคำอธิบายใต้ช่อง "Claims ที่อนุมัติ"</li><li>กด "บันทึกการเปลี่ยนแปลง" แล้วเปิดหน้ารายละเอียดสินค้า</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>คำอธิบายระบุ "ข้อความเคลมที่ผ่านการตรวจ — AI พูดได้เฉพาะที่อยู่ในรายการนี้"</li><li>หลังบันทึก หน้ารายละเอียดมีหัวข้อ "Claims ที่พูดได้" พร้อมข้อความเคลมที่กรอก</li><li>Claims แสดงแยกส่วนของตัวเอง ไม่ถูกนำไปปนกับจุดเด่นหรือ FAQ</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · Story 2.4 · FR13</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13046" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13046" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13046" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13046" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13046" data-st="block">BLOCKED</span>
@@ -2477,7 +2530,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">เพิ่ม FAQ คำถาม-คำตอบให้สินค้าและนับจำนวนถูกต้อง <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13047"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13047"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13047"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -2488,10 +2541,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังสินค้า" เปิดฟอร์มแก้ไขสินค้าทดสอบ แล้วเลื่อนไปส่วน FAQ ในหัวข้อ "ข้อมูลให้ AI"</li><li>กด "เพิ่ม FAQ" แล้วกรอก "คำถาม" และ "คำตอบ" ตาม Test Data</li><li>เพิ่ม FAQ อีก 1 รายการ แล้วลบรายการแรกออก</li><li>กด "บันทึกการเปลี่ยนแปลง" แล้วเปิดหน้ารายละเอียดสินค้า ดูหัวข้อ FAQ</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ฟอร์ม FAQ มีช่อง "คำถาม" และ "คำตอบ" แยกกันชัดเจน พร้อมคำแนะนำ "คำถามที่ลูกค้าถามบ่อย — ช่วย AI ตอบคอมเมนต์ระหว่างไลฟ์"</li><li>ลบ FAQ รายข้อได้โดยรายการอื่นไม่หาย</li><li>หน้ารายละเอียดแสดงจำนวนคำถามตรงกับที่เหลืออยู่จริง (เช่น "1 คำถามพบบ่อย")</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · Story 2.4 · FR13</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13047" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13047" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13047" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13047" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13047" data-st="block">BLOCKED</span>
@@ -2509,7 +2562,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">เพิ่มคำเสี่ยงเฉพาะสินค้านี้และแสดงแยกจากชุดของหมวด <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
-  <td class="status" data-uid="tc-13048"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13048"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13048"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -2520,10 +2573,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังสินค้า" เปิดฟอร์มแก้ไขสินค้าที่เลือกประเภทสินค้าไว้แล้ว จากนั้นเลื่อนไปหัวข้อ Risk Words</li><li>อ่านคำอธิบายของหัวข้อ แล้วกดการ์ดชุดคำเสี่ยงของหมวดเพื่อเปิดดูรายการคำ จากนั้นปิด</li><li>พิมพ์คำเสี่ยง 2 คำตาม Test Data ลงช่อง "เพิ่มคำเสี่ยงเฉพาะสินค้านี้" (พิมพ์แล้วกด Enter ทีละคำ)</li><li>กด "บันทึกการเปลี่ยนแปลง" แล้วเปิดหน้ารายละเอียดสินค้า ดูส่วน Risk Words</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>คำอธิบายหัวข้อระบุ "คำที่ห้าม AI พูดถึงสินค้านี้ — รวมจากชุดของประเภทสินค้า + คำที่เพิ่มเองด้านล่าง"</li><li>การ์ดชุดคำเสี่ยงของหมวดกดเปิดดูรายการคำได้ และเป็นแบบอ่านอย่างเดียว (ไม่มีปุ่มแก้/ลบคำของหมวด)</li><li>คำที่พิมพ์ปรากฏเป็นชิปและลบได้ทีละคำ</li><li>หน้ารายละเอียดแสดง "คำเสี่ยงเฉพาะสินค้านี้" แยกออกจากการ์ดชุดของหมวด</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · Story 2.4 · FR13</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13048" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13048" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13048" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13048" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13048" data-st="block">BLOCKED</span>
@@ -2541,7 +2594,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">ความพร้อมขายของสินค้าเปลี่ยนตามความครบของข้อมูล <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13049"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13049"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13049"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -2552,10 +2605,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังสินค้า" สร้างสินค้าใหม่ที่มีข้อมูลขั้นต่ำตาม Precondition แล้วดูป้าย "ความพร้อมขาย" ของสินค้านั้นในรายการคลัง</li><li>เปิดฟอร์มแก้ไข เพิ่ม SKU พร้อมราคา กด "บันทึกการเปลี่ยนแปลง" แล้วดูป้ายอีกครั้ง</li><li>เพิ่มจุดเด่น 3 ข้อ + Claims + FAQ แล้วบันทึก</li><li>ดูป้ายความพร้อมขายในรายการ และเปิดหน้ารายละเอียดอ่านข้อความสรุปความพร้อม พร้อมเทียบการ์ดสรุปด้านบนของคลัง</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ตอนข้อมูลน้อย ป้ายแสดงระดับต่ำ ("ยังขายไม่ได้" หรือ "ข้อมูลไม่ครบ")</li><li>เมื่อเติมข้อมูลครบขึ้น ป้ายเลื่อนระดับขึ้นตามจนถึง "พร้อมขาย"</li><li>เมื่อครบทุกด้าน หน้ารายละเอียดแสดง "พร้อมขายแล้ว" พร้อมคำอธิบาย "ข้อมูลครบทุกด้าน — AI พร้อมพูดขายสินค้านี้ได้เต็มที่"</li><li>การ์ดสรุปด้านบนของคลังสินค้า ("พร้อมขาย" / "ต้องเติมข้อมูล" / "ฉบับร่าง") อัปเดตจำนวนตามระดับที่เปลี่ยนไป</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · Story 2.4</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13049" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13049" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13049" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13049" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13049" data-st="block">BLOCKED</span>
@@ -2573,7 +2626,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">แก้ไขจุดเด่นและ FAQ ที่มีอยู่ และลบ Claims กับคำเสี่ยงเฉพาะสินค้าออกจนหมด <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13171"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13171"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13171"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -2584,10 +2637,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังสินค้า" ในแถบด้านซ้าย กดเมนูตัวเลือก (⋯) ของสินค้าตาม Precondition แล้วเลือก "แก้ไข" และเลื่อนไปหัวข้อ "ข้อมูลให้ AI"</li><li>แก้ข้อความจุดเด่นข้อแรกตาม Test Data แล้วที่ FAQ ข้อแรก (ถ้ายังไม่กางอยู่ให้กดหัวข้อเพื่อเปิด) แก้ "คำตอบ" ตาม Test Data</li><li>กดปุ่ม × ข้างทุกข้อใน "Claims ที่อนุมัติ" จนไม่เหลือ แล้วเลื่อนไปหัวข้อ Risk Words และกด × บนชิปคำเสี่ยงเฉพาะสินค้าจนหมด</li><li>กด "บันทึกการเปลี่ยนแปลง" แล้วดูหน้ารายละเอียดสินค้าที่ถูกพาไป</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>แก้ข้อความจุดเด่นและคำตอบ FAQ ได้ในช่องเดิมโดยข้ออื่นไม่หาย</li><li>เมื่อลบชิปคำเสี่ยงหมด ใต้ช่องขึ้น "ยังไม่มีคำเสี่ยงเฉพาะสินค้านี้"</li><li>หลังบันทึก เห็นข้อความ "บันทึกการแก้ไขแล้ว" หน้ารายละเอียดแสดงจุดเด่นและคำตอบ FAQ เป็นข้อความใหม่</li><li>ส่วน "Claims ที่พูดได้" แสดง "ยังไม่มี Claims ที่อนุมัติ — AI จะพูดถึงสรรพคุณไม่ได้"</li><li>ส่วน "คำเสี่ยงเฉพาะสินค้านี้" แสดง "ยังไม่มีคำเสี่ยงเฉพาะสินค้านี้ — ใช้ชุดคำเสี่ยงของหมวดเป็นค่าตั้งต้น"</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · Story 2.4 · FR13</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13171" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13171" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13171" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13171" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13171" data-st="block">BLOCKED</span>
@@ -2605,7 +2658,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">Claim ยาวเกิน 500 ตัวอักษรบันทึกไม่ได้ และข้อความบอกข้อที่ผิดกับความยาวจริง <span class="kd kd-val">Validation</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13172"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13172"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13172"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -2616,10 +2669,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังสินค้า" ในแถบด้านซ้าย กดเมนูตัวเลือก (⋯) ของสินค้าทดสอบแล้วเลือก "แก้ไข" และเลื่อนไปหัวข้อ "ข้อมูลให้ AI"</li><li>กด "เพิ่ม Claim" กรอก Claim ข้อแรกเป็นข้อความสั้น แล้วกด "เพิ่ม Claim" อีกครั้งและวางข้อความยาว 505 ตัวอักษรเป็นข้อที่ 2</li><li>กด "บันทึกการเปลี่ยนแปลง" แล้วอ่านข้อความแจ้งผล</li><li>ย่อ Claim ข้อที่ 2 ให้ไม่เกิน 500 ตัวอักษร แล้วกด "บันทึกการเปลี่ยนแปลง" อีกครั้ง และสังเกตผล</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>บันทึกไม่ผ่าน — ขึ้นข้อความ "บันทึกไม่สำเร็จ" พร้อม "Claims ที่อนุมัติ ข้อที่ 2 ยาวเกิน 500 ตัวอักษร (ตอนนี้ 505) — ย่อให้สั้นลงแล้วบันทึกอีกครั้ง"</li><li>ยังอยู่ที่ฟอร์มแก้ไข และข้อมูลที่กรอกไว้ทุกช่องไม่หาย</li><li>หลังย่อข้อความ บันทึกได้ เห็น "บันทึกการแก้ไขแล้ว" และหน้ารายละเอียดแสดง Claims ครบ 2 ข้อ</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · Story 2.4 · FR13 (field enrichment เกิน limit เช่น claims → validate + error ไม่ persist ข้อมูลพัง) · TAKRA-1204</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13172" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13172" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13172" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13172" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13172" data-st="block">BLOCKED</span>
@@ -2637,7 +2690,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">ช่องจุดเด่น/Claim ที่เว้นว่าง และ FAQ ที่มีแต่คำถาม ไม่ถูกบันทึกและไม่ทำให้บันทึกล้ม <span class="kd kd-data">Data</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13173"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13173"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13173"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -2648,10 +2701,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังสินค้า" ในแถบด้านซ้าย กดเมนูตัวเลือก (⋯) ของสินค้าทดสอบแล้วเลือก "แก้ไข" และเลื่อนไปหัวข้อ "ข้อมูลให้ AI"</li><li>กด "เพิ่มจุดเด่น" 2 ครั้ง กรอกข้อแรกตาม Test Data และปล่อยข้อที่ 2 ว่าง แล้วกด "เพิ่ม Claim" 1 ครั้งโดยไม่กรอก</li><li>กด "เพิ่ม FAQ" 2 ครั้ง ข้อแรกกรอกทั้ง "คำถาม" และ "คำตอบ" ส่วนข้อที่ 2 กรอกแค่ "คำถาม"</li><li>กด "บันทึกการเปลี่ยนแปลง" แล้วดูหน้ารายละเอียดสินค้า จากนั้นกด "แก้ไขสินค้า" เพื่อเปิดฟอร์มอีกครั้ง</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>บันทึกสำเร็จ เห็นข้อความ "บันทึกการแก้ไขแล้ว" (ไม่มีข้อความผิดพลาดจากช่องที่เว้นว่าง)</li><li>หน้ารายละเอียดแสดงจุดเด่นเพียง 1 ข้อ และ "Claims ที่พูดได้" แสดง "ยังไม่มี Claims ที่อนุมัติ — AI จะพูดถึงสรรพคุณไม่ได้"</li><li>ส่วน FAQ แสดง "1 คำถามพบบ่อย" — FAQ ที่มีแต่คำถามไม่ถูกบันทึก</li><li>เปิดฟอร์มแก้ไขอีกครั้ง ไม่มีแถวจุดเด่น/Claim ว่าง และไม่มี FAQ ข้อที่ 2 ค้างอยู่</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · Story 2.4 · FR13 (field enrichment ว่าง → validate · ไม่ persist ข้อมูลพัง)</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13173" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13173" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13173" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13173" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13173" data-st="block">BLOCKED</span>
@@ -2669,7 +2722,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">คำเสี่ยงเฉพาะสินค้าที่ซ้ำ — พิมพ์คำเดิมซ้ำไม่เกิดชิปซ้ำ และคำที่อยู่ในชุดของหมวดถูกบอกว่าคุมอยู่แล้ว <span class="kd kd-val">Validation</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13174"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13174"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13174"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -2680,10 +2733,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังสินค้า" ในแถบด้านซ้าย กดเมนูตัวเลือก (⋯) ของสินค้าทดสอบแล้วเลือก "แก้ไข" กดการ์ด "ชุดคำเสี่ยงของ “&lt;หมวด&gt;”" ใต้ช่องหมวดเพื่อเปิดรายการ แล้วจดคำ 1 คำจากรายการ จากนั้นปิด</li><li>เลื่อนไปหัวข้อ Risk Words พิมพ์คำใหม่ตาม Test Data ลงช่อง "เพิ่มคำเสี่ยงเฉพาะสินค้านี้" แล้วกด Enter และพิมพ์คำเดิมซ้ำแล้วกด Enter อีกครั้ง</li><li>พิมพ์คำที่จดไว้จากชุดของหมวดแล้วกด Enter สังเกตสีของชิปและข้อความใต้ชิป</li><li>กด "บันทึกการเปลี่ยนแปลง" แล้วดูส่วน Risk Words ในหน้ารายละเอียดสินค้า</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>พิมพ์คำเดิมซ้ำแล้วกด Enter ไม่เกิดชิปที่สอง (ยังมีชิปคำนั้นแค่ 1 ชิป และช่องพิมพ์ถูกล้าง)</li><li>คำที่อยู่ในชุดของหมวดอยู่แล้วแสดงเป็นชิปสีจาง (ชี้แล้วเห็น "อยู่ในชุดคำเสี่ยงของหมวดอยู่แล้ว") และใต้ชิปขึ้น "1 คำที่กรอกไว้อยู่ในชุดของหมวดอยู่แล้ว — ระบบคุมให้อัตโนมัติ ไม่ต้องเพิ่มซ้ำ"</li><li>หลังบันทึก ส่วน "คำเสี่ยงเฉพาะสินค้านี้" ในหน้ารายละเอียดแสดงเฉพาะคำใหม่ และมีข้อความ "อีก 1 คำที่กรอกไว้อยู่ในชุดของหมวดอยู่แล้ว — ระบบคุมให้อัตโนมัติ"</li><li>จำนวนคำบนการ์ดชุดคำเสี่ยงของหมวดไม่เพิ่มขึ้นจากคำที่ซ้ำ (ไม่นับซ้ำ)</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · Story 2.4 · FR13 (per-product risk word ซ้ำกับ library → dedupe/merge ไม่เกิด entry ซ้ำ) · TAKRA-612</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13174" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13174" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13174" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13174" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13174" data-st="block">BLOCKED</span>
@@ -2701,7 +2754,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <td class="ctitle">ป้ายความพร้อมขายที่หัวฟอร์มอัปเดตทันทีระหว่างเติมข้อมูล ก่อนกดบันทึก <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13175"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13175"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13175"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
@@ -2712,10 +2765,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังสินค้า" ในแถบด้านซ้าย กดเมนูตัวเลือก (⋯) ของสินค้าตาม Precondition แล้วเลือก "แก้ไข" และอ่านป้ายความพร้อมใต้ชื่อสินค้าที่หัวฟอร์ม</li><li>ในหัวข้อ "ข้อมูลให้ AI" เพิ่มจุดเด่น 3 ข้อ แล้วดูป้ายที่หัวฟอร์มอีกครั้ง</li><li>เพิ่ม FAQ 2 ข้อโดยกรอกแค่ "คำถาม" ดูป้าย แล้วกรอก "คำตอบ" ให้ครบทั้ง 2 ข้อและดูป้ายอีกครั้ง</li><li>เพิ่ม Claims 2 ข้อ ดูป้ายที่หัวฟอร์ม แล้วกด "บันทึกการเปลี่ยนแปลง" และดูส่วน "ความพร้อมขาย" ในหน้ารายละเอียด</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ตอนเปิดฟอร์ม ป้ายแสดง "ยังขายไม่ได้ · ความพร้อมขาย 1/4"</li><li>หลังเพิ่มจุดเด่น 3 ข้อ ป้ายเปลี่ยนเป็น "ข้อมูลไม่ครบ · ความพร้อมขาย 2/4" ทันทีโดยยังไม่ต้องบันทึก</li><li>FAQ ที่มีแต่คำถามไม่ทำให้คะแนนขึ้น — เมื่อกรอกคำตอบครบ 2 ข้อ ป้ายขึ้นเป็น 3/4</li><li>เมื่อเพิ่ม Claims 2 ข้อ ป้ายเป็น "พร้อมขาย · ความพร้อมขาย 4/4" และหลังบันทึก หน้ารายละเอียดแสดง "พร้อมขายแล้ว"</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 2 · Story 2.4 · FR13</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13175" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13175" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13175" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13175" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13175" data-st="block">BLOCKED</span>
@@ -7819,4 +7872,22 @@ document.querySelectorAll('.feat-owner').forEach(function(sel){var e=sel.dataset
 </script>
 
 
-</body></html>
+<div id="claude-agent-glow-border" style="position: fixed; inset: 0px; pointer-events: none; z-index: 2147483646; opacity: 1; transition: opacity 0.3s ease-in-out;"><div id="claude-agent-glow-border-inner" style="position: absolute; inset: 0px; will-change: opacity; box-shadow: rgba(217, 119, 87, 0.7) 0px 0px 15px inset, rgba(217, 119, 87, 0.5) 0px 0px 25px inset, rgba(217, 119, 87, 0.2) 0px 0px 35px inset;"></div></div><div id="claude-static-indicator-container" style="position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%); display: inline-flex; align-items: center; justify-content: center; padding: 6px 6px 6px 16px; background: rgb(250, 249, 245); border: 0.5px solid rgba(31, 30, 29, 0.3); border-radius: 14px; box-shadow: rgba(0, 0, 0, 0.15) 0px 40px 80px 0px; z-index: 2147483647; pointer-events: none; white-space: nowrap; user-select: none; font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, sans-serif;">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 16px; height: 16px; display: inline-block; vertical-align: middle; flex-shrink: 0; margin-right: 8px;">
+        <path d="M3.13946 10.6399L6.28757 8.87462L6.37405 8.73821L6.28757 8.6339H6.13189L5.60432 8.6018L3.80541 8.55366L2.24865 8.48947L0.735135 8.40923H0.492973L0.354595 8.32899L0.181622 8.1685L0.0345946 8.01605L0 7.85557L0.0345946 7.62287L0.138378 7.44634L0.224865 7.40622H0.354595L0.812973 7.44634L1.82486 7.51856L3.34703 7.62287L4.44541 7.68706L6.08 7.85557H6.33946L6.37405 7.75125L6.28757 7.68706L6.21838 7.62287L4.64432 6.55567L2.94054 5.4323L2.04973 4.78235L1.57405 4.45336L1.33189 4.14845L1.22811 3.92377L1.17622 3.69107L1.22811 3.47442L1.33189 3.28185L1.46162 3.13741L1.66054 2.99298H1.87676L2.24865 3.0331L2.39568 3.07322L2.99243 3.53059L4.26378 4.51755L5.92432 5.73721L6.16649 5.93781H6.27892V5.82548L6.16649 5.64092L5.26703 4.01204L4.30703 2.35105L3.87459 1.66098L3.76216 1.25176C3.7391 1.16082 3.69297 0.977332 3.69297 0.970913V0.762287L3.77946 0.505517L3.93513 0.240722L4.18595 0.0882648L4.4627 0H4.67892L4.83459 0.0240722L5.12865 0.0882648L5.4054 0.328987L5.82054 1.27583L6.48649 2.76028L7.52432 4.78235L7.82703 5.38415L7.99135 5.93781L8.05189 6.10632H8.15567V6.01003L8.24216 4.87061L8.39784 3.47442L8.55351 1.67703L8.6054 1.17151L8.85622 0.561685L8.9773 0.417252L9.21946 0.232698H9.35784L9.74703 0.417252L9.97189 0.665998L10.067 0.874624L10.0238 1.17151L9.83351 2.40722L9.46162 4.34102L9.21946 5.64092H9.35784L9.52216 5.47242L10.1795 4.60582L11.2778 3.22568L11.7622 2.68004L12.333 2.07823L12.6962 1.78937L13.0162 1.67703L13.3881 1.78937L13.7168 2.06219L13.8897 2.54363V2.76028L13.6649 3.32197L12.9557 4.22066L12.3676 4.98295L12.0043 5.56871L11.0011 7.02106V7.08526H11.1741L13.0768 6.67603L14.1059 6.49147L15.3341 6.28285L15.5762 6.34704L15.8876 6.53962L15.9481 6.80441L15.8876 7.12538L15.7319 7.34203L14.4173 7.66299L12.8778 7.97593L10.5854 8.51559C10.5705 8.51909 10.56 8.53236 10.56 8.54764C10.56 8.56468 10.573 8.57891 10.59 8.58044L11.6238 8.67402L12.0649 8.69809H13.1459L15.1611 8.85055L15.6886 9.19559L15.9481 9.39619L16 9.62086L15.9481 9.94985L15.8443 10.1023L15.4119 10.3029L15.1351 10.3591L14.0454 10.1023L11.4941 9.49248L10.6205 9.27583H10.4995V9.34804L11.2259 10.0622L12.5665 11.2658L14.2357 12.8225L14.3222 13.0953V13.2076L14.1059 13.5125L13.9243 13.5206L13.8811 13.4804L12.4108 12.3731L12.2984 12.325L11.84 11.8756L10.56 10.7924H10.4735V10.9047L10.7676 11.338L12.333 13.6891L12.4108 14.4112L12.2984 14.6439L11.8919 14.7884L11.667 14.7563L11.4508 14.7081L11.2605 14.5396L10.5254 13.4162L9.5827 11.9719L8.82162 10.672H8.79342C8.76039 10.672 8.73278 10.6972 8.7297 10.73L8.27676 15.5667L8.06919 15.8154L7.6454 16H7.58486L7.17838 15.6951L6.96216 15.1976L7.17838 14.2106L7.43784 12.9268L7.6454 11.9077L7.83567 10.6399L7.95187 10.2164C7.9548 10.2057 7.95069 10.1944 7.94161 10.1881C7.91157 10.1672 7.87034 10.1741 7.84878 10.2037L6.89297 11.5145L5.44 13.4804L4.28973 14.7081L4.01297 14.8205H3.80541L3.5373 14.5717V14.4514L3.58054 14.1304L3.84865 13.7372L5.44 11.7151L6.4 10.4554L7.01872 9.73222C7.04511 9.70139 7.04245 9.65523 7.0127 9.62763C7.00333 9.61894 6.98925 9.61773 6.97854 9.62471L2.75027 12.3811L1.99784 12.4774L1.66919 12.1725L1.71243 11.675L1.86811 11.5145L3.13946 10.6399Z" fill="#D97757"></path>
+      </svg>
+      <span style="vertical-align: middle; color: #141413; font-size: 14px; display: inline-block;">Claude is active in this tab group</span>
+      <div style="display: inline-block; width: 0.5px; height: 32px; background: rgba(31, 30, 29, 0.15); margin: 0 8px; vertical-align: middle;"></div>
+      <button id="claude-static-chat-button" style="position: relative; display: inline-flex; align-items: center; justify-content: center; padding: 6px; background: transparent; border: none; cursor: pointer; pointer-events: auto; vertical-align: middle; width: 32px; height: 32px; border-radius: 8px; transition: background 0.2s;">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="#141413" xmlns="http://www.w3.org/2000/svg" style="width: 20px; height: 20px; display: block;">
+          <path d="M10 2.5C14.1421 2.5 17.5 5.85786 17.5 10C17.5 14.1421 14.1421 17.5 10 17.5H3C2.79779 17.5 2.61549 17.3782 2.53809 17.1914C2.4607 17.0046 2.50349 16.7895 2.64648 16.6465L4.35547 14.9365C3.20124 13.6175 2.5 11.8906 2.5 10C2.5 5.85786 5.85786 2.5 10 2.5ZM10 3.5C6.41015 3.5 3.5 6.41015 3.5 10C3.5 11.7952 4.22659 13.4199 5.40332 14.5967L5.46582 14.6729C5.52017 14.7544 5.5498 14.8508 5.5498 14.9502C5.5498 15.0828 5.49709 15.2099 5.40332 15.3037L4.20703 16.5H10C13.5899 16.5 16.5 13.5899 16.5 10C16.5 6.41015 13.5899 3.5 10 3.5ZM13.29 9.30371C13.3986 9.05001 13.6925 8.93174 13.9463 9.04004C14.2 9.14863 14.3183 9.44253 14.21 9.69629C13.8506 10.536 13.1645 11.25 12.25 11.25C11.6372 11.25 11.128 10.9289 10.75 10.4648C10.372 10.9289 9.86276 11.25 9.25 11.25C8.63724 11.25 8.12801 10.9289 7.75 10.4648C7.37198 10.9289 6.86276 11.25 6.25 11.25C5.97386 11.25 5.75 11.0261 5.75 10.75C5.75 10.4739 5.97386 10.25 6.25 10.25C6.58764 10.25 7.00448 9.97056 7.29004 9.30371L7.32422 9.2373C7.41431 9.09121 7.5749 9 7.75 9C7.9501 9 8.13123 9.11975 8.20996 9.30371L8.32227 9.53516C8.59804 10.0359 8.95442 10.25 9.25 10.25C9.58764 10.25 10.0045 9.97056 10.29 9.30371L10.3242 9.2373C10.4143 9.09121 10.5749 9 10.75 9C10.9501 9 11.1312 9.11975 11.21 9.30371L11.3223 9.53516C11.598 10.0359 11.9544 10.25 12.25 10.25C12.5876 10.25 13.0045 9.97056 13.29 9.30371Z"></path>
+        </svg>
+        <span id="claude-static-chat-tooltip" style="position: absolute; bottom: calc(100% + 12px); left: 50%; transform: translateX(-50%); padding: 6px 12px; background: #30302E; color: #FAF9F5; border-radius: 6px; font-size: 12px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.2s; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;">Open chat</span>
+      </button>
+      <button id="claude-static-close-button" style="position: relative; display: inline-flex; align-items: center; justify-content: center; padding: 6px; background: transparent; border: none; cursor: pointer; pointer-events: auto; vertical-align: middle; width: 32px; height: 32px; margin-left: 4px; border-radius: 8px; transition: background 0.2s;">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 20px; height: 20px; display: block;">
+          <path d="M15.1464 4.14642C15.3417 3.95121 15.6582 3.95118 15.8534 4.14642C16.0486 4.34168 16.0486 4.65822 15.8534 4.85346L10.7069 9.99997L15.8534 15.1465C16.0486 15.3417 16.0486 15.6583 15.8534 15.8535C15.6826 16.0244 15.4186 16.0461 15.2245 15.918L15.1464 15.8535L9.99989 10.707L4.85338 15.8535C4.65813 16.0486 4.34155 16.0486 4.14634 15.8535C3.95115 15.6583 3.95129 15.3418 4.14634 15.1465L9.29286 9.99997L4.14634 4.85346C3.95129 4.65818 3.95115 4.34162 4.14634 4.14642C4.34154 3.95128 4.65812 3.95138 4.85338 4.14642L9.99989 9.29294L15.1464 4.14642Z" fill="#141413"></path>
+        </svg>
+        <span id="claude-static-close-tooltip" style="position: absolute; bottom: calc(100% + 12px); left: 50%; transform: translateX(-50%); padding: 6px 12px; background: #30302E; color: #FAF9F5; border-radius: 6px; font-size: 12px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.2s; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;">Dismiss</span>
+      </button>
+    </div></body></html>
