@@ -161,19 +161,19 @@ td.status-win{white-space:nowrap}
 
 <header class="top">
   <h1>📊 [REG 5–9 ต.ค.] TAKRA Insight — Regression Test Cases (คู่ 🪟/🍎)</h1>
-  <div class="sub">รอบ Regression <b>🪟 พ 7 ต.ค.</b> · <b>🍎 ศ 9 ต.ค. 2569</b> — สโคปเดียวกันทั้ง 2 OS · Live Readiness รอบยืนยัน 33 + จุดที่เคย FAIL 26 + BYOK smoke (P0) 11 = 70 เคส · บันทึกผลแยกคอลัมน์ 🍎 Mac / 🪟 Windows</div>
+  <div class="sub">รอบ Regression <b>🪟 พ 7 ต.ค.</b> · <b>🍎 ศ 9 ต.ค. 2569</b> — สโคปเดียวกันทั้ง 2 OS · Live Readiness รอบยืนยัน 32 + จุดที่เคย FAIL 10 + BYOK smoke (P0) 11 + 🆕 UI/ฟีเจอร์ใหม่ 25 = 78 เคส · บันทึกผลแยกคอลัมน์ 🍎 Mac / 🪟 Windows</div>
   <div class="meta">
-    <span class="pill">49 เคส + E2E 4 = 53</span>
-    <span class="pill">LR 8 มิติ + ❌ RI·FAIL + 🔑 RI·BYOK</span>
+    <span class="pill">74 เคส + E2E 4 = 78</span>
+    <span class="pill">LR 8 มิติ + ❌ RI·FAIL + 🔑 RI·BYOK + 🆕 RI·ใหม่ ต.ค.</span>
     <span class="pill">UI + E2E · manual</span>
-    <span class="pill">P0 32 · P1 21 · P2 0</span>
-    <span class="pill">ประเภท: Happy 15 · Negative 6 · Boundary 7 · Exception 9 · Permission 3 · Data 13 · Validation 0</span>
+    <span class="pill">P0 42 · P1 36 · P2 0</span>
+    <span class="pill">ประเภท: Happy 25 · Negative 8 · Boundary 10 · Exception 16 · Permission 3 · Data 16 · Validation 0</span>
   </div>
 </header>
 
 <div class="wrap">
 
-  <div class="note-box">🧪 <b>รอบ Regression 5–9 ต.ค. 2569</b> — <b>🪟 Windows พ 7 ต.ค. · 🍎 Mac ศ 9 ต.ค.</b> สโคปเดียวกันทั้งสองวัน (Live Readiness ใช้ไลฟ์จริง<b>รอบเดียว</b> ดูจอสอง OS คู่กัน) · บันทึกผลแยกคอลัมน์ Mac/Windows ในหน้านี้<br>📦 <b>3 ก้อน:</b> ① Live Readiness ทั้งชุด 33 เคส (D1–D8 · จาก <code>insight_live_readiness_cases.py</code> ไม่แก้เนื้อหา) · ② <b>❌ RI·FAIL</b> จุดที่เคย FAIL รอบก่อน 26 เคส (Dashboard 10 · Reports 3 · Membership 13 — ดึงเคสเต็มจากโมดูลต้นทางตาม store-data ของรายงาน 2026/09 · ผลรอบก่อนเขียนกำกับท้าย Expected ของแต่ละเคส) · ③ <b>🔑 RI·BYOK smoke</b> 11 เคส (เฉพาะ P0 จาก <code>insight_mvp2_byok_cases.py</code>)<br>🆔 id เคสคงของเดิมจากชุดต้นทาง (TC-LR-* / TC-DASH-* / TC-RPT-* / TC-MEM-* / TC-BYOK-* — ไม่ชนกัน จึงไม่เติม prefix)<br>📎 แผนรวม: <a href="https://wanlee-tankunnatam.github.io/qa-test-reports/timeline/regression-plan.html#plan">regression-plan</a></div>
+  <div class="note-box">🧪 <b>รอบ Regression 5–9 ต.ค. 2569</b> — <b>🪟 Windows พ 7 ต.ค. · 🍎 Mac ศ 9 ต.ค.</b> สโคปเดียวกันทั้งสองวัน (Live Readiness ใช้ไลฟ์จริง<b>รอบเดียว</b> ดูจอสอง OS คู่กัน) · บันทึกผลแยกคอลัมน์ Mac/Windows ในหน้านี้<br>📦 <b>4 ก้อน:</b> ① Live Readiness ทั้งชุด 32 เคส (D1–D8 · จาก <code>insight_live_readiness_cases.py</code> ไม่แก้เนื้อหา) · ② <b>❌ RI·FAIL</b> จุดที่เคย FAIL รอบก่อน 10 เคส (Dashboard 8 · Reports 2 — Membership ตัดออกเพราะเป็นเรื่อง roles · ผลรอบก่อนเขียนกำกับท้าย Expected ของแต่ละเคส) · ③ <b>🔑 RI·BYOK smoke</b> 11 เคส (เฉพาะ P0 จาก <code>insight_mvp2_byok_cases.py</code>) · ④ <b>🆕 RI·ใหม่ ต.ค.</b> 25 เคส — UI/ฟีเจอร์ที่ขึ้น UAT หลัง 29 ก.ย. ถึง 5 ต.ค. (origin/uat 7c26b9fe · จาก <code>insight_reg_oct_new_cases.py</code> · เพิ่ม 6 ต.ค. ต่อท้ายรายงาน ผลเทสเดิมไม่เลื่อน)<br>🆔 id เคสคงของเดิมจากชุดต้นทาง (TC-LR-* / TC-DASH-* / TC-RPT-* / TC-BYOK-* — ไม่ชนกัน จึงไม่เติม prefix) · เคสใหม่ใช้ TC-OCT-*<br>📎 แผนรวม: <a href="https://wanlee-tankunnatam.github.io/qa-test-reports/timeline/regression-plan.html#plan">regression-plan</a></div>
 
   <div class="runsum">
     <h3>📊 สรุปผล Manual Test</h3>
@@ -183,10 +183,10 @@ td.status-win{white-space:nowrap}
       <span class="cnt hold">HOLD <b id="sum-hold">0</b></span>
       <span class="cnt block">BLOCKED <b id="sum-block">0</b></span>
       <span class="cnt skip">SKIP <b id="sum-skip">0</b></span>
-      <span class="cnt pending">รอเทส <b id="sum-pending">53</b></span>
+      <span class="cnt pending">รอเทส <b id="sum-pending">78</b></span>
     </div>
     <div class="progress"><div id="sumbar" class="progressbar" style="width:0%"></div></div>
-    <div class="hint" id="sumpct" style="margin-top:5px">0% ทดสอบแล้ว (0/53)</div>
+    <div class="hint" id="sumpct" style="margin-top:5px">0% ทดสอบแล้ว (0/78)</div>
   </div>
 
   <div class="toolbar">
@@ -206,11 +206,11 @@ td.status-win{white-space:nowrap}
 
   <div class="filters">
     <div class="row"><label>กลุ่ม</label>
-      <button class="fchip" data-f="feat" data-v="lrD1">D1 · เริ่มไลฟ์ (3)</button><button class="fchip" data-f="feat" data-v="lrD2">D2 · คอมเมนต์ครบ สด ไม่ซ้ำ (5)</button><button class="fchip" data-f="feat" data-v="lrD3">D3 · สัญญาณอื่น (gift · like · follow · share · shopping) (3)</button><button class="fchip" data-f="feat" data-v="lrD4">D4 · อารมณ์และ HUD (5)</button><button class="fchip" data-f="feat" data-v="lrD5">D5 · แจ้งเตือน (alert) (3)</button><button class="fchip" data-f="feat" data-v="lrD6">D6 · ทนทาน (resilience) (6)</button><button class="fchip" data-f="feat" data-v="lrD7">D7 · ทนเวลาและโหลด (soak) (4)</button><button class="fchip" data-f="feat" data-v="lrD8">D8 · จบไลฟ์และรายงาน (3)</button><button class="fchip" data-f="feat" data-v="rifail">❌ RI·FAIL (10)</button><button class="fchip" data-f="feat" data-v="ribyok">🔑 RI·BYOK smoke (11)</button>
+      <button class="fchip" data-f="feat" data-v="lrD1">D1 · เริ่มไลฟ์ (3)</button><button class="fchip" data-f="feat" data-v="lrD2">D2 · คอมเมนต์ครบ สด ไม่ซ้ำ (5)</button><button class="fchip" data-f="feat" data-v="lrD3">D3 · สัญญาณอื่น (gift · like · follow · share · shopping) (3)</button><button class="fchip" data-f="feat" data-v="lrD4">D4 · อารมณ์และ HUD (5)</button><button class="fchip" data-f="feat" data-v="lrD5">D5 · แจ้งเตือน (alert) (3)</button><button class="fchip" data-f="feat" data-v="lrD6">D6 · ทนทาน (resilience) (6)</button><button class="fchip" data-f="feat" data-v="lrD7">D7 · ทนเวลาและโหลด (soak) (4)</button><button class="fchip" data-f="feat" data-v="lrD8">D8 · จบไลฟ์และรายงาน (3)</button><button class="fchip" data-f="feat" data-v="rifail">❌ RI·FAIL (10)</button><button class="fchip" data-f="feat" data-v="ribyok">🔑 RI·BYOK smoke (11)</button><button class="fchip" data-f="feat" data-v="rinew">🆕 RI·ใหม่ ต.ค. (25)</button>
       <button class="clearbtn" data-clear="feat">✕</button>
     </div>
     <div class="row"><label>ประเภท</label>
-      <button class="fchip" data-f="kind" data-v="happy" title="flow ปกติ">Happy Path (15)</button><button class="fchip" data-f="kind" data-v="negative" title="ข้อมูลผิด / action ผิด">Negative (6)</button><button class="fchip" data-f="kind" data-v="boundary" title="min / max / ก่อน-ตรง-เกินขอบ">Boundary/Edge (7)</button><button class="fchip" data-f="kind" data-v="exception" title="ผู้ให้บริการล่ม · เน็ตหลุด · key ใช้ไม่ได้">Exception/Error (9)</button><button class="fchip" data-f="kind" data-v="permission" title="แยกตามบัญชี / ความปลอดภัยของ key">Permission (3)</button><button class="fchip" data-f="kind" data-v="data" title="ค่าคงอยู่ · ข้อมูลเดิมไม่หาย · ซิงก์ข้ามเครื่อง">Data (13)</button><button class="fchip" data-f="kind" data-v="validation" title="format · required · ความถูกต้องของค่าที่แสดง">Validation (0)</button>
+      <button class="fchip" data-f="kind" data-v="happy" title="flow ปกติ">Happy Path (25)</button><button class="fchip" data-f="kind" data-v="negative" title="ข้อมูลผิด / action ผิด">Negative (8)</button><button class="fchip" data-f="kind" data-v="boundary" title="min / max / ก่อน-ตรง-เกินขอบ">Boundary/Edge (10)</button><button class="fchip" data-f="kind" data-v="exception" title="ผู้ให้บริการล่ม · เน็ตหลุด · key ใช้ไม่ได้">Exception/Error (16)</button><button class="fchip" data-f="kind" data-v="permission" title="แยกตามบัญชี / ความปลอดภัยของ key">Permission (3)</button><button class="fchip" data-f="kind" data-v="data" title="ค่าคงอยู่ · ข้อมูลเดิมไม่หาย · ซิงก์ข้ามเครื่อง">Data (16)</button><button class="fchip" data-f="kind" data-v="validation" title="format · required · ความถูกต้องของค่าที่แสดง">Validation (0)</button>
       <button class="clearbtn" data-clear="kind">✕</button>
     </div>
     <div class="row"><label>Priority</label>
@@ -2466,12 +2466,1060 @@ td.status-win{white-space:nowrap}
 
 </div></td></tr>
 
+
+<!-- rinew -->
+<tr class="epicrow" data-epic="rinew"><td colspan="8">🆕 UI/ฟีเจอร์ใหม่หลัง 29 ก.ย. — ขึ้น UAT ถึง 5 ต.ค. (origin/uat 7c26b9fe) <span class="rp">(25 เคส)</span></td></tr>
+<tr class="featrow" data-featkey="rinew-start"><td colspan="8">📁 เปิดแอปและหน้าความยินยอมครั้งแรก (TI-501 · TI-547 · TI-581) <span class="rp"><span class="lv lvl-ui">🌐 4</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="rinew-start"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow" data-feat="rinew" data-level="ui" data-prio="P1" data-kind="happy" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-OCT-A.1</td>
+  <td class="ctitle">เปิดแอปครั้งถัดไปเห็นหน้า "กำลังเปิด TAKRA Insight" หน้าเดียว ไม่บอกเรื่องโมเดล AI ในเครื่อง <span class="kd kd-happy">Happy Path</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-14554"><span class="stb pending">รอเทส</span></td>
+  <td class="status-win" data-uid="tc-14554"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-14554"></td>
+</tr>
+<tr class="detail"><td colspan="8"><div class="card">
+  <div class="h-title">เปิดแอปครั้งถัดไปเห็นหน้า "กำลังเปิด TAKRA Insight" หน้าเดียว ไม่บอกเรื่องโมเดล AI ในเครื่อง</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · UI/ฟีเจอร์ใหม่หลัง 29 ก.ย. — ขึ้น UAT ถึง 5 ต.ค. (origin/uat 7c26b9fe)</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เครื่องนี้เคยเปิดแอปและเตรียมระบบเสร็จแล้วอย่างน้อย 1 ครั้ง</li></ul></div>
+  <div class="sec"><h4>Test Data</h4><ul><li>บัญชีที่ใช้ (UAT): qa.owner@realfactory.co.th · บทบาท "เจ้าของ"</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) บนเครื่องที่เคยเข้าสู่ระบบด้วยบัญชี UAT และเตรียมระบบเสร็จแล้ว</li><li>สังเกตหน้าจอตั้งแต่แอปเปิดจนเข้า "หน้าหลัก"</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ขึ้นหน้าเดียว "กำลังเปิด TAKRA Insight…" ต่อเนื่องจนเข้า "หน้าหลัก" ไม่มีหน้าขาวกับวงกลมหมุนก่อน</li><li>ไม่มีการ์ด "ตั้งค่าครั้งแรก" ไม่มีคำว่า AI model และไม่มีขนาดไฟล์ (MB) หรือชื่อโมเดล</li><li>ถ้าเปิดช้ากว่าปกติ ขึ้น "ระบบใช้เวลาเปิดนานกว่าปกติ กดลองใหม่เพื่อรอต่อ" พร้อมปุ่ม "ลองใหม่" ไม่ใช่ข้อความ error ดิบ</li></ul><div class="hint" style="margin-top:6px">ที่มา: TI-547 + TI-501 · owner เคาะแบบ A 2026-09-29 (ยังรอให้พร้อมก่อนเข้าแอป เปลี่ยนเฉพาะสิ่งที่หน้าจอพูด) · ตรวจโค้ด origin/uat 7c26b9fe (5 ต.ค.)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4>
+  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
+    <span class="opt pass" data-uid="tc-14554" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-14554" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-14554" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-14554" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-14554" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">
+    <span class="optw pass" data-uid="tc-14554" data-stw="pass">PASS</span>
+    <span class="optw fail" data-uid="tc-14554" data-stw="fail">FAIL</span>
+    <span class="optw hold" data-uid="tc-14554" data-stw="hold">HOLD</span>
+    <span class="optw block" data-uid="tc-14554" data-stw="block">BLOCKED</span>
+    <span class="optw skip" data-uid="tc-14554" data-stw="skip">SKIP</span>
+  </div></div>
+  </div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-14554"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-14554" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-14554">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="rinew" data-level="ui" data-prio="P1" data-kind="exception" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-OCT-A.2</td>
+  <td class="ctitle">ติดตั้งใหม่แล้วเน็ตหลุดระหว่างเตรียมระบบ ขึ้น "เตรียมระบบไม่สำเร็จ" กดลองใหม่ได้ ไม่โชว์ error ดิบ <span class="kd kd-exc">Exception/Error</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-14555"><span class="stb pending">รอเทส</span></td>
+  <td class="status-win" data-uid="tc-14555"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-14555"></td>
+</tr>
+<tr class="detail"><td colspan="8"><div class="card">
+  <div class="h-title">ติดตั้งใหม่แล้วเน็ตหลุดระหว่างเตรียมระบบ ขึ้น "เตรียมระบบไม่สำเร็จ" กดลองใหม่ได้ ไม่โชว์ error ดิบ</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Exception/Error</b> <span class="hint">(ผู้ให้บริการล่ม · เน็ตหลุด · key ใช้ไม่ได้)</span> · UI/ฟีเจอร์ใหม่หลัง 29 ก.ย. — ขึ้น UAT ถึง 5 ต.ค. (origin/uat 7c26b9fe)</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>ถอนการติดตั้งแอปเดิมแล้วติดตั้งบิลด์ UAT ใหม่ (เครื่องยังไม่เคยเตรียมระบบ)</li></ul></div>
+  <div class="sec"><h4>Test Data</h4><ul><li>บัญชีที่ใช้ (UAT): qa.owner@realfactory.co.th · บทบาท "เจ้าของ"</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT บนเครื่องที่เพิ่งติดตั้งแอปใหม่</li><li>ที่หน้า "ก่อนเริ่มใช้งาน ขอความยินยอมจากคุณ" กด "ยินยอมและเริ่มใช้งาน"</li><li>เมื่อขึ้นหน้า "กำลังเตรียมพร้อมใช้งาน" และแถบ % เริ่มวิ่ง ให้ปิด Wi-Fi/ถอดสายแลน แล้วรอจนหน้าจอเปลี่ยน</li><li>เปิดอินเทอร์เน็ตกลับ แล้วกด "ลองใหม่" และสังเกตจนเข้าแอป</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ระหว่างเตรียมระบบ เห็น "กำลังเตรียมพร้อมใช้งาน" · "ครั้งแรกใช้เวลาสักครู่ ขึ้นกับความเร็วอินเทอร์เน็ต" · "แนะนำให้เชื่อมต่อ Wi-Fi" และแถบ % โดยไม่มีขนาดไฟล์หรือชื่อโมเดล</li><li>เน็ตหลุดแล้วขึ้น "เตรียมระบบไม่สำเร็จ" + "ตรวจสอบการเชื่อมต่ออินเทอร์เน็ต แล้วกดลองใหม่" ไม่ค้างที่แถบ % และไม่มีข้อความ error ดิบจากระบบ</li><li>กด "ลองใหม่" หลังเน็ตกลับแล้วเตรียมต่อจนเข้า "หน้าหลัก" ได้</li></ul><div class="hint" style="margin-top:6px">ที่มา: TI-501 + TI-547 · owner เคาะ 2026-09-29 · ตรวจโค้ด origin/uat 7c26b9fe (5 ต.ค.)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4>
+  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
+    <span class="opt pass" data-uid="tc-14555" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-14555" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-14555" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-14555" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-14555" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">
+    <span class="optw pass" data-uid="tc-14555" data-stw="pass">PASS</span>
+    <span class="optw fail" data-uid="tc-14555" data-stw="fail">FAIL</span>
+    <span class="optw hold" data-uid="tc-14555" data-stw="hold">HOLD</span>
+    <span class="optw block" data-uid="tc-14555" data-stw="block">BLOCKED</span>
+    <span class="optw skip" data-uid="tc-14555" data-stw="skip">SKIP</span>
+  </div></div>
+  </div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-14555"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-14555" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-14555">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="rinew" data-level="ui" data-prio="P0" data-kind="data" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-OCT-A.3</td>
+  <td class="ctitle">บัญชีที่เคยให้ความยินยอมไว้แล้ว เข้าสู่ระบบบนเครื่องใหม่ ไม่ถูกถามความยินยอมซ้ำและสิทธิ์เดิมไม่ถูกทับ <span class="kd kd-data">Data</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-14556"><span class="stb pending">รอเทส</span></td>
+  <td class="status-win" data-uid="tc-14556"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-14556"></td>
+</tr>
+<tr class="detail"><td colspan="8"><div class="card">
+  <div class="h-title">บัญชีที่เคยให้ความยินยอมไว้แล้ว เข้าสู่ระบบบนเครื่องใหม่ ไม่ถูกถามความยินยอมซ้ำและสิทธิ์เดิมไม่ถูกทับ</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Data</b> <span class="hint">(ค่าคงอยู่ · ข้อมูลเดิมไม่หาย · ซิงก์ข้ามเครื่อง)</span> · UI/ฟีเจอร์ใหม่หลัง 29 ก.ย. — ขึ้น UAT ถึง 5 ต.ค. (origin/uat 7c26b9fe)</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>บัญชีนี้เคยตอบหน้าขอความยินยอมในทีมนี้จากอีกเครื่องแล้ว (ให้ความยินยอม "อ่านอารมณ์จากสีหน้า")</li></ul></div>
+  <div class="sec"><h4>Test Data</h4><ul><li>บัญชีที่ใช้ (UAT): qa.owner@realfactory.co.th · บทบาท "เจ้าของ"</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) บนเครื่องที่ยังไม่เคยใช้บัญชีนี้ แล้วเข้าสู่ระบบด้วยบัญชี UAT (บัญชีเดียวกับที่เคยให้ความยินยอมไว้)</li><li>สังเกตหน้าที่ขึ้นหลังเข้าสู่ระบบ</li><li>กดรูปโปรไฟล์ ("โปรไฟล์และบัญชี") ที่ท้ายแถบเมนูซ้าย แล้วเลือก "ความเป็นส่วนตัว" (หน้า "ความยินยอมของคุณ") แล้วสังเกตสถานะของ "การอ่านอารมณ์จากสีหน้า"</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ไม่ขึ้นหน้า "ก่อนเริ่มใช้งาน ขอความยินยอมจากคุณ" ซ้ำ ระบบใช้คำตอบเดิมของทีมนี้แล้วไปต่อได้เลย</li><li>หน้า "ความยินยอมของคุณ" แสดงสถานะตรงกับที่เคยตอบไว้ (เช่น "ให้ความยินยอมเมื่อ …") ไม่กลายเป็น "ยังไม่ได้ให้ความยินยอม" หรือถูกปฏิเสธทับ</li></ul><div class="hint" style="margin-top:6px">ที่มา: TI-581 (หน้าขอความยินยอมรับคำตอบที่มีอยู่บน cloud แทนการถามซ้ำ) · owner เคาะ O5 · ตรวจโค้ด origin/uat 7c26b9fe (5 ต.ค.)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4>
+  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
+    <span class="opt pass" data-uid="tc-14556" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-14556" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-14556" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-14556" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-14556" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">
+    <span class="optw pass" data-uid="tc-14556" data-stw="pass">PASS</span>
+    <span class="optw fail" data-uid="tc-14556" data-stw="fail">FAIL</span>
+    <span class="optw hold" data-uid="tc-14556" data-stw="hold">HOLD</span>
+    <span class="optw block" data-uid="tc-14556" data-stw="block">BLOCKED</span>
+    <span class="optw skip" data-uid="tc-14556" data-stw="skip">SKIP</span>
+  </div></div>
+  </div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-14556"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-14556" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-14556">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="rinew" data-level="ui" data-prio="P1" data-kind="exception" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-OCT-A.4</td>
+  <td class="ctitle">อ่านคำตอบความยินยอมจากระบบไม่ได้ (ออฟไลน์) ต้องขึ้นการ์ดลองใหม่ ไม่มีสวิตช์ และไม่เข้าแอป <span class="kd kd-exc">Exception/Error</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-14557"><span class="stb pending">รอเทส</span></td>
+  <td class="status-win" data-uid="tc-14557"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-14557"></td>
+</tr>
+<tr class="detail"><td colspan="8"><div class="card">
+  <div class="h-title">อ่านคำตอบความยินยอมจากระบบไม่ได้ (ออฟไลน์) ต้องขึ้นการ์ดลองใหม่ ไม่มีสวิตช์ และไม่เข้าแอป</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Exception/Error</b> <span class="hint">(ผู้ให้บริการล่ม · เน็ตหลุด · key ใช้ไม่ได้)</span> · UI/ฟีเจอร์ใหม่หลัง 29 ก.ย. — ขึ้น UAT ถึง 5 ต.ค. (origin/uat 7c26b9fe)</div>
+  <div class="sec"><h4>Test Data</h4><ul><li>บัญชีที่ใช้ (UAT): qa.owner@realfactory.co.th · บทบาท "เจ้าของ"</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) บนเครื่องที่ยังไม่เคยใช้บัญชีนี้ แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>ทันทีที่เข้าสู่ระบบสำเร็จ ให้ปิด Wi-Fi/ถอดสายแลน แล้วสังเกตหน้าความยินยอม</li><li>เปิดอินเทอร์เน็ตกลับ แล้วกด "ลองใหม่"</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ขึ้นการ์ด "ตรวจสอบความยินยอมกับระบบไม่ได้ กรุณาตรวจสอบอินเทอร์เน็ตแล้วลองใหม่" พร้อมปุ่ม "ลองใหม่" ไม่มีสวิตช์ให้เลือก และไม่เข้า "หน้าหลัก"</li><li>กด "ลองใหม่" หลังเน็ตกลับแล้วไปต่อตามคำตอบที่มีอยู่ (ข้ามหน้า ถ้าเคยตอบไว้) หรือถามตามปกติ (ถ้ายังไม่เคยตอบ)</li></ul><div class="hint" style="margin-top:6px">ที่มา: TI-581 (อ่าน cloud ไม่ได้ = การ์ดลองใหม่ ไม่ส่ง "ปฏิเสธ" ทับสิทธิ์เดิม) · ตรวจโค้ด origin/uat 7c26b9fe (5 ต.ค.)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4>
+  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
+    <span class="opt pass" data-uid="tc-14557" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-14557" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-14557" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-14557" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-14557" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">
+    <span class="optw pass" data-uid="tc-14557" data-stw="pass">PASS</span>
+    <span class="optw fail" data-uid="tc-14557" data-stw="fail">FAIL</span>
+    <span class="optw hold" data-uid="tc-14557" data-stw="hold">HOLD</span>
+    <span class="optw block" data-uid="tc-14557" data-stw="block">BLOCKED</span>
+    <span class="optw skip" data-uid="tc-14557" data-stw="skip">SKIP</span>
+  </div></div>
+  </div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-14557"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-14557" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-14557">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="featrow" data-featkey="rinew-ws"><td colspan="8">📁 เมนูโปรไฟล์ · สลับพื้นที่ทำงาน · ข้อมูลแยกตามทีม (TI-521 · TI-491 · TI-492 · TI-577) <span class="rp"><span class="lv lvl-ui">🌐 3</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="rinew-ws"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow" data-feat="rinew" data-level="ui" data-prio="P1" data-kind="happy" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-OCT-B.1</td>
+  <td class="ctitle">ปุ่มโปรไฟล์บอกแพ็กเกจและทีมที่เลือก และรายชื่อทีมเปิดเป็นเมนูย่อยทางขวา <span class="kd kd-happy">Happy Path</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-14558"><span class="stb pending">รอเทส</span></td>
+  <td class="status-win" data-uid="tc-14558"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-14558"></td>
+</tr>
+<tr class="detail"><td colspan="8"><div class="card">
+  <div class="h-title">ปุ่มโปรไฟล์บอกแพ็กเกจและทีมที่เลือก และรายชื่อทีมเปิดเป็นเมนูย่อยทางขวา</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · UI/ฟีเจอร์ใหม่หลัง 29 ก.ย. — ขึ้น UAT ถึง 5 ต.ค. (origin/uat 7c26b9fe)</div>
+  <div class="sec"><h4>Test Data</h4><ul><li>บัญชีที่ใช้ (UAT): qa.multi@realfactory.co.th · บทบาท "เจ้าของทีม B + โฮสต์ทีม A"</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT (บัญชีที่อยู่ 2 ทีม)</li><li>สังเกตป้ายและบรรทัดที่สองบนปุ่มโปรไฟล์ที่ท้ายแถบเมนูซ้าย</li><li>กดรูปโปรไฟล์ ("โปรไฟล์และบัญชี") ที่ท้ายแถบเมนูซ้าย แล้วชี้เมาส์หรือกดที่แถวชื่อพื้นที่ทำงาน</li><li>สังเกตเมนูย่อยที่เปิดขึ้น</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ป้ายบนปุ่มโปรไฟล์เป็นชื่อแพ็กเกจของทีมที่เลือก (Pro / Agency / Enterprise) แทนคำว่า "ใช้งานอยู่" · ทีมทดลองใช้ขึ้น "ทดลองใช้" · หมดอายุขึ้น "หมดอายุ"</li><li>บรรทัดที่สองเป็นชื่อพื้นที่ทำงานปัจจุบัน และในเมนูไม่มีป้ายบทบาท</li><li>เมนูย่อยเปิดทางขวาของเมนู หัวข้อ "สลับพื้นที่ทำงาน" ขึ้น "กำลังโหลดรายชื่อพื้นที่ทำงาน…" แล้วแสดงรายชื่อทีมในกล่องที่เลื่อนได้ เมนูหลักไม่ยืดขึ้นด้านบน</li><li>ถ้าโหลดไม่ได้ ขึ้น "โหลดรายชื่อพื้นที่ทำงานไม่สำเร็จ" พร้อม "ลองอีกครั้ง"</li></ul><div class="hint" style="margin-top:6px">ที่มา: TI-521 (ป้ายแพ็กเกจ) · TI-491 (เมนูย่อยรายชื่อทีม) · TI-563 (ไม่มีบทบาทในเมนู) · ตรวจโค้ด origin/uat 7c26b9fe (5 ต.ค.)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4>
+  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
+    <span class="opt pass" data-uid="tc-14558" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-14558" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-14558" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-14558" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-14558" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">
+    <span class="optw pass" data-uid="tc-14558" data-stw="pass">PASS</span>
+    <span class="optw fail" data-uid="tc-14558" data-stw="fail">FAIL</span>
+    <span class="optw hold" data-uid="tc-14558" data-stw="hold">HOLD</span>
+    <span class="optw block" data-uid="tc-14558" data-stw="block">BLOCKED</span>
+    <span class="optw skip" data-uid="tc-14558" data-stw="skip">SKIP</span>
+  </div></div>
+  </div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-14558"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-14558" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-14558">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="rinew" data-level="ui" data-prio="P0" data-kind="negative" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-OCT-B.2</td>
+  <td class="ctitle">สลับพื้นที่ทำงานขณะบันทึกไลฟ์ ต้องขึ้น popup "ยังสลับพื้นที่ทำงานไม่ได้" และไลฟ์ที่บันทึกอยู่ไม่สะดุด <span class="kd kd-neg">Negative</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-14559"><span class="stb pending">รอเทส</span></td>
+  <td class="status-win" data-uid="tc-14559"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-14559"></td>
+</tr>
+<tr class="detail"><td colspan="8"><div class="card">
+  <div class="h-title">สลับพื้นที่ทำงานขณะบันทึกไลฟ์ ต้องขึ้น popup "ยังสลับพื้นที่ทำงานไม่ได้" และไลฟ์ที่บันทึกอยู่ไม่สะดุด</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Negative</b> <span class="hint">(ข้อมูลผิด / action ผิด)</span> · UI/ฟีเจอร์ใหม่หลัง 29 ก.ย. — ขึ้น UAT ถึง 5 ต.ค. (origin/uat 7c26b9fe)</div>
+  <div class="sec"><h4>Test Data</h4><ul><li>บัญชีที่ใช้ (UAT): qa.multi@realfactory.co.th · บทบาท "เจ้าของทีม B + โฮสต์ทีม A"</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT (บัญชีที่อยู่ 2 ทีม)</li><li>ไปที่เมนู "เซสชัน" กด "วิเคราะห์ไลฟ์ใหม่" วางลิงก์ไลฟ์ TikTok ที่กำลังออกอากาศ กด "เปิดดูไลฟ์" แล้วตั้งชื่อเซสชันและกด "เริ่มบันทึก"</li><li>ระหว่างบันทึก กดรูปโปรไฟล์ ("โปรไฟล์และบัญชี") ที่ท้ายแถบเมนูซ้าย เปิดเมนูย่อย "สลับพื้นที่ทำงาน" แล้วกดเลือกอีกทีม</li><li>สังเกต popup แล้วกด "รับทราบ" และดูไลฟ์ที่บันทึกอยู่</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>แถวทีมในเมนูย่อยยังกดได้ และบอกเหตุผลไว้ก่อน "กำลังบันทึกไลฟ์อยู่ หยุดติดตามไลฟ์ทั้งหมดก่อน แล้วค่อยสลับพื้นที่ทำงาน"</li><li>กดแล้วเมนูปิด ขึ้น popup "ยังสลับพื้นที่ทำงานไม่ได้" ที่ระบุชื่อทั้งทีมปัจจุบันและทีมที่จะไป พร้อม "ไลฟ์ที่บันทึกอยู่ไม่ได้รับผลกระทบ" และมีปุ่มเดียว "รับทราบ"</li><li>หลังกด "รับทราบ" พื้นที่ทำงานยังเป็นทีมเดิม ไลฟ์ยังบันทึกต่อ คอมเมนต์ยังไหล</li></ul><div class="hint" style="margin-top:6px">ที่มา: TI-492 (สลับทีมขณะบันทึกไลฟ์ขึ้น popup รับทราบ) · ตรวจโค้ด origin/uat 7c26b9fe (5 ต.ค.)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4>
+  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
+    <span class="opt pass" data-uid="tc-14559" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-14559" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-14559" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-14559" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-14559" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">
+    <span class="optw pass" data-uid="tc-14559" data-stw="pass">PASS</span>
+    <span class="optw fail" data-uid="tc-14559" data-stw="fail">FAIL</span>
+    <span class="optw hold" data-uid="tc-14559" data-stw="hold">HOLD</span>
+    <span class="optw block" data-uid="tc-14559" data-stw="block">BLOCKED</span>
+    <span class="optw skip" data-uid="tc-14559" data-stw="skip">SKIP</span>
+  </div></div>
+  </div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-14559"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-14559" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-14559">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="rinew" data-level="ui" data-prio="P0" data-kind="data" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-OCT-B.3</td>
+  <td class="ctitle">บัญชีหลายทีม: "หน้าหลัก" · "เซสชัน" · "แชนเนลที่ติดตาม" แสดงเฉพาะข้อมูลของทีมที่เลือก ไม่ปนข้ามทีม <span class="kd kd-data">Data</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-14560"><span class="stb pending">รอเทส</span></td>
+  <td class="status-win" data-uid="tc-14560"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-14560"></td>
+</tr>
+<tr class="detail"><td colspan="8"><div class="card">
+  <div class="h-title">บัญชีหลายทีม: "หน้าหลัก" · "เซสชัน" · "แชนเนลที่ติดตาม" แสดงเฉพาะข้อมูลของทีมที่เลือก ไม่ปนข้ามทีม</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Data</b> <span class="hint">(ค่าคงอยู่ · ข้อมูลเดิมไม่หาย · ซิงก์ข้ามเครื่อง)</span> · UI/ฟีเจอร์ใหม่หลัง 29 ก.ย. — ขึ้น UAT ถึง 5 ต.ค. (origin/uat 7c26b9fe)</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>บัญชีนี้มีไลฟ์ที่บันทึกบนเครื่องนี้ทีมละอย่างน้อย 1 ไลฟ์ และติดตามช่องคนละช่องในแต่ละทีม</li></ul></div>
+  <div class="sec"><h4>Test Data</h4><ul><li>บัญชีที่ใช้ (UAT): qa.multi@realfactory.co.th · บทบาท "เจ้าของทีม B + โฮสต์ทีม A"</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT (บัญชีที่อยู่ 2 ทีม)</li><li>เลือกทีม A จากเมนูย่อย "สลับพื้นที่ทำงาน" แล้วเปิดเมนู "หน้าหลัก" · "เซสชัน" · "แชนเนลที่ติดตาม" จดรายการไลฟ์และช่องที่เห็น</li><li>สลับไปทีม B แล้วเปิดทั้งสามหน้าอีกครั้ง</li><li>เลื่อนลงไปท้ายหน้า "เซสชัน" แล้วสังเกตกลุ่มไลฟ์ที่ไม่ระบุทีม</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>แต่ละทีมเห็นเฉพาะไลฟ์ที่บันทึกในทีมนั้นและช่องที่ติดตามในทีมนั้น ไม่มีรายการของอีกทีมปน</li><li>สลับทีมแล้วรายการเปลี่ยนตามทีมทันที ไม่ค้างรายการของทีมเก่า</li><li>ไลฟ์เก่าที่ไม่มีข้อมูลว่าอัดในทีมไหน อยู่ในกลุ่ม "ไลฟ์ที่ไม่ระบุทีม (n)" ท้ายหน้า "เซสชัน" พร้อมคำอธิบาย "… จึงแสดงในทุกทีม และไม่นับในหน้าภาพรวม"</li></ul><div class="hint" style="margin-top:6px">ที่มา: TI-577 · คำตัดสินเจ้าของงาน 2026-10-01 (กลับคำตัดสิน 15 ก.ย. ของ Story m2-9.1) · ตรวจโค้ด origin/uat 7c26b9fe (5 ต.ค.)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4>
+  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
+    <span class="opt pass" data-uid="tc-14560" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-14560" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-14560" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-14560" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-14560" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">
+    <span class="optw pass" data-uid="tc-14560" data-stw="pass">PASS</span>
+    <span class="optw fail" data-uid="tc-14560" data-stw="fail">FAIL</span>
+    <span class="optw hold" data-uid="tc-14560" data-stw="hold">HOLD</span>
+    <span class="optw block" data-uid="tc-14560" data-stw="block">BLOCKED</span>
+    <span class="optw skip" data-uid="tc-14560" data-stw="skip">SKIP</span>
+  </div></div>
+  </div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-14560"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-14560" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-14560">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="featrow" data-featkey="rinew-live"><td colspan="8">📁 หน้า "หลายไลฟ์พร้อมกัน" และการเก็บไลฟ์ (TI-586 · TI-568 · TI-583 · TI-570 · TI-591) <span class="rp"><span class="lv lvl-ui">🌐 8</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="rinew-live"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow" data-feat="rinew" data-level="ui" data-prio="P1" data-kind="boundary" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-OCT-C.1</td>
+  <td class="ctitle">กล่องจอไลฟ์ขนาดคงที่ เรียงแถวละ 5 ไม่เปลี่ยนขนาดตามจำนวนไลฟ์ และไม่มีแถบเลื่อนแนวนอน <span class="kd kd-bnd">Boundary/Edge</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-14561"><span class="stb pending">รอเทส</span></td>
+  <td class="status-win" data-uid="tc-14561"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-14561"></td>
+</tr>
+<tr class="detail"><td colspan="8"><div class="card">
+  <div class="h-title">กล่องจอไลฟ์ขนาดคงที่ เรียงแถวละ 5 ไม่เปลี่ยนขนาดตามจำนวนไลฟ์ และไม่มีแถบเลื่อนแนวนอน</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Boundary/Edge</b> <span class="hint">(min / max / ก่อน-ตรง-เกินขอบ)</span> · UI/ฟีเจอร์ใหม่หลัง 29 ก.ย. — ขึ้น UAT ถึง 5 ต.ค. (origin/uat 7c26b9fe)</div>
+  <div class="sec"><h4>Test Data</h4><ul><li>บัญชีที่ใช้ (UAT): qa.owner@realfactory.co.th · บทบาท "เจ้าของ"</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>ไปที่เมนู "หลายไลฟ์พร้อมกัน" วางลิงก์ไลฟ์ที่กำลังออกอากาศแล้วกด "เปิดดูไลฟ์" 1 ไลฟ์ สังเกตขนาดกล่อง</li><li>เพิ่มไลฟ์ที่กำลังออกอากาศจนครบ 3 ไลฟ์ (หรือเท่าที่แพ็กเกจให้) แล้วสังเกตขนาดกล่องอีกครั้ง</li><li>ย่อหน้าต่างแอปให้แคบลงเรื่อยๆ แล้วสังเกตการจัดเรียง</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>กล่องจอไลฟ์ทุกกล่องขนาดเท่ากัน และ 1 ไลฟ์กับ 3 ไลฟ์ได้กล่องขนาดเดียวกัน ขนาดขึ้นกับความกว้างหน้าต่างอย่างเดียว</li><li>เรียงชิดซ้ายแถวละไม่เกิน 5 กล่อง (ถ้ามี 6 ไลฟ์ = 5+1)</li><li>หน้าต่างแคบแล้วกล่องไม่เล็กลงต่ำกว่าขั้นต่ำ จำนวนคอลัมน์ลดลงแทน และไม่มีแถบเลื่อนแนวนอน</li></ul><div class="hint" style="margin-top:6px">ที่มา: TI-586 · sprint-change-proposal-2026-09-30 (แทนคำตัดสิน TI-509 §2.1 "แถวเท่ากัน") · ตรวจโค้ด origin/uat 7c26b9fe (5 ต.ค.)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4>
+  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
+    <span class="opt pass" data-uid="tc-14561" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-14561" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-14561" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-14561" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-14561" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">
+    <span class="optw pass" data-uid="tc-14561" data-stw="pass">PASS</span>
+    <span class="optw fail" data-uid="tc-14561" data-stw="fail">FAIL</span>
+    <span class="optw hold" data-uid="tc-14561" data-stw="hold">HOLD</span>
+    <span class="optw block" data-uid="tc-14561" data-stw="block">BLOCKED</span>
+    <span class="optw skip" data-uid="tc-14561" data-stw="skip">SKIP</span>
+  </div></div>
+  </div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-14561"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-14561" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-14561">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="rinew" data-level="ui" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-OCT-C.2</td>
+  <td class="ctitle">ไลฟ์ที่แอปหยุดเก็บเอง ต้องขึ้นการ์ด "หยุดเก็บ n ไลฟ์" พร้อมเหตุผลและปุ่มดูรายงาน แทนการ์ด "จบแล้ว" แบบเดิม <span class="kd kd-happy">Happy Path</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-14562"><span class="stb pending">รอเทส</span></td>
+  <td class="status-win" data-uid="tc-14562"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-14562"></td>
+</tr>
+<tr class="detail"><td colspan="8"><div class="card">
+  <div class="h-title">ไลฟ์ที่แอปหยุดเก็บเอง ต้องขึ้นการ์ด "หยุดเก็บ n ไลฟ์" พร้อมเหตุผลและปุ่มดูรายงาน แทนการ์ด "จบแล้ว" แบบเดิม</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · UI/ฟีเจอร์ใหม่หลัง 29 ก.ย. — ขึ้น UAT ถึง 5 ต.ค. (origin/uat 7c26b9fe)</div>
+  <div class="sec"><h4>Test Data</h4><ul><li>บัญชีที่ใช้ (UAT): qa.owner@realfactory.co.th · บทบาท "เจ้าของ"</li><li>บัญชี TikTok ที่ 2 สำหรับเปิด/ปิดไลฟ์ และพิมพ์คอมเมนต์ทดสอบ</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>ไปที่เมนู "หลายไลฟ์พร้อมกัน" เปิดไลฟ์ของบัญชี TikTok ที่ 2 แล้วเริ่มเก็บ ปล่อยไว้อย่างน้อย 2 นาที</li><li>ให้บัญชี TikTok ที่ 2 ปิดไลฟ์ แล้วสังเกตหน้า "หลายไลฟ์พร้อมกัน"</li><li>กด "ดูรายงาน" บนการ์ด แล้วกลับมากด × ("ปิดประกาศ")</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ขึ้นการ์ด "หยุดเก็บ 1 ไลฟ์" + "แอปหยุดเก็บให้เอง · กด × เมื่อรับทราบ" แทนการ์ด "จบแล้ว" แบบเดิม</li><li>แถวของไลฟ์บอกเหตุผล "ไลฟ์จบแล้ว บันทึกเรียบร้อย" · ระหว่างบันทึกรายงานปุ่มขึ้น "กำลังบันทึกรายงาน…" แล้วเปลี่ยนเป็น "ดูรายงาน" (ไลฟ์ที่สั้นเกินไปขึ้น "สั้นเกินไป จึงไม่มีรายงาน")</li><li>กด "ดูรายงาน" แล้วเปิดรายงานของไลฟ์นั้นได้ · กด × แล้วการ์ดหายไป</li></ul><div class="hint" style="margin-top:6px">ที่มา: TI-586 (การ์ดแจ้งไลฟ์ที่แอปหยุดเอง) · ตรวจโค้ด origin/uat 7c26b9fe (5 ต.ค.)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4>
+  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
+    <span class="opt pass" data-uid="tc-14562" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-14562" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-14562" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-14562" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-14562" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">
+    <span class="optw pass" data-uid="tc-14562" data-stw="pass">PASS</span>
+    <span class="optw fail" data-uid="tc-14562" data-stw="fail">FAIL</span>
+    <span class="optw hold" data-uid="tc-14562" data-stw="hold">HOLD</span>
+    <span class="optw block" data-uid="tc-14562" data-stw="block">BLOCKED</span>
+    <span class="optw skip" data-uid="tc-14562" data-stw="skip">SKIP</span>
+  </div></div>
+  </div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-14562"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-14562" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-14562">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="rinew" data-level="ui" data-prio="P0" data-kind="exception" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-OCT-C.3</td>
+  <td class="ctitle">ระหว่างบันทึก หน้าเว็บไปหน้าโปรไฟล์/วิดีโอของร้าน ต้องเตือนที่ 1 นาที และหยุดเก็บพร้อมบันทึกที่ 3 นาที <span class="kd kd-exc">Exception/Error</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-14563"><span class="stb pending">รอเทส</span></td>
+  <td class="status-win" data-uid="tc-14563"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-14563"></td>
+</tr>
+<tr class="detail"><td colspan="8"><div class="card">
+  <div class="h-title">ระหว่างบันทึก หน้าเว็บไปหน้าโปรไฟล์/วิดีโอของร้าน ต้องเตือนที่ 1 นาที และหยุดเก็บพร้อมบันทึกที่ 3 นาที</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Exception/Error</b> <span class="hint">(ผู้ให้บริการล่ม · เน็ตหลุด · key ใช้ไม่ได้)</span> · UI/ฟีเจอร์ใหม่หลัง 29 ก.ย. — ขึ้น UAT ถึง 5 ต.ค. (origin/uat 7c26b9fe)</div>
+  <div class="sec"><h4>Test Data</h4><ul><li>บัญชีที่ใช้ (UAT): qa.owner@realfactory.co.th · บทบาท "เจ้าของ"</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>ไปที่เมนู "เซสชัน" กด "วิเคราะห์ไลฟ์ใหม่" วางลิงก์ไลฟ์ TikTok ที่กำลังออกอากาศ กด "เปิดดูไลฟ์" แล้วตั้งชื่อเซสชันและกด "เริ่มบันทึก"</li><li>ในหน้าเว็บ TikTok ของแอป กดชื่อร้านเพื่อไปหน้าโปรไฟล์ (@ชื่อร้าน) หรือหน้าวิดีโอของร้าน แล้วเริ่มจับเวลา</li><li>รอประมาณ 1 นาทีโดยไม่กลับหน้าไลฟ์ แล้วสังเกตแบนเนอร์</li><li>รอต่อจนครบ 3 นาที แล้วสังเกตหน้าบันทึกและหน้า "หลายไลฟ์พร้อมกัน"</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ประมาณ 1 นาที ขึ้นแบนเนอร์ "ออกจากหน้าไลฟ์แล้ว ระบบจึงยังไม่ได้เก็บคอมเมนต์ในช่วงนี้ — กลับไปหน้าไลฟ์เพื่อเก็บต่อ ถ้าไม่กลับภายใน 2 นาที ระบบจะหยุดและบันทึกเซสชันให้เอง" และกล่องไลฟ์มีป้าย "ออกจากหน้าไลฟ์แล้ว"</li><li>ครบประมาณ 3 นาที ระบบหยุดเก็บและบันทึกเซสชัน ขึ้น "ออกจากหน้าไลฟ์เกิน 3 นาที ระบบจึงหยุดเก็บและบันทึกไว้แล้ว — ถ้าไลฟ์นี้ยังออกอากาศอยู่ เปิดใหม่ได้จากหน้าหลายไลฟ์"</li><li>หน้า "หลายไลฟ์พร้อมกัน" มีการ์ดเหตุผล "ออกจากหน้าไลฟ์เกิน 3 นาที จึงหยุดเก็บ ไลฟ์นี้อาจยังออกอากาศอยู่" พร้อมปุ่ม "เปิดอีกครั้ง"</li><li>ถ้ากลับหน้าไลฟ์ก่อนครบ 3 นาที ระบบเก็บต่อและไม่หยุด</li></ul><div class="hint" style="margin-top:6px">ที่มา: TI-583 (หน้าโปรไฟล์/วิดีโอของร้านนับเป็นออกจากหน้าไลฟ์) · TI-586 (เหตุผล noChannel) · ตรวจโค้ด origin/uat 7c26b9fe (5 ต.ค.)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4>
+  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
+    <span class="opt pass" data-uid="tc-14563" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-14563" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-14563" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-14563" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-14563" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">
+    <span class="optw pass" data-uid="tc-14563" data-stw="pass">PASS</span>
+    <span class="optw fail" data-uid="tc-14563" data-stw="fail">FAIL</span>
+    <span class="optw hold" data-uid="tc-14563" data-stw="hold">HOLD</span>
+    <span class="optw block" data-uid="tc-14563" data-stw="block">BLOCKED</span>
+    <span class="optw skip" data-uid="tc-14563" data-stw="skip">SKIP</span>
+  </div></div>
+  </div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-14563"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-14563" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-14563">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="rinew" data-level="ui" data-prio="P1" data-kind="exception" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-OCT-C.4</td>
+  <td class="ctitle">ออกจากหน้าบันทึกไปหน้าอื่นในแอป ไลฟ์ที่ยังออกอากาศต้องไม่ถูกหยุดเพราะไม่มีใครดู <span class="kd kd-exc">Exception/Error</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-14564"><span class="stb pending">รอเทส</span></td>
+  <td class="status-win" data-uid="tc-14564"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-14564"></td>
+</tr>
+<tr class="detail"><td colspan="8"><div class="card">
+  <div class="h-title">ออกจากหน้าบันทึกไปหน้าอื่นในแอป ไลฟ์ที่ยังออกอากาศต้องไม่ถูกหยุดเพราะไม่มีใครดู</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Exception/Error</b> <span class="hint">(ผู้ให้บริการล่ม · เน็ตหลุด · key ใช้ไม่ได้)</span> · UI/ฟีเจอร์ใหม่หลัง 29 ก.ย. — ขึ้น UAT ถึง 5 ต.ค. (origin/uat 7c26b9fe)</div>
+  <div class="sec"><h4>Test Data</h4><ul><li>บัญชีที่ใช้ (UAT): qa.owner@realfactory.co.th · บทบาท "เจ้าของ"</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>ไปที่เมนู "เซสชัน" กด "วิเคราะห์ไลฟ์ใหม่" วางลิงก์ไลฟ์ TikTok ที่กำลังออกอากาศ กด "เปิดดูไลฟ์" แล้วตั้งชื่อเซสชันและกด "เริ่มบันทึก" (ไลฟ์ที่ออกอากาศต่อเนื่องอย่างน้อย 5 นาที)</li><li>กดไปเมนู "หน้าหลัก" ทิ้งไว้ 1 นาที</li><li>สังเกตป้าย "กำลังบันทึก n ไลฟ์" ที่เมนู แล้วเปิดเมนู "หลายไลฟ์พร้อมกัน"</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ป้าย "กำลังบันทึก 1 ไลฟ์" ยังอยู่ และไลฟ์ยังถูกเก็บต่อในหน้า "หลายไลฟ์พร้อมกัน"</li><li>ไม่ถูกตัดสินว่า "ไลฟ์จบแล้ว" หลังออกจากหน้าบันทึก และไม่มีการ์ด "หยุดเก็บ" ของไลฟ์นี้</li></ul><div class="hint" style="margin-top:6px">ที่มา: TI-568 (ไลฟ์ที่ยังออกอากาศไม่ถูกหยุดเพราะไม่มีใครดู · owner ruling D1) · ตรวจโค้ด origin/uat 7c26b9fe (5 ต.ค.)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4>
+  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
+    <span class="opt pass" data-uid="tc-14564" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-14564" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-14564" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-14564" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-14564" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">
+    <span class="optw pass" data-uid="tc-14564" data-stw="pass">PASS</span>
+    <span class="optw fail" data-uid="tc-14564" data-stw="fail">FAIL</span>
+    <span class="optw hold" data-uid="tc-14564" data-stw="hold">HOLD</span>
+    <span class="optw block" data-uid="tc-14564" data-stw="block">BLOCKED</span>
+    <span class="optw skip" data-uid="tc-14564" data-stw="skip">SKIP</span>
+  </div></div>
+  </div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-14564"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-14564" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-14564">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="rinew" data-level="ui" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-OCT-C.5</td>
+  <td class="ctitle">กด "เริ่มบันทึก" แล้วหน้า TikTok ต้องไม่โหลดใหม่ และเซสชันไม่ถูกตัดสินว่าไลฟ์จบ <span class="kd kd-happy">Happy Path</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-14565"><span class="stb pending">รอเทส</span></td>
+  <td class="status-win" data-uid="tc-14565"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-14565"></td>
+</tr>
+<tr class="detail"><td colspan="8"><div class="card">
+  <div class="h-title">กด "เริ่มบันทึก" แล้วหน้า TikTok ต้องไม่โหลดใหม่ และเซสชันไม่ถูกตัดสินว่าไลฟ์จบ</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · UI/ฟีเจอร์ใหม่หลัง 29 ก.ย. — ขึ้น UAT ถึง 5 ต.ค. (origin/uat 7c26b9fe)</div>
+  <div class="sec"><h4>Test Data</h4><ul><li>บัญชีที่ใช้ (UAT): qa.owner@realfactory.co.th · บทบาท "เจ้าของ"</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>ไปที่เมนู "เซสชัน" กด "วิเคราะห์ไลฟ์ใหม่" วางลิงก์ไลฟ์ TikTok ที่กำลังออกอากาศ กด "เปิดดูไลฟ์" แล้วรอจนวิดีโอเล่น</li><li>ตั้งชื่อเซสชันแล้วกด "เริ่มบันทึก" พร้อมสังเกตวิดีโอในจอ</li><li>ดูต่อ 1 นาที แล้วสังเกตวิดีโอและแผงคอมเมนต์</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>วิดีโอเล่นต่อเนื่องตอนกด "เริ่มบันทึก" ไม่กระพริบ ไม่โหลดหน้า TikTok ใหม่ และไม่เป็นหน้าว่าง</li><li>เซสชันไม่ถูกตัดสินว่า "ไลฟ์จบแล้ว" ในช่วงแรก และคอมเมนต์เริ่มขึ้นในแผงคอมเมนต์</li></ul><div class="hint" style="margin-top:6px">ที่มา: TI-591 (QA r01 · Windows: กดบันทึกแล้ว TikTok ตอบหน้าว่างและไลฟ์ที่ยังออกอากาศถูกตัดจบใน 15 วิ) · ตรวจโค้ด origin/uat 7c26b9fe (5 ต.ค.)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4>
+  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
+    <span class="opt pass" data-uid="tc-14565" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-14565" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-14565" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-14565" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-14565" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">
+    <span class="optw pass" data-uid="tc-14565" data-stw="pass">PASS</span>
+    <span class="optw fail" data-uid="tc-14565" data-stw="fail">FAIL</span>
+    <span class="optw hold" data-uid="tc-14565" data-stw="hold">HOLD</span>
+    <span class="optw block" data-uid="tc-14565" data-stw="block">BLOCKED</span>
+    <span class="optw skip" data-uid="tc-14565" data-stw="skip">SKIP</span>
+  </div></div>
+  </div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-14565"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-14565" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-14565">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="rinew" data-level="ui" data-prio="P1" data-kind="exception" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-OCT-C.6</td>
+  <td class="ctitle">TikTok ไม่ส่งหน้าไลฟ์มาให้ ต้องขึ้นแบนเนอร์พร้อมปุ่ม "โหลดหน้าไลฟ์ใหม่" และไม่ตัดสินว่าไลฟ์จบ <span class="kd kd-exc">Exception/Error</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-14566"><span class="stb pending">รอเทส</span></td>
+  <td class="status-win" data-uid="tc-14566"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-14566"></td>
+</tr>
+<tr class="detail"><td colspan="8"><div class="card">
+  <div class="h-title">TikTok ไม่ส่งหน้าไลฟ์มาให้ ต้องขึ้นแบนเนอร์พร้อมปุ่ม "โหลดหน้าไลฟ์ใหม่" และไม่ตัดสินว่าไลฟ์จบ</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Exception/Error</b> <span class="hint">(ผู้ให้บริการล่ม · เน็ตหลุด · key ใช้ไม่ได้)</span> · UI/ฟีเจอร์ใหม่หลัง 29 ก.ย. — ขึ้น UAT ถึง 5 ต.ค. (origin/uat 7c26b9fe)</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เปิดแอปบิลด์ UAT โดยตั้งตัวแปร LHM_TEST_BLANK_LIVE_PAGE=2 ให้หน้าไลฟ์ 2 ครั้งถัดไปเป็นหน้าว่าง (มีเฉพาะบิลด์ dev/uat)</li></ul></div>
+  <div class="sec"><h4>Test Data</h4><ul><li>บัญชีที่ใช้ (UAT): qa.owner@realfactory.co.th · บทบาท "เจ้าของ"</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT (เปิดแอปตาม Precondition)</li><li>ไปที่เมนู "เซสชัน" กด "วิเคราะห์ไลฟ์ใหม่" วางลิงก์ไลฟ์ TikTok ที่กำลังออกอากาศ กด "เปิดดูไลฟ์" แล้วตั้งชื่อเซสชันและกด "เริ่มบันทึก"</li><li>รอ 15–30 วินาที แล้วสังเกตหน้าบันทึกและกล่องไลฟ์ในเมนู "หลายไลฟ์พร้อมกัน"</li><li>กลับหน้าบันทึกแล้วกด "โหลดหน้าไลฟ์ใหม่" และสังเกตจนได้ภาพ</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ขึ้นแบนเนอร์ "TikTok ยังไม่ส่งหน้าไลฟ์มาให้ จึงยังเก็บคอมเมนต์และภาพไม่ได้ — ระบบจะลองโหลดใหม่ให้เองเป็นระยะ · ไลฟ์ของคุณยังออกอากาศตามปกติ" พร้อมปุ่ม "โหลดหน้าไลฟ์ใหม่"</li><li>กล่องไลฟ์ในหน้า "หลายไลฟ์พร้อมกัน" มีป้าย "ยังไม่ได้ภาพ"</li><li>เซสชันไม่ถูกหยุดหรือตัดสินว่า "ไลฟ์จบแล้ว" ระหว่างที่ยังไม่ได้ภาพ</li><li>เมื่อได้ภาพแล้ว แบนเนอร์และป้ายหายเอง และคอมเมนต์เริ่มไหล</li></ul><div class="hint" style="margin-top:6px">ที่มา: TI-591 (owner rulings R1/R2 · โหลดใหม่เองที่ 30 วิ, 60 วิ แล้วทุก 120 วิ) · ตรวจโค้ด origin/uat 7c26b9fe (5 ต.ค.)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4>
+  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
+    <span class="opt pass" data-uid="tc-14566" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-14566" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-14566" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-14566" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-14566" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">
+    <span class="optw pass" data-uid="tc-14566" data-stw="pass">PASS</span>
+    <span class="optw fail" data-uid="tc-14566" data-stw="fail">FAIL</span>
+    <span class="optw hold" data-uid="tc-14566" data-stw="hold">HOLD</span>
+    <span class="optw block" data-uid="tc-14566" data-stw="block">BLOCKED</span>
+    <span class="optw skip" data-uid="tc-14566" data-stw="skip">SKIP</span>
+  </div></div>
+  </div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-14566"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-14566" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-14566">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="rinew" data-level="ui" data-prio="P1" data-kind="negative" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-OCT-C.7</td>
+  <td class="ctitle">ไลฟ์จบระหว่างอยู่หน้าพรีวิว แล้วกด "เริ่มบันทึก" ต้องถูกปฏิเสธพร้อมเหตุผล ไม่เปิดเซสชันค้าง <span class="kd kd-neg">Negative</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-14567"><span class="stb pending">รอเทส</span></td>
+  <td class="status-win" data-uid="tc-14567"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-14567"></td>
+</tr>
+<tr class="detail"><td colspan="8"><div class="card">
+  <div class="h-title">ไลฟ์จบระหว่างอยู่หน้าพรีวิว แล้วกด "เริ่มบันทึก" ต้องถูกปฏิเสธพร้อมเหตุผล ไม่เปิดเซสชันค้าง</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Negative</b> <span class="hint">(ข้อมูลผิด / action ผิด)</span> · UI/ฟีเจอร์ใหม่หลัง 29 ก.ย. — ขึ้น UAT ถึง 5 ต.ค. (origin/uat 7c26b9fe)</div>
+  <div class="sec"><h4>Test Data</h4><ul><li>บัญชีที่ใช้ (UAT): qa.owner@realfactory.co.th · บทบาท "เจ้าของ"</li><li>บัญชี TikTok ที่ 2 สำหรับเปิด/ปิดไลฟ์ และพิมพ์คอมเมนต์ทดสอบ</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>ไปที่เมนู "เซสชัน" กด "วิเคราะห์ไลฟ์ใหม่" วางลิงก์ไลฟ์ของบัญชี TikTok ที่ 2 แล้วกด "เปิดดูไลฟ์"</li><li>ให้บัญชี TikTok ที่ 2 ปิดไลฟ์ รอจนหน้าเว็บขึ้นว่าไลฟ์จบ แล้วตั้งชื่อเซสชันและกด "เริ่มบันทึก"</li><li>สังเกตข้อความ แล้วเปิดเมนู "เซสชัน"</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ไม่เริ่มบันทึก ขึ้น "ยังไม่ได้เปิดหน้าไลฟ์ของช่องที่ต้องการ หรือไลฟ์จบแล้ว — เปิดหน้าไลฟ์ของช่องนั้นโดยตรง (ไม่ใช่หน้ารวมไลฟ์) แล้วลองใหม่ · ถ้าเพิ่งเปลี่ยนห้องภายในหน้าเว็บ ให้กดรีเฟรชก่อน"</li><li>หน้า "เซสชัน" ไม่มีเซสชันว่างของไลฟ์นี้เกิดขึ้น</li></ul><div class="hint" style="margin-top:6px">ที่มา: TI-570 (ไม่เริ่มบันทึกบนห้องที่รู้ว่าจบแล้ว · owner ruling D3) · ตรวจโค้ด origin/uat 7c26b9fe (5 ต.ค.)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4>
+  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
+    <span class="opt pass" data-uid="tc-14567" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-14567" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-14567" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-14567" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-14567" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">
+    <span class="optw pass" data-uid="tc-14567" data-stw="pass">PASS</span>
+    <span class="optw fail" data-uid="tc-14567" data-stw="fail">FAIL</span>
+    <span class="optw hold" data-uid="tc-14567" data-stw="hold">HOLD</span>
+    <span class="optw block" data-uid="tc-14567" data-stw="block">BLOCKED</span>
+    <span class="optw skip" data-uid="tc-14567" data-stw="skip">SKIP</span>
+  </div></div>
+  </div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-14567"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-14567" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-14567">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="rinew" data-level="ui" data-prio="P1" data-kind="exception" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-OCT-C.8</td>
+  <td class="ctitle">เครื่องทรัพยากรไม่พอ ข้อความใต้ช่องลิงก์ต้องบอกเหตุผลจริงของเครื่อง ไม่บอกว่าแพ็กเกจเต็ม <span class="kd kd-exc">Exception/Error</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-14568"><span class="stb pending">รอเทส</span></td>
+  <td class="status-win" data-uid="tc-14568"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-14568"></td>
+</tr>
+<tr class="detail"><td colspan="8"><div class="card">
+  <div class="h-title">เครื่องทรัพยากรไม่พอ ข้อความใต้ช่องลิงก์ต้องบอกเหตุผลจริงของเครื่อง ไม่บอกว่าแพ็กเกจเต็ม</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Exception/Error</b> <span class="hint">(ผู้ให้บริการล่ม · เน็ตหลุด · key ใช้ไม่ได้)</span> · UI/ฟีเจอร์ใหม่หลัง 29 ก.ย. — ขึ้น UAT ถึง 5 ต.ค. (origin/uat 7c26b9fe)</div>
+  <div class="sec"><h4>Test Data</h4><ul><li>บัญชีที่ใช้ (UAT): qa.owner@realfactory.co.th · บทบาท "เจ้าของ"</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>เปิดโปรแกรมที่ใช้เครื่องหนัก (เช่นเล่นวิดีโอ 4K หลายหน้าต่าง) จนแถบทรัพยากรด้านบนหน้า "หลายไลฟ์พร้อมกัน" ขึ้นเตือน</li><li>ไปที่เมนู "หลายไลฟ์พร้อมกัน" วางลิงก์ไลฟ์ใหม่แล้วกด "เปิดดูไลฟ์"</li><li>สังเกตข้อความใต้ช่องลิงก์และตัวนับ "x / y เซสชัน"</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ข้อความใต้ช่องลิงก์ใช้ประโยคเดียวกับแถบทรัพยากร เช่น "ทรัพยากรเครื่องไม่พอสำหรับเปิดไลฟ์เพิ่ม — ลองปิดแอปอื่น หรือรอสักครู่แล้วลองใหม่" หรือ "การ์ดจอทำงานหนักเกินกว่าจะเปิดไลฟ์เพิ่ม — นับรวมแอปอื่นด้วย ลองปิดแอปที่เล่นวิดีโออยู่แล้วลองใหม่"</li><li>ไม่ขึ้น "เก็บไลฟ์พร้อมกันได้สูงสุด … ไลฟ์แล้ว …" ถ้ายังไม่ถึงเพดานแพ็กเกจ</li><li>ตัวหารของตัวนับ "x / y เซสชัน" เป็นเพดานแพ็กเกจ ไม่ลดลงตามสภาพเครื่อง</li></ul><div class="hint" style="margin-top:6px">ที่มา: TI-586 (ข้อความเพิ่มไลฟ์ไม่ได้บอกเหตุผลจริง · ตัวนับใช้เพดานแพ็กเกจ) · ตรวจโค้ด origin/uat 7c26b9fe (5 ต.ค.)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4>
+  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
+    <span class="opt pass" data-uid="tc-14568" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-14568" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-14568" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-14568" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-14568" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">
+    <span class="optw pass" data-uid="tc-14568" data-stw="pass">PASS</span>
+    <span class="optw fail" data-uid="tc-14568" data-stw="fail">FAIL</span>
+    <span class="optw hold" data-uid="tc-14568" data-stw="hold">HOLD</span>
+    <span class="optw block" data-uid="tc-14568" data-stw="block">BLOCKED</span>
+    <span class="optw skip" data-uid="tc-14568" data-stw="skip">SKIP</span>
+  </div></div>
+  </div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-14568"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-14568" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-14568">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="featrow" data-featkey="rinew-ai"><td colspan="8">📁 ข้อความ AI: ยืนยันก่อนแทนที่ · Gemini · ลำดับการ์ดแดชบอร์ดแบรนด์ (TI-534 · TI-536 · TI-585 · TI-572 · TI-592 · #655) <span class="rp"><span class="lv lvl-ui">🌐 5</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="rinew-ai"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow" data-feat="rinew" data-level="ui" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-OCT-D.1</td>
+  <td class="ctitle">AI Summary ที่มีข้อความอยู่แล้ว กด "สรุปใหม่" ต้องถาม popup ก่อน และ "ไม่ต้อง" ต้องเก็บสรุปเดิมไว้ <span class="kd kd-happy">Happy Path</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-14569"><span class="stb pending">รอเทส</span></td>
+  <td class="status-win" data-uid="tc-14569"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-14569"></td>
+</tr>
+<tr class="detail"><td colspan="8"><div class="card">
+  <div class="h-title">AI Summary ที่มีข้อความอยู่แล้ว กด "สรุปใหม่" ต้องถาม popup ก่อน และ "ไม่ต้อง" ต้องเก็บสรุปเดิมไว้</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · UI/ฟีเจอร์ใหม่หลัง 29 ก.ย. — ขึ้น UAT ถึง 5 ต.ค. (origin/uat 7c26b9fe)</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>บัญชีนี้ตั้งค่าผู้ให้บริการ AI ครบแล้ว (บันทึก key · เลือกโมเดล · ยอมรับข้อตกลงการส่งข้อมูล)</li></ul></div>
+  <div class="sec"><h4>Test Data</h4><ul><li>บัญชีที่ใช้ (UAT): qa.owner@realfactory.co.th · บทบาท "เจ้าของ"</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>ไปที่เมนู "เซสชัน" แล้วเปิดไลฟ์ที่บันทึกจบแล้วซึ่งมี "AI Summary · สรุปไลฟ์นี้" อยู่แล้ว</li><li>กด "สรุปใหม่" แล้วกด "ไม่ต้อง"</li><li>กด "สรุปใหม่" อีกครั้งแล้วกด "แทนที่เลย" และสังเกตการ์ด</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ขึ้น popup "สรุปไลฟ์นี้ใหม่?" + "สรุปใหม่จะแทนที่สรุปเดิม และล้างคะแนนที่คุณให้ไว้ · จะเรียกผู้ให้บริการ AI อีกหนึ่งครั้งด้วย key ของคุณ" พร้อมปุ่ม "แทนที่เลย" / "ไม่ต้อง"</li><li>กด "ไม่ต้อง" แล้วสรุปเดิมอยู่ครบ ไม่มี "กำลังสรุป…"</li><li>กด "แทนที่เลย" แล้วขึ้น "กำลังสรุป…" ได้สรุปใหม่แทนของเดิม และคะแนน 👍/👎 ที่เคยให้ถูกล้าง</li></ul><div class="hint" style="margin-top:6px">ที่มา: TI-534 + TI-536 · owner ruling 2026-09-29 (popup แทนที่แบบเดียวกันทุกการ์ด AI) · ตรวจโค้ด origin/uat 7c26b9fe (5 ต.ค.)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4>
+  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
+    <span class="opt pass" data-uid="tc-14569" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-14569" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-14569" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-14569" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-14569" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">
+    <span class="optw pass" data-uid="tc-14569" data-stw="pass">PASS</span>
+    <span class="optw fail" data-uid="tc-14569" data-stw="fail">FAIL</span>
+    <span class="optw hold" data-uid="tc-14569" data-stw="hold">HOLD</span>
+    <span class="optw block" data-uid="tc-14569" data-stw="block">BLOCKED</span>
+    <span class="optw skip" data-uid="tc-14569" data-stw="skip">SKIP</span>
+  </div></div>
+  </div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-14569"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-14569" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-14569">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="rinew" data-level="ui" data-prio="P1" data-kind="happy" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-OCT-D.2</td>
+  <td class="ctitle">การ์ด AI ทุกใบถามด้วย popup แบบเดียวกันก่อนเขียนใหม่ (หัว popup ตรงกับแต่ละการ์ด) <span class="kd kd-happy">Happy Path</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-14570"><span class="stb pending">รอเทส</span></td>
+  <td class="status-win" data-uid="tc-14570"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-14570"></td>
+</tr>
+<tr class="detail"><td colspan="8"><div class="card">
+  <div class="h-title">การ์ด AI ทุกใบถามด้วย popup แบบเดียวกันก่อนเขียนใหม่ (หัว popup ตรงกับแต่ละการ์ด)</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · UI/ฟีเจอร์ใหม่หลัง 29 ก.ย. — ขึ้น UAT ถึง 5 ต.ค. (origin/uat 7c26b9fe)</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>บัญชีนี้ตั้งค่าผู้ให้บริการ AI ครบแล้ว (บันทึก key · เลือกโมเดล · ยอมรับข้อตกลงการส่งข้อมูล)</li><li>มีไลฟ์ที่บันทึกจบแล้วซึ่งสร้าง AI Summary · AI Narrative · AI Coach · สรุปบทพูดไว้แล้ว และแดชบอร์ดแบรนด์/AI Insights มีข้อความ AI อยู่แล้ว</li></ul></div>
+  <div class="sec"><h4>Test Data</h4><ul><li>บัญชีที่ใช้ (UAT): qa.owner@realfactory.co.th · บทบาท "เจ้าของ"</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>ไปที่เมนู "เซสชัน" เปิดไลฟ์ที่มีข้อความ AI ครบ แล้วกด "เขียนใหม่" ที่ "AI Narrative · เล่าเรื่องไลฟ์นี้" · "แนะนำใหม่" ที่ "AI Coach · สิ่งที่ควรทำไลฟ์หน้า" · "สรุปใหม่" ที่ "สรุปบทพูดโดย AI" โดยกด "ไม่ต้อง" ทุกครั้ง</li><li>ไปที่ "แดชบอร์ดแบรนด์" กด "สรุปใหม่" ที่ AI HIGHLIGHT และ "เขียนใหม่" ที่ AI NARRATIVE โดยกด "ไม่ต้อง" ทุกครั้ง</li><li>ไปที่ "AI Insights" กด "เขียนใหม่" ที่ชุดการ์ด แล้วกด "ไม่ต้อง" และสังเกตหัว popup ของทุกการ์ด</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>หัว popup ตรงกับการ์ด: AI Narrative "เขียนย่อหน้านี้ใหม่?" · AI Coach "ขอคำแนะนำใหม่?" · สรุปบทพูด "สรุปบทพูดใหม่?" · AI HIGHLIGHT "สรุปประโยคนี้ใหม่?" · AI NARRATIVE (แดชบอร์ดแบรนด์) "เขียนย่อหน้านี้ใหม่?" · AI Insights "เขียนการ์ดชุดนี้ใหม่?"</li><li>ทุก popup มีปุ่ม "แทนที่เลย" / "ไม่ต้อง" และบอกว่า "จะเรียกผู้ให้บริการ AI อีกหนึ่งครั้งด้วย key ของคุณ"</li><li>กด "ไม่ต้อง" แล้วข้อความเดิมของทุกการ์ดอยู่ครบ</li></ul><div class="hint" style="margin-top:6px">ที่มา: TI-534 + TI-536 · owner ruling 2026-09-29 · ตรวจโค้ด origin/uat 7c26b9fe (5 ต.ค.)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4>
+  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
+    <span class="opt pass" data-uid="tc-14570" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-14570" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-14570" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-14570" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-14570" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">
+    <span class="optw pass" data-uid="tc-14570" data-stw="pass">PASS</span>
+    <span class="optw fail" data-uid="tc-14570" data-stw="fail">FAIL</span>
+    <span class="optw hold" data-uid="tc-14570" data-stw="hold">HOLD</span>
+    <span class="optw block" data-uid="tc-14570" data-stw="block">BLOCKED</span>
+    <span class="optw skip" data-uid="tc-14570" data-stw="skip">SKIP</span>
+  </div></div>
+  </div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-14570"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-14570" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-14570">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="rinew" data-level="ui" data-prio="P1" data-kind="exception" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-OCT-D.3</td>
+  <td class="ctitle">ปุ่ม "ลองใหม่" ข้างข้อความ AI ที่มีอยู่แล้ว ต้องถาม popup ก่อนแทนที่ <span class="kd kd-exc">Exception/Error</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-14571"><span class="stb pending">รอเทส</span></td>
+  <td class="status-win" data-uid="tc-14571"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-14571"></td>
+</tr>
+<tr class="detail"><td colspan="8"><div class="card">
+  <div class="h-title">ปุ่ม "ลองใหม่" ข้างข้อความ AI ที่มีอยู่แล้ว ต้องถาม popup ก่อนแทนที่</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Exception/Error</b> <span class="hint">(ผู้ให้บริการล่ม · เน็ตหลุด · key ใช้ไม่ได้)</span> · UI/ฟีเจอร์ใหม่หลัง 29 ก.ย. — ขึ้น UAT ถึง 5 ต.ค. (origin/uat 7c26b9fe)</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>บัญชีนี้ตั้งค่าผู้ให้บริการ AI ครบแล้ว (บันทึก key · เลือกโมเดล · ยอมรับข้อตกลงการส่งข้อมูล)</li></ul></div>
+  <div class="sec"><h4>Test Data</h4><ul><li>บัญชีที่ใช้ (UAT): qa.owner@realfactory.co.th · บทบาท "เจ้าของ"</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>ไปที่เมนู "เซสชัน" แล้วเปิดไลฟ์ที่มี "AI Summary · สรุปไลฟ์นี้" อยู่แล้ว</li><li>ปิด Wi-Fi/ถอดสายแลน กด "สรุปใหม่" แล้วกด "แทนที่เลย" รอจนการ์ดขึ้นสถานะผิดพลาดพร้อมปุ่ม "ลองใหม่"</li><li>เปิดอินเทอร์เน็ตกลับ แล้วกด "ลองใหม่" และสังเกต</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ระหว่างที่สร้างไม่สำเร็จ สรุปเดิมยังแสดงอยู่</li><li>กด "ลองใหม่" แล้วขึ้น popup "สรุปไลฟ์นี้ใหม่?" ก่อน ไม่สร้างใหม่ทันที · กด "แทนที่เลย" แล้วจึงสร้างสรุปใหม่</li><li>การ์ดที่ยังไม่มีข้อความ กด "ลองใหม่" แล้วสร้างทันทีเหมือนเดิม (ไม่มี popup)</li></ul><div class="hint" style="margin-top:6px">ที่มา: TI-585 · owner ruling 2026-10-02 (กลับคำตัดสิน 29 ก.ย. — รวมสรุปบทพูด) · ตรวจโค้ด origin/uat 7c26b9fe (5 ต.ค.)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4>
+  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
+    <span class="opt pass" data-uid="tc-14571" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-14571" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-14571" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-14571" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-14571" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">
+    <span class="optw pass" data-uid="tc-14571" data-stw="pass">PASS</span>
+    <span class="optw fail" data-uid="tc-14571" data-stw="fail">FAIL</span>
+    <span class="optw hold" data-uid="tc-14571" data-stw="hold">HOLD</span>
+    <span class="optw block" data-uid="tc-14571" data-stw="block">BLOCKED</span>
+    <span class="optw skip" data-uid="tc-14571" data-stw="skip">SKIP</span>
+  </div></div>
+  </div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-14571"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-14571" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-14571">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="rinew" data-level="ui" data-prio="P1" data-kind="happy" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-OCT-D.4</td>
+  <td class="ctitle">ใช้โมเดล Gemini 3.8 Flash แล้ว AI Coach และ AI HIGHLIGHT ได้คำตอบครบ ไม่ถูกปัดว่าใช้ไม่ได้ <span class="kd kd-happy">Happy Path</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-14572"><span class="stb pending">รอเทส</span></td>
+  <td class="status-win" data-uid="tc-14572"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-14572"></td>
+</tr>
+<tr class="detail"><td colspan="8"><div class="card">
+  <div class="h-title">ใช้โมเดล Gemini 3.8 Flash แล้ว AI Coach และ AI HIGHLIGHT ได้คำตอบครบ ไม่ถูกปัดว่าใช้ไม่ได้</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · UI/ฟีเจอร์ใหม่หลัง 29 ก.ย. — ขึ้น UAT ถึง 5 ต.ค. (origin/uat 7c26b9fe)</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>key OpenRouter ที่ใช้ได้ 1 อัน · ยอมรับข้อตกลงการส่งข้อมูลให้ AI แล้ว</li></ul></div>
+  <div class="sec"><h4>Test Data</h4><ul><li>บัญชีที่ใช้ (UAT): qa.owner@realfactory.co.th · บทบาท "เจ้าของ"</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>กดรูปโปรไฟล์ ("โปรไฟล์และบัญชี") ที่ท้ายแถบเมนูซ้าย แล้วเลือก "ผู้ให้บริการ AI" เลือก OpenRouter บันทึก key และเลือกโมเดล "Gemini 3.8 Flash"</li><li>ไปที่เมนู "เซสชัน" เปิดไลฟ์ที่บันทึกจบแล้ว กด "ขอคำแนะนำจาก AI" (ถ้ามีคำแนะนำอยู่แล้ว กด "แนะนำใหม่" → "แทนที่เลย")</li><li>ไปที่ "แดชบอร์ดแบรนด์" กด "สรุปด้วย AI" ที่ AI HIGHLIGHT แล้วสังเกตผลทั้งสองการ์ด</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>AI Coach ได้คำแนะนำครบ ไม่ถูกตัดกลางบรรทัด</li><li>AI HIGHLIGHT ได้สรุปเป็นประโยคเดียว</li><li>ไม่ขึ้น "คำตอบของ AI รอบนี้ใช้ไม่ได้" (ก่อนแก้ขึ้นทุกครั้งกับโมเดลนี้) · ถ้าคำตอบไม่ผ่านการตรวจของแอปจริง ต้องขึ้นสถานะนี้พร้อม "ลองใหม่" ไม่ใช่ error ดิบ</li></ul><div class="hint" style="margin-top:6px">ที่มา: TI-592 (QA M-01 · reasoning low เฉพาะ Gemini) · TI-572 (สถานะ answer_unusable · owner ruling T3 2026-09-29) · ตรวจโค้ด origin/uat 7c26b9fe (5 ต.ค.)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4>
+  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
+    <span class="opt pass" data-uid="tc-14572" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-14572" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-14572" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-14572" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-14572" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">
+    <span class="optw pass" data-uid="tc-14572" data-stw="pass">PASS</span>
+    <span class="optw fail" data-uid="tc-14572" data-stw="fail">FAIL</span>
+    <span class="optw hold" data-uid="tc-14572" data-stw="hold">HOLD</span>
+    <span class="optw block" data-uid="tc-14572" data-stw="block">BLOCKED</span>
+    <span class="optw skip" data-uid="tc-14572" data-stw="skip">SKIP</span>
+  </div></div>
+  </div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-14572"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-14572" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-14572">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="rinew" data-level="ui" data-prio="P1" data-kind="happy" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-OCT-D.5</td>
+  <td class="ctitle">แดชบอร์ดแบรนด์: การ์ด AI NARRATIVE อยู่ใต้ AI HIGHLIGHT ทันที ก่อนการ์ดตัวเลข <span class="kd kd-happy">Happy Path</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-14573"><span class="stb pending">รอเทส</span></td>
+  <td class="status-win" data-uid="tc-14573"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-14573"></td>
+</tr>
+<tr class="detail"><td colspan="8"><div class="card">
+  <div class="h-title">แดชบอร์ดแบรนด์: การ์ด AI NARRATIVE อยู่ใต้ AI HIGHLIGHT ทันที ก่อนการ์ดตัวเลข</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · UI/ฟีเจอร์ใหม่หลัง 29 ก.ย. — ขึ้น UAT ถึง 5 ต.ค. (origin/uat 7c26b9fe)</div>
+  <div class="sec"><h4>Test Data</h4><ul><li>บัญชีที่ใช้ (UAT): qa.owner@realfactory.co.th · บทบาท "เจ้าของ"</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>ไปที่เมนู "แดชบอร์ดแบรนด์"</li><li>สังเกตลำดับการ์ดจากบนลงล่าง และข้อความใต้ย่อหน้าของ AI NARRATIVE</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>การ์ด AI NARRATIVE (ปุ่ม "เขียนสรุปช่วงนี้ด้วย AI") อยู่ถัดจากการ์ด AI HIGHLIGHT (ปุ่ม "สรุปด้วย AI") ทันที และอยู่ก่อนการ์ดตัวเลข</li><li>ข้อความใต้ย่อหน้าเขียนว่า "เขียนจากตัวเลขรวมของ workspace ณ เวลาที่เขียน การ์ดตัวเลขด้านล่างอาจอัปเดตหลังจากนั้น · …"</li></ul><div class="hint" style="margin-top:6px">ที่มา: PR #655 (ย้ายการ์ด "เขียนสรุปช่วงนี้ด้วย AI" ขึ้นไปไว้ใต้ "สรุปด้วย AI") · ตรวจโค้ด origin/uat 7c26b9fe (5 ต.ค.)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4>
+  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
+    <span class="opt pass" data-uid="tc-14573" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-14573" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-14573" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-14573" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-14573" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">
+    <span class="optw pass" data-uid="tc-14573" data-stw="pass">PASS</span>
+    <span class="optw fail" data-uid="tc-14573" data-stw="fail">FAIL</span>
+    <span class="optw hold" data-uid="tc-14573" data-stw="hold">HOLD</span>
+    <span class="optw block" data-uid="tc-14573" data-stw="block">BLOCKED</span>
+    <span class="optw skip" data-uid="tc-14573" data-stw="skip">SKIP</span>
+  </div></div>
+  </div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-14573"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-14573" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-14573">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="featrow" data-featkey="rinew-consent"><td colspan="8">📁 ความยินยอม (TI-582 · TI-554 · TI-578) <span class="rp"><span class="lv lvl-ui">🌐 2</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="rinew-consent"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow" data-feat="rinew" data-level="ui" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-OCT-E.1</td>
+  <td class="ctitle">กล่องให้ความยินยอมบอกผลของการ "ให้" ไม่ใช่ "ถอน" และไม่มีสัญญา "ลบให้ภายใน 7 วัน ไม่มีเงื่อนไข" <span class="kd kd-happy">Happy Path</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-14574"><span class="stb pending">รอเทส</span></td>
+  <td class="status-win" data-uid="tc-14574"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-14574"></td>
+</tr>
+<tr class="detail"><td colspan="8"><div class="card">
+  <div class="h-title">กล่องให้ความยินยอมบอกผลของการ "ให้" ไม่ใช่ "ถอน" และไม่มีสัญญา "ลบให้ภายใน 7 วัน ไม่มีเงื่อนไข"</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · UI/ฟีเจอร์ใหม่หลัง 29 ก.ย. — ขึ้น UAT ถึง 5 ต.ค. (origin/uat 7c26b9fe)</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>บัญชีนี้ยังไม่ได้ให้ หรือถอนความยินยอมทั้งสองเรื่องไว้ก่อนเริ่มเคส</li></ul></div>
+  <div class="sec"><h4>Test Data</h4><ul><li>บัญชีที่ใช้ (UAT): qa.owner@realfactory.co.th · บทบาท "เจ้าของ"</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>กดรูปโปรไฟล์ ("โปรไฟล์และบัญชี") ที่ท้ายแถบเมนูซ้าย แล้วเลือก "ความเป็นส่วนตัว" (หน้า "ความยินยอมของคุณ")</li><li>ที่ "การอ่านอารมณ์จากสีหน้า" กด "ให้ความยินยอม" อ่านข้อความในกล่องแล้วกดยืนยัน ทำแบบเดียวกันกับ "ฟังเสียงพูดระหว่างไลฟ์"</li><li>กด "ถอน" ที่ "การอ่านอารมณ์จากสีหน้า" แล้วกด "ถอนความยินยอม" และสังเกตข้อความที่ขึ้น</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>กล่อง "ให้ความยินยอม: …?" ของกล้องแสดงผลของการให้ "เปิดการอ่านอารมณ์แบบเรียลไทม์ · ตัวเลขอารมณ์ถูกเก็บไว้ในเครื่องนี้เพื่อดูย้อนหลัง …" และของเสียงแสดง "ฟังเสียงพูดในไลฟ์แล้วถอดเป็นข้อความในเครื่อง …"</li><li>ไม่มีประโยคของการถอน (เช่น "เซสชันถัดไปจะเป็นโหมดคอมเมนต์อย่างเดียว") ในกล่องให้ความยินยอม</li><li>ไม่มีข้อความ "ลบได้ทุกเมื่อ · ภายใน 7 วัน" หรือ "ไม่มีเงื่อนไข" ทั้งในกล่องนี้และกล่อง "ยังลังเลอยู่ไหม?"</li><li>หลังถอนขึ้น "ถอนความยินยอมแล้ว · ข้อมูลบน cloud จะถูกลบภายใน 7 วัน"</li></ul><div class="hint" style="margin-top:6px">ที่มา: TI-582 + TI-554 · spec-ti-582-554-grant-dialog-consent-copy · ตรวจโค้ด origin/uat 7c26b9fe (5 ต.ค.)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4>
+  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
+    <span class="opt pass" data-uid="tc-14574" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-14574" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-14574" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-14574" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-14574" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">
+    <span class="optw pass" data-uid="tc-14574" data-stw="pass">PASS</span>
+    <span class="optw fail" data-uid="tc-14574" data-stw="fail">FAIL</span>
+    <span class="optw hold" data-uid="tc-14574" data-stw="hold">HOLD</span>
+    <span class="optw block" data-uid="tc-14574" data-stw="block">BLOCKED</span>
+    <span class="optw skip" data-uid="tc-14574" data-stw="skip">SKIP</span>
+  </div></div>
+  </div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-14574"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-14574" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-14574">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="rinew" data-level="ui" data-prio="P0" data-kind="data" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-OCT-E.2</td>
+  <td class="ctitle">ถอนความยินยอมเรื่องกล้องกลางไลฟ์ แล้วคอมเมนต์หลังจากนั้นยังเก็บได้พร้อมข้อความครบ <span class="kd kd-data">Data</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-14575"><span class="stb pending">รอเทส</span></td>
+  <td class="status-win" data-uid="tc-14575"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-14575"></td>
+</tr>
+<tr class="detail"><td colspan="8"><div class="card">
+  <div class="h-title">ถอนความยินยอมเรื่องกล้องกลางไลฟ์ แล้วคอมเมนต์หลังจากนั้นยังเก็บได้พร้อมข้อความครบ</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Data</b> <span class="hint">(ค่าคงอยู่ · ข้อมูลเดิมไม่หาย · ซิงก์ข้ามเครื่อง)</span> · UI/ฟีเจอร์ใหม่หลัง 29 ก.ย. — ขึ้น UAT ถึง 5 ต.ค. (origin/uat 7c26b9fe)</div>
+  <div class="sec"><h4>Test Data</h4><ul><li>บัญชีที่ใช้ (UAT): qa.owner@realfactory.co.th · บทบาท "เจ้าของ"</li><li>บัญชี TikTok ที่ 2 สำหรับเปิด/ปิดไลฟ์ และพิมพ์คอมเมนต์ทดสอบ</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>ไปที่เมนู "เซสชัน" กด "วิเคราะห์ไลฟ์ใหม่" วางลิงก์ไลฟ์ TikTok ที่กำลังออกอากาศ กด "เปิดดูไลฟ์" แล้วตั้งชื่อเซสชันและกด "เริ่มบันทึก"</li><li>ระหว่างบันทึก กดรูปโปรไฟล์ ("โปรไฟล์และบัญชี") ที่ท้ายแถบเมนูซ้าย แล้วเลือก "ความเป็นส่วนตัว" (หน้า "ความยินยอมของคุณ") แล้วกด "ถอน" ที่ "การอ่านอารมณ์จากสีหน้า" และกด "ถอนความยินยอม"</li><li>กลับไปหน้าบันทึก ให้บัญชี TikTok ที่ 2 พิมพ์คอมเมนต์ 3–5 ข้อความ แล้วสังเกตแผงคอมเมนต์</li><li>หยุดบันทึก แล้วเปิดรายงานของไลฟ์นี้จากเมนู "เซสชัน"</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>คอมเมนต์ที่พิมพ์หลังถอนขึ้นในแผงคอมเมนต์พร้อมข้อความครบ ไม่เป็นแถวว่าง</li><li>รายงานหลังไลฟ์นับคอมเมนต์ช่วงหลังถอนครบ โดยไม่ต้องปิด-เปิดแอปใหม่</li></ul><div class="hint" style="margin-top:6px">ที่มา: TI-578 · owner ruling 2026-09-30 (ก่อนแก้: คอมเมนต์หลังถอนหายข้อความ 12/12) · ตรวจโค้ด origin/uat 7c26b9fe (5 ต.ค.)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4>
+  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
+    <span class="opt pass" data-uid="tc-14575" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-14575" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-14575" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-14575" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-14575" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">
+    <span class="optw pass" data-uid="tc-14575" data-stw="pass">PASS</span>
+    <span class="optw fail" data-uid="tc-14575" data-stw="fail">FAIL</span>
+    <span class="optw hold" data-uid="tc-14575" data-stw="hold">HOLD</span>
+    <span class="optw block" data-uid="tc-14575" data-stw="block">BLOCKED</span>
+    <span class="optw skip" data-uid="tc-14575" data-stw="skip">SKIP</span>
+  </div></div>
+  </div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-14575"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-14575" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-14575">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="featrow" data-featkey="rinew-update"><td colspan="8">📁 การ์ดอัปเดตแอป (TI-567) <span class="rp"><span class="lv lvl-ui">🌐 2</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="rinew-update"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow" data-feat="rinew" data-level="ui" data-prio="P1" data-kind="happy" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-OCT-F.1</td>
+  <td class="ctitle">เจอเวอร์ชันใหม่ ต้องขึ้นการ์ดเสนอให้กดดาวน์โหลดเอง พร้อมแถบความคืบหน้าและหยุดดาวน์โหลดได้ <span class="kd kd-happy">Happy Path</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-14576"><span class="stb pending">รอเทส</span></td>
+  <td class="status-win" data-uid="tc-14576"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-14576"></td>
+</tr>
+<tr class="detail"><td colspan="8"><div class="card">
+  <div class="h-title">เจอเวอร์ชันใหม่ ต้องขึ้นการ์ดเสนอให้กดดาวน์โหลดเอง พร้อมแถบความคืบหน้าและหยุดดาวน์โหลดได้</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · UI/ฟีเจอร์ใหม่หลัง 29 ก.ย. — ขึ้น UAT ถึง 5 ต.ค. (origin/uat 7c26b9fe)</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>ติดตั้งบิลด์ UAT ที่เก่ากว่าเวอร์ชันล่าสุดบนช่อง UAT อย่างน้อย 1 เวอร์ชัน</li></ul></div>
+  <div class="sec"><h4>Test Data</h4><ul><li>บัญชีที่ใช้ (UAT): qa.owner@realfactory.co.th · บทบาท "เจ้าของ"</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT (ยังไม่ได้เปิดติดตามไลฟ์ใด)</li><li>กดรูปโปรไฟล์ ("โปรไฟล์และบัญชี") ที่ท้ายแถบเมนูซ้าย แล้วกด "ตรวจหาอัปเดต" และอ่านการ์ดที่ขึ้น</li><li>กด "ดาวน์โหลด" แล้วสังเกตการ์ดระหว่างดาวน์โหลด จากนั้นกด "หยุดดาวน์โหลด"</li><li>กด "ดาวน์โหลด" อีกครั้งแล้วรอจนเสร็จ และสังเกตการ์ด</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>การ์ด "มีเวอร์ชันใหม่ …" บอก "ขนาดประมาณ … · การดาวน์โหลดใช้อินเทอร์เน็ตมาก …" และยังไม่ดาวน์โหลดจนกว่าจะกด "ดาวน์โหลด"</li><li>ระหว่างดาวน์โหลดขึ้น "กำลังดาวน์โหลดเวอร์ชัน …" พร้อมแถบความคืบหน้า "… จาก …" เวลาที่เหลือ ("อีกประมาณ n นาที" / "อีกไม่ถึง 1 นาที") และปุ่ม "หยุดดาวน์โหลด"</li><li>กด "หยุดดาวน์โหลด" แล้วขึ้น "กำลังหยุดดาวน์โหลด…" และการ์ดกลับมาให้กด "ดาวน์โหลด" ใหม่</li><li>ดาวน์โหลดเสร็จแล้วการ์ดถามให้ติดตั้ง แอปไม่รีสตาร์ทเอง</li></ul><div class="hint" style="margin-top:6px">ที่มา: TI-567 · owner rulings 1–7 (Jira TI-567 comment 48787) · เหมือนกันทั้ง Mac และ Windows · ตรวจโค้ด origin/uat 7c26b9fe (5 ต.ค.)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4>
+  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
+    <span class="opt pass" data-uid="tc-14576" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-14576" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-14576" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-14576" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-14576" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">
+    <span class="optw pass" data-uid="tc-14576" data-stw="pass">PASS</span>
+    <span class="optw fail" data-uid="tc-14576" data-stw="fail">FAIL</span>
+    <span class="optw hold" data-uid="tc-14576" data-stw="hold">HOLD</span>
+    <span class="optw block" data-uid="tc-14576" data-stw="block">BLOCKED</span>
+    <span class="optw skip" data-uid="tc-14576" data-stw="skip">SKIP</span>
+  </div></div>
+  </div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-14576"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-14576" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-14576">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="rinew" data-level="ui" data-prio="P0" data-kind="boundary" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-OCT-F.2</td>
+  <td class="ctitle">ระหว่างติดตามไลฟ์ การ์ดอัปเดตต้องไม่ให้ดาวน์โหลด และเริ่มไลฟ์กลางการดาวน์โหลดแล้วต้องหยุดดาวน์โหลดเอง <span class="kd kd-bnd">Boundary/Edge</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-14577"><span class="stb pending">รอเทส</span></td>
+  <td class="status-win" data-uid="tc-14577"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-14577"></td>
+</tr>
+<tr class="detail"><td colspan="8"><div class="card">
+  <div class="h-title">ระหว่างติดตามไลฟ์ การ์ดอัปเดตต้องไม่ให้ดาวน์โหลด และเริ่มไลฟ์กลางการดาวน์โหลดแล้วต้องหยุดดาวน์โหลดเอง</div>
+  <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Boundary/Edge</b> <span class="hint">(min / max / ก่อน-ตรง-เกินขอบ)</span> · UI/ฟีเจอร์ใหม่หลัง 29 ก.ย. — ขึ้น UAT ถึง 5 ต.ค. (origin/uat 7c26b9fe)</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>ติดตั้งบิลด์ UAT ที่เก่ากว่าเวอร์ชันล่าสุดบนช่อง UAT อย่างน้อย 1 เวอร์ชัน</li></ul></div>
+  <div class="sec"><h4>Test Data</h4><ul><li>บัญชีที่ใช้ (UAT): qa.owner@realfactory.co.th · บทบาท "เจ้าของ"</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>ไปที่เมนู "เซสชัน" กด "วิเคราะห์ไลฟ์ใหม่" วางลิงก์ไลฟ์ TikTok ที่กำลังออกอากาศ กด "เปิดดูไลฟ์" แล้วตั้งชื่อเซสชันและกด "เริ่มบันทึก" แล้วกดรูปโปรไฟล์ ("โปรไฟล์และบัญชี") ที่ท้ายแถบเมนูซ้าย กด "ตรวจหาอัปเดต" และอ่านการ์ด</li><li>หยุดบันทึกไลฟ์ สังเกตการ์ด แล้วกด "ดาวน์โหลด"</li><li>ระหว่างดาวน์โหลด เริ่มบันทึกไลฟ์ใหม่ แล้วสังเกตการ์ดและวิดีโอไลฟ์</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ระหว่างติดตามไลฟ์ การ์ดบอก "กำลังติดตามไลฟ์ … อยู่ — จะดาวน์โหลดได้หลังหยุดติดตาม …" ไม่มีปุ่ม "ดาวน์โหลด" มีแค่ "เตือนเมื่อไลฟ์จบ"</li><li>หยุดติดตามแล้วการ์ดเปลี่ยนเป็น "ตอนนี้ไม่มีไลฟ์ที่ติดตามอยู่แล้ว — ดาวน์โหลดได้เลย …"</li><li>เริ่มไลฟ์กลางการดาวน์โหลดแล้ว ภายในราว 1 วินาทีขึ้น "หยุดดาวน์โหลดแล้ว" + "… หลังหยุดติดตามต้องกดดาวน์โหลดใหม่ และจะเริ่มตั้งแต่ต้น" และไลฟ์ไม่กระตุก</li></ul><div class="hint" style="margin-top:6px">ที่มา: TI-567 · owner rulings 1–7 · ตรวจโค้ด origin/uat 7c26b9fe (5 ต.ค.)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4>
+  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
+    <span class="opt pass" data-uid="tc-14577" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-14577" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-14577" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-14577" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-14577" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">
+    <span class="optw pass" data-uid="tc-14577" data-stw="pass">PASS</span>
+    <span class="optw fail" data-uid="tc-14577" data-stw="fail">FAIL</span>
+    <span class="optw hold" data-uid="tc-14577" data-stw="hold">HOLD</span>
+    <span class="optw block" data-uid="tc-14577" data-stw="block">BLOCKED</span>
+    <span class="optw skip" data-uid="tc-14577" data-stw="skip">SKIP</span>
+  </div></div>
+  </div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-14577"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-14577" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-14577">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="featrow" data-featkey="rinew-report"><td colspan="8">📁 หน้ารายงานไลฟ์ (TI-484) <span class="rp"><span class="lv lvl-ui">🌐 1</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="rinew-report"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow" data-feat="rinew" data-level="ui" data-prio="P1" data-kind="boundary" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-OCT-G.1</td>
+  <td class="ctitle">คำยาวในคอมเมนต์ไม่ดันหน้ารายงานไลฟ์ล้นจอ (ชิปคำที่พบบ่อย · คำเด่นในคอมเมนต์ · คอมเมนต์ที่ควรระวัง) <span class="kd kd-bnd">Boundary/Edge</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-14578"><span class="stb pending">รอเทส</span></td>
+  <td class="status-win" data-uid="tc-14578"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-14578"></td>
+</tr>
+<tr class="detail"><td colspan="8"><div class="card">
+  <div class="h-title">คำยาวในคอมเมนต์ไม่ดันหน้ารายงานไลฟ์ล้นจอ (ชิปคำที่พบบ่อย · คำเด่นในคอมเมนต์ · คอมเมนต์ที่ควรระวัง)</div>
+  <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Boundary/Edge</b> <span class="hint">(min / max / ก่อน-ตรง-เกินขอบ)</span> · UI/ฟีเจอร์ใหม่หลัง 29 ก.ย. — ขึ้น UAT ถึง 5 ต.ค. (origin/uat 7c26b9fe)</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>ไลฟ์ที่บันทึกแล้วซึ่งมีคอมเมนต์คำยาวไม่เว้นวรรค เช่น "ฮาาาาาา…" 70 ตัว (ให้บัญชี TikTok ที่ 2 พิมพ์ระหว่างไลฟ์)</li></ul></div>
+  <div class="sec"><h4>Test Data</h4><ul><li>บัญชีที่ใช้ (UAT): qa.owner@realfactory.co.th · บทบาท "เจ้าของ"</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>ไปที่เมนู "เซสชัน" แล้วเปิดไลฟ์ตาม Precondition</li><li>เลื่อนดูส่วน "คำที่พบบ่อย" · "คำเด่นในคอมเมนต์" · "คอมเมนต์ที่ควรระวัง"</li><li>ชี้เมาส์ที่ชิปคำที่ถูกตัดท้าย แล้วสังเกต</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>หน้าไม่มีแถบเลื่อนแนวนอน ชิปคำไม่กว้างเกินการ์ด</li><li>คำยาวถูกตัดท้ายด้วย … และยังเห็นจำนวนครั้ง (n) เสมอ · ชี้เมาส์แล้วเห็นคำเต็ม</li><li>คำที่ยาวเกิน 20 ตัวอักษรไม่ขึ้นเป็นชิปใน "คำที่พบบ่อย"</li><li>ข้อความใน "คอมเมนต์ที่ควรระวัง" ตัดขึ้นบรรทัดใหม่ภายในการ์ด</li></ul><div class="hint" style="margin-top:6px">ที่มา: TI-484 (กฎเดียวกับคำเด่นในคอมเมนต์ TI-352 R1) · ตรวจโค้ด origin/uat 7c26b9fe (5 ต.ค.)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4>
+  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
+    <span class="opt pass" data-uid="tc-14578" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-14578" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-14578" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-14578" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-14578" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">
+    <span class="optw pass" data-uid="tc-14578" data-stw="pass">PASS</span>
+    <span class="optw fail" data-uid="tc-14578" data-stw="fail">FAIL</span>
+    <span class="optw hold" data-uid="tc-14578" data-stw="hold">HOLD</span>
+    <span class="optw block" data-uid="tc-14578" data-stw="block">BLOCKED</span>
+    <span class="optw skip" data-uid="tc-14578" data-stw="skip">SKIP</span>
+  </div></div>
+  </div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-14578"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-14578" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-14578">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
 </tbody>
   </table>
   </div>
 
 </div>
-<footer>[REG 5–9 ต.ค.] TAKRA Insight — Regression Test Cases (คู่ 🪟/🍎) · 49 UI + 4 E2E = 53 TCs · Regression 5–9 ต.ค. 2569 · takra-insight (คู่ Mac/Windows)</footer>
+<footer>[REG 5–9 ต.ค.] TAKRA Insight — Regression Test Cases (คู่ 🪟/🍎) · 74 UI + 4 E2E = 78 TCs · Regression 5–9 ต.ค. 2569 · takra-insight (คู่ Mac/Windows)</footer>
 
 <script>
 // ── Load store from embedded JSON ──
