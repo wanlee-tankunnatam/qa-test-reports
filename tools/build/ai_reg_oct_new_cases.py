@@ -17,6 +17,8 @@ uid ของเคสใหม่ตรึงใน uid_map ของ reg-oct-s
   · TAKRA-1242 · 1369 · 1376 · 1378 · 1384 — แก้ฝั่งเอนจิน/เสียง ไม่มีอะไรใหม่ให้เห็นบนจอ
 """
 
+import re
+
 OPEN = 'เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner'
 OPEN_WSA = 'เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner (UAT) ของ WS-A'
 STUDIO_NEW = 'ไปที่เมนู "แพลตฟอร์มไลฟ์" ในแถบด้านซ้าย (ยืนยัน "เปลี่ยนแพลตฟอร์ม") แล้วที่แดชบอร์ดไลฟ์กดปุ่ม "เริ่มไลฟ์ใหม่" รอจนหน้า Studio โหลดเสร็จ'
@@ -50,8 +52,15 @@ KINDS = {  # กรอบเดียวกับรายงานหลัก
 }
 
 
+# id เคสเดิมที่ถูกเคสใหม่แทน (ดึงจาก replaces=) — reg_ai_happy_oct_cases ใช้เอาเคสเดิมที่ UI เปลี่ยนออก (เฉพาะที่ยังไม่มีผลบันทึก)
+REPLACED = set()
+_ID_RE = re.compile(r'TC-[A-Z0-9]+(?:-[A-Z]+)?[.-][A-Z0-9.-]*[A-Z0-9]|T12\d\d\.\d+|(?:ARS|SRF|RPL|RSK|COM|RCP)-\d+')
+
+
 def C(id, title, prio, steps, expected, src, pre=None, data=None, kind='happy', replaces=None):
     assert kind in KINDS, kind
+    if replaces:
+        REPLACED.update(_ID_RE.findall(replaces))
     tail = f' · 🆕 แทนเคสเดิม {replaces} (เคสเดิมคงไว้)' if replaces else ' · 🆕 ฟีเจอร์ใหม่'
     return dict(id=id, title=title, prio=prio, level='ui', kind=kind, ui=True, pre=pre or [], steps=steps,
                 data=data or [], expected=expected, src=f'{src}{tail} · {UAT}', note=None)

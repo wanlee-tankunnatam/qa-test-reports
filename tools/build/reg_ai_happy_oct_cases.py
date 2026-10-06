@@ -74,6 +74,27 @@ _ids = [c['id'] for e in EPICS for f in e['feats'] for c in f['cases']]
 assert len(_ids) == len(set(_ids)), 'duplicate ids หลังรวม'
 assert all(i in UID_MAP for i in _ids), f'uid ยังไม่ตรึง: {[i for i in _ids if i not in UID_MAP]}'
 
+# ── เอาเคสเดิมออก (สั่ง 2026-10-06): ① เคสที่ UI เปลี่ยนแล้วมีเคส 🆕 TC-OCT-* แทน ② เคส "-RF" ที่ซ้ำกับเคสหลักในขั้นที่ 1–6 ──
+# เอาออกเฉพาะเคสที่ "ยังไม่มีผลบันทึก" ใน store-data ของรายงาน (สถานะ/Actual/Jira) — เคสที่มีผลแล้วคงไว้ ไม่ให้ข้อมูลที่บันทึกหายจากจอ
+# uid ยังตรึงใน uid_map เหมือนเดิม (ไม่แจกซ้ำ) · เช็กกับ store ทุกครั้งที่ build จึงกันกรณีมีคนบันทึกผลระหว่างนี้
+import pathlib as _pl, re as _re
+
+_OUT = _pl.Path(__file__).resolve().parents[2] / META['out_rel']
+_m = _re.search(r'<script id="store-data"[^>]*>([\s\S]*?)</script>', _OUT.read_text(encoding='utf-8')) if _OUT.exists() else None
+_STORE = json.loads(_m.group(1).strip() or '{}') if _m else {}
+_has_data = lambda i: bool(_STORE.get(f'tc-{UID_MAP[i]}'))
+_RETIRE_WANT = {i for i in _ids if not i.startswith('TC-OCT-') and (i in _new.REPLACED or i.endswith('-RF'))}
+RETIRED = sorted(i for i in _RETIRE_WANT if not _has_data(i))
+KEPT_WITH_DATA = sorted(_RETIRE_WANT - set(RETIRED))   # อยากเอาออกแต่มีผลบันทึกแล้ว → คงไว้
+_retired = set(RETIRED)
+EPICS = [e2 for e2 in (dict(_e, feats=[f2 for f2 in (dict(_f, cases=[c for c in _f['cases'] if c['id'] not in _retired])
+                                                    for _f in _e['feats']) if f2['cases']]) for _e in EPICS) if e2['feats']]
+_cnt = lambda keys: sum(len(f['cases']) for e in EPICS if e['key'] in keys for f in e['feats'])
+_N_HAPPY = _cnt({'rg1', 'rg2', 'rg3', 'rg4', 'rg5', 'rg6', 'rge2e'})
+_N_NEW = _cnt({'ranew'})
+_N_FF = sum(len(f['cases']) for e in EPICS for f in e['feats']) - _N_HAPPY - _N_NEW
+print(f'retired {len(RETIRED)} เคส (ไม่มีผลบันทึก) · คงไว้เพราะมีผลแล้ว {len(KEPT_WITH_DATA)} เคส')
+
 META.update(
     title='[REG 5–9 ต.ค.] TAKRA AI · Live — Regression (Happy Path + จุดเคย FAIL + ฟีเจอร์ ก.ย.)',
     sub=('รอบ Regression <b>จ 5 – ศ 9 ต.ค. 2569</b> · รายงานเดียวรวมทุกเคสของ takra-ai (Live) · '
@@ -86,8 +107,9 @@ META.update(
           f'② <b>จุดเคย FAIL + ฟีเจอร์ ก.ย.</b> ({_N_FF} เคส · เดิมอยู่รายงาน fail-features) — ก้อน FAIL re-test เฉพาะใบที่ dev ปิดแล้ว '
           'ใบที่ยังไม่ปิดให้ลง <b>SKIP</b> พร้อมเหตุผล · ใบงาน TAKRA-1223–1230 และ tool-calling รันทั้งชุด · '
           f'③ <b>🆕 อัปเดตตาม UAT 6 ต.ค.</b> ({_N_NEW} เคส · ต่อท้าย) — ตรวจโค้ดทั้งโปรเจกต์ (origin/uat 5e79e582 = develop) ทุกหน้าเทียบทุกเคส: UI/ฟีเจอร์ที่เปลี่ยน → เคสแทน · ฟีเจอร์ที่ยังไม่มีเคส → เคสใหม่ (เฉพาะ P0/P1) '
-          'เขียนเป็นเคสใหม่ <b>ไม่แก้เคสเดิม</b> · ที่มาของแต่ละเคสบอกว่า "แทนเคสเดิม" ตัวไหน — เคสเดิมที่ทำบน UI ไม่ได้แล้วให้ลง <b>SKIP</b>'
-          '<br>🆔 เคสในก้อน "เคย FAIL" ที่ id ซ้ำกับเคส happy ด้านบนเติม <code>-RF</code> ท้าย id (re-test FAIL) — เนื้อหาเป็นฉบับของก้อน FAIL'
+          'เขียนเป็นเคสใหม่ <b>ไม่แก้เคสเดิม</b> · ที่มาของแต่ละเคสบอกว่า "แทนเคสเดิม" ตัวไหน'
+          f'<br>🧹 <b>เอาเคสเดิมออกแล้ว {len(RETIRED)} เคส</b> (6 ต.ค.): เคสที่ UI เปลี่ยนแล้วมีเคส 🆕 แทน + เคส <code>-RF</code> ที่ซ้ำกับเคสหลักในขั้นที่ 1–6 '
+          f'— เอาออกเฉพาะเคสที่ยังไม่มีผลบันทึก · อีก {len(KEPT_WITH_DATA)} เคสที่ถูกแทนแต่มีผลบันทึกแล้วคงไว้ (ดูผลเดิมได้ · รอบนี้ให้เทสที่เคส 🆕 แทน)'
           '<br>📎 เคสคัดจาก: รายงานรวม MVP1+2 (<code>regai1.json</code> · <code>regai2_fails.json</code>) · '
           '<code>ai_tickets_1223_cases.py</code> · <code>ai_autoreply_cases.py</code> · แผนรวม: '
           '<a href="https://wanlee-tankunnatam.github.io/qa-test-reports/timeline/regression-plan.html#plan">regression-plan</a>'),
