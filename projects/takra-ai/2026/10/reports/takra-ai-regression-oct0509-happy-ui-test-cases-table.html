@@ -528,6 +528,33 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   },
   "tc-13142": {
     "st": "pass"
+  },
+  "tc-13143": {
+    "st": "pass"
+  },
+  "tc-13144": {
+    "st": "fail"
+  },
+  "tc-13145": {
+    "st": "pass"
+  },
+  "tc-13146": {
+    "st": "hold"
+  },
+  "tc-13147": {
+    "st": "hold"
+  },
+  "tc-13162": {
+    "st": "hold"
+  },
+  "tc-13163": {
+    "st": "block"
+  },
+  "tc-13200": {
+    "st": "hold"
+  },
+  "tc-13211": {
+    "st": "pass"
   }
 }
 </script>
@@ -551,15 +578,15 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="runsum">
     <h3>📊 สรุปผล Manual Test</h3>
     <div class="sumchips">
-      <span class="cnt pass">PASS <b id="sum-pass">80</b></span>
-      <span class="cnt fail">FAIL <b id="sum-fail">5</b></span>
-      <span class="cnt hold">HOLD <b id="sum-hold">9</b></span>
-      <span class="cnt block">BLOCKED <b id="sum-block">2</b></span>
+      <span class="cnt pass">PASS <b id="sum-pass">83</b></span>
+      <span class="cnt fail">FAIL <b id="sum-fail">6</b></span>
+      <span class="cnt hold">HOLD <b id="sum-hold">13</b></span>
+      <span class="cnt block">BLOCKED <b id="sum-block">3</b></span>
       <span class="cnt skip">SKIP <b id="sum-skip">0</b></span>
-      <span class="cnt pending">รอเทส <b id="sum-pending">162</b></span>
+      <span class="cnt pending">รอเทส <b id="sum-pending">153</b></span>
     </div>
-    <div class="progress"><div id="sumbar" class="progressbar" style="width: 37%;"></div></div>
-    <div class="hint" id="sumpct" style="margin-top:5px">37% ทดสอบแล้ว (96/258)</div>
+    <div class="progress"><div id="sumbar" class="progressbar" style="width: 41%;"></div></div>
+    <div class="hint" id="sumpct" style="margin-top:5px">41% ทดสอบแล้ว (105/258)</div>
   </div>
 
   <div class="toolbar">
@@ -2112,25 +2139,25 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 </div></td></tr>
 
-<tr class="trow" data-feat="rg2" data-level="ui" data-prio="P1" data-kind="happy" data-ui="yes" onclick="tg(this)">
+<tr class="trow open" data-feat="rg2" data-level="ui" data-prio="P1" data-kind="happy" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-V2.7</td>
   <td class="ctitle">อัดเสียงจากไมโครโฟนในหน้าเว็บแล้วใช้เป็นตัวอย่างเสียงได้ <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13143"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13143"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13143"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail show"><td colspan="7"><div class="card">
   <div class="h-title">อัดเสียงจากไมโครโฟนในหน้าเว็บแล้วใช้เป็นตัวอย่างเสียงได้</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · ขั้นที่ 2 คลังของ Workspace — Avatar/Voice/สินค้า/คำเสี่ยง/สคริปต์ · Epic 2</div>
   <div class="sec"><h4>Precondition</h4><ul><li>ล็อกอินเป็น Owner</li><li>workspace มีเสียงใน "เสียงของฉัน" ไม่ครบ 3 เสียง</li><li>เครื่องมีไมโครโฟน และใช้เบราว์เซอร์ Chrome</li></ul></div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังเสียง" ในแถบด้านซ้าย (หมวด "คลังข้อมูล") แล้วที่หัวข้อ "เสียงของฉัน" กด "อัดเสียงเลย"</li><li>กด "เริ่มอัด" อนุญาตไมโครโฟนเมื่อเบราว์เซอร์ถาม แล้วพูดประมาณ 1 นาที</li><li>กด "หยุด" ฟังเสียงที่อัด แล้วกด "ใช้เสียงนี้"</li><li>สังเกตข้อความแจ้งผลและแถวใหม่ในตาราง "เสียงของฉัน"</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ระหว่างอัดเห็นเวลาเดินแบบ "กำลังอัด …" และหลังหยุดเห็น "ความยาว …" พร้อมปุ่ม "อัดใหม่" และ "ใช้เสียงนี้"</li><li>กด "ใช้เสียงนี้" แล้วขึ้น "อัปโหลดเสียงแล้ว" และแถวใหม่สถานะ "รอยืนยัน consent"</li><li>ถ้าไม่อนุญาตไมโครโฟน ขึ้นคำแนะนำให้เปิดสิทธิ์ไมโครโฟนในการตั้งค่าเบราว์เซอร์ หรืออัปโหลดไฟล์เสียงแทน</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 10 · Story 10.2 · FR9 · TAKRA-740 (อัดเสียงในเบราว์เซอร์)</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13143" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13143" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13143" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13143" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13143" data-st="block">BLOCKED</span>
@@ -2143,15 +2170,15 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 </div></td></tr>
 
-<tr class="trow" data-feat="rg2" data-level="ui" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
+<tr class="trow open" data-feat="rg2" data-level="ui" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-V2.8</td>
   <td class="ctitle">ยืนยันความยินยอม PDPA แล้ว clone เสียงจนพร้อมใช้และฟังตัวอย่างได้ <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
-  <td class="status" data-uid="tc-13144"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13144"><span class="stb fail">FAIL</span></td>
   <td class="jira-cell" data-uid="tc-13144"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail show"><td colspan="7"><div class="card">
   <div class="h-title">ยืนยันความยินยอม PDPA แล้ว clone เสียงจนพร้อมใช้และฟังตัวอย่างได้</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · ขั้นที่ 2 คลังของ Workspace — Avatar/Voice/สินค้า/คำเสี่ยง/สคริปต์ · Epic 2</div>
   <div class="sec"><h4>Precondition</h4><ul><li>ล็อกอินเป็น Owner</li><li>มีเสียงใน "เสียงของฉัน" ที่สถานะ "รอยืนยัน consent" (เช่นจาก TC-V2.6)</li></ul></div>
@@ -2159,11 +2186,11 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังเสียง" ในแถบด้านซ้าย (หมวด "คลังข้อมูล") แล้วที่ตาราง "เสียงของฉัน" คลิกแถวเสียงที่สถานะ "รอยืนยัน consent" เพื่อเปิดแผงรายละเอียด</li><li>กด "เริ่มยืนยัน consent" ในหน้าต่าง "ยินยอมโคลนเสียง (PDPA)" ฟังไฟล์เสียงข้อ 1 กด "คัดลอกข้อความตัวอย่าง" แล้ววางในช่องข้อ 2 และติ๊กข้อ 3</li><li>กด "ยืนยันความยินยอม" แล้วดูสถานะของเสียง จากนั้นกด "clone"</li><li>รอจนสถานะเปลี่ยน (ถ้ายังไม่เสร็จ กด "เช็คสถานะ" ภายหลัง) แล้วกด "ฟังตัวอย่าง"</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>หน้าต่างมีหัวข้อ "ยินยอมโคลนเสียง (PDPA)" 3 ขั้น: "1. ไฟล์เสียงที่อัปโหลดไว้ของเสียงนี้" · "2. พิมพ์ข้อความยินยอม" · "3. ข้าพเจ้ายินยอมให้ TAKRA โคลนและใช้เสียงนี้ตามขอบเขตที่ระบุ" พร้อม "เวอร์ชันข้อตกลง: …"</li><li>บันทึกแล้วขึ้น "บันทึกความยินยอมแล้ว" สถานะเป็น "รอ clone" และมีปุ่ม "clone" (ก่อนยืนยันความยินยอมจะไม่มีปุ่ม clone)</li><li>กด "clone" แล้วขึ้น "clone เสียงสำเร็จ" และสถานะเป็น "พร้อมใช้" · ถ้าผู้ให้บริการยังไม่ปล่อย ขึ้น "ส่ง clone แล้ว" และปุ่มเป็น "เช็คสถานะ"</li><li>เสียงที่ "พร้อมใช้" กด "ฟังตัวอย่าง" แล้วได้ยินเสียงสังเคราะห์ (ระหว่างรอขึ้น "กำลังสร้างเสียง…")</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 10 · Story 10.3 · 10.4 · 10.6 · FR9 · FR10</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-13144" data-st="pass">PASS</span>
-    <span class="opt fail" data-uid="tc-13144" data-st="fail">FAIL</span>
+    <span class="opt fail sel" data-uid="tc-13144" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13144" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13144" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-13144" data-st="skip">SKIP</span>
@@ -2175,15 +2202,15 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 </div></td></tr>
 
-<tr class="trow" data-feat="rg2" data-level="ui" data-prio="P1" data-kind="validation" data-ui="yes" onclick="tg(this)">
+<tr class="trow open" data-feat="rg2" data-level="ui" data-prio="P1" data-kind="validation" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-V2.9</td>
   <td class="ctitle">ไฟล์ที่ไม่ใช่เสียง ไฟล์เกิน 10MB และเสียงครบ 3 เสียง ต้องอัปโหลดไม่ได้พร้อมบอกเหตุผล <span class="kd kd-val">Validation</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13145"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13145"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13145"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail show"><td colspan="7"><div class="card">
   <div class="h-title">ไฟล์ที่ไม่ใช่เสียง ไฟล์เกิน 10MB และเสียงครบ 3 เสียง ต้องอัปโหลดไม่ได้พร้อมบอกเหตุผล</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Validation</b> <span class="hint">(format · required · character · length)</span> · ขั้นที่ 2 คลังของ Workspace — Avatar/Voice/สินค้า/คำเสี่ยง/สคริปต์ · Epic 2</div>
   <div class="sec"><h4>Precondition</h4><ul><li>ล็อกอินเป็น Owner</li></ul></div>
@@ -2191,10 +2218,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังเสียง" ในแถบด้านซ้าย (หมวด "คลังข้อมูล") แล้วที่หัวข้อ "เสียงของฉัน" กด "อัปโหลดเสียง" แล้วเลือกไฟล์ที่ไม่ใช่เสียง (เช่น .txt ที่เปลี่ยนนามสกุลเป็น .mp3)</li><li>กด "อัปโหลดเสียง" อีกครั้งแล้วเลือกไฟล์เสียงที่ใหญ่เกิน 10MB</li><li>อัปโหลดเสียงที่ถูกต้องจนครบ 3 เสียง แล้วสังเกตคำบรรยายใต้หัวข้อและปุ่ม "อัปโหลดเสียง"</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ไฟล์ที่ไม่ใช่เสียงขึ้น "อัปโหลดเสียงไม่สำเร็จ" พร้อม "ไฟล์นี้ไม่ใช่ไฟล์เสียงที่รองรับ — เลือกไฟล์ WAV, MP3 หรือ M4A"</li><li>ไฟล์เกิน 10MB ขึ้น "ไฟล์ใหญ่เกิน 10MB — ตัดให้สั้นลง (แนะนำ 1–2 นาที) แล้วลองใหม่"</li><li>ครบ 3 เสียงแล้ว คำบรรยายเปลี่ยนเป็น "ครบ 3 เสียงแล้ว — ลบเสียงเดิมก่อนจึงจะเพิ่มใหม่ได้" และเพิ่มเสียงที่ 4 ไม่ได้</li><li>ทุกกรณีไม่มีแถวใหม่เพิ่มในตาราง</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 10 · Story 10.2 · FR9 (เพดาน 3 เสียงต่อ workspace · ไฟล์ ≤10MB)</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13145" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13145" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13145" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13145" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13145" data-st="block">BLOCKED</span>
@@ -2207,15 +2234,15 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 </div></td></tr>
 
-<tr class="trow" data-feat="rg2" data-level="ui" data-prio="P1" data-kind="happy" data-ui="yes" onclick="tg(this)">
+<tr class="trow open" data-feat="rg2" data-level="ui" data-prio="P1" data-kind="happy" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-V2.10</td>
   <td class="ctitle">แก้ไขชื่อ คาแรกเตอร์ โทน และเพศของเสียงใน "เสียงของฉัน" <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13146"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13146"><span class="stb hold">HOLD</span></td>
   <td class="jira-cell" data-uid="tc-13146"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail show"><td colspan="7"><div class="card">
   <div class="h-title">แก้ไขชื่อ คาแรกเตอร์ โทน และเพศของเสียงใน "เสียงของฉัน"</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · ขั้นที่ 2 คลังของ Workspace — Avatar/Voice/สินค้า/คำเสี่ยง/สคริปต์ · Epic 2</div>
   <div class="sec"><h4>Precondition</h4><ul><li>ล็อกอินเป็น Owner</li><li>มีเสียงใน "เสียงของฉัน" อย่างน้อย 1 เสียง</li></ul></div>
@@ -2223,12 +2250,12 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังเสียง" ในแถบด้านซ้าย (หมวด "คลังข้อมูล") แล้วที่ตาราง "เสียงของฉัน" คลิกแถวเสียงทดสอบเพื่อเปิดแผงรายละเอียด แล้วกด "แก้ไข"</li><li>ในหน้าต่าง "แก้ไขเสียง" แก้ "ชื่อ" ใส่ "คาแรกเตอร์" และ "โทน" แล้วเลือก "เพศ"</li><li>กด "บันทึก" แล้วสังเกตข้อความแจ้งผลและชื่อในตาราง</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>หน้าต่าง "แก้ไขเสียง" มีช่อง "ชื่อ" · "คาแรกเตอร์" (ไม่บังคับ) · "โทน" (ไม่บังคับ) · "เพศ" (มีตัวเลือก "ไม่ระบุ")</li><li>บันทึกแล้วขึ้น "บันทึกเสียงแล้ว" และตารางแสดงชื่อใหม่</li><li>เพศที่ตั้งใช้กรองในคลังเสียงได้</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 10 · Story 10.2 · FR9</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-13146" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13146" data-st="fail">FAIL</span>
-    <span class="opt hold" data-uid="tc-13146" data-st="hold">HOLD</span>
+    <span class="opt hold sel" data-uid="tc-13146" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13146" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-13146" data-st="skip">SKIP</span>
   </div></div>
@@ -2239,27 +2266,27 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 </div></td></tr>
 
-<tr class="trow" data-feat="rg2" data-level="ui" data-prio="P1" data-kind="happy" data-ui="yes" onclick="tg(this)">
+<tr class="trow open" data-feat="rg2" data-level="ui" data-prio="P1" data-kind="happy" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-V2.11</td>
   <td class="ctitle">ถอนความยินยอมและลบเสียงของฉัน (เฉพาะ Owner) ต้องยืนยันก่อน <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13147"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13147"><span class="stb hold">HOLD</span></td>
   <td class="jira-cell" data-uid="tc-13147"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail show"><td colspan="7"><div class="card">
   <div class="h-title">ถอนความยินยอมและลบเสียงของฉัน (เฉพาะ Owner) ต้องยืนยันก่อน</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · ขั้นที่ 2 คลังของ Workspace — Avatar/Voice/สินค้า/คำเสี่ยง/สคริปต์ · Epic 2</div>
   <div class="sec"><h4>Precondition</h4><ul><li>ล็อกอินเป็น Owner</li><li>มีเสียงทดสอบใน "เสียงของฉัน" ที่ไม่ได้ใช้ในไลฟ์ที่ยังไม่จบ</li></ul></div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังเสียง" ในแถบด้านซ้าย (หมวด "คลังข้อมูล") แล้วที่ตาราง "เสียงของฉัน" คลิกแถวเสียงทดสอบเพื่อเปิดแผงรายละเอียด</li><li>กด "ถอนความยินยอม" อ่านหัวข้อและข้อความในหน้าต่างยืนยัน แล้วกด "ยกเลิก" ก่อน</li><li>กด "ถอนความยินยอม" อีกครั้ง แล้วกด "ถอนความยินยอมและลบ"</li><li>สังเกตข้อความแจ้งผลและสถานะของเสียงในตาราง</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>หน้าต่างยืนยันมีหัวข้อ "ถอนความยินยอมและลบเสียงนี้?" และบอกว่าจะลบถาวรทั้งไฟล์ตัวอย่าง หนังสือยินยอม และเสียงที่ clone ไว้ · กู้คืนไม่ได้</li><li>กด "ยกเลิก" แล้วเสียงยังอยู่เหมือนเดิม</li><li>ยืนยันแล้วระหว่างรอขึ้น "กำลังลบ…" จากนั้นขึ้น "ถอนความยินยอมแล้ว" และสถานะเสียงเป็น "ถอนความยินยอม" (ใช้งานไม่ได้อีก)</li><li>บัญชีที่ไม่ใช่ Owner จะไม่เห็นปุ่ม "ถอนความยินยอม"</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 10 · Story 10.5 · FR11</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-13147" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13147" data-st="fail">FAIL</span>
-    <span class="opt hold" data-uid="tc-13147" data-st="hold">HOLD</span>
+    <span class="opt hold sel" data-uid="tc-13147" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13147" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-13147" data-st="skip">SKIP</span>
   </div></div>
@@ -2270,15 +2297,15 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 </div></td></tr>
 
-<tr class="trow" data-feat="rg2" data-level="ui" data-prio="P1" data-kind="happy" data-ui="yes" onclick="tg(this)">
+<tr class="trow open" data-feat="rg2" data-level="ui" data-prio="P1" data-kind="happy" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-V2.12</td>
   <td class="ctitle">หลังยืนยันความยินยอมแล้ว แผงรายละเอียดเสียงแสดงหลักฐานความยินยอม (ข้อความที่พิมพ์ + คลิปเสียง) แบบอ่านอย่างเดียว <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13162"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13162"><span class="stb hold">HOLD</span></td>
   <td class="jira-cell" data-uid="tc-13162"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail show"><td colspan="7"><div class="card">
   <div class="h-title">หลังยืนยันความยินยอมแล้ว แผงรายละเอียดเสียงแสดงหลักฐานความยินยอม (ข้อความที่พิมพ์ + คลิปเสียง) แบบอ่านอย่างเดียว</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · ขั้นที่ 2 คลังของ Workspace — Avatar/Voice/สินค้า/คำเสี่ยง/สคริปต์ · Epic 2</div>
   <div class="sec"><h4>Precondition</h4><ul><li>มีเสียงใน "เสียงของฉัน" ที่ยืนยันความยินยอมแล้ว (สถานะ "รอ clone" หรือ "พร้อมใช้") ตามขั้นตอน TC-V2.8 และจดข้อความยินยอมที่พิมพ์ไว้ตอนยืนยัน</li></ul></div>
@@ -2286,12 +2313,12 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังเสียง" ในแถบด้านซ้าย (หมวด "คลังข้อมูล") แล้วที่ตาราง "เสียงของฉัน" คลิกแถวเสียงที่ยืนยันความยินยอมแล้วเพื่อเปิดแผงรายละเอียด</li><li>เลื่อนไปที่หัวข้อ "ความยินยอม PDPA" อ่านข้อความใต้ "ข้อความยินยอมที่ลูกค้าพิมพ์เอง" แล้วเทียบกับข้อความที่จดไว้</li><li>กดเล่นคลิปใต้ "คลิปเสียงยืนยัน" แล้วลองคลิกที่ข้อความยินยอมเพื่อดูว่าแก้ไขได้หรือไม่</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>หัวข้อ "ความยินยอม PDPA" มีป้ายสถานะตรงกับในตาราง ("รอ clone" หรือ "พร้อมใช้")</li><li>ใต้ "ข้อความยินยอมที่ลูกค้าพิมพ์เอง" แสดงข้อความตรงกับที่พิมพ์ไว้ตอนยืนยันทุกตัวอักษร</li><li>ใต้ "คลิปเสียงยืนยัน" มีตัวเล่นเสียงแบบแถบคลื่นเสียง (ระหว่างโหลดขึ้น "กำลังโหลดไฟล์เสียง…") กดเล่นแล้วได้ยินไฟล์เสียงที่อัปโหลด/อัดไว้ของเสียงนี้ · ถ้าโหลดไม่ได้ขึ้น "โหลดไฟล์เสียงมาฟังไม่ได้" พร้อมปุ่ม "ลองใหม่"</li><li>ข้อความหลักฐานทุกบรรทัดเป็นข้อความอ่านอย่างเดียว คลิกแล้วไม่กลายเป็นช่องแก้ไข และไม่มีปุ่มแก้ไขหลักฐาน</li><li>เสียงที่ยังเป็น "รอยืนยัน consent" จะไม่มีส่วนหลักฐานนี้ มีแต่ปุ่ม "เริ่มยืนยัน consent"</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 10 · Story 10.6 · FR10 · TAKRA-772 (ลดขั้น consent เหลือไฟล์เสียง + พิมพ์ข้อความยินยอม · แสดงหลักฐานในแผง)</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-13162" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13162" data-st="fail">FAIL</span>
-    <span class="opt hold" data-uid="tc-13162" data-st="hold">HOLD</span>
+    <span class="opt hold sel" data-uid="tc-13162" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13162" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-13162" data-st="skip">SKIP</span>
   </div></div>
@@ -2302,15 +2329,15 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 </div></td></tr>
 
-<tr class="trow" data-feat="rg2" data-level="ui" data-prio="P1" data-kind="negative" data-ui="yes" onclick="tg(this)">
+<tr class="trow open" data-feat="rg2" data-level="ui" data-prio="P1" data-kind="negative" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-V2.13</td>
   <td class="ctitle">ถอนความยินยอมเสียงที่ไลฟ์ที่ยังไม่จบใช้อยู่ ต้องเตือนจำนวนไลฟ์และให้ยืนยันซ้ำก่อนลบ <span class="kd kd-neg">Negative</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13163"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13163"><span class="stb block">BLOCKED</span></td>
   <td class="jira-cell" data-uid="tc-13163"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail show"><td colspan="7"><div class="card">
   <div class="h-title">ถอนความยินยอมเสียงที่ไลฟ์ที่ยังไม่จบใช้อยู่ ต้องเตือนจำนวนไลฟ์และให้ยืนยันซ้ำก่อนลบ</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Negative</b> <span class="hint">(ข้อมูลผิด / action ผิด)</span> · ขั้นที่ 2 คลังของ Workspace — Avatar/Voice/สินค้า/คำเสี่ยง/สคริปต์ · Epic 2</div>
   <div class="sec"><h4>Precondition</h4><ul><li>มีเสียงทดสอบใน "เสียงของฉัน" สถานะ "พร้อมใช้"</li><li>มีไลฟ์ที่ตั้งเวลาไว้และยังไม่จบอย่างน้อย 1 ไลฟ์ ที่ฉากในไลฟ์เลือกใช้เสียงทดสอบนี้ (เลือกในหน้าต่าง "เลือกเสียง" ของสตูดิโอ แล้วกด "นำไปใช้")</li><li>ใช้ไลฟ์/เสียงทดสอบที่ลบทิ้งได้ เพราะยืนยันแล้วเสียงถูกลบถาวร</li></ul></div>
@@ -2318,13 +2345,13 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังเสียง" ในแถบด้านซ้าย (หมวด "คลังข้อมูล") แล้วที่ตาราง "เสียงของฉัน" คลิกแถวเสียงทดสอบเพื่อเปิดแผงรายละเอียด</li><li>กด "ถอนความยินยอม" แล้วกด "ถอนความยินยอมและลบ" ในหน้าต่างยืนยัน จากนั้นอ่านข้อความเตือนที่ขึ้นในหน้าต่างและชื่อปุ่มยืนยัน</li><li>กด "ยกเลิก" แล้วดูว่าเสียงยังอยู่ จากนั้นทำซ้ำข้อ 3 แล้วกด "ยืนยัน ลบทั้งที่ไลฟ์ยังใช้อยู่"</li><li>สังเกตข้อความแจ้งผลและสถานะของเสียงในตาราง "เสียงของฉัน"</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>กด "ถอนความยินยอมและลบ" ครั้งแรก เสียงยังไม่ถูกลบ หน้าต่างยังเปิดอยู่ และขึ้นข้อความสีแดง "เสียงนี้ถูกใช้อยู่ใน 1 ไลฟ์ที่ยังไม่จบ — ลบแล้วไลฟ์ที่ใช้เสียงนี้จะไม่มีเสียงพูด" (ตัวเลขตรงกับจำนวนไลฟ์ที่ใช้เสียงนี้)</li><li>ปุ่มยืนยันเปลี่ยนชื่อเป็น "ยืนยัน ลบทั้งที่ไลฟ์ยังใช้อยู่"</li><li>กด "ยกเลิก" แล้วหน้าต่างปิด เสียงยังอยู่สถานะเดิม</li><li>กด "ยืนยัน ลบทั้งที่ไลฟ์ยังใช้อยู่" แล้วระหว่างรอขึ้น "กำลังลบ…" จากนั้นขึ้น "ถอนความยินยอมแล้ว" และสถานะเสียงเป็น "ถอนความยินยอม" · ไม่ถูกห้ามลบเพราะเป็นสิทธิ์ของเจ้าของเสียง</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 10 · Story 10.5 · FR11 · NFR-COMP-05 · TAKRA-1244 (เตือนเมื่อเสียงยังถูกใช้ในไลฟ์ที่ยังไม่จบ แล้วให้ยืนยันซ้ำ)</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-13163" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13163" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13163" data-st="hold">HOLD</span>
-    <span class="opt block" data-uid="tc-13163" data-st="block">BLOCKED</span>
+    <span class="opt block sel" data-uid="tc-13163" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-13163" data-st="skip">SKIP</span>
   </div></div>
   <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
@@ -2365,27 +2392,27 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 </div></td></tr>
 
-<tr class="trow" data-feat="rg2" data-level="ui" data-prio="P1" data-kind="exception" data-ui="yes" onclick="tg(this)">
+<tr class="trow open" data-feat="rg2" data-level="ui" data-prio="P1" data-kind="exception" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-V2.15</td>
   <td class="ctitle">หน้าต่างยินยอม PDPA โหลดไฟล์เสียงไม่ได้ตอนเน็ตหลุด แล้วมีปุ่ม "ลองใหม่" และไม่ชวนให้กดบันทึกโดยไม่ได้ฟัง <span class="kd kd-exc">Exception</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13200"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13200"><span class="stb hold">HOLD</span></td>
   <td class="jira-cell" data-uid="tc-13200"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail show"><td colspan="7"><div class="card">
   <div class="h-title">หน้าต่างยินยอม PDPA โหลดไฟล์เสียงไม่ได้ตอนเน็ตหลุด แล้วมีปุ่ม "ลองใหม่" และไม่ชวนให้กดบันทึกโดยไม่ได้ฟัง</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Exception</b> <span class="hint">(API fail · network fail · server error · timeout)</span> · ขั้นที่ 2 คลังของ Workspace — Avatar/Voice/สินค้า/คำเสี่ยง/สคริปต์ · Epic 2</div>
   <div class="sec"><h4>Precondition</h4><ul><li>มีเสียงใน "เสียงของฉัน" ที่สถานะ "รอยืนยัน consent" (เช่นจาก TC-V2.6)</li></ul></div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังเสียง" ในแถบด้านซ้าย (หมวด "คลังข้อมูล") แล้วที่ตาราง "เสียงของฉัน" คลิกแถวเสียงที่สถานะ "รอยืนยัน consent" เพื่อเปิดแผงรายละเอียด</li><li>ปิด Wi-Fi ของเครื่อง แล้วกด "เริ่มยืนยัน consent" และอ่านส่วน "1. ไฟล์เสียงที่อัปโหลดไว้ของเสียงนี้"</li><li>เปิด Wi-Fi กลับ แล้วกดปุ่ม "ลองใหม่" ในส่วนเดิม</li><li>กดฟังไฟล์เสียงที่โหลดขึ้นมา แล้วสังเกตส่วนข้อ 1 และปุ่มยืนยันของหน้าต่าง</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ตอนเน็ตหลุด ข้อ 1 ขึ้นการ์ดหัวเรื่อง "โหลดไฟล์เสียงมาฟังไม่ได้" ข้อความ "เน็ตอาจสะดุดหรือโหลดไม่ทัน — กดลองใหม่เพื่อโหลดอีกครั้ง แล้วฟังให้แน่ใจว่าเป็นไฟล์ที่ถูกต้องก่อนบันทึก" และปุ่ม "ลองใหม่" — ไม่มีข้อความชวน "กดบันทึกต่อได้เลย"</li><li>กด "ลองใหม่" หลังเน็ตกลับมา ไฟล์เสียงโหลดขึ้นในหน้าต่างเดิมโดยไม่ต้องปิดแล้วเปิดใหม่ และกดฟังได้</li><li>ปุ่มยืนยันความยินยอมยังกดได้ตามปกติ (ไฟล์อยู่บนเซิร์ฟเวอร์แล้ว)</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 10 · Story 10.3 · FR9 · TAKRA-1185</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
     <span class="opt pass" data-uid="tc-13200" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13200" data-st="fail">FAIL</span>
-    <span class="opt hold" data-uid="tc-13200" data-st="hold">HOLD</span>
+    <span class="opt hold sel" data-uid="tc-13200" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13200" data-st="block">BLOCKED</span>
     <span class="opt skip" data-uid="tc-13200" data-st="skip">SKIP</span>
   </div></div>
@@ -2396,25 +2423,25 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 </div></td></tr>
 
-<tr class="trow" data-feat="rg2" data-level="ui" data-prio="P1" data-kind="happy" data-ui="yes" onclick="tg(this)">
+<tr class="trow open" data-feat="rg2" data-level="ui" data-prio="P1" data-kind="happy" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-V2.16</td>
   <td class="ctitle">คลังเสียงซ่อนเสียงค่ายที่ปรับน้ำเสียงไม่ได้พร้อมบอกจำนวน และกด "แสดงทั้งหมด" เพื่อเปิดดูได้ <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-13211"><span class="stb pending">รอเทส</span></td>
+  <td class="status" data-uid="tc-13211"><span class="stb pass">PASS</span></td>
   <td class="jira-cell" data-uid="tc-13211"></td>
 </tr>
-<tr class="detail"><td colspan="7"><div class="card">
+<tr class="detail show"><td colspan="7"><div class="card">
   <div class="h-title">คลังเสียงซ่อนเสียงค่ายที่ปรับน้ำเสียงไม่ได้พร้อมบอกจำนวน และกด "แสดงทั้งหมด" เพื่อเปิดดูได้</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · ขั้นที่ 2 คลังของ Workspace — Avatar/Voice/สินค้า/คำเสี่ยง/สคริปต์ · Epic 2</div>
   <div class="sec"><h4>Precondition</h4><ul><li>ล็อกอินเป็น Owner</li><li>Workspace เคยกด "อัปเดตคลังเสียง" แล้ว และคลังมีเสียงของค่ายที่ปรับน้ำเสียงไม่ได้อย่างน้อย 1 เสียง (ถ้าไม่มี ข้อความซ่อนจะไม่ขึ้น — บันทึกเป็น N/A)</li></ul></div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบด้วยบัญชี Owner</li><li>ไปที่เมนู "คลังเสียง" ในแถบด้านซ้าย แล้วเลื่อนลงไปที่หัวข้อย่อย "เสียงของระบบ" รอจนรายการโหลดเสร็จ</li><li>อ่านข้อความในแถวตัวกรองเหนือตาราง แล้วนับจำนวนแถวในตาราง</li><li>กด "แสดงทั้งหมด" นับจำนวนแถวอีกครั้ง กดเปิดเสียงที่เพิ่งโผล่มา 1 แถว แล้วปิดแผง จากนั้นกด "ซ่อนอีกครั้ง"</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>แถวตัวกรองแสดง "ซ่อนไว้ N เสียง — ค่ายที่ปรับน้ำเสียงไม่ได้" ตามด้วยปุ่ม "แสดงทั้งหมด"</li><li>กด "แสดงทั้งหมด" แล้วตารางเพิ่มขึ้น N แถวพอดี ข้อความเปลี่ยนเป็น "กำลังแสดงทุกเสียง รวม N เสียงที่ปรับน้ำเสียงไม่ได้" และปุ่มเปลี่ยนเป็น "ซ่อนอีกครั้ง"</li><li>เสียงที่โผล่มาเปิดแผงรายละเอียดได้ตามปกติ (เห็นข้อมูลความยินยอม PDPA)</li><li>กด "ซ่อนอีกครั้ง" แล้วตารางกลับเหลือเท่าเดิมและข้อความกลับเป็น "ซ่อนไว้ N เสียง — ค่ายที่ปรับน้ำเสียงไม่ได้"</li></ul><div class="hint" style="margin-top:6px">ที่มา: TAKRA-1304 (คลังเสียงเลิกซ่อนเสียงที่ยินยอมแล้วโดยไม่บอก) · TAKRA-1275 (มติ PO 24 ก.ย. เสนอเฉพาะค่ายที่ปรับน้ำเสียงได้) · Epic 2 · Story 2.2 · FR9</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox filled" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-13211" data-st="pass">PASS</span>
+    <span class="opt pass sel" data-uid="tc-13211" data-st="pass">PASS</span>
     <span class="opt fail" data-uid="tc-13211" data-st="fail">FAIL</span>
     <span class="opt hold" data-uid="tc-13211" data-st="hold">HOLD</span>
     <span class="opt block" data-uid="tc-13211" data-st="block">BLOCKED</span>
