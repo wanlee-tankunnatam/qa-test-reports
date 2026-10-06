@@ -15,6 +15,9 @@ import pathlib
 
 SRC = pathlib.Path(__file__).resolve().parent / 'reg-oct-sources'
 _DOC = json.loads((SRC / 'regrerun.json').read_text(encoding='utf-8'))
+# uid ตรึงต่อเคส (ตั้ง 6 ต.ค. ก่อนเพิ่มก้อนฟีเจอร์ ต.ค.) — เพิ่ม/แทรกเคสได้โดยผลเทสเดิม (Mac/Win) ไม่เลื่อน
+# เคสใหม่: build จะพิมพ์ uid ที่แจกให้ → เพิ่มลง uid_map ใน regrerun.json ด้วย
+UID_MAP = _DOC.get('uid_map', {})
 
 KINDS = {
     'happy':      ('Happy Path', 'flow ปกติ'),
@@ -30,6 +33,7 @@ _GROUPS = [
     ('rrfail', '❌ จุดที่เคย FAIL', '❌', 'จุดที่เคย FAIL รอบก่อน (union ผล Windows + Mac · ดู note "ผลรอบก่อน" ในแต่ละเคส)'),
     ('rrcore', '🧭 flow หลัก P0', '🧭', 'flow หลัก P0 — login · สร้าง/รันรีรัน · playlist · จอ/overlay (ไม่ซ้ำก้อนที่เคย FAIL)'),
     ('rrnew',  '🆕 ฟีเจอร์ ก.ย.', '🆕', 'ฟีเจอร์ใหม่ ก.ย. — auto chat-reply (LLM · Epic 22) + keyword ตอบกลับอัตโนมัติ (Epic 23) · P0+P1'),
+    ('rroct',  '🎬 ฟีเจอร์ใหม่ ต.ค.', '🎬', 'ฟีเจอร์/UI ใหม่ใน develop 29 ก.ย.–5 ต.ค. — จัดฉาก (Epic 28 · เฉพาะ build UAT/dev) · โอเวอร์เลย์นับถอยหลัง/ข้อความวิ่ง/แก้เทมเพลต (Epic 31) · ไลฟ์ย้อนหลัง · อื่น ๆ (เพิ่ม 6 ต.ค.)'),
 ]
 
 EPICS = []
@@ -57,13 +61,14 @@ META = dict(
     os_cols=True,
     sub=('รอบ Regression <b>🪟 Windows จ 5 ต.ค.</b> · <b>🍎 Mac อ 6 ต.ค. 2569</b> — สโคปเดียวกัน '
          'บันทึกผลแยกคอลัมน์ Mac/Windows ในรายงานเดียว · '
-         f"จุดที่เคย FAIL {_N['rrfail']} + flow หลัก P0 {_N['rrcore']} + ฟีเจอร์ ก.ย. {_N['rrnew']} = {sum(_N.values())} เคส"),
-    groups_label='3 ก้อน (เคย FAIL · flow หลัก · ฟีเจอร์ ก.ย.)',
+         f"จุดที่เคย FAIL {_N['rrfail']} + flow หลัก P0 {_N['rrcore']} + ฟีเจอร์ ก.ย. {_N['rrnew']} + ฟีเจอร์ใหม่ ต.ค. {_N['rroct']} = {sum(_N.values())} เคส"),
+    groups_label='4 ก้อน (เคย FAIL · flow หลัก · ฟีเจอร์ ก.ย. · ฟีเจอร์ใหม่ ต.ค.)',
     note=('🧪 <b>รอบ Regression 5–9 ต.ค. 2569</b> — <b>🪟 Windows จ 5 ต.ค. · 🍎 Mac อ 6 ต.ค.</b> สโคปเดียวกัน บันทึกผลแยกคอลัมน์ Mac/Win ในรายงานเดียว'
           f"<br>📦 <b>3 ก้อน:</b> ❌ จุดที่เคย FAIL {_N['rrfail']} เคส (union ผลรอบก่อนจากรายงาน windows + mac · แต่ละเคสมีบรรทัด \"ผลรอบก่อน (Win/Mac)\" ใต้ Expected) · "
           f"🧭 flow หลัก P0 {_N['rrcore']} เคส · 🆕 ฟีเจอร์ ก.ย. {_N['rrnew']} เคส (ตอบแชทอัตโนมัติ LLM Epic 22 + คีย์เวิร์ดตอบกลับ Epic 23 · P0+P1)"
           '<br>✂️ <b>วิธีคัด flow หลัก:</b> P0 ทั้งหมดของรายงาน MVP1+2 มีเกินงบ จึงคัดเฉพาะ feature หลักตามแผน — '
           'login (MVP-1 E1) · สร้าง/รันรีรัน (MVP-1 E4 + ขั้นที่ 8 เริ่มไลฟ์) · playlist (ขั้นที่ 2/5/10) · จอ/overlay (ขั้นที่ 3) — เคสที่ซ้ำก้อนเคย FAIL ไม่นับซ้ำ'
+          f"<br>🎬 <b>ฟีเจอร์ใหม่ ต.ค. {_N['rroct']} เคส (เพิ่ม 6 ต.ค.):</b> จัดฉาก Epic 28 — ต้องใช้แอปรุ่น UAT (เปิดฟีเจอร์จัดฉาก) + แพ็กเกจที่ใช้ฉากได้ (Agency/Enterprise) · โอเวอร์เลย์ Epic 31 · ไลฟ์ย้อนหลัง/วิดีโอ/ตารางปัก · uid เคสเดิมตรึงไว้ — ผลเทสเดิมไม่เลื่อน"
           '<br>⚠️ <b>ฟีเจอร์ ก.ย. ที่ไม่มีเคส:</b> ตั้งเวลาอัตโนมัติ และ แบนเนอร์วิ่ง — ไม่พบเคสในรายงาน/โมดูลใดของ takra-rerun จึงไม่อยู่ในรอบนี้ (ไม่แต่งเคสเอง)'
           '<br>📝 Test Steps เขียนจากรายงานฐาน Windows — รอบ Mac ให้เดินขั้นตอนเดียวกันบนเครื่อง Mac แล้วบันทึกผลที่คอลัมน์ 🍎'
           '<br>📎 เคสคัดจากรายงานหลัก MVP1+2 (<code>projects/takra-rerun/2026/07/reports/…-windows.html</code> / <code>…-mac.html</code>) · '
