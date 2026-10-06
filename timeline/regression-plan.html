@@ -120,7 +120,7 @@
   <header>
     <div>
       <h1>🧪 แผน Regression ทุกโปรเจกต์</h1>
-      <div class="sub">รอบ <b>จันทร์ 5 – พุธ (เช้า) 7 ต.ค. 2569</b> · ทุกคนเริ่มพร้อมกันวันจันทร์ · วางแผนล่วงหน้า (ยังไม่ผูก Jira / test case) · ข้อมูล ณ <span id="asof"></span></div>
+      <div class="sub">รอบ <b>จันทร์ 5 – พุธ (เช้า) 7 ต.ค. 2569</b> · ทุกคนเริ่มพร้อมกันวันจันทร์ · ทุกแถวผูกรายงาน test case แล้ว — สถานะ/ความคืบหน้าดึงสดจากผลเทส · ข้อมูล ณ <span id="asof"></span></div>
     </div>
     <a class="back" href="../">🏠 รายงานทั้งหมด</a>
   </header>
@@ -144,37 +144,39 @@
         <tbody id="rows"></tbody>
       </table>
     </div>
-    <footer>แผนตั้งต้น — แก้ข้อมูลได้ที่ไฟล์นี้ (array <code>PLAN</code>) · สถานะ: วางแผน → กำลังเทส → เสร็จ · "ติดเงื่อนไข" = มี precondition ที่ต้องเคลียร์ก่อนถึงวัน · ลิงก์ Jira/test case จะผูกทีหลังตอนใกล้รอบ</footer>
+    <footer>แผนตั้งต้น — แก้ข้อมูลได้ที่ไฟล์นี้ (array <code>PLAN</code>) · สถานะ: วางแผน → กำลังเทส → เสร็จ · "ติดเงื่อนไข" = มี precondition ที่ต้องเคลียร์ก่อนถึงวัน · คอลัมน์สถานะอ่านสดจากรายงาน — แถวที่ใช้รายงานเดียวกันนับเฉพาะกลุ่มของแถวนั้น (<code>secs</code>) · ⏰ = เลยวันที่วางไว้แต่ยังไม่ครบ</footer>
   </section>
 </div>
 
 <script>
-const AS_OF = '2026-09-29';
+const AS_OF = '2026-10-06';
 const TODAY = (() => { const n = new Date(); return `${n.getFullYear()}-${String(n.getMonth() + 1).padStart(2, '0')}-${String(n.getDate()).padStart(2, '0')}`; })();
 
 // ── แผน regression 5–9 ต.ค. 2569 — แก้มือได้ที่นี่ ──
 // item: name=สโคป · note=รายละเอียด/เงื่อนไข · owner=ผู้เทส · start/end (YYYY-MM-DD ใน 2026-10-05..09) · cases=ประมาณการ
+// secs = data-epic ของกลุ่มในรายงานที่แถวนี้รับผิดชอบ (ใช้เมื่อหลายแถวแชร์รายงานเดียว · ไม่ใส่ = นับทั้งรายงาน)
 // status: plan (วางแผน) | doing (กำลังเทส) | done (เสร็จ) | risk (ติดเงื่อนไข) | fail (เจอปัญหา)
 const PLAN = [
   { name:'Live', emoji:'🎥', color:'#e11d48', owner:'Ice / Moss', items:[
-    { name:'MVP-1 happy path ทั้งเส้น (login → คลัง → Studio → ไลฟ์ → จบ)', note:'ชุด happy 137 เคส — ยืนยันของเดิมไม่พังหลัง dev แก้ชุดใหญ่ (เคสอัปเดตตามโค้ด uat 29 ก.ย. แล้ว)', owner:'Ice', start:'2026-10-05', end:'2026-10-05', cases:'~137', report:'https://wanlee-tankunnatam.github.io/qa-test-reports/projects/takra-ai/2026/10/reports/takra-ai-regression-oct0509-happy-ui-test-cases-table.html', status:'plan' },
-    { name:'จุดที่เคย FAIL + ใบงาน ก.ย. (1223–1230)', note:'ก้อน FAIL 62 (re-test เฉพาะใบที่ dev ปิด ใบไม่ปิด→SKIP) + ใบงาน 60 · ใช้รายงานเดียวกับแถว tool-calling — Ice เทสทุกกลุ่มยกเว้น ARS/SRF/RPL/RSK/COM/RCP', owner:'Ice', start:'2026-10-06', end:'2026-10-06', cases:'~122', report:'https://wanlee-tankunnatam.github.io/qa-test-reports/projects/takra-ai/2026/10/reports/takra-ai-regression-oct0509-happy-ui-test-cases-table.html', status:'plan' },
-    { name:'tool-calling auto-reply (กลุ่ม ARS · SRF · RPL · RSK · COM · RCP)', note:'รายงานเดียวกับแถวบน — Moss เทสเฉพาะ 6 กลุ่มท้าย (สวิตช์ AI ตอบ · การตอบ · คำเสี่ยง · ด่านการขาย · สรุปหลังไลฟ์)', owner:'Moss', start:'2026-10-05', end:'2026-10-05', cases:'~43', report:'https://wanlee-tankunnatam.github.io/qa-test-reports/projects/takra-ai/2026/10/reports/takra-ai-regression-oct0509-happy-ui-test-cases-table.html', status:'plan' },
+    { name:'MVP-1 happy path ทั้งเส้น (login → คลัง → Studio → ไลฟ์ → จบ)', note:'ขั้นที่ 1–6 + Full E2E (258 เคส) ในรายงานรวม 442 เคส — ยืนยันของเดิมไม่พังหลัง dev แก้ชุดใหญ่ (เคสอัปเดตตามโค้ด uat 29 ก.ย. แล้ว)', owner:'Ice', start:'2026-10-05', end:'2026-10-05', cases:'~258', report:'https://wanlee-tankunnatam.github.io/qa-test-reports/projects/takra-ai/2026/10/reports/takra-ai-regression-oct0509-happy-ui-test-cases-table.html', secs:['rg1','rg2','rg3','rg4','rg5','rg6','rge2e'], status:'plan' },
+    { name:'จุดที่เคย FAIL + ใบงาน ก.ย. (1223–1230)', note:'ก้อน FAIL 62 (re-test เฉพาะใบที่ dev ปิด ใบไม่ปิด→SKIP) + ใบงาน TAKRA-1223–1230 60 · รายงานเดียวกับแถว happy (รวมไฟล์เดียว 6 ต.ค.)', owner:'Ice', start:'2026-10-06', end:'2026-10-06', cases:'~122', report:'https://wanlee-tankunnatam.github.io/qa-test-reports/projects/takra-ai/2026/10/reports/takra-ai-regression-oct0509-happy-ui-test-cases-table.html', secs:['rgfail','t1223','t1224','t1225','t1226','t1227','t1228','t1229','t1230'], status:'plan' },
+    { name:'tool-calling auto-reply (กลุ่ม ARS · SRF · RPL · RSK · COM · RCP)', note:'รายงานเดียวกับแถวบน — Moss เทสเฉพาะ 6 กลุ่มนี้ (สวิตช์ AI ตอบ · การตอบ · คำเสี่ยง · ด่านการขาย · สรุปหลังไลฟ์)', owner:'Moss', start:'2026-10-05', end:'2026-10-05', cases:'~43', report:'https://wanlee-tankunnatam.github.io/qa-test-reports/projects/takra-ai/2026/10/reports/takra-ai-regression-oct0509-happy-ui-test-cases-table.html', secs:['ars','srf','rpl','rsk','com','rcp'], status:'plan' },
+    { name:'🆕 อัปเดตตาม UAT 6 ต.ค. — UI/ฟีเจอร์ที่เปลี่ยนหรือเพิ่ม (TC-OCT-*)', note:'เพิ่ม 6 ต.ค. 19 เคส ต่อท้ายรายงานเดียวกัน (ไม่แก้เคสเดิม) — เทสต่อจากชุดของตัวเอง ปิดในพุธเช้า', owner:'Ice / Moss', start:'2026-10-06', end:'2026-10-07', cases:'~19', report:'https://wanlee-tankunnatam.github.io/qa-test-reports/projects/takra-ai/2026/10/reports/takra-ai-regression-oct0509-happy-ui-test-cases-table.html', secs:['ranew'], status:'plan' },
   ]},
   { name:'Rerun', emoji:'🔁', color:'#7c3aed', owner:'Jame (BA)', items:[
-    { name:'flow หลัก + จุดที่เคย FAIL + ฟีเจอร์ใหม่ ก.ย. — เฉพาะ MVP-2', os:'win', note:'เฉพาะ MVP-2 (ตัด MVP-1 ออก) · เคสอัปเดตตามรีดีไซน์ TAK-652 + "ตอบด้วย AI" แล้ว', owner:'Jame (BA)', start:'2026-10-05', end:'2026-10-05', cases:'~67', report:'https://wanlee-tankunnatam.github.io/qa-test-reports/projects/takra-rerun/2026/10/reports/takra-rerun-regression-oct0509-ui-test-cases-table.html', status:'plan' },
-    { name:'flow หลัก + จุดที่เคย FAIL + ฟีเจอร์ใหม่ ก.ย. — เฉพาะ MVP-2', os:'mac', note:'ชุดเดียวกับแถว Windows ทุกเคส — บันทึกแยกคอลัมน์ Mac/Win ในรายงาน', owner:'Jame (BA)', start:'2026-10-06', end:'2026-10-06', cases:'~67', report:'https://wanlee-tankunnatam.github.io/qa-test-reports/projects/takra-rerun/2026/10/reports/takra-rerun-regression-oct0509-ui-test-cases-table.html', status:'plan' },
+    { name:'flow หลัก + จุดที่เคย FAIL + ฟีเจอร์ใหม่ ก.ย. — เฉพาะ MVP-2', os:'win', note:'เฉพาะ MVP-2 (ตัด MVP-1 ออก) 67 + 🎬 ฟีเจอร์ใหม่ ต.ค. 45 (จัดฉาก Epic 28 · โอเวอร์เลย์ Epic 31 · ไลฟ์ย้อนหลัง · เพิ่ม 6 ต.ค.) · เคสอัปเดตตามรีดีไซน์ TAK-652 + "ตอบด้วย AI" แล้ว', owner:'Jame (BA)', start:'2026-10-05', end:'2026-10-05', cases:'~112', report:'https://wanlee-tankunnatam.github.io/qa-test-reports/projects/takra-rerun/2026/10/reports/takra-rerun-regression-oct0509-ui-test-cases-table.html', status:'plan' },
+    { name:'flow หลัก + จุดที่เคย FAIL + ฟีเจอร์ใหม่ ก.ย. — เฉพาะ MVP-2', os:'mac', note:'ชุดเดียวกับแถว Windows ทุกเคส — บันทึกแยกคอลัมน์ Mac/Win ในรายงาน', owner:'Jame (BA)', start:'2026-10-06', end:'2026-10-06', cases:'~112', report:'https://wanlee-tankunnatam.github.io/qa-test-reports/projects/takra-rerun/2026/10/reports/takra-rerun-regression-oct0509-ui-test-cases-table.html', status:'plan' },
   ]},
   { name:'Insight', emoji:'📊', color:'#f59e0b', owner:'P', items:[
     { name:'Live Readiness รอบยืนยัน + จุดที่เคย FAIL (Dashboard · Reports) — ไม่รวม roles/permission', os:'win', note:'LR 32 + FAIL Dashboard/Reports + BYOK P0 (หน้าใหม่ 4 ขั้น #620) + 🆕 UI/ฟีเจอร์ใหม่ ต.ค. 25 (เพิ่ม 6 ต.ค.) · นัดไลฟ์จริง 1 รอบวันนี้ ใช้ดูจอ Mac คู่ได้', owner:'P', start:'2026-10-05', end:'2026-10-05', cases:'~78', report:'https://wanlee-tankunnatam.github.io/qa-test-reports/projects/takra-insight/2026/10/reports/takra-insight-regression-oct0509-ui-test-cases-table.html', status:'plan' },
     { name:'Live Readiness รอบยืนยัน + จุดที่เคย FAIL (Dashboard · Reports) — ไม่รวม roles/permission', os:'mac', note:'ชุดเดียวกับแถว Windows (LR ไม่ต้องรันไลฟ์จริงซ้ำ) — บันทึกแยกคอลัมน์ Mac/Win', owner:'P', start:'2026-10-06', end:'2026-10-06', cases:'~78', report:'https://wanlee-tankunnatam.github.io/qa-test-reports/projects/takra-insight/2026/10/reports/takra-insight-regression-oct0509-ui-test-cases-table.html', status:'plan' },
   ]},
   { name:'Trendora', emoji:'📈', color:'#16a34a', owner:'Berm', items:[
-    { name:'โซนสินค้า: ค้นหา · เช็คจอ · บันทึกไว้/หน้าหลัก · สร้างลิงก์ (กลุ่ม C–F)', note:'เคสอัปเดตตามโค้ด 29 ก.ย. ("เฝ้าดู"→"บันทึกไว้" ฯลฯ) · ข้อมูลแคตตาล็อก+ค่าคอมมีแล้ว (ClickHouse) · re-test บัค TKRD-186 ที่เกี่ยว', owner:'Berm', start:'2026-10-05', end:'2026-10-05', cases:'~77', report:'https://wanlee-tankunnatam.github.io/qa-test-reports/projects/takra-radar/2026/10/reports/takra-radar-regression-oct0509-ui-test-cases-table.html', status:'plan' },
-    { name:'โซนบัญชี/หลังบ้าน: สมัคร-ล็อกอิน · App Shell/กันแชร์ · สลิป/แพ็กเกจ · โค้ดแนะนำ · แอดมิน (กลุ่ม A–B · G–H · ADM)', note:'รายงานเดียวกับแถวบน — เทสกลุ่ม A/B/G/H/ADM · billing แยก 4 หน้าแล้วตามเคสที่อัปเดต', owner:'Berm', start:'2026-10-06', end:'2026-10-06', cases:'~53', report:'https://wanlee-tankunnatam.github.io/qa-test-reports/projects/takra-radar/2026/10/reports/takra-radar-regression-oct0509-ui-test-cases-table.html', status:'plan' },
+    { name:'โซนสินค้า: ค้นหา · เช็คจอ · บันทึกไว้/หน้าหลัก · สร้างลิงก์ (กลุ่ม C–F)', note:'เคสอัปเดตตามโค้ด 29 ก.ย. ("เฝ้าดู"→"บันทึกไว้" ฯลฯ) · ข้อมูลแคตตาล็อก+ค่าคอมมีแล้ว (ClickHouse) · re-test บัค TKRD-186 ที่เกี่ยว', owner:'Berm', start:'2026-10-05', end:'2026-10-05', cases:'~77', report:'https://wanlee-tankunnatam.github.io/qa-test-reports/projects/takra-radar/2026/10/reports/takra-radar-regression-oct0509-ui-test-cases-table.html', secs:['rdc','rdd','rde','rdf'], status:'plan' },
+    { name:'โซนบัญชี/หลังบ้าน: สมัคร-ล็อกอิน · App Shell/กันแชร์ · สลิป/แพ็กเกจ · โค้ดแนะนำ · แอดมิน (กลุ่ม A–B · G–H · ADM)', note:'รายงานเดียวกับแถวบน — เทสกลุ่ม A/B/G/H/ADM · billing แยก 4 หน้าแล้วตามเคสที่อัปเดต', owner:'Berm', start:'2026-10-06', end:'2026-10-06', cases:'~53', report:'https://wanlee-tankunnatam.github.io/qa-test-reports/projects/takra-radar/2026/10/reports/takra-radar-regression-oct0509-ui-test-cases-table.html', secs:['rda','rdb','rdg','rdh','rdadm'], status:'plan' },
   ]},
   { name:'Post', emoji:'📱', color:'#0d9488', owner:'Ice / Moss', items:[
-    { name:'3 ฟีเจอร์หลัก (ต่อมือถือ · ตั้งตาราง · คลังคอนเทนต์) + เคสค้าง', note:'เริ่มพร้อมกันวันจันทร์ จบในอังคาร — Moss นำ (Ice ติด Live มาสมทบ) · เคสอัปเดตตาม merge 27 ก.ย. แล้ว (gate เตรียมอุปกรณ์กลับมา · 4 ฟีเจอร์ถูกถอดติด SKIP) + re-test TF-1', owner:'Ice / Moss', start:'2026-10-05', end:'2026-10-06', cases:'~54', report:'https://wanlee-tankunnatam.github.io/qa-test-reports/projects/takra-farm/2026/10/reports/takra-farm-regression-oct0509-ui-test-cases-table.html', status:'plan' },
+    { name:'3 ฟีเจอร์หลัก (ต่อมือถือ · ตั้งตาราง · คลังคอนเทนต์) + เคสค้าง', note:'เริ่มพร้อมกันวันจันทร์ จบในอังคาร — Moss นำ (Ice ติด Live มาสมทบ) · เคสอัปเดตตาม merge 27 ก.ย. แล้ว (gate เตรียมอุปกรณ์กลับมา · 4 ฟีเจอร์ถูกถอดติด SKIP) + re-test TF-1 · + กลุ่ม L Shopee 15 เคส (TF-22 · เพิ่ม 5 ต.ค.)', owner:'Ice / Moss', start:'2026-10-05', end:'2026-10-06', cases:'~69', report:'https://wanlee-tankunnatam.github.io/qa-test-reports/projects/takra-farm/2026/10/reports/takra-farm-regression-oct0509-ui-test-cases-table.html', status:'plan' },
   ]},
   { name:'เก็บตก', emoji:'🧯', color:'#64748b', owner:'Ice / Moss', items:[
     { name:'ปิดรอบพุธเช้า — re-test บัคที่เจอระหว่างรอบ + สโคปที่เลื่อน + สรุปผลรอบ', note:'เช้าพุธอย่างเดียว ทุกคนปิดงานค้างของตัวเอง — Ice/Moss รวมตัวเลขสรุปรอบส่งทีม', owner:'Ice / Moss', start:'2026-10-07', end:'2026-10-07', cases:'—', status:'plan' },
@@ -210,7 +212,7 @@ document.getElementById('rows').innerHTML = PLAN.map(p => {
     <td class="st">${it.os ? `<span class="pill ${it.os === 'win' ? 'os-win' : 'os-mac'}">${it.os === 'win' ? '🪟 Windows' : '🍎 macOS'}</span>` : '<span style="color:var(--faint)">—</span>'}</td>
     <td class="day">${fmt(it.start)}${it.end !== it.start ? ` – ${fmt(it.end)}` : ''}</td>
     <td class="cs">${esc(it.cases)}</td>
-    <td class="st" data-live="${it.report ? esc(it.report) + '|' + (it.os || '') : ''}"><span class="pill ${ST[it.status][0]}">${ST[it.status][1]}</span></td>
+    <td class="st" data-live="${it.report ? esc(it.report) + '|' + (it.os || '') + '|' + (it.secs || []).join(',') : ''}" data-end="${it.end}"><span class="pill ${ST[it.status][0]}">${ST[it.status][1]}</span></td>
   </tr>`).join('');
 }).join('');
 
@@ -248,29 +250,32 @@ document.getElementById('rows').innerHTML = PLAN.map(p => {
 // ── สถานะสดจาก store-data ของรายงานแต่ละแถว (โหลดตอนเปิดหน้า · แบบเดียวกับหน้ารวมรายงาน) ──
 (function(){
   const cells = [...document.querySelectorAll('td.st[data-live]')].filter(td => td.dataset.live);
+  const late = td => { const e = td.dataset.end; return e && TODAY > e; };
   if (!cells.length) return;
   const rel = u => { const m = u.match(/qa-test-reports\/([^?#]+)/); return '../' + (m ? m[1] : u); };
   const cache = {};
   const load = url => cache[url] || (cache[url] = fetch(rel(url), { cache: 'no-store' })
     .then(r => r.text())
     .then(text => {
-      const uids = new Set(); let mm; const rx = /data-uid="(tc-\d+)"/g;
-      while ((mm = rx.exec(text))) uids.add(mm[1]);
+      const uids = new Set(), sec = {}; let mm, cur = ''; const rx = /data-epic="([^"]+)"|data-uid="(tc-\d+)"/g;
+      while ((mm = rx.exec(text))) { if (mm[1]) cur = mm[1]; else { uids.add(mm[2]); sec[mm[2]] = cur; } }
       const sm = text.match(/<script id="store-data"[^>]*>([\s\S]*?)<\/script>/);
       let store = {}; try { store = JSON.parse((sm ? sm[1] : '{}').trim() || '{}'); } catch (e) {}
-      return { uids, store };
+      return { uids, sec, store };
     }).catch(() => null));
   cells.forEach(td => {
-    const [url, os] = td.dataset.live.split('|');
+    const [url, os, secs] = td.dataset.live.split('|');
     load(url).then(d => {
       if (!d) return;
+      const want = secs ? new Set(secs.split(',')) : null;
+      const uids = want ? [...d.uids].filter(u => want.has(d.sec[u])) : [...d.uids];
       const key = os === 'win' ? 'stw' : 'st';   // os_cols: st = Mac · stw = Windows · รายงานเดี่ยวใช้ st
       const c = { pass:0, fail:0, hold:0, block:0, skip:0 };
-      d.uids.forEach(u => { const v = d.store[u]; const st = v && v[key]; if (st && c.hasOwnProperty(st)) c[st]++; });
-      const total = d.uids.size, issue = c.hold + c.block;
+      uids.forEach(u => { const v = d.store[u]; const st = v && v[key]; if (st && c.hasOwnProperty(st)) c[st]++; });
+      const total = uids.length, issue = c.hold + c.block;
       const done = c.pass + c.fail + issue, testable = Math.max(1, total - c.skip);
       if (!done && !c.skip) {   // ยังไม่เริ่ม — คงป้ายแผนเดิม เติมบรรทัดบอกจำนวน
-        td.insertAdjacentHTML('beforeend', `<span class="lv-txt" style="display:block;margin-top:3px">ยังไม่เริ่ม · 0/${total}</span>`);
+        td.insertAdjacentHTML('beforeend', `<span class="lv-txt" style="display:block;margin-top:3px">ยังไม่เริ่ม · 0/${total}${late(td) ? ' · ⏰ เลยวันที่วางไว้' : ''}</span>`);
         return;
       }
       const w = n => (n / testable * 100);
@@ -281,7 +286,7 @@ document.getElementById('rows').innerHTML = PLAN.map(p => {
       const pct = Math.round(done / testable * 100);
       const chips = `${c.pass ? `<span class="c-p">✓${c.pass}</span>` : ''} ${c.fail ? `<span class="c-f">✗${c.fail}</span>` : ''} ${issue ? `<span class="c-b">⏸${issue}</span>` : ''}${c.skip ? ` <span>⏭${c.skip}</span>` : ''}`;
       const label = pct >= 100 && !c.fail && !issue ? '<span class="pill s-pass">✓ เสร็จ</span>' : `<span class="pill s-prog">กำลังเทส</span>`;
-      td.innerHTML = `<span class="lv-wrap">${label}<span class="lv-bar">${segs}</span><span class="lv-txt"><b>${pct}%</b> · ${done}/${total - c.skip}</span><span class="lv-chips">${chips}</span></span>`;
+      td.innerHTML = `<span class="lv-wrap">${label}<span class="lv-bar">${segs}</span><span class="lv-txt"><b>${pct}%</b> · ${done}/${total - c.skip}${pct < 100 && late(td) ? ' · ⏰' : ''}</span><span class="lv-chips">${chips}</span></span>`;
     });
   });
 })();
