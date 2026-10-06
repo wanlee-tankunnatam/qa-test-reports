@@ -63,6 +63,9 @@ UID_START = META['uid_start']
 TITLE = META['title']
 # ปุ่ม "รายงานทั้งหมด" — ตั้งต่อรายงานได้ผ่าน META['back'] (ค่าเริ่มต้น = hub)
 BACK = META.get('back', 'https://wanlee-tankunnatam.github.io/qa-test-reports/?project=hub')
+# ชื่อ/คำอธิบายปุ่ม — ตั้งต่อรายงานได้ผ่าน META['back_label'] / META['back_title'] (เช่นปุ่มไปหน้าแผน regression)
+BACK_LABEL = META.get('back_label', '🏠 รายงานทั้งหมด')
+BACK_TITLE = META.get('back_title', 'กลับไปหน้ารวมรายงาน (Hub)')
 # ข้อความเตือนใต้เคสที่ยังไม่มีหน้าจอ — ตั้งต่อรายงานได้ผ่าน META['noui_note']
 # ป้ายของเคส ui=False — ตั้งต่อรายงานได้ผ่าน META['noui_badge'] (ค่าเริ่มต้น = ไม่พบใน UI)
 NOUI_BADGE = META.get('noui_badge', '⛔ ไม่พบใน UI')
@@ -535,7 +538,7 @@ def build():
 '''
     extra_css = EXTRA_CSS + (EPIC_TAG_CSS if any(e.get('jira') for e in EPICS) else '')
     out = (css + extra_css + '</style>\n</head>\n<body>\n'
-           f'<a id="hub-back-btn" href="{BACK}" title="กลับไปหน้ารวมรายงาน (Hub)" style="position:fixed;top:12px;right:14px;z-index:99999;display:inline-flex;align-items:center;gap:7px;padding:10px 18px;border-radius:999px;background:#ffffff;color:#1e3a8a;font-size:14px;font-weight:800;text-decoration:none;box-shadow:0 4px 16px rgba(0,0,0,.35);border:2px solid #1e3a8a;font-family:\'Segoe UI\',\'Sarabun\',system-ui,sans-serif">🏠 รายงานทั้งหมด</a>\n\n\n'
+           f'<a id="hub-back-btn" href="{BACK}" title="{BACK_TITLE}" style="position:fixed;top:12px;right:14px;z-index:99999;display:inline-flex;align-items:center;gap:7px;padding:10px 18px;border-radius:999px;background:#ffffff;color:#1e3a8a;font-size:14px;font-weight:800;text-decoration:none;box-shadow:0 4px 16px rgba(0,0,0,.35);border:2px solid #1e3a8a;font-family:\'Segoe UI\',\'Sarabun\',system-ui,sans-serif">{BACK_LABEL}</a>\n\n\n'
            f'<script id="store-data" type="application/json">\n{store}\n</script>\n'
            + header + '\n'.join(rows) + footer + js)
     if META.get('script_col'):

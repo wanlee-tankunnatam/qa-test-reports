@@ -238,7 +238,9 @@ META = dict(
     title='[REG 5–9 ต.ค.] TAKRA AI · Live — Regression แยกตามเมนู/ฟีเจอร์',
     emoji='🎥', uid_start=13001,
     download='takra-ai-regression-oct0509-bymenu-ui-test-cases-table.html',
-    back='https://wanlee-tankunnatam.github.io/qa-test-reports/?project=ai',
+    # ปุ่มมุมขวาบนพาไปหน้าแผน regression (สั่ง 2026-10-06) แทนหน้า hub
+    back='https://wanlee-tankunnatam.github.io/qa-test-reports/timeline/regression-plan.html#plan',
+    back_label='🗓️ แผน Regression', back_title='ไปหน้าแผน Regression 5–9 ต.ค. (ตารางแผน)',
     sub=(f'รอบ Regression <b>จ 5 – ศ 9 ต.ค. 2569</b> · เคสชุดเดียวกับรายงาน Happy ({_N} เคส) จัดใหม่เป็น '
          f'<b>{len(EPICS)} เมนู · {_N_SETS} ชุดฟีเจอร์</b> เรียงตามแถบเมนูของแอป · Target: <b>UAT</b> https://uat-live.takra.ai'),
     groups_label=f'{len(EPICS)} เมนู → {_N_SETS} ชุดฟีเจอร์ (ตามแถบเมนูของแอป)',
