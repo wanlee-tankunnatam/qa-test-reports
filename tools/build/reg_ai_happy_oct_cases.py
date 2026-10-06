@@ -157,12 +157,30 @@ def _scene_setup_raw(c):
     return c, None
 
 
+# เคสที่ต้องไลฟ์แต่ regex ด้านบนจับไม่ได้ (ตรวจ 6 ต.ค. · สั่งย้ำ "อวาตาร์ Graham · layer "AI Live" เสมอ · สุ่มฉากหลัง เท่านั้น"):
+#   เริ่มไลฟ์ด้วยคำอื่น ("เริ่มไลฟ์ใหม่" / ส่งตรงเข้า TikTok / ไลฟ์จริง) · E2E (steps อยู่ใน phases) ·
+#   Precondition ต้องมีไลฟ์ที่ออกอากาศจบแล้วซึ่งผู้เทสต้องไลฟ์เอง → เติมบรรทัดกติกาใน Precondition
+SCENE_EXTRA_PRE = {
+    'T1224.8', 'T1228.5', 'T1229.8', 'TC-RA.4', 'TC-RA.5',
+    'T1223.5', 'T1223.6', 'T1223.7', 'T1223.8', 'T1223.9', 'T1223.10', 'T1223.11',
+    'TC-E2E.1', 'TC-E2E.2', 'TC-E2E.3', 'TC-E2E.4', 'TC-E2E.5',
+    'TC-OCT-M.4', 'TC-OCT-M.6', 'TC-OCT-M.14', 'TC-N2.1', 'TC-N2.2', 'TC-N2.3', 'TC-OCT-U.2', 'TC-OCT-Q.3',
+}
+
+
+def _scene_setup_all(c):
+    c2, how = _scene_setup(c)
+    if not how and c['id'] in SCENE_EXTRA_PRE:
+        return _graham(dict(c, pre=list(c.get('pre', [])) + [SCENE_SETUP_PRE])), 'pre'
+    return c2, how
+
+
 SCENE_SETUP_COUNT = {'step': 0, 'split': 0, 'pre': 0}
 for _e in EPICS:
     for _f in _e['feats']:
         _out = []
         for _c in _f['cases']:
-            _c2, _how = _scene_setup(_c)
+            _c2, _how = _scene_setup_all(_c)
             if _how:
                 SCENE_SETUP_COUNT[_how] += 1
             _out.append(_c2)

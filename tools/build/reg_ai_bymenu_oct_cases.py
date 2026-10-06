@@ -183,26 +183,42 @@ MENUS = [
 ]
 
 
+# ── ตัดเคสออก (สั่ง 2026-10-06) — ผลที่บันทึกไว้ยังอยู่ใน store-data (uid ตรึง) ใส่กลับได้โดยเอา id ออกจากชุดนี้ ──
+# ① ซ้ำตรงตัว: -RF = รอบ re-test ของเคสเดียวกัน · BR.3 ตรวจแบนเนอร์ "โหมดพื้นฐานของรอบนี้:" เดียวกับ RA.1 (RA.1 ครอบกว่า: เช็กแบนเนอร์ค้างด้วย)
+DROP_DUP = {'TC-SL.1-RF': 'TC-SL.1', 'TC-BR.3': 'TC-RA.1'}
+# ② เคสเดิมที่มีเคส 🆕 TC-OCT-* แทนแล้ว (replaces= ใน ai_reg_oct_new_cases) — เดิมคงไว้เพราะมีผลบันทึก · ตอนนี้ตัด เทสที่เคส 🆕
+_NEW_IDS = {c['id'] for f in _src._new.EPIC['feats'] for c in f['cases']}
+DROP_REPLACED = sorted(i for e in _src.EPICS for f in e['feats'] for c in f['cases']
+                       for i in [c['id']] if i in _src._new.REPLACED and i not in _NEW_IDS)
+# ③ Priority P2 — รอบนี้เอาเฉพาะ P0/P1
+DROP_P2 = sorted(c['id'] for e in _src.EPICS for f in e['feats'] for c in f['cases'] if c['prio'] == 'P2')
+DROP = set(DROP_DUP) | set(DROP_REPLACED) | set(DROP_P2)
+
+
 def _regroup():
     by_id, by_feat = {}, {}
     for e in _src.EPICS:
         for f in e['feats']:
-            by_feat[f['featkey']] = [c['id'] for c in f['cases']]
+            by_feat[f['featkey']] = [c['id'] for c in f['cases'] if c['id'] not in DROP]
             for c in f['cases']:
-                by_id[c['id']] = c
+                if c['id'] not in DROP:
+                    by_id[c['id']] = c
     used, epics = {}, []
     for key, emoji, chip, title, sets in MENUS:
         feats = []
         for i, (stitle, refs) in enumerate(sets, 1):
             ids = []
             for r in refs:
-                got = by_feat.get(r) or ([r] if r in by_id else None)
-                assert got, f'{key}: ไม่รู้จัก "{r}" (ไม่ใช่ featkey หรือ case id ในชุดหลัก)'
+                if r in DROP:
+                    continue
+                got = by_feat[r] if r in by_feat else ([r] if r in by_id else None)
+                assert got is not None, f'{key}: ไม่รู้จัก "{r}" (ไม่ใช่ featkey หรือ case id ในชุดหลัก)'
                 ids += got
             for cid in ids:
                 assert cid not in used, f'{cid} อยู่ 2 ชุด: {used[cid]} และ {key}#{i}'
                 used[cid] = f'{key}#{i}'
-            feats.append(dict(featkey=f'{key}-{i}', title=f'ชุด {i} · {stitle}', cases=[by_id[c] for c in ids]))
+            if ids:
+                feats.append(dict(featkey=f'{key}-{len(feats) + 1}', title=f'ชุด {len(feats) + 1} · {stitle}', cases=[by_id[c] for c in ids]))
         n = sum(len(f['cases']) for f in feats)
         epics.append(dict(key=key, emoji=emoji, chip=f'{emoji} {chip}', title=title, feats=feats))
     missing = [c for c in by_id if c not in used]
@@ -226,7 +242,11 @@ META = dict(
     sub=(f'รอบ Regression <b>จ 5 – ศ 9 ต.ค. 2569</b> · เคสชุดเดียวกับรายงาน Happy ({_N} เคส) จัดใหม่เป็น '
          f'<b>{len(EPICS)} เมนู · {_N_SETS} ชุดฟีเจอร์</b> เรียงตามแถบเมนูของแอป · Target: <b>UAT</b> https://uat-live.takra.ai'),
     groups_label=f'{len(EPICS)} เมนู → {_N_SETS} ชุดฟีเจอร์ (ตามแถบเมนูของแอป)',
-    note=('🧭 <b>รายงานนี้ใช้บันทึกผลแทนรายงาน Happy ตั้งแต่ 6 ต.ค. 2569</b> — เคส/เนื้อหา/uid ชุดเดียวกันทุกเคส '
+    note=(f'✂️ <b>ตัดเคสออก {len(DROP)} เคส (6 ต.ค.)</b>: ซ้ำตรงตัว {len(DROP_DUP)} ('
+          + ' · '.join(f'{k} ซ้ำ {v}' for k, v in DROP_DUP.items())
+          + f') · เคสเดิมที่มีเคส 🆕 TC-OCT-* แทนแล้ว {len(DROP_REPLACED)} — เทสที่เคส 🆕 แทน · P2 {len(DROP_P2)} ({", ".join(DROP_P2)}) '
+          '— ผลที่เคยบันทึกของเคสที่ตัดยังเก็บอยู่ในไฟล์ ไม่หาย<br>'
+          '🧭 <b>รายงานนี้ใช้บันทึกผลแทนรายงาน Happy ตั้งแต่ 6 ต.ค. 2569</b> — เคส/เนื้อหา/uid ชุดเดียวกันทุกเคส '
           f'แค่จัดกลุ่มใหม่ตามเมนูของแอป (เข้าสู่ระบบ → พื้นที่ทำงาน → คลังข้อมูล → ระบบไลฟ์ → แพลตฟอร์มไลฟ์ → Studio → ออกอากาศ → สรุปไลฟ์ → ตั้งค่า) '
           'แล้วแบ่งแต่ละเมนูเป็น <b>ชุดฟีเจอร์</b> — เคสเดิมกับเคส 🆕 TC-OCT-* ของเรื่องเดียวกันอยู่ชุดเดียวกัน · '
           'ผลเทส/Actual/Jira ที่บันทึกในรายงาน Happy ถึง 6 ต.ค. ย้ายมาครบแล้ว'
