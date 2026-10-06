@@ -82,6 +82,10 @@ import pathlib as _pl, re as _re
 _OUT = _pl.Path(__file__).resolve().parents[2] / META['out_rel']
 _m = _re.search(r'<script id="store-data"[^>]*>([\s\S]*?)</script>', _OUT.read_text(encoding='utf-8')) if _OUT.exists() else None
 _STORE = json.loads(_m.group(1).strip() or '{}') if _m else {}
+# ตั้งแต่ 6 ต.ค. บันทึกผลที่รายงาน "แยกตามเมนู" (reg_ai_bymenu_oct_cases · uid เดิม) → นับผลจากไฟล์นั้นด้วย
+_MENU_OUT = _OUT.parent / 'takra-ai-regression-oct0509-bymenu-ui-test-cases-table.html'
+_m2 = _re.search(r'<script id="store-data"[^>]*>([\s\S]*?)</script>', _MENU_OUT.read_text(encoding='utf-8')) if _MENU_OUT.exists() else None
+_STORE = {**_STORE, **(json.loads(_m2.group(1).strip() or '{}') if _m2 else {})}
 _has_data = lambda i: bool(_STORE.get(f'tc-{UID_MAP[i]}'))
 # ③ (สั่ง 2026-10-06) กลุ่ม "จุดที่เคย FAIL ในรายงาน MVP1+2" ทั้งกลุ่ม — เคส MVP-1 ซ้ำ/ถูกแทนหมดแล้ว · ที่เหลือคือ Epic 14 RTMP (ยังไม่ขึ้น UAT)
 #   + Epic 15 เป้า/ร่าง (มีเคส 🆕 กลุ่ม M ครอบ) — ใส่ Epic 14 กลับได้ตอน TAKRA-783 merge (uid ยังตรึง)
@@ -190,4 +194,15 @@ META.update(
           '<a href="https://wanlee-tankunnatam.github.io/qa-test-reports/timeline/regression-plan.html#plan">regression-plan</a>'),
     noui_note=_ff.META['noui_note'], noui_badge=_ff.META['noui_badge'],
     footer='Regression 5–9 ต.ค. 2569 · takra-ai (Live) · Happy Path + ฟีเจอร์ ก.ย. + อัปเดต UAT 6 ต.ค.',
+)
+
+# ── ย้ายไปบันทึกผลที่รายงาน "แยกตามเมนู/ฟีเจอร์" (สั่ง 2026-10-06) — ไฟล์นี้คงไว้ดูผลเดิม ──
+# NOTE_BODY = note เดิม (รายงานแยกตามเมนูดึงไปใช้ต่อ) · ป้ายย้ายใส่เฉพาะไฟล์นี้
+NOTE_BODY = META['note']
+MOVED_URL = 'https://wanlee-tankunnatam.github.io/qa-test-reports/projects/takra-ai/2026/10/reports/takra-ai-regression-oct0509-bymenu-ui-test-cases-table.html'
+META.update(
+    title='[REG 5–9 ต.ค.] TAKRA AI · Live — Regression (ไฟล์เดิม · ย้ายไปรายงานแยกตามเมนูแล้ว)',
+    note=('<div style="padding:10px 12px;margin-bottom:8px;border:2px solid #dc2626;border-radius:8px;background:#fef2f2;color:#991b1b;font-size:14px">'
+          '⚠️ <b>เลิกบันทึกผลที่ไฟล์นี้แล้ว (6 ต.ค. 2569)</b> — เคสชุดเดียวกันทั้งหมดพร้อมผลเทสที่บันทึกไว้ ย้ายไป '
+          f'<a href="{MOVED_URL}"><b>รายงานแยกตามเมนู/ฟีเจอร์</b></a> แล้ว · บันทึกผลที่นั่นเท่านั้น</div>' + NOTE_BODY),
 )

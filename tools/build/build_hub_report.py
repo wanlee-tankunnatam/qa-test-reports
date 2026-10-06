@@ -44,7 +44,7 @@ MODULES = {'mvp1': 'hub_cases', 'mvp2': 'hub_mvp2_cases', 'mvp2rbac': 'hub_mvp2_
            'lipsync': 'lipsync_cases',
            'radar': 'radar_cases',
            'regradar': 'reg_radar_oct_cases', 'regfarm': 'reg_farm_oct_cases',
-           'regai1': 'reg_ai_happy_oct_cases', 'regai2': 'reg_ai_failfeat_oct_cases',
+           'regai1': 'reg_ai_happy_oct_cases', 'regai2': 'reg_ai_failfeat_oct_cases', 'regaimenu': 'reg_ai_bymenu_oct_cases',
            'regrerun': 'reg_rerun_oct_cases', 'reginsight': 'reg_insight_oct_cases'}
 _which = next((a for a in sys.argv[1:] if a in MODULES), 'mvp1')
 # 'module:key' = โมดูลเดียวสร้างได้หลายไฟล์ — เรียก select(key) ก่อนอ่าน EPICS/META
@@ -386,6 +386,13 @@ def build():
         if m and m.group(1).strip():
             store = m.group(1).strip()
             json.loads(store)
+    # ไฟล์ใหม่ที่ย้ายผลมาจากรายงานอื่น (uid เดิม): META['seed_store_from'] — ใช้ครั้งเดียวตอนไฟล์ปลายทางยังไม่มี
+    elif META.get('seed_store_from') and (ROOT / META['seed_store_from']).exists():
+        m = re.search(r'<script id="store-data"[^>]*>([\s\S]*?)</script>', (ROOT / META['seed_store_from']).read_text(encoding='utf-8'))
+        if m and m.group(1).strip():
+            store = m.group(1).strip()
+            json.loads(store)
+            print('seed store-data จาก', META['seed_store_from'], len(json.loads(store)), 'uid')
 
     # ── body ──
     uid = UID_START
