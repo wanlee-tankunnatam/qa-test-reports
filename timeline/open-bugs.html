@@ -117,12 +117,13 @@ td.st{width:1%;white-space:nowrap}
 .none{color:var(--muted);font-size:.85rem;padding:18px 0}
 footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--line);color:var(--muted);font-size:.78rem}
 @media (max-width:520px){ .wrap{padding-block:20px 48px} th,td{padding:7px 9px} }
+.jstep{display:inline-block;font-size:12px;line-height:1.35;padding:2px 8px;border-radius:999px;background:var(--surface-2,rgba(127,127,127,.12));white-space:nowrap}.jnone{opacity:.6;font-style:italic}td.jy{min-width:150px}
 </style>
 </head>
 <body>
 <div class="wrap">
   <h1>บั๊กค้างรอบส่งงาน</h1>
-  <p class="sub">บั๊กที่ยังไม่ปิดจากทุกโปรเจกต์ใน Jira แยกตามรอบส่ง แล้วแยกตามผู้รับผิดชอบ · ข้อมูล ณ 6 ต.ค. 2026 11:08 น. (อัปเดตอัตโนมัติ 09:00 / 13:00)</p>
+  <p class="sub">บั๊กที่ยังไม่ปิดจากทุกโปรเจกต์ใน Jira แยกตามรอบส่ง แล้วแยกตามผู้รับผิดชอบ · ในแต่ละคนเรียงตามขั้นที่ลูกค้าเจอใน user journey · ข้อมูล ณ 6 ต.ค. 2026 11:08 น. (อัปเดตอัตโนมัติ 09:00 / 13:00)</p>
   <div class="proj" id="fj" role="group" aria-label="โปรเจกต์"></div>
   <div class="tot" id="tot"></div>
 
@@ -401,7 +402,7 @@ const ROWS = [
 ["9-OCT", "Mae", "TAK-737", "Medium", "แท็บวิดีโอหน้าบัญชี: เลือกคลิปได้แค่ 24 ใบล่าสุด + ไม่มีช่องค้นหา/เรียง", "IN REVIEW"],
 ["9-OCT", "No", "TAKRA-1378", "Medium", "[FE] 🔴 กระดิ่ง track ที่สองมาถึง = เสียงพูดดับทั้งไลฟ์ (AudioContext ไม่ถูกปลุก + แยกเสียงพูดด้วยลำดับ) — ต่อจาก TAKRA-1368", "To Do"],
 ["9-OCT", "ไม่มีคนรับ", "TKRD-368", "Medium", "[แผงจอ] แผงที่เปิดจากหน้าอันดับ สืบทอดการจัดวางข้อความของช่องตาราง — ทุกบรรทัดอยู่กึ่งกลาง และตัวเลขคลิปล้นไปทับคอลัมน์ข้าง ๆ", "READY TO TEST"],
-["9-OCT", "No", "TAKRA-1379", "Medium", "[BE] ลบเสียงที่ยังไม่มี voice_id แล้วช่องที่ผู้ให้บริการไม่ถูกคืน — ไม่ยิง DELETE และไม่บันทึกอะไรเลย", "To Do"],
+["30-OCT", "No", "TAKRA-1379", "Medium", "[BE] ลบเสียงที่ยังไม่มี voice_id แล้วช่องที่ผู้ให้บริการไม่ถูกคืน — ไม่ยิง DELETE และไม่บันทึกอะไรเลย", "To Do"],
 ["9-OCT", "James", "TI-591", "High", "TAKRA Insight - กด \"เริ่มบันทึก\" แล้วแอปล้างลิงก์สตรีม + โหลดหน้า TikTok ใหม่เอง → TikTok ส่งหน้าว่าง → 15 วิต่อมาตัดสิน \"ไลฟ์จบ\" (heartbeat-stale, flvUrl=false) แล้วทิ้งเซสชัน ทั้งที่ไลฟ์ยังอยู่", "READY TO TEST"],
 ["9-OCT", "James", "TI-592", "Medium", "TAKRA Insight - AI COACH / AI HIGHLIGHT ใช้ไม่ได้บน Gemini 3.8 Flash: reasoning ที่ปิดไม่ได้กิน max_tokens ~96% (765/796 · 385/396) → คำตอบถูกตัดกลางบรรทัด → malformed · สรุปบทพูดเก็บข้อความที่ถูกตัดไปแสดง", "READY TO TEST"],
 ["9-OCT", "Berm", "TKRD-370", "Medium", "[Trendora] ปรับ UI หน้าการแจ้งชำระเงิน", "READY TO TEST"],
@@ -411,12 +412,12 @@ const ROWS = [
 ["9-OCT", "Boat", "TAKRA-1381", "Medium", "TAKRA Live - ด่านไซซ์ของ AI ตอบคอมเมนต์บล็อกเบอร์ที่อยู่กลางช่วง (สินค้าไซซ์ 36-40 แต่ AI ตอบ \"มีเบอร์ 38\" ไม่ได้) แล้วอวาตาร์พูดว่า \"ยังไม่มีข้อมูล\" ทั้งที่มี", "To Do"],
 ["9-OCT", "Boat", "TAKRA-1382", "High", "[BE] ด่านไซซ์ของ AI ตอบคอมเมนต์ปล่อยไซซ์ที่ไม่มีจริงออกอากาศ ถ้า AI ทวนคำถามก่อนแล้วค่อยตอบว่า \"มีค่ะ\" — \"เรื่องไซซ์ XL นะคะ มีค่ะ\" ผ่านด่าน ทั้งที่สินค้ามีแค่ S/M/L (ผลข้างเคียงจาก PR #1160 ของ TAKRA-1372)", "To Do"],
 ["9-OCT", "Boat", "TAKRA-1383", "High", "[BE] ด่านไซซ์ของ AI ตอบคอมเมนต์ปล่อยขนาดที่แต่งขึ้นออกอากาศ ถ้ามีคำว่า \"สูงสุด / ไม่ต่ำกว่า / มากกว่า\" นำหน้า — \"ขนาดสูงสุด 200 มล. ค่ะ\" ผ่านด่าน ทั้งที่สินค้ามีแค่ 8 กับ 24 ซีซี (ผลข้างเคียงจาก PR #1160 ของ TAKRA-1372)", "To Do"],
-["9-OCT", "No", "TAKRA-1385", "High", "TAKRA Live - คลังอวาตาร์: \"อวาตาร์ของร้าน\" แสดงคนละทรงกับ \"อวาตาร์ที่ทีมจัดเตรียมให้\" และฟอร์มอัปคลิปแทรกกลางหน้าแทนที่จะเป็นหน้าต่างซ้อน", "To Do"],
+["16-OCT", "No", "TAKRA-1385", "High", "TAKRA Live - คลังอวาตาร์: \"อวาตาร์ของร้าน\" แสดงคนละทรงกับ \"อวาตาร์ที่ทีมจัดเตรียมให้\" และฟอร์มอัปคลิปแทรกกลางหน้าแทนที่จะเป็นหน้าต่างซ้อน", "To Do"],
 ["9-OCT", "Boat", "TAKRA-1386", "Highest", "TAKRA Live - คลังสคริปต์ > ให้ AI ร่างทั้งชุด: กด \"ร่างสคริปต์\" แล้วขึ้น \"ร่างนานผิดปกติ\" แทบทุกครั้ง — ร่างทั้งชุดไม่สำเร็จ", "To Do"],
-["9-OCT", "Boat", "TAKRA-1387", "Medium", "TAKRA Live - ให้ AI ร่าง: ผู้พูดเพศชาย โทน \"สบายๆ\" ใช้สรรพนามแทนตัวว่า \"เรา\" แทน \"ผม\"", "To Do"],
-["9-OCT", "Boat", "TAKRA-1388", "Medium", "TAKRA Live - ใส่แท็กเสียง: ใส่แท็ก 4–5 ตัวต่อ content แทน 2 ตัว และจำนวนแท็กไม่เปลี่ยนตามโทนของสคริปต์", "To Do"],
-["9-OCT", "Boat", "TAKRA-1389", "High", "TAKRA Live - ให้ AI ร่าง: บล็อก \"ถาม-ตอบ\" แต่งเนื้อสัมผัส/สรรพคุณที่ไม่มีในข้อมูลสินค้า และอ้างว่าใช้เอง (\"อันนี้ชอบมาก\")", "To Do"],
-["9-OCT", "Boat", "TAKRA-1390", "Medium", "TAKRA Live - ให้ AI ร่าง: 1 บรรทัดมีหลายประโยค ไม่ใช่ 1 ประโยคต่อ 1 บรรทัด", "To Do"],
+["23-OCT", "Boat", "TAKRA-1387", "Medium", "TAKRA Live - ให้ AI ร่าง: ผู้พูดเพศชาย โทน \"สบายๆ\" ใช้สรรพนามแทนตัวว่า \"เรา\" แทน \"ผม\"", "To Do"],
+["23-OCT", "Boat", "TAKRA-1388", "Medium", "TAKRA Live - ใส่แท็กเสียง: ใส่แท็ก 4–5 ตัวต่อ content แทน 2 ตัว และจำนวนแท็กไม่เปลี่ยนตามโทนของสคริปต์", "To Do"],
+["16-OCT", "Boat", "TAKRA-1389", "High", "TAKRA Live - ให้ AI ร่าง: บล็อก \"ถาม-ตอบ\" แต่งเนื้อสัมผัส/สรรพคุณที่ไม่มีในข้อมูลสินค้า และอ้างว่าใช้เอง (\"อันนี้ชอบมาก\")", "To Do"],
+["23-OCT", "Boat", "TAKRA-1390", "Medium", "TAKRA Live - ให้ AI ร่าง: 1 บรรทัดมีหลายประโยค ไม่ใช่ 1 ประโยคต่อ 1 บรรทัด", "To Do"],
 ["9-OCT", "Boat", "TAKRA-1396", "High", "TAKRA Live - โหมดถ่ายด้วยโทรศัพท์: กระดิ่งและอีเมลสรุปคำเสี่ยงขึ้น \"คำเสี่ยงที่บล็อก: ไม่พบคำเสี่ยง\" ทั้งที่รอบนี้ไม่ได้รับคอมเมนต์เลย (ไม่ได้ตรวจ) — หน้าสรุปไลฟ์บอกตรงกันข้าม", "To Do"],
 ["16-OCT", "Boat", "TAKRA-1397", "Medium", "TAKRA Live - ตรวจก่อนไลฟ์: แถว \"การ์ดสินค้าใหญ่พอให้อ่านออก\" และ \"เวลาจบของตัวนับถอยหลัง\" ขึ้น \"ผ่าน\" ทั้งที่ฉากไม่มีการ์ดสินค้า / ไม่มีตัวนับถอยหลังเลย (ไม่มีอะไรให้ตรวจ)", "To Do"],
 ["16-OCT", "Boat", "TAKRA-1398", "Medium", "TAKRA Live - ตั้ง \"ความยาวไลฟ์\" 10 นาที แต่ไลฟ์จบเองที่ราว 2.5 นาทีเพราะสคริปต์เล่นครบรอบ — ข้อความใต้ช่องบอกแค่ \"จบเมื่อครบเวลานี้\" และเช็คลิสต์ซ่อนเรื่องนี้ไว้ในแถว \"ความจุ / ระยะเวลา\" ที่ขึ้น \"ตรวจไม่ได้\"", "To Do"],
@@ -490,6 +491,12 @@ const SCOPE={
 };
 const SCOPE_LABEL={ui:"UI อย่างเดียว",sys:"แตะ API / ระบบ",tool:"เทส / เครื่องมือ"};
 ROWS.forEach(r=>{const c=SCOPE[r[2]]; r[6]=c?SCOPE_LABEL[c[0]]:"";});
+// User-journey step per ticket (TAKRA): the order a customer meets the screen — rows sort by it inside each round.
+// Tickets added later by the auto-update have no step yet and sort last ("ยังไม่จัดขั้น").
+const JOURNEY_STEPS=["เข้าระบบ · ทีม · แพ็กเกจ", "เตรียมอวาตาร์ · เสียง · สินค้า", "เตรียมสคริปต์", "จัดฉากในสตูดิโอ", "ตรวจก่อนไลฟ์ · เริ่มไลฟ์ · เชื่อม TikTok", "ระหว่างไลฟ์: ภาพ · เสียง · กระดิ่ง", "ระหว่างไลฟ์: AI ตอบคอมเมนต์ · คำเสี่ยง", "ห้องคุมไลฟ์ · หยุด/ปิดไลฟ์", "หลังไลฟ์: สรุป · แจ้งเตือน · รายการไลฟ์", "ทั้งแอป: ข้อความ error · การเข้าถึง", "หลังบ้าน · เทสต์ (ลูกค้าไม่เห็น)"];
+const JOURNEY={"TAKRA-576": 1, "TAKRA-602": 1, "TAKRA-791": 1, "TAKRA-971": 1, "TAKRA-972": 1, "TAKRA-1146": 1, "TAKRA-1192": 1, "TAKRA-1374": 1, "TAKRA-584": 2, "TAKRA-746": 2, "TAKRA-747": 2, "TAKRA-760": 2, "TAKRA-792": 2, "TAKRA-874": 2, "TAKRA-1009": 2, "TAKRA-1218": 2, "TAKRA-1280": 2, "TAKRA-1285": 2, "TAKRA-1298": 2, "TAKRA-1306": 2, "TAKRA-1340": 2, "TAKRA-1358": 2, "TAKRA-1359": 2, "TAKRA-1385": 2, "TAKRA-1220": 3, "TAKRA-1245": 3, "TAKRA-1247": 3, "TAKRA-1251": 3, "TAKRA-1274": 3, "TAKRA-1386": 3, "TAKRA-1387": 3, "TAKRA-1388": 3, "TAKRA-1389": 3, "TAKRA-1390": 3, "TAKRA-627": 4, "TAKRA-664": 4, "TAKRA-780": 4, "TAKRA-880": 4, "TAKRA-983": 4, "TAKRA-1151": 4, "TAKRA-1258": 4, "TAKRA-1263": 4, "TAKRA-1272": 4, "TAKRA-1273": 4, "TAKRA-1281": 4, "TAKRA-1283": 4, "TAKRA-1287": 4, "TAKRA-1315": 4, "TAKRA-572": 5, "TAKRA-660": 5, "TAKRA-798": 5, "TAKRA-879": 5, "TAKRA-1144": 5, "TAKRA-1169": 5, "TAKRA-1173": 5, "TAKRA-1200": 5, "TAKRA-1203": 5, "TAKRA-1211": 5, "TAKRA-1233": 5, "TAKRA-1235": 5, "TAKRA-1259": 5, "TAKRA-1260": 5, "TAKRA-1262": 5, "TAKRA-1282": 5, "TAKRA-1288": 5, "TAKRA-1343": 5, "TAKRA-1397": 5, "TAKRA-1398": 5, "TAKRA-709": 6, "TAKRA-921": 6, "TAKRA-931": 6, "TAKRA-965": 6, "TAKRA-1010": 6, "TAKRA-1167": 6, "TAKRA-1217": 6, "TAKRA-1234": 6, "TAKRA-1237": 6, "TAKRA-1239": 6, "TAKRA-1302": 6, "TAKRA-1305": 6, "TAKRA-1309": 6, "TAKRA-1312": 6, "TAKRA-1313": 6, "TAKRA-1378": 6, "TAKRA-975": 7, "TAKRA-976": 7, "TAKRA-1278": 7, "TAKRA-1279": 7, "TAKRA-1289": 7, "TAKRA-1371": 7, "TAKRA-1373": 7, "TAKRA-1381": 7, "TAKRA-1382": 7, "TAKRA-1383": 7, "TAKRA-882": 8, "TAKRA-964": 8, "TAKRA-970": 8, "TAKRA-1026": 8, "TAKRA-1189": 8, "TAKRA-1199": 8, "TAKRA-1208": 8, "TAKRA-1265": 8, "TAKRA-1270": 8, "TAKRA-1357": 8, "TAKRA-274": 9, "TAKRA-1165": 9, "TAKRA-1277": 9, "TAKRA-1297": 9, "TAKRA-1396": 9, "TAKRA-998": 10, "TAKRA-999": 10, "TAKRA-1008": 10, "TAKRA-1138": 10, "TAKRA-1183": 10, "TAKRA-1271": 10, "TAKRA-697": 11, "TAKRA-872": 11, "TAKRA-873": 11, "TAKRA-912": 11, "TAKRA-924": 11, "TAKRA-1004": 11, "TAKRA-1027": 11, "TAKRA-1132": 11, "TAKRA-1140": 11, "TAKRA-1141": 11, "TAKRA-1145": 11, "TAKRA-1152": 11, "TAKRA-1154": 11, "TAKRA-1164": 11, "TAKRA-1174": 11, "TAKRA-1175": 11, "TAKRA-1184": 11, "TAKRA-1186": 11, "TAKRA-1190": 11, "TAKRA-1191": 11, "TAKRA-1193": 11, "TAKRA-1194": 11, "TAKRA-1195": 11, "TAKRA-1196": 11, "TAKRA-1197": 11, "TAKRA-1198": 11, "TAKRA-1202": 11, "TAKRA-1206": 11, "TAKRA-1207": 11, "TAKRA-1209": 11, "TAKRA-1210": 11, "TAKRA-1231": 11, "TAKRA-1232": 11, "TAKRA-1236": 11, "TAKRA-1238": 11, "TAKRA-1261": 11, "TAKRA-1307": 11, "TAKRA-1310": 11, "TAKRA-1311": 11, "TAKRA-1328": 11, "TAKRA-1331": 11, "TAKRA-1334": 11, "TAKRA-1339": 11, "TAKRA-1349": 11, "TAKRA-1379": 11};
+const NO_STEP="ยังไม่จัดขั้น";
+ROWS.forEach(r=>{const s=JOURNEY[r[2]]; r[7]=s?s:(r[2].startsWith("TAKRA-")?99:0);});
 const scCls=v=>v===SCOPE_LABEL.ui?"c-ui":v===SCOPE_LABEL.sys?"c-sys":"c-tool";
 
 const PROJECTS={
@@ -521,8 +528,9 @@ const devSlot=d=>d==="Boat"?"boat":d==="No"?"no":EXTRA.includes(d)?"x"+(EXTRA.in
 const devCls=d=>"d-"+devSlot(d);
 const devVar=d=>"--dev-"+devSlot(d);
 const byR=r=>RO.indexOf(r[0]), byD=r=>DO.indexOf(r[1]), byP=r=>PO.indexOf(r[3]);
-ROWS.sort((a,b)=>byR(a)-byR(b)||byD(a)-byD(b)||byP(a)-byP(b)||a[2].localeCompare(b[2]));
+ROWS.sort((a,b)=>byR(a)-byR(b)||byD(a)-byD(b)||a[7]-b[7]||byP(a)-byP(b)||a[2].localeCompare(b[2]));
 
+const stepLabel=n=>n===99?NO_STEP:n+'. '+JOURNEY_STEPS[n-1];
 const st={j:null,r:null,d:null,p:null,s:null,c:null,q:""};
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const inProj=()=>ROWS.filter(r=>!st.j||projOf(r)===st.j);
@@ -599,6 +607,7 @@ function render(){
   if(!rows.length){out.innerHTML='<p class="none">ไม่มีตั๋วที่ตรงเงื่อนไขนี้</p>';return;}
   const showProj=!st.j;   // mixed view: say which project each ticket belongs to
   const showScope=rows.some(r=>r[6]);
+  const showStep=rows.some(r=>r[7]);
 
   let h="";
   RO.forEach(rd=>{
@@ -607,11 +616,11 @@ function render(){
     DO.forEach(dv=>{
       const inD=inR.filter(r=>r[1]===dv); if(!inD.length) return;
       h+='<div class="dev '+devCls(dv)+'"><h3 class="devh">'+esc(dv)+' <span class="n">'+inD.length+' ใบ</span></h3>'+
-         '<div class="scroll"><table><thead><tr>'+(showProj?'<th>โปรเจกต์</th>':'')+'<th>ID</th><th>ชื่อ</th>'+(showScope?'<th>ขอบเขตงาน</th>':'')+'<th>Priority</th><th>สถานะ</th></tr></thead><tbody>';
+         '<div class="scroll"><table><thead><tr>'+(showProj?'<th>โปรเจกต์</th>':'')+(showStep?'<th>ขั้นใน journey</th>':'')+'<th>ID</th><th>ชื่อ</th>'+(showScope?'<th>ขอบเขตงาน</th>':'')+'<th>Priority</th><th>สถานะ</th></tr></thead><tbody>';
       inD.forEach(r=>{
         const pk=projOf(r);
         h+='<tr>'+(showProj?'<td class="pj"><span class="ptag" title="'+esc(projName(pk))+'">'+esc(pk)+'</span></td>':'')+
-           '<td class="id"><a href="'+jiraBase(pk)+'/browse/'+esc(r[2])+'" target="_blank" rel="noopener">'+esc(r[2])+'</a></td>'+
+           (showStep?'<td class="jy">'+(r[7]?'<span class="jstep'+(r[7]===99?' jnone':'')+'">'+esc(stepLabel(r[7]))+'</span>':'')+'</td>':'')+'<td class="id"><a href="'+jiraBase(pk)+'/browse/'+esc(r[2])+'" target="_blank" rel="noopener">'+esc(r[2])+'</a></td>'+
            '<td class="nm">'+esc(r[4])+(r[6]?'<span class="why">'+esc(SCOPE[r[2]][1])+'</span>':'')+'</td>'+
            (showScope?'<td class="sc">'+(r[6]?'<span class="scp '+scCls(r[6])+'" title="'+esc(SCOPE[r[2]][1])+'">'+esc(r[6])+'</span>':'')+'</td>':'')+
            '<td class="p"><span class="sev s-'+esc(r[3])+'">'+esc(r[3])+'</span></td>'+
