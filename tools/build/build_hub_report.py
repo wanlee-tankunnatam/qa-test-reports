@@ -353,7 +353,30 @@ def build():
                     "    if (filters.prio.size  && !filters.prio.has(row.dataset.prio))   ok = false;\n"
                     "    if (filters.kind.size  && !filters.kind.has(row.dataset.kind))   ok = false;\n"
                     "    if (filters.ui.size    && !filters.ui.has(row.dataset.ui))       ok = false;")
-    for needle in ("var GH_PATH   = '" + OUT_REL, META['download'], "kind: new Set()", "filters.kind.has", "filters.ui.has"):
+    # auto-save ไฟล์ใหญ่ > 1 MB: contents API ของ GitHub ส่ง content ว่าง (encoding "none") ⇒ เดิม buildFromRemote
+    # ตกไป buildEncoded() (เขียน DOM ทั้งหน้าของแท็บนั้นทับ) และ mergeRemote อ่านผลของเพื่อนไม่ได้ —
+    # แท็บค้าง/หน้าจาก Pages cache เคยเขียนรายงาน 423 เคสกลับเป็น 258 เคส (118ceca · 6 ต.ค. 2569)
+    # แก้: ถ้า content ว่าง ดึงตัวไฟล์ raw อีกครั้งแล้วใส่เป็น base64 ให้โค้ดเดิมใช้ต่อ · ดึงไม่ได้ = ไม่บันทึก (ห้ามเขียน DOM ทับ)
+    js = js.replace(
+        "      throw new Error('ดึงไฟล์ไม่ได้ (HTTP ' + r.status + ') — ตรวจ token หรือ branch');\n"
+        "    }\n"
+        "    return r.json();\n",
+        "      throw new Error('ดึงไฟล์ไม่ได้ (HTTP ' + r.status + ') — ตรวจ token หรือ branch');\n"
+        "    }\n"
+        "    var j = await r.json();\n"
+        "    if (!j.content && j.sha) {\n"
+        "      var rr = await fetch(\n"
+        "        API + '?ref=' + GH_BRANCH + '&t=' + Date.now(),\n"
+        "        { cache: 'no-store', headers: { Authorization: 'token ' + token, Accept: 'application/vnd.github.raw' } }\n"
+        "      );\n"
+        "      if (!rr.ok) throw new Error('ดึงไฟล์ไม่ได้ (HTTP ' + rr.status + ') — ลองบันทึกใหม่อีกครั้ง');\n"
+        "      var raw = await rr.text();\n"
+        "      if (!/<script id=\"store-data\"/.test(raw)) throw new Error('ไฟล์บน GitHub อ่านไม่ครบ — ยังไม่บันทึก ลองใหม่อีกครั้ง');\n"
+        "      j.content = btoa(unescape(encodeURIComponent(raw)));\n"
+        "    }\n"
+        "    return j;\n")
+    for needle in ("var GH_PATH   = '" + OUT_REL, META['download'], "kind: new Set()", "filters.kind.has", "filters.ui.has",
+                   "Accept: 'application/vnd.github.raw'"):
         assert needle in js, f'patch failed: {needle}'
 
     # เก็บ store-data เดิมถ้ามีไฟล์อยู่แล้ว
