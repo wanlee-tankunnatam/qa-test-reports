@@ -98,6 +98,54 @@ _N_NEW = _cnt({'ranew'})
 _N_FF = sum(len(f['cases']) for e in EPICS for f in e['feats']) - _N_HAPPY - _N_NEW
 print(f'retired {len(RETIRED)} เคส (ไม่มีผลบันทึก) · คงไว้เพราะมีผลแล้ว {len(KEPT_WITH_DATA)} เคส')
 
+# ── จัดฉากก่อนไลฟ์ทุกครั้ง (สั่ง 2026-10-06): ข้อความ "AI Live" อยู่หน้าสุด + สุ่มฉากหลัง ──
+# ใส่ตอน build ให้ทุกเคสที่ต้องไลฟ์ (เคสต้นทางไม่แตะ · uid/ผลเทสไม่เปลี่ยน):
+#   ① มี step กด "เริ่มไลฟ์" ใน Studio → แทรก step จัดฉากก่อนจุดกด (ตัด step เดิมเป็น 2 ท่อนถ้าประโยคเดียวพาเข้า Studio แล้วกดเลย)
+#      (เฉพาะเมื่อกดต่อจนไลฟ์จริง "ไลฟ์เลย"/"เริ่มออกอากาศ" — เคสที่กดแค่ดู "ตรวจก่อนไลฟ์" หรือ "ตั้งเวลา" ไม่แตะ)
+#   ② ไม่มี step กดเริ่มไลฟ์ แต่ต้องมีไลฟ์ออกอากาศอยู่ (Precondition / กด "เริ่มออกอากาศ" รอบที่เตรียมไว้) → เติมบรรทัด Precondition
+# คำ UI ลอกจาก takra-ai origin/uat (studio.ts · studioPanels.ts · inspector-panel.tsx ปุ่ม "AI Live")
+SCENE_SETUP_STEP = (
+    'จัดฉากก่อนไลฟ์ (ทำทุกครั้งที่ต้องไลฟ์ · ทุกฉากในไลฟ์): '
+    '① สุ่มฉากหลัง — ถ้าฉากยังไม่มีฉากหลัง กด "เพิ่ม Layer" เลือก "รูปภาพ" หรือ "วิดีโอ" ในหมวด "ฉากหลัง / สื่อ" แล้วกด "เพิ่มลงในฉาก" · '
+    'ถ้ามีอยู่แล้ว เลือก layer ฉากหลังนั้นแล้วกด "เปลี่ยนรูปภาพ" หรือ "เปลี่ยนวิดีโอ" — ในหน้าต่างคลังสื่อสุ่มเลือกไฟล์ที่ไม่ซ้ำกับรอบก่อน แล้วกด "ใส่ลงในฉาก" (หรือ "เลือก") '
+    '② ข้อความ "AI Live" หน้าสุด — ถ้ายังไม่มี กด "เพิ่ม Layer" เลือก "ข้อความ" กด "เพิ่มลงในฉาก" แล้วกดปุ่ม "AI Live" ใต้หัวข้อ "เนื้อหาข้อความ" · '
+    'เลือก layer ข้อความนี้แล้วกด "เลื่อนขึ้นหน้า" จนอยู่หน้าสุด ไม่ถูกอวาตาร์หรือ layer อื่นบัง')
+SCENE_SETUP_PRE = ('ไลฟ์ที่ใช้ในเคสนี้เริ่มจากฉากที่จัดตามกติกาจัดฉากก่อนไลฟ์: มี layer ข้อความ "AI Live" อยู่หน้าสุด (ไม่ถูกอวาตาร์หรือ layer อื่นบัง) '
+                   'และสุ่มฉากหลังใหม่จากคลังสื่อ (ไม่ซ้ำกับรอบก่อน)')
+_PRESS_LIVE = _re.compile(r'(?:ใน Studio\s*)?กด(?:ปุ่ม)?\s*"เริ่มไลฟ์"')
+_GO_LIVE = _re.compile(r'(?:กด(?:ปุ่ม)?|→|และ)\s*"(?:ไลฟ์เลย|เริ่มออกอากาศ|เริ่มไลฟ์เลย)"')   # กดจริง ไม่ใช่แค่ "ดูปุ่ม"/"เลือกแท็บ"
+_ON_AIR = _re.compile(r'(?<!ไม่มีไลฟ์อื่น)กำลังออกอากาศ|ระหว่างไลฟ์|ระหว่างออกอากาศ|ไลฟ์อยู่|ออกอากาศอยู่|เริ่มออกอากาศแล้ว|กำลังไลฟ์')
+_TAIL = _re.compile(r'(?:\s|แล้ว|จากนั้น|และ|·|—|,)+$')
+
+
+def _scene_setup(c):
+    steps = list(c['steps'])
+    for i, s in enumerate(steps):
+        m = _PRESS_LIVE.search(s)
+        if not m or not _GO_LIVE.search(' '.join([s[m.start():]] + steps[i + 1:])):
+            continue   # กด "เริ่มไลฟ์" แค่เปิดดูตรวจก่อนไลฟ์/ตั้งเวลา ไม่ได้ไลฟ์จริง → ไม่แทรก (เช่น TC-OCT-R.17 ที่ต้องไม่มี "AI Live")
+        head = _TAIL.sub('', s[:m.start()])
+        if len(head) < 15:   # step ขึ้นต้นด้วยการกดเริ่มไลฟ์ (step ก่อนหน้าพาเข้า Studio แล้ว)
+            return dict(c, steps=steps[:i] + [SCENE_SETUP_STEP] + steps[i:]), 'step'
+        return dict(c, steps=steps[:i] + [head, SCENE_SETUP_STEP, s[m.start():]] + steps[i + 1:]), 'split'
+    if _GO_LIVE.search(' '.join(steps)) or _ON_AIR.search(' '.join(c.get('pre', []))):
+        return dict(c, pre=list(c.get('pre', [])) + [SCENE_SETUP_PRE]), 'pre'
+    return c, None
+
+
+SCENE_SETUP_COUNT = {'step': 0, 'split': 0, 'pre': 0}
+for _e in EPICS:
+    for _f in _e['feats']:
+        _out = []
+        for _c in _f['cases']:
+            _c2, _how = _scene_setup(_c)
+            if _how:
+                SCENE_SETUP_COUNT[_how] += 1
+            _out.append(_c2)
+        _f['cases'] = _out
+_N_SCENE = sum(SCENE_SETUP_COUNT.values())
+print(f'จัดฉากก่อนไลฟ์ {_N_SCENE} เคส · {SCENE_SETUP_COUNT}')
+
 META.update(
     title='[REG 5–9 ต.ค.] TAKRA AI · Live — Regression (Happy Path + ฟีเจอร์ ก.ย. + อัปเดต UAT 6 ต.ค.)',
     sub=('รอบ Regression <b>จ 5 – ศ 9 ต.ค. 2569</b> · รายงานเดียวรวมทุกเคสของ takra-ai (Live) · '
@@ -113,6 +161,10 @@ META.update(
           'เขียนเป็นเคสใหม่ <b>ไม่แก้เคสเดิม</b> · ที่มาของแต่ละเคสบอกว่า "แทนเคสเดิม" ตัวไหน'
           f'<br>🧹 <b>เอาเคสเดิมออกแล้ว {len(RETIRED)} เคส</b> (6 ต.ค.): เคสที่ UI เปลี่ยนแล้วมีเคส 🆕 แทน + เคส <code>-RF</code> ที่ซ้ำกับเคสหลักในขั้นที่ 1–6 '
           f'— เอาออกเฉพาะเคสที่ยังไม่มีผลบันทึก · อีก {len(KEPT_WITH_DATA)} เคสที่ถูกแทนแต่มีผลบันทึกแล้วคงไว้ (ดูผลเดิมได้ · รอบนี้ให้เทสที่เคส 🆕 แทน)'
+          f'<br>🎬 <b>จัดฉากก่อนไลฟ์ทุกครั้ง</b> (6 ต.ค.): ทุกเคสที่ต้องไลฟ์ ใส่ layer ข้อความ <b>"AI Live"</b> ไว้หน้าสุด (ไม่ถูกอวาตาร์หรือ layer อื่นบัง) '
+          f'และ<b>สุ่มฉากหลัง</b>ใหม่จากคลังสื่อทุกรอบ (ไม่ซ้ำรอบก่อน) — แทรกเป็น step ก่อนกด "เริ่มไลฟ์" {SCENE_SETUP_COUNT["step"] + SCENE_SETUP_COUNT["split"]} เคส · '
+          f'เติมใน Precondition ของเคสที่ใช้รอบไลฟ์ที่เตรียมไว้/กำลังออกอากาศ {SCENE_SETUP_COUNT["pre"]} เคส · '
+          'เคสที่กด "เริ่มไลฟ์" แค่ดู "ตรวจก่อนไลฟ์" หรือตั้งเวลาไม่ใส่ (TC-OCT-R.17 ต้องไม่มี "AI Live" เพื่อดูข้อเตือน)'
           '<br>📎 เคสคัดจาก: รายงานรวม MVP1+2 (<code>regai1.json</code> · <code>regai2_fails.json</code>) · '
           '<code>ai_tickets_1223_cases.py</code> · <code>ai_autoreply_cases.py</code> · แผนรวม: '
           '<a href="https://wanlee-tankunnatam.github.io/qa-test-reports/timeline/regression-plan.html#plan">regression-plan</a>'),
