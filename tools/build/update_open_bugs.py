@@ -8,7 +8,9 @@
 - ใบใหม่/ใบที่ยังไม่มีรอบ → ใส่รอบส่งถัดไปที่ใกล้ที่สุด (รอบที่มีอยู่แล้วในหน้า ที่วันยังไม่ถึง) ให้อัตโนมัติ
   · Dev = ชื่อเล่นในวงเล็บของ assignee (ไม่มีคนรับถ้าว่าง) · ถ้าไม่มีรอบอนาคตเหลือ → "ยังไม่มีรอบ"
 - TAKRA: รอบ = ป้ายวันที่ในตั๋ว Jira เสมอ (ป้ายล่าสุดถ้ามีหลายอัน) · ไม่มีป้าย → "ยังไม่มีรอบ" ไม่ดึงเข้ารอบเอง
-- แก้เฉพาะ ROWS + บรรทัด "ข้อมูล ณ" แล้ว commit+push ถ้ามีการเปลี่ยน
+- แก้เฉพาะ ROWS + SYNCED + บรรทัด "ข้อมูล ณ" แล้ว commit+push ถ้ามีการเปลี่ยน
+- OPEN_BUGS_KEYS=TAKRA (ปุ่มในหน้า ตอนเลือกแท็บโปรเจกต์) → ดึงเฉพาะโปรเจกต์นั้น แถวของโปรเจกต์อื่นคงเดิมทุกช่อง
+  · อัปเดตแค่ SYNCED[key] ไม่แตะบรรทัด "ข้อมูล ณ" (บรรทัดนั้น = ดึงครบทุกโปรเจกต์ล่าสุด)
 auth: ~/.config/jira-auth ผ่าน ~/.claude/scripts/jira.py (ห้าม print token)
 """
 import base64, json, os, pathlib, re, subprocess, sys, datetime, importlib.util, urllib.error, urllib.request
@@ -82,20 +84,28 @@ def fetch_open_bugs(key):
 
 
 def main():
+    scope = [k for k in re.split(r'[\s,]+', os.environ.get('OPEN_BUGS_KEYS', '').upper()) if k]
+    bad = [k for k in scope if k not in KEYS]
+    if bad:
+        raise RuntimeError(f'ไม่รู้จักโปรเจกต์ {bad} (มีแค่ {KEYS})')
+    keys = scope or KEYS
     html = PAGE.read_text(encoding='utf-8')
     m = re.search(r'const ROWS = \[\n(.*?)\n\];', html, re.S)
     assert m, 'ไม่พบ const ROWS ใน open-bugs.html'
     rows = [json.loads(line.rstrip(',')) for line in m.group(1).splitlines() if line.strip()]
 
     jira = {}
-    for key in KEYS:
+    for key in keys:
         jira.update(fetch_open_bugs(key))
-    if not jira:
+    if not jira and not scope:
         raise RuntimeError('Jira คืนบั๊กเปิด 0 ใบทุกโปรเจกต์ — ผิดปกติ ไม่เขียนทับ')
+    inscope = lambda k: k.split('-')[0] in keys
 
     known = {r[2] for r in rows}
     out, changed, removed = [], [], []
     for r in rows:
+        if not inscope(r[2]):
+            out.append(r); continue
         info = jira.get(r[2])
         if not info:
             removed.append(r[2]); continue
@@ -121,7 +131,7 @@ def main():
     pulled = []
     if next_round:
         for r in out:
-            if r[0] == NO_ROUND and r[2].split('-')[0] not in LABEL_ROUND_KEYS:
+            if r[0] == NO_ROUND and inscope(r[2]) and r[2].split('-')[0] not in LABEL_ROUND_KEYS:
                 r[0] = next_round; pulled.append(r[2])
 
     # กดปุ่มในหน้า (OPEN_BUGS_FORCE=1) → อัปเดตเวลา "ข้อมูล ณ" แม้ไม่มีอะไรเปลี่ยน ให้เห็นว่าดึงแล้ว
@@ -132,8 +142,15 @@ def main():
     html = html[:m.start()] + 'const ROWS = [\n' + '\n'.join(lines) + '\n];' + html[m.end():]
 
     now = datetime.datetime.now()
-    stamp = f'ข้อมูล ณ {now.day} {TH_MON[now.month - 1]} {now.year} {now:%H:%M} น. (อัปเดตอัตโนมัติ 09:00 / 13:00 หรือกดปุ่มดึงข้อมูลจาก Jira)'
-    html = re.sub(r'ข้อมูล ณ [^<]*', stamp, html, count=1)
+    when = f'{now.day} {TH_MON[now.month - 1]} {now.year} {now:%H:%M}'
+    sm = re.search(r'^const SYNCED = (\{.*\});$', html, re.M)
+    assert sm, 'ไม่พบ const SYNCED ใน open-bugs.html'
+    synced = json.loads(sm.group(1))
+    synced.update({k: when for k in keys})
+    html = html[:sm.start()] + 'const SYNCED = ' + json.dumps(synced, ensure_ascii=False) + ';' + html[sm.end():]
+    if not scope:
+        stamp = f'ข้อมูล ณ {when} น. (อัปเดตอัตโนมัติ 09:00 / 13:00 หรือกดปุ่มดึงข้อมูลจาก Jira)'
+        html = re.sub(r'ข้อมูล ณ [^<]*', stamp, html, count=1)
     PAGE.write_text(html, encoding='utf-8')
 
     def git(*args, ok=True):
@@ -150,7 +167,7 @@ def main():
         f'ดึงเข้ารอบ {next_round} {len(pulled)} ใบ ({", ".join(pulled[:6])}{"…" if len(pulled) > 6 else ""})' if pulled else '',
         f'ปิดแล้วเอาออก {len(removed)} ({", ".join(removed[:6])}{"…" if len(removed) > 6 else ""})' if removed else ''] if x) or 'refresh เวลา'
     git('add', 'timeline/open-bugs.html')
-    git('commit', '-m', f'chore(open-bugs): อัปเดตจาก Jira {now:%d/%m %H:%M} — {summary}')
+    git('commit', '-m', f'chore(open-bugs): อัปเดตจาก Jira{" " + "/".join(scope) if scope else ""} {now:%d/%m %H:%M} — {summary}')
     git('pull', '--rebase', '--autostash')
     git('push')
     print(f'{now:%F %H:%M} push แล้ว — {summary}')

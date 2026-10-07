@@ -118,14 +118,14 @@ td.st{width:1%;white-space:nowrap}
 footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--line);color:var(--muted);font-size:.78rem}
 @media (max-width:520px){ .wrap{padding-block:20px 48px} th,td{padding:7px 9px} }
 .jstep{display:inline-block;font-size:12px;line-height:1.35;padding:2px 8px;border-radius:999px;background:var(--surface-2,rgba(127,127,127,.12));white-space:nowrap}.jnone{opacity:.6;font-style:italic}td.jy{min-width:150px}
-.sync{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:10px 0 4px}#syncmsg{font-size:.8rem;color:var(--muted)}#syncmsg a{color:var(--accent)}button.f:disabled{opacity:.6;cursor:progress}
+.sync{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:10px 0 4px}#syncmsg,#syncat{font-size:.8rem;color:var(--muted)}#syncmsg a{color:var(--accent)}button.f:disabled{opacity:.6;cursor:progress}
 </style>
 </head>
 <body>
 <div class="wrap">
   <h1>บั๊กค้างรอบส่งงาน</h1>
   <p class="sub">บั๊กที่ยังไม่ปิดจากทุกโปรเจกต์ใน Jira แยกตามรอบส่ง แล้วแยกตามผู้รับผิดชอบ · ในแต่ละคนเรียงตามขั้นที่ลูกค้าเจอใน user journey · ข้อมูล ณ 7 ต.ค. 2026 16:39 น. (อัปเดตอัตโนมัติ 09:00 / 13:00)</p>
-  <div class="sync"><button type="button" class="f" id="sync">ดึงข้อมูลจาก Jira</button><span id="syncmsg" role="status"></span></div>
+  <div class="sync"><button type="button" class="f" id="sync">ดึงข้อมูลจาก Jira</button><span id="syncat"></span><span id="syncmsg" role="status"></span></div>
   <div class="proj" id="fj" role="group" aria-label="โปรเจกต์"></div>
   <div class="tot" id="tot"></div>
 
@@ -527,6 +527,8 @@ const NO_STEP="ยังไม่จัดขั้น";
 ROWS.forEach(r=>{const s=JOURNEY[r[2]]; r[7]=s?s:(r[2].startsWith("TAKRA-")?99:0);});
 const scCls=v=>v===SCOPE_LABEL.ui?"c-ui":v===SCOPE_LABEL.sys?"c-sys":"c-tool";
 
+// เวลาที่ดึงจาก Jira ล่าสุดรายโปรเจกต์ — ตัวซิงก์ (update_open_bugs.py) เขียนบรรทัดนี้เอง ต้องอยู่บรรทัดเดียว
+const SYNCED = {"TAKRA": "7 ต.ค. 2026 16:39", "TI": "7 ต.ค. 2026 16:39", "TAK": "7 ต.ค. 2026 16:39", "TKRD": "7 ต.ค. 2026 16:39", "TF": "7 ต.ค. 2026 16:39", "TKH": "7 ต.ค. 2026 16:39"};
 const PROJECTS={
   TAKRA:{name:"Takra AI", jira:"https://kitdi.atlassian.net"},
   TI:{name:"Takra Insight", jira:"https://kitdi.atlassian.net"},
@@ -566,8 +568,21 @@ const cnt=(rows,k,v)=>rows.filter(r=>r[k]===v).length;
 
 const FILTERS=[["fr",0,"r",()=>RO],["fd",1,"d",()=>DO],["fp",3,"p",()=>PO],["fs",5,"s",()=>SO],["fc",6,"c",()=>CO]];
 FILTERS.forEach(([id,,key])=>document.getElementById(id).addEventListener("click",e=>{
-  const b=e.target.closest("button.f"); if(!b) return; st[key]=b.dataset.v||null; render();
+  const b=e.target.closest("button.f"); if(!b) return; st[key]=b.dataset.v||null; setFilterParams(); render();
 }));
+// ตัวกรอง (รอบ/Dev/ระดับ/สถานะ/ขอบเขตงาน/ค้นหา) อยู่ใน URL ด้วย ⇒ กดดึงข้อมูลแล้วหน้าโหลดใหม่ยังกรองเหมือนเดิม และแชร์ลิงก์ได้
+function setFilterParams(){
+  const u=new URL(location.href);
+  FILTERS.forEach(([,,key])=>{if(st[key]) u.searchParams.set(key,st[key]); else u.searchParams.delete(key);});
+  if(st.q) u.searchParams.set("q",st.q); else u.searchParams.delete("q");
+  if(u.href!==location.href) history.replaceState(null,"",u);
+}
+function filtersFromUrl(){
+  const sp=new URLSearchParams(location.search);
+  FILTERS.forEach(([,,key,vals])=>{const v=sp.get(key); st[key]=v&&vals().includes(v)?v:null;});
+  st.q=(sp.get("q")||"").trim().toLowerCase();
+  document.getElementById("q").value=st.q;
+}
 // The selected project lives in ?project=TI so a link opens on that project
 // (#TI from the old artifact links is still read).
 const projFromUrl=()=>{
@@ -580,13 +595,13 @@ function setProjParam(k){
   u.hash="";
   if(u.href!==location.href) history.pushState(null,"",u);
 }
-st.j=projFromUrl();
-window.addEventListener("popstate",()=>{st.j=projFromUrl();render();});
+st.j=projFromUrl(); filtersFromUrl();
+window.addEventListener("popstate",()=>{st.j=projFromUrl();filtersFromUrl();render();});
 window.addEventListener("hashchange",()=>{st.j=projFromUrl();render();});
 document.getElementById("fj").addEventListener("click",e=>{
   const b=e.target.closest("button"); if(!b) return; st.j=b.dataset.v||null; setProjParam(st.j); render();
 });
-document.getElementById("q").addEventListener("input",e=>{st.q=e.target.value.trim().toLowerCase();render();});
+document.getElementById("q").addEventListener("input",e=>{st.q=e.target.value.trim().toLowerCase();setFilterParams();render();});
 
 function drawProjects(){
   const el=document.getElementById("fj");
@@ -594,6 +609,12 @@ function drawProjects(){
     '<button type="button" data-v="" aria-pressed="'+(st.j===null)+'">ทุกโปรเจกต์ <small>'+ROWS.length+' ใบ</small></button>'+
     PJ.map(k=>'<button type="button" data-v="'+esc(k)+'" aria-pressed="'+(st.j===k)+'">'+esc(projName(k))+' <span class="k">'+esc(k)+'</span> <small>'+ROWS.filter(r=>projOf(r)===k).length+' ใบ</small></button>').join("")+
     (PJ.length===1?'<span class="hint">โปรเจกต์อื่นจะขึ้นเป็นแท็บใหม่ตรงนี้เมื่อมีตั๋ว</span>':'');
+}
+// ปุ่มดึงข้อมูลตามแท็บ: แท็บโปรเจกต์ → ดึงเฉพาะโปรเจกต์นั้น · "ทุกโปรเจกต์" → ดึงครบ
+function drawSync(){
+  const btn=document.getElementById("sync"); if(btn.disabled) return;
+  btn.textContent=st.j?"ดึงข้อมูล "+st.j+" จาก Jira":"ดึงข้อมูลทุกโปรเจกต์จาก Jira";
+  document.getElementById("syncat").textContent=st.j&&SYNCED[st.j]?"ดึงล่าสุด "+SYNCED[st.j]+" น.":"";
 }
 function drawFilters(base){
   const hasScope=base.some(r=>r[6]);
@@ -626,7 +647,7 @@ function drawSummary(base){
 
 function render(){
   const base=inProj();
-  drawProjects(); drawFilters(base); drawSummary(base);
+  drawProjects(); drawSync(); drawFilters(base); drawSummary(base);
   const rows=base.filter(r=>
     (!st.r||r[0]===st.r)&&(!st.d||r[1]===st.d)&&(!st.p||r[3]===st.p)&&(!st.s||r[5]===st.s)&&(!st.c||r[6]===st.c)&&
     (!st.q||r[2].toLowerCase().includes(st.q)||r[4].toLowerCase().includes(st.q)));
@@ -671,7 +692,8 @@ render();
   const btn=document.getElementById("sync"), msg=document.getElementById("syncmsg");
   const say=h=>{msg.innerHTML=h;};
   const sleep=ms=>new Promise(r=>setTimeout(r,ms));
-  const stampOf=s=>(/ข้อมูล ณ [^<(]*/.exec(s)||[""])[0].trim();
+  // หน้าใหม่ขึ้น Pages แล้ว = บรรทัด "ข้อมูล ณ" (ดึงครบ) หรือ SYNCED (ดึงรายโปรเจกต์) เปลี่ยน
+  const stampOf=s=>(/ข้อมูล ณ [^<(]*/.exec(s)||[""])[0].trim()+"|"+(/^const SYNCED = .*$/m.exec(s)||[""])[0];
   const u=new URL(location.href);
   if(u.searchParams.has("_v")){u.searchParams.delete("_v");history.replaceState(null,"",u);}
   const ls=k=>{try{return localStorage.getItem(k);}catch(e){return null;}};
@@ -687,12 +709,13 @@ render();
   const gh=(url,t,opt={})=>fetch(url,{...opt,headers:{Authorization:"token "+t,Accept:"application/vnd.github+json"}});
   btn.addEventListener("click",async()=>{
     const t=token(); if(!t) return;
-    btn.disabled=true;
+    const proj=st.j||"";
+    btn.disabled=true; document.getElementById("syncat").textContent="";
     const before=stampOf(document.body.innerHTML), t0=Date.now();
     const el=()=>Math.round((Date.now()-t0)/1000)+" วิ";
     try{
-      say("กำลังสั่งดึงข้อมูลจาก Jira…");
-      const d=await gh(WF+"/dispatches",t,{method:"POST",body:JSON.stringify({ref:"master"})});
+      say("กำลังสั่งดึงข้อมูล"+(proj?" "+proj:"ทุกโปรเจกต์")+"จาก Jira…");
+      const d=await gh(WF+"/dispatches",t,{method:"POST",body:JSON.stringify({ref:"master",inputs:{projects:proj}})});
       if(d.status===401){try{localStorage.removeItem("gh_pat");}catch(e){} throw new Error("GitHub token หมดอายุหรือไม่ถูกต้อง — กดปุ่มอีกครั้งเพื่อใส่ token ใหม่");}
       if(d.status!==204) throw new Error("token นี้สั่งรันไม่ได้ (HTTP "+d.status+") — ต้องมีสิทธิ์ repo (classic) หรือ Actions = Read and write (fine-grained)");
       let run=null;
@@ -709,11 +732,11 @@ render();
         say("ดึงเสร็จแล้ว กำลังรอหน้าเว็บอัปเดต… ("+el()+")");
         const html=await (await fetch(location.pathname+"?_nc="+Date.now(),{cache:"no-store"})).text();
         const s=stampOf(html);
-        if(s&&s!==before){u.searchParams.set("_v",Date.now());location.replace(u);return;}
+        if(s&&s!==before){const v=new URL(location.href);v.searchParams.set("_v",Date.now());location.replace(v);return;}
         await sleep(5000);
       }
       throw new Error("หน้าเว็บยังไม่อัปเดต ลองรีโหลดอีกครั้งในอีกสักครู่");
-    }catch(e){say(e.message);btn.disabled=false;}
+    }catch(e){say(e.message);btn.disabled=false;drawSync();}
   });
 })();
 </script>

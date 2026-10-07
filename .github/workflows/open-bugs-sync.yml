@@ -3,6 +3,11 @@
 name: open-bugs-sync
 on:
   workflow_dispatch:
+    inputs:
+      projects:
+        description: "คีย์โปรเจกต์ที่จะดึง เช่น TAKRA (ว่าง = ทุกโปรเจกต์) — ปุ่มส่งแท็บที่เลือกอยู่มา"
+        required: false
+        default: ""
 concurrency:
   group: open-bugs-sync
   cancel-in-progress: false
@@ -20,6 +25,7 @@ jobs:
           JIRA_AUTH: ${{ secrets.JIRA_AUTH }}
           TZ: Asia/Bangkok
           OPEN_BUGS_FORCE: "1"
+          OPEN_BUGS_KEYS: ${{ inputs.projects }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898299+github-actions[bot]@users.noreply.github.com"
