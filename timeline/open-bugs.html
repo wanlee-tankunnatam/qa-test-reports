@@ -659,19 +659,6 @@ function render(){
   out.innerHTML=h;
 }
 render();
-
-// GitHub Pages sends max-age=600, so a pasted link can open a copy up to 10 min old.
-// Compare the "ข้อมูล ณ" stamp with a no-store fetch and reload once onto a fresh URL if it moved.
-(function(){
-  const u=new URL(location.href);
-  if(u.searchParams.has("_v")){u.searchParams.delete("_v");history.replaceState(null,"",u);return;}
-  const stampOf=s=>(/ข้อมูล ณ [^<(]*/.exec(s)||[""])[0].trim();
-  const mine=stampOf(document.body.innerHTML);
-  fetch(location.pathname+"?_nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
-    const fresh=stampOf(t);
-    if(fresh&&mine&&fresh!==mine){u.searchParams.set("_v",Date.now());location.replace(u);}
-  }).catch(()=>{});
-})();
 </script>
 
 </body>
