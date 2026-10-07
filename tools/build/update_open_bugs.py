@@ -7,6 +7,7 @@
 - ใบที่ปิดแล้ว/หายจาก Jira → เอาออก
 - ใบใหม่/ใบที่ยังไม่มีรอบ → ใส่รอบส่งถัดไปที่ใกล้ที่สุด (รอบที่มีอยู่แล้วในหน้า ที่วันยังไม่ถึง) ให้อัตโนมัติ
   · Dev = ชื่อเล่นในวงเล็บของ assignee (ไม่มีคนรับถ้าว่าง) · ถ้าไม่มีรอบอนาคตเหลือ → "ยังไม่มีรอบ"
+- TAKRA: รอบ = ป้ายวันที่ในตั๋ว Jira เสมอ (ป้ายล่าสุดถ้ามีหลายอัน) · ไม่มีป้าย → "ยังไม่มีรอบ" ไม่ดึงเข้ารอบเอง
 - แก้เฉพาะ ROWS + บรรทัด "ข้อมูล ณ" แล้ว commit+push ถ้ามีการเปลี่ยน
 auth: ~/.config/jira-auth ผ่าน ~/.claude/scripts/jira.py (ห้าม print token)
 """
@@ -15,6 +16,9 @@ import json, pathlib, re, subprocess, sys, datetime, importlib.util
 REPO = pathlib.Path(__file__).resolve().parents[2]
 PAGE = REPO / 'timeline' / 'open-bugs.html'
 KEYS = ['TAKRA', 'TI', 'TAK', 'TKRD', 'TF', 'TKH']
+LABEL_ROUND_KEYS = {'TAKRA'}  # โปรเจกต์ที่รอบในหน้า = ป้ายวันที่ใน Jira
+MON = dict(JAN=1, FEB=2, MAR=3, APR=4, MAY=5, JUN=6, JUL=7, AUG=8, SEP=9, OCT=10, NOV=11, DEC=12)
+ROUND_LABEL = re.compile(r'^(\d{1,2})-([A-Z]{3})$')
 NO_ROUND = 'ยังไม่มีรอบ'
 TH_MON = ['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.', 'ก.ค.', 'ส.ค.', 'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.']
 
@@ -28,7 +32,7 @@ def fetch_open_bugs(key):
         # ห้ามกรองด้วย statusCategory — TF ตั้งหมวดกลับด้าน ("Done" อยู่หมวด In Progress,
         # "Ready to Test" อยู่หมวด Done) → ดึงทั้งหมดแล้วกรองด้วยชื่อสถานะเอง
         body = {'jql': f'project = {key} AND issuetype = Bug ORDER BY key ASC',
-                'maxResults': 100, 'fields': ['summary', 'status', 'priority', 'assignee']}
+                'maxResults': 100, 'fields': ['summary', 'status', 'priority', 'assignee', 'labels']}
         if token:
             body['nextPageToken'] = token
         s, r = j.call('POST', '/rest/api/3/search/jql', body)
@@ -46,7 +50,11 @@ def fetch_open_bugs(key):
                      'TO DO': 'To Do', 'IN PROGRESS': 'In Progress', 'TESTING': 'TESTING',
                      'NEED ADVISE': 'Need Advise'}
             status = canon.get(f['status']['name'].upper(), f['status']['name'])
+            rounds = sorted((x for x in f.get('labels') or []
+                             if (lm := ROUND_LABEL.match(x)) and lm.group(2) in MON),
+                            key=lambda x: (MON[ROUND_LABEL.match(x).group(2)], int(ROUND_LABEL.match(x).group(1))))
             issues[i['key']] = dict(
+                round=rounds[-1] if rounds else NO_ROUND,
                 prio=(f.get('priority') or {}).get('name') or 'Medium',
                 title=f.get('summary') or '',
                 status=status,
@@ -74,17 +82,17 @@ def main():
         info = jira.get(r[2])
         if not info:
             removed.append(r[2]); continue
-        new = [r[0], r[1], r[2], info['prio'], info['title'], info['status']]
+        rnd = info['round'] if r[2].split('-')[0] in LABEL_ROUND_KEYS else r[0]
+        new = [rnd, r[1], r[2], info['prio'], info['title'], info['status']]
         if new != r[:6]:
             changed.append(r[2])
         out.append(new)
     added = [k for k in sorted(jira, key=lambda k: (k.split('-')[0], int(k.split('-')[1]))) if k not in known]
     for k in added:
         info = jira[k]
-        out.append([NO_ROUND, info['dev'], k, info['prio'], info['title'], info['status']])
+        out.append([info['round'] if k.split('-')[0] in LABEL_ROUND_KEYS else NO_ROUND, info['dev'], k, info['prio'], info['title'], info['status']])
 
     # ใบที่ไม่มีรอบกำกับ → ดึงเข้ารอบส่งถัดไปที่ใกล้ที่สุด (จากรอบที่มีอยู่แล้วในหน้า)
-    MON = dict(JAN=1, FEB=2, MAR=3, APR=4, MAY=5, JUN=6, JUL=7, AUG=8, SEP=9, OCT=10, NOV=11, DEC=12)
     today = datetime.date.today()
 
     def round_date(r):
@@ -96,7 +104,7 @@ def main():
     pulled = []
     if next_round:
         for r in out:
-            if r[0] == NO_ROUND:
+            if r[0] == NO_ROUND and r[2].split('-')[0] not in LABEL_ROUND_KEYS:
                 r[0] = next_round; pulled.append(r[2])
 
     if not (changed or added or removed or pulled):
