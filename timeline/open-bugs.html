@@ -118,12 +118,14 @@ td.st{width:1%;white-space:nowrap}
 footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--line);color:var(--muted);font-size:.78rem}
 @media (max-width:520px){ .wrap{padding-block:20px 48px} th,td{padding:7px 9px} }
 .jstep{display:inline-block;font-size:12px;line-height:1.35;padding:2px 8px;border-radius:999px;background:var(--surface-2,rgba(127,127,127,.12));white-space:nowrap}.jnone{opacity:.6;font-style:italic}td.jy{min-width:150px}
+.sync{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:10px 0 4px}#syncmsg{font-size:.8rem;color:var(--muted)}#syncmsg a{color:var(--accent)}button.f:disabled{opacity:.6;cursor:progress}
 </style>
 </head>
 <body>
 <div class="wrap">
   <h1>บั๊กค้างรอบส่งงาน</h1>
   <p class="sub">บั๊กที่ยังไม่ปิดจากทุกโปรเจกต์ใน Jira แยกตามรอบส่ง แล้วแยกตามผู้รับผิดชอบ · ในแต่ละคนเรียงตามขั้นที่ลูกค้าเจอใน user journey · ข้อมูล ณ 7 ต.ค. 2026 16:39 น. (อัปเดตอัตโนมัติ 09:00 / 13:00)</p>
+  <div class="sync"><button type="button" class="f" id="sync">ดึงข้อมูลจาก Jira</button><span id="syncmsg" role="status"></span></div>
   <div class="proj" id="fj" role="group" aria-label="โปรเจกต์"></div>
   <div class="tot" id="tot"></div>
 
@@ -659,6 +661,61 @@ function render(){
   out.innerHTML=h;
 }
 render();
+
+// ปุ่ม "ดึงข้อมูลจาก Jira": หน้านี้เรียก Jira ตรงไม่ได้ (CORS + ห้ามฝัง token) → สั่ง GitHub Actions
+// open-bugs-sync.yml รันตัวซิงก์ตัวเดียวกับ launchd แล้วรอ Pages build เสร็จค่อยโหลดหน้าใหม่
+// GitHub token ใช้ตัวเดียวกับหน้ารายงาน (localStorage gh_pat · origin เดียวกัน)
+(function(){
+  const API="https://api.github.com/repos/wanlee-tankunnatam/qa-test-reports";
+  const WF=API+"/actions/workflows/open-bugs-sync.yml";
+  const btn=document.getElementById("sync"), msg=document.getElementById("syncmsg");
+  const say=h=>{msg.innerHTML=h;};
+  const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+  const stampOf=s=>(/ข้อมูล ณ [^<(]*/.exec(s)||[""])[0].trim();
+  const u=new URL(location.href);
+  if(u.searchParams.has("_v")){u.searchParams.delete("_v");history.replaceState(null,"",u);}
+  const ls=k=>{try{return localStorage.getItem(k);}catch(e){return null;}};
+  function token(){
+    let t=ls("gh_pat");
+    if(!t){
+      t=prompt("ใส่ GitHub Personal Access Token (ใส่ครั้งเดียว จำไว้ในเบราว์เซอร์นี้ ใช้ร่วมกับหน้ารายงาน)\n\n"+
+        "Tokens (classic) → ติ๊ก scope: repo\nหรือ Fine-grained: repo \"qa-test-reports\" → Actions = Read and write + Contents = Read and write");
+      if(t){t=t.trim();try{localStorage.setItem("gh_pat",t);}catch(e){}}
+    }
+    return t||null;
+  }
+  const gh=(url,t,opt={})=>fetch(url,{...opt,headers:{Authorization:"token "+t,Accept:"application/vnd.github+json"}});
+  btn.addEventListener("click",async()=>{
+    const t=token(); if(!t) return;
+    btn.disabled=true;
+    const before=stampOf(document.body.innerHTML), t0=Date.now();
+    const el=()=>Math.round((Date.now()-t0)/1000)+" วิ";
+    try{
+      say("กำลังสั่งดึงข้อมูลจาก Jira…");
+      const d=await gh(WF+"/dispatches",t,{method:"POST",body:JSON.stringify({ref:"master"})});
+      if(d.status===401){try{localStorage.removeItem("gh_pat");}catch(e){} throw new Error("GitHub token หมดอายุหรือไม่ถูกต้อง — กดปุ่มอีกครั้งเพื่อใส่ token ใหม่");}
+      if(d.status!==204) throw new Error("token นี้สั่งรันไม่ได้ (HTTP "+d.status+") — ต้องมีสิทธิ์ repo (classic) หรือ Actions = Read and write (fine-grained)");
+      let run=null;
+      for(let i=0;i<90;i++){
+        await sleep(4000);
+        const r=await (await gh(WF+"/runs?event=workflow_dispatch&per_page=5",t)).json();
+        run=(r.workflow_runs||[]).find(x=>Date.parse(x.created_at)>=t0-60000)||null;
+        if(run&&run.status==="completed") break;
+        say("กำลังดึงจาก Jira… ("+el()+")");
+      }
+      if(!run||run.status!=="completed") throw new Error("รอนานเกินไป");
+      if(run.conclusion!=="success") throw new Error('ดึงไม่สำเร็จ — <a href="'+run.html_url+'" target="_blank" rel="noopener">ดูรายละเอียด</a>');
+      for(let i=0;i<60;i++){
+        say("ดึงเสร็จแล้ว กำลังรอหน้าเว็บอัปเดต… ("+el()+")");
+        const html=await (await fetch(location.pathname+"?_nc="+Date.now(),{cache:"no-store"})).text();
+        const s=stampOf(html);
+        if(s&&s!==before){u.searchParams.set("_v",Date.now());location.replace(u);return;}
+        await sleep(5000);
+      }
+      throw new Error("หน้าเว็บยังไม่อัปเดต ลองรีโหลดอีกครั้งในอีกสักครู่");
+    }catch(e){say(e.message);btn.disabled=false;}
+  });
+})();
 </script>
 
 </body>

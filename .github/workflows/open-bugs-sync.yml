@@ -1,0 +1,31 @@
+# ปุ่ม "ดึงข้อมูลจาก Jira" ใน timeline/open-bugs.html สั่งรัน workflow นี้ (workflow_dispatch)
+# รันตัวซิงก์ตัวเดียวกับ launchd 09:00 / 13:00 แล้วสั่ง Pages build ใหม่
+name: open-bugs-sync
+on:
+  workflow_dispatch:
+concurrency:
+  group: open-bugs-sync
+  cancel-in-progress: false
+permissions:
+  contents: write
+  pages: write
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Sync open bugs from Jira
+        env:
+          JIRA_AUTH: ${{ secrets.JIRA_AUTH }}
+          TZ: Asia/Bangkok
+          OPEN_BUGS_FORCE: "1"
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898299+github-actions[bot]@users.noreply.github.com"
+          python3 tools/build/update_open_bugs.py
+      # push ด้วย GITHUB_TOKEN ไม่ปลุก Pages build เอง → สั่งตรง
+      - name: Request Pages build
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api -X POST "repos/${{ github.repository }}/pages/builds" || true

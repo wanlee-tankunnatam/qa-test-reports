@@ -11,7 +11,7 @@
 - แก้เฉพาะ ROWS + บรรทัด "ข้อมูล ณ" แล้ว commit+push ถ้ามีการเปลี่ยน
 auth: ~/.config/jira-auth ผ่าน ~/.claude/scripts/jira.py (ห้าม print token)
 """
-import json, pathlib, re, subprocess, sys, datetime, importlib.util
+import base64, json, os, pathlib, re, subprocess, sys, datetime, importlib.util, urllib.error, urllib.request
 
 REPO = pathlib.Path(__file__).resolve().parents[2]
 PAGE = REPO / 'timeline' / 'open-bugs.html'
@@ -22,8 +22,25 @@ ROUND_LABEL = re.compile(r'^(\d{1,2})-([A-Z]{3})$')
 NO_ROUND = 'ยังไม่มีรอบ'
 TH_MON = ['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.', 'ก.ค.', 'ส.ค.', 'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.']
 
-spec = importlib.util.spec_from_file_location('j', pathlib.Path.home() / '.claude/scripts/jira.py')
-j = importlib.util.module_from_spec(spec); spec.loader.exec_module(j)
+if os.environ.get('JIRA_AUTH'):
+    # GitHub Actions (ปุ่ม "ดึงข้อมูลจาก Jira" ในหน้า): auth มาจาก secret JIRA_AUTH รูปแบบเดียวกับ ~/.config/jira-auth
+    class j:
+        @staticmethod
+        def call(method, path, body=None):
+            req = urllib.request.Request('https://kitdi.atlassian.net' + path, method=method,
+                                         data=json.dumps(body).encode() if body is not None else None)
+            req.add_header('Authorization', 'Basic ' + base64.b64encode(os.environ['JIRA_AUTH'].strip().encode()).decode())
+            req.add_header('Content-Type', 'application/json')
+            req.add_header('Accept', 'application/json')
+            try:
+                with urllib.request.urlopen(req) as r:
+                    t = r.read().decode()
+                    return r.status, (json.loads(t) if t else None)
+            except urllib.error.HTTPError as e:
+                return e.code, e.read().decode()
+else:
+    spec = importlib.util.spec_from_file_location('j', pathlib.Path.home() / '.claude/scripts/jira.py')
+    j = importlib.util.module_from_spec(spec); spec.loader.exec_module(j)
 
 
 def fetch_open_bugs(key):
@@ -107,14 +124,15 @@ def main():
             if r[0] == NO_ROUND and r[2].split('-')[0] not in LABEL_ROUND_KEYS:
                 r[0] = next_round; pulled.append(r[2])
 
-    if not (changed or added or removed or pulled):
+    # กดปุ่มในหน้า (OPEN_BUGS_FORCE=1) → อัปเดตเวลา "ข้อมูล ณ" แม้ไม่มีอะไรเปลี่ยน ให้เห็นว่าดึงแล้ว
+    if not (changed or added or removed or pulled or os.environ.get('OPEN_BUGS_FORCE')):
         print(f'{datetime.datetime.now():%F %H:%M} ไม่มีอะไรเปลี่ยน (ข้าม ไม่ commit)'); return
 
     lines = [json.dumps(r, ensure_ascii=False).replace('</', '<\\/') + ',' for r in out]
     html = html[:m.start()] + 'const ROWS = [\n' + '\n'.join(lines) + '\n];' + html[m.end():]
 
     now = datetime.datetime.now()
-    stamp = f'ข้อมูล ณ {now.day} {TH_MON[now.month - 1]} {now.year} {now:%H:%M} น. (อัปเดตอัตโนมัติ 09:00 / 13:00)'
+    stamp = f'ข้อมูล ณ {now.day} {TH_MON[now.month - 1]} {now.year} {now:%H:%M} น. (อัปเดตอัตโนมัติ 09:00 / 13:00 หรือกดปุ่มดึงข้อมูลจาก Jira)'
     html = re.sub(r'ข้อมูล ณ [^<]*', stamp, html, count=1)
     PAGE.write_text(html, encoding='utf-8')
 
