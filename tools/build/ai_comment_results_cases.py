@@ -6,7 +6,7 @@
 โมดูลนี้อ่านตารางจากต้นฉบับ → EPICS (ชุด A/B) · feats (กลุ่มตามรหัสข้อ) · 1 แถว = 1 ข้อ
 ผลที่ตัดสินไว้ในต้นฉบับ (ผ่าน/ไม่ผ่าน/ก้ำกึ่ง + คำที่ AI พูด) ถูก seed ลง store-data ครั้งแรกเท่านั้น (SEED_STORE) —
 หลังจากนั้นเป็นข้อมูลของรายงาน (auto-save) build ซ้ำไม่ทับ
-build: python3 tools/build/build_hub_report.py aicomment
+build: python3 tools/build/build_hub_report.py aicommenta  (ชุด A · 1 สคริปต์) / aicommentb (ชุด B · 2 สคริปต์)
 """
 import html as _html
 import pathlib
@@ -115,21 +115,51 @@ def _issues_html(k):
 
 
 _skip = re.findall(r'ข้ามเพราะต้องไลฟ์จริง:\s*([^<]+)', _src)
-META = dict(
-    out_rel='projects/takra-ai/2026/10/reports/takra-ai-ai-comment-reply-results-2026-10-08-test-cases-table.html',
-    title='ผลทดสอบ AI ตอบคอมเมนต์ 8 ต.ค. 2569 — ทดสอบผลของ AI (ไม่ผ่านหน้าจอ)',
-    emoji='🤖', uid_start=14001,
-    download='takra-ai-ai-comment-reply-results-2026-10-08.html',
-    back=PAGES + '?project=ai',
-    sub=(f'8 ต.ค. 2569 · AI จริงบน UAT · ข้อมูลสินค้าจริงจาก workspace QA · ใช้โค้ดตอบคอมเมนต์ตัวจริง ไม่ได้ไลฟ์ · '
-         f'ชุด A {_N.get("aiA", 0)} ข้อ + ชุด B {_N.get("aiB", 0)} ข้อ = {sum(_N.values())} ข้อ · ผลตัดสินจากการอ่านคำตอบเทียบ ควร/ห้าม'),
-    groups_label='ชุด A (1 สคริปต์ · BP Coffee) · ชุด B (2 สคริปต์ · รองเท้า HP8009 + HP8075)',
-    note=('🤖 <b>ทดสอบผลของ AI ตอบคอมเมนต์ (ไม่ผ่านหน้าจอ)</b> — ส่งคอมเมนต์เข้าโค้ดตอบคอมเมนต์ตัวจริงบน UAT ด้วยข้อมูลสินค้าจริง แล้วอ่านคำที่ AI พูดเทียบ "ควร / ห้าม" · '
-          'สถานะ: ✅ ผ่าน = <b>PASS</b> · ❌ ไม่ผ่าน = <b>FAIL</b> · ⚠️ ก้ำกึ่ง (ไม่ผิดชัด แต่ควรดูเอง/ข้อมูลสินค้าขาด) = <b>HOLD</b> · คำที่ AI พูดอยู่ในช่อง Actual'
-          '<br>⚠️ สวิตช์ AI ตอบคอมเมนต์ของ workspace QA บน UAT ปิดอยู่ ถ้าไลฟ์จริงตอนนี้จะไม่มีคำตอบเลย'
-          + ''.join(f'<br><br><b>{_SETS[k]["chip"]} — {_html.escape(" · ".join(_SET_INFO.get(k, [])[:2]))}</b>'
-                    + (f' · ข้ามเพราะต้องไลฟ์จริง: {_html.escape(_skip[i].strip())}' if i < len(_skip) else '')
-                    + '<br>ปัญหาที่เจอในชุดนี้:' + _issues_html(k) for i, k in enumerate(('A', 'B')))
-          + '📎 ต้นฉบับ: <code>tools/build/ai-comment-results-sources/2026-10-08.html</code>'),
-    footer='ผลทดสอบ AI ตอบคอมเมนต์ 8 ต.ค. 2569 · takra-ai · ไม่ผ่านหน้าจอ',
-)
+# uid ตรึงตามลำดับข้อในต้นฉบับ (ชุด A ต่อด้วยชุด B) = ค่าเดิมของรายงานรวม (tc-14001…) — แยกไฟล์แล้วผลเทสไม่หลุด
+UID_MAP = {cid: 14001 + n for n, cid in enumerate(_ids)}
+_ALL_EPICS = EPICS
+_FILES = {  # 1 ไฟล์ต่อ 1 ชุด (แยก 8 ต.ค. 2569 ตามคำขอ)
+    'a': dict(set='A', slug='1script', name='1 สคริปต์ · 1 สินค้า (BP Coffee)'),
+    'b': dict(set='B', slug='2scripts', name='2 สคริปต์ · 2 สินค้า (รองเท้า HP8009 + HP8075)'),
+}
+
+
+def out_rel(key):
+    return f'projects/takra-ai/2026/10/reports/takra-ai-ai-comment-reply-results-2026-10-08-{_FILES[key]["slug"]}-test-cases-table.html'
+
+
+def _meta(key):
+    f = _FILES[key]
+    k = f['set']
+    i = ('A', 'B').index(k)
+    n = _N[_SETS[k]['key']]
+    return dict(
+        out_rel=out_rel(key),
+        title=f'ผลทดสอบ AI ตอบคอมเมนต์ 8 ต.ค. 2569 — {f["name"]} · ทดสอบผลของ AI (ไม่ผ่านหน้าจอ)',
+        emoji=_SETS[k]['emoji'], uid_start=14001,
+        download=f'takra-ai-ai-comment-reply-results-2026-10-08-{f["slug"]}.html',
+        back=PAGES + '?project=ai',
+        sub=(f'8 ต.ค. 2569 · AI จริงบน UAT · ข้อมูลสินค้าจริงจาก workspace QA · ใช้โค้ดตอบคอมเมนต์ตัวจริง ไม่ได้ไลฟ์ · '
+             f'ชุด {k} · {_html.escape(_SET_INFO.get(k, [""])[0])} · {n} ข้อ · ผลตัดสินจากการอ่านคำตอบเทียบ ควร/ห้าม'),
+        groups_label=f'ชุด {k} · {f["name"]}',
+        note=('🤖 <b>ทดสอบผลของ AI ตอบคอมเมนต์ (ไม่ผ่านหน้าจอ)</b> — ส่งคอมเมนต์เข้าโค้ดตอบคอมเมนต์ตัวจริงบน UAT ด้วยข้อมูลสินค้าจริง แล้วอ่านคำที่ AI พูดเทียบ "ควร / ห้าม" · '
+              'สถานะ: ✅ ผ่าน = <b>PASS</b> · ❌ ไม่ผ่าน = <b>FAIL</b> · ⚠️ ก้ำกึ่ง (ไม่ผิดชัด แต่ควรดูเอง/ข้อมูลสินค้าขาด) = <b>HOLD</b> · คำที่ AI พูดอยู่ในช่อง Actual'
+              '<br>⚠️ สวิตช์ AI ตอบคอมเมนต์ของ workspace QA บน UAT ปิดอยู่ ถ้าไลฟ์จริงตอนนี้จะไม่มีคำตอบเลย'
+              f'<br><br><b>{_SETS[k]["chip"]} — {_html.escape(" · ".join(_SET_INFO.get(k, [])[:2]))}</b>'
+              + (f' · ข้ามเพราะต้องไลฟ์จริง: {_html.escape(_skip[i].strip())}' if i < len(_skip) else '')
+              + '<br>ปัญหาที่เจอในชุดนี้:' + _issues_html(k)
+              + f'📎 อีกชุด: <a href="{PAGES}{out_rel("b" if key == "a" else "a")}">{_FILES["b" if key == "a" else "a"]["name"]}</a>'
+              + ' · ต้นฉบับ: <code>tools/build/ai-comment-results-sources/2026-10-08.html</code>'),
+        footer=f'ผลทดสอบ AI ตอบคอมเมนต์ 8 ต.ค. 2569 · ชุด {k} · takra-ai · ไม่ผ่านหน้าจอ',
+    )
+
+
+META = None
+
+
+def select(key):
+    """build_hub_report.py เรียก select('a'|'b') ก่อนอ่าน EPICS/META — 1 ไฟล์ต่อ 1 ชุด"""
+    global EPICS, META
+    k = _FILES[key]['set']
+    EPICS = [e for e in _ALL_EPICS if e['key'] == _SETS[k]['key']]
+    META = _meta(key)
