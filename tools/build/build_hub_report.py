@@ -31,7 +31,7 @@ import sys
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 MODULES = {'mvp1': 'hub_cases', 'mvp2': 'hub_mvp2_cases', 'mvp2rbac': 'hub_mvp2_rbac_cases',
-           'aitickets': 'ai_tickets_cases', 'ai1223': 'ai_tickets_1223_cases:t1223', 'ai1224': 'ai_tickets_1223_cases:t1224', 'ai1225': 'ai_tickets_1223_cases:t1225', 'ai1226': 'ai_tickets_1223_cases:t1226', 'ai1227': 'ai_tickets_1223_cases:t1227', 'ai1228': 'ai_tickets_1223_cases:t1228', 'ai1229': 'ai_tickets_1223_cases:t1229', 'ai1230': 'ai_tickets_1223_cases:t1230', 'aiautoreply': 'ai_autoreply_cases', 'clipbo': 'clip_bo_cases', 'farm': 'farm_cases',
+           'aitickets': 'ai_tickets_cases', 'ai1223': 'ai_tickets_1223_cases:t1223', 'ai1224': 'ai_tickets_1223_cases:t1224', 'ai1225': 'ai_tickets_1223_cases:t1225', 'ai1226': 'ai_tickets_1223_cases:t1226', 'ai1227': 'ai_tickets_1223_cases:t1227', 'ai1228': 'ai_tickets_1223_cases:t1228', 'ai1229': 'ai_tickets_1223_cases:t1229', 'ai1230': 'ai_tickets_1223_cases:t1230', 'aiautoreply': 'ai_autoreply_cases', 'aicomment': 'ai_comment_results_cases', 'clipbo': 'clip_bo_cases', 'farm': 'farm_cases',
            'insighte46': 'insight_mvp2_e46_cases',
            'insightbyok': 'insight_mvp2_byok_cases',
            'insightdash': 'insight_mvp2_dashboard_cases',
