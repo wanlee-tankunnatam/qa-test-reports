@@ -65,6 +65,8 @@ repo นี้เก็บรายงาน manual test case (UI) ของท�
 
 > **takra-ai คุณภาพไลฟ์รีรัน** (9 ก.ย. 2026) — 15 เคส 3 รอบ อยู่ที่ `tools/build/ai_quality_cases.py` → `python3 tools/build/build_hub_report.py aiquality`
 >
+> **takra-ai Production smoke** (9 ต.ค. 2026) — 9 โฟลว์หลัก + 1 ครบลูป · 52 เคส P0 คัดจาก `reg_ai_bymenu_oct_cases.py` · prod = branch `production` · URL live.takra.ai / hub.takra.ai · แปลง URL/คำ UAT → production ตอน build · uid เดิม store แยก (`tools/build/ai_prod_smoke_cases.py` → `python3 tools/build/build_hub_report.py aiprod`) — แก้เนื้อเคสที่ชุดหลัก แก้ที่ไฟล์นี้แค่รายชื่อเคส/กติกา prod
+>
 > **takra-rerun คุณภาพ/ประสิทธิภาพการไลฟ์รีรัน** (9 ก.ย. 2026) — 14 เคส 3 รอบ อยู่ที่ `tools/build/rerun_quality_cases.py` → `python3 tools/build/build_hub_report.py rerunquality`
 >
 > **takra-insight Live Readiness** (9 ก.ย. 2026) — เคสคุณภาพข้าม epic 33 เคส 8 มิติ อยู่ที่ `tools/build/insight_live_readiness_cases.py` → `python3 tools/build/build_hub_report.py lrready`

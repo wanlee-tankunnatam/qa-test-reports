@@ -18,6 +18,7 @@ harness (CSS + JS ปุ่ม ☁️ เซฟ/ตัวกรอง/Jira/owner
       aiquality = ai_quality_cases.py (TAKRA AI · คุณภาพไลฟ์รีรัน ท่อส่ง+เนื้อหา)
       ai1223 … ai1230 = ai_tickets_1223_cases.py (TAKRA AI · 1 ไฟล์ต่อ 1 ใบงาน TAKRA-1223–1230)
       aiautoreply = ai_autoreply_cases.py (TAKRA AI · Tool-calling auto-reply · Epic 13)
+      aiprod = ai_prod_smoke_cases.py (TAKRA AI · Production smoke · 9 โฟลว์หลัก คัดจาก regaimenu)
       lipsync = lipsync_cases.py (TAKRA Lib-Sync · แอปเดสก์ท็อป takra-lib-sync)
       (แต่ละไฟล์มี META บอก path/ชื่อ/uid เริ่ม)
 สถานะผลเทสเดิมในไฟล์ปลายทาง (<script id="store-data">) จะถูกคงไว้ถ้ามีอยู่แล้ว
@@ -45,7 +46,7 @@ MODULES = {'mvp1': 'hub_cases', 'mvp2': 'hub_mvp2_cases', 'mvp2rbac': 'hub_mvp2_
            'lipsync': 'lipsync_cases',
            'radar': 'radar_cases',
            'regradar': 'reg_radar_oct_cases', 'regfarm': 'reg_farm_oct_cases',
-           'regai1': 'reg_ai_happy_oct_cases', 'regai2': 'reg_ai_failfeat_oct_cases', 'regaimenu': 'reg_ai_bymenu_oct_cases',
+           'regai1': 'reg_ai_happy_oct_cases', 'regai2': 'reg_ai_failfeat_oct_cases', 'regaimenu': 'reg_ai_bymenu_oct_cases', 'aiprod': 'ai_prod_smoke_cases',
            'regrerun': 'reg_rerun_oct_cases', 'reginsight': 'reg_insight_oct_cases'}
 _which = next((a for a in sys.argv[1:] if a in MODULES), 'mvp1')
 # 'module:key' = โมดูลเดียวสร้างได้หลายไฟล์ — เรียก select(key) ก่อนอ่าน EPICS/META
