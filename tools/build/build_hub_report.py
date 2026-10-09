@@ -7,7 +7,8 @@ harness (CSS + JS ปุ่ม ☁️ เซฟ/ตัวกรอง/Jira/owner
 ใช้:  python3 tools/build/build_hub_report.py [mvp1|mvp2|mvp2rbac]   # เขียนไฟล์ (default mvp1)
       python3 tools/build/build_hub_report.py mvp2 --check            # แค่ตรวจ/นับ ไม่เขียน
 ข้อมูลเคส: mvp1 = hub_cases.py · mvp2 = hub_mvp2_cases.py · mvp2rbac = hub_mvp2_rbac_cases.py (Epic 1 RBAC/ABAC + Aff Account)
-      clipbo = clip_bo_cases.py (TAKRA Clip · Back Office EP-02) · farm = farm_cases.py (TAKRA Post · takra-farm)
+      clipbo = clip_bo_cases.py (TAKRA Clip · Back Office EP-02) · clipcut = clip_cut_cases.py (Takra Clip Cut 1.0.0 · แอปเดสก์ท็อป E2E)
+      farm = farm_cases.py (TAKRA Post · takra-farm)
       insighte46 = insight_mvp2_e46_cases.py (TAKRA Insight · MVP-2 Epic 4 เครดิต AI + Epic 6 AI Insights)
       insightbyok = insight_mvp2_byok_cases.py (TAKRA Insight · MVP-2 Epic 4 Metered LLM Proxy → AI Provider BYOK)
       insightdash / insightrpt / insightmem = insight_mvp2_{dashboard,reports,membership}_cases.py (TAKRA Insight · MVP-2 Epic 5 / 7 / 9)
@@ -31,7 +32,7 @@ import sys
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 MODULES = {'mvp1': 'hub_cases', 'mvp2': 'hub_mvp2_cases', 'mvp2rbac': 'hub_mvp2_rbac_cases',
-           'aitickets': 'ai_tickets_cases', 'ai1223': 'ai_tickets_1223_cases:t1223', 'ai1224': 'ai_tickets_1223_cases:t1224', 'ai1225': 'ai_tickets_1223_cases:t1225', 'ai1226': 'ai_tickets_1223_cases:t1226', 'ai1227': 'ai_tickets_1223_cases:t1227', 'ai1228': 'ai_tickets_1223_cases:t1228', 'ai1229': 'ai_tickets_1223_cases:t1229', 'ai1230': 'ai_tickets_1223_cases:t1230', 'aiautoreply': 'ai_autoreply_cases', 'aicommenta': 'ai_comment_results_cases:a', 'aicommentb': 'ai_comment_results_cases:b', 'clipbo': 'clip_bo_cases', 'farm': 'farm_cases',
+           'aitickets': 'ai_tickets_cases', 'ai1223': 'ai_tickets_1223_cases:t1223', 'ai1224': 'ai_tickets_1223_cases:t1224', 'ai1225': 'ai_tickets_1223_cases:t1225', 'ai1226': 'ai_tickets_1223_cases:t1226', 'ai1227': 'ai_tickets_1223_cases:t1227', 'ai1228': 'ai_tickets_1223_cases:t1228', 'ai1229': 'ai_tickets_1223_cases:t1229', 'ai1230': 'ai_tickets_1223_cases:t1230', 'aiautoreply': 'ai_autoreply_cases', 'aicommenta': 'ai_comment_results_cases:a', 'aicommentb': 'ai_comment_results_cases:b', 'clipbo': 'clip_bo_cases', 'clipcut': 'clip_cut_cases', 'farm': 'farm_cases',
            'insighte46': 'insight_mvp2_e46_cases',
            'insightbyok': 'insight_mvp2_byok_cases',
            'insightdash': 'insight_mvp2_dashboard_cases',
