@@ -470,7 +470,40 @@ def _rt_text(cid):
 _FILES = {  # 1 ไฟล์ต่อ 1 ชุด (แยก 8 ต.ค. 2569 ตามคำขอ)
     'a': dict(set='A', slug='1script', name='1 สคริปต์ · 1 สินค้า (BP Coffee)'),
     'b': dict(set='B', slug='2scripts', name='2 สคริปต์ · 2 สินค้า (รองเท้า HP8009 + HP8075)'),
+    # ชุด A อีกไฟล์สำหรับทดสอบบน Production (9 ต.ค. 2569 ตามคำขอ) — เคส/uid เดียวกับชุด A · store แยก เริ่มว่าง (ไม่ seed ผล UAT)
+    'aprod': dict(set='A', slug='1script-prod', name='1 สคริปต์ · 1 สินค้า (BP Coffee) · Production', env='prod'),
 }
+
+# ค่าตั้ง prod (Takra-GitOps envs/prod/takra-ai/patch-configmap.yaml · อ่าน 9 ต.ค. 2569)
+_PROD = dict(branch='production', base='https://api.realfact.tech', preset='d13082f4-3b1b-4cb0-be43-355655de01cd', timeout='45 วิ')
+_PROD_PRE = (f'รันกับ AI จริงบน Production — โค้ด branch "{_PROD["branch"]}" · AI {_PROD["base"]} · preset ตอบคอมเมนต์ของ prod '
+             f'({_PROD["preset"][:8]}…) · ใช้โค้ดตอบคอมเมนต์ตัวจริง (ไม่ผ่านหน้าจอ · ไม่ได้ไลฟ์)')
+_PROD_DATA = 'ข้อมูลสินค้า BP Coffee + สคริปต์ + อวาตาร์ Graham ชุดเดียวกับรอบ UAT 8 ต.ค. 2569 (ผลที่ต่างจาก UAT จึงมาจากโค้ด/AI ของ prod)'
+
+
+def _prod_epics():
+    import copy
+    out = []
+    for e in _ALL_EPICS:
+        if e['key'] != 'aiA':
+            continue
+        e2 = copy.deepcopy(e)
+        e2['title'] = e2['title'] + ' · Production'
+        for f in e2['feats']:
+            for c in f['cases']:
+                c['pre'] = [_PROD_PRE, _PROD_DATA]
+                c['src'] = c['src'].replace('ที่มา: ผลทดสอบ AI ตอบคอมเมนต์ 8 ต.ค. 2569', 'ที่มา: ชุดเคสเดียวกับรายงาน UAT 8 ต.ค. 2569') + ' · ทดสอบบน Production'
+        out.append(e2)
+    return out
+
+
+def _prod_note():
+    return ('🏭 <b>ชุด A · 1 สคริปต์ · 1 สินค้า (BP Coffee) — ทดสอบบน Production</b> · ยังไม่มีผล (รอทดสอบ)'
+            f'<br>⚙️ <b>ค่าตั้ง prod:</b> โค้ด branch <code>{_PROD["branch"]}</code> · AI <code>{_PROD["base"]}</code> · '
+            f'preset ตอบคอมเมนต์ของ prod <code>{_PROD["preset"]}</code> · timeout {_PROD["timeout"]} (Takra-GitOps envs/prod)'
+            f'<br>📦 {_PROD_DATA}'
+            '<br><span style="opacity:.75">เกณฑ์เดียวกับรอบ UAT: ข้อมูลไม่พอแต่ AI ไม่แต่ง = PASS · ข้อมูลมีแต่ผู้ชมได้คำตอบผิด = FAIL · '
+            f'รอบ UAT (เทียบผล): <a href="{PAGES}{out_rel("a")}">1 สคริปต์ · 1 สินค้า (BP Coffee) · UAT</a></span>')
 
 
 def out_rel(key):
@@ -482,6 +515,19 @@ def _meta(key):
     k = f['set']
     i = ('A', 'B').index(k)
     n = _N[_SETS[k]['key']]
+    if f.get('env') == 'prod':
+        return dict(
+            out_rel=out_rel(key),
+            title=f'AI ตอบคอมเมนต์ บน Production — {f["name"]} · ทดสอบผลของ AI (ไม่ผ่านหน้าจอ)',
+            emoji='🏭', uid_start=14001,
+            download=f'takra-ai-ai-comment-reply-results-2026-10-08-{f["slug"]}.html',
+            back=PAGES + '?project=ai',
+            sub=(f'Production · โค้ด branch {_PROD["branch"]} · AI {_PROD["base"]} · ใช้โค้ดตอบคอมเมนต์ตัวจริง ไม่ได้ไลฟ์ · '
+                 f'ชุด {k} · {_html.escape(_SET_INFO.get(k, [""])[0])} · {n} ข้อ (เคสเดียวกับรอบ UAT 8 ต.ค.) · ผลตัดสินจากการอ่านคำตอบเทียบ ควร/ห้าม'),
+            groups_label=f'ชุด {k} · {f["name"]}',
+            note=_prod_note(),
+            footer=f'AI ตอบคอมเมนต์ บน Production · ชุด {k} · takra-ai · ไม่ผ่านหน้าจอ',
+        )
     return dict(
         out_rel=out_rel(key),
         title=f'ผลทดสอบ AI ตอบคอมเมนต์ 8 ต.ค. 2569 — {f["name"]} · ทดสอบผลของ AI (ไม่ผ่านหน้าจอ)',
@@ -588,5 +634,8 @@ def select(key):
     """build_hub_report.py เรียก select('a'|'b') ก่อนอ่าน EPICS/META — 1 ไฟล์ต่อ 1 ชุด"""
     global EPICS, META
     k = _FILES[key]['set']
-    EPICS = [e for e in _ALL_EPICS if e['key'] in ({'aiA'} if k == 'A' else {'aiB', 'aiBmp'})]
+    if _FILES[key].get('env') == 'prod':
+        EPICS = _prod_epics()
+    else:
+        EPICS = [e for e in _ALL_EPICS if e['key'] in ({'aiA'} if k == 'A' else {'aiB', 'aiBmp'})]
     META = _meta(key)
