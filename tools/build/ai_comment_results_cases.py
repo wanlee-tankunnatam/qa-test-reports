@@ -470,40 +470,51 @@ def _rt_text(cid):
 _FILES = {  # 1 ไฟล์ต่อ 1 ชุด (แยก 8 ต.ค. 2569 ตามคำขอ)
     'a': dict(set='A', slug='1script', name='1 สคริปต์ · 1 สินค้า (BP Coffee)'),
     'b': dict(set='B', slug='2scripts', name='2 สคริปต์ · 2 สินค้า (รองเท้า HP8009 + HP8075)'),
-    # ชุด A อีกไฟล์สำหรับทดสอบบน Production (9 ต.ค. 2569 ตามคำขอ) — เคส/uid เดียวกับชุด A · store แยก เริ่มว่าง (ไม่ seed ผล UAT)
-    'aprod': dict(set='A', slug='1script-prod', name='1 สคริปต์ · 1 สินค้า (BP Coffee) · Production', env='prod'),
+    # ไฟล์ทดสอบบน Production (9 ต.ค. 2569 ตามคำขอ) — โครงชุด A แต่สินค้า = รองเท้าแมรี่เจน HP8075 (คำถามเปลี่ยนจาก BP Coffee) · store แยก เริ่มว่าง
+    'aprod': dict(set='A', slug='1script-prod', name='1 สคริปต์ · 1 สินค้า (รองเท้าแมรี่เจน HP8075) · Production', env='prod'),
 }
 
 # ค่าตั้ง prod (Takra-GitOps envs/prod/takra-ai/patch-configmap.yaml · อ่าน 9 ต.ค. 2569)
 _PROD = dict(branch='production', base='https://api.realfact.tech', preset='d13082f4-3b1b-4cb0-be43-355655de01cd', timeout='45 วิ')
 _PROD_PRE = (f'รันกับ AI จริงบน Production — โค้ด branch "{_PROD["branch"]}" · AI {_PROD["base"]} · preset ตอบคอมเมนต์ของ prod '
              f'({_PROD["preset"][:8]}…) · ใช้โค้ดตอบคอมเมนต์ตัวจริง (ไม่ผ่านหน้าจอ · ไม่ได้ไลฟ์)')
-_PROD_DATA = 'ข้อมูลสินค้า BP Coffee + สคริปต์ + อวาตาร์ Graham ชุดเดียวกับรอบ UAT 8 ต.ค. 2569 (ผลที่ต่างจาก UAT จึงมาจากโค้ด/AI ของ prod)'
+_PROD_DATA = ('รอบไลฟ์มี 1 สคริปต์ · 1 สินค้า = Hello Polo รองเท้าแมรี่เจน 2 รุ่น HP8075 · อวาตาร์ Graham (ผม/ครับ) · ข้อมูลสินค้าตามคลังสินค้า: '
+              '4 สี กล้วย/โอวัลติน/ซากุระ/ดำ · ไซซ์ 36–41 (ช่อง SKU 36-40) · พื้นหนา 3 ซม. พื้นนุ่ม กันลื่น · EVA · เปิด/ปิดส้น · '
+              'ไม่มีข้อมูลกันน้ำ/น้ำหนัก/ตารางไซซ์/การดูแล')
+
+
+_MJ = json.loads((SRC.parent / '2026-10-09-prod-maryjane.json').read_text(encoding='utf-8'))
+_MJ_GROUPS = {'C1': 'คำถามสินค้า (แมรี่เจน HP8075)', 'NC': 'ถามของที่ไลฟ์นี้ไม่ได้ขาย', 'GB': 'คำถามทั่วไป · ภาษาถิ่น · ภาษาต่างประเทศ'}
 
 
 def _prod_epics():
-    import copy
-    out = []
-    for e in _ALL_EPICS:
-        if e['key'] != 'aiA':
-            continue
-        e2 = copy.deepcopy(e)
-        e2['title'] = e2['title'] + ' · Production'
-        for f in e2['feats']:
-            for c in f['cases']:
-                c['pre'] = [_PROD_PRE, _PROD_DATA]
-                c['src'] = c['src'].replace('ที่มา: ผลทดสอบ AI ตอบคอมเมนต์ 8 ต.ค. 2569', 'ที่มา: ชุดเคสเดียวกับรายงาน UAT 8 ต.ค. 2569') + ' · ทดสอบบน Production'
-        out.append(e2)
-    return out
+    """ชุด prod = 1 สคริปต์ · 1 สินค้า รองเท้าแมรี่เจน HP8075 (เปลี่ยนจาก BP Coffee 9 ต.ค. 2569 ตามคำขอ) — เคสจาก 2026-10-09-prod-maryjane.json"""
+    feats = {}
+    for c in _MJ['cases']:
+        flag = c.get('flag')
+        feats.setdefault(c['group'], []).append(dict(
+            id=c['id'], title=f'ผู้ชมพิมพ์ "{c["q"]}"' + (f' · {flag}' if flag else ''), prio='P1', level='ui',
+            kind='negative' if flag else 'happy', ui=True,
+            pre=[_PROD_PRE, _PROD_DATA],
+            steps=['ส่งคอมเมนต์ผู้ชมตาม Test Data เข้าโค้ดตอบคอมเมนต์ตัวจริงของชุดนี้',
+                   'อ่านประโยคที่ AI พูดออกอากาศ และสถานะในระบบ แล้วเทียบกับ "ควร / ห้าม"'],
+            data=[f'คอมเมนต์: "{c["q"]}"'] + ([flag] if flag else []),
+            expected=['ควร: ' + c['ok']] + (['ห้าม: ' + c['bad']] if c['bad'] else []),
+            src=f'ที่มา: ข้อมูลสินค้าแมรี่เจน HP8075 ในคลังสินค้า · โครงเคสเดียวกับชุด A รอบ UAT 8 ต.ค. 2569 · กลุ่ม {c["group"]} · ทดสอบบน Production',
+            note=None))
+    return [dict(key='aiAprod', chip='🏭 Production · แมรี่เจน', emoji='🏭',
+                 title='1 สคริปต์ · 1 สินค้า (รองเท้าแมรี่เจน HP8075) · Production',
+                 feats=[dict(featkey=f'aiAprod-{g.lower()}', title=f'กลุ่ม {g} · {_MJ_GROUPS[g]} ({len(cs)} ข้อ)', cases=cs)
+                        for g, cs in feats.items()])]
 
 
 def _prod_note():
-    return ('🏭 <b>ชุด A · 1 สคริปต์ · 1 สินค้า (BP Coffee) — ทดสอบบน Production</b> · ยังไม่มีผล (รอทดสอบ)'
+    return ('🏭 <b>1 สคริปต์ · 1 สินค้า (รองเท้าแมรี่เจน HP8075) — ทดสอบบน Production</b> · 75 ข้อ · ยังไม่มีผล (รอทดสอบ)'
             f'<br>⚙️ <b>ค่าตั้ง prod:</b> โค้ด branch <code>{_PROD["branch"]}</code> · AI <code>{_PROD["base"]}</code> · '
             f'preset ตอบคอมเมนต์ของ prod <code>{_PROD["preset"]}</code> · timeout {_PROD["timeout"]} (Takra-GitOps envs/prod)'
             f'<br>📦 {_PROD_DATA}'
             '<br><span style="opacity:.75">เกณฑ์เดียวกับรอบ UAT: ข้อมูลไม่พอแต่ AI ไม่แต่ง = PASS · ข้อมูลมีแต่ผู้ชมได้คำตอบผิด = FAIL · '
-            f'รอบ UAT (เทียบผล): <a href="{PAGES}{out_rel("a")}">1 สคริปต์ · 1 สินค้า (BP Coffee) · UAT</a></span>')
+            f'โครงเคสเดียวกับ <a href="{PAGES}{out_rel("a")}">1 สคริปต์ · 1 สินค้า (BP Coffee) · UAT</a> แต่คำถามเป็นรองเท้าแมรี่เจน</span>')
 
 
 def out_rel(key):
@@ -523,7 +534,7 @@ def _meta(key):
             download=f'takra-ai-ai-comment-reply-results-2026-10-08-{f["slug"]}.html',
             back=PAGES + '?project=ai',
             sub=(f'Production · โค้ด branch {_PROD["branch"]} · AI {_PROD["base"]} · ใช้โค้ดตอบคอมเมนต์ตัวจริง ไม่ได้ไลฟ์ · '
-                 f'ชุด {k} · {_html.escape(_SET_INFO.get(k, [""])[0])} · {n} ข้อ (เคสเดียวกับรอบ UAT 8 ต.ค.) · ผลตัดสินจากการอ่านคำตอบเทียบ ควร/ห้าม'),
+                 f'1 สคริปต์ · 1 สินค้า = รองเท้าแมรี่เจน HP8075 · Graham ใช้ ผม/ครับ · {len(_MJ["cases"])} ข้อ · ผลตัดสินจากการอ่านคำตอบเทียบ ควร/ห้าม'),
             groups_label=f'ชุด {k} · {f["name"]}',
             note=_prod_note(),
             footer=f'AI ตอบคอมเมนต์ บน Production · ชุด {k} · takra-ai · ไม่ผ่านหน้าจอ',
