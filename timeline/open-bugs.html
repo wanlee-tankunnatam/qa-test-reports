@@ -124,7 +124,7 @@ footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--line);color:v
 <body>
 <div class="wrap">
   <h1>บั๊กค้างรอบส่งงาน</h1>
-  <p class="sub">บั๊กที่ยังไม่ปิดจากทุกโปรเจกต์ใน Jira แยกตามรอบส่ง แล้วแยกตามผู้รับผิดชอบ · ในแต่ละคนเรียงตามขั้นที่ลูกค้าเจอใน user journey · ข้อมูล ณ 10 ต.ค. 2026 09:00 น. (อัปเดตอัตโนมัติ 09:00 / 13:00 หรือกดปุ่มดึงข้อมูลจาก Jira)</p>
+  <p class="sub">บั๊กที่ยังไม่ปิดจากทุกโปรเจกต์ใน Jira แยกตามรอบส่ง แล้วแยกตามผู้รับผิดชอบ · ในแต่ละคนเรียงตามขั้นที่ลูกค้าเจอใน user journey · ข้อมูล ณ 10 ต.ค. 2026 13:00 น. (อัปเดตอัตโนมัติ 09:00 / 13:00 หรือกดปุ่มดึงข้อมูลจาก Jira)</p>
   <div class="sync"><button type="button" class="f" id="sync">ดึงข้อมูลจาก Jira</button><span id="syncat"></span><span id="syncmsg" role="status"></span></div>
   <div class="proj" id="fj" role="group" aria-label="โปรเจกต์"></div>
   <div class="tot" id="tot"></div>
@@ -450,13 +450,13 @@ const ROWS = [
 ["15-OCT", "James", "TI-639", "High", "[regression] TAKRA Insight - การ์ดอัปเดตเสนอ \"ดาวน์โหลดได้เลย\" พร้อมปุ่มดาวน์โหลดที่ +1 วิ หลังไลฟ์เริ่มกลางการดาวน์โหลด ก่อนสลับเป็น \"หยุดดาวน์โหลดแล้ว\" ที่ +3 วิ (TC-OCT-F.2)", "READY TO TEST"],
 ["15-OCT", "James", "TI-641", "Medium", "[regression] TAKRA Insight - ตัวนับ \"คอมเมนต์สด\" บนหน้าบันทึกค้างที่ 208 หลัง engine restart ขณะรายการคอมเมนต์ยังไหลและ DB มี 1,794 แถว (TC-LR-D6-NEG-04)", "READY TO TEST"],
 ["15-OCT", "James", "TI-644", "Medium", "[regression] TAKRA Insight - (macOS) ความยาวไลฟ์ใน \"ไลฟ์ล่าสุด\" บนแดชบอร์ด (2 นาที) ไม่ตรงกับหน้าไลฟ์ของเครื่อง (1 นาที) และ Engagement 63 ในแถวไม่มีบนหน้า (TC-DASH-H.1)", "READY TO TEST"],
-["15-OCT", "James", "TI-647", "Low", "[regression] TAKRA Insight - กล่อง \"มี session ก่อนหน้าของแชนเนลนี้\" แสดงชื่อไฟล์ดิบ ws_session_20261009_030255.csv แทนชื่อที่ผู้ใช้อ่านเข้าใจ (TC-LR-D1-NEG-01)", "In Progress"],
+["15-OCT", "James", "TI-647", "Low", "[regression] TAKRA Insight - กล่อง \"มี session ก่อนหน้าของแชนเนลนี้\" แสดงชื่อไฟล์ดิบ ws_session_20261009_030255.csv แทนชื่อที่ผู้ใช้อ่านเข้าใจ (TC-LR-D1-NEG-01)", "READY TO TEST"],
 ["15-OCT", "James", "TI-650", "Highest", "[regression] TAKRA Insight - เริ่ม monitor ได้ทั้งที่ยังไม่ login TikTok ในเบราว์เซอร์ของแอป ไม่มี gate และไม่มีคำเตือน ทั้งที่เคสคาดให้บังคับ login ก่อน (TC-LR-D1-NEG-02)", "READY TO TEST"],
 ["15-OCT", "James", "TI-652", "High", "[regression] TAKRA Insight - เปิดดูร้านที่ไลฟ์จบแล้ว แผงแอปยังขึ้น \"พร้อมเก็บ Insight แล้ว\" ไม่บอกเองว่าไลฟ์จบ บอกเฉพาะตอนกด \"เริ่มบันทึก\" (TC-LR-D1-NEG-01)", "READY TO TEST"],
 ["15-OCT", "James", "TI-655", "Medium", "[regression] TAKRA Insight - การ์ดอัปเดตหลังหยุดติดตามไลฟ์ไม่ขึ้น \"ตอนนี้ไม่มีไลฟ์ที่ติดตามอยู่แล้ว — ดาวน์โหลดได้เลย\" ถ้าไม่ได้กด \"เตือนเมื่อไลฟ์จบ\" ก่อน (TC-OCT-F.2)", "READY TO TEST"],
 ["15-OCT", "James", "TI-656", "Highest", "[regression] TAKRA Insight - เน็ตหลุดกลางไลฟ์ไม่มีแบนเนอร์ \"ขาดการเชื่อมต่อ\" และหลุด ≥45 วิ heartbeat อาจตัดสินว่าไลฟ์จบแล้ว auto-stop session (TC-LR-D6-NEG-01)", "READY TO TEST"],
 ["15-OCT", "James", "TI-658", "High", "[regression] TAKRA Insight - แดชบอร์ดแบรนด์: ประโยค AI อาจอ้างไลก์/ของขวัญ/แชร์/ผู้ติดตามใหม่ที่ส่งเป็น facts แต่ไม่มีบนการ์ดตัวชี้วัด ผู้ใช้ตรวจสอบตัวเลขไม่ได้ (TC-DASH-D.2)", "READY TO TEST"],
-["15-OCT", "James", "TI-659", "Low", "[regression] TAKRA Insight (engine) - PATCH /sessions/{id} ตอบ 500 AttributeError เมื่อ body.title ไม่ใช่ string ควรตอบ 422 (server.py:13212)", "In Progress"],
+["15-OCT", "James", "TI-659", "Low", "[regression] TAKRA Insight (engine) - PATCH /sessions/{id} ตอบ 500 AttributeError เมื่อ body.title ไม่ใช่ string ควรตอบ 422 (server.py:13212)", "IN REVIEW"],
 ["15-OCT", "James", "TI-660", "Medium", "[regression] TAKRA Insight - UAT กับ prod ใช้ userData เดียวกัน (~/Library/Application Support/takra-insight) และ engine รับ LHM_BUFFER_KEY/LHM_TRANSCRIPT_KEY ทาง environment ที่ ps อ่านได้", "To Do"],
 ["15-OCT", "Hope", "TAK-754", "High", "[Hotfix] Windows เริ่มไลฟ์ไม่ได้เมื่อโอเวอร์เลย์มีนาฬิกาดิจิทัลแบบเอียง", "IN REVIEW"],
 ["15-OCT", "Hope", "TAK-755", "High", "[Hotfix] ตั้งพร็อกซีให้บัญชีแล้วลบออกไม่ได้ — พร็อกซีเสียทำให้เริ่มไลฟ์ไม่ได้ถาวร", "IN REVIEW"],
@@ -557,7 +557,7 @@ ROWS.forEach(r=>{const s=JOURNEY[r[2]]; r[7]=s?s:(r[2].startsWith("TAKRA-")?99:0
 const scCls=v=>v===SCOPE_LABEL.ui?"c-ui":v===SCOPE_LABEL.sys?"c-sys":"c-tool";
 
 // เวลาที่ดึงจาก Jira ล่าสุดรายโปรเจกต์ — ตัวซิงก์ (update_open_bugs.py) เขียนบรรทัดนี้เอง ต้องอยู่บรรทัดเดียว
-const SYNCED = {"TAKRA": "10 ต.ค. 2026 09:00", "TI": "10 ต.ค. 2026 09:00", "TAK": "10 ต.ค. 2026 09:00", "TKRD": "10 ต.ค. 2026 09:00", "TF": "10 ต.ค. 2026 09:00", "TKH": "10 ต.ค. 2026 09:00"};
+const SYNCED = {"TAKRA": "10 ต.ค. 2026 13:00", "TI": "10 ต.ค. 2026 13:00", "TAK": "10 ต.ค. 2026 13:00", "TKRD": "10 ต.ค. 2026 13:00", "TF": "10 ต.ค. 2026 13:00", "TKH": "10 ต.ค. 2026 13:00"};
 const PROJECTS={
   TAKRA:{name:"Takra AI", jira:"https://kitdi.atlassian.net"},
   TI:{name:"Takra Insight", jira:"https://kitdi.atlassian.net"},
