@@ -124,7 +124,7 @@ footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--line);color:v
 <body>
 <div class="wrap">
   <h1>บั๊กค้างรอบส่งงาน</h1>
-  <p class="sub">บั๊กที่ยังไม่ปิดจากทุกโปรเจกต์ใน Jira แยกตามรอบส่ง แล้วแยกตามผู้รับผิดชอบ · ในแต่ละคนเรียงตามขั้นที่ลูกค้าเจอใน user journey · ข้อมูล ณ 13 ต.ค. 2026 09:00 น. (อัปเดตอัตโนมัติ 09:00 / 13:00 หรือกดปุ่มดึงข้อมูลจาก Jira)</p>
+  <p class="sub">บั๊กที่ยังไม่ปิดจากทุกโปรเจกต์ใน Jira แยกตามรอบส่ง แล้วแยกตามผู้รับผิดชอบ · ในแต่ละคนเรียงตามขั้นที่ลูกค้าเจอใน user journey · ข้อมูล ณ 13 ต.ค. 2026 13:00 น. (อัปเดตอัตโนมัติ 09:00 / 13:00 หรือกดปุ่มดึงข้อมูลจาก Jira)</p>
   <div class="sync"><button type="button" class="f" id="sync">ดึงข้อมูลจาก Jira</button><span id="syncat"></span><span id="syncmsg" role="status"></span></div>
   <div class="proj" id="fj" role="group" aria-label="โปรเจกต์"></div>
   <div class="tot" id="tot"></div>
@@ -541,6 +541,7 @@ const ROWS = [
 ["15-OCT", "Hope", "TAK-825", "Medium", "[FE] ออกจากระบบในแท็บ A แล้วกด action ในแท็บ B (ไม่รีเฟรช) — ได้ 401 แต่แอปแสดง toast \"ตรวจสอบไม่สำเร็จ\" ค้างอยู่หน้าเดิม ไม่พาไปหน้าเข้าสู่ระบบ", "To Do"],
 ["15-OCT", "Mae", "TAK-826", "Low", "[FE] คลังวิดีโอบนจอมือถือ 390px — การ์ดคลิปกว้าง 462px ในคอลัมน์ 342px ล้นจอ คอลัมน์การ์ดที่ 2 และแถบพื้นที่จัดเก็บถูกตัดขอบขวา หน้าเลื่อนแนวนอน", "To Do"],
 ["15-OCT", "Mae", "TAK-827", "Low", "[FE] ตั้งค่า › ระบบ บนมือถือ — ปุ่มกดเล็กกว่า 44px: «รีเฟรช» 32px · «ลองใหม่» (ตอนโหลดไม่สำเร็จ) 36px · ตัวเปิด «ดูรายละเอียดทางเทคนิค» เล็กกว่านั้นอีก", "To Do"],
+["15-OCT", "Hope", "TAK-828", "High", "[Hotfix] อัปเดต golang.org/x/net เป็น 0.60.0 — Release บน production ตกด่านสแกนช่องโหว่ (CVE-2026-78669)", "In Progress"],
 ];
 // Projects: the Jira key prefix decides the project, so rows from another project
 // show up here as soon as they are added to ROWS. Add a line to PROJECTS to give it a name.
@@ -619,7 +620,7 @@ ROWS.forEach(r=>{const s=JOURNEY[r[2]]; r[7]=s?s:(r[2].startsWith("TAKRA-")?99:0
 const scCls=v=>v===SCOPE_LABEL.ui?"c-ui":v===SCOPE_LABEL.sys?"c-sys":"c-tool";
 
 // เวลาที่ดึงจาก Jira ล่าสุดรายโปรเจกต์ — ตัวซิงก์ (update_open_bugs.py) เขียนบรรทัดนี้เอง ต้องอยู่บรรทัดเดียว
-const SYNCED = {"TAKRA": "13 ต.ค. 2026 09:00", "TI": "13 ต.ค. 2026 09:00", "TAK": "13 ต.ค. 2026 09:00", "TKRD": "13 ต.ค. 2026 09:00", "TF": "13 ต.ค. 2026 09:00", "TKH": "13 ต.ค. 2026 09:00"};
+const SYNCED = {"TAKRA": "13 ต.ค. 2026 13:00", "TI": "13 ต.ค. 2026 13:00", "TAK": "13 ต.ค. 2026 13:00", "TKRD": "13 ต.ค. 2026 13:00", "TF": "13 ต.ค. 2026 13:00", "TKH": "13 ต.ค. 2026 13:00"};
 const PROJECTS={
   TAKRA:{name:"Takra AI", jira:"https://kitdi.atlassian.net"},
   TI:{name:"Takra Insight", jira:"https://kitdi.atlassian.net"},
