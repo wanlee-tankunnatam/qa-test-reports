@@ -524,19 +524,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 <tr class="trow" data-feat="lrD2" data-level="ui" data-prio="P0" data-kind="data" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-LR-D2-POS-03</td>
-  <td class="ctitle">TAKRA Insight เริ่ม monitor ร้านที่มีคอมเมนต์ค้าง (history replay) ต้องไม่บันทึกซ้ำ 2 เท่า <span class="kd kd-data">Data</span></td>
+  <td class="ctitle">TAKRA Insight เริ่ม monitor ร้านที่มีคอมเมนต์ค้าง (history replay) ต้องไม่บันทึกคอมเมนต์เก่าที่เกิดก่อนเริ่ม — เก็บเฉพาะที่เกิดหลังเริ่ม <span class="kd kd-data">Data</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
   <td class="status" data-uid="tc-2206"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-2206"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">TAKRA Insight เริ่ม monitor ร้านที่มีคอมเมนต์ค้าง (history replay) ต้องไม่บันทึกซ้ำ 2 เท่า</div>
+  <div class="h-title">TAKRA Insight เริ่ม monitor ร้านที่มีคอมเมนต์ค้าง (history replay) ต้องไม่บันทึกคอมเมนต์เก่าที่เกิดก่อนเริ่ม — เก็บเฉพาะที่เกิดหลังเริ่ม</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Data</b> <span class="hint">(ครบถ้วน · ไม่ซ้ำ · ตรงกันระหว่าง UI กับ DB)</span> · D2 · คอมเมนต์ครบ สด ไม่ซ้ำ</div>
-  <div class="sec"><h4>Precondition</h4><ul><li>ร้านที่ไลฟ์มาแล้วสักพักและมีคอมเมนต์เก่าปรากฏตอนเข้าห้อง (history)</li><li>เกี่ยวข้อง TI-381</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Insight (App) แล้ว Login ด้วยบัญชีที่มีสิทธิ์ใช้งาน (entitled)</li><li>ไปที่ หน้าหลัก → กด วิเคราะห์ไลฟ์ใหม่ → วาง URL ของร้านที่กำลังไลฟ์อยู่ (ร้านในลิสต์ที่กำหนด · ตรวจด้วย probe ก่อนว่าไลฟ์จริง)</li><li>Login TikTok ในเบราว์เซอร์ในตัวและ ติดตามช่อง ตามที่ระบบบังคับ แล้วกด เปิดดูไลฟ์</li><li>ทันทีที่เข้าห้อง สังเกตว่ามีคอมเมนต์เก่าไหลเข้ามาเป็นชุด (replay) หรือไม่ บันทึกจำนวนที่เห็น</li><li>ปล่อย 3 นาที แล้วกด หยุดติดตาม</li><li>ใน traka.db นับแถวของ session แยกเป็น history (ingest_time ≤ start+30s) และ live</li><li>ตรวจ dupGroups ในส่วน history: ข้อความเดียวกัน ผู้ใช้เดียวกัน เวลาเดียวกัน มีกี่แถว</li></ol></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>ร้านที่ไลฟ์มาแล้วสักพักและมีคอมเมนต์เก่าปรากฏตอนเข้าห้อง (history)</li><li>เกี่ยวข้อง TI-381 · TI-441</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Insight (App) แล้ว Login ด้วยบัญชีที่มีสิทธิ์ใช้งาน (entitled)</li><li>ไปที่ หน้าหลัก → กด วิเคราะห์ไลฟ์ใหม่ → วาง URL ของร้านที่กำลังไลฟ์อยู่ (ร้านในลิสต์ที่กำหนด · ตรวจด้วย probe ก่อนว่าไลฟ์จริง)</li><li>Login TikTok ในเบราว์เซอร์ในตัวและ ติดตามช่อง ตามที่ระบบบังคับ แล้วกด เปิดดูไลฟ์</li><li>ทันทีที่เข้าห้อง สังเกตในหน้า TikTok ทางซ้ายว่ามีคอมเมนต์เก่าไหลเข้ามาเป็นชุด (replay) หรือไม่ บันทึกจำนวนที่เห็น และจดเวลาที่เริ่ม</li><li>ปล่อย 3 นาที แล้วกด หยุดติดตาม</li><li>ใน traka.db นับแถวคอมเมนต์ของ session ที่เวลาเกิดก่อนเวลาเริ่ม และเปิด takra-main.log หาบรรทัด refused N replayed-history ของ session นี้ (พิมพ์ตอนหยุดติดตาม)</li><li>ตรวจ dupGroups ในส่วน history: ข้อความเดียวกัน ผู้ใช้เดียวกัน เวลาเดียวกัน มีกี่แถว</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>จำนวน history ใน DB = จำนวนที่เห็นตอนเข้าห้อง (ไม่ใช่ 2 เท่า)</li><li>dupGroups = 0 ทั้งส่วน history และ live</li><li>ตัวเลข คอมเมนต์รวม ในรายงานหลังไลฟ์ตรงกับ DB</li></ul><div class="hint" style="margin-top:6px">ประเภท: Manual — คนทำบนช่องจริง · ที่มา: live-readiness-test-cases.html (QA · 2026-09-09) · แผนคู่: live-readiness-test-plan.html · วัดกับ develop @ b82bb4f</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>คอมเมนต์เก่าที่เห็นตอนเข้าห้อง (เกิดก่อนเริ่ม) ไม่ถูกบันทึก: แถวคอมเมนต์ที่เกิดก่อนเวลาเริ่มใน DB = 0 และไม่ขึ้นในแผงคอมเมนต์ของ TAKRA Insight</li><li>log มีบรรทัด refused N replayed-history ของ session นี้ โดย N ใกล้กับจำนวนที่เห็นตอนเข้าห้อง (ถ้าไม่มีคอมเมนต์เก่าตอนเข้าห้องเลย บรรทัดนี้จะไม่ขึ้น = ยังสรุปไม่ได้ ไม่ใช่ผ่าน)</li><li>dupGroups = 0 ทั้งส่วน history และ live</li><li>ตัวเลข คอมเมนต์รวม ในรายงานหลังไลฟ์ตรงกับ DB</li></ul><div class="hint" style="margin-top:6px">ประเภท: Manual — คนทำบนช่องจริง · ที่มา: live-readiness-test-cases.html (QA · 2026-09-09) · แผนคู่: live-readiness-test-plan.html · วัดกับ develop @ b82bb4f · 🔄 2026-10-15 แก้ Expected ตาม TI-381 T4 (เจ้าของงานเคาะ 2026-09-01: session เก็บเฉพาะสิ่งที่เกิดหลังเริ่ม · commit 26477cea) และ TI-441 (เลิกดึงคอมเมนต์ย้อนหลังเอง · e816f60c) — เดิมคาดว่า history ใน DB = จำนวนที่เห็นตอนเข้าห้อง ซึ่งไม่ตรงพฤติกรรมแล้ว · เคสกลางใน repo: TC-0.5-CAP-TI381-E2E-NEG-01</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1677,7 +1677,18 @@ async function publishToGH(auto) {
       if (r.status === 401) { localStorage.removeItem('gh_pat'); }
       throw new Error('ดึงไฟล์ไม่ได้ (HTTP ' + r.status + ') — ตรวจ token หรือ branch');
     }
-    return r.json();
+    var j = await r.json();
+    if (!j.content && j.sha) {
+      var rr = await fetch(
+        API + '?ref=' + GH_BRANCH + '&t=' + Date.now(),
+        { cache: 'no-store', headers: { Authorization: 'token ' + token, Accept: 'application/vnd.github.raw' } }
+      );
+      if (!rr.ok) throw new Error('ดึงไฟล์ไม่ได้ (HTTP ' + rr.status + ') — ลองบันทึกใหม่อีกครั้ง');
+      var raw = await rr.text();
+      if (!/<script id="store-data"/.test(raw)) throw new Error('ไฟล์บน GitHub อ่านไม่ครบ — ยังไม่บันทึก ลองใหม่อีกครั้ง');
+      j.content = btoa(unescape(encodeURIComponent(raw)));
+    }
+    return j;
   }
 
   // Merge statuses that exist on the remote copy but NOT locally, so a
