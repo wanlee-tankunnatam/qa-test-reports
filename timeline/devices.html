@@ -138,6 +138,14 @@
   table.mx tr.app td.d{color:var(--faint); font-size:.78rem}
   table.mx tr.app td.info{white-space:normal}
   table.mx th.pn{position:static; box-shadow:none}
+  table.mx{min-width:0; width:100%}
+  table.mx th:nth-child(1), table.mx tr.app td.pn{width:34%}
+  table.mx tr.app td.val{text-align:left; color:var(--text); white-space:normal}
+  table.mx tr.app td.has, table.mx tr.app td.no{text-align:left}
+  table.mx tr.app .v.has{font-size:.95rem}
+  table.mx tr.kv td.pn{color:var(--muted); font-weight:600}
+  table.mx .pnote{color:var(--muted); font-weight:400; margin-left:6px}
+  table.mx .v[data-act="edit-dev"]{cursor:pointer}
 
   /* ---- dialog ---- */
   dialog{border:1px solid var(--border); border-radius:16px; background:var(--panel); color:var(--text); padding:0; max-width:560px; width:calc(100% - 32px); box-shadow:0 20px 60px rgba(0,0,0,.25)}
@@ -184,14 +192,14 @@
   </div>
 
   <div class="tabs" role="tablist">
-    <button class="tab active" role="tab" data-tab="table">📋 ตารางรวม (เครื่อง → โปรแกรม TAKRA)</button>
+    <button class="tab active" role="tab" data-tab="table">📋 ตารางรวม</button>
     <button class="tab" role="tab" data-tab="devices">🖥️ รายเครื่อง (การ์ด)</button>
   </div>
 
   <section class="panel" data-panel="table">
     <div class="toolbar">
       <input type="search" id="qm" placeholder="ค้นหาเครื่อง / โปรแกรม… (เช่น Insight, Windows, Ice)" autocomplete="off">
-      <span class="hint" style="color:var(--muted);font-size:.82rem">แถวหลัก = เครื่อง (กด ▾ พับ/กาง) · แถวย่อย = โปรแกรม TAKRA แต่ละตัว (คลิกเวอร์ชันเพื่อแก้ · คลิก — เพื่อเพิ่ม)</span>
+      <span class="hint" style="color:var(--muted);font-size:.82rem">แถวหลัก = เครื่อง (กด ▾ พับ/กาง) · ใต้ลงมา Spec · AnyDesk · โปรแกรม TAKRA ทีละตัว (คลิกเวอร์ชันเพื่อแก้ · คลิก — เพื่อเพิ่ม)</span>
       <span class="grow" style="flex:1"></span>
       <button class="btn primary" id="btn-add-device2">＋ เพิ่มเครื่อง</button>
     </div>
@@ -407,45 +415,43 @@
     }); });
     return cols;
   }
-  // แถวหลัก = เครื่อง (พับ/กางได้) · แถวย่อย = โปรแกรม TAKRA แต่ละตัว (prod / UAT)
+  // แถวหลัก = เครื่อง (พับ/กางได้) · แถวย่อย = สเปก · AnyDesk · โปรแกรม TAKRA ทีละตัว (UAT ก่อน prod)
   var collapsed={}; try { collapsed=JSON.parse(localStorage.getItem('qa-devices-collapsed')||'{}')||{}; } catch(_){}
+  var ORDER=['Takra Rerun','Takra Insight','Takra Post','Takra Clip Cut','Takra Lib-Sync'];
+  function programRows(d){
+    // รายชื่อโปรแกรมที่จะโชว์: ชุดมาตรฐาน (UAT ก่อน prod) + โปรแกรมอื่นที่มีในเครื่อง
+    var list=[], seen={};
+    ORDER.forEach(function(n){ [n+' UAT', n].forEach(function(v){ list.push(v); seen[norm(v)]=1; }); });
+    (d.apps||[]).forEach(function(a){ if(!seen[norm(a.name)]){ seen[norm(a.name)]=1; list.push(a.name); } });
+    return list;
+  }
   function renderTable(){
     var q=norm(document.getElementById('qm').value), tbl=document.getElementById('mx');
     var devs=store.devices.slice().sort(function(a,b){ return (a.os||'').localeCompare(b.os||'') || a.name.localeCompare(b.name,'th'); });
-    var cols=appColumns(), NC=6;
-    var h='<thead><tr><th class="pn">เครื่อง / โปรแกรม TAKRA</th><th>เวอร์ชัน prod</th><th>ลงเมื่อ</th><th>เวอร์ชัน UAT</th><th>ลงเมื่อ</th><th>หมายเหตุ</th></tr></thead><tbody>';
+    var NC=3;
+    var h='<thead><tr><th class="pn">รายการ</th><th>เวอร์ชัน / ค่า</th><th>ลงเมื่อ</th></tr></thead><tbody>';
     var shown=0;
     devs.forEach(function(d){
       var m=matchQ(d,q); if(!m.dev) return; shown++;
       var os=OS[d.os]||OS.oth, st=STATE[d.state]||STATE.ok, isC=!!collapsed[d.id] && !q;
-      var meta=[]; meta.push('<span class="pill '+os.cls+'">'+os.lbl+'</span>'+(d.osver?' '+esc(d.osver):''));
-      if(d.spec) meta.push(esc(d.spec));
-      meta.push('🖧 AnyDesk '+(d.anydesk?'<code>'+esc(d.anydesk)+'</code> <button class="ib" data-act="copy-ad" title="คัดลอก ID">📋</button>':'<span style="color:var(--faint)">—</span>'));
-      if(d.owner) meta.push('👤 '+esc(d.owner));
-      if(d.loc) meta.push('📍 '+esc(d.loc));
       h+='<tr class="dev'+(isC?' collapsed':'')+'" data-id="'+esc(d.id)+'"><td class="pn" colspan="'+NC+'"><div class="devrow">';
       h+='<button class="ib caret" data-act="toggle" title="พับ/กาง">▾</button>';
-      h+='<span class="dname">'+os.ico+' '+esc(d.name)+(d.state&&d.state!=='ok'?' <span class="pill '+st.cls+'">'+st.lbl+'</span>':'')+'</span>';
-      h+='<span class="dmeta">'+meta.join(' · ')+'</span>';
+      h+='<span class="dname">'+os.ico+' '+esc(d.name)+'</span> <span class="pill '+os.cls+'">'+os.lbl+'</span>'+(d.state&&d.state!=='ok'?' <span class="pill '+st.cls+'">'+st.lbl+'</span>':'');
+      var meta=[]; if(d.owner) meta.push('👤 '+esc(d.owner)); if(d.loc) meta.push('📍 '+esc(d.loc));
+      if(meta.length) h+='<span class="dmeta">'+meta.join(' · ')+'</span>';
       h+='<span class="dcnt">ลงแล้ว <b>'+(d.apps||[]).length+'</b> ตัว</span>';
       h+='<span class="dact"><button class="ib" data-act="edit-dev" title="แก้ข้อมูลเครื่อง">✏️</button><button class="ib" data-act="add-app" title="เพิ่มโปรแกรม">＋</button><button class="ib" data-act="import" title="นำเข้าจากเครื่อง">📥</button></span>';
-      h+='</div>'+(d.note?'<div class="dnote">'+esc(d.note)+'</div>':'')+'</td></tr>';
+      h+='</div></td></tr>';
       if(isC) return;
-      var seen={};
-      cols.forEach(function(c){
-        var cells='', any=false, notes=[];
-        c.variants.forEach(function(vn){
-          var idx=-1; (d.apps||[]).forEach(function(a,i){ if(idx<0 && norm(a.name)===norm(vn)) idx=i; });
-          if(idx>=0){ var a=d.apps[idx]; any=true; seen[idx]=1; if(a.note) notes.push(esc(a.note));
-            cells+='<td class="has"><span class="v has" data-edit="'+idx+'" title="แก้ '+esc(vn)+'">'+(a.ver?esc(a.ver):'✓')+'</span></td><td class="d">'+esc(fmtDate(a.date))+'</td>'; }
-          else cells+='<td class="no"><span class="v no" data-add="'+esc(vn)+'" title="เพิ่ม '+esc(vn)+' ให้ '+esc(d.name)+'">—</span></td><td class="d"></td>';
-        });
-        h+='<tr class="app'+(any?'':' none')+'" data-id="'+esc(d.id)+'"><td class="pn">'+esc(c.name)+'</td>'+cells+'<td class="info">'+notes.join(' · ')+'</td></tr>';
+      h+='<tr class="app kv" data-id="'+esc(d.id)+'"><td class="pn">Spec</td><td class="val">'+([d.spec?esc(d.spec):'', d.osver?esc(d.osver):''].filter(Boolean).join(' · ')||'<span class="v no" data-act="edit-dev">—</span>')+'</td><td class="d"></td></tr>';
+      h+='<tr class="app kv" data-id="'+esc(d.id)+'"><td class="pn">AnyDesk</td><td class="val">'+(d.anydesk?'<code>'+esc(d.anydesk)+'</code> <button class="ib" data-act="copy-ad" title="คัดลอก ID">📋</button>':'<span class="v no" data-act="edit-dev" title="กรอก AnyDesk ID">—</span>')+'</td><td class="d"></td></tr>';
+      programRows(d).forEach(function(pn){
+        var idx=-1; (d.apps||[]).forEach(function(a,i){ if(idx<0 && norm(a.name)===norm(pn)) idx=i; });
+        if(idx>=0){ var a=d.apps[idx];
+          h+='<tr class="app" data-id="'+esc(d.id)+'"><td class="pn">'+esc(pn)+'</td><td class="has"><span class="v has" data-edit="'+idx+'" title="แก้ '+esc(pn)+'">'+(a.ver?esc(a.ver):'✓')+'</span>'+(a.note?' <small class="pnote">'+esc(a.note)+'</small>':'')+'</td><td class="d">'+esc(fmtDate(a.date))+'</td></tr>'; }
+        else h+='<tr class="app none" data-id="'+esc(d.id)+'"><td class="pn">'+esc(pn)+'</td><td class="no"><span class="v no" data-add="'+esc(pn)+'" title="เพิ่ม '+esc(pn)+' ให้ '+esc(d.name)+'">—</span></td><td class="d"></td></tr>';
       });
-      // โปรแกรมอื่นในเครื่องที่ไม่เข้ากลุ่ม prod/UAT (กันข้อมูลหาย)
-      (d.apps||[]).forEach(function(a,i){ if(seen[i]) return;
-        h+='<tr class="app" data-id="'+esc(d.id)+'"><td class="pn">'+esc(a.name)+'</td><td class="has"><span class="v has" data-edit="'+i+'">'+(a.ver?esc(a.ver):'✓')+'</span></td><td class="d">'+esc(fmtDate(a.date))+'</td><td></td><td></td><td class="info">'+esc(a.note||'')+'</td></tr>';
-      });
+      if(d.note) h+='<tr class="app kv" data-id="'+esc(d.id)+'"><td class="pn">หมายเหตุ</td><td class="val" colspan="2">'+esc(d.note)+'</td></tr>';
     });
     if(!devs.length) h+='<tr><td class="pn" colspan="'+NC+'"><span class="empty">ยังไม่มีเครื่องในทะเบียน — กด "＋ เพิ่มเครื่อง"</span></td></tr>';
     else if(!shown) h+='<tr><td class="pn" colspan="'+NC+'"><span class="empty">ไม่พบเครื่อง/โปรแกรมที่ตรงคำค้น</span></td></tr>';
