@@ -199,7 +199,7 @@
   <section class="panel" data-panel="table">
     <div class="toolbar">
       <input type="search" id="qm" placeholder="ค้นหาเครื่อง / โปรแกรม… (เช่น Insight, Windows, Ice)" autocomplete="off">
-      <span class="hint" style="color:var(--muted);font-size:.82rem">แถวหลัก = เครื่อง (กด ▾ พับ/กาง) · ใต้ลงมา Spec · AnyDesk · โปรแกรม TAKRA ทีละตัว (คลิกเวอร์ชันเพื่อแก้ · คลิก — เพื่อเพิ่ม)</span>
+      <span class="hint" style="color:var(--muted);font-size:.82rem">แถวหลัก = เครื่อง (กด ▾ พับ/กาง) · ใต้ลงมา Spec · AnyDesk · โปรแกรม TAKRA ทีละตัว (✅ = ลงแล้ว ชี้เพื่อดูเวอร์ชัน · คลิก ✅ เพื่อแก้ · คลิก — เพื่อเพิ่ม)</span>
       <span class="grow" style="flex:1"></span>
       <button class="btn primary" id="btn-add-device2">＋ เพิ่มเครื่อง</button>
     </div>
@@ -448,7 +448,7 @@
       programRows(d).forEach(function(pn){
         var idx=-1; (d.apps||[]).forEach(function(a,i){ if(idx<0 && norm(a.name)===norm(pn)) idx=i; });
         if(idx>=0){ var a=d.apps[idx];
-          h+='<tr class="app" data-id="'+esc(d.id)+'"><td class="pn">'+esc(pn)+'</td><td class="has"><span class="v has" data-edit="'+idx+'" title="แก้ '+esc(pn)+'">'+(a.ver?esc(a.ver):'✓')+'</span>'+(a.note?' <small class="pnote">'+esc(a.note)+'</small>':'')+'</td><td class="d">'+esc(fmtDate(a.date))+'</td></tr>'; }
+          h+='<tr class="app" data-id="'+esc(d.id)+'"><td class="pn">'+esc(pn)+'</td><td class="has"><span class="v has" data-edit="'+idx+'" title="ลงแล้ว'+(a.ver?' · เวอร์ชัน '+esc(a.ver):'')+(a.note?' · '+esc(a.note):'')+' — คลิกเพื่อแก้">✅</span></td><td class="d">'+esc(fmtDate(a.date))+'</td></tr>'; }
         else h+='<tr class="app none" data-id="'+esc(d.id)+'"><td class="pn">'+esc(pn)+'</td><td class="no"><span class="v no" data-add="'+esc(pn)+'" title="เพิ่ม '+esc(pn)+' ให้ '+esc(d.name)+'">—</span></td><td class="d"></td></tr>';
       });
       if(d.note) h+='<tr class="app kv" data-id="'+esc(d.id)+'"><td class="pn">หมายเหตุ</td><td class="val" colspan="2">'+esc(d.note)+'</td></tr>';
