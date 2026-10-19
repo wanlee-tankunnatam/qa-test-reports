@@ -141,7 +141,7 @@
   <header>
     <div>
       <h1>🖥️ ทะเบียนอุปกรณ์ทดสอบ</h1>
-      <div class="sub">คอมที่ใช้ทดสอบทุกโปรเจกต์ TAKRA · เครื่องไหนลงโปรแกรม/เวอร์ชันอะไรไว้แล้ว · อัปเดตล่าสุด <span id="asof">—</span></div>
+      <div class="sub">คอมที่ใช้ทดสอบทุกโปรเจกต์ TAKRA · นับเฉพาะโปรแกรมของ TAKRA (Insight · Rerun · Post · Clip Cut · Lib-Sync …) ว่าเครื่องไหนลงตัวไหน/เวอร์ชันอะไรไว้แล้ว · อัปเดตล่าสุด <span id="asof">—</span></div>
     </div>
     <a class="back" href="../">🏠 รายงานทั้งหมด</a>
   </header>
@@ -180,7 +180,7 @@
     <div class="table-wrap"><table class="mx" id="mx"></table></div>
   </section>
 
-  <footer>แก้ในหน้าได้เลย — ข้อมูลเก็บในไฟล์นี้ (บล็อก store-data) และบันทึกขึ้น GitHub อัตโนมัติ · เปิดได้ทุกเครื่องผ่าน GitHub Pages (cache ~10 นาที) · ปุ่ม "📥 นำเข้าจากเครื่อง" มีคำสั่งดึงรายชื่อโปรแกรมสำหรับ Mac/Windows</footer>
+  <footer>แก้ในหน้าได้เลย — ข้อมูลเก็บในไฟล์นี้ (บล็อก store-data) และบันทึกขึ้น GitHub อัตโนมัติ · เปิดได้ทุกเครื่องผ่าน GitHub Pages (cache ~10 นาที) · ปุ่ม "📥 นำเข้าจากเครื่อง" มีคำสั่งดึงรายชื่อโปรแกรมสำหรับ Mac/Windows (กรองเฉพาะ TAKRA ให้เอง)</footer>
 </div>
 
 <!-- ===== Dialog: เพิ่ม/แก้เครื่อง ===== -->
@@ -209,7 +209,7 @@
   <form method="dialog" id="f-app">
     <div class="dg-head"><span id="dg-app-title">เพิ่มโปรแกรม</span><button type="button" class="ib" data-close>✕</button></div>
     <div class="dg-body">
-      <label class="full">ชื่อโปรแกรม *<input name="name" required list="dl-apps" placeholder="เช่น Takra Insight UAT / Google Chrome / OBS Studio" autocomplete="off"></label>
+      <label class="full">ชื่อโปรแกรม *<input name="name" required list="dl-apps" placeholder="เช่น Takra Insight UAT / Takra Rerun / Takra Post / Takra Clip Cut" autocomplete="off"></label>
       <label>เวอร์ชัน<input name="ver" placeholder="เช่น 0.1.105"></label>
       <label>วันที่ลง / อัปเดต<input name="date" type="date"></label>
       <label class="full">หมายเหตุ<textarea name="note" placeholder="เช่น build UAT · ติดตั้งจาก .dmg ของ dev · ต้องเปิด VPN ก่อน"></textarea></label>
@@ -236,6 +236,7 @@
       </div>
       <label class="full">วางผลลัพธ์ที่นี่<textarea name="text" style="min-height:160px" placeholder="Takra Insight UAT&#9;0.1.105&#10;Google Chrome&#9;155.0.8059.82&#10;OBS Studio"></textarea></label>
       <label>วันที่นำเข้า<input name="date" type="date"></label>
+      <label style="flex-direction:row;align-items:center;gap:8px;align-self:end;padding-bottom:8px"><input type="checkbox" name="takraOnly" checked style="width:auto"> เอาเฉพาะโปรแกรมของ TAKRA (ชื่อมีคำว่า Takra)</label>
     </div>
     <div class="dg-foot"><div class="r"><button type="button" class="btn" data-close>ยกเลิก</button><button type="submit" class="btn primary">นำเข้า</button></div></div>
   </form>
@@ -255,37 +256,32 @@
       "state": "ok",
       "owner": "Ice",
       "loc": "เครื่องหลัก QA",
-      "note": "เครื่องที่ใช้เขียน/รันรายงานใน qa-test-reports · มี Node v22.23.2 · Python 3.14.6 · git 2.50.1 · ffmpeg 8.1.2",
+      "note": "เครื่องที่ใช้เขียน/รันรายงานใน qa-test-reports",
       "apps": [
-        {"name": "Takra Insight", "ver": "0.1.59", "date": "2026-09-14", "note": "build production"},
-        {"name": "Takra Insight UAT", "ver": "0.1.105", "date": "2026-10-15", "note": "build UAT"},
-        {"name": "Takra Rerun", "ver": "0.1.26", "date": "2026-08-01", "note": "build production"},
-        {"name": "Takra Rerun UAT", "ver": "0.1.62", "date": "2026-10-14", "note": "build UAT"},
-        {"name": "Google Chrome", "ver": "155.0.8059.82", "date": "2026-06-16", "note": ""},
-        {"name": "Microsoft Edge", "ver": "155.0.4283.62", "date": "2026-06-18", "note": ""},
-        {"name": "Brave Browser", "ver": "155.1.97.56", "date": "2026-10-10", "note": ""},
-        {"name": "Visual Studio Code", "ver": "1.141.0", "date": "2026-10-03", "note": ""},
-        {"name": "Docker", "ver": "4.65.0", "date": "2026-03-13", "note": ""},
-        {"name": "Postman", "ver": "12.15.8", "date": "2026-06-19", "note": ""},
-        {"name": "TablePlus", "ver": "26.8.6", "date": "2026-08-04", "note": ""},
-        {"name": "GitHub Desktop", "ver": "3.6.5", "date": "2026-09-02", "note": ""},
-        {"name": "Android Studio", "ver": "2026.1", "date": "2026-07-10", "note": "มี adb สำหรับ TAKRA Post"},
-        {"name": "Xcode", "ver": "26.6", "date": "2026-07-17", "note": ""},
-        {"name": "OBSBOT_Center", "ver": "2.0.14", "date": "2026-06-10", "note": "กล้อง OBSBOT สำหรับทดสอบไลฟ์"},
-        {"name": "AnyDesk", "ver": "9.7.2", "date": "2026-06-30", "note": "รีโมตเข้าเครื่องอื่น"},
-        {"name": "OpenVPN Connect", "ver": "3.8.2", "date": "2026-09-08", "note": ""},
-        {"name": "LINE", "ver": "26.5.0", "date": "2026-10-04", "note": ""},
-        {"name": "Telegram", "ver": "13.0", "date": "2026-10-14", "note": "ทดสอบแจ้งเตือน Insight"},
-        {"name": "Discord", "ver": "0.0.416", "date": "2026-10-16", "note": ""},
-        {"name": "Figma", "ver": "1.0", "date": "2026-06-18", "note": ""},
-        {"name": "CapCut", "ver": "9.5.0", "date": "2026-09-25", "note": ""},
-        {"name": "Claude", "ver": "2.42304.0", "date": "", "note": ""},
-        {"name": "tldv", "ver": "3.0.353", "date": "2026-10-01", "note": ""},
-        {"name": "Obsidian", "ver": "1.12.7", "date": "2026-03-23", "note": ""},
-        {"name": "QADash", "ver": "0.1.0", "date": "2026-07-24", "note": ""},
-        {"name": "ClipForge", "ver": "0.8.79", "date": "2026-08-07", "note": ""},
-        {"name": "ScreenArc", "ver": "1.4.0", "date": "2026-07-20", "note": ""},
-        {"name": "Shopee Post", "ver": "1.0.0", "date": "2026-10-11", "note": ""}
+        {
+          "name": "Takra Insight",
+          "ver": "0.1.59",
+          "date": "2026-09-14",
+          "note": "build production"
+        },
+        {
+          "name": "Takra Insight UAT",
+          "ver": "0.1.105",
+          "date": "2026-10-15",
+          "note": "build UAT"
+        },
+        {
+          "name": "Takra Rerun",
+          "ver": "0.1.26",
+          "date": "2026-08-01",
+          "note": "build production"
+        },
+        {
+          "name": "Takra Rerun UAT",
+          "ver": "0.1.62",
+          "date": "2026-10-14",
+          "note": "build UAT"
+        }
       ]
     }
   ]
@@ -323,7 +319,7 @@
     h+='<div class="chip c-mac">🍎 macOS <b>'+mac+'</b></div>';
     h+='<div class="chip c-win">🪟 Windows <b>'+win+'</b></div>';
     if(oth) h+='<div class="chip">💻 อื่น ๆ <b>'+oth+'</b></div>';
-    h+='<div class="chip c-prog">🧩 โปรแกรมไม่ซ้ำ <b>'+Object.keys(names).length+'</b> ตัว</div>';
+    h+='<div class="chip c-prog">🧩 โปรแกรม TAKRA ไม่ซ้ำ <b>'+Object.keys(names).length+'</b> ตัว</div>';
     var fix=devs.filter(function(d){ return d.state&&d.state!=='ok'; }).length;
     if(fix) h+='<div class="chip" style="background:var(--none-bg);color:var(--none)">⚠️ มีปัญหา <b>'+fix+'</b></div>';
     document.getElementById('summary').innerHTML=h;
@@ -349,7 +345,7 @@
       h+='<div class="acts"><button class="ib" data-act="edit-dev" title="แก้ข้อมูลเครื่อง">✏️</button></div></div>';
       h+='<div class="card-body">';
       if(d.note) h+='<div class="dnote">'+esc(d.note)+'</div>';
-      h+='<div class="cnt"><span>ลงโปรแกรมแล้ว <b>'+(d.apps||[]).length+'</b> ตัว'+(m.apps?' (ตรงคำค้น '+apps.length+')':'')+'</span></div>';
+      h+='<div class="cnt"><span>ลงโปรแกรม TAKRA แล้ว <b>'+(d.apps||[]).length+'</b> ตัว'+(m.apps?' (ตรงคำค้น '+apps.length+')':'')+'</span></div>';
       if(!apps.length) h+='<div class="empty">ยังไม่มีรายการ — กด "＋ โปรแกรม" หรือ "📥 นำเข้าจากเครื่อง"</div>';
       else {
         h+='<table class="apps"><thead><tr><th>โปรแกรม</th><th>เวอร์ชัน</th><th>ลงเมื่อ</th><th></th></tr></thead><tbody>';
@@ -466,20 +462,22 @@
   function openImport(d){ impDev=d; document.getElementById('dg-import-dev').textContent=d.name; fImp.elements.text.value=''; fImp.elements.date.value=today(); dgImp.showModal(); fImp.elements.text.focus(); }
   fImp.addEventListener('submit', function(e){
     e.preventDefault(); if(!impDev) return;
-    var lines=fImp.elements.text.value.split(/\r?\n/), date=fImp.elements.date.value, added=0, updated=0;
+    var lines=fImp.elements.text.value.split(/\r?\n/), date=fImp.elements.date.value, added=0, updated=0, skipped=0;
+    var takraOnly=fImp.elements.takraOnly.checked;
     lines.forEach(function(ln){
       ln=ln.replace(/\s+$/,''); if(!ln.trim()) return;
       var parts=ln.split('\t'); var name, ver='';
       if(parts.length>=2){ name=parts[0].trim(); ver=parts.slice(1).join(' ').trim(); }
       else { var m=/^(.*?)[\s,|;]+(v?\d[\w.\-]*)$/.exec(ln.trim()); if(m){ name=m[1].trim(); ver=m[2]; } else name=ln.trim(); }
       if(!name || /^(utilities|safari)$/i.test(name)) return;
+      if(takraOnly && !/takra|ตะกร้า/i.test(name)){ skipped++; return; }
       var k=norm(name), hit=null; impDev.apps.forEach(function(a){ if(norm(a.name)===k) hit=a; });
       if(hit){ if(ver && hit.ver!==ver){ hit.ver=ver; hit.date=date||hit.date; updated++; } }
       else { impDev.apps.push({name:name, ver:ver, date:date, note:''}); added++; }
     });
     sortApps(impDev); dgImp.close();
     if(added||updated) changed(); else renderAll();
-    alert('นำเข้าแล้ว — เพิ่ม '+added+' · อัปเดตเวอร์ชัน '+updated+' โปรแกรม');
+    alert('นำเข้าแล้ว — เพิ่ม '+added+' · อัปเดตเวอร์ชัน '+updated+' โปรแกรม'+(skipped?' · ข้ามที่ไม่ใช่ TAKRA '+skipped:''));
   });
   [].slice.call(document.querySelectorAll('[data-copy]')).forEach(function(b){
     b.addEventListener('click', function(){
