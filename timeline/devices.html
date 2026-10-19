@@ -123,7 +123,21 @@
   table.mx td.pn .sub{display:block; color:var(--muted); font-size:.76rem; font-weight:400}
   table.mx td.act{white-space:nowrap}
   table.mx td.ad code, .card-head code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-size:.84rem; font-weight:700; color:var(--prog); background:var(--prog-bg); padding:1px 6px; border-radius:6px}
-  table.mx tfoot td{background:var(--head); color:var(--muted); font-size:.8rem; font-weight:600; border-top:2px solid var(--border)}
+  table.mx tr.dev td{background:color-mix(in srgb, var(--prog) 9%, var(--panel)); border-top:2px solid var(--border); box-shadow:inset 4px 0 0 var(--prog); text-align:left; white-space:normal; padding:10px 14px}
+  table.mx tr.dev:first-child td{border-top:0}
+  table.mx tr.dev.collapsed .caret{transform:rotate(-90deg)}
+  table.mx .devrow{display:flex; flex-wrap:wrap; align-items:center; gap:6px 12px}
+  table.mx .caret{font-size:1rem; transition:transform .15s; color:var(--prog)}
+  table.mx .dname{font-weight:700; font-size:1rem}
+  table.mx .dmeta{color:var(--muted); font-size:.82rem}
+  table.mx .dcnt{color:var(--muted); font-size:.82rem; margin-left:auto}
+  table.mx .dact{white-space:nowrap}
+  table.mx tr.dev .dnote{margin:4px 0 0 34px}
+  table.mx tr.app td.pn{padding-left:34px; font-weight:600; box-shadow:none; position:static}
+  table.mx tr.app.none td.pn{color:var(--muted); font-weight:500}
+  table.mx tr.app td.d{color:var(--faint); font-size:.78rem}
+  table.mx tr.app td.info{white-space:normal}
+  table.mx th.pn{position:static; box-shadow:none}
 
   /* ---- dialog ---- */
   dialog{border:1px solid var(--border); border-radius:16px; background:var(--panel); color:var(--text); padding:0; max-width:560px; width:calc(100% - 32px); box-shadow:0 20px 60px rgba(0,0,0,.25)}
@@ -170,14 +184,14 @@
   </div>
 
   <div class="tabs" role="tablist">
-    <button class="tab active" role="tab" data-tab="table">📋 ตารางรวม (เครื่อง × โปรแกรม TAKRA)</button>
+    <button class="tab active" role="tab" data-tab="table">📋 ตารางรวม (เครื่อง → โปรแกรม TAKRA)</button>
     <button class="tab" role="tab" data-tab="devices">🖥️ รายเครื่อง (การ์ด)</button>
   </div>
 
   <section class="panel" data-panel="table">
     <div class="toolbar">
       <input type="search" id="qm" placeholder="ค้นหาเครื่อง / โปรแกรม… (เช่น Insight, Windows, Ice)" autocomplete="off">
-      <span class="hint" style="color:var(--muted);font-size:.82rem">1 แถว = 1 เครื่อง · ช่อง = เวอร์ชัน prod / เวอร์ชัน UAT (คลิกตัวเลขเพื่อแก้ · คลิก — เพื่อเพิ่ม)</span>
+      <span class="hint" style="color:var(--muted);font-size:.82rem">แถวหลัก = เครื่อง (กด ▾ พับ/กาง) · แถวย่อย = โปรแกรม TAKRA แต่ละตัว (คลิกเวอร์ชันเพื่อแก้ · คลิก — เพื่อเพิ่ม)</span>
       <span class="grow" style="flex:1"></span>
       <button class="btn primary" id="btn-add-device2">＋ เพิ่มเครื่อง</button>
     </div>
@@ -393,46 +407,49 @@
     }); });
     return cols;
   }
+  // แถวหลัก = เครื่อง (พับ/กางได้) · แถวย่อย = โปรแกรม TAKRA แต่ละตัว (prod / UAT)
+  var collapsed={}; try { collapsed=JSON.parse(localStorage.getItem('qa-devices-collapsed')||'{}')||{}; } catch(_){}
   function renderTable(){
     var q=norm(document.getElementById('qm').value), tbl=document.getElementById('mx');
     var devs=store.devices.slice().sort(function(a,b){ return (a.os||'').localeCompare(b.os||'') || a.name.localeCompare(b.name,'th'); });
-    var cols=appColumns();
-    var h='<thead><tr><th class="pn">เครื่อง</th><th>OS</th><th>AnyDesk ID</th><th>สเปก</th>';
-    cols.forEach(function(c){ h+='<th>'+esc(c.name)+'<small>prod / UAT</small></th>'; });
-    h+='<th>ลงแล้ว</th><th>จัดการ</th><th>ผู้ดูแล</th></tr></thead><tbody>';
-    var shown=0, per={};
+    var cols=appColumns(), NC=6;
+    var h='<thead><tr><th class="pn">เครื่อง / โปรแกรม TAKRA</th><th>เวอร์ชัน prod</th><th>ลงเมื่อ</th><th>เวอร์ชัน UAT</th><th>ลงเมื่อ</th><th>หมายเหตุ</th></tr></thead><tbody>';
+    var shown=0;
     devs.forEach(function(d){
       var m=matchQ(d,q); if(!m.dev) return; shown++;
-      var os=OS[d.os]||OS.oth, st=STATE[d.state]||STATE.ok;
-      h+='<tr data-id="'+esc(d.id)+'"><td class="pn">'+os.ico+' '+esc(d.name)+(d.state&&d.state!=='ok'?' <span class="pill '+st.cls+'">'+st.lbl+'</span>':'')+(d.loc?'<span class="sub">📍 '+esc(d.loc)+'</span>':'')+'</td>';
-      h+='<td><span class="pill '+os.cls+'">'+os.lbl+'</span>'+(d.osver?'<br><small style="color:var(--muted)">'+esc(d.osver)+'</small>':'')+'</td>';
-      h+='<td class="ad">'+(d.anydesk?'<code>'+esc(d.anydesk)+'</code> <button class="ib" data-act="copy-ad" title="คัดลอก ID">📋</button>':'<span style="color:var(--faint)">—</span>')+'</td>';
-      h+='<td class="info">'+(d.spec?esc(d.spec):'<span style="color:var(--faint)">—</span>')+'</td>';
-      var n=0;
+      var os=OS[d.os]||OS.oth, st=STATE[d.state]||STATE.ok, isC=!!collapsed[d.id] && !q;
+      var meta=[]; meta.push('<span class="pill '+os.cls+'">'+os.lbl+'</span>'+(d.osver?' '+esc(d.osver):''));
+      if(d.spec) meta.push(esc(d.spec));
+      meta.push('🖧 AnyDesk '+(d.anydesk?'<code>'+esc(d.anydesk)+'</code> <button class="ib" data-act="copy-ad" title="คัดลอก ID">📋</button>':'<span style="color:var(--faint)">—</span>'));
+      if(d.owner) meta.push('👤 '+esc(d.owner));
+      if(d.loc) meta.push('📍 '+esc(d.loc));
+      h+='<tr class="dev'+(isC?' collapsed':'')+'" data-id="'+esc(d.id)+'"><td class="pn" colspan="'+NC+'"><div class="devrow">';
+      h+='<button class="ib caret" data-act="toggle" title="พับ/กาง">▾</button>';
+      h+='<span class="dname">'+os.ico+' '+esc(d.name)+(d.state&&d.state!=='ok'?' <span class="pill '+st.cls+'">'+st.lbl+'</span>':'')+'</span>';
+      h+='<span class="dmeta">'+meta.join(' · ')+'</span>';
+      h+='<span class="dcnt">ลงแล้ว <b>'+(d.apps||[]).length+'</b> ตัว</span>';
+      h+='<span class="dact"><button class="ib" data-act="edit-dev" title="แก้ข้อมูลเครื่อง">✏️</button><button class="ib" data-act="add-app" title="เพิ่มโปรแกรม">＋</button><button class="ib" data-act="import" title="นำเข้าจากเครื่อง">📥</button></span>';
+      h+='</div>'+(d.note?'<div class="dnote">'+esc(d.note)+'</div>':'')+'</td></tr>';
+      if(isC) return;
+      var seen={};
       cols.forEach(function(c){
-        var parts=[], any=false;
+        var cells='', any=false, notes=[];
         c.variants.forEach(function(vn){
           var idx=-1; (d.apps||[]).forEach(function(a,i){ if(idx<0 && norm(a.name)===norm(vn)) idx=i; });
-          if(idx>=0){ var a=d.apps[idx]; n++; any=true;
-            parts.push('<span class="v has" data-edit="'+idx+'" title="'+esc(vn+(a.date?' · ลงเมื่อ '+fmtDate(a.date):'')+(a.note?' · '+a.note:''))+'">'+(a.ver?esc(a.ver):'✓')+'</span>'); }
-          else parts.push('<span class="v no" data-add="'+esc(vn)+'" title="เพิ่ม '+esc(vn)+' ให้ '+esc(d.name)+'">—</span>');
+          if(idx>=0){ var a=d.apps[idx]; any=true; seen[idx]=1; if(a.note) notes.push(esc(a.note));
+            cells+='<td class="has"><span class="v has" data-edit="'+idx+'" title="แก้ '+esc(vn)+'">'+(a.ver?esc(a.ver):'✓')+'</span></td><td class="d">'+esc(fmtDate(a.date))+'</td>'; }
+          else cells+='<td class="no"><span class="v no" data-add="'+esc(vn)+'" title="เพิ่ม '+esc(vn)+' ให้ '+esc(d.name)+'">—</span></td><td class="d"></td>';
         });
-        if(any) per[c.name]=(per[c.name]||0)+1;
-        h+='<td class="'+(any?'has':'no')+'">'+parts.join('<i class="sep">/</i>')+'</td>';
+        h+='<tr class="app'+(any?'':' none')+'" data-id="'+esc(d.id)+'"><td class="pn">'+esc(c.name)+'</td>'+cells+'<td class="info">'+notes.join(' · ')+'</td></tr>';
       });
-      var extra=(d.apps||[]).length-n;
-      h+='<td class="cnt">'+(d.apps||[]).length+(extra>0?' <small>(+'+extra+' นอกตาราง)</small>':'')+'</td>';
-      h+='<td class="act"><button class="ib" data-act="edit-dev" title="แก้ข้อมูลเครื่อง">✏️</button><button class="ib" data-act="add-app" title="เพิ่มโปรแกรม">＋</button><button class="ib" data-act="import" title="นำเข้าจากเครื่อง">📥</button></td>';
-      h+='<td class="info">'+(d.owner?'👤 '+esc(d.owner):'<span style="color:var(--faint)">—</span>')+'</td></tr>';
+      // โปรแกรมอื่นในเครื่องที่ไม่เข้ากลุ่ม prod/UAT (กันข้อมูลหาย)
+      (d.apps||[]).forEach(function(a,i){ if(seen[i]) return;
+        h+='<tr class="app" data-id="'+esc(d.id)+'"><td class="pn">'+esc(a.name)+'</td><td class="has"><span class="v has" data-edit="'+i+'">'+(a.ver?esc(a.ver):'✓')+'</span></td><td class="d">'+esc(fmtDate(a.date))+'</td><td></td><td></td><td class="info">'+esc(a.note||'')+'</td></tr>';
+      });
     });
-    if(!devs.length) h+='<tr><td class="pn" colspan="'+(cols.length+7)+'"><span class="empty">ยังไม่มีเครื่องในทะเบียน — กด "＋ เพิ่มเครื่อง"</span></td></tr>';
-    else if(!shown) h+='<tr><td class="pn" colspan="'+(cols.length+7)+'"><span class="empty">ไม่พบเครื่อง/โปรแกรมที่ตรงคำค้น</span></td></tr>';
+    if(!devs.length) h+='<tr><td class="pn" colspan="'+NC+'"><span class="empty">ยังไม่มีเครื่องในทะเบียน — กด "＋ เพิ่มเครื่อง"</span></td></tr>';
+    else if(!shown) h+='<tr><td class="pn" colspan="'+NC+'"><span class="empty">ไม่พบเครื่อง/โปรแกรมที่ตรงคำค้น</span></td></tr>';
     h+='</tbody>';
-    if(devs.length>1){
-      h+='<tfoot><tr><td class="pn" colspan="4">รวมเครื่องที่ลงแล้ว</td>';
-      cols.forEach(function(c){ h+='<td>'+(per[c.name]||0)+'/'+devs.length+'</td>'; });
-      h+='<td></td><td></td><td></td></tr></tfoot>';
-    }
     tbl.innerHTML=h;
   }
   function renderAll(){ renderSummary(); renderCards(); renderTable(); }
@@ -552,7 +569,9 @@
     var tr=e.target.closest('tr[data-id]'); if(!tr) return;
     var d=dev(tr.dataset.id); if(!d) return;
     var b=e.target.closest('[data-act]');
-    if(b){ var act=b.dataset.act; if(act==='edit-dev') openDevice(d); else if(act==='add-app') openApp(d,-1); else if(act==='import') openImport(d); else if(act==='copy-ad') copyText(d.anydesk, b); return; }
+    if(b){ var act=b.dataset.act; if(act==='edit-dev') openDevice(d); else if(act==='add-app') openApp(d,-1); else if(act==='import') openImport(d); else if(act==='copy-ad') copyText(d.anydesk, b);
+      else if(act==='toggle'){ if(collapsed[d.id]) delete collapsed[d.id]; else collapsed[d.id]=1; try{ localStorage.setItem('qa-devices-collapsed', JSON.stringify(collapsed)); }catch(_){} renderTable(); }
+      return; }
     var v=e.target.closest('.v');
     if(v && v.dataset.add!=null) openApp(d,-1, v.dataset.add);
     else if(v && v.dataset.edit!=null) openApp(d,+v.dataset.edit);
