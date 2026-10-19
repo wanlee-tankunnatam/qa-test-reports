@@ -140,6 +140,8 @@
   table.mx th.pn{position:static; box-shadow:none}
   table.mx{min-width:0; width:100%}
   table.mx{table-layout:fixed}
+  .devtables{display:flex; flex-direction:column; gap:16px}
+  .devcard table.mx tr.dev td{border-top:0}
   table.mx th:nth-child(1), table.mx th:nth-child(3){width:22%}
   table.mx th:nth-child(2), table.mx th:nth-child(4){width:28%}
   table.mx tr.app td{white-space:normal; overflow-wrap:anywhere}
@@ -211,7 +213,7 @@
       <span class="grow" style="flex:1"></span>
       <button class="btn primary" id="btn-add-device2">＋ เพิ่มเครื่อง</button>
     </div>
-    <div class="table-wrap"><table class="mx" id="mx"></table></div>
+    <div class="devtables" id="mx"></div>
   </section>
 
   <section class="panel" data-panel="devices" hidden>
@@ -539,11 +541,12 @@
     var q=norm(document.getElementById('qm').value), tbl=document.getElementById('mx');
     var devs=store.devices.slice().sort(function(a,b){ return (a.os||'').localeCompare(b.os||'') || a.name.localeCompare(b.name,'th'); });
     var NC=4;
-    var h='<colgroup><col style="width:22%"><col style="width:28%"><col style="width:22%"><col style="width:28%"></colgroup><tbody>';   // ไม่มีหัวตาราง
-    var shown=0;
+    var COLS='<colgroup><col style="width:22%"><col style="width:28%"><col style="width:22%"><col style="width:28%"></colgroup>';
+    var h='', shown=0;
     devs.forEach(function(d){
       var m=matchQ(d,q); if(!m.dev) return; shown++;
       var os=OS[d.os]||OS.oth, st=STATE[d.state]||STATE.ok, isC=!!collapsed[d.id] && !q;
+      h+='<div class="table-wrap devcard"><table class="mx">'+COLS+'<tbody>';   // 1 เครื่อง = 1 การ์ด (ตารางแยก มีช่องว่างคั่น)
       h+='<tr class="dev'+(isC?' collapsed':'')+'" data-id="'+esc(d.id)+'"><td class="pn" colspan="'+NC+'"><div class="devrow">';
       h+='<button class="ib caret" data-act="toggle" title="พับ/กาง">▾</button>';
       h+='<span class="dname">'+os.ico+' '+esc(d.name)+'</span> <span class="pill '+os.cls+'">'+os.lbl+'</span>'+(d.state&&d.state!=='ok'?' <span class="pill '+st.cls+'">'+st.lbl+'</span>':'');
@@ -552,7 +555,7 @@
       h+='<span class="dcnt">ลงแล้ว <b>'+(d.apps||[]).length+'</b> ตัว</span>';
       h+='<span class="dact"><button class="ib" data-act="edit-dev" title="แก้ข้อมูลเครื่อง">✏️</button></span>';
       h+='</div></td></tr>';
-      if(isC) return;
+      if(isC){ h+='</tbody></table></div>'; return; }
       // รายการของเครื่อง: Spec · AnyDesk · โปรแกรม TAKRA — จัดเป็น 2 คอลัมน์ (ครึ่งแรกซ้าย ครึ่งหลังขวา)
       var items=[];
       items.push({pn:'Spec', cls:'kv', val:'<td class="val">'+([d.spec?esc(d.spec):'', d.osver?esc(d.osver):''].filter(Boolean).join(' · ')||'<span class="v no" data-act="edit-dev">—</span>')+'</td>'});
@@ -571,10 +574,10 @@
         h+='</tr>';
       }
       if(d.note) h+='<tr class="app kv" data-id="'+esc(d.id)+'"><td class="pn">หมายเหตุ</td><td class="val" colspan="3">'+esc(d.note)+'</td></tr>';
+      h+='</tbody></table></div>';
     });
-    if(!devs.length) h+='<tr><td class="pn" colspan="'+NC+'"><span class="empty">ยังไม่มีเครื่องในทะเบียน — กด "＋ เพิ่มเครื่อง"</span></td></tr>';
-    else if(!shown) h+='<tr><td class="pn" colspan="'+NC+'"><span class="empty">ไม่พบเครื่อง/โปรแกรมที่ตรงคำค้น</span></td></tr>';
-    h+='</tbody>';
+    if(!devs.length) h+='<div class="table-wrap"><div class="empty">ยังไม่มีเครื่องในทะเบียน — กด "＋ เพิ่มเครื่อง"</div></div>';
+    else if(!shown) h+='<div class="table-wrap"><div class="empty">ไม่พบเครื่อง/โปรแกรมที่ตรงคำค้น</div></div>';
     tbl.innerHTML=h;
   }
   function renderAll(){ renderSummary(); renderCards(); renderTable(); }
