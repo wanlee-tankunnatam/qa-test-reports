@@ -397,9 +397,9 @@
     var q=norm(document.getElementById('qm').value), tbl=document.getElementById('mx');
     var devs=store.devices.slice().sort(function(a,b){ return (a.os||'').localeCompare(b.os||'') || a.name.localeCompare(b.name,'th'); });
     var cols=appColumns();
-    var h='<thead><tr><th class="pn">เครื่อง</th><th>OS</th><th>AnyDesk ID</th><th>สเปก / ผู้ดูแล</th>';
+    var h='<thead><tr><th class="pn">เครื่อง</th><th>OS</th><th>AnyDesk ID</th><th>สเปก</th>';
     cols.forEach(function(c){ h+='<th>'+esc(c.name)+'<small>prod / UAT</small></th>'; });
-    h+='<th>ลงแล้ว</th><th>จัดการ</th></tr></thead><tbody>';
+    h+='<th>ลงแล้ว</th><th>จัดการ</th><th>ผู้ดูแล</th></tr></thead><tbody>';
     var shown=0, per={};
     devs.forEach(function(d){
       var m=matchQ(d,q); if(!m.dev) return; shown++;
@@ -407,7 +407,7 @@
       h+='<tr data-id="'+esc(d.id)+'"><td class="pn">'+os.ico+' '+esc(d.name)+(d.state&&d.state!=='ok'?' <span class="pill '+st.cls+'">'+st.lbl+'</span>':'')+(d.loc?'<span class="sub">📍 '+esc(d.loc)+'</span>':'')+'</td>';
       h+='<td><span class="pill '+os.cls+'">'+os.lbl+'</span>'+(d.osver?'<br><small style="color:var(--muted)">'+esc(d.osver)+'</small>':'')+'</td>';
       h+='<td class="ad">'+(d.anydesk?'<code>'+esc(d.anydesk)+'</code> <button class="ib" data-act="copy-ad" title="คัดลอก ID">📋</button>':'<span style="color:var(--faint)">—</span>')+'</td>';
-      h+='<td class="info">'+[d.spec?esc(d.spec):'', d.owner?'👤 '+esc(d.owner):''].filter(Boolean).join('<br>')+'</td>';
+      h+='<td class="info">'+(d.spec?esc(d.spec):'<span style="color:var(--faint)">—</span>')+'</td>';
       var n=0;
       cols.forEach(function(c){
         var parts=[], any=false;
@@ -422,15 +422,16 @@
       });
       var extra=(d.apps||[]).length-n;
       h+='<td class="cnt">'+(d.apps||[]).length+(extra>0?' <small>(+'+extra+' นอกตาราง)</small>':'')+'</td>';
-      h+='<td class="act"><button class="ib" data-act="edit-dev" title="แก้ข้อมูลเครื่อง">✏️</button><button class="ib" data-act="add-app" title="เพิ่มโปรแกรม">＋</button><button class="ib" data-act="import" title="นำเข้าจากเครื่อง">📥</button></td></tr>';
+      h+='<td class="act"><button class="ib" data-act="edit-dev" title="แก้ข้อมูลเครื่อง">✏️</button><button class="ib" data-act="add-app" title="เพิ่มโปรแกรม">＋</button><button class="ib" data-act="import" title="นำเข้าจากเครื่อง">📥</button></td>';
+      h+='<td class="info">'+(d.owner?'👤 '+esc(d.owner):'<span style="color:var(--faint)">—</span>')+'</td></tr>';
     });
-    if(!devs.length) h+='<tr><td class="pn" colspan="'+(cols.length+6)+'"><span class="empty">ยังไม่มีเครื่องในทะเบียน — กด "＋ เพิ่มเครื่อง"</span></td></tr>';
-    else if(!shown) h+='<tr><td class="pn" colspan="'+(cols.length+6)+'"><span class="empty">ไม่พบเครื่อง/โปรแกรมที่ตรงคำค้น</span></td></tr>';
+    if(!devs.length) h+='<tr><td class="pn" colspan="'+(cols.length+7)+'"><span class="empty">ยังไม่มีเครื่องในทะเบียน — กด "＋ เพิ่มเครื่อง"</span></td></tr>';
+    else if(!shown) h+='<tr><td class="pn" colspan="'+(cols.length+7)+'"><span class="empty">ไม่พบเครื่อง/โปรแกรมที่ตรงคำค้น</span></td></tr>';
     h+='</tbody>';
     if(devs.length>1){
       h+='<tfoot><tr><td class="pn" colspan="4">รวมเครื่องที่ลงแล้ว</td>';
       cols.forEach(function(c){ h+='<td>'+(per[c.name]||0)+'/'+devs.length+'</td>'; });
-      h+='<td></td><td></td></tr></tfoot>';
+      h+='<td></td><td></td><td></td></tr></tfoot>';
     }
     tbl.innerHTML=h;
   }
