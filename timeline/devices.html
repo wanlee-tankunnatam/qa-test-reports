@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TAKRA QA — ทะเบียนอุปกรณ์ทดสอบ</title>
+<style>
+  :root{
+    --bg:#f5f6f8; --panel:#ffffff; --head:#f8f9fb; --border:#e6e8ec;
+    --text:#1a1f26; --muted:#6b7280; --faint:#9aa1ab;
+    --pass:#15803d; --pass-bg:#e3f5e9;
+    --fail:#dc2626; --fail-bg:#fdeaea;
+    --prog:#2563eb; --prog-bg:#e6effe;
+    --wait:#6b7280; --wait-bg:#eef0f3;
+    --none:#b45309; --none-bg:#fdf1df; --yel:#ca8a04;
+    --mac:#6d28d9; --mac-bg:#efe9fd; --win:#0369a1; --win-bg:#e0f2fe; --oth:#374151; --oth-bg:#e5e7eb;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --bg:#0e1116; --panel:#161b22; --head:#1b2230; --border:#2a313c;
+      --text:#e6e9ee; --muted:#9aa4b2; --faint:#6b7480;
+      --pass:#4ade80; --pass-bg:#12301f; --fail:#f87171; --fail-bg:#3a1618;
+      --prog:#6ea8fe; --prog-bg:#17233b; --wait:#a3acb9; --wait-bg:#1f2630;
+      --none:#f0b35b; --none-bg:#332614; --yel:#facc15;
+      --mac:#c4b5fd; --mac-bg:#2a1f4d; --win:#7dd3fc; --win-bg:#0f2a3a; --oth:#cbd5e1; --oth-bg:#2a313c;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0e1116; --panel:#161b22; --head:#1b2230; --border:#2a313c;
+    --text:#e6e9ee; --muted:#9aa4b2; --faint:#6b7480;
+    --pass:#4ade80; --pass-bg:#12301f; --fail:#f87171; --fail-bg:#3a1618;
+    --prog:#6ea8fe; --prog-bg:#17233b; --wait:#a3acb9; --wait-bg:#1f2630;
+    --none:#f0b35b; --none-bg:#332614; --yel:#facc15;
+    --mac:#c4b5fd; --mac-bg:#2a1f4d; --win:#7dd3fc; --win-bg:#0f2a3a; --oth:#cbd5e1; --oth-bg:#2a313c;
+  }
+  *{box-sizing:border-box}
+  [hidden]{display:none!important}
+  html,body{margin:0}
+  body{background:var(--bg); color:var(--text); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans Thai",Roboto,Helvetica,Arial,sans-serif; line-height:1.5; font-size:15px; -webkit-font-smoothing:antialiased}
+  .wrap{max-width:1180px; margin:0 auto; padding:28px 16px 60px}
+  header{display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between; gap:12px; margin-bottom:14px}
+  h1{font-size:1.5rem; margin:0}
+  .sub{color:var(--muted); font-size:.9rem}
+  .back{color:var(--muted); font-size:.85rem; text-decoration:none; border:1px dashed var(--border); border-radius:10px; padding:6px 12px}
+
+  .summary{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:14px}
+  .chip{display:flex; align-items:center; gap:8px; padding:8px 14px; border-radius:12px; font-weight:600; font-size:.92rem; background:var(--wait-bg); color:var(--wait)}
+  .chip b{font-size:1.25rem; font-variant-numeric:tabular-nums}
+  .chip.c-all{background:var(--prog-bg); color:var(--prog)}
+  .chip.c-mac{background:var(--mac-bg); color:var(--mac)}
+  .chip.c-win{background:var(--win-bg); color:var(--win)}
+  .chip.c-prog{background:var(--pass-bg); color:var(--pass)}
+
+  .savebar{display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin:0 0 14px; padding:10px 12px; background:var(--panel); border:1px solid var(--border); border-radius:12px}
+  .savebar .hint{color:var(--muted); font-size:.82rem}
+  .savebar .grow{flex:1}
+  .btn{appearance:none; font:inherit; font-size:.85rem; font-weight:600; padding:6px 12px; border-radius:9px; border:1px solid var(--border); background:var(--head); color:var(--text); cursor:pointer}
+  .btn:hover{filter:brightness(.97)}
+  .btn:disabled{opacity:.6; cursor:default}
+  .btn.primary{background:var(--prog); border-color:var(--prog); color:#fff}
+  .btn.danger{color:var(--fail)}
+  .btn.sm{font-size:.78rem; padding:4px 9px}
+  .btn.ghost{background:transparent}
+
+  .tabs{display:flex; gap:4px; border-bottom:1px solid var(--border); margin:4px 0 16px; overflow-x:auto}
+  .tab{appearance:none; background:none; border:0; border-bottom:3px solid transparent; margin-bottom:-1px; padding:10px 16px; font:inherit; font-weight:600; font-size:.95rem; color:var(--muted); cursor:pointer; white-space:nowrap}
+  .tab:hover{color:var(--text)}
+  .tab.active{color:var(--text); border-bottom-color:var(--prog)}
+
+  .toolbar{display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin-bottom:12px}
+  .toolbar input[type=search]{font:inherit; font-size:.9rem; padding:7px 12px; border:1px solid var(--border); border-radius:10px; background:var(--panel); color:var(--text); min-width:240px}
+
+  /* ---- device cards ---- */
+  .cards{display:grid; grid-template-columns:repeat(auto-fill, minmax(340px, 1fr)); gap:14px}
+  .card{background:var(--panel); border:1px solid var(--border); border-radius:14px; overflow:hidden; display:flex; flex-direction:column}
+  .card-head{padding:12px 14px; border-bottom:1px solid var(--border); background:var(--head); display:flex; gap:10px; align-items:flex-start}
+  .card-head .ico{font-size:1.6rem; line-height:1}
+  .card-head .ttl{flex:1; min-width:0}
+  .card-head .name{font-weight:700; font-size:1.02rem; word-break:break-word}
+  .card-head .meta{color:var(--muted); font-size:.8rem; line-height:1.45}
+  .card-head .acts{display:flex; gap:4px; flex-wrap:wrap; justify-content:flex-end}
+  .pill{display:inline-block; font-size:.74rem; font-weight:700; border-radius:999px; padding:1px 9px; vertical-align:1px}
+  .p-mac{color:var(--mac); background:var(--mac-bg)} .p-win{color:var(--win); background:var(--win-bg)} .p-oth{color:var(--oth); background:var(--oth-bg)}
+  .p-ok{color:var(--pass); background:var(--pass-bg)} .p-bad{color:var(--fail); background:var(--fail-bg)} .p-fix{color:var(--none); background:var(--none-bg)}
+  .card-body{padding:8px 14px 12px; flex:1}
+  .card-body .cnt{display:flex; justify-content:space-between; align-items:center; color:var(--muted); font-size:.82rem; margin:2px 0 6px}
+  table.apps{width:100%; border-collapse:collapse; font-size:.86rem}
+  table.apps th{text-align:left; font-size:.72rem; color:var(--muted); font-weight:600; padding:4px 6px; border-bottom:1px solid var(--border)}
+  table.apps td{padding:5px 6px; border-top:1px solid var(--border); vertical-align:top}
+  table.apps tr:first-child td{border-top:0}
+  table.apps td.v{white-space:nowrap; font-variant-numeric:tabular-nums; color:var(--muted)}
+  table.apps td.d{white-space:nowrap; font-variant-numeric:tabular-nums; color:var(--faint); font-size:.78rem}
+  table.apps td.x{text-align:right; white-space:nowrap}
+  table.apps .pname{font-weight:600}
+  table.apps .pnote{display:block; color:var(--muted); font-size:.76rem}
+  .ib{appearance:none; border:0; background:none; cursor:pointer; color:var(--muted); font-size:.85rem; padding:2px 4px; border-radius:6px}
+  .ib:hover{background:var(--wait-bg); color:var(--text)}
+  .ib.del:hover{color:var(--fail); background:var(--fail-bg)}
+  .empty{color:var(--faint); font-size:.86rem; padding:12px 0; text-align:center}
+  .card-foot{padding:8px 14px 12px; display:flex; gap:6px; flex-wrap:wrap; border-top:1px dashed var(--border)}
+  .dnote{color:var(--muted); font-size:.82rem; margin:6px 0 2px; white-space:pre-wrap}
+
+  /* ---- matrix ---- */
+  .table-wrap{overflow-x:auto; background:var(--panel); border:1px solid var(--border); border-radius:14px}
+  table.mx{border-collapse:collapse; min-width:100%; font-size:.86rem}
+  table.mx th, table.mx td{padding:8px 12px; border-right:1px solid var(--border); border-top:1px solid var(--border); text-align:center; white-space:nowrap}
+  table.mx th:last-child, table.mx td:last-child{border-right:0}
+  table.mx thead th{background:var(--head); font-size:.78rem; color:var(--text); font-weight:700; border-top:0; vertical-align:bottom}
+  table.mx thead th small{display:block; color:var(--muted); font-weight:500}
+  table.mx th.pn, table.mx td.pn{text-align:left; position:sticky; left:0; background:var(--panel); z-index:2; box-shadow:4px 0 6px -4px rgba(0,0,0,.18); font-weight:600}
+  table.mx thead th.pn{background:var(--head)}
+  table.mx td.has{color:var(--pass); background:color-mix(in srgb, var(--pass-bg) 55%, var(--panel)); font-weight:600}
+  table.mx td.no{color:var(--faint)}
+  table.mx td.cnt{color:var(--muted); font-variant-numeric:tabular-nums}
+  table.mx td.has small{display:block; color:var(--muted); font-weight:400; font-size:.72rem}
+
+  /* ---- dialog ---- */
+  dialog{border:1px solid var(--border); border-radius:16px; background:var(--panel); color:var(--text); padding:0; max-width:560px; width:calc(100% - 32px); box-shadow:0 20px 60px rgba(0,0,0,.25)}
+  dialog::backdrop{background:rgba(0,0,0,.45)}
+  dialog form{display:flex; flex-direction:column}
+  .dg-head{padding:14px 18px; border-bottom:1px solid var(--border); font-weight:700; font-size:1.05rem; display:flex; justify-content:space-between; align-items:center}
+  .dg-body{padding:14px 18px; display:grid; grid-template-columns:1fr 1fr; gap:10px 12px}
+  .dg-body .full{grid-column:1 / -1}
+  .dg-body label{display:flex; flex-direction:column; gap:4px; font-size:.8rem; color:var(--muted); font-weight:600}
+  .dg-body input, .dg-body select, .dg-body textarea{font:inherit; font-size:.9rem; padding:7px 10px; border:1px solid var(--border); border-radius:9px; background:var(--bg); color:var(--text); width:100%}
+  .dg-body textarea{min-height:70px; resize:vertical}
+  .dg-foot{padding:12px 18px; border-top:1px solid var(--border); display:flex; justify-content:space-between; gap:8px; flex-wrap:wrap}
+  .dg-foot .r{display:flex; gap:8px; margin-left:auto}
+  .help{color:var(--muted); font-size:.8rem; line-height:1.5}
+  .help code, pre.cmd{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-size:.78rem}
+  pre.cmd{background:var(--bg); border:1px solid var(--border); border-radius:9px; padding:8px 10px; margin:4px 0 0; white-space:pre-wrap; word-break:break-all; color:var(--text)}
+  .cmdrow{display:flex; justify-content:space-between; align-items:center; gap:8px; margin-top:8px}
+  .cmdrow b{font-size:.82rem}
+  datalist{display:none}
+  footer{margin-top:16px; color:var(--faint); font-size:.8rem}
+  @media (max-width:560px){ .dg-body{grid-template-columns:1fr} .cards{grid-template-columns:1fr} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>🖥️ ทะเบียนอุปกรณ์ทดสอบ</h1>
+      <div class="sub">คอมที่ใช้ทดสอบทุกโปรเจกต์ TAKRA · เครื่องไหนลงโปรแกรม/เวอร์ชันอะไรไว้แล้ว · อัปเดตล่าสุด <span id="asof">—</span></div>
+    </div>
+    <a class="back" href="../">🏠 รายงานทั้งหมด</a>
+  </header>
+
+  <section class="summary" id="summary"></section>
+
+  <div class="savebar">
+    <span id="save-status" class="hint">✓ ตรงกับ GitHub</span>
+    <label class="hint" title="บันทึกขึ้น GitHub อัตโนมัติหลังหยุดแก้ ~5 วินาที"><input type="checkbox" id="chk-autosave" checked> auto-save</label>
+    <span class="grow"></span>
+    <button class="btn" id="btn-token" title="ใส่/เปลี่ยน GitHub token (ถ้าเซฟไม่ขึ้น/token เสีย กดอันนี้)">🔑 Token</button>
+    <button class="btn" id="btn-refresh" title="ดึงค่าล่าสุดจาก GitHub มารวม (ไม่ต้อง reload)">🔄 ดึงล่าสุด</button>
+    <button class="btn" id="btn-copy" title="คัดลอกสรุปเป็นข้อความ (วางใน LINE/Jira ได้)">📋 คัดลอกสรุป</button>
+    <button class="btn primary" id="btn-publish">☁️ บันทึกขึ้น GitHub</button>
+  </div>
+
+  <div class="tabs" role="tablist">
+    <button class="tab active" role="tab" data-tab="devices">🖥️ รายเครื่อง</button>
+    <button class="tab" role="tab" data-tab="matrix">🧩 ตารางเทียบโปรแกรม × เครื่อง</button>
+  </div>
+
+  <section class="panel" data-panel="devices">
+    <div class="toolbar">
+      <input type="search" id="q" placeholder="ค้นหาเครื่อง / โปรแกรม… (เช่น Insight, Windows, Chrome)" autocomplete="off">
+      <span class="grow" style="flex:1"></span>
+      <button class="btn primary" id="btn-add-device">＋ เพิ่มเครื่อง</button>
+    </div>
+    <div class="cards" id="cards"></div>
+  </section>
+
+  <section class="panel" data-panel="matrix" hidden>
+    <div class="toolbar">
+      <input type="search" id="qm" placeholder="กรองชื่อโปรแกรม…" autocomplete="off">
+      <span class="hint" style="color:var(--muted);font-size:.82rem">✓ = ลงแล้ว (ตัวเลข = เวอร์ชัน) · — = ยังไม่ลง · คลิกช่องว่างเพื่อเพิ่มโปรแกรมนั้นให้เครื่อง</span>
+    </div>
+    <div class="table-wrap"><table class="mx" id="mx"></table></div>
+  </section>
+
+  <footer>แก้ในหน้าได้เลย — ข้อมูลเก็บในไฟล์นี้ (บล็อก store-data) และบันทึกขึ้น GitHub อัตโนมัติ · เปิดได้ทุกเครื่องผ่าน GitHub Pages (cache ~10 นาที) · ปุ่ม "📥 นำเข้าจากเครื่อง" มีคำสั่งดึงรายชื่อโปรแกรมสำหรับ Mac/Windows</footer>
+</div>
+
+<!-- ===== Dialog: เพิ่ม/แก้เครื่อง ===== -->
+<dialog id="dg-device">
+  <form method="dialog" id="f-device">
+    <div class="dg-head"><span id="dg-device-title">เพิ่มเครื่อง</span><button type="button" class="ib" data-close>✕</button></div>
+    <div class="dg-body">
+      <label class="full">ชื่อเครื่อง *<input name="name" required placeholder="เช่น MacBook Pro M5 (Ice) / Windows PC ห้องทดสอบ"></label>
+      <label>ระบบปฏิบัติการ<select name="os"><option value="mac">macOS</option><option value="win">Windows</option><option value="oth">อื่น ๆ (Linux / iOS / Android)</option></select></label>
+      <label>เวอร์ชัน OS<input name="osver" placeholder="เช่น macOS 26.5.1 / Windows 11 24H2"></label>
+      <label>รุ่น / สเปก<input name="spec" placeholder="เช่น Apple M5 · 24 GB / i7-13700 · 32 GB · RTX 4060"></label>
+      <label>สภาพ<select name="state"><option value="ok">ใช้งานได้</option><option value="fix">มีปัญหา / รอซ่อม</option><option value="bad">ใช้ไม่ได้</option></select></label>
+      <label>ผู้ใช้ / ผู้ดูแล<input name="owner" placeholder="เช่น Ice / Moss / ส่วนกลาง"></label>
+      <label>ที่อยู่เครื่อง<input name="loc" placeholder="เช่น โต๊ะ QA / ห้องไลฟ์ / Remote (AnyDesk)"></label>
+      <label class="full">หมายเหตุ<textarea name="note" placeholder="เช่น ใช้ไลฟ์จริงเท่านั้น · มีกล้อง OBSBOT · ล็อกอิน UAT บัญชี …"></textarea></label>
+    </div>
+    <div class="dg-foot">
+      <button type="button" class="btn danger ghost" id="btn-del-device" hidden>🗑 ลบเครื่องนี้</button>
+      <div class="r"><button type="button" class="btn" data-close>ยกเลิก</button><button type="submit" class="btn primary">บันทึก</button></div>
+    </div>
+  </form>
+</dialog>
+
+<!-- ===== Dialog: เพิ่ม/แก้โปรแกรมในเครื่อง ===== -->
+<dialog id="dg-app">
+  <form method="dialog" id="f-app">
+    <div class="dg-head"><span id="dg-app-title">เพิ่มโปรแกรม</span><button type="button" class="ib" data-close>✕</button></div>
+    <div class="dg-body">
+      <label class="full">ชื่อโปรแกรม *<input name="name" required list="dl-apps" placeholder="เช่น Takra Insight UAT / Google Chrome / OBS Studio" autocomplete="off"></label>
+      <label>เวอร์ชัน<input name="ver" placeholder="เช่น 0.1.105"></label>
+      <label>วันที่ลง / อัปเดต<input name="date" type="date"></label>
+      <label class="full">หมายเหตุ<textarea name="note" placeholder="เช่น build UAT · ติดตั้งจาก .dmg ของ dev · ต้องเปิด VPN ก่อน"></textarea></label>
+    </div>
+    <div class="dg-foot">
+      <button type="button" class="btn danger ghost" id="btn-del-app" hidden>🗑 เอาออกจากเครื่อง</button>
+      <div class="r"><button type="button" class="btn" data-close>ยกเลิก</button><button type="submit" class="btn primary">บันทึก</button></div>
+    </div>
+  </form>
+  <datalist id="dl-apps"></datalist>
+</dialog>
+
+<!-- ===== Dialog: นำเข้าจากเครื่อง ===== -->
+<dialog id="dg-import">
+  <form method="dialog" id="f-import">
+    <div class="dg-head"><span>📥 นำเข้ารายชื่อโปรแกรม → <span id="dg-import-dev"></span></span><button type="button" class="ib" data-close>✕</button></div>
+    <div class="dg-body">
+      <div class="full help">
+        รันคำสั่งบนเครื่องนั้น แล้วคัดลอกผลลัพธ์มาวางด้านล่าง (บรรทัดละ 1 โปรแกรม รูปแบบ <code>ชื่อ[TAB]เวอร์ชัน</code> หรือพิมพ์เองก็ได้) · โปรแกรมที่มีอยู่แล้วจะอัปเดตเวอร์ชัน ไม่เพิ่มซ้ำ
+        <div class="cmdrow"><b>macOS (Terminal)</b><button type="button" class="btn sm" data-copy="cmd-mac">คัดลอก</button></div>
+        <pre class="cmd" id="cmd-mac">for a in /Applications/*.app; do n=$(basename "$a" .app); v=$(defaults read "$a/Contents/Info.plist" CFBundleShortVersionString 2>/dev/null); printf '%s\t%s\n' "$n" "$v"; done | pbcopy</pre>
+        <div class="cmdrow"><b>Windows (PowerShell)</b><button type="button" class="btn sm" data-copy="cmd-win">คัดลอก</button></div>
+        <pre class="cmd" id="cmd-win">Get-ItemProperty HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*, HKLM:\Software\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*, HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall\* | Where-Object DisplayName | Sort-Object DisplayName -Unique | ForEach-Object { "$($_.DisplayName)`t$($_.DisplayVersion)" } | Set-Clipboard</pre>
+      </div>
+      <label class="full">วางผลลัพธ์ที่นี่<textarea name="text" style="min-height:160px" placeholder="Takra Insight UAT&#9;0.1.105&#10;Google Chrome&#9;155.0.8059.82&#10;OBS Studio"></textarea></label>
+      <label>วันที่นำเข้า<input name="date" type="date"></label>
+    </div>
+    <div class="dg-foot"><div class="r"><button type="button" class="btn" data-close>ยกเลิก</button><button type="submit" class="btn primary">นำเข้า</button></div></div>
+  </form>
+</dialog>
+
+<!-- ข้อมูลทะเบียน — แก้ผ่านหน้าเว็บ แล้วบันทึกขึ้น GitHub (อย่าแก้โครง HTML เพื่อเปลี่ยนข้อมูล) -->
+<script id="store-data" type="application/json">
+{
+  "updated": "2026-10-19",
+  "devices": [
+    {
+      "id": "d-ice-mbp-m5",
+      "name": "MacBook Pro M5 (Ice)",
+      "os": "mac",
+      "osver": "macOS 26.5.1 (25F80)",
+      "spec": "Apple M5 · 24 GB",
+      "state": "ok",
+      "owner": "Ice",
+      "loc": "เครื่องหลัก QA",
+      "note": "เครื่องที่ใช้เขียน/รันรายงานใน qa-test-reports · มี Node v22.23.2 · Python 3.14.6 · git 2.50.1 · ffmpeg 8.1.2",
+      "apps": [
+        {"name": "Takra Insight", "ver": "0.1.59", "date": "2026-09-14", "note": "build production"},
+        {"name": "Takra Insight UAT", "ver": "0.1.105", "date": "2026-10-15", "note": "build UAT"},
+        {"name": "Takra Rerun", "ver": "0.1.26", "date": "2026-08-01", "note": "build production"},
+        {"name": "Takra Rerun UAT", "ver": "0.1.62", "date": "2026-10-14", "note": "build UAT"},
+        {"name": "Google Chrome", "ver": "155.0.8059.82", "date": "2026-06-16", "note": ""},
+        {"name": "Microsoft Edge", "ver": "155.0.4283.62", "date": "2026-06-18", "note": ""},
+        {"name": "Brave Browser", "ver": "155.1.97.56", "date": "2026-10-10", "note": ""},
+        {"name": "Visual Studio Code", "ver": "1.141.0", "date": "2026-10-03", "note": ""},
+        {"name": "Docker", "ver": "4.65.0", "date": "2026-03-13", "note": ""},
+        {"name": "Postman", "ver": "12.15.8", "date": "2026-06-19", "note": ""},
+        {"name": "TablePlus", "ver": "26.8.6", "date": "2026-08-04", "note": ""},
+        {"name": "GitHub Desktop", "ver": "3.6.5", "date": "2026-09-02", "note": ""},
+        {"name": "Android Studio", "ver": "2026.1", "date": "2026-07-10", "note": "มี adb สำหรับ TAKRA Post"},
+        {"name": "Xcode", "ver": "26.6", "date": "2026-07-17", "note": ""},
+        {"name": "OBSBOT_Center", "ver": "2.0.14", "date": "2026-06-10", "note": "กล้อง OBSBOT สำหรับทดสอบไลฟ์"},
+        {"name": "AnyDesk", "ver": "9.7.2", "date": "2026-06-30", "note": "รีโมตเข้าเครื่องอื่น"},
+        {"name": "OpenVPN Connect", "ver": "3.8.2", "date": "2026-09-08", "note": ""},
+        {"name": "LINE", "ver": "26.5.0", "date": "2026-10-04", "note": ""},
+        {"name": "Telegram", "ver": "13.0", "date": "2026-10-14", "note": "ทดสอบแจ้งเตือน Insight"},
+        {"name": "Discord", "ver": "0.0.416", "date": "2026-10-16", "note": ""},
+        {"name": "Figma", "ver": "1.0", "date": "2026-06-18", "note": ""},
+        {"name": "CapCut", "ver": "9.5.0", "date": "2026-09-25", "note": ""},
+        {"name": "Claude", "ver": "2.42304.0", "date": "", "note": ""},
+        {"name": "tldv", "ver": "3.0.353", "date": "2026-10-01", "note": ""},
+        {"name": "Obsidian", "ver": "1.12.7", "date": "2026-03-23", "note": ""},
+        {"name": "QADash", "ver": "0.1.0", "date": "2026-07-24", "note": ""},
+        {"name": "ClipForge", "ver": "0.8.79", "date": "2026-08-07", "note": ""},
+        {"name": "ScreenArc", "ver": "1.4.0", "date": "2026-07-20", "note": ""},
+        {"name": "Shopee Post", "ver": "1.0.0", "date": "2026-10-11", "note": ""}
+      ]
+    }
+  ]
+}
+</script>
+
+<script>
+(function(){
+  'use strict';
+  // ─────────────────────────────────────────────────────────────
+  // ข้อมูล: อ่าน/เขียนที่ <script id="store-data"> เท่านั้น
+  // store = { updated, devices:[ {id,name,os,osver,spec,state,owner,loc,note, apps:[{name,ver,date,note}]} ] }
+  // ─────────────────────────────────────────────────────────────
+  var storeEl = document.getElementById('store-data');
+  var store = {devices:[]};
+  try { store = JSON.parse(storeEl.textContent || '{}') || {}; } catch(_) {}
+  if(!Array.isArray(store.devices)) store.devices = [];
+  function today(){ var n=new Date(); return n.getFullYear()+'-'+String(n.getMonth()+1).padStart(2,'0')+'-'+String(n.getDate()).padStart(2,'0'); }
+  function serialize(s){ return '\n' + JSON.stringify(s, null, 2).replace(/</g, '\\u003c') + '\n'; }
+  function save(){ store.updated = today(); storeEl.textContent = serialize(store); }
+  function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+  function uid(p){ return p+'-'+Date.now().toString(36)+Math.random().toString(36).slice(2,6); }
+  function norm(s){ return String(s||'').trim().toLowerCase().replace(/\s+/g,' '); }
+  function fmtDate(d){ if(!d) return ''; var m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(d); if(!m) return d; var th=['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.']; return (+m[3])+' '+th[+m[2]-1]+' '+(+m[1]+543).toString().slice(2); }
+  var OS = {mac:{lbl:'macOS',ico:'🍎',cls:'p-mac'}, win:{lbl:'Windows',ico:'🪟',cls:'p-win'}, oth:{lbl:'อื่น ๆ',ico:'💻',cls:'p-oth'}};
+  var STATE = {ok:{lbl:'ใช้งานได้',cls:'p-ok'}, fix:{lbl:'มีปัญหา / รอซ่อม',cls:'p-fix'}, bad:{lbl:'ใช้ไม่ได้',cls:'p-bad'}};
+  function dev(id){ for(var i=0;i<store.devices.length;i++) if(store.devices[i].id===id) return store.devices[i]; return null; }
+  function sortApps(d){ d.apps.sort(function(a,b){ return a.name.localeCompare(b.name,'th'); }); }
+
+  // ───────────────── render ─────────────────
+  function renderSummary(){
+    var devs=store.devices, mac=0, win=0, oth=0, names={};
+    devs.forEach(function(d){ if(d.os==='mac') mac++; else if(d.os==='win') win++; else oth++; (d.apps||[]).forEach(function(a){ names[norm(a.name)]=1; }); });
+    var h='<div class="chip c-all">🖥️ คอมทั้งหมด <b>'+devs.length+'</b> เครื่อง</div>';
+    h+='<div class="chip c-mac">🍎 macOS <b>'+mac+'</b></div>';
+    h+='<div class="chip c-win">🪟 Windows <b>'+win+'</b></div>';
+    if(oth) h+='<div class="chip">💻 อื่น ๆ <b>'+oth+'</b></div>';
+    h+='<div class="chip c-prog">🧩 โปรแกรมไม่ซ้ำ <b>'+Object.keys(names).length+'</b> ตัว</div>';
+    var fix=devs.filter(function(d){ return d.state&&d.state!=='ok'; }).length;
+    if(fix) h+='<div class="chip" style="background:var(--none-bg);color:var(--none)">⚠️ มีปัญหา <b>'+fix+'</b></div>';
+    document.getElementById('summary').innerHTML=h;
+    document.getElementById('asof').textContent = store.updated ? fmtDate(store.updated)+' ('+store.updated+')' : '—';
+  }
+  function matchQ(d, q){
+    if(!q) return {dev:true, apps:null};
+    var txt=norm([d.name,d.osver,d.spec,d.owner,d.loc,d.note,OS[d.os]&&OS[d.os].lbl].join(' '));
+    if(txt.indexOf(q)>=0) return {dev:true, apps:null};
+    var apps=(d.apps||[]).filter(function(a){ return norm(a.name+' '+a.ver+' '+a.note).indexOf(q)>=0; });
+    return apps.length ? {dev:true, apps:apps} : {dev:false};
+  }
+  function renderCards(){
+    var q=norm(document.getElementById('q').value), box=document.getElementById('cards'), h='';
+    var list=store.devices.slice().sort(function(a,b){ return (a.os||'').localeCompare(b.os||'') || a.name.localeCompare(b.name,'th'); });
+    list.forEach(function(d){
+      var m=matchQ(d,q); if(!m.dev) return;
+      var os=OS[d.os]||OS.oth, st=STATE[d.state]||STATE.ok, apps=(m.apps||d.apps||[]);
+      h+='<article class="card" data-id="'+esc(d.id)+'">';
+      h+='<div class="card-head"><div class="ico">'+os.ico+'</div><div class="ttl"><div class="name">'+esc(d.name)+' <span class="pill '+os.cls+'">'+os.lbl+'</span> <span class="pill '+st.cls+'">'+st.lbl+'</span></div>';
+      var meta=[]; if(d.osver) meta.push(esc(d.osver)); if(d.spec) meta.push(esc(d.spec)); if(d.owner) meta.push('👤 '+esc(d.owner)); if(d.loc) meta.push('📍 '+esc(d.loc));
+      h+='<div class="meta">'+meta.join(' · ')+'</div></div>';
+      h+='<div class="acts"><button class="ib" data-act="edit-dev" title="แก้ข้อมูลเครื่อง">✏️</button></div></div>';
+      h+='<div class="card-body">';
+      if(d.note) h+='<div class="dnote">'+esc(d.note)+'</div>';
+      h+='<div class="cnt"><span>ลงโปรแกรมแล้ว <b>'+(d.apps||[]).length+'</b> ตัว'+(m.apps?' (ตรงคำค้น '+apps.length+')':'')+'</span></div>';
+      if(!apps.length) h+='<div class="empty">ยังไม่มีรายการ — กด "＋ โปรแกรม" หรือ "📥 นำเข้าจากเครื่อง"</div>';
+      else {
+        h+='<table class="apps"><thead><tr><th>โปรแกรม</th><th>เวอร์ชัน</th><th>ลงเมื่อ</th><th></th></tr></thead><tbody>';
+        apps.forEach(function(a){
+          var idx=d.apps.indexOf(a);
+          h+='<tr><td><span class="pname">'+esc(a.name)+'</span>'+(a.note?'<span class="pnote">'+esc(a.note)+'</span>':'')+'</td><td class="v">'+esc(a.ver||'—')+'</td><td class="d">'+esc(fmtDate(a.date))+'</td>';
+          h+='<td class="x"><button class="ib" data-act="edit-app" data-i="'+idx+'" title="แก้">✏️</button><button class="ib del" data-act="del-app" data-i="'+idx+'" title="เอาออก">✕</button></td></tr>';
+        });
+        h+='</tbody></table>';
+      }
+      h+='</div><div class="card-foot"><button class="btn sm" data-act="add-app">＋ โปรแกรม</button><button class="btn sm" data-act="import">📥 นำเข้าจากเครื่อง</button></div></article>';
+    });
+    if(!h) h='<div class="empty" style="grid-column:1/-1">'+(store.devices.length?'ไม่พบเครื่อง/โปรแกรมที่ตรงคำค้น':'ยังไม่มีเครื่องในทะเบียน — กด "＋ เพิ่มเครื่อง"')+'</div>';
+    box.innerHTML=h;
+  }
+  function renderMatrix(){
+    var q=norm(document.getElementById('qm').value), tbl=document.getElementById('mx');
+    var devs=store.devices.slice().sort(function(a,b){ return (a.os||'').localeCompare(b.os||'') || a.name.localeCompare(b.name,'th'); });
+    var map={}, order=[];
+    devs.forEach(function(d){ (d.apps||[]).forEach(function(a){ var k=norm(a.name); if(!map[k]){ map[k]={name:a.name, by:{}}; order.push(k); } map[k].by[d.id]=a; }); });
+    order.sort(function(x,y){ var dx=Object.keys(map[x].by).length, dy=Object.keys(map[y].by).length; return dy-dx || map[x].name.localeCompare(map[y].name,'th'); });
+    var h='<thead><tr><th class="pn">โปรแกรม</th>';
+    devs.forEach(function(d){ var os=OS[d.os]||OS.oth; h+='<th>'+os.ico+' '+esc(d.name)+'<small>'+esc(d.osver||os.lbl)+'</small></th>'; });
+    h+='<th>ลงแล้ว</th></tr></thead><tbody>';
+    var rows=0;
+    order.forEach(function(k){
+      var p=map[k]; if(q && norm(p.name).indexOf(q)<0) return; rows++;
+      h+='<tr><td class="pn">'+esc(p.name)+'</td>';
+      devs.forEach(function(d){
+        var a=p.by[d.id];
+        if(a) h+='<td class="has" title="'+esc(a.note||'')+'">✓'+(a.ver?'<small>'+esc(a.ver)+'</small>':'')+'</td>';
+        else h+='<td class="no" data-add="'+esc(d.id)+'" data-name="'+esc(p.name)+'" title="เพิ่ม '+esc(p.name)+' ให้ '+esc(d.name)+'" style="cursor:pointer">—</td>';
+      });
+      h+='<td class="cnt">'+Object.keys(p.by).length+'/'+devs.length+'</td></tr>';
+    });
+    if(!devs.length) h+='<tr><td class="pn" colspan="2"><span class="empty">ยังไม่มีเครื่อง</span></td></tr>';
+    else if(!rows) h+='<tr><td class="pn" colspan="'+(devs.length+2)+'"><span class="empty">'+(order.length?'ไม่พบโปรแกรมที่ตรงคำค้น':'ยังไม่มีโปรแกรมในเครื่องใดเลย')+'</span></td></tr>';
+    h+='</tbody>';
+    tbl.innerHTML=h;
+  }
+  function renderAll(){ renderSummary(); renderCards(); renderMatrix(); }
+  function changed(){ save(); renderAll(); markDirty(); }
+
+  // ───────────────── tabs ─────────────────
+  var tabs=[].slice.call(document.querySelectorAll('.tab'));
+  function showTab(name){
+    tabs.forEach(function(t){ t.classList.toggle('active', t.dataset.tab===name); });
+    [].slice.call(document.querySelectorAll('.panel')).forEach(function(p){ p.hidden = p.dataset.panel!==name; });
+    try { localStorage.setItem('qa-devices-tab', name); } catch(_){}
+  }
+  tabs.forEach(function(t){ t.addEventListener('click', function(){ showTab(t.dataset.tab); }); });
+  try { var lt=localStorage.getItem('qa-devices-tab'); if(lt) showTab(lt); } catch(_){}
+  document.getElementById('q').addEventListener('input', renderCards);
+  document.getElementById('qm').addEventListener('input', renderMatrix);
+
+  // ───────────────── dialogs ─────────────────
+  [].slice.call(document.querySelectorAll('dialog [data-close]')).forEach(function(b){ b.addEventListener('click', function(){ b.closest('dialog').close(); }); });
+  var dgDev=document.getElementById('dg-device'), fDev=document.getElementById('f-device'), editingDev=null;
+  function openDevice(d){
+    editingDev=d||null;
+    document.getElementById('dg-device-title').textContent = d ? 'แก้ข้อมูลเครื่อง' : 'เพิ่มเครื่อง';
+    document.getElementById('btn-del-device').hidden = !d;
+    ['name','os','osver','spec','state','owner','loc','note'].forEach(function(k){ fDev.elements[k].value = d ? (d[k]||(k==='os'?'mac':k==='state'?'ok':'')) : (k==='os'?'mac':k==='state'?'ok':''); });
+    dgDev.showModal(); fDev.elements.name.focus();
+  }
+  fDev.addEventListener('submit', function(e){
+    e.preventDefault();
+    var name=fDev.elements.name.value.trim(); if(!name) return;
+    var d=editingDev || {id:uid('d'), apps:[]};
+    ['name','os','osver','spec','state','owner','loc','note'].forEach(function(k){ d[k]=fDev.elements[k].value.trim(); });
+    if(!editingDev) store.devices.push(d);
+    dgDev.close(); changed();
+  });
+  document.getElementById('btn-del-device').addEventListener('click', function(){
+    if(!editingDev) return;
+    if(!confirm('ลบเครื่อง "'+editingDev.name+'" พร้อมรายการโปรแกรม '+(editingDev.apps||[]).length+' ตัว?')) return;
+    store.devices=store.devices.filter(function(x){ return x!==editingDev; });
+    dgDev.close(); changed();
+  });
+  document.getElementById('btn-add-device').addEventListener('click', function(){ openDevice(null); });
+
+  var dgApp=document.getElementById('dg-app'), fApp=document.getElementById('f-app'), appCtx=null; // {dev, idx}
+  function fillDatalist(){
+    var names={}; store.devices.forEach(function(d){ (d.apps||[]).forEach(function(a){ names[a.name]=1; }); });
+    document.getElementById('dl-apps').innerHTML=Object.keys(names).sort().map(function(n){ return '<option value="'+esc(n)+'">'; }).join('');
+  }
+  function openApp(d, idx, preset){
+    appCtx={dev:d, idx:idx};
+    var a = idx>=0 ? d.apps[idx] : {name:preset||'', ver:'', date:today(), note:''};
+    document.getElementById('dg-app-title').textContent = (idx>=0 ? 'แก้โปรแกรม' : 'เพิ่มโปรแกรม')+' · '+d.name;
+    document.getElementById('btn-del-app').hidden = idx<0;
+    ['name','ver','date','note'].forEach(function(k){ fApp.elements[k].value=a[k]||''; });
+    fillDatalist(); dgApp.showModal(); (idx>=0 ? fApp.elements.ver : fApp.elements.name).focus();
+  }
+  fApp.addEventListener('submit', function(e){
+    e.preventDefault();
+    if(!appCtx) return;
+    var d=appCtx.dev, name=fApp.elements.name.value.trim(); if(!name) return;
+    var rec={name:name, ver:fApp.elements.ver.value.trim(), date:fApp.elements.date.value, note:fApp.elements.note.value.trim()};
+    var dup=-1; d.apps.forEach(function(x,i){ if(i!==appCtx.idx && norm(x.name)===norm(name)) dup=i; });
+    if(appCtx.idx>=0){ d.apps[appCtx.idx]=rec; if(dup>=0) d.apps.splice(dup,1); }
+    else if(dup>=0){ if(!confirm('เครื่องนี้มี "'+d.apps[dup].name+'" อยู่แล้ว (เวอร์ชัน '+(d.apps[dup].ver||'—')+') — แทนด้วยข้อมูลใหม่?')) return; d.apps[dup]=rec; }
+    else d.apps.push(rec);
+    sortApps(d); dgApp.close(); changed();
+  });
+  document.getElementById('btn-del-app').addEventListener('click', function(){
+    if(!appCtx || appCtx.idx<0) return;
+    var a=appCtx.dev.apps[appCtx.idx];
+    if(!confirm('เอา "'+a.name+'" ออกจาก '+appCtx.dev.name+'?')) return;
+    appCtx.dev.apps.splice(appCtx.idx,1); dgApp.close(); changed();
+  });
+
+  var dgImp=document.getElementById('dg-import'), fImp=document.getElementById('f-import'), impDev=null;
+  function openImport(d){ impDev=d; document.getElementById('dg-import-dev').textContent=d.name; fImp.elements.text.value=''; fImp.elements.date.value=today(); dgImp.showModal(); fImp.elements.text.focus(); }
+  fImp.addEventListener('submit', function(e){
+    e.preventDefault(); if(!impDev) return;
+    var lines=fImp.elements.text.value.split(/\r?\n/), date=fImp.elements.date.value, added=0, updated=0;
+    lines.forEach(function(ln){
+      ln=ln.replace(/\s+$/,''); if(!ln.trim()) return;
+      var parts=ln.split('\t'); var name, ver='';
+      if(parts.length>=2){ name=parts[0].trim(); ver=parts.slice(1).join(' ').trim(); }
+      else { var m=/^(.*?)[\s,|;]+(v?\d[\w.\-]*)$/.exec(ln.trim()); if(m){ name=m[1].trim(); ver=m[2]; } else name=ln.trim(); }
+      if(!name || /^(utilities|safari)$/i.test(name)) return;
+      var k=norm(name), hit=null; impDev.apps.forEach(function(a){ if(norm(a.name)===k) hit=a; });
+      if(hit){ if(ver && hit.ver!==ver){ hit.ver=ver; hit.date=date||hit.date; updated++; } }
+      else { impDev.apps.push({name:name, ver:ver, date:date, note:''}); added++; }
+    });
+    sortApps(impDev); dgImp.close();
+    if(added||updated) changed(); else renderAll();
+    alert('นำเข้าแล้ว — เพิ่ม '+added+' · อัปเดตเวอร์ชัน '+updated+' โปรแกรม');
+  });
+  [].slice.call(document.querySelectorAll('[data-copy]')).forEach(function(b){
+    b.addEventListener('click', function(){
+      var t=document.getElementById(b.dataset.copy).textContent;
+      navigator.clipboard.writeText(t).then(function(){ b.textContent='✅ คัดลอกแล้ว'; setTimeout(function(){ b.textContent='คัดลอก'; },1500); });
+    });
+  });
+
+  // card actions
+  document.getElementById('cards').addEventListener('click', function(e){
+    var b=e.target.closest('[data-act]'); if(!b) return;
+    var card=b.closest('.card'), d=dev(card.dataset.id); if(!d) return;
+    var act=b.dataset.act, i=+b.dataset.i;
+    if(act==='edit-dev') openDevice(d);
+    else if(act==='add-app') openApp(d,-1);
+    else if(act==='import') openImport(d);
+    else if(act==='edit-app') openApp(d,i);
+    else if(act==='del-app'){ var a=d.apps[i]; if(a && confirm('เอา "'+a.name+'" ออกจาก '+d.name+'?')){ d.apps.splice(i,1); changed(); } }
+  });
+  document.getElementById('mx').addEventListener('click', function(e){
+    var td=e.target.closest('td[data-add]'); if(!td) return;
+    var d=dev(td.dataset.add); if(d) openApp(d,-1, td.dataset.name);
+  });
+
+  // คัดลอกสรุปเป็นข้อความ
+  document.getElementById('btn-copy').addEventListener('click', function(){
+    var out=['🖥️ ทะเบียนอุปกรณ์ทดสอบ TAKRA QA — '+(store.updated||today())+' · คอม '+store.devices.length+' เครื่อง',''];
+    store.devices.forEach(function(d){
+      var os=OS[d.os]||OS.oth, st=STATE[d.state]||STATE.ok;
+      out.push(os.ico+' '+d.name+' — '+[d.osver,d.spec,d.owner?'ผู้ใช้ '+d.owner:'',d.loc].filter(Boolean).join(' · ')+(d.state&&d.state!=='ok'?' · ⚠️ '+st.lbl:''));
+      (d.apps||[]).forEach(function(a){ out.push('   • '+a.name+(a.ver?' '+a.ver:'')+(a.date?' ('+a.date+')':'')+(a.note?' — '+a.note:'')); });
+      out.push('');
+    });
+    navigator.clipboard.writeText(out.join('\n')).then(function(){ var b=document.getElementById('btn-copy'); b.textContent='✅ คัดลอกแล้ว'; setTimeout(function(){ b.textContent='📋 คัดลอกสรุป'; },1500); });
+  });
+
+  // ─────────────────────────────────────────────────────────────
+  // GitHub publish (โค้ดชุดเดียวกับ timeline/index.html · token ใช้ร่วมกัน key gh_pat)
+  // ─────────────────────────────────────────────────────────────
+  var GH_OWNER='wanlee-tankunnatam', GH_REPO='qa-test-reports', GH_PATH='timeline/devices.html', GH_BRANCH='master';
+  var GH_API='https://api.github.com/repos/'+GH_OWNER+'/'+GH_REPO+'/contents/'+GH_PATH;
+  var dirty=false, autoTimer=null, publishing=false;
+  function ghToken(){
+    var t = localStorage.getItem('gh_pat');
+    if(!t){
+      t = prompt('ใส่ GitHub Personal Access Token (ใส่ครั้งเดียว จำไว้ในเบราว์เซอร์นี้ ใช้ร่วมกับไฟล์ test case)\n\n' +
+        'สร้าง token: github.com → Settings → Developer settings → Personal access tokens → Tokens (classic) → scope: repo\n' +
+        'หรือ Fine-grained token: repo "qa-test-reports" → Contents = Read and write');
+      if(t) localStorage.setItem('gh_pat', t.trim());
+    }
+    return t ? t.trim() : null;
+  }
+  function clearToken(){ localStorage.removeItem('gh_pat'); }
+  function storeFromHtml(html){
+    var m = html.match(/<script id="store-data"[^>]*>([\s\S]*?)<\/script>/);
+    try { var s = m ? (JSON.parse((m[1]||'{}').trim()||'{}')||{}) : {}; if(!Array.isArray(s.devices)) s.devices=[]; return s; } catch(_){ return {devices:[]}; }
+  }
+  function decode(remote){ return decodeURIComponent(escape(atob((remote.content||'').replace(/\s/g,'')))); }
+  // merge: เครื่องที่เรายังไม่มี (ตาม id) จาก GitHub ถูกเพิ่มเข้ามา · เครื่องที่ซ้ำ id ของเราชนะ
+  function mergeStore(rs){
+    var added=0;
+    (rs.devices||[]).forEach(function(rd){ if(!dev(rd.id)){ store.devices.push(rd); added++; } });
+    return added;
+  }
+  async function publishToGH(auto){
+    if(publishing) return;
+    var btn = document.getElementById('btn-publish');
+    var token = auto ? localStorage.getItem('gh_pat') : ghToken();
+    if(!token) return;
+    publishing = true;
+    if(autoTimer){ clearTimeout(autoTimer); autoTimer=null; }
+    btn.disabled = true; btn.textContent = '⏳ กำลังบันทึก…';
+    save();
+    async function fetchRemote(){
+      var r = await fetch(GH_API+'?ref='+GH_BRANCH+'&t='+Date.now(), {cache:'no-store', headers:{Authorization:'token '+token, Accept:'application/vnd.github+json'}});
+      if(!r.ok){ if(r.status===401) clearToken(); throw new Error('ดึงไฟล์ไม่ได้ (HTTP '+r.status+') — ตรวจ token หรือ branch'); }
+      return r.json();
+    }
+    function buildFromRemote(remote){
+      var remoteHtml = decode(remote);
+      try { if(mergeStore(storeFromHtml(remoteHtml))){ save(); renderAll(); } } catch(_){}
+      if(!/<script id="store-data"[^>]*>[\s\S]*?<\/script>/.test(remoteHtml)) throw new Error('ไฟล์บน GitHub ไม่มีบล็อก store-data');
+      var json = serialize(store);
+      var replaced = remoteHtml.replace(/(<script id="store-data"[^>]*>)[\s\S]*?(<\/script>)/, function(_m,o,c){ return o+json+c; });
+      return btoa(unescape(encodeURIComponent(replaced)));
+    }
+    async function commit(remote){
+      var ts = new Date().toISOString().slice(0,16).replace('T',' ');
+      return fetch(GH_API, {method:'PUT', headers:{Authorization:'token '+token, Accept:'application/vnd.github+json', 'Content-Type':'application/json'},
+        body: JSON.stringify({message:'chore(qa): update device inventory '+ts, content:buildFromRemote(remote), sha:remote.sha, branch:GH_BRANCH})});
+    }
+    try {
+      var r2, lastErr;
+      for(var attempt=0; attempt<4; attempt++){
+        var remote = await fetchRemote();
+        r2 = await commit(remote);
+        if(r2.ok) break;
+        if(r2.status===409 || r2.status===422){ lastErr='SHA ชนกัน (HTTP '+r2.status+')'; await new Promise(function(res){ setTimeout(res, 400*(attempt+1)); }); continue; }
+        if(r2.status===401 || r2.status===403){
+          clearToken();
+          var pe = await r2.json().catch(function(){ return {}; });
+          throw new Error((pe.message||'HTTP '+r2.status)+'\n\n→ Token สิทธิ์ไม่พอ/หมดอายุ ลบให้แล้ว ครั้งหน้าจะถามใหม่');
+        }
+        var e = await r2.json(); throw new Error(e.message||'HTTP '+r2.status);
+      }
+      if(!r2.ok) throw new Error((lastErr||'conflict')+' — มีการแก้ไฟล์พร้อมกัน ลองกดบันทึกอีกครั้ง');
+      dirty=false; publishing=false;
+      btn.textContent='✅ บันทึกแล้ว!'; btn.style.background='var(--pass)'; btn.style.borderColor='var(--pass)';
+      setTimeout(function(){ btn.style.background=''; btn.style.borderColor=''; btn.disabled=false; updateIndicator(); }, 3000);
+    } catch(err){
+      publishing=false;
+      if(!auto) alert('❌ บันทึกไม่สำเร็จ: '+err.message);
+      btn.disabled=false; updateIndicator();
+    }
+  }
+  function autoOn(){ var c=document.getElementById('chk-autosave'); return c ? c.checked : false; }
+  function updateIndicator(){
+    var s=document.getElementById('save-status'), b=document.getElementById('btn-publish');
+    if(dirty){ if(s){ s.textContent='● ยังไม่ได้บันทึก'; s.style.color='var(--none)'; } if(b && !b.disabled && b.textContent.indexOf('✅')<0) b.textContent='☁️ บันทึกขึ้น GitHub *'; }
+    else { if(s){ s.textContent='✓ ตรงกับ GitHub'; s.style.color='var(--muted)'; } if(b && !b.disabled && b.textContent.indexOf('✅')<0) b.textContent='☁️ บันทึกขึ้น GitHub'; }
+  }
+  var askedToken=false;
+  function markDirty(){
+    dirty=true; updateIndicator();
+    if(!autoOn()) return;
+    if(!localStorage.getItem('gh_pat') && !askedToken){ askedToken=true; ghToken(); }
+    if(localStorage.getItem('gh_pat')){
+      if(autoTimer) clearTimeout(autoTimer);
+      autoTimer=setTimeout(function(){ autoTimer=null; publishToGH(true); }, 5000);
+    } else {
+      var s=document.getElementById('save-status');
+      if(s){ s.textContent='● ยังไม่ได้บันทึก — กด 🔑 Token เพื่อเปิด auto-save'; s.style.color='var(--none)'; }
+    }
+  }
+  window.addEventListener('beforeunload', function(e){ if(dirty){ e.preventDefault(); e.returnValue='มีงานที่ยังไม่ได้บันทึกขึ้น GitHub'; return e.returnValue; } });
+  async function pullLatest(){
+    var rbtn=document.getElementById('btn-refresh');
+    if(dirty && !confirm('มีงานที่ยังไม่ได้บันทึก — การดึงล่าสุดจะใช้ค่าจาก GitHub ทับทั้งหมด ต้องการต่อ?')) return;
+    if(rbtn){ rbtn.disabled=true; rbtn.textContent='⏳ กำลังดึง…'; }
+    try {
+      var token=localStorage.getItem('gh_pat'), html;
+      if(token){
+        var r=await fetch(GH_API+'?ref='+GH_BRANCH+'&t='+Date.now(), {cache:'no-store', headers:{Authorization:'token '+token, Accept:'application/vnd.github+json'}});
+        if(!r.ok) throw new Error('HTTP '+r.status);
+        html=decode(await r.json());
+      } else {
+        var rr=await fetch('https://raw.githubusercontent.com/'+GH_OWNER+'/'+GH_REPO+'/'+GH_BRANCH+'/'+GH_PATH+'?t='+Date.now(), {cache:'no-store'});
+        if(!rr.ok) throw new Error('HTTP '+rr.status);
+        html=await rr.text();
+      }
+      store=storeFromHtml(html); save(); renderAll(); dirty=false; updateIndicator();
+      if(rbtn){ rbtn.textContent='✅ ดึงแล้ว'; setTimeout(function(){ rbtn.textContent='🔄 ดึงล่าสุด'; rbtn.disabled=false; }, 2000); }
+    } catch(err){
+      alert('❌ ดึงล่าสุดไม่สำเร็จ: '+err.message);
+      if(rbtn){ rbtn.textContent='🔄 ดึงล่าสุด'; rbtn.disabled=false; }
+    }
+  }
+  document.getElementById('btn-publish').addEventListener('click', function(){ publishToGH(false); });
+  document.getElementById('btn-refresh').addEventListener('click', pullLatest);
+  document.getElementById('btn-token').addEventListener('click', function(){
+    clearToken(); var t=ghToken();
+    if(t){ updateIndicator(); if(dirty) publishToGH(true); else alert('บันทึก token แล้ว ✅\nลองเพิ่ม/แก้สัก 1 รายการ — ปุ่มควรเด้ง "✅ บันทึกแล้ว!" ใน ~5 วิ'); }
+  });
+
+  renderAll();
+})();
+</script>
+</body>
+</html>
