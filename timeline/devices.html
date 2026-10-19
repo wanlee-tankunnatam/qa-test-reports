@@ -56,6 +56,7 @@
   .savebar .grow{flex:1}
   .btn{appearance:none; font:inherit; font-size:.85rem; font-weight:600; padding:6px 12px; border-radius:9px; border:1px solid var(--border); background:var(--head); color:var(--text); cursor:pointer}
   .btn:hover{filter:brightness(.97)}
+  a.btn{text-decoration:none; display:inline-block}
   .btn:disabled{opacity:.6; cursor:default}
   .btn.primary{background:var(--prog); border-color:var(--prog); color:#fff}
   .btn.danger{color:var(--fail)}
@@ -198,6 +199,11 @@
     <button class="btn" id="btn-token" title="ใส่/เปลี่ยน GitHub token (ถ้าเซฟไม่ขึ้น/token เสีย กดอันนี้)">🔑 Token</button>
     <button class="btn" id="btn-refresh" title="ดึงค่าล่าสุดจาก GitHub มารวม (ไม่ต้อง reload)">🔄 ดึงล่าสุด</button>
     <button class="btn" id="btn-copy" title="คัดลอกสรุปเป็นข้อความ (วางใน LINE/Jira ได้)">📋 คัดลอกสรุป</button>
+    <button class="btn" id="btn-export-csv" title="ดาวน์โหลดทะเบียนเป็น CSV (เปิดใน Excel/Google Sheets ได้ · 1 แถว = 1 เครื่อง)">⬇️ Export CSV</button>
+    <button class="btn" id="btn-export-json" title="ดาวน์โหลดทะเบียนเต็ม (JSON · ใช้สำรอง/ย้ายข้อมูล)">⬇️ Export JSON</button>
+    <button class="btn" id="btn-import" title="นำเข้าจากไฟล์ CSV หรือ JSON ที่ export ไว้ / กรอกตามเทมเพลต — เครื่องชื่อซ้ำจะถูกอัปเดต ชื่อใหม่จะถูกเพิ่ม">⬆️ Import ไฟล์</button>
+    <a class="btn" href="devices-template.csv" download title="เทมเพลต CSV สำหรับกรอกเครื่องใหม่แล้ว Import">📄 เทมเพลต CSV</a>
+    <input type="file" id="file-import" accept=".csv,.json,text/csv,application/json" hidden>
     <button class="btn primary" id="btn-publish">☁️ บันทึกขึ้น GitHub</button>
   </div>
 
@@ -225,7 +231,7 @@
     <div class="cards" id="cards"></div>
   </section>
 
-  <footer>แก้ในหน้าได้เลย — ข้อมูลเก็บในไฟล์นี้ (บล็อก store-data) และบันทึกขึ้น GitHub อัตโนมัติ · เปิดได้ทุกเครื่องผ่าน GitHub Pages (cache ~10 นาที) · ปุ่ม "📥 นำเข้าจากเครื่อง" มีคำสั่งดึงรายชื่อโปรแกรมสำหรับ Mac/Windows (กรองเฉพาะ TAKRA ให้เอง)</footer>
+  <footer>แก้ในหน้าได้เลย — ข้อมูลเก็บในไฟล์นี้ (บล็อก store-data) และบันทึกขึ้น GitHub อัตโนมัติ · เปิดได้ทุกเครื่องผ่าน GitHub Pages (cache ~10 นาที) · Import/Export ไฟล์ได้ทั้ง CSV (1 แถว = 1 เครื่อง · กรอกใน Excel/Google Sheets แล้วนำเข้า) และ JSON (สำรองข้อมูลเต็ม) · เทมเพลต CSV กดปุ่ม 📄</footer>
 </div>
 
 <!-- ===== Dialog: เพิ่ม/แก้เครื่อง ===== -->
@@ -715,6 +721,105 @@
       out.push('');
     });
     navigator.clipboard.writeText(out.join('\n')).then(function(){ var b=document.getElementById('btn-copy'); b.textContent='✅ คัดลอกแล้ว'; setTimeout(function(){ b.textContent='📋 คัดลอกสรุป'; },1500); });
+  });
+
+  // ─────────────────────────────────────────────────────────────
+  // Import / Export ไฟล์ (CSV = 1 แถว/เครื่อง · JSON = ข้อมูลเต็ม)
+  // ─────────────────────────────────────────────────────────────
+  var CSV_FIELDS=[['name','ชื่อเครื่อง'],['os','OS'],['osver','เวอร์ชัน OS'],['spec','สเปก'],['state','สภาพ'],['owner','ผู้ดูแล'],['anydesk','AnyDesk ID'],['loc','ที่อยู่เครื่อง'],['note','หมายเหตุ']];
+  var OS_TXT={mac:'macOS',win:'Windows',oth:'อื่น ๆ'}, ST_TXT={ok:'ใช้งานได้',fix:'มีปัญหา',bad:'ใช้ไม่ได้'};
+  function osFromText(t){ t=norm(t); if(/mac|osx|darwin/.test(t)) return 'mac'; if(/win/.test(t)) return 'win'; return t?'oth':'mac'; }
+  function stateFromText(t){ t=norm(t); if(/ไม่ได้|bad|broken|dead/.test(t)) return 'bad'; if(/ปัญหา|ซ่อม|fix|repair|issue/.test(t)) return 'fix'; return 'ok'; }
+  function allProgramNames(){
+    var list=[], seen={};
+    ORDER.forEach(function(n){ [n+' UAT', n].forEach(function(v){ list.push(v); seen[norm(v)]=1; }); });
+    store.devices.forEach(function(d){ (d.apps||[]).forEach(function(a){ if(!seen[norm(a.name)]){ seen[norm(a.name)]=1; list.push(a.name); } }); });
+    return list;
+  }
+  function csvCell(v){ v=String(v==null?'':v); return /[",\n\r]/.test(v) ? '"'+v.replace(/"/g,'""')+'"' : v; }
+  function toCSV(){
+    var progs=allProgramNames();
+    var head=CSV_FIELDS.map(function(f){ return f[1]; }).concat(progs);
+    var rows=[head.map(csvCell).join(',')];
+    store.devices.forEach(function(d){
+      var r=CSV_FIELDS.map(function(f){ var k=f[0], v=d[k]||''; if(k==='os') v=OS_TXT[v]||v; if(k==='state') v=ST_TXT[v]||v; return v; });
+      progs.forEach(function(pn){ var a=null; (d.apps||[]).forEach(function(x){ if(!a && norm(x.name)===norm(pn)) a=x; }); r.push(a ? (a.ver||'✅') : ''); });
+      rows.push(r.map(csvCell).join(','));
+    });
+    return '\ufeff'+rows.join('\r\n')+'\r\n';
+  }
+  function parseCSV(text){
+    text=text.replace(/^\ufeff/,''); var rows=[], row=[], cur='', inQ=false;
+    for(var i=0;i<text.length;i++){
+      var c=text[i];
+      if(inQ){ if(c==='"'){ if(text[i+1]==='"'){ cur+='"'; i++; } else inQ=false; } else cur+=c; }
+      else if(c==='"') inQ=true;
+      else if(c===',' || c==='\t'){ row.push(cur); cur=''; }
+      else if(c==='\r'){ /* skip */ }
+      else if(c==='\n'){ row.push(cur); rows.push(row); row=[]; cur=''; }
+      else cur+=c;
+    }
+    if(cur!=='' || row.length){ row.push(cur); rows.push(row); }
+    return rows.filter(function(r){ return r.some(function(x){ return String(x).trim()!==''; }); });
+  }
+  function download(name, text, type){
+    var blob=new Blob([text], {type:type||'text/plain;charset=utf-8'}), a=document.createElement('a');
+    a.href=URL.createObjectURL(blob); a.download=name; document.body.appendChild(a); a.click();
+    setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 500);
+  }
+  document.getElementById('btn-export-csv').addEventListener('click', function(){ download('takra-devices-'+today()+'.csv', toCSV(), 'text/csv;charset=utf-8'); });
+  document.getElementById('btn-export-json').addEventListener('click', function(){ download('takra-devices-'+today()+'.json', JSON.stringify(store, null, 2), 'application/json'); });
+  // นำเข้า: จับคู่เครื่องด้วย id (JSON) หรือชื่อเครื่อง (CSV/JSON) → ซ้ำ = อัปเดตทับฟิลด์ที่มีค่า · ใหม่ = เพิ่ม
+  function importDevices(list){
+    var added=0, updated=0;
+    list.forEach(function(nd){
+      if(!nd || !nd.name) return;
+      var hit=null; store.devices.forEach(function(d){ if(!hit && ((nd.id && d.id===nd.id) || norm(d.name)===norm(nd.name))) hit=d; });
+      if(hit){
+        ['name','os','osver','spec','state','owner','anydesk','loc','note'].forEach(function(k){ if(nd[k]!=null && nd[k]!=='') hit[k]=nd[k]; });
+        hit.apps=hit.apps||[];
+        (nd.apps||[]).forEach(function(na){ var ex=null; hit.apps.forEach(function(a){ if(!ex && norm(a.name)===norm(na.name)) ex=a; });
+          if(ex){ if(na.ver) ex.ver=na.ver; if(na.date) ex.date=na.date; if(na.note) ex.note=na.note; } else hit.apps.push({name:na.name, ver:na.ver||'', date:na.date||'', note:na.note||''}); });
+        sortApps(hit); updated++;
+      } else {
+        var d={id:nd.id||uid('d'), name:nd.name, os:nd.os||'mac', osver:nd.osver||'', spec:nd.spec||'', state:nd.state||'ok', owner:nd.owner||'', anydesk:nd.anydesk||'', loc:nd.loc||'', note:nd.note||'',
+          apps:(nd.apps||[]).map(function(a){ return {name:a.name, ver:a.ver||'', date:a.date||'', note:a.note||''}; })};
+        sortApps(d); store.devices.push(d); added++;
+      }
+    });
+    return {added:added, updated:updated};
+  }
+  function devicesFromCSV(text){
+    var rows=parseCSV(text); if(rows.length<2) throw new Error('ไฟล์ CSV ไม่มีข้อมูล (ต้องมีหัวตาราง + อย่างน้อย 1 แถว)');
+    var head=rows[0].map(function(h){ return String(h).trim(); }), idx={};
+    head.forEach(function(h,i){ var k=null; CSV_FIELDS.forEach(function(f){ if(norm(f[1])===norm(h) || norm(f[0])===norm(h)) k=f[0]; }); idx[i]=k; });
+    if(Object.keys(idx).every(function(i){ return idx[i]!=='name'; })) throw new Error('ไม่พบคอลัมน์ "ชื่อเครื่อง" ในไฟล์ CSV — ใช้เทมเพลต CSV จากปุ่ม 📄');
+    return rows.slice(1).map(function(r){
+      var d={apps:[]};
+      head.forEach(function(h,i){
+        var v=String(r[i]==null?'':r[i]).trim(), k=idx[i];
+        if(k){ d[k]= k==='os'?osFromText(v) : k==='state'?stateFromText(v) : v; }
+        else if(h && v && !/^(-|—|no|n\/a|ไม่|x|✗|❌|0)$/i.test(v)){ d.apps.push({name:h, ver:/^(✅|✓|yes|y|ok|true|1|ลงแล้ว)$/i.test(v)?'':v, date:today(), note:''}); }
+      });
+      return d;
+    });
+  }
+  document.getElementById('btn-import').addEventListener('click', function(){ document.getElementById('file-import').click(); });
+  document.getElementById('file-import').addEventListener('change', function(ev){
+    var f=ev.target.files && ev.target.files[0]; ev.target.value=''; if(!f) return;
+    var rd=new FileReader();
+    rd.onload=function(){
+      try {
+        var text=String(rd.result||''), list;
+        if(/\.json$/i.test(f.name) || /^\s*[\[{]/.test(text)){ var j=JSON.parse(text); list=Array.isArray(j)?j:(j.devices||[]); }
+        else list=devicesFromCSV(text);
+        if(!list.length) throw new Error('ไม่พบเครื่องในไฟล์');
+        var r=importDevices(list);
+        if(r.added||r.updated) changed(); else renderAll();
+        alert('นำเข้าแล้ว — เพิ่มเครื่องใหม่ '+r.added+' · อัปเดตเครื่องเดิม '+r.updated);
+      } catch(err){ alert('❌ นำเข้าไม่สำเร็จ: '+err.message); }
+    };
+    rd.readAsText(f, 'utf-8');
   });
 
   // ─────────────────────────────────────────────────────────────
