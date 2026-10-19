@@ -799,7 +799,8 @@
       head.forEach(function(h,i){
         var v=String(r[i]==null?'':r[i]).trim(), k=idx[i];
         if(k){ d[k]= k==='os'?osFromText(v) : k==='state'?stateFromText(v) : v; }
-        else if(h && v && !/^(-|—|no|n\/a|ไม่|x|✗|❌|0)$/i.test(v)){ d.apps.push({name:h, ver:/^(✅|✓|yes|y|ok|true|1|ลงแล้ว)$/i.test(v)?'':v, date:today(), note:''}); }
+        else if(/anydesk\s*pass|password|รหัสผ่าน/i.test(h)){ /* ไม่เก็บรหัสผ่านลงหน้าเว็บสาธารณะ — ข้ามคอลัมน์นี้ */ }
+        else if(h && v && !/^(-|—|no|n\/a|ไม่|x|✗|❌|0|false|ยังไม่ลง)$/i.test(v)){ d.apps.push({name:h, ver:/^(✅|✓|yes|y|ok|true|1|ลงแล้ว)$/i.test(v)?'':v, date:today(), note:''}); }
       });
       return d;
     });
