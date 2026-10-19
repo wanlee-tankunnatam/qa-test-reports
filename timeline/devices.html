@@ -428,8 +428,8 @@
   function renderTable(){
     var q=norm(document.getElementById('qm').value), tbl=document.getElementById('mx');
     var devs=store.devices.slice().sort(function(a,b){ return (a.os||'').localeCompare(b.os||'') || a.name.localeCompare(b.name,'th'); });
-    var NC=3;
-    var h='<thead><tr><th class="pn">รายการ</th><th>สถานะ</th><th>ลงเมื่อ</th></tr></thead><tbody>';
+    var NC=2;
+    var h='<thead><tr><th class="pn">รายการ</th><th>สถานะ</th></tr></thead><tbody>';
     var shown=0;
     devs.forEach(function(d){
       var m=matchQ(d,q); if(!m.dev) return; shown++;
@@ -443,15 +443,15 @@
       h+='<span class="dact"><button class="ib" data-act="edit-dev" title="แก้ข้อมูลเครื่อง">✏️</button><button class="ib" data-act="add-app" title="เพิ่มโปรแกรม">＋</button><button class="ib" data-act="import" title="นำเข้าจากเครื่อง">📥</button></span>';
       h+='</div></td></tr>';
       if(isC) return;
-      h+='<tr class="app kv" data-id="'+esc(d.id)+'"><td class="pn">Spec</td><td class="val">'+([d.spec?esc(d.spec):'', d.osver?esc(d.osver):''].filter(Boolean).join(' · ')||'<span class="v no" data-act="edit-dev">—</span>')+'</td><td class="d"></td></tr>';
-      h+='<tr class="app kv" data-id="'+esc(d.id)+'"><td class="pn">AnyDesk</td><td class="val">'+(d.anydesk?'<code>'+esc(d.anydesk)+'</code> <button class="ib" data-act="copy-ad" title="คัดลอก ID">📋</button>':'<span class="v no" data-act="edit-dev" title="กรอก AnyDesk ID">—</span>')+'</td><td class="d"></td></tr>';
+      h+='<tr class="app kv" data-id="'+esc(d.id)+'"><td class="pn">Spec</td><td class="val">'+([d.spec?esc(d.spec):'', d.osver?esc(d.osver):''].filter(Boolean).join(' · ')||'<span class="v no" data-act="edit-dev">—</span>')+'</td></tr>';
+      h+='<tr class="app kv" data-id="'+esc(d.id)+'"><td class="pn">AnyDesk</td><td class="val">'+(d.anydesk?'<code>'+esc(d.anydesk)+'</code> <button class="ib" data-act="copy-ad" title="คัดลอก ID">📋</button>':'<span class="v no" data-act="edit-dev" title="กรอก AnyDesk ID">—</span>')+'</td></tr>';
       programRows(d).forEach(function(pn){
         var idx=-1; (d.apps||[]).forEach(function(a,i){ if(idx<0 && norm(a.name)===norm(pn)) idx=i; });
         if(idx>=0){ var a=d.apps[idx];
-          h+='<tr class="app" data-id="'+esc(d.id)+'"><td class="pn">'+esc(pn)+'</td><td class="has"><span class="v has" data-edit="'+idx+'" title="ลงแล้ว'+(a.ver?' · เวอร์ชัน '+esc(a.ver):'')+(a.note?' · '+esc(a.note):'')+' — คลิกเพื่อแก้">✅</span></td><td class="d">'+esc(fmtDate(a.date))+'</td></tr>'; }
-        else h+='<tr class="app none" data-id="'+esc(d.id)+'"><td class="pn">'+esc(pn)+'</td><td class="no"><span class="v no" data-add="'+esc(pn)+'" title="เพิ่ม '+esc(pn)+' ให้ '+esc(d.name)+'">—</span></td><td class="d"></td></tr>';
+          h+='<tr class="app" data-id="'+esc(d.id)+'"><td class="pn">'+esc(pn)+'</td><td class="has"><span class="v has" data-edit="'+idx+'" title="ลงแล้ว'+(a.ver?' · เวอร์ชัน '+esc(a.ver):'')+(a.note?' · '+esc(a.note):'')+(a.date?' · ลงเมื่อ '+esc(fmtDate(a.date)):'')+' — คลิกเพื่อแก้">✅</span></td></tr>'; }
+        else h+='<tr class="app none" data-id="'+esc(d.id)+'"><td class="pn">'+esc(pn)+'</td><td class="no"><span class="v no" data-add="'+esc(pn)+'" title="เพิ่ม '+esc(pn)+' ให้ '+esc(d.name)+'">—</span></td></tr>';
       });
-      if(d.note) h+='<tr class="app kv" data-id="'+esc(d.id)+'"><td class="pn">หมายเหตุ</td><td class="val" colspan="2">'+esc(d.note)+'</td></tr>';
+      if(d.note) h+='<tr class="app kv" data-id="'+esc(d.id)+'"><td class="pn">หมายเหตุ</td><td class="val">'+esc(d.note)+'</td></tr>';
     });
     if(!devs.length) h+='<tr><td class="pn" colspan="'+NC+'"><span class="empty">ยังไม่มีเครื่องในทะเบียน — กด "＋ เพิ่มเครื่อง"</span></td></tr>';
     else if(!shown) h+='<tr><td class="pn" colspan="'+NC+'"><span class="empty">ไม่พบเครื่อง/โปรแกรมที่ตรงคำค้น</span></td></tr>';
