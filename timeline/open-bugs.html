@@ -124,7 +124,7 @@ footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--line);color:v
 <body>
 <div class="wrap">
   <h1>บั๊กค้างรอบส่งงาน</h1>
-  <p class="sub">บั๊กที่ยังไม่ปิดจากทุกโปรเจกต์ใน Jira แยกตามรอบส่ง แล้วแยกตามผู้รับผิดชอบ · ในแต่ละคนเรียงตามขั้นที่ลูกค้าเจอใน user journey · ข้อมูล ณ 21 ต.ค. 2026 09:00 น. (อัปเดตอัตโนมัติ 09:00 / 13:00 หรือกดปุ่มดึงข้อมูลจาก Jira)</p>
+  <p class="sub">บั๊กที่ยังไม่ปิดจากทุกโปรเจกต์ใน Jira แยกตามรอบส่ง แล้วแยกตามผู้รับผิดชอบ · ในแต่ละคนเรียงตามขั้นที่ลูกค้าเจอใน user journey · ข้อมูล ณ 21 ต.ค. 2026 13:00 น. (อัปเดตอัตโนมัติ 09:00 / 13:00 หรือกดปุ่มดึงข้อมูลจาก Jira)</p>
   <div class="sync"><button type="button" class="f" id="sync">ดึงข้อมูลจาก Jira</button><span id="syncat"></span><span id="syncmsg" role="status"></span></div>
   <div class="proj" id="fj" role="group" aria-label="โปรเจกต์"></div>
   <div class="tot" id="tot"></div>
@@ -578,6 +578,7 @@ const ROWS = [
 ["ยังไม่มีรอบ", "Boat", "TAKRA-1518", "High", "[Defect][BE][FE] sync สินค้า TikTok Shop: แยกเหตุดึง SKU ไม่ได้ + ป้าย/ตัวกรองสถานะบน TikTok + กันสินค้าที่โปรไฟล์ถูกลบไม่ให้ไลฟ์", "To Do"],
 ["23-OCT", "No", "TKH-278", "Medium", "TAKRA Hub - หน้าชำระเงิน/ตรวจสลิป/โปรไฟล์ เลื่อนซ้ายขวาได้ 16px ที่จอกว้างตั้งแต่ 1024px", "To Do"],
 ["23-OCT", "No", "TKH-279", "Medium", "TAKRA Hub - เมนูข้างไม่มีแถบเลื่อน ทำให้จอเตี้ยกดปุ่มสลับทีมไม่ได้", "To Do"],
+["23-OCT", "No", "TKH-289", "High", "[Defect][FE] /admin/billing — บันทึกอัตรา VAT ทับของคนอื่นเงียบ ๆ คำเตือน superseded ไม่มีทางยิง (dead path)", "To Do"],
 ];
 // Projects: the Jira key prefix decides the project, so rows from another project
 // show up here as soon as they are added to ROWS. Add a line to PROJECTS to give it a name.
@@ -656,7 +657,7 @@ ROWS.forEach(r=>{const s=JOURNEY[r[2]]; r[7]=s?s:(r[2].startsWith("TAKRA-")?99:0
 const scCls=v=>v===SCOPE_LABEL.ui?"c-ui":v===SCOPE_LABEL.sys?"c-sys":"c-tool";
 
 // เวลาที่ดึงจาก Jira ล่าสุดรายโปรเจกต์ — ตัวซิงก์ (update_open_bugs.py) เขียนบรรทัดนี้เอง ต้องอยู่บรรทัดเดียว
-const SYNCED = {"TAKRA": "21 ต.ค. 2026 09:00", "TI": "21 ต.ค. 2026 09:00", "TAK": "21 ต.ค. 2026 09:00", "TKRD": "21 ต.ค. 2026 09:00", "TF": "21 ต.ค. 2026 09:00", "TKH": "21 ต.ค. 2026 09:00"};
+const SYNCED = {"TAKRA": "21 ต.ค. 2026 13:00", "TI": "21 ต.ค. 2026 13:00", "TAK": "21 ต.ค. 2026 13:00", "TKRD": "21 ต.ค. 2026 13:00", "TF": "21 ต.ค. 2026 13:00", "TKH": "21 ต.ค. 2026 13:00"};
 const PROJECTS={
   TAKRA:{name:"Takra AI", jira:"https://kitdi.atlassian.net"},
   TI:{name:"Takra Insight", jira:"https://kitdi.atlassian.net"},
