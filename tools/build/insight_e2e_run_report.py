@@ -257,9 +257,6 @@ def build_html(stats, rows, tier, branch, note, run_at):
                     f'<div class="card"><div class="sec"><h4>เหตุผลที่ SKIP</h4>'
                     f'{reason_html}{raw_html}{src_html}</div></div></td></tr>')
 
-    file_chips = "".join(
-        f'<button class="fchip" data-f="file" data-v="{html.escape(f)}">{html.escape(os.path.basename(f))}</button>'
-        for f in files)
 
     return f"""<!DOCTYPE html>
 <html lang="th"><head>
@@ -327,6 +324,7 @@ table.fs th{{color:var(--muted);font-size:10px;text-transform:uppercase;letter-s
 table.fs td{{padding:5px 10px;border-bottom:1px solid var(--line)}}
 table.fs tr:last-child td{{border-bottom:none}}
 tr.fsrow{{cursor:pointer}}tr.fsrow:hover td{{background:#f7f9fc}}
+tr.fsrow.active td{{background:rgba(37,99,235,.14)}}
 td.num{{text-align:right;font-variant-numeric:tabular-nums;width:52px}}
 td.num.ok{{color:var(--pass);font-weight:700}}td.num.bad{{color:var(--fail);font-weight:700}}
 .fsfile{{display:block;font-family:monospace;font-size:10px;color:var(--muted)}}
@@ -364,7 +362,6 @@ footer{{color:var(--muted);font-size:12px;text-align:center;padding:20px}}
       <button class="fchip" data-f="st" data-v="flaky">⚠️ FLAKY</button>
       <button class="fchip" data-f="st" data-v="skip">⏭ SKIP</button>
     </div>
-    <div class="row"><label>ไฟล์</label>{file_chips}</div>
   </div>
   <div class="tablewrap"><table class="tc">
     <thead><tr><th></th><th>Test case</th><th>Tags</th><th>ผล</th><th>เวลา</th></tr></thead>
@@ -397,10 +394,12 @@ document.querySelectorAll('tr.trow').forEach(tr=>tr.addEventListener('click',()=
   if(!d)return; tr.classList.toggle('open'); d.classList.toggle('show');
 }}));
 function gotoFeature(file,anchorId){{
-  const chip=document.querySelector(`.fchip[data-f="file"][data-v="${{CSS.escape(file)}}"]`);
-  if(chip&&!chip.classList.contains('active'))chip.click();
-  const row=document.getElementById(anchorId);
-  if(row)row.scrollIntoView({{behavior:'smooth',block:'start'}});
+  const off=F.file===file;
+  F.file=off?null:file;
+  document.querySelectorAll('tr.fsrow').forEach(x=>x.classList.toggle('active',!off&&x.dataset.file===file));
+  apply();
+  if(!off){{const row=document.getElementById(anchorId);
+    if(row)row.scrollIntoView({{behavior:'smooth',block:'start'}});}}
 }}
 document.querySelectorAll('tr.fsrow').forEach(tr=>tr.addEventListener('click',e=>{{
   e.preventDefault(); gotoFeature(tr.dataset.file,tr.dataset.anchor);
