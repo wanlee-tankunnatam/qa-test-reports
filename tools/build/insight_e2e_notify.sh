@@ -131,11 +131,21 @@ EOF
 if [ "$DO_LINE" = 1 ]; then
   while IFS= read -r line; do export "$line"; done \
     < <(grep "^E2E_INS_LINE" "$INSIGHT/.env.development")
+  # เฝ้าโควตา push (แพลนฟรี 300/เดือน) — เกิน 80% เตือนในข้อความเลย จะได้เห็นก่อนโดนตัด
+  QUOTA_LINE=""
+  USED=$(curl -s https://api.line.me/v2/bot/message/quota/consumption \
+           -H "Authorization: Bearer $E2E_INS_LINE_TOKEN" | grep -oE '[0-9]+' | head -1 || echo "")
+  LIMIT=$(curl -s https://api.line.me/v2/bot/message/quota \
+           -H "Authorization: Bearer $E2E_INS_LINE_TOKEN" | grep -oE '"value":[0-9]+' | grep -oE '[0-9]+' || echo "")
+  if [ -n "$USED" ] && [ -n "$LIMIT" ] && [ "$USED" -ge $((LIMIT * 80 / 100)) ]; then
+    QUOTA_LINE="
+⚠️ โควตา LINE เดือนนี้ใกล้เต็ม: $USED/$LIMIT — พิจารณาแจ้งเฉพาะ FAIL หรืออัปแพลน"
+  fi
   TEXT="🧪 ผลรัน e2e @$TIER — takra-insight
 $SUMMARY
 env: $NOTE
 branch: $BRANCH
-📄 รายงาน: $URL"
+📄 รายงาน: $URL$QUOTA_LINE"
   CODE=$(python3 - "$E2E_INS_LINE_TOKEN" "$E2E_INS_LINE_GROUP_ID" "$TEXT" <<'EOF'
 import sys, json, urllib.request
 tok, gid, text = sys.argv[1], sys.argv[2], sys.argv[3]
