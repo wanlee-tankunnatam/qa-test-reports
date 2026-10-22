@@ -124,7 +124,7 @@ footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--line);color:v
 <body>
 <div class="wrap">
   <h1>บั๊กค้างรอบส่งงาน</h1>
-  <p class="sub">บั๊กที่ยังไม่ปิดจากทุกโปรเจกต์ใน Jira แยกตามรอบส่ง แล้วแยกตามผู้รับผิดชอบ · ในแต่ละคนเรียงตามขั้นที่ลูกค้าเจอใน user journey · ข้อมูล ณ 22 ต.ค. 2026 09:00 น. (อัปเดตอัตโนมัติ 09:00 / 13:00 หรือกดปุ่มดึงข้อมูลจาก Jira)</p>
+  <p class="sub">บั๊กที่ยังไม่ปิดจากทุกโปรเจกต์ใน Jira แยกตามรอบส่ง แล้วแยกตามผู้รับผิดชอบ · ในแต่ละคนเรียงตามขั้นที่ลูกค้าเจอใน user journey · ข้อมูล ณ 22 ต.ค. 2026 13:01 น. (อัปเดตอัตโนมัติ 09:00 / 13:00 หรือกดปุ่มดึงข้อมูลจาก Jira)</p>
   <div class="sync"><button type="button" class="f" id="sync">ดึงข้อมูลจาก Jira</button><span id="syncat"></span><span id="syncmsg" role="status"></span></div>
   <div class="proj" id="fj" role="group" aria-label="โปรเจกต์"></div>
   <div class="tot" id="tot"></div>
@@ -377,7 +377,6 @@ const ROWS = [
 ["30-OCT", "Boat", "TAKRA-1374", "Low", "TAKRA Live - กดออกจากระบบตอนรายชื่อพื้นที่ทำงานยังโหลดไม่เสร็จ รายชื่อทีมที่เบราว์เซอร์จำไว้ไม่ถูกล้าง บัญชีถัดไปจึงเห็นชื่อทีมของบัญชีเดิม", "To Do"],
 ["30-OCT", "James", "TI-587", "Medium", "TAKRA Insight - ปรับ UI หน้า AI Insights ตาม mock \"AI Insights ทีม A\" (ช่วงที่ดูเทียบค่าปกติ · ตัวกรองสถานะช่อง · การ์ดโฮสต์/ช่อง · แถบสิ่งที่ต่างจากปกติ) — PR #642", "To Do"],
 ["9-OCT", "James", "TI-588", "Medium", "TAKRA Insight - (macOS) อัปเดตที่โหลดเสร็จแล้วถูกติดตั้งเองตอนปิดแอป (⌘Q) แม้ผู้ใช้กด \"ภายหลัง\" — ShipIt ติดตั้ง 0.1.94 → 0.1.95 โดยไม่ถาม (2/2)", "To Do"],
-["23-OCT", "James", "TI-589", "Low", "TAKRA Insight - การ์ดอัปเดต: หยุดไลฟ์ที่ทำให้การดาวน์โหลดหยุด แล้วไม่ขึ้น \"ตอนนี้ไม่มีไลฟ์ที่ติดตามอยู่แล้ว — ดาวน์โหลดได้เลย\" (2/2) + ข้อความไลฟ์ค้างผิด 1–2 วิ", "READY TO TEST"],
 ["9-OCT", "Berm", "TKRD-355", "High", "[หน้าค้นหา] Warehouse ช้าเกิน NFR-2 และคำค้นกว้าง/สั้นทำให้ค้นหาล้มเหลว 503 (ต้องปรับประสิทธิภาพ warehouse และกำหนดความยาวคำค้นขั้นต่ำ)", "To Do"],
 ["9-OCT", "ไม่มีคนรับ", "TKRD-357", "Medium", "[infra] Layer ที่ patch OS package ของ web image ถูกแคชค้าง — ปล่อยของเก่าไปเงียบ ๆ จนบล็อก release ไปแล้ว 3 ครั้ง", "Need Advise"],
 ["9-OCT", "Berm", "TKRD-361", "Medium", "[Trendora] ปรับ UI หน้าค้นหา", "To Do"],
@@ -436,9 +435,7 @@ const ROWS = [
 ["15-OCT", "Book", "TF-123", "High", "Shopee คลิปไม่ใส่เพลง: ขั้นเอาเพลงออกไปกดไอคอนแจ้งเตือนในแถบสถานะ (แผงแจ้งเตือน Android เปิด) แทนกล่องเพลง — และขั้นถูกนับว่า \"ผ่าน\"", "READY TO TEST"],
 ["15-OCT", "Book", "TF-125", "Low", "ภาพรวม: ตัวเลข \"3\" ข้างหัวการ์ด \"เทียบรายช่อง\" และ \"ผลงานรายเครื่อง\" ไม่บอกว่าเป็นเลขของอะไร (feedback จาก demo 8 ต.ค.)", "READY TO TEST"],
 ["15-OCT", "James", "TI-641", "Medium", "[regression] TAKRA Insight - ตัวนับ \"คอมเมนต์สด\" บนหน้าบันทึกค้างที่ 208 หลัง engine restart ขณะรายการคอมเมนต์ยังไหลและ DB มี 1,794 แถว (TC-LR-D6-NEG-04)", "READY TO TEST"],
-["15-OCT", "James", "TI-644", "Medium", "[regression] TAKRA Insight - (macOS) ความยาวไลฟ์ใน \"ไลฟ์ล่าสุด\" บนแดชบอร์ด (2 นาที) ไม่ตรงกับหน้าไลฟ์ของเครื่อง (1 นาที) และ Engagement 63 ในแถวไม่มีบนหน้า (TC-DASH-H.1)", "READY TO TEST"],
 ["15-OCT", "James", "TI-647", "Low", "[regression] TAKRA Insight - กล่อง \"มี session ก่อนหน้าของแชนเนลนี้\" แสดงชื่อไฟล์ดิบ ws_session_20261009_030255.csv แทนชื่อที่ผู้ใช้อ่านเข้าใจ (TC-LR-D1-NEG-01)", "READY TO TEST"],
-["15-OCT", "James", "TI-655", "Medium", "[regression] TAKRA Insight - การ์ดอัปเดตหลังหยุดติดตามไลฟ์ไม่ขึ้น \"ตอนนี้ไม่มีไลฟ์ที่ติดตามอยู่แล้ว — ดาวน์โหลดได้เลย\" ถ้าไม่ได้กด \"เตือนเมื่อไลฟ์จบ\" ก่อน (TC-OCT-F.2)", "READY TO TEST"],
 ["15-OCT", "James", "TI-659", "Low", "[regression] TAKRA Insight (engine) - PATCH /sessions/{id} ตอบ 500 AttributeError เมื่อ body.title ไม่ใช่ string ควรตอบ 422 (server.py:13212)", "READY TO TEST"],
 ["15-OCT", "James", "TI-660", "Medium", "[regression] TAKRA Insight - UAT กับ prod ใช้ userData เดียวกัน (~/Library/Application Support/takra-insight) และ engine รับ LHM_BUFFER_KEY/LHM_TRANSCRIPT_KEY ทาง environment ที่ ps อ่านได้", "READY TO TEST"],
 ["15-OCT", "Hope", "TAK-754", "High", "[Hotfix] Windows เริ่มไลฟ์ไม่ได้เมื่อโอเวอร์เลย์มีนาฬิกาดิจิทัลแบบเอียง", "IN REVIEW"],
@@ -494,7 +491,6 @@ const ROWS = [
 ["15-OCT", "Mae", "TAK-792", "Medium", "[FE] Logs › การกระทำ: action ที่ระบบบันทึกจริงหลายตัวไม่มีป้ายไทย หน้า audit แสดงรหัสดิบ เช่น account.keyword_reply_enabled.set", "READY TO TEST"],
 ["15-OCT", "Hope", "TAK-794", "Highest", "[Desktop] กด ✕/Cmd+Q ตอนมีไลฟ์ แล้วไม่ตอบ dialog \"ยังมีไลฟ์ทำงานอยู่\" ภายใน 15 วิ → แอปปิดเองและฆ่า sidecar ทั้งที่ไลฟ์ยังออกอากาศ", "READY TO TEST"],
 ["15-OCT", "Hope", "TAK-795", "High", "[Desktop] ปิด/รีสตาร์ตแอปไม่รับประกันว่า sidecar และ ffmpeg ตาย — Windows ฆ่า sidecar ทันที (ffmpeg กำพร้ายัง push ขึ้น TikTok) และ SIGKILL สำรอง 8 วิไม่เคยทำงาน", "To Do"],
-["15-OCT", "Mae", "TAK-796", "Medium", "[FE] Desktop: ปิดแอปตอนดึงรายการไลฟ์ไม่ได้ (401/500/offline) → ปิดทันทีไม่ถาม แม้ยังมีไลฟ์ออกอากาศ (ต่างจากปุ่มออกจากระบบ TAK-694)", "To Do"],
 ["15-OCT", "Hope", "TAK-797", "Medium", "[Desktop] หน้าต่างหลักไม่มี will-navigate guard / IPC ไม่ตรวจ origin ของ sender / ไม่มี CSP → หน้าเว็บภายนอกที่ถูกนำทางเข้ามาได้ bridge `takraDesktop` ครบ (รวม addViaLogin ที่คืน curl + คุกกี้ TikTok)", "To Do"],
 ["15-OCT", "Hope", "TAK-798", "High", "[Desktop] แอปที่ ship เก็บ KEK ของ vault เป็นไฟล์ plaintext (`secrets/vault-kek.txt`) ข้าง DB และรัน `VAULT_KMS_MODE=dev` — ไม่ใช้ Keychain/DPAPI ตาม Story 8.3", "To Do"],
 ["15-OCT", "Hope", "TAK-799", "Medium", "[Desktop] KEK ของ vault หาย/เขียนลงดิสก์ไม่ได้ → แอปสร้าง KEK ใหม่เงียบ ๆ ทำให้คุกกี้ทุกบัญชีถอดไม่ได้ถาวร แต่ข้อความบอก \"ใช้งานไม่ได้ชั่วคราว · ปิดแล้วเปิดโปรแกรมใหม่\"", "To Do"],
@@ -532,7 +528,7 @@ const ROWS = [
 ["15-OCT", "Book", "TF-131", "Low", "[Defect][BE] ยกเลิก task แล้วลองใหม่คลิปเดียว → task จบเป็น \"failed\" ทั้งที่ไม่มีคลิปล้ม", "READY TO TEST"],
 ["16-OCT", "Mae", "TAK-831", "Medium", "[FE][a11y] แถบแพ็กเกจหมดอายุ (lapsed) และป้าย \"แพลนหมดอายุ\"/\"ยังไม่มีแพลน\" ในรายการเวิร์กสเปซ contrast ต่ำกว่า WCAG AA 4.5:1 — ข้อความแถบ 3.96:1 · ข้อความติดต่อผู้ดูแลบนแถบ 3.22:1 · ป้ายแพลน 4.12:1", "To Do"],
 ["16-OCT", "Mae", "TAK-832", "High", "[FE] กล่องยืนยันลบวิดีโอบอกว่า \"ไฟล์ยังถูกเก็บไว้บนคลาวด์\" ทั้งที่เครื่องอื่นลบออกจากคลาวด์ไปแล้ว — ตัดสินจากคิวอัปโหลดในเครื่อง ไม่ใช่ cloud index (จุดที่ TAK-438 ไม่ครอบ)", "READY TO TEST"],
-["16-OCT", "Mae", "TAK-833", "Medium", "[FE][Desktop] การ์ดอัปเดต — กด «เตือนเมื่อไลฟ์จบ» แล้วรีโหลดหน้าต่าง/เปิดหน้าต่างใหม่ระหว่างไลฟ์ การ์ดกลับมาทันที (การเลื่อนไม่ถูกเก็บถาวร)", "To Do"],
+["16-OCT", "Mae", "TAK-833", "Medium", "[FE][Desktop] การ์ดอัปเดต — กด «เตือนเมื่อไลฟ์จบ» แล้วรีโหลดหน้าต่าง/เปิดหน้าต่างใหม่ระหว่างไลฟ์ การ์ดกลับมาทันที (การเลื่อนไม่ถูกเก็บถาวร)", "IN REVIEW"],
 ["16-OCT", "Mae", "TAK-834", "Medium", "[FE] กล่อง «แก้เองได้» บนการ์ดห้องควบคุม — กด «คัดลอกรหัส» แล้วขึ้น «คัดลอกแล้ว» ทั้งที่คัดลอกไม่สำเร็จ (ไม่มี clipboard API / writeText ถูกปฏิเสธ)", "READY TO TEST"],
 ["16-OCT", "Hope", "TAK-835", "High", "[Desktop][Security] แอปที่ ship ยังเปิด Electron fuses RunAsNode / NODE_OPTIONS / --inspect — รัน JS ด้วย runtime ของแอป + แนบ debugger ได้ ข้ามการ obfuscate (Anti-Piracy)", "To Do"],
 ["16-OCT", "ไม่มีคนรับ", "TF-132", "Low", "[Defect][BE] TikTok: ขั้น tap_upload หาปุ่ม \"สร้าง\" ไม่เจอ แล้วกดพิกัดที่จำไว้ก็ไม่เปิดหน้าอัปโหลด", "READY TO TEST"],
@@ -560,7 +556,7 @@ const ROWS = [
 ["23-OCT", "James", "TI-679", "Low", "[Defect][FE][Electron] เมนูแอปบน macOS แสดงชื่อ \"takra-insight-uat\" แทนชื่อแอป", "To Do"],
 ["23-OCT", "Hope", "TAK-877", "High", "[Desktop/BE/FE] ปักตะกร้า + ปักหมุดค้างเงียบทั้งเครื่องกลางไลฟ์ — ตัวปักสินค้ารอหน้า TikTok ไม่มีเวลาเลิกรอ ต้องปิดเปิดแอป (ไลฟ์หลุด) ถึงจะหาย", "READY TO TEST"],
 ["23-OCT", "James", "TI-687", "High", "[Defect][FE][Electron] Mac หลับระหว่างบันทึกไลฟ์ ≥15 วิ → ตื่นมาแอปตัดสินว่า \"ไลฟ์จบ\" (heartbeat-stale) แล้วหยุดบันทึกเอง ทั้งที่ไลฟ์ยังอยู่", "IN REVIEW"],
-["23-OCT", "Mae", "TAK-878", "Medium", "[FE][a11y] หน้าสถานะไลฟ์ › แผง «สินค้าในไลฟ์» — ข้อความสีส้ม (--primary #ff6b1a) contrast ต่ำกว่า WCAG AA 4.5:1 (ชิปนับถอยหลัง 2.45:1 · ราคาสปอตไลต์ 2.71:1 · ปุ่ม «ปัก» 2.84:1)", "To Do"],
+["23-OCT", "Mae", "TAK-878", "Medium", "[FE][a11y] หน้าสถานะไลฟ์ › แผง «สินค้าในไลฟ์» — ข้อความสีส้ม (--primary #ff6b1a) contrast ต่ำกว่า WCAG AA 4.5:1 (ชิปนับถอยหลัง 2.45:1 · ราคาสปอตไลต์ 2.71:1 · ปุ่ม «ปัก» 2.84:1)", "In Progress"],
 ["23-OCT", "James", "TI-691", "Low", "[Defect][FE] หน้า Telegram: วาง token ใหม่และตรวจผ่านแล้ว ขั้นที่ 3 ยังค้างกล่องแดง \"token ใช้ไม่ได้\" จนกว่าจะกดส่งทดสอบ", "To Do"],
 ["23-OCT", "James", "TI-692", "Low", "[Defect][FE] หน้า Telegram: ตอนบอทไม่อยู่ในกลุ่ม ข้อความใต้สวิตช์ขึ้น \"กดได้หลังส่งข้อความทดสอบผ่าน\" ทั้งที่สวิตช์ยังเปิด และกล่องแดงเรื่องเดียวกันขึ้นซ้ำ 2 กล่อง", "To Do"],
 ["ยังไม่มีรอบ", "No", "TAKRA-1501", "Medium", "[BE] AI ตอบคอมเมนต์มีเศษขยะต่อท้ายประโยคออกอากาศ (อักษรต่างชาติ · \"เว็บพนัน?\" · \"马会\" · เครื่องหมายคำพูด/จุดซ้ำ) ~3% ของคำตอบบน prod", "READY TO TEST"],
@@ -579,14 +575,7 @@ const ROWS = [
 ["23-OCT", "James", "TI-695", "Medium", "[TAKRA Insight] ช่องวางลิงก์ไลฟ์ — คลิกขวาไม่ได้ (เมนู Paste/context menu ไม่ขึ้น) ต้องใช้ Ctrl+V แทน", "To Do"],
 ["23-OCT", "James", "TI-696", "Low", "[Defect][BE] สลับบัญชีกลางไลฟ์: stream-pulse (feed-release) ของไลฟ์บัญชีเก่ายิง engine ตอน restart ได้ 401 (teardown/finalize สำเร็จ ข้อมูลไม่หาย)", "To Do"],
 ["23-OCT", "James", "TI-698", "Medium", "[Defect][BE] engine เปิด TLS ไป IP ของ Google LLC (~2 นาที) ช่วง loading models หลัง login และ consent — ไม่ผ่าน env proxy, นอกเหนือ egress ที่ประกาศ (CDN เท่านั้น)", "To Do"],
-["23-OCT", "No", "TKH-291", "Medium", "TAKRA Hub - หน้าบริการ (/services) เลื่อนซ้ายขวาได้ เพราะ tooltip ของแถบวันที่เหลือล้นออกนอกจอ", "READY TO TEST"],
-["23-OCT", "No", "TKH-292", "Medium", "TAKRA Hub - หน้าตั้งค่า: breadcrumb \"ทีม\" กดแล้วไปหน้า 404", "READY TO TEST"],
-["23-OCT", "No", "TKH-293", "Low", "TAKRA Hub - Admin Console: รายการ subscription แสดงสถานะเป็นภาษาอังกฤษดิบ (awaiting_verification)", "READY TO TEST"],
-["23-OCT", "No", "TKH-294", "Low", "TAKRA Hub - หน้าบัญชีพนักงาน: ตาราง \"แต่ละสิทธิ์ทำอะไรได้\" ไม่มีสิทธิ์อีเมลแคมเปญ", "READY TO TEST"],
-["23-OCT", "No", "TKH-295", "Low", "TAKRA Hub - แดชบอร์ด: React hydration error #418 ใน console", "In Progress"],
 ["23-OCT", "No", "TKH-296", "Low", "TAKRA Hub - หน้ายกเลิกรับอีเมล: ลิงก์ที่ token ไม่ถูกต้องยังโชว์ปุ่มยืนยัน", "READY TO TEST"],
-["23-OCT", "No", "TKH-297", "Low", "TAKRA Hub - หน้าเขียนอีเมลแคมเปญ: รูปจาก URL ภายนอกที่วางมาค้างในร่างเป็นรูปแตก", "READY TO TEST"],
-["23-OCT", "No", "TKH-298", "Low", "TAKRA Hub - หน้าตั้งค่า (มือถือ): หัวข้อกลุ่ม \"บัญชีของฉัน\" ซ้อนใต้แถบหัวเว็บเมื่อเปิดจากลิงก์ #profile", "READY TO TEST"],
 ];
 // Projects: the Jira key prefix decides the project, so rows from another project
 // show up here as soon as they are added to ROWS. Add a line to PROJECTS to give it a name.
@@ -665,7 +654,7 @@ ROWS.forEach(r=>{const s=JOURNEY[r[2]]; r[7]=s?s:(r[2].startsWith("TAKRA-")?99:0
 const scCls=v=>v===SCOPE_LABEL.ui?"c-ui":v===SCOPE_LABEL.sys?"c-sys":"c-tool";
 
 // เวลาที่ดึงจาก Jira ล่าสุดรายโปรเจกต์ — ตัวซิงก์ (update_open_bugs.py) เขียนบรรทัดนี้เอง ต้องอยู่บรรทัดเดียว
-const SYNCED = {"TAKRA": "22 ต.ค. 2026 09:00", "TI": "22 ต.ค. 2026 09:00", "TAK": "22 ต.ค. 2026 09:00", "TKRD": "22 ต.ค. 2026 09:00", "TF": "22 ต.ค. 2026 09:00", "TKH": "22 ต.ค. 2026 09:00"};
+const SYNCED = {"TAKRA": "22 ต.ค. 2026 13:01", "TI": "22 ต.ค. 2026 13:01", "TAK": "22 ต.ค. 2026 13:01", "TKRD": "22 ต.ค. 2026 13:01", "TF": "22 ต.ค. 2026 13:01", "TKH": "22 ต.ค. 2026 13:01"};
 const PROJECTS={
   TAKRA:{name:"Takra AI", jira:"https://kitdi.atlassian.net"},
   TI:{name:"Takra Insight", jira:"https://kitdi.atlassian.net"},
