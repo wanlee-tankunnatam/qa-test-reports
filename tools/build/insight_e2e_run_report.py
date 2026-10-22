@@ -42,10 +42,48 @@ def collect(results_path):
                         "file": sp.get("file") or su.get("file") or su.get("title", ""),
                         "title": re.sub(r"\s*@[\w-]+", "", title).strip(),
                         "tags": tags, "status": st, "dur": dur, "err": err,
+                        "skip": skip_reason(t.get("annotations")) if st == "skip" else None,
                     })
             walk(su.get("suites", []))
     walk(data.get("suites", []))
     return data.get("stats", {}), rows
+
+
+def skip_reason(annotations):
+    """หาเหตุผลที่เคสถูก skip — จาก annotation.description ถ้ามี ไม่งั้นตามไปอ่านคอมเมนต์
+    รอบบรรทัด test.skip ใน spec (ไฟล์:บรรทัดอยู่ใน annotation.location) · คืน (ข้อความ, ที่มา)"""
+    for a in annotations or []:
+        if a.get("type") not in ("skip", "fixme"):
+            continue
+        if a.get("description"):
+            return (a["description"], None)
+        loc = a.get("location") or {}
+        f, ln = loc.get("file"), loc.get("line")
+        src = f"{os.path.basename(f)}:{ln}" if f and ln else None
+        if not (f and ln and os.path.exists(f)):
+            return (None, src)
+        lines = open(f, encoding="utf-8").read().splitlines()
+        def clean(s):
+            return re.sub(r"^[/\s]*", "", s).strip("─ ").strip()
+        banner = []   # คอมเมนต์คั่นเหนือบรรทัด test.skip
+        for i in range(ln - 2, max(ln - 6, -1), -1):
+            s = lines[i].strip()
+            if s.startswith("//"):
+                banner.insert(0, clean(s))
+            elif s:
+                break
+        body = []     # คอมเมนต์บรรทัดแรกๆ ในตัวเทส
+        for i in range(ln, min(ln + 15, len(lines))):
+            s = lines[i].strip()
+            if s.startswith("//"):
+                body.append(clean(s))
+            elif body or s.startswith("});"):
+                break
+        txt = " ".join(banner) or ""
+        if body:
+            txt = (txt + " · " if txt else "") + " ".join(body[:3])
+        return (txt or None, src)
+    return (None, None)
 
 
 def explain_error(err):
@@ -107,7 +145,8 @@ def build_html(stats, rows, tier, branch, note, run_at):
             st = r["status"]
             tags = " ".join(f'<span class="lv lvl-ui">{html.escape(t)}</span>' for t in r["tags"])
             has_err = bool(r["err"]) and st in ("fail", "flaky")
-            tog = '<span class="tog">▶</span>' if has_err else '<span class="tog"></span>'
+            has_skip = st == "skip" and r.get("skip") and (r["skip"][0] or r["skip"][1])
+            tog = '<span class="tog">▶</span>' if (has_err or has_skip) else '<span class="tog"></span>'
             body_rows.append(
                 f'<tr class="trow" data-uid="{uid}" data-st="{st}" data-file="{html.escape(fname)}">'
                 f'<td>{tog}</td>'
@@ -127,6 +166,13 @@ def build_html(stats, rows, tier, branch, note, run_at):
                     f'<tr class="detail" data-uid="{uid}" data-st="{st}" data-file="{html.escape(fname)}"><td colspan="5">'
                     f'<div class="card">{ex_html}<div class="sec"><h4>Error (ดิบ)</h4>'
                     f'<pre class="errpre">{html.escape(r["err"][:3000])}</pre></div></div></td></tr>')
+            elif has_skip:
+                reason, src = r["skip"]
+                src_html = f'<p class="exsrc">ที่มา: คอมเมนต์ใน {html.escape(src)}</p>' if src else ""
+                body_rows.append(
+                    f'<tr class="detail" data-uid="{uid}" data-st="{st}" data-file="{html.escape(fname)}"><td colspan="5">'
+                    f'<div class="card"><div class="sec"><h4>เหตุผลที่ SKIP</h4>'
+                    f'<p class="exbody">{html.escape(reason or "ไม่พบคำอธิบายใน spec — ควรเติมคอมเมนต์เหตุผลไว้ที่ test.skip")}</p>{src_html}</div></div></td></tr>')
 
     file_chips = "".join(
         f'<button class="fchip" data-f="file" data-v="{html.escape(f)}">{html.escape(os.path.basename(f))}</button>'
@@ -189,6 +235,7 @@ tr.detail>td{{background:#fafbfc;padding:0;border-bottom:2px solid var(--line)}}
 .card .sec{{margin:0 0 12px}}.card .sec:last-child{{margin-bottom:0}}
 .exhead{{margin:0 0 4px;font-weight:700;font-size:13px}}
 .exbody{{margin:0;font-size:13px;border-left:3px solid var(--hold);padding:4px 12px;color:var(--txt)}}
+.exsrc{{margin:6px 0 0;font-size:11.5px;color:var(--muted);font-family:monospace}}
 tr.hide{{display:none!important}}
 .note-box{{background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:8px 12px;font-size:12px;color:#92400e;margin:0 0 12px}}
 footer{{color:var(--muted);font-size:12px;text-align:center;padding:20px}}
