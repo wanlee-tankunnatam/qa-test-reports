@@ -81,9 +81,33 @@ def skip_reason(annotations):
                 break
         txt = " ".join(banner) or ""
         if body:
-            txt = (txt + " · " if txt else "") + " ".join(body[:3])
+            txt = (txt + " · " if txt else "") + " ".join(body[:8])
         return (txt or None, src)
     return (None, None)
+
+
+def humanize_skip(txt):
+    """สรุปเหตุผล skip เป็นภาษาคน — คอมเมนต์ใน spec มักเป็นอังกฤษ/ศัพท์ช่าง แปลง pattern ที่พบบ่อย"""
+    if not txt:
+        return None
+    low = txt.lower()
+    thai = re.findall(r"[ก-๙][^·]*", txt)
+    parts = []
+    if re.search(r"unit[- ]covered|proven as unit|covered in .*test", low):
+        parts.append("ตรรกะของเคสนี้มีเทสระดับ unit คุมอยู่แล้ว จึงข้ามการรันบนหน้าจอจริง")
+    if "human-gated" in low:
+        parts.append("ส่วนที่ข้ามต้องมีคนคุมการรัน (ไม่ปล่อยอัตโนมัติ)")
+    if re.search(r"pending .*(harness|fixture)", low):
+        parts.append("รอเครื่องมือจำลองสัญญาณ/fixture ที่ยังไม่ได้สร้าง")
+    if "blocked" in low:
+        parts.append("ติดบล็อก: ยังไม่มีสภาพแวดล้อม/ของที่ต้องใช้" + (f" — {thai[0].strip()}" if thai else ""))
+    elif thai and not parts:
+        return txt  # เหตุผลเป็นไทยอยู่แล้ว ใช้ตรงๆ
+    elif thai:
+        parts.append(thai[0].strip())
+    if not parts:
+        return f"ข้ามไว้โดยตั้งใจตามเหตุผลใน spec: {txt}"
+    return " · ".join(dict.fromkeys(parts))
 
 
 def explain_error(err):
@@ -168,11 +192,14 @@ def build_html(stats, rows, tier, branch, note, run_at):
                     f'<pre class="errpre">{html.escape(r["err"][:3000])}</pre></div></div></td></tr>')
             elif has_skip:
                 reason, src = r["skip"]
-                src_html = f'<p class="exsrc">ที่มา: คอมเมนต์ใน {html.escape(src)}</p>' if src else ""
+                human = humanize_skip(reason)
+                raw_html = (f'<p class="exsrc">คอมเมนต์ใน spec: {html.escape(reason)}</p>'
+                            if reason and human != reason else "")
+                src_html = f'<p class="exsrc">ที่มา: {html.escape(src)}</p>' if src else ""
                 body_rows.append(
                     f'<tr class="detail" data-uid="{uid}" data-st="{st}" data-file="{html.escape(fname)}"><td colspan="5">'
                     f'<div class="card"><div class="sec"><h4>เหตุผลที่ SKIP</h4>'
-                    f'<p class="exbody">{html.escape(reason or "ไม่พบคำอธิบายใน spec — ควรเติมคอมเมนต์เหตุผลไว้ที่ test.skip")}</p>{src_html}</div></div></td></tr>')
+                    f'<p class="exbody">{html.escape(human or "ไม่พบคำอธิบายใน spec — ควรเติมคอมเมนต์เหตุผลไว้ที่ test.skip")}</p>{raw_html}{src_html}</div></div></td></tr>')
 
     file_chips = "".join(
         f'<button class="fchip" data-f="file" data-v="{html.escape(f)}">{html.escape(os.path.basename(f))}</button>'
