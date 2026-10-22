@@ -102,12 +102,13 @@ def humanize_skip(txt):
     if "blocked" in low:
         parts.append("ติดบล็อก: ยังไม่มีสภาพแวดล้อม/ของที่ต้องใช้" + (f" — {thai[0].strip()}" if thai else ""))
     elif thai and not parts:
-        return txt  # เหตุผลเป็นไทยอยู่แล้ว ใช้ตรงๆ
+        # เหตุผลเป็นไทยอยู่แล้ว — แตกเป็นข้อตามตัวคั่น
+        return [p.strip() for p in re.split(r"\s*·\s*", txt) if p.strip()]
     elif thai:
         parts.append(thai[0].strip())
     if not parts:
-        return f"ข้ามไว้โดยตั้งใจตามเหตุผลใน spec: {txt}"
-    return " · ".join(dict.fromkeys(parts))
+        return [f"ข้ามไว้โดยตั้งใจตามเหตุผลใน spec: {txt}"]
+    return list(dict.fromkeys(parts))
 
 
 def explain_error(err):
@@ -193,13 +194,19 @@ def build_html(stats, rows, tier, branch, note, run_at):
             elif has_skip:
                 reason, src = r["skip"]
                 human = humanize_skip(reason)
+                if human:
+                    reason_html = ('<ul class="exlist">'
+                                   + "".join(f"<li>{html.escape(p)}</li>" for p in human)
+                                   + "</ul>")
+                else:
+                    reason_html = '<p class="exbody">ไม่พบคำอธิบายใน spec — ควรเติมคอมเมนต์เหตุผลไว้ที่ test.skip</p>'
                 raw_html = (f'<p class="exsrc">คอมเมนต์ใน spec: {html.escape(reason)}</p>'
-                            if reason and human != reason else "")
+                            if reason and human != [reason] else "")
                 src_html = f'<p class="exsrc">ที่มา: {html.escape(src)}</p>' if src else ""
                 body_rows.append(
                     f'<tr class="detail" data-uid="{uid}" data-st="{st}" data-file="{html.escape(fname)}"><td colspan="5">'
                     f'<div class="card"><div class="sec"><h4>เหตุผลที่ SKIP</h4>'
-                    f'<p class="exbody">{html.escape(human or "ไม่พบคำอธิบายใน spec — ควรเติมคอมเมนต์เหตุผลไว้ที่ test.skip")}</p>{raw_html}{src_html}</div></div></td></tr>')
+                    f'{reason_html}{raw_html}{src_html}</div></div></td></tr>')
 
     file_chips = "".join(
         f'<button class="fchip" data-f="file" data-v="{html.escape(f)}">{html.escape(os.path.basename(f))}</button>'
@@ -263,6 +270,8 @@ tr.detail>td{{background:#fafbfc;padding:0;border-bottom:2px solid var(--line)}}
 .exhead{{margin:0 0 4px;font-weight:700;font-size:13px}}
 .exbody{{margin:0;font-size:13px;border-left:3px solid var(--hold);padding:4px 12px;color:var(--txt)}}
 .exsrc{{margin:6px 0 0;font-size:11.5px;color:var(--muted);font-family:monospace}}
+.exlist{{margin:0;padding-left:20px;font-size:13px;border-left:3px solid var(--hold)}}
+.exlist li{{margin:3px 0}}
 tr.hide{{display:none!important}}
 .note-box{{background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:8px 12px;font-size:12px;color:#92400e;margin:0 0 12px}}
 footer{{color:var(--muted);font-size:12px;text-align:center;padding:20px}}
