@@ -112,6 +112,7 @@ if [ "$DO_LINE" = 1 ]; then
     < <(grep "^E2E_INS_LINE" "$INSIGHT/.env.development")
   TEXT="🧪 ผลรัน e2e @$TIER — takra-insight
 $SUMMARY
+env: $NOTE
 branch: $BRANCH
 📄 รายงาน: $URL"
   CODE=$(python3 - "$E2E_INS_LINE_TOKEN" "$E2E_INS_LINE_GROUP_ID" "$TEXT" <<'EOF'
