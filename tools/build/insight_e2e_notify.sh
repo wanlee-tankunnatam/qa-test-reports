@@ -30,7 +30,24 @@ BRANCH=$(git -C "$INSIGHT" branch --show-current)
 NOTE="unconfigured · โปรไฟล์แยก (เทียบเท่า CI)"
 
 # ── 1. รันเทส (เว้นแต่ส่ง --results มา) ──────────────────────────────────────
-if [ -z "$RESULTS" ]; then
+# tier "uat" = suite e2e/uat (playwright.uat.config.js) — สูตรกลับด้านกับ local:
+# build:uat (bake uat-hub จริง) · ไม่ล้าง MAIN_VITE_* · ไม่แยกโปรไฟล์ · ต้อง
+# `node e2e/uat/login-capture.cjs` (login มือ) มาก่อน และพอร์ต 8765 ต้องว่าง
+# (ปิดแอป installed ก่อน) — รายละเอียด: e2e/uat/README.md
+if [ "$TIER" = uat ] && [ -z "$RESULTS" ]; then
+  if lsof -nP -iTCP:8765 -sTCP:LISTEN >/dev/null 2>&1; then
+    echo "พอร์ต 8765 ไม่ว่าง — ปิดแอป Takra Insight ที่เปิดอยู่ก่อน (e2e/uat/README.md)" >&2; exit 1
+  fi
+  RESULTS="$(mktemp -d)/results.json"
+  NOTE="UAT · uat-hub.takra.ai จริง"
+  echo "== npm run build:uat =="
+  (cd "$INSIGHT" && npm run build:uat >/dev/null)
+  set +e
+  (cd "$INSIGHT" && PLAYWRIGHT_JSON_OUTPUT_NAME="$RESULTS" \
+      npx playwright test --config playwright.uat.config.js --reporter=list,json)
+  set -e
+  [ -s "$RESULTS" ] || { echo "ไม่มี results.json — รันล้มก่อนถึง reporter" >&2; exit 1; }
+elif [ -z "$RESULTS" ]; then
   RESULTS="$(mktemp -d)/results.json"
   echo "== npm run build =="
   (cd "$INSIGHT" && npm run build >/dev/null)
