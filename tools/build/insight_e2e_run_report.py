@@ -158,13 +158,34 @@ def build_html(stats, rows, tier, branch, note, run_at):
     pct = round(100 * n["pass"] / ran) if ran else 0
     files = sorted({r["file"] for r in rows})
 
+    def anchor(fname):
+        base = os.path.basename(fname)
+        base = re.sub(r"\.(spec|test)\.[cm]?js x?$|\.(spec|test)\.[cm]?jsx?$", "", base)
+        return "feat-" + re.sub(r"[^A-Za-z0-9._~-]", "-", base)
+
+    # ── แถบสรุปต่อฟีเจอร์ (กดแล้วกรอง+กระโดดไปกลุ่มนั้น) ──
+    feat_rows = []
+    for fname in files:
+        frows = [r for r in rows if r["file"] == fname]
+        c = {k: sum(1 for r in frows if r["status"] == k) for k in ("pass", "fail", "flaky", "skip")}
+        cls = "fail" if c["fail"] else ("flaky" if c["flaky"] else "pass")
+        feat_rows.append(
+            f'<tr class="fsrow" data-file="{html.escape(fname)}" data-anchor="{anchor(fname)}">'
+            f'<td><a href="#{anchor(fname)}">{html.escape(os.path.basename(fname))}</a></td>'
+            f'<td class="num ok">{c["pass"]}</td><td class="num {"bad" if c["fail"] else ""}">{c["fail"]}</td>'
+            f'<td class="num">{c["flaky"]}</td><td class="num">{c["skip"]}</td>'
+            f'<td><span class="stb {cls}">{"FAIL" if c["fail"] else ("FLAKY" if c["flaky"] else "PASS")}</span></td></tr>')
+    feat_summary = ('<div class="featsum"><table class="fs">'
+                    '<thead><tr><th>ฟีเจอร์ (spec file)</th><th>ผ่าน</th><th>ตก</th><th>flaky</th><th>ข้าม</th><th>สรุป</th></tr></thead>'
+                    f'<tbody>{"".join(feat_rows)}</tbody></table></div>')
+
     body_rows = []
     uid = 0
     for fname in files:
         frows = [r for r in rows if r["file"] == fname]
         fp = sum(1 for r in frows if r["status"] == "pass")
         body_rows.append(
-            f'<tr class="featrow" data-file="{html.escape(fname)}"><td colspan="5">{html.escape(fname)}'
+            f'<tr class="featrow" id="{anchor(fname)}" data-file="{html.escape(fname)}"><td colspan="5">{html.escape(fname)}'
             f'<span class="rp">ผ่าน {fp}/{len(frows)}</span></td></tr>')
         for r in frows:
             uid += 1
@@ -274,6 +295,14 @@ tr.detail>td{{background:#fafbfc;padding:0;border-bottom:2px solid var(--line)}}
 .exsrc{{margin:6px 0 0;font-size:11.5px;color:var(--muted);font-family:monospace}}
 .exlist{{margin:0;padding-left:20px;font-size:13px;border-left:3px solid var(--hold)}}
 .exlist li{{margin:3px 0}}
+.featsum{{background:#fff;border:1px solid var(--line);border-radius:12px;padding:6px 10px;margin:0 0 14px;overflow-x:auto;background:var(--card)}}
+table.fs{{border-collapse:collapse;width:100%;min-width:560px;font-size:12.5px}}
+table.fs th{{color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.4px;text-align:left;padding:6px 10px;border-bottom:2px solid var(--line)}}
+table.fs td{{padding:5px 10px;border-bottom:1px solid var(--line)}}
+table.fs tr:last-child td{{border-bottom:none}}
+tr.fsrow{{cursor:pointer}}tr.fsrow:hover td{{background:#f7f9fc}}
+td.num{{text-align:right;font-variant-numeric:tabular-nums;width:52px}}
+td.num.ok{{color:var(--pass);font-weight:700}}td.num.bad{{color:var(--fail);font-weight:700}}
 tr.hide{{display:none!important}}
 .note-box{{background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:8px 12px;font-size:12px;color:#92400e;margin:0 0 12px}}
 footer{{color:var(--muted);font-size:12px;text-align:center;padding:20px}}
@@ -299,6 +328,7 @@ footer{{color:var(--muted);font-size:12px;text-align:center;padding:20px}}
     <span class="cnt">รวม <b>{total}</b> · ผ่าน {pct}% ของที่รัน</span>
   </div>
   <div class="progress"><div class="progressbar"></div></div>
+  {feat_summary}
   {'<div class="note-box">⚠️ มีเคส FAIL — กดที่แถวเพื่อดู error เต็ม</div>' if n['fail'] else ''}
   <div class="filters">
     <div class="row"><label>สถานะ</label>
@@ -339,6 +369,19 @@ document.querySelectorAll('tr.trow').forEach(tr=>tr.addEventListener('click',()=
   const d=document.querySelector(`tr.detail[data-uid="${{tr.dataset.uid}}"]`);
   if(!d)return; tr.classList.toggle('open'); d.classList.toggle('show');
 }}));
+function gotoFeature(file,anchorId){{
+  const chip=document.querySelector(`.fchip[data-f="file"][data-v="${{CSS.escape(file)}}"]`);
+  if(chip&&!chip.classList.contains('active'))chip.click();
+  const row=document.getElementById(anchorId);
+  if(row)row.scrollIntoView({{behavior:'smooth',block:'start'}});
+}}
+document.querySelectorAll('tr.fsrow').forEach(tr=>tr.addEventListener('click',e=>{{
+  e.preventDefault(); gotoFeature(tr.dataset.file,tr.dataset.anchor);
+}}));
+if(location.hash.startsWith('#feat-')){{
+  const row=document.getElementById(location.hash.slice(1));
+  if(row)gotoFeature(row.dataset.file,row.id);
+}}
 </script>
 </body></html>"""
 
