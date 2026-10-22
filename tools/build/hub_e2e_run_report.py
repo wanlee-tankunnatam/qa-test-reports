@@ -276,10 +276,11 @@ def build_html(stats, rows, tier, branch, note, run_at):
             skip_counts[r["why"]] = skip_counts.get(r["why"], 0) + 1
     # ผลตัดสิน gate ของรอบรันนี้ (คำสั่งผู้ใช้ 22 ต.ค. 2026) — เกณฑ์: FAIL ต้องเป็น 0 ถึงจะผ่าน
     if n["fail"] == 0:
-        gate_cls, gate_txt = "pass", "✅ GATE: ผ่าน — ไม่มีเคสตก" + (f" (flaky {n['flaky']} ตัว ควรจับตา)" if n["flaky"] else "")
+        gate_cls, gate_txt = "pass", ("✅ GATE: ผ่าน — ไม่มีเคสตก"
+            + (f"<small>มี flaky {n['flaky']} เคส — ผ่านแบบมีเงื่อนไข ควรจับตา</small>" if n["flaky"] else ""))
     else:
-        gate_cls, gate_txt = "fail", (f"⛔ GATE: ไม่ผ่าน — ตก {n['fail']} เคส "
-                                      f"(ต้องเป็น 0 หรือทุกตัวมีตั๋ว/เหตุกำกับและ QA เซ็นรับ) · ดูสาเหตุรายตัวในตาราง")
+        gate_cls, gate_txt = "fail", (f"⛔ GATE: ไม่ผ่าน — ตก {n['fail']} เคส"
+            "<small>ต้องตก 0 หรือทุกตัวมีตั๋ว/เหตุกำกับและ QA เซ็นรับ — ดูสาเหตุรายตัวในตาราง</small>")
     gate_box = f'<div class="gatebox {gate_cls}">{gate_txt}</div>'
 
     skip_box = ""
@@ -368,9 +369,10 @@ tr.fsrow.active td{{background:rgba(37,99,235,.14)}}
 td.num{{text-align:right;font-variant-numeric:tabular-nums;width:52px}}
 td.num.ok{{color:var(--pass);font-weight:700}}td.num.bad{{color:var(--fail);font-weight:700}}
 .fsfile{{display:block;font-family:monospace;font-size:10px;color:var(--muted)}}
-.gatebox{{border-radius:10px;padding:10px 16px;margin:0 0 14px;font-size:14px;font-weight:800;border:2px solid}}
-.gatebox.pass{{background:#f0fdf4;border-color:var(--pass);color:#166534}}
-.gatebox.fail{{background:#fef2f2;border-color:var(--fail);color:#7f1d1d}}
+.gatebox{{border-radius:12px;padding:14px 20px;margin:0 0 14px;font-size:24px;font-weight:900;text-align:center;border:3px solid;letter-spacing:.3px}}
+.gatebox.pass{{background:#f0fdf4;border-color:var(--pass);color:#15803d}}
+.gatebox.fail{{background:#fef2f2;border-color:var(--fail);color:#b91c1c}}
+.gatebox small{{display:block;font-size:13px;font-weight:600;color:#6b7280;margin-top:4px}}
 .whyfull{{margin:0;font-size:12.5px;background:#fffbeb;border:1px solid #fde68a;border-radius:7px;padding:8px 12px;color:#92400e}}
 .skipbox{{background:#fff;border:1px solid var(--line);border-radius:10px;padding:8px 14px;margin:0 0 14px;font-size:12px}}
 .skipbox summary{{cursor:pointer;font-weight:700;color:#374151}}
