@@ -17,14 +17,35 @@ REPORTS_ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
 INSIGHT="/Users/ice/Documents/rf/takra-insight/apps/desktop/desktop"
 PAGES_BASE="https://wanlee-tankunnatam.github.io/qa-test-reports"
 
-TIER=smoke; RESULTS=""; DO_PUSH=1; DO_LINE=1
+TIER=smoke; RESULTS=""; DO_PUSH=1; DO_LINE=1; DO_PULL=1
 while [ $# -gt 0 ]; do case "$1" in
   --tier) TIER="$2"; shift 2;;
   --results) RESULTS="$2"; shift 2;;
   --no-push) DO_PUSH=0; shift;;
   --no-line) DO_LINE=0; shift;;
+  --no-pull) DO_PULL=0; shift;;
   *) echo "unknown arg: $1" >&2; exit 2;;
 esac; done
+
+# ── 0. อัปเดตโค้ดเป็นล่าสุดก่อนรันเสมอ (ปิดได้ด้วย --no-pull) ────────────────
+# pull เฉพาะเมื่อ checkout สะอาด — จะได้ไม่ทับงานค้างของคน/session อื่นบนเครื่อง
+# หมายเหตุ: ถ้า pull แล้วมีของใหม่ฝั่ง engine/model bundle และจะเทสเคสที่ใช้ engine จริง
+# ต้องลบ+โหลด model ใหม่ตาม Model Install Rule ใน CLAUDE.md ก่อน (tier smoke/uat
+# ปัจจุบันเป็น stub/hub ล้วน ไม่แตะ model จึงไม่ทำอัตโนมัติที่นี่)
+if [ "$DO_PULL" = 1 ] && [ -z "$RESULTS" ]; then
+  if [ -z "$(git -C "$INSIGHT" status --porcelain)" ]; then
+    LOCK_BEFORE=$(md5 -q "$INSIGHT/package-lock.json" 2>/dev/null || true)
+    echo "== git pull ($(git -C "$INSIGHT" branch --show-current)) =="
+    git -C "$INSIGHT" pull --ff-only || echo "⚠️ pull ไม่ได้ (non-ff/ออฟไลน์) — รันบนโค้ดที่มี" >&2
+    LOCK_AFTER=$(md5 -q "$INSIGHT/package-lock.json" 2>/dev/null || true)
+    if [ "$LOCK_BEFORE" != "$LOCK_AFTER" ]; then
+      echo "== lockfile เปลี่ยน → npm ci =="
+      (cd "$INSIGHT" && npm ci >/dev/null)
+    fi
+  else
+    echo "⚠️ checkout ไม่สะอาด — ข้าม pull, รันบนโค้ดที่มี (เลี่ยงทับงานค้างของ session อื่น)" >&2
+  fi
+fi
 
 BRANCH=$(git -C "$INSIGHT" branch --show-current)
 NOTE="unconfigured · โปรไฟล์แยก (เทียบเท่า CI)"
