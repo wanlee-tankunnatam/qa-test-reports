@@ -48,6 +48,40 @@ def collect(results_path):
     return data.get("stats", {}), rows
 
 
+def explain_error(err):
+    """แปล error ของ Playwright เป็นประโยคภาษาคน — คืน (หัวเรื่อง, คำอธิบาย/สาเหตุที่พบบ่อย)"""
+    if not err:
+        return None
+    lines = [l for l in err.splitlines() if l.strip()]
+    first = lines[0] if lines else ""
+    loc = (re.search(r"Locator:\s*(.+)", err) or [None, None])[1]
+    exp = (re.search(r"Expected[^:\n]*:\s*(.+)", err) or [None, None])[1]
+    rec = (re.search(r"Received[^:\n]*:\s*(.+)", err) or [None, None])[1]
+    tmo = (re.search(r"Timeout:\s*(\d+)ms", err) or [None, None])[1]
+    wait = f" (รอครบ {int(tmo)//1000} วิแล้ว)" if tmo else ""
+    not_found = "element(s) not found" in err
+
+    # spec เขียนข้อความ assert เป็นไทยเอง → ใช้ประโยคนั้นนำได้เลย
+    custom = re.sub(r"^Error:\s*", "", first)
+    headline = custom if re.search(r"[ก-๙]", custom) else None
+
+    if "Test timeout" in err:
+        body = "เทสรันเกินเวลาที่กำหนด — มักเกิดจากหน้า/ปุ่มที่รออยู่ไม่โผล่ขึ้นมาเลย ทำให้เทสค้างรอจนหมดเวลา"
+    elif "toBeVisible" in err and not_found:
+        body = f"เทสมองหา {loc or 'element'} บนหน้าจอ แต่หาไม่เจอเลย{wait} — มักเกิดจาก UI เปลี่ยน (ข้อความ/ชื่อปุ่มไม่ตรงกับที่เทสหา) หรือหน้าที่คาดไว้ไม่ได้เปิดขึ้น"
+    elif "toBeVisible" in err:
+        body = f"{loc or 'element'} มีอยู่ในหน้า แต่ไม่แสดงผล (ถูกซ่อน/ยังไม่ render){wait}"
+    elif not_found:
+        body = f"เทสจะตรวจค่า{(' ของ ' + loc) if loc else ''} แต่หา element นั้นไม่เจอเลย{wait} — มักเกิดจาก UI เปลี่ยนคำ/โครงสร้าง ไม่ตรงกับที่เทสเขียนไว้"
+    elif "toHaveCount" in err:
+        body = f"จำนวนรายการไม่ตรงที่คาด: ต้องการ {exp or '?'} แต่เจอ {rec or '?'}" + (f" (ตัวที่นับ: {loc})" if loc else "")
+    elif exp and rec:
+        body = f"ค่าที่ได้ไม่ตรงที่คาด: คาด {exp.strip()} แต่ได้จริง {rec.strip()}" + (f" (จุดที่ตรวจ: {loc})" if loc else "")
+    else:
+        body = custom
+    return (headline, body)
+
+
 def fmt_dur(ms):
     s = ms / 1000
     return f"{int(s // 60)} นาที {int(s % 60)} วิ" if s >= 60 else f"{s:.1f} วิ"
@@ -82,9 +116,16 @@ def build_html(stats, rows, tier, branch, note, run_at):
                 f'<td class="status"><span class="stb {st}">{STATUS_TH[st]}</span></td>'
                 f'<td class="cid">{fmt_dur(r["dur"]) if st != "skip" else "—"}</td></tr>')
             if has_err:
+                ex = explain_error(r["err"])
+                ex_html = ""
+                if ex:
+                    headline, body = ex
+                    ex_html = ('<div class="sec"><h4>ทำไมไม่ผ่าน (ภาษาคน)</h4>'
+                               + (f'<p class="exhead">{html.escape(headline)}</p>' if headline else "")
+                               + f'<p class="exbody">{html.escape(body)}</p></div>')
                 body_rows.append(
                     f'<tr class="detail" data-uid="{uid}" data-st="{st}" data-file="{html.escape(fname)}"><td colspan="5">'
-                    f'<div class="card"><div class="sec"><h4>Error</h4>'
+                    f'<div class="card">{ex_html}<div class="sec"><h4>Error (ดิบ)</h4>'
                     f'<pre class="errpre">{html.escape(r["err"][:3000])}</pre></div></div></td></tr>')
 
     file_chips = "".join(
@@ -145,6 +186,9 @@ tr.detail>td{{background:#fafbfc;padding:0;border-bottom:2px solid var(--line)}}
 .card{{padding:16px 20px}}
 .card .sec h4{{margin:0 0 5px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.3px;color:#374151}}
 .errpre{{white-space:pre-wrap;background:#fff;border:1px dashed #fecaca;border-radius:7px;padding:9px 12px;font-size:11.5px;color:#991b1b;margin:0}}
+.card .sec{{margin:0 0 12px}}.card .sec:last-child{{margin-bottom:0}}
+.exhead{{margin:0 0 4px;font-weight:700;font-size:13px}}
+.exbody{{margin:0;font-size:13px;border-left:3px solid var(--hold);padding:4px 12px;color:var(--txt)}}
 tr.hide{{display:none!important}}
 .note-box{{background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:8px 12px;font-size:12px;color:#92400e;margin:0 0 12px}}
 footer{{color:var(--muted);font-size:12px;text-align:center;padding:20px}}
