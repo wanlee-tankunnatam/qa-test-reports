@@ -23,6 +23,32 @@ STATUS_MAP = {"expected": "pass", "unexpected": "fail", "flaky": "flaky", "skipp
 STATUS_TH = {"pass": "PASS", "fail": "FAIL", "flaky": "FLAKY", "skip": "SKIP"}
 
 
+# ชื่อฟีเจอร์ภาษาคนต่อ spec file (ตารางสรุปบนรายงาน) — ไฟล์ใหม่ที่ไม่อยู่ในนี้จะ fallback เป็นชื่อไฟล์
+FEATURE_NAMES = {
+    "brand-dashboard.spec.js": "แดชบอร์ดแบรนด์",
+    "channel-watchlist.spec.js": "ช่องที่ติดตาม (watchlist)",
+    "channels.spec.js": "รายชื่อช่อง",
+    "comment-capture.spec.js": "เก็บคอมเมนต์สด",
+    "consent-settings.spec.js": "ตั้งค่าความยินยอม",
+    "dashboard.spec.js": "หน้าหลัก (dashboard)",
+    "entitlement-guard.spec.js": "ด่านตรวจสิทธิ์ใช้งาน",
+    "first-run-consent.spec.js": "ขอความยินยอมครั้งแรก",
+    "first-run-foreign-engine.smoke.spec.js": "เปิดครั้งแรกเจอ engine แปลกปลอม",
+    "health-score.spec.js": "คะแนนสุขภาพไลฟ์",
+    "kpi-panel.spec.js": "แผง KPI",
+    "login-sso.spec.js": "เข้าสู่ระบบ (SSO)",
+    "sessions-list.spec.js": "รายการเซสชัน",
+    "session-detail.spec.js": "รายละเอียดเซสชัน",
+    "live-player.spec.js": "จอดูไลฟ์",
+    "live-readiness.spec.js": "ความพร้อมก่อนไลฟ์",
+    "telegram-alerts.spec.js": "แจ้งเตือน Telegram",
+}
+
+
+def feature_name(fname):
+    return FEATURE_NAMES.get(os.path.basename(fname), os.path.basename(fname).split(".spec")[0])
+
+
 def collect(results_path):
     with open(results_path, encoding="utf-8") as f:
         data = json.load(f)
@@ -171,12 +197,13 @@ def build_html(stats, rows, tier, branch, note, run_at):
         cls = "fail" if c["fail"] else ("flaky" if c["flaky"] else "pass")
         feat_rows.append(
             f'<tr class="fsrow" data-file="{html.escape(fname)}" data-anchor="{anchor(fname)}">'
-            f'<td><a href="#{anchor(fname)}">{html.escape(os.path.basename(fname))}</a></td>'
+            f'<td><a href="#{anchor(fname)}">{html.escape(feature_name(fname))}</a>'
+            f'<span class="fsfile">{html.escape(os.path.basename(fname))}</span></td>'
             f'<td class="num ok">{c["pass"]}</td><td class="num {"bad" if c["fail"] else ""}">{c["fail"]}</td>'
             f'<td class="num">{c["flaky"]}</td><td class="num">{c["skip"]}</td>'
             f'<td><span class="stb {cls}">{"FAIL" if c["fail"] else ("FLAKY" if c["flaky"] else "PASS")}</span></td></tr>')
     feat_summary = ('<div class="featsum"><table class="fs">'
-                    '<thead><tr><th>ฟีเจอร์ (spec file)</th><th>ผ่าน</th><th>ตก</th><th>flaky</th><th>ข้าม</th><th>สรุป</th></tr></thead>'
+                    '<thead><tr><th>ฟีเจอร์</th><th>ผ่าน</th><th>ตก</th><th>flaky</th><th>ข้าม</th><th>สรุป</th></tr></thead>'
                     f'<tbody>{"".join(feat_rows)}</tbody></table></div>')
 
     body_rows = []
@@ -185,8 +212,8 @@ def build_html(stats, rows, tier, branch, note, run_at):
         frows = [r for r in rows if r["file"] == fname]
         fp = sum(1 for r in frows if r["status"] == "pass")
         body_rows.append(
-            f'<tr class="featrow" id="{anchor(fname)}" data-file="{html.escape(fname)}"><td colspan="5">{html.escape(fname)}'
-            f'<span class="rp">ผ่าน {fp}/{len(frows)}</span></td></tr>')
+            f'<tr class="featrow" id="{anchor(fname)}" data-file="{html.escape(fname)}"><td colspan="5">{html.escape(feature_name(fname))}'
+            f'<span class="rp">{html.escape(fname)} · ผ่าน {fp}/{len(frows)}</span></td></tr>')
         for r in frows:
             uid += 1
             st = r["status"]
@@ -303,6 +330,7 @@ table.fs tr:last-child td{{border-bottom:none}}
 tr.fsrow{{cursor:pointer}}tr.fsrow:hover td{{background:#f7f9fc}}
 td.num{{text-align:right;font-variant-numeric:tabular-nums;width:52px}}
 td.num.ok{{color:var(--pass);font-weight:700}}td.num.bad{{color:var(--fail);font-weight:700}}
+.fsfile{{display:block;font-family:monospace;font-size:10px;color:var(--muted)}}
 tr.hide{{display:none!important}}
 .note-box{{background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:8px 12px;font-size:12px;color:#92400e;margin:0 0 12px}}
 footer{{color:var(--muted);font-size:12px;text-align:center;padding:20px}}
