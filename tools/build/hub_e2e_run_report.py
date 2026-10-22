@@ -22,6 +22,53 @@ ANSI = re.compile(r"\x1b\[[0-9;]*m")
 STATUS_MAP = {"expected": "pass", "unexpected": "fail", "flaky": "flaky", "skipped": "skip"}
 STATUS_TH = {"pass": "PASS", "fail": "FAIL", "flaky": "FLAKY", "skip": "SKIP"}
 
+# ชื่อฟีเจอร์ภาษาคนต่อโฟลเดอร์ spec (แบบเดียวกับรายงาน insight) — ของใหม่ที่ไม่อยู่ในนี้ fallback เป็นชื่อโฟลเดอร์
+FEATURE_NAMES = {
+    "admin-dashboard": "แดชบอร์ดแอดมิน",
+    "admin-package": "แพ็กเกจ (ฝั่งแอดมิน)",
+    "admin-subscription": "subscription (ฝั่งแอดมิน)",
+    "affiliate": "ผู้แนะนำ (affiliate)",
+    "auth-harness": "ด่านตรวจ session บัญชีเทส",
+    "authz-log": "บันทึกสิทธิ์ (authz log)",
+    "billing-vat": "ภาษีและค่าธรรมเนียม (VAT)",
+    "catalog": "หน้ารวมแพ็กเกจ",
+    "checkout-payment": "ชำระเงิน/แนบสลิป",
+    "consent-gate": "ด่านยอมรับเอกสาร (consent)",
+    "cs-console": "คอนโซล CS",
+    "cs-console-ux": "คอนโซล CS — UX",
+    "downloads": "หน้าดาวน์โหลดแอป",
+    "finance-reconcile": "กระทบยอดการเงิน",
+    "free-trial": "ทดลองใช้ฟรี",
+    "invite-flow": "เชิญสมาชิกเข้าทีม",
+    "legal-admin": "เอกสารกฎหมาย (แอดมิน)",
+    "legal-pages": "หน้าเอกสารกฎหมาย",
+    "login-bff": "เข้าสู่ระบบ",
+    "my-subscriptions": "บริการของฉัน",
+    "password-reset-bff": "รีเซ็ตรหัสผ่าน",
+    "profile-workspaces": "โปรไฟล์และทีม",
+    "promotion-admin": "โค้ดส่วนลด (แอดมิน)",
+    "promotion-checkout": "โค้ดส่วนลดตอนชำระเงิน",
+    "promotion-report": "รายงานโค้ดส่วนลด",
+    "register-bff": "สมัครสมาชิก",
+    "smoke": "สโมคพื้นฐาน (ไม่ต้อง login)",
+    "staff": "บัญชีพนักงาน",
+    "trial-switch": "สวิตช์ปิด/เปิด trial",
+    "verify-email": "ยืนยันอีเมล",
+    "workspace-members": "สมาชิกทีม",
+}
+
+
+def feature_name(fname):
+    # hub spec = "{feature}/{aspect}.spec.ts" หรือไฟล์เดี่ยวเช่น "auth-harness.spec.ts"
+    parts = fname.split("/")
+    key = parts[0] if len(parts) > 1 else os.path.basename(fname).split(".spec")[0]
+    name = FEATURE_NAMES.get(key, key)
+    aspect = os.path.basename(fname).split(".spec")[0]
+    if len(parts) > 1 and aspect not in ("ui", "harness"):
+        name += f" ({aspect})"
+    return name
+
+
 # คำสั่งผู้ใช้ 22 ต.ค. 2026: ทุกผลการรันต้องบอก "ทำไมตก" เป็นภาษาคน และ "ทำไม skip" ทุกตัว
 FAIL_HINTS = [
     ("Error reading storage state", "ไม่มีไฟล์ login ของบัญชีนี้ — ยังไม่ได้ตั้งรหัสผ่านใน .env (ตั้งใจให้ล้มดัง ๆ ไม่ข้ามเงียบ)"),
@@ -105,6 +152,46 @@ def collect(results_path):
     return data.get("stats", {}), rows
 
 
+def explain_error(err):
+    """แปล error ของ Playwright เป็นประโยคภาษาคน — คืน (หัวเรื่อง, คำอธิบาย) · ยกมาจากรายงาน insight"""
+    if not err:
+        return None
+    lines = [l for l in err.splitlines() if l.strip()]
+    first = lines[0] if lines else ""
+    loc = (re.search(r"Locator:\s*(.+)", err) or [None, None])[1]
+    exp = (re.search(r"Expected[^:\n]*:\s*(.+)", err) or [None, None])[1]
+    rec = (re.search(r"Received[^:\n]*:\s*(.+)", err) or [None, None])[1]
+    tmo = (re.search(r"Timeout:\s*(\d+)ms", err) or [None, None])[1]
+    wait = f" (รอครบ {int(tmo)//1000} วิแล้ว)" if tmo else ""
+    not_found = "element(s) not found" in err
+
+    # spec เขียนข้อความ assert เป็นไทยเอง → ใช้ประโยคนั้นนำได้เลย
+    custom = re.sub(r"^Error:\s*", "", first)
+    headline = custom if re.search(r"[ก-๙]", custom) else None
+
+    if "Error reading storage state" in err:
+        body = "ไม่มีไฟล์ login ของบัญชีนี้ — ยังไม่ได้ตั้งรหัสผ่านใน .env (ตั้งใจให้ล้มดัง ๆ ไม่ข้ามเงียบ)"
+    elif "504" in err:
+        body = "UAT ตอบ 504 Gateway time-out — เซิร์ฟเวอร์สะดุดชั่วคราว ไม่ใช่บัคของหน้า ลองรันใหม่"
+    elif "strict mode violation" in err:
+        body = f"เทสหา {loc or 'element'} ตัวเดียว แต่บนหน้ามีหลายตัว — เนื้อหา/โครงหน้าบน UAT มีของซ้ำหรือเปลี่ยนไป"
+    elif "Test timeout" in err:
+        body = "เทสรันเกินเวลาที่กำหนด — มักเกิดจากหน้า/ปุ่มที่รออยู่ไม่โผล่ขึ้นมาเลย ทำให้เทสค้างรอจนหมดเวลา"
+    elif "toBeVisible" in err and not_found:
+        body = f"เทสมองหา {loc or 'element'} บนหน้าจอ แต่หาไม่เจอเลย{wait} — มักเกิดจาก UI เปลี่ยน (ข้อความ/ชื่อปุ่มไม่ตรงกับที่เทสหา) หรือหน้าที่คาดไว้ไม่ได้เปิดขึ้น"
+    elif "toBeVisible" in err:
+        body = f"{loc or 'element'} มีอยู่ในหน้า แต่ไม่แสดงผล (ถูกซ่อน/ยังไม่ render){wait}"
+    elif not_found:
+        body = f"เทสจะตรวจค่า{(' ของ ' + loc) if loc else ''} แต่หา element นั้นไม่เจอเลย{wait} — มักเกิดจาก UI เปลี่ยนคำ/โครงสร้าง ไม่ตรงกับที่เทสเขียนไว้"
+    elif "toHaveCount" in err:
+        body = f"จำนวนรายการไม่ตรงที่คาด: ต้องการ {exp or '?'} แต่เจอ {rec or '?'}" + (f" (ตัวที่นับ: {loc})" if loc else "")
+    elif exp and rec:
+        body = f"ค่าที่ได้ไม่ตรงที่คาด: คาด {exp.strip()} แต่ได้จริง {rec.strip()}" + (f" (จุดที่ตรวจ: {loc})" if loc else "")
+    else:
+        body = custom
+    return (headline, body)
+
+
 def fmt_dur(ms):
     s = ms / 1000
     return f"{int(s // 60)} นาที {int(s % 60)} วิ" if s >= 60 else f"{s:.1f} วิ"
@@ -117,14 +204,34 @@ def build_html(stats, rows, tier, branch, note, run_at):
     pct = round(100 * n["pass"] / ran) if ran else 0
     files = sorted({r["file"] for r in rows})
 
+    def anchor(fname):
+        return "feat-" + re.sub(r"[^A-Za-z0-9._~-]", "-", fname.replace("/", "-").split(".spec")[0])
+
+    # ── แถบสรุปต่อฟีเจอร์ (กดแล้วกรอง+กระโดดไปกลุ่มนั้น) — แบบเดียวกับรายงาน insight ──
+    feat_rows = []
+    for fname in files:
+        frows = [r for r in rows if r["file"] == fname]
+        c = {k: sum(1 for r in frows if r["status"] == k) for k in ("pass", "fail", "flaky", "skip")}
+        cls = "fail" if c["fail"] else ("flaky" if c["flaky"] else "pass")
+        feat_rows.append(
+            f'<tr class="fsrow" data-file="{html.escape(fname)}" data-anchor="{anchor(fname)}">'
+            f'<td><a href="#{anchor(fname)}">{html.escape(feature_name(fname))}</a>'
+            f'<span class="fsfile">{html.escape(fname)}</span></td>'
+            f'<td class="num ok">{c["pass"]}</td><td class="num {"bad" if c["fail"] else ""}">{c["fail"]}</td>'
+            f'<td class="num">{c["flaky"]}</td><td class="num">{c["skip"]}</td>'
+            f'<td><span class="stb {cls}">{"FAIL" if c["fail"] else ("FLAKY" if c["flaky"] else "PASS")}</span></td></tr>')
+    feat_summary = ('<div class="featsum"><table class="fs">'
+                    '<thead><tr><th>ฟีเจอร์</th><th>ผ่าน</th><th>ตก</th><th>flaky</th><th>ข้าม</th><th>สรุป</th></tr></thead>'
+                    f'<tbody>{"".join(feat_rows)}</tbody></table></div>')
+
     body_rows = []
     uid = 0
     for fname in files:
         frows = [r for r in rows if r["file"] == fname]
         fp = sum(1 for r in frows if r["status"] == "pass")
         body_rows.append(
-            f'<tr class="featrow" data-file="{html.escape(fname)}"><td colspan="5">{html.escape(fname)}'
-            f'<span class="rp">ผ่าน {fp}/{len(frows)}</span></td></tr>')
+            f'<tr class="featrow" id="{anchor(fname)}" data-file="{html.escape(fname)}"><td colspan="5">{html.escape(feature_name(fname))}'
+            f'<span class="rp">ผ่าน {fp}/{len(frows)} · {html.escape(fname)}</span></td></tr>')
         for r in frows:
             uid += 1
             st = r["status"]
@@ -144,11 +251,16 @@ def build_html(stats, rows, tier, branch, note, run_at):
                 f'<td class="status"><span class="stb {st}">{STATUS_TH[st]}</span></td>'
                 f'<td class="cid">{fmt_dur(r["dur"]) if st != "skip" else "—"}</td></tr>')
             if bool(r["err"]) and st in ("fail", "flaky"):
+                ex = explain_error(r["err"])
+                ex_html = ""
+                if ex:
+                    headline, body_txt = ex
+                    ex_html = ('<div class="sec"><h4>ทำไมไม่ผ่าน (ภาษาคน)</h4>'
+                               + (f'<p class="exhead">{html.escape(headline)}</p>' if headline else "")
+                               + f'<p class="exbody">{html.escape(body_txt)}</p></div>')
                 body_rows.append(
                     f'<tr class="detail" data-uid="{uid}" data-st="{st}" data-file="{html.escape(fname)}"><td colspan="5">'
-                    f'<div class="card"><div class="sec"><h4>ทำไมตก (ภาษาคน)</h4>'
-                    f'<p class="whyfull">{html.escape(r["why"])}</p></div>'
-                    f'<div class="sec"><h4>Error</h4>'
+                    f'<div class="card">{ex_html}<div class="sec"><h4>Error (ดิบ)</h4>'
                     f'<pre class="errpre">{html.escape(r["err"][:3000])}</pre></div></div></td></tr>')
             elif skip_detail:
                 items = "".join(f'<li>{html.escape(p)}</li>' for p in raw_segments)
@@ -236,6 +348,18 @@ tr.trow[data-st="skip"] .why{{color:#6b7280}}
 .whyraw{{color:#9ca3af;font-size:10.5px}}
 .exlist{{margin:0;padding-left:18px;font-size:12.5px;color:#4b5563}}
 .exlist li{{margin:3px 0}}
+.exhead{{margin:0 0 4px;font-weight:700;font-size:13px}}
+.exbody{{margin:0;font-size:13px;border-left:3px solid var(--hold);padding:4px 12px;color:var(--txt)}}
+.featsum{{background:#fff;border:1px solid var(--line);border-radius:12px;padding:6px 10px;margin:0 0 14px;overflow-x:auto}}
+table.fs{{border-collapse:collapse;width:100%;min-width:560px;font-size:12.5px}}
+table.fs th{{color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.4px;text-align:left;padding:6px 10px;border-bottom:2px solid var(--line)}}
+table.fs td{{padding:5px 10px;border-bottom:1px solid var(--line)}}
+table.fs tr:last-child td{{border-bottom:none}}
+tr.fsrow{{cursor:pointer}}tr.fsrow:hover td{{background:#f7f9fc}}
+tr.fsrow.active td{{background:rgba(37,99,235,.14)}}
+td.num{{text-align:right;font-variant-numeric:tabular-nums;width:52px}}
+td.num.ok{{color:var(--pass);font-weight:700}}td.num.bad{{color:var(--fail);font-weight:700}}
+.fsfile{{display:block;font-family:monospace;font-size:10px;color:var(--muted)}}
 .whyfull{{margin:0;font-size:12.5px;background:#fffbeb;border:1px solid #fde68a;border-radius:7px;padding:8px 12px;color:#92400e}}
 .skipbox{{background:#fff;border:1px solid var(--line);border-radius:10px;padding:8px 14px;margin:0 0 14px;font-size:12px}}
 .skipbox summary{{cursor:pointer;font-weight:700;color:#374151}}
@@ -264,7 +388,8 @@ footer{{color:var(--muted);font-size:12px;text-align:center;padding:20px}}
     <span class="cnt">รวม <b>{total}</b> · ผ่าน {pct}% ของที่รัน</span>
   </div>
   <div class="progress"><div class="progressbar"></div></div>
-  {'<div class="note-box">⚠️ มีเคส FAIL — ใต้ชื่อเคสมีคำอธิบายสั้น ๆ ว่าทำไมตก · กดที่แถวเพื่อดู error เต็ม</div>' if n['fail'] else ''}
+  {feat_summary}
+  {'<div class="note-box">⚠️ มีเคส FAIL — ใต้ชื่อเคสมีคำอธิบายสั้น ๆ ว่าทำไมตก · กดที่แถวเพื่อดูคำอธิบาย + error เต็ม</div>' if n['fail'] else ''}
   {skip_box}
   <div class="filters">
     <div class="row"><label>สถานะ</label>
@@ -305,6 +430,21 @@ document.querySelectorAll('tr.trow').forEach(tr=>tr.addEventListener('click',()=
   const d=document.querySelector(`tr.detail[data-uid="${{tr.dataset.uid}}"]`);
   if(!d)return; tr.classList.toggle('open'); d.classList.toggle('show');
 }}));
+function gotoFeature(file,anchorId){{
+  const off=F.file===file;
+  F.file=off?null:file;
+  document.querySelectorAll('tr.fsrow').forEach(x=>x.classList.toggle('active',!off&&x.dataset.file===file));
+  apply();
+  if(!off){{const row=document.getElementById(anchorId);
+    if(row)row.scrollIntoView({{behavior:'smooth',block:'start'}});}}
+}}
+document.querySelectorAll('tr.fsrow').forEach(tr=>tr.addEventListener('click',e=>{{
+  e.preventDefault(); gotoFeature(tr.dataset.file,tr.dataset.anchor);
+}}));
+if(location.hash.startsWith('#feat-')){{
+  const row=document.getElementById(location.hash.slice(1));
+  if(row)gotoFeature(row.dataset.file,row.id);
+}}
 </script>
 </body></html>"""
 
