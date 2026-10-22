@@ -375,7 +375,6 @@ function apply(){{
   document.querySelectorAll('tr.trow,tr.detail').forEach(tr=>{{
     const ok=(!F.st||tr.dataset.st===F.st)&&(!F.file||tr.dataset.file===F.file);
     tr.classList.toggle('hide',!ok);
-    if(tr.classList.contains('detail')&&!tr.classList.contains('show'))tr.classList.add('hide')===false;
   }});
   document.querySelectorAll('tr.featrow').forEach(fr=>{{
     const any=[...document.querySelectorAll(`tr.trow[data-file="${{CSS.escape(fr.dataset.file)}}"]`)].some(r=>!r.classList.contains('hide'));
