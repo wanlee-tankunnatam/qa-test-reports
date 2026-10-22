@@ -129,16 +129,16 @@ def build_html(stats, rows, tier, branch, note, run_at):
             uid += 1
             st = r["status"]
             tags = " ".join(f'<span class="lv lvl-ui">{html.escape(t)}</span>' for t in r["tags"])
-            has_detail = bool(r["err"]) and st in ("fail", "flaky")
+            # เหตุผลเต็มของ skip แตกเป็นข้อ ๆ ตามตัวคั่น "·" (คำสั่งผู้ใช้: อย่าปล่อยเป็นบรรทัดยาวติดกัน)
+            raw_segments = [p.strip() for p in re.split(r"\s*·\s*", r["whyraw"] or "") if p.strip()]
+            skip_detail = st == "skip" and raw_segments and r["whyraw"] != r["why"]
+            has_detail = (bool(r["err"]) and st in ("fail", "flaky")) or skip_detail
             tog = '<span class="tog">▶</span>' if has_detail else '<span class="tog"></span>'
             body_rows.append(
                 f'<tr class="trow" data-uid="{uid}" data-st="{st}" data-file="{html.escape(fname)}">'
                 f'<td>{tog}</td>'
                 f'<td class="ctitle">{html.escape(r["title"])}'
-                + (f'<div class="why">{"⏭" if st == "skip" else "💬"} {html.escape(r["why"])}'
-                   + (f'<span class="whyraw"> · เหตุผลเต็ม: {html.escape(r["whyraw"][:160])}</span>'
-                      if st == "skip" and r["whyraw"] != r["why"] else '')
-                   + '</div>' if r["why"] else '')
+                + (f'<div class="why">{"⏭" if st == "skip" else "💬"} {html.escape(r["why"])}</div>' if r["why"] else '')
                 + f'</td>'
                 f'<td class="lvl">{tags}</td>'
                 f'<td class="status"><span class="stb {st}">{STATUS_TH[st]}</span></td>'
@@ -150,6 +150,12 @@ def build_html(stats, rows, tier, branch, note, run_at):
                     f'<p class="whyfull">{html.escape(r["why"])}</p></div>'
                     f'<div class="sec"><h4>Error</h4>'
                     f'<pre class="errpre">{html.escape(r["err"][:3000])}</pre></div></div></td></tr>')
+            elif skip_detail:
+                items = "".join(f'<li>{html.escape(p)}</li>' for p in raw_segments)
+                body_rows.append(
+                    f'<tr class="detail" data-uid="{uid}" data-st="{st}" data-file="{html.escape(fname)}"><td colspan="5">'
+                    f'<div class="card"><div class="sec"><h4>เหตุผลที่ SKIP (จากใน spec)</h4>'
+                    f'<ul class="exlist">{items}</ul></div></div></td></tr>')
 
     # กล่องสรุป "ข้ามเพราะอะไร" — จัดกลุ่มเหตุผล skip เรียงจากเยอะไปน้อย
     skip_counts = {}
@@ -159,7 +165,8 @@ def build_html(stats, rows, tier, branch, note, run_at):
     skip_box = ""
     if skip_counts:
         items = "".join(
-            f'<li><b>×{c}</b> — {html.escape(reason)}</li>'
+            f'<li><b>×{c}</b> — ' + "<br>· ".join(
+                html.escape(p.strip()) for p in re.split(r"\s*·\s*", reason) if p.strip()) + '</li>'
             for reason, c in sorted(skip_counts.items(), key=lambda kv: -kv[1]))
         skip_box = (f'<details class="skipbox"><summary>⏭ เหตุผลที่ข้าม {n["skip"]} เคส '
                     f'({len(skip_counts)} สาเหตุ — กดเพื่อดู)</summary><ul>{items}</ul></details>')
@@ -227,6 +234,8 @@ tr.hide{{display:none!important}}
 .why{{font-weight:400;font-size:11.5px;color:#92400e;margin-top:2px}}
 tr.trow[data-st="skip"] .why{{color:#6b7280}}
 .whyraw{{color:#9ca3af;font-size:10.5px}}
+.exlist{{margin:0;padding-left:18px;font-size:12.5px;color:#4b5563}}
+.exlist li{{margin:3px 0}}
 .whyfull{{margin:0;font-size:12.5px;background:#fffbeb;border:1px solid #fde68a;border-radius:7px;padding:8px 12px;color:#92400e}}
 .skipbox{{background:#fff;border:1px solid var(--line);border-radius:10px;padding:8px 14px;margin:0 0 14px;font-size:12px}}
 .skipbox summary{{cursor:pointer;font-weight:700;color:#374151}}
