@@ -100,7 +100,8 @@ def humanize_skip(txt):
     if re.search(r"pending .*(harness|fixture)", low):
         parts.append("รอเครื่องมือจำลองสัญญาณ/fixture ที่ยังไม่ได้สร้าง")
     if "blocked" in low:
-        parts.append("ติดบล็อก: ยังไม่มีสภาพแวดล้อม/ของที่ต้องใช้" + (f" — {thai[0].strip()}" if thai else ""))
+        # ข้อความ BLOCKED อธิบายตัวเองดีอยู่แล้ว — คงคำเดิม แค่แตกเป็นข้อ
+        return [p.strip() for p in re.split(r"\s*·\s*", txt) if p.strip()]
     elif thai and not parts:
         # เหตุผลเป็นไทยอยู่แล้ว — แตกเป็นข้อตามตัวคั่น
         return [p.strip() for p in re.split(r"\s*·\s*", txt) if p.strip()]
@@ -200,8 +201,9 @@ def build_html(stats, rows, tier, branch, note, run_at):
                                    + "</ul>")
                 else:
                     reason_html = '<p class="exbody">ไม่พบคำอธิบายใน spec — ควรเติมคอมเมนต์เหตุผลไว้ที่ test.skip</p>'
+                raw_segments = [p.strip() for p in re.split(r"\s*·\s*", reason or "") if p.strip()]
                 raw_html = (f'<p class="exsrc">คอมเมนต์ใน spec: {html.escape(reason)}</p>'
-                            if reason and human != [reason] else "")
+                            if reason and human != raw_segments else "")
                 src_html = f'<p class="exsrc">ที่มา: {html.escape(src)}</p>' if src else ""
                 body_rows.append(
                     f'<tr class="detail" data-uid="{uid}" data-st="{st}" data-file="{html.escape(fname)}"><td colspan="5">'
