@@ -120,7 +120,14 @@ def walk(suites):
         walk(su.get("suites", []))
 walk(d.get("suites", []))
 m, sec = divmod(int(s.get("duration", 0) / 1000), 60)
-print(f"✅ ผ่าน {s.get('expected',0)} · ❌ ตก {s.get('unexpected',0)} · ⚠️ flaky {s.get('flaky',0)} · ⏭ ข้าม {s.get('skipped',0)} · ⏱ {m} นาที {sec} วิ")
+fail = s.get("unexpected", 0); flaky = s.get("flaky", 0)
+if fail:
+    print(f"🔴 GATE ไม่ผ่าน — ตก {fail} เคส")
+elif flaky:
+    print(f"🟡 GATE ผ่านแบบมีเงื่อนไข — flaky {flaky} เคส ควรจับตา")
+else:
+    print("🟢 GATE ผ่าน")
+print(f"✅ ผ่าน {s.get('expected',0)} · ❌ ตก {fail} · ⚠️ flaky {flaky} · ⏭ ข้าม {s.get('skipped',0)} · ⏱ {m} นาที {sec} วิ")
 for f in fails[:8]:
     print(f)
 if len(fails) > 8:
