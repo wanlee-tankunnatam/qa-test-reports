@@ -271,11 +271,11 @@ body{{margin:0;background:var(--bg);color:var(--txt);font-family:"Segoe UI","Sar
 a{{color:var(--accent)}}
 header.top{{padding:20px 28px 14px;border-bottom:1px solid var(--line);background:linear-gradient(135deg,#1e3a8a,#2563eb);color:#fff}}
 header.top h1{{margin:0 0 4px;font-size:20px}}
-.gate{{display:block;padding:16px 28px;font-size:26px;font-weight:900;text-align:center;background:#fff;letter-spacing:.3px}}
-.gate-fail{{color:#b91c1c;border-bottom:6px solid #b91c1c}}
-.gate-pass{{color:#15803d;border-bottom:6px solid #15803d}}
-.gate-warn{{color:#b45309;border-bottom:6px solid #b45309}}
-.gate small{{display:block;font-size:13px;font-weight:600;color:#6b7280;margin-top:3px}}
+.gate{{display:block;padding:16px 28px;font-size:26px;font-weight:900;text-align:center;background:#111827;letter-spacing:.3px}}
+.gate-fail{{color:#fbbf24;border-bottom:6px solid #fbbf24}}
+.gate-pass{{color:#4ade80;border-bottom:6px solid #4ade80}}
+.gate-warn{{color:#fb923c;border-bottom:6px solid #fb923c}}
+.gate small{{display:block;font-size:13px;font-weight:600;color:#9ca3af;margin-top:3px}}
 header.top .sub{{font-size:12.5px;opacity:.88}}
 header.top .meta{{margin-top:10px;display:flex;flex-wrap:wrap;gap:8px}}
 .pill{{display:inline-block;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:600;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.35);color:#fff}}
