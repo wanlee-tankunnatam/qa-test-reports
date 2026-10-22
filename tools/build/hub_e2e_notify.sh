@@ -132,7 +132,9 @@ def walk(suites):
         walk(su.get("suites", []))
 walk(d.get("suites", []))
 m, sec = divmod(int(s.get("duration", 0) / 1000), 60)
-print(f"✅ ผ่าน {s.get('expected',0)} · ❌ ตก {s.get('unexpected',0)} · ⚠️ flaky {s.get('flaky',0)} · ⏭ ข้าม {s.get('skipped',0)} · ⏱ {m} นาที {sec} วิ")
+nf = s.get("unexpected", 0)
+print("✅ GATE: ผ่าน — ไม่มีเคสตก" if nf == 0 else f"⛔ GATE: ไม่ผ่าน — ตก {nf} เคส")
+print(f"✅ ผ่าน {s.get('expected',0)} · ❌ ตก {nf} · ⚠️ flaky {s.get('flaky',0)} · ⏭ ข้าม {s.get('skipped',0)} · ⏱ {m} นาที {sec} วิ")
 for f in fails[:8]:
     print(f)
 if len(fails) > 8:

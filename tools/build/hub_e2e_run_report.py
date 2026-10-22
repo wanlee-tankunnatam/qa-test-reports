@@ -274,6 +274,14 @@ def build_html(stats, rows, tier, branch, note, run_at):
     for r in rows:
         if r["status"] == "skip":
             skip_counts[r["why"]] = skip_counts.get(r["why"], 0) + 1
+    # ผลตัดสิน gate ของรอบรันนี้ (คำสั่งผู้ใช้ 22 ต.ค. 2026) — เกณฑ์: FAIL ต้องเป็น 0 ถึงจะผ่าน
+    if n["fail"] == 0:
+        gate_cls, gate_txt = "pass", "✅ GATE: ผ่าน — ไม่มีเคสตก" + (f" (flaky {n['flaky']} ตัว ควรจับตา)" if n["flaky"] else "")
+    else:
+        gate_cls, gate_txt = "fail", (f"⛔ GATE: ไม่ผ่าน — ตก {n['fail']} เคส "
+                                      f"(ต้องเป็น 0 หรือทุกตัวมีตั๋ว/เหตุกำกับและ QA เซ็นรับ) · ดูสาเหตุรายตัวในตาราง")
+    gate_box = f'<div class="gatebox {gate_cls}">{gate_txt}</div>'
+
     skip_box = ""
     if skip_counts:
         items = "".join(
@@ -360,6 +368,9 @@ tr.fsrow.active td{{background:rgba(37,99,235,.14)}}
 td.num{{text-align:right;font-variant-numeric:tabular-nums;width:52px}}
 td.num.ok{{color:var(--pass);font-weight:700}}td.num.bad{{color:var(--fail);font-weight:700}}
 .fsfile{{display:block;font-family:monospace;font-size:10px;color:var(--muted)}}
+.gatebox{{border-radius:10px;padding:10px 16px;margin:0 0 14px;font-size:14px;font-weight:800;border:2px solid}}
+.gatebox.pass{{background:#f0fdf4;border-color:var(--pass);color:#166534}}
+.gatebox.fail{{background:#fef2f2;border-color:var(--fail);color:#7f1d1d}}
 .whyfull{{margin:0;font-size:12.5px;background:#fffbeb;border:1px solid #fde68a;border-radius:7px;padding:8px 12px;color:#92400e}}
 .skipbox{{background:#fff;border:1px solid var(--line);border-radius:10px;padding:8px 14px;margin:0 0 14px;font-size:12px}}
 .skipbox summary{{cursor:pointer;font-weight:700;color:#374151}}
@@ -388,6 +399,7 @@ footer{{color:var(--muted);font-size:12px;text-align:center;padding:20px}}
     <span class="cnt">รวม <b>{total}</b> · ผ่าน {pct}% ของที่รัน</span>
   </div>
   <div class="progress"><div class="progressbar"></div></div>
+  {gate_box}
   {feat_summary}
   {'<div class="note-box">⚠️ มีเคส FAIL — ใต้ชื่อเคสมีคำอธิบายสั้น ๆ ว่าทำไมตก · กดที่แถวเพื่อดูคำอธิบาย + error เต็ม</div>' if n['fail'] else ''}
   {skip_box}
