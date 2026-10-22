@@ -197,8 +197,7 @@ def build_html(stats, rows, tier, branch, note, run_at):
         cls = "fail" if c["fail"] else ("flaky" if c["flaky"] else "pass")
         feat_rows.append(
             f'<tr class="fsrow" data-file="{html.escape(fname)}" data-anchor="{anchor(fname)}">'
-            f'<td><a href="#{anchor(fname)}">{html.escape(feature_name(fname))}</a>'
-            f'<span class="fsfile">{html.escape(os.path.basename(fname))}</span></td>'
+            f'<td><a href="#{anchor(fname)}">{html.escape(feature_name(fname))}</a></td>'
             f'<td class="num ok">{c["pass"]}</td><td class="num {"bad" if c["fail"] else ""}">{c["fail"]}</td>'
             f'<td class="num">{c["flaky"]}</td><td class="num">{c["skip"]}</td>'
             f'<td><span class="stb {cls}">{"FAIL" if c["fail"] else ("FLAKY" if c["flaky"] else "PASS")}</span></td></tr>')
@@ -213,7 +212,7 @@ def build_html(stats, rows, tier, branch, note, run_at):
         fp = sum(1 for r in frows if r["status"] == "pass")
         body_rows.append(
             f'<tr class="featrow" id="{anchor(fname)}" data-file="{html.escape(fname)}"><td colspan="5">{html.escape(feature_name(fname))}'
-            f'<span class="rp">{html.escape(fname)} · ผ่าน {fp}/{len(frows)}</span></td></tr>')
+            f'<span class="rp">ผ่าน {fp}/{len(frows)}</span></td></tr>')
         for r in frows:
             uid += 1
             st = r["status"]
