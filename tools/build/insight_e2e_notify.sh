@@ -128,9 +128,17 @@ if len(fails) > 8:
 EOF
 )
 
-if [ "$DO_LINE" = 1 ]; then
+# เครื่อง QA: ค่า LINE อยู่ใน .env.development · CI: inject มาเป็น env ตรงๆ (GitHub Secrets) ไม่มีไฟล์นี้
+if [ "$DO_LINE" = 1 ] && [ -f "$INSIGHT/.env.development" ]; then
   while IFS= read -r line; do export "$line"; done \
     < <(grep "^E2E_INS_LINE" "$INSIGHT/.env.development")
+fi
+if [ "$DO_LINE" = 1 ] && { [ -z "${E2E_INS_LINE_TOKEN:-}" ] || [ -z "${E2E_INS_LINE_GROUP_ID:-}" ]; }; then
+  echo "⚠️ ไม่มี E2E_INS_LINE_TOKEN/GROUP_ID (ทั้งในไฟล์ env และ environment) — ข้ามการส่ง LINE" >&2
+  DO_LINE=0
+fi
+
+if [ "$DO_LINE" = 1 ]; then
   # เฝ้าโควตา push (แพลนฟรี 300/เดือน) — เกิน 80% เตือนในข้อความเลย จะได้เห็นก่อนโดนตัด
   QUOTA_LINE=""
   USED=$(curl -s https://api.line.me/v2/bot/message/quota/consumption \
