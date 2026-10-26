@@ -155,17 +155,17 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <h1>🖥️ TAKRA AI — แอปเดสก์ท็อป Takra Live (Windows) UI Manual Test Cases</h1>
   <div class="sub">เทส UI ด้วยมือ · แอป <b>Takra Live</b> บน Windows (Electron) ที่โหลดเว็บ TAKRA AI UAT แล้วเรนเดอร์อวาตาร์ด้วยการ์ดจอของเครื่อง · โค้ด <b>origin/develop @ 631d52f8</b> (26 ต.ค. 2569) · Epic <b>TAKRA-1453</b></div>
   <div class="meta">
-    <span class="pill">67 เคส + E2E 1 = 68</span>
-    <span class="pill">12 กลุ่ม (A–L) + E2E</span>
+    <span class="pill">83 เคส + E2E 1 = 84</span>
+    <span class="pill">13 กลุ่ม (A–L + Q คุณภาพไลฟ์) + E2E</span>
     <span class="pill">UI + E2E · manual</span>
-    <span class="pill">P0 31 · P1 37 · P2 0</span>
-    <span class="pill">ประเภท: Happy 28 · Negative 6 · Boundary 4 · Validation 3 · Exception 10 · Permission 5 · Data 12</span>
+    <span class="pill">P0 38 · P1 46 · P2 0</span>
+    <span class="pill">ประเภท: Happy 30 · Negative 9 · Boundary 11 · Validation 3 · Exception 12 · Permission 5 · Data 14</span>
   </div>
 </header>
 
 <div class="wrap">
 
-  <div class="note-box">🖥️ <b>Test target:</b> แอป <b>Takra Live</b> (ตัวติดตั้ง <code>Takra-Live-x64.exe</code>) บน Windows 10/11 x64 · แอปเปิดเว็บ <code>https://uat-live.takra.ai</code> ในหน้าต่างของแอป · ล็อกอินผ่านหน้า TAKRA Hub ที่เปิดในแอป<br>🧰 <b>เครื่องที่ต้องเตรียม:</b> (1) <b>เครื่อง A</b> Windows + การ์ด NVIDIA ผ่านสเปก (VRAM ≥ 16 GB · ไดรเวอร์ ≥ 570 · RAM 32 GB · CPU 8 คอร์ · ดิสก์ว่าง 50 GB) · (2) <b>เครื่อง B</b> Windows อีกเครื่อง ร้านเดียวกัน (เคสส่งออก/นำเข้า · อวาตาร์ไม่อยู่ในเครื่อง) · (3) เครื่องที่ไม่ผ่านสเปกหรือไม่มีการ์ด NVIDIA (เคสตรวจเครื่อง) · (4) เบราว์เซอร์ปกติ (Chrome) เปิด UAT เดียวกัน (เคสเทียบ "นอกแอป")<br>📎 <b>ที่มาของเคส:</b> โค้ดจริงใน <code>apps/desktop/src</code> + <code>apps/web/src</code> · คำ UI ลอกจาก <code>apps/web/src/i18n/locales/th/*.ts</code> และข้อความในแอปจาก <code>apps/desktop/src/*.js</code> · Expected ยึด Jira Epic TAKRA-1453 และใบย่อย (TAKRA-1464 · 1465 · 1469 · 1470 · 1473 · 1474 · 1475 · 1504 · 1507 · 1508 · 1529 · 1531 · 1532 · 1533 · 1537 · 1546 · 1547 · 1551 · 1552 · 1554 · 1555 · 1556 · 1559 · 1560)<br>🔴 <b>ไลฟ์จริง = manual เท่านั้น:</b> เคสกลุ่ม L และ E2E ออกอากาศเข้า TikTok จริง ห้ามเขียนเป็นสคริปต์อัตโนมัติ · ห้ามใช้บัญชี/ห้องไลฟ์เดียวกับรอบทดสอบอื่นพร้อมกัน<br>⚠️ <b>ยังไม่อยู่ในรอบนี้ (ตามโค้ด 26 ต.ค.):</b> TikTok LIVE Studio + กล้องเสมือน (TAKRA-1463 ยังไม่ทำ — ตัวเลือก "ผ่าน TikTok LIVE Studio" จะไม่ขึ้น) · code signing / อัปเดตอัตโนมัติ / Sentry (TAKRA-1470 To Do — Windows อาจเตือน unknown publisher) · ช่อง production ของแอป (มีแค่ UAT)<br>📏 <b>เกณฑ์สเปก:</b> Epic TAKRA-1453 (15 ต.ค.) เขียน VRAM ≥ 24 GB แต่โค้ดปัจจุบันใช้เกณฑ์ใหม่ของ TAKRA-1542/1464 (VRAM 16 GB · ความเร็วเรนเดอร์ ≤ 4 วิ ต่อเสียง 5 วิ) — เคสยึดตัวเลขในแอป ถ้า BA ยืนยันตัวเลขอื่นให้แก้ที่เคสกลุ่ม C</div>
+  <div class="note-box">🖥️ <b>Test target:</b> แอป <b>Takra Live</b> (ตัวติดตั้ง <code>Takra-Live-x64.exe</code>) บน Windows 10/11 x64 · แอปเปิดเว็บ <code>https://uat-live.takra.ai</code> ในหน้าต่างของแอป · ล็อกอินผ่านหน้า TAKRA Hub ที่เปิดในแอป<br>🧰 <b>เครื่องที่ต้องเตรียม:</b> (1) <b>เครื่อง A</b> Windows + การ์ด NVIDIA ผ่านสเปก (VRAM ≥ 16 GB · ไดรเวอร์ ≥ 570 · RAM 32 GB · CPU 8 คอร์ · ดิสก์ว่าง 50 GB) · (2) <b>เครื่อง B</b> Windows อีกเครื่อง ร้านเดียวกัน (เคสส่งออก/นำเข้า · อวาตาร์ไม่อยู่ในเครื่อง) · (3) เครื่องที่ไม่ผ่านสเปกหรือไม่มีการ์ด NVIDIA (เคสตรวจเครื่อง) · (4) เบราว์เซอร์ปกติ (Chrome) เปิด UAT เดียวกัน (เคสเทียบ "นอกแอป")<br>📎 <b>ที่มาของเคส:</b> โค้ดจริงใน <code>apps/desktop/src</code> + <code>apps/web/src</code> · คำ UI ลอกจาก <code>apps/web/src/i18n/locales/th/*.ts</code> และข้อความในแอปจาก <code>apps/desktop/src/*.js</code> · Expected ยึด Jira Epic TAKRA-1453 และใบย่อย (TAKRA-1464 · 1465 · 1469 · 1470 · 1473 · 1474 · 1475 · 1504 · 1507 · 1508 · 1529 · 1531 · 1532 · 1533 · 1537 · 1546 · 1547 · 1551 · 1552 · 1554 · 1555 · 1556 · 1559 · 1560)<br>🎯 <b>กลุ่ม Q คุณภาพไลฟ์:</b> ตัดสินจาก<b>จอมือถือผู้ชม</b> (อัดหน้าจอ 60 fps แนบใน Actual) ไม่ใช่จอในแอป · เกณฑ์ตัวเลขจากใบงาน: ปาก/เสียงเหลื่อม ≤ 40 ms + ไลฟ์ 2 ชม.ไม่หลุด (TAKRA-1462/1467) · ตอบคอมเมนต์ 15–25 วิ (TAKRA-1461/1467) · soak 6 ชม. VRAM ไม่โต + ทางถอย (TAKRA-1545) · หน้านิ่ง (TAKRA-1521) · ลดเพลง 30% (TAKRA-1550) · จดสเปกเครื่อง + เน็ตขาขึ้นทุกครั้ง<br>🔴 <b>ไลฟ์จริง = manual เท่านั้น:</b> เคสกลุ่ม L, Q และ E2E ออกอากาศเข้า TikTok จริง ห้ามเขียนเป็นสคริปต์อัตโนมัติ · ห้ามใช้บัญชี/ห้องไลฟ์เดียวกับรอบทดสอบอื่นพร้อมกัน<br>⚠️ <b>ยังไม่อยู่ในรอบนี้ (ตามโค้ด 26 ต.ค.):</b> TikTok LIVE Studio + กล้องเสมือน (TAKRA-1463 ยังไม่ทำ — ตัวเลือก "ผ่าน TikTok LIVE Studio" จะไม่ขึ้น) · code signing / อัปเดตอัตโนมัติ / Sentry (TAKRA-1470 To Do — Windows อาจเตือน unknown publisher) · ช่อง production ของแอป (มีแค่ UAT)<br>📏 <b>เกณฑ์สเปก:</b> Epic TAKRA-1453 (15 ต.ค.) เขียน VRAM ≥ 24 GB แต่โค้ดปัจจุบันใช้เกณฑ์ใหม่ของ TAKRA-1542/1464 (VRAM 16 GB · ความเร็วเรนเดอร์ ≤ 4 วิ ต่อเสียง 5 วิ) — เคสยึดตัวเลขในแอป ถ้า BA ยืนยันตัวเลขอื่นให้แก้ที่เคสกลุ่ม C</div>
 
   <div class="runsum">
     <h3>📊 สรุปผล Manual Test</h3>
@@ -175,10 +175,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
       <span class="cnt hold">HOLD <b id="sum-hold">0</b></span>
       <span class="cnt block">BLOCKED <b id="sum-block">0</b></span>
       <span class="cnt skip">SKIP <b id="sum-skip">0</b></span>
-      <span class="cnt pending">รอเทส <b id="sum-pending">68</b></span>
+      <span class="cnt pending">รอเทส <b id="sum-pending">84</b></span>
     </div>
     <div class="progress"><div id="sumbar" class="progressbar" style="width:0%"></div></div>
-    <div class="hint" id="sumpct" style="margin-top:5px">0% ทดสอบแล้ว (0/68)</div>
+    <div class="hint" id="sumpct" style="margin-top:5px">0% ทดสอบแล้ว (0/84)</div>
   </div>
 
   <div class="toolbar">
@@ -198,11 +198,11 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
   <div class="filters">
     <div class="row"><label>กลุ่ม</label>
-      <button class="fchip" data-f="feat" data-v="dt-a">📦 A · ติดตั้ง/เปิดแอป (6)</button><button class="fchip" data-f="feat" data-v="dt-b">⚙️ B · ตัวเรนเดอร์ (6)</button><button class="fchip" data-f="feat" data-v="dt-c">🔍 C · ตรวจเครื่อง (6)</button><button class="fchip" data-f="feat" data-v="dt-d">🧑 D · อวาตาร์ของร้าน (8)</button><button class="fchip" data-f="feat" data-v="dt-e">👄 E · ฝึกปาก (3)</button><button class="fchip" data-f="feat" data-v="dt-f">📤 F · ส่งออก/นำเข้า (7)</button><button class="fchip" data-f="feat" data-v="dt-g">🎙️ G · เสียงสำหรับแอป (2)</button><button class="fchip" data-f="feat" data-v="dt-h">▶️ H · ทดสอบฉาก (5)</button><button class="fchip" data-f="feat" data-v="dt-i">🎞️ I · คลังฉาก (4)</button><button class="fchip" data-f="feat" data-v="dt-j">🎵 J · บัญชี TikTok ในแอป (7)</button><button class="fchip" data-f="feat" data-v="dt-k">✅ K · เตรียมไลฟ์ LOCAL (4)</button><button class="fchip" data-f="feat" data-v="dt-l">📡 L · ออกอากาศจากเครื่อง (9)</button><button class="fchip" data-f="feat" data-v="dt-e2e">🔄 Full E2E (1)</button>
+      <button class="fchip" data-f="feat" data-v="dt-a">📦 A · ติดตั้ง/เปิดแอป (6)</button><button class="fchip" data-f="feat" data-v="dt-b">⚙️ B · ตัวเรนเดอร์ (6)</button><button class="fchip" data-f="feat" data-v="dt-c">🔍 C · ตรวจเครื่อง (6)</button><button class="fchip" data-f="feat" data-v="dt-d">🧑 D · อวาตาร์ของร้าน (8)</button><button class="fchip" data-f="feat" data-v="dt-e">👄 E · ฝึกปาก (3)</button><button class="fchip" data-f="feat" data-v="dt-f">📤 F · ส่งออก/นำเข้า (7)</button><button class="fchip" data-f="feat" data-v="dt-g">🎙️ G · เสียงสำหรับแอป (2)</button><button class="fchip" data-f="feat" data-v="dt-h">▶️ H · ทดสอบฉาก (5)</button><button class="fchip" data-f="feat" data-v="dt-i">🎞️ I · คลังฉาก (4)</button><button class="fchip" data-f="feat" data-v="dt-j">🎵 J · บัญชี TikTok ในแอป (7)</button><button class="fchip" data-f="feat" data-v="dt-k">✅ K · เตรียมไลฟ์ LOCAL (4)</button><button class="fchip" data-f="feat" data-v="dt-l">📡 L · ออกอากาศจากเครื่อง (9)</button><button class="fchip" data-f="feat" data-v="dt-q">🎯 Q · คุณภาพไลฟ์ (16)</button><button class="fchip" data-f="feat" data-v="dt-e2e">🔄 Full E2E (1)</button>
       <button class="clearbtn" data-clear="feat">✕</button>
     </div>
     <div class="row"><label>ประเภท</label>
-      <button class="fchip" data-f="kind" data-v="happy" title="flow ปกติ">Happy Path (28)</button><button class="fchip" data-f="kind" data-v="negative" title="ข้อมูลผิด / action ผิด">Negative (6)</button><button class="fchip" data-f="kind" data-v="boundary" title="min · max · ก่อนขอบ · ตรงขอบ · เกินขอบ">Boundary (4)</button><button class="fchip" data-f="kind" data-v="validation" title="format · required · character · length">Validation (3)</button><button class="fchip" data-f="kind" data-v="exception" title="API fail · network fail · server error · timeout">Exception (10)</button><button class="fchip" data-f="kind" data-v="permission" title="role ไหนทำได้ / ทำไม่ได้">Permission (5)</button><button class="fchip" data-f="kind" data-v="data" title="empty · null · duplicate · existing · non-existing">Data (12)</button>
+      <button class="fchip" data-f="kind" data-v="happy" title="flow ปกติ">Happy Path (30)</button><button class="fchip" data-f="kind" data-v="negative" title="ข้อมูลผิด / action ผิด">Negative (9)</button><button class="fchip" data-f="kind" data-v="boundary" title="min · max · ก่อนขอบ · ตรงขอบ · เกินขอบ">Boundary (11)</button><button class="fchip" data-f="kind" data-v="validation" title="format · required · character · length">Validation (3)</button><button class="fchip" data-f="kind" data-v="exception" title="API fail · network fail · server error · timeout">Exception (12)</button><button class="fchip" data-f="kind" data-v="permission" title="role ไหนทำได้ / ทำไม่ได้">Permission (5)</button><button class="fchip" data-f="kind" data-v="data" title="empty · null · duplicate · existing · non-existing">Data (14)</button>
       <button class="clearbtn" data-clear="kind">✕</button>
     </div>
     <div class="row"><label>Priority</label>
@@ -2362,6 +2362,518 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 </div></td></tr>
 
 
+<!-- dt-q -->
+<tr class="epicrow" data-epic="dt-q"><td colspan="7">🎯 Q · คุณภาพไลฟ์ LOCAL — ภาพ/ปาก/เสียงฝั่งผู้ชม · ความต่อเนื่อง · ตอบคอมเมนต์ · ไลฟ์ยาว · ทางถอย (TAKRA-1461 · 1462 · 1467 · 1521 · 1539 · 1540 · 1545 · 1550) — 🔴 ไลฟ์จริง manual <span class="rp">(16 เคส)</span> <a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1453" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1453 ใน Jira">🧩 Epic TAKRA-1453</a></td></tr>
+<tr class="featrow" data-featkey="dt-q-av"><td colspan="7">📁 Q1 · ภาพและเสียงฝั่งผู้ชม <span class="rp"><span class="lv lvl-ui">🌐 4</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="dt-q-av"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow" data-feat="dt-q" data-level="ui" data-prio="P0" data-kind="boundary" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-DT-Q.1</td>
+  <td class="ctitle">ปากกับเสียงตรงกันฝั่งผู้ชม — เหลื่อมไม่เกิน 40 ms (ไม่เกิน 1 เฟรมที่ 25 fps) ทั้งบทและคำตอบคอมเมนต์ <span class="kd kd-bnd">Boundary</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-15087"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-15087"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ปากกับเสียงตรงกันฝั่งผู้ชม — เหลื่อมไม่เกิน 40 ms (ไม่เกิน 1 เฟรมที่ 25 fps) ทั้งบทและคำตอบคอมเมนต์</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1453" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1453 ใน Jira">🧩 Epic TAKRA-1453</a> · Priority: <b>P0</b> · UI · ประเภท: <b>Boundary</b> <span class="hint">(min · max · ก่อนขอบ · ตรงขอบ · เกินขอบ)</span> · Q · คุณภาพไลฟ์ LOCAL — ภาพ/ปาก/เสียงฝั่งผู้ชม</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เครื่อง A: Windows 10/11 x64 · การ์ด NVIDIA ผ่านสเปก · ติดตั้งแอป Takra Live รุ่นล่าสุดจาก UAT และติดตั้งตัวเรนเดอร์แล้ว</li><li>มีฉากใน "คลังฉาก" ที่ฉากแรกใช้อวาตาร์ของร้าน (ป้าย "ในเครื่อง") · มีเสียงที่ "พร้อมใช้ในแอปแล้ว" · ผูกสคริปต์ที่อนุมัติแล้วอย่างน้อย 1 สคริปต์</li><li>มีบัญชี TikTok ทดสอบที่ไลฟ์ได้ (ไม่ใช่บัญชีที่รอบทดสอบอื่นกำลังใช้)</li><li>🔴 ไลฟ์จริงเข้า TikTok — ทดสอบด้วยมือเท่านั้น</li><li>จดรุ่นการ์ดจอ ไดรเวอร์ RAM และความเร็วเน็ตขาขึ้นของเครื่อง A ใน Actual ทุกครั้ง</li></ul></div>
+  <div class="sec"><h4>Test Data</h4><ul><li>อัดหน้าจอมือถือผู้ชมที่ 60 fps ตลอดเคส (เก็บไฟล์แนบใน Actual) · ใช้แอปเล่นวิดีโอที่เดินทีละเฟรมได้ตอนตัดสิน</li><li>สคริปต์ที่มีคำ ม/บ/ป ชัด ๆ อย่างน้อย 5 จุด</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป "Takra Live" บนเครื่อง A แล้วเข้าสู่ระบบผ่านหน้า TAKRA Hub ที่เปิดขึ้นในแอปด้วยบัญชี UAT เจ้าของ workspace</li><li>เริ่มไลฟ์ LOCAL ให้ออกอากาศตาม TC-DT-L.1</li><li>ใช้บัญชี TikTok ผู้ชมบนมือถืออีกเครื่องเข้าห้องไลฟ์ (ตัดสินจากจอผู้ชม ไม่ใช่จอในแอป) แล้วอัดหน้าจอมือถือผู้ชมที่ 60 fps ตลอดเคส</li><li>อัดอย่างน้อย 5 บรรทัดของบท และ 2 คำตอบคอมเมนต์ (ให้ผู้ชมพิมพ์ถาม)</li><li>เปิดไฟล์อัดทีละเฟรม หาคำที่ปิดปากชัด (ม/บ/ป) แล้วนับระยะระหว่างเฟรมที่ปากปิดกับจุดที่เสียงคำนั้นเริ่ม</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ทุกจุดที่วัด ภาพปากกับเสียงเหลื่อมไม่เกิน 40 ms (≤ 1 เฟรม)</li><li>ไม่มีช่วงที่เสียงนำปากหรือปากนำเสียงจนเห็นได้ด้วยตา</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic TAKRA-1453 · TAKRA-1462 · TAKRA-1467 (ภาพเสียงเหลื่อมไม่เกิน 40 ms) · TAKRA-1539 (audio_offset_ms = 0)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-15087" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-15087" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-15087" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-15087" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-15087" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-15087"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-15087" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-15087">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="dt-q" data-level="ui" data-prio="P0" data-kind="negative" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-DT-Q.2</td>
+  <td class="ctitle">หน้าอวาตาร์นิ่ง ไม่ขยายเข้าออกเป็นจังหวะ และรอยต่อท่าว่าง→บท ไม่มีหน้าซ้อน/หน้าลอย/หัวกระโดด <span class="kd kd-neg">Negative</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-15088"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-15088"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">หน้าอวาตาร์นิ่ง ไม่ขยายเข้าออกเป็นจังหวะ และรอยต่อท่าว่าง→บท ไม่มีหน้าซ้อน/หน้าลอย/หัวกระโดด</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1453" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1453 ใน Jira">🧩 Epic TAKRA-1453</a> · Priority: <b>P0</b> · UI · ประเภท: <b>Negative</b> <span class="hint">(ข้อมูลผิด / action ผิด)</span> · Q · คุณภาพไลฟ์ LOCAL — ภาพ/ปาก/เสียงฝั่งผู้ชม</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เครื่อง A: Windows 10/11 x64 · การ์ด NVIDIA ผ่านสเปก · ติดตั้งแอป Takra Live รุ่นล่าสุดจาก UAT และติดตั้งตัวเรนเดอร์แล้ว</li><li>มีฉากใน "คลังฉาก" ที่ฉากแรกใช้อวาตาร์ของร้าน (ป้าย "ในเครื่อง") · มีเสียงที่ "พร้อมใช้ในแอปแล้ว" · ผูกสคริปต์ที่อนุมัติแล้วอย่างน้อย 1 สคริปต์</li><li>มีบัญชี TikTok ทดสอบที่ไลฟ์ได้ (ไม่ใช่บัญชีที่รอบทดสอบอื่นกำลังใช้)</li><li>🔴 ไลฟ์จริงเข้า TikTok — ทดสอบด้วยมือเท่านั้น</li><li>จดรุ่นการ์ดจอ ไดรเวอร์ RAM และความเร็วเน็ตขาขึ้นของเครื่อง A ใน Actual ทุกครั้ง</li></ul></div>
+  <div class="sec"><h4>Test Data</h4><ul><li>อัดหน้าจอมือถือผู้ชมที่ 60 fps ตลอดเคส (เก็บไฟล์แนบใน Actual) · ใช้แอปเล่นวิดีโอที่เดินทีละเฟรมได้ตอนตัดสิน</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป "Takra Live" บนเครื่อง A แล้วเข้าสู่ระบบผ่านหน้า TAKRA Hub ที่เปิดขึ้นในแอปด้วยบัญชี UAT เจ้าของ workspace</li><li>เริ่มไลฟ์ LOCAL ให้ออกอากาศตาม TC-DT-L.1</li><li>ใช้บัญชี TikTok ผู้ชมบนมือถืออีกเครื่องเข้าห้องไลฟ์ (ตัดสินจากจอผู้ชม ไม่ใช่จอในแอป) แล้วอัดหน้าจอมือถือผู้ชมที่ 60 fps ตลอดเคส 10 นาที</li><li>ดูไฟล์อัดช้า ๆ ทุกรอยต่อระหว่างท่าว่างกับบท และระหว่างบรรทัดกับบรรทัด</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ขนาดหน้าไม่ขยายเข้าออกเป็นจังหวะ (แกว่งไม่เกินประมาณ 3%) กึ่งกลางหน้าไม่เลื่อนเกินประมาณ 8 px</li><li>ทุกรอยต่อไม่มีหน้าซ้อนสองหัว หน้าลอย หรือหัวกระโดดไปที่ใหม่ในเฟรมเดียว</li><li>ถ้ามีการเฟดตรงรอยต่อ ต้องสั้นและไม่เห็นเป็นภาพซ้อนสองท่า</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic TAKRA-1453 · TAKRA-1521 (DoD ขนาดหน้าแกว่ง ≤ 3% · กึ่งกลางเลื่อน ≤ 8 px · ไม่เห็นหน้าซ้อนตรงรอยต่อ) · TAKRA-1462 (รอยต่อไม่กระตุกจนเห็น)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-15088" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-15088" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-15088" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-15088" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-15088" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-15088"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-15088" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-15088">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="dt-q" data-level="ui" data-prio="P0" data-kind="boundary" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-DT-Q.3</td>
+  <td class="ctitle">ภาพฝั่งผู้ชมลื่น ไม่กระตุก — แถวสถิติบนหน้าไลฟ์ส่งได้ราว 25 fps และผู้ชมไม่เห็นภาพค้าง <span class="kd kd-bnd">Boundary</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-15089"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-15089"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ภาพฝั่งผู้ชมลื่น ไม่กระตุก — แถวสถิติบนหน้าไลฟ์ส่งได้ราว 25 fps และผู้ชมไม่เห็นภาพค้าง</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1453" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1453 ใน Jira">🧩 Epic TAKRA-1453</a> · Priority: <b>P0</b> · UI · ประเภท: <b>Boundary</b> <span class="hint">(min · max · ก่อนขอบ · ตรงขอบ · เกินขอบ)</span> · Q · คุณภาพไลฟ์ LOCAL — ภาพ/ปาก/เสียงฝั่งผู้ชม</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เครื่อง A: Windows 10/11 x64 · การ์ด NVIDIA ผ่านสเปก · ติดตั้งแอป Takra Live รุ่นล่าสุดจาก UAT และติดตั้งตัวเรนเดอร์แล้ว</li><li>มีฉากใน "คลังฉาก" ที่ฉากแรกใช้อวาตาร์ของร้าน (ป้าย "ในเครื่อง") · มีเสียงที่ "พร้อมใช้ในแอปแล้ว" · ผูกสคริปต์ที่อนุมัติแล้วอย่างน้อย 1 สคริปต์</li><li>มีบัญชี TikTok ทดสอบที่ไลฟ์ได้ (ไม่ใช่บัญชีที่รอบทดสอบอื่นกำลังใช้)</li><li>🔴 ไลฟ์จริงเข้า TikTok — ทดสอบด้วยมือเท่านั้น</li><li>จดรุ่นการ์ดจอ ไดรเวอร์ RAM และความเร็วเน็ตขาขึ้นของเครื่อง A ใน Actual ทุกครั้ง</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป "Takra Live" บนเครื่อง A แล้วเข้าสู่ระบบผ่านหน้า TAKRA Hub ที่เปิดขึ้นในแอปด้วยบัญชี UAT เจ้าของ workspace</li><li>เริ่มไลฟ์ LOCAL ให้ออกอากาศตาม TC-DT-L.1</li><li>ดูแถวสถิติการส่งในหน้าไลฟ์ ("วาด … → ส่ง … fps · … kbps · … เฟรม") ทุก 5 นาที เป็นเวลา 30 นาที</li><li>ใช้บัญชี TikTok ผู้ชมบนมือถืออีกเครื่องเข้าห้องไลฟ์ (ตัดสินจากจอผู้ชม ไม่ใช่จอในแอป) แล้วสังเกตความลื่นของภาพ</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ตัวเลข fps ที่ส่งอยู่ราว 25 fps สม่ำเสมอ ไม่ขึ้น "เครื่องประกอบภาพได้ไม่ทัน 30 ครั้งต่อวินาที …" หรือ "เครื่องตามไม่ทัน …" ค้างนาน</li><li>ผู้ชมไม่เห็นภาพค้าง ภาพกระตุก หรือจอดำ</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic TAKRA-1453 · TAKRA-1462 (H.264 25 fps · ≤ 1080p) · TAKRA-1467</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-15089" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-15089" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-15089" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-15089" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-15089" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-15089"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-15089" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-15089">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="dt-q" data-level="ui" data-prio="P1" data-kind="data" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-DT-Q.4</td>
+  <td class="ctitle">ปากของอวาตาร์ที่ฝึกปากเสร็จแล้ว คมกว่าก่อนฝึก (เทียบคลิปเดียวกัน) <span class="kd kd-data">Data</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-15090"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-15090"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ปากของอวาตาร์ที่ฝึกปากเสร็จแล้ว คมกว่าก่อนฝึก (เทียบคลิปเดียวกัน)</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1453" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1453 ใน Jira">🧩 Epic TAKRA-1453</a> · Priority: <b>P1</b> · UI · ประเภท: <b>Data</b> <span class="hint">(empty · null · duplicate · existing · non-existing)</span> · Q · คุณภาพไลฟ์ LOCAL — ภาพ/ปาก/เสียงฝั่งผู้ชม</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เครื่อง A: Windows 10/11 x64 · การ์ด NVIDIA ผ่านสเปก · ติดตั้งแอป Takra Live รุ่นล่าสุดจาก UAT และติดตั้งตัวเรนเดอร์แล้ว</li><li>อวาตาร์จากคลิปที่ผ่านเกณฑ์ฝึก (≥ 2 นาที พูดตลอด หน้าใหญ่)</li><li>📝 หมายเหตุ: ไม่ต้องไลฟ์จริง — ใช้ทดสอบฉากเทียบกัน · การฝึกใช้เวลาราว 2 ชม.</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป "Takra Live" บนเครื่อง A แล้วเข้าสู่ระบบผ่านหน้า TAKRA Hub ที่เปิดขึ้นในแอปด้วยบัญชี UAT เจ้าของ workspace</li><li>ไปที่เมนู "คลังอวาตาร์" (กลุ่ม "คลังข้อมูล" ที่เมนูซ้าย) ใช้อวาตาร์ที่ยังขึ้น "รอฝึกปาก …" เปิดฉากที่ใช้อวาตาร์นี้ใน Studio แล้วกด "ทดสอบฉากนี้" และอัดหน้าจอเก็บไว้</li><li>รอจนการฝึกปากเสร็จ (ข้อความฝึกปากหายจากการ์ด) แล้วกด "ทดสอบฉากนี้" ที่ฉากเดิมอีกครั้งและอัดหน้าจอ</li><li>เปิดสองคลิปเทียบกันทีละเฟรมตรงคำเดียวกัน</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>คลิปหลังฝึก ปากคมกว่า รูปปากตรงกับคำมากกว่า และฟัน/ริมฝีปากไม่เบลอเท่าก่อนฝึก</li><li>หลังฝึกเสร็จทดสอบฉากเรนเดอร์ใหม่ด้วยโมเดลที่ฝึก (ไม่เล่นคลิปเก่าจากแคช)</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic TAKRA-1453 · TAKRA-1540 (stock vs fine-tune ปากคมขึ้น) · TAKRA-1555 (cache คลิปเปลี่ยนตาม UNet)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-15090" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-15090" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-15090" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-15090" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-15090" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-15090"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-15090" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-15090">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="featrow" data-featkey="dt-q-flow"><td colspan="7">📁 Q2 · ความต่อเนื่องของบท <span class="rp"><span class="lv lvl-ui">🌐 2</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="dt-q-flow"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow" data-feat="dt-q" data-level="ui" data-prio="P0" data-kind="negative" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-DT-Q.5</td>
+  <td class="ctitle">บทเดินต่อเนื่อง — ไม่มีช่วงอวาตาร์ยืนนิ่งเงียบระหว่างบรรทัด และไม่ข้ามบรรทัด <span class="kd kd-neg">Negative</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-15091"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-15091"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">บทเดินต่อเนื่อง — ไม่มีช่วงอวาตาร์ยืนนิ่งเงียบระหว่างบรรทัด และไม่ข้ามบรรทัด</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1453" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1453 ใน Jira">🧩 Epic TAKRA-1453</a> · Priority: <b>P0</b> · UI · ประเภท: <b>Negative</b> <span class="hint">(ข้อมูลผิด / action ผิด)</span> · Q · คุณภาพไลฟ์ LOCAL — ภาพ/ปาก/เสียงฝั่งผู้ชม</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เครื่อง A: Windows 10/11 x64 · การ์ด NVIDIA ผ่านสเปก · ติดตั้งแอป Takra Live รุ่นล่าสุดจาก UAT และติดตั้งตัวเรนเดอร์แล้ว</li><li>มีฉากใน "คลังฉาก" ที่ฉากแรกใช้อวาตาร์ของร้าน (ป้าย "ในเครื่อง") · มีเสียงที่ "พร้อมใช้ในแอปแล้ว" · ผูกสคริปต์ที่อนุมัติแล้วอย่างน้อย 1 สคริปต์</li><li>มีบัญชี TikTok ทดสอบที่ไลฟ์ได้ (ไม่ใช่บัญชีที่รอบทดสอบอื่นกำลังใช้)</li><li>🔴 ไลฟ์จริงเข้า TikTok — ทดสอบด้วยมือเท่านั้น</li><li>จดรุ่นการ์ดจอ ไดรเวอร์ RAM และความเร็วเน็ตขาขึ้นของเครื่อง A ใน Actual ทุกครั้ง</li></ul></div>
+  <div class="sec"><h4>Test Data</h4><ul><li>อัดหน้าจอมือถือผู้ชมที่ 60 fps ตลอดเคส (เก็บไฟล์แนบใน Actual) · ใช้แอปเล่นวิดีโอที่เดินทีละเฟรมได้ตอนตัดสิน</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป "Takra Live" บนเครื่อง A แล้วเข้าสู่ระบบผ่านหน้า TAKRA Hub ที่เปิดขึ้นในแอปด้วยบัญชี UAT เจ้าของ workspace</li><li>เริ่มไลฟ์ LOCAL ให้ออกอากาศตาม TC-DT-L.1</li><li>ใช้บัญชี TikTok ผู้ชมบนมือถืออีกเครื่องเข้าห้องไลฟ์ (ตัดสินจากจอผู้ชม ไม่ใช่จอในแอป) แล้วอัดหน้าจอมือถือผู้ชมที่ 60 fps ตลอดเคส 15 นาที โดยเปิดสคริปต์ของฉากไว้เทียบ</li><li>จดช่วงเงียบที่ยาวที่สุดระหว่างบรรทัด และเช็คว่าทุกบรรทัดในสคริปต์ถูกพูดตามลำดับ</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ไม่มีช่วงที่อวาตาร์ยืนนิ่งเงียบนานผิดปกติระหว่างบรรทัด (ช่วงหยุดยาวสุดอยู่ในระดับเว้นวรรคปกติของการพูด)</li><li>ทุกบรรทัดถูกพูดครบตามลำดับ ไม่ข้าม ไม่พูดซ้ำบรรทัดเดียวกันติดกัน</li><li>ห้องคุมไลฟ์แสดงบรรทัดที่กำลังพูดตรงกับเสียงที่ได้ยิน</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic TAKRA-1453 · TAKRA-1474 (วนสคริปต์ทำงานเหมือนเดิม) · TAKRA-1539 (ไม่ยืนนิ่งเงียบระหว่างรอเรนเดอร์)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-15091" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-15091" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-15091" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-15091" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-15091" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-15091"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-15091" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-15091">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="dt-q" data-level="ui" data-prio="P1" data-kind="happy" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-DT-Q.6</td>
+  <td class="ctitle">เสียงกระดิ่ง {{bell}} ดังตรงจังหวะในบรรทัด และวนสคริปต์ครบรอบตามที่ตั้ง <span class="kd kd-happy">Happy Path</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-15092"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-15092"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">เสียงกระดิ่ง {{bell}} ดังตรงจังหวะในบรรทัด และวนสคริปต์ครบรอบตามที่ตั้ง</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1453" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1453 ใน Jira">🧩 Epic TAKRA-1453</a> · Priority: <b>P1</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · Q · คุณภาพไลฟ์ LOCAL — ภาพ/ปาก/เสียงฝั่งผู้ชม</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เครื่อง A: Windows 10/11 x64 · การ์ด NVIDIA ผ่านสเปก · ติดตั้งแอป Takra Live รุ่นล่าสุดจาก UAT และติดตั้งตัวเรนเดอร์แล้ว</li><li>มีฉากใน "คลังฉาก" ที่ฉากแรกใช้อวาตาร์ของร้าน (ป้าย "ในเครื่อง") · มีเสียงที่ "พร้อมใช้ในแอปแล้ว" · ผูกสคริปต์ที่อนุมัติแล้วอย่างน้อย 1 สคริปต์</li><li>มีบัญชี TikTok ทดสอบที่ไลฟ์ได้ (ไม่ใช่บัญชีที่รอบทดสอบอื่นกำลังใช้)</li><li>🔴 ไลฟ์จริงเข้า TikTok — ทดสอบด้วยมือเท่านั้น</li><li>จดรุ่นการ์ดจอ ไดรเวอร์ RAM และความเร็วเน็ตขาขึ้นของเครื่อง A ใน Actual ทุกครั้ง</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป "Takra Live" บนเครื่อง A แล้วเข้าสู่ระบบผ่านหน้า TAKRA Hub ที่เปิดขึ้นในแอปด้วยบัญชี UAT เจ้าของ workspace ใช้ฉากที่สคริปต์มี {{bell}} อย่างน้อย 2 จุด และตั้งจำนวนรอบวนไว้ 2 รอบ</li><li>เริ่มไลฟ์ LOCAL ให้ออกอากาศตาม TC-DT-L.1</li><li>ใช้บัญชี TikTok ผู้ชมบนมือถืออีกเครื่องเข้าห้องไลฟ์ (ตัดสินจากจอผู้ชม ไม่ใช่จอในแอป) แล้วฟังจนจบรอบที่ 2</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>เสียงกระดิ่งดังตรงตำแหน่งในบรรทัด ไม่ดังทับคำพูดจนฟังไม่ออก</li><li>สคริปต์วนครบ 2 รอบตามที่ตั้ง แล้วพูดคำลาก่อนจบ (ถ้าตั้งไว้)</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic TAKRA-1453 · TAKRA-1474 (วนสคริปต์, {{bell}}, คำลาก่อนจบ ทำงานเหมือนเดิม)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-15092" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-15092" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-15092" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-15092" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-15092" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-15092"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-15092" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-15092">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="featrow" data-featkey="dt-q-reply"><td colspan="7">📁 Q3 · ตอบคอมเมนต์ระหว่างไลฟ์ <span class="rp"><span class="lv lvl-ui">🌐 2</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="dt-q-reply"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow" data-feat="dt-q" data-level="ui" data-prio="P0" data-kind="boundary" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-DT-Q.7</td>
+  <td class="ctitle">เวลาจากผู้ชมกดส่งคอมเมนต์ ถึงอวาตาร์เริ่มพูดตอบบนจอผู้ชม อยู่ใน 15–25 วินาที <span class="kd kd-bnd">Boundary</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-15093"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-15093"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">เวลาจากผู้ชมกดส่งคอมเมนต์ ถึงอวาตาร์เริ่มพูดตอบบนจอผู้ชม อยู่ใน 15–25 วินาที</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1453" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1453 ใน Jira">🧩 Epic TAKRA-1453</a> · Priority: <b>P0</b> · UI · ประเภท: <b>Boundary</b> <span class="hint">(min · max · ก่อนขอบ · ตรงขอบ · เกินขอบ)</span> · Q · คุณภาพไลฟ์ LOCAL — ภาพ/ปาก/เสียงฝั่งผู้ชม</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เครื่อง A: Windows 10/11 x64 · การ์ด NVIDIA ผ่านสเปก · ติดตั้งแอป Takra Live รุ่นล่าสุดจาก UAT และติดตั้งตัวเรนเดอร์แล้ว</li><li>มีฉากใน "คลังฉาก" ที่ฉากแรกใช้อวาตาร์ของร้าน (ป้าย "ในเครื่อง") · มีเสียงที่ "พร้อมใช้ในแอปแล้ว" · ผูกสคริปต์ที่อนุมัติแล้วอย่างน้อย 1 สคริปต์</li><li>มีบัญชี TikTok ทดสอบที่ไลฟ์ได้ (ไม่ใช่บัญชีที่รอบทดสอบอื่นกำลังใช้)</li><li>🔴 ไลฟ์จริงเข้า TikTok — ทดสอบด้วยมือเท่านั้น</li><li>จดรุ่นการ์ดจอ ไดรเวอร์ RAM และความเร็วเน็ตขาขึ้นของเครื่อง A ใน Actual ทุกครั้ง</li><li>มีบัญชี TikTok ผู้ชมอีกบัญชี</li></ul></div>
+  <div class="sec"><h4>Test Data</h4><ul><li>คำถามสินค้า 5 ข้อที่ตอบได้จากข้อมูลสินค้า</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป "Takra Live" บนเครื่อง A แล้วเข้าสู่ระบบผ่านหน้า TAKRA Hub ที่เปิดขึ้นในแอปด้วยบัญชี UAT เจ้าของ workspace</li><li>เริ่มไลฟ์ LOCAL ให้ออกอากาศตาม TC-DT-L.1 (เปิดสวิตช์ให้ AI ตอบคอมเมนต์)</li><li>ใช้บัญชี TikTok ผู้ชมบนมือถืออีกเครื่องเข้าห้องไลฟ์ (ตัดสินจากจอผู้ชม ไม่ใช่จอในแอป) เปิดนาฬิกาจับเวลาไว้ข้าง ๆ แล้วพิมพ์คำถามเกี่ยวกับสินค้า 5 ข้อ เว้นข้อละประมาณ 1 นาที</li><li>จับเวลาแต่ละข้อตั้งแต่กดส่งจนได้ยินอวาตาร์เริ่มตอบข้อนั้นบนมือถือผู้ชม</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ทั้ง 5 ข้อ อวาตาร์เริ่มตอบภายใน 15–25 วินาที (จดค่าทุกข้อ + ค่าเฉลี่ยใน Actual)</li><li>ระหว่างรอ AI คิดคำตอบ บทหลักยังพูดต่อ ไม่หยุดเงียบรอ</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic TAKRA-1453 · TAKRA-1467 (ตอบคอมเมนต์ระหว่างไลฟ์ได้ใน 15–25 วิ) · TAKRA-1461 · TAKRA-1545 (วัดเวลาคอมเมนต์ → ปากบนจอ)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-15093" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-15093" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-15093" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-15093" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-15093" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-15093"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-15093" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-15093">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="dt-q" data-level="ui" data-prio="P1" data-kind="boundary" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-DT-Q.8</td>
+  <td class="ctitle">คอมเมนต์เข้ามาติดกัน 5 ข้อ — ตอบตามลำดับที่มา ไม่ตัดบทกลางบล็อก และบทกลับมาต่อถูกที่ <span class="kd kd-bnd">Boundary</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-15094"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-15094"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">คอมเมนต์เข้ามาติดกัน 5 ข้อ — ตอบตามลำดับที่มา ไม่ตัดบทกลางบล็อก และบทกลับมาต่อถูกที่</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1453" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1453 ใน Jira">🧩 Epic TAKRA-1453</a> · Priority: <b>P1</b> · UI · ประเภท: <b>Boundary</b> <span class="hint">(min · max · ก่อนขอบ · ตรงขอบ · เกินขอบ)</span> · Q · คุณภาพไลฟ์ LOCAL — ภาพ/ปาก/เสียงฝั่งผู้ชม</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เครื่อง A: Windows 10/11 x64 · การ์ด NVIDIA ผ่านสเปก · ติดตั้งแอป Takra Live รุ่นล่าสุดจาก UAT และติดตั้งตัวเรนเดอร์แล้ว</li><li>มีฉากใน "คลังฉาก" ที่ฉากแรกใช้อวาตาร์ของร้าน (ป้าย "ในเครื่อง") · มีเสียงที่ "พร้อมใช้ในแอปแล้ว" · ผูกสคริปต์ที่อนุมัติแล้วอย่างน้อย 1 สคริปต์</li><li>มีบัญชี TikTok ทดสอบที่ไลฟ์ได้ (ไม่ใช่บัญชีที่รอบทดสอบอื่นกำลังใช้)</li><li>🔴 ไลฟ์จริงเข้า TikTok — ทดสอบด้วยมือเท่านั้น</li><li>จดรุ่นการ์ดจอ ไดรเวอร์ RAM และความเร็วเน็ตขาขึ้นของเครื่อง A ใน Actual ทุกครั้ง</li><li>มีบัญชี TikTok ผู้ชมอีกบัญชี</li></ul></div>
+  <div class="sec"><h4>Test Data</h4><ul><li>อัดหน้าจอมือถือผู้ชมที่ 60 fps ตลอดเคส (เก็บไฟล์แนบใน Actual) · ใช้แอปเล่นวิดีโอที่เดินทีละเฟรมได้ตอนตัดสิน</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป "Takra Live" บนเครื่อง A แล้วเข้าสู่ระบบผ่านหน้า TAKRA Hub ที่เปิดขึ้นในแอปด้วยบัญชี UAT เจ้าของ workspace</li><li>เริ่มไลฟ์ LOCAL ให้ออกอากาศตาม TC-DT-L.1 (เปิดสวิตช์ให้ AI ตอบคอมเมนต์)</li><li>ใช้บัญชี TikTok ผู้ชมบนมือถืออีกเครื่องเข้าห้องไลฟ์ (ตัดสินจากจอผู้ชม ไม่ใช่จอในแอป) แล้วพิมพ์คำถามต่างกัน 5 ข้อติดกันภายใน 30 วินาที</li><li>ฟังจนตอบครบ แล้วฟังบทหลักต่ออีก 2 บรรทัด</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>คำตอบออกตามลำดับที่คอมเมนต์เข้ามา</li><li>ไม่ตัดบรรทัดบทกลางประโยค และไม่มีภาพกระโดด/หน้าซ้อนตรงรอยต่อบท→คำตอบ→บท</li><li>หลังตอบครบ บทหลักพูดต่อจากจุดที่ค้าง ไม่ข้ามและไม่ย้อนซ้ำ</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic TAKRA-1453 · TAKRA-1461 (คำตอบคอมเมนต์แทรกคิวก่อน) · TAKRA-1539 (replies keep their order)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-15094" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-15094" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-15094" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-15094" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-15094" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-15094"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-15094" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-15094">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="featrow" data-featkey="dt-q-audio"><td colspan="7">📁 Q4 · เสียงพูดและเพลงพื้นหลัง <span class="rp"><span class="lv lvl-ui">🌐 2</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="dt-q-audio"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow" data-feat="dt-q" data-level="ui" data-prio="P1" data-kind="happy" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-DT-Q.9</td>
+  <td class="ctitle">เพลงพื้นหลังเบาลงตอนอวาตาร์พูดตามค่า "เสียงเพลงตอนอวาตาร์พูด" (ค่าเริ่มต้น "เหลือ 30%") และกลับมาดังเมื่อพูดจบ <span class="kd kd-happy">Happy Path</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-15095"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-15095"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">เพลงพื้นหลังเบาลงตอนอวาตาร์พูดตามค่า "เสียงเพลงตอนอวาตาร์พูด" (ค่าเริ่มต้น "เหลือ 30%") และกลับมาดังเมื่อพูดจบ</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1453" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1453 ใน Jira">🧩 Epic TAKRA-1453</a> · Priority: <b>P1</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · Q · คุณภาพไลฟ์ LOCAL — ภาพ/ปาก/เสียงฝั่งผู้ชม</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เครื่อง A: Windows 10/11 x64 · การ์ด NVIDIA ผ่านสเปก · ติดตั้งแอป Takra Live รุ่นล่าสุดจาก UAT และติดตั้งตัวเรนเดอร์แล้ว</li><li>มีฉากใน "คลังฉาก" ที่ฉากแรกใช้อวาตาร์ของร้าน (ป้าย "ในเครื่อง") · มีเสียงที่ "พร้อมใช้ในแอปแล้ว" · ผูกสคริปต์ที่อนุมัติแล้วอย่างน้อย 1 สคริปต์</li><li>มีบัญชี TikTok ทดสอบที่ไลฟ์ได้ (ไม่ใช่บัญชีที่รอบทดสอบอื่นกำลังใช้)</li><li>🔴 ไลฟ์จริงเข้า TikTok — ทดสอบด้วยมือเท่านั้น</li><li>จดรุ่นการ์ดจอ ไดรเวอร์ RAM และความเร็วเน็ตขาขึ้นของเครื่อง A ใน Actual ทุกครั้ง</li><li>ฉากมีเพลงพื้นหลังจาก "คลังเพลง"</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป "Takra Live" บนเครื่อง A แล้วเข้าสู่ระบบผ่านหน้า TAKRA Hub ที่เปิดขึ้นในแอปด้วยบัญชี UAT เจ้าของ workspace</li><li>ไปที่เมนู "คลังฉาก" (กลุ่ม "คลังข้อมูล" ที่เมนูซ้าย) กด "แก้ไข" ที่ฉากที่มีเพลงพื้นหลัง แล้วดูค่า "เสียงเพลงตอนอวาตาร์พูด"</li><li>กด "ทดสอบฉากนี้" ฟังเพลงตอนอวาตาร์พูดกับตอนเงียบ</li><li>เปลี่ยนค่าเป็น "เหลือ 10%" บันทึก แล้วเริ่มไลฟ์ LOCAL ให้ออกอากาศตาม TC-DT-L.1 และฟังจากมือถือผู้ชม</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ค่าเริ่มต้นเป็น "เหลือ 30%" และมีคำอธิบาย "เพลงเบาลงอัตโนมัติตอนอวาตาร์พูด แล้วกลับมาดังเท่าเดิมเมื่อพูดจบ · ใช้กับทุกฉากของไลฟ์นี้"</li><li>ทดสอบฉาก: เพลงเบาลงตอนพูด แล้วดังกลับเมื่อพูดจบ</li><li>ไลฟ์จริงที่ตั้ง 10%: เพลงเบาลงมากกว่าตอน 30% ชัดเจน เสียงพูดฟังชัดไม่ถูกเพลงกลบ ระดับเดียวกับตอนทดสอบฉาก</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic TAKRA-1453 · TAKRA-1550 (ducking ต่อไลฟ์ · ค่าเริ่มต้น 30% · ใช้ค่าเดียวกันทั้งทดสอบฉากและออกอากาศ)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-15095" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-15095" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-15095" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-15095" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-15095" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-15095"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-15095" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-15095">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="dt-q" data-level="ui" data-prio="P1" data-kind="negative" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-DT-Q.10</td>
+  <td class="ctitle">เสียงพูด (MiniMax) ฟังชัดเป็นธรรมชาติ ดังสม่ำเสมอทุกบรรทัด ไม่แตก ไม่มีเสียงคลิกตรงรอยต่อ <span class="kd kd-neg">Negative</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-15096"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-15096"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">เสียงพูด (MiniMax) ฟังชัดเป็นธรรมชาติ ดังสม่ำเสมอทุกบรรทัด ไม่แตก ไม่มีเสียงคลิกตรงรอยต่อ</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1453" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1453 ใน Jira">🧩 Epic TAKRA-1453</a> · Priority: <b>P1</b> · UI · ประเภท: <b>Negative</b> <span class="hint">(ข้อมูลผิด / action ผิด)</span> · Q · คุณภาพไลฟ์ LOCAL — ภาพ/ปาก/เสียงฝั่งผู้ชม</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เครื่อง A: Windows 10/11 x64 · การ์ด NVIDIA ผ่านสเปก · ติดตั้งแอป Takra Live รุ่นล่าสุดจาก UAT และติดตั้งตัวเรนเดอร์แล้ว</li><li>มีฉากใน "คลังฉาก" ที่ฉากแรกใช้อวาตาร์ของร้าน (ป้าย "ในเครื่อง") · มีเสียงที่ "พร้อมใช้ในแอปแล้ว" · ผูกสคริปต์ที่อนุมัติแล้วอย่างน้อย 1 สคริปต์</li><li>มีบัญชี TikTok ทดสอบที่ไลฟ์ได้ (ไม่ใช่บัญชีที่รอบทดสอบอื่นกำลังใช้)</li><li>🔴 ไลฟ์จริงเข้า TikTok — ทดสอบด้วยมือเท่านั้น</li><li>จดรุ่นการ์ดจอ ไดรเวอร์ RAM และความเร็วเน็ตขาขึ้นของเครื่อง A ใน Actual ทุกครั้ง</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป "Takra Live" บนเครื่อง A แล้วเข้าสู่ระบบผ่านหน้า TAKRA Hub ที่เปิดขึ้นในแอปด้วยบัญชี UAT เจ้าของ workspace</li><li>เริ่มไลฟ์ LOCAL ให้ออกอากาศตาม TC-DT-L.1</li><li>ใช้บัญชี TikTok ผู้ชมบนมือถืออีกเครื่องเข้าห้องไลฟ์ (ตัดสินจากจอผู้ชม ไม่ใช่จอในแอป) ใส่หูฟังฟัง 10 นาที</li><li>จดบรรทัดที่เสียงดัง/เบาต่างจากบรรทัดอื่นชัดเจน เสียงแตก หรือมีเสียงคลิก/ป๊อปตรงรอยต่อ</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>เสียงดังใกล้เคียงกันทุกบรรทัดและทุกคำตอบคอมเมนต์</li><li>ไม่มีเสียงแตก เสียงคลิก/ป๊อปตรงรอยต่อบรรทัด และไม่มีช่วงเสียงขาดหาย</li><li>ผู้ชมเห็นป้าย "เสียงสร้างด้วย AI" ตลอดไลฟ์</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic TAKRA-1453 · TAKRA-1462 (เสียงเป็นนาฬิกาหลัก · Opus 48 kHz) · TAKRA-1473 (ป้ายเสียง AI)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-15096" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-15096" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-15096" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-15096" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-15096" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-15096"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-15096" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-15096">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="featrow" data-featkey="dt-q-long"><td colspan="7">📁 Q5 · ไลฟ์ยาวและทรัพยากรเครื่อง <span class="rp"><span class="lv lvl-ui">🌐 2</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="dt-q-long"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow" data-feat="dt-q" data-level="ui" data-prio="P0" data-kind="boundary" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-DT-Q.11</td>
+  <td class="ctitle">ไลฟ์ต่อเนื่อง 2 ชั่วโมงไม่หลุด และภาพ/เสียงยังไม่เหลื่อมสะสมตอนท้าย (≤ 40 ms) <span class="kd kd-bnd">Boundary</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-15097"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-15097"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ไลฟ์ต่อเนื่อง 2 ชั่วโมงไม่หลุด และภาพ/เสียงยังไม่เหลื่อมสะสมตอนท้าย (≤ 40 ms)</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1453" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1453 ใน Jira">🧩 Epic TAKRA-1453</a> · Priority: <b>P0</b> · UI · ประเภท: <b>Boundary</b> <span class="hint">(min · max · ก่อนขอบ · ตรงขอบ · เกินขอบ)</span> · Q · คุณภาพไลฟ์ LOCAL — ภาพ/ปาก/เสียงฝั่งผู้ชม</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เครื่อง A: Windows 10/11 x64 · การ์ด NVIDIA ผ่านสเปก · ติดตั้งแอป Takra Live รุ่นล่าสุดจาก UAT และติดตั้งตัวเรนเดอร์แล้ว</li><li>มีฉากใน "คลังฉาก" ที่ฉากแรกใช้อวาตาร์ของร้าน (ป้าย "ในเครื่อง") · มีเสียงที่ "พร้อมใช้ในแอปแล้ว" · ผูกสคริปต์ที่อนุมัติแล้วอย่างน้อย 1 สคริปต์</li><li>มีบัญชี TikTok ทดสอบที่ไลฟ์ได้ (ไม่ใช่บัญชีที่รอบทดสอบอื่นกำลังใช้)</li><li>🔴 ไลฟ์จริงเข้า TikTok — ทดสอบด้วยมือเท่านั้น</li><li>จดรุ่นการ์ดจอ ไดรเวอร์ RAM และความเร็วเน็ตขาขึ้นของเครื่อง A ใน Actual ทุกครั้ง</li></ul></div>
+  <div class="sec"><h4>Test Data</h4><ul><li>อัดหน้าจอมือถือผู้ชมที่ 60 fps ตลอดเคส (เก็บไฟล์แนบใน Actual) · ใช้แอปเล่นวิดีโอที่เดินทีละเฟรมได้ตอนตัดสิน</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป "Takra Live" บนเครื่อง A แล้วเข้าสู่ระบบผ่านหน้า TAKRA Hub ที่เปิดขึ้นในแอปด้วยบัญชี UAT เจ้าของ workspace</li><li>เริ่มไลฟ์ LOCAL ให้ออกอากาศตาม TC-DT-L.1 แล้วปล่อยออกอากาศต่อเนื่อง 2 ชั่วโมงโดยไม่แตะเครื่อง</li><li>ใช้บัญชี TikTok ผู้ชมบนมือถืออีกเครื่องเข้าห้องไลฟ์ (ตัดสินจากจอผู้ชม ไม่ใช่จอในแอป) แล้วอัดหน้าจอ 2 นาทีแรก และ 2 นาทีสุดท้าย</li><li>วัดปากกับเสียงแบบ TC-DT-Q.1 ในทั้งสองช่วง แล้วจดเวลาที่เคยหลุด (ถ้ามี)</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ไลฟ์อยู่ครบ 2 ชั่วโมง ห้อง TikTok ไม่ปิดเอง ไม่มีช่วงจอดำ</li><li>ปาก/เสียงในช่วงท้ายเหลื่อมไม่เกิน 40 ms เท่ากับช่วงแรก (ไม่เหลื่อมสะสม)</li><li>ตอบคอมเมนต์ในชั่วโมงที่ 2 ได้เหมือนนาทีแรก</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic TAKRA-1453 · TAKRA-1462 · TAKRA-1467 (ไลฟ์ 2 ชั่วโมงไม่หลุด ภาพเสียงเหลื่อมไม่เกิน 40 ms)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-15097" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-15097" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-15097" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-15097" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-15097" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-15097"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-15097" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-15097">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="dt-q" data-level="ui" data-prio="P1" data-kind="boundary" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-DT-Q.12</td>
+  <td class="ctitle">ไลฟ์ยาว 6 ชั่วโมง — หน่วยความจำการ์ดจอ/เครื่องไม่โตต่อเนื่อง และแคชคลิปไม่เกิน 5 GB <span class="kd kd-bnd">Boundary</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-15098"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-15098"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ไลฟ์ยาว 6 ชั่วโมง — หน่วยความจำการ์ดจอ/เครื่องไม่โตต่อเนื่อง และแคชคลิปไม่เกิน 5 GB</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1453" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1453 ใน Jira">🧩 Epic TAKRA-1453</a> · Priority: <b>P1</b> · UI · ประเภท: <b>Boundary</b> <span class="hint">(min · max · ก่อนขอบ · ตรงขอบ · เกินขอบ)</span> · Q · คุณภาพไลฟ์ LOCAL — ภาพ/ปาก/เสียงฝั่งผู้ชม</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เครื่อง A: Windows 10/11 x64 · การ์ด NVIDIA ผ่านสเปก · ติดตั้งแอป Takra Live รุ่นล่าสุดจาก UAT และติดตั้งตัวเรนเดอร์แล้ว</li><li>มีฉากใน "คลังฉาก" ที่ฉากแรกใช้อวาตาร์ของร้าน (ป้าย "ในเครื่อง") · มีเสียงที่ "พร้อมใช้ในแอปแล้ว" · ผูกสคริปต์ที่อนุมัติแล้วอย่างน้อย 1 สคริปต์</li><li>มีบัญชี TikTok ทดสอบที่ไลฟ์ได้ (ไม่ใช่บัญชีที่รอบทดสอบอื่นกำลังใช้)</li><li>🔴 ไลฟ์จริงเข้า TikTok — ทดสอบด้วยมือเท่านั้น</li><li>จดรุ่นการ์ดจอ ไดรเวอร์ RAM และความเร็วเน็ตขาขึ้นของเครื่อง A ใน Actual ทุกครั้ง</li><li>📝 หมายเหตุ: ใช้เวลานาน — ทำนอกเวลาทำงานบนบัญชี TikTok ทดสอบที่ไม่มีรอบอื่นใช้</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป "Takra Live" บนเครื่อง A แล้วเข้าสู่ระบบผ่านหน้า TAKRA Hub ที่เปิดขึ้นในแอปด้วยบัญชี UAT เจ้าของ workspace</li><li>เปิด Task Manager แท็บ Performance แล้วจด Dedicated GPU memory และ Memory ก่อนเริ่ม</li><li>เริ่มไลฟ์ LOCAL ให้ออกอากาศตาม TC-DT-L.1 แล้วปล่อยออกอากาศ 6 ชั่วโมง จดค่าทั้งสองทุก 1 ชั่วโมง</li><li>หลังจบไลฟ์ ดูขนาดโฟลเดอร์ %APPDATA%\Takra Live\clips</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>หน่วยความจำการ์ดจอและเครื่องคงที่ (ไม่โตขึ้นทุกชั่วโมงจนใกล้เต็ม)</li><li>ไลฟ์อยู่ครบ ไม่มีเฟรมตก/ภาพค้างเพิ่มขึ้นตามเวลา</li><li>โฟลเดอร์แคชคลิปไม่เกินประมาณ 5 GB</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic TAKRA-1453 · TAKRA-1545 (soak 1–6 ชม. · VRAM ไม่โต) · apps/desktop README (แคชคลิปไม่เกิน 5 GB)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-15098" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-15098" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-15098" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-15098" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-15098" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-15098"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-15098" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-15098">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="featrow" data-featkey="dt-q-fallback"><td colspan="7">📁 Q6 · ทางถอยระหว่างไลฟ์ <span class="rp"><span class="lv lvl-ui">🌐 2</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="dt-q-fallback"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow" data-feat="dt-q" data-level="ui" data-prio="P0" data-kind="exception" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-DT-Q.13</td>
+  <td class="ctitle">ตัวเรนเดอร์ล่มกลางไลฟ์ — ไลฟ์ไม่หยุด และกลับมาพูดบทต่อเองเมื่อตัวเรนเดอร์เปิดขึ้นใหม่ <span class="kd kd-exc">Exception</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-15099"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-15099"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ตัวเรนเดอร์ล่มกลางไลฟ์ — ไลฟ์ไม่หยุด และกลับมาพูดบทต่อเองเมื่อตัวเรนเดอร์เปิดขึ้นใหม่</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1453" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1453 ใน Jira">🧩 Epic TAKRA-1453</a> · Priority: <b>P0</b> · UI · ประเภท: <b>Exception</b> <span class="hint">(API fail · network fail · server error · timeout)</span> · Q · คุณภาพไลฟ์ LOCAL — ภาพ/ปาก/เสียงฝั่งผู้ชม</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เครื่อง A: Windows 10/11 x64 · การ์ด NVIDIA ผ่านสเปก · ติดตั้งแอป Takra Live รุ่นล่าสุดจาก UAT และติดตั้งตัวเรนเดอร์แล้ว</li><li>มีฉากใน "คลังฉาก" ที่ฉากแรกใช้อวาตาร์ของร้าน (ป้าย "ในเครื่อง") · มีเสียงที่ "พร้อมใช้ในแอปแล้ว" · ผูกสคริปต์ที่อนุมัติแล้วอย่างน้อย 1 สคริปต์</li><li>มีบัญชี TikTok ทดสอบที่ไลฟ์ได้ (ไม่ใช่บัญชีที่รอบทดสอบอื่นกำลังใช้)</li><li>🔴 ไลฟ์จริงเข้า TikTok — ทดสอบด้วยมือเท่านั้น</li><li>จดรุ่นการ์ดจอ ไดรเวอร์ RAM และความเร็วเน็ตขาขึ้นของเครื่อง A ใน Actual ทุกครั้ง</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป "Takra Live" บนเครื่อง A แล้วเข้าสู่ระบบผ่านหน้า TAKRA Hub ที่เปิดขึ้นในแอปด้วยบัญชี UAT เจ้าของ workspace</li><li>เริ่มไลฟ์ LOCAL ให้ออกอากาศตาม TC-DT-L.1 ให้ออกอากาศอย่างน้อย 5 นาที</li><li>เปิด Task Manager แล้วกด End task ที่โปรเซส python ของตัวเรนเดอร์ (ไม่ปิดแอป)</li><li>สังเกตห้อง TikTok บนมือถือผู้ชมและหน้าไลฟ์ในแอป 3–5 นาที</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ห้องไลฟ์ไม่ปิดและภาพไม่ดับ (ระหว่างนั้นอวาตาร์อยู่ท่าว่าง หรือพูดบรรทัดที่เรนเดอร์ไว้แล้วต่อ)</li><li>ตัวเรนเดอร์กลับมาเองภายในไม่กี่นาที แล้วอวาตาร์พูดบทต่อโดยไม่ต้องกดอะไร</li><li>หน้าจอในแอปไม่มีข้อความดิบภาษาอังกฤษ</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic TAKRA-1453 · TAKRA-1545 (ทางถอย: ตัวเรนเดอร์ล่ม — ไลฟ์ต้องไม่หยุด) · TAKRA-1464 (ตัวเรนเดอร์ที่เช็คไม่ผ่านครั้งแรกลองใหม่เอง)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-15099" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-15099" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-15099" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-15099" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-15099" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-15099"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-15099" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-15099">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="dt-q" data-level="ui" data-prio="P1" data-kind="exception" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-DT-Q.14</td>
+  <td class="ctitle">การ์ดจอถูกโปรแกรมอื่นแย่งใช้กลางไลฟ์ — ไลฟ์ไม่หยุด ตอบคอมเมนต์อาจช้าลงแต่ยังตอบ <span class="kd kd-exc">Exception</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-15100"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-15100"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">การ์ดจอถูกโปรแกรมอื่นแย่งใช้กลางไลฟ์ — ไลฟ์ไม่หยุด ตอบคอมเมนต์อาจช้าลงแต่ยังตอบ</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1453" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1453 ใน Jira">🧩 Epic TAKRA-1453</a> · Priority: <b>P1</b> · UI · ประเภท: <b>Exception</b> <span class="hint">(API fail · network fail · server error · timeout)</span> · Q · คุณภาพไลฟ์ LOCAL — ภาพ/ปาก/เสียงฝั่งผู้ชม</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เครื่อง A: Windows 10/11 x64 · การ์ด NVIDIA ผ่านสเปก · ติดตั้งแอป Takra Live รุ่นล่าสุดจาก UAT และติดตั้งตัวเรนเดอร์แล้ว</li><li>มีฉากใน "คลังฉาก" ที่ฉากแรกใช้อวาตาร์ของร้าน (ป้าย "ในเครื่อง") · มีเสียงที่ "พร้อมใช้ในแอปแล้ว" · ผูกสคริปต์ที่อนุมัติแล้วอย่างน้อย 1 สคริปต์</li><li>มีบัญชี TikTok ทดสอบที่ไลฟ์ได้ (ไม่ใช่บัญชีที่รอบทดสอบอื่นกำลังใช้)</li><li>🔴 ไลฟ์จริงเข้า TikTok — ทดสอบด้วยมือเท่านั้น</li><li>จดรุ่นการ์ดจอ ไดรเวอร์ RAM และความเร็วเน็ตขาขึ้นของเครื่อง A ใน Actual ทุกครั้ง</li><li>มีบัญชี TikTok ผู้ชมอีกบัญชี</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป "Takra Live" บนเครื่อง A แล้วเข้าสู่ระบบผ่านหน้า TAKRA Hub ที่เปิดขึ้นในแอปด้วยบัญชี UAT เจ้าของ workspace</li><li>เริ่มไลฟ์ LOCAL ให้ออกอากาศตาม TC-DT-L.1 (เปิดสวิตช์ให้ AI ตอบคอมเมนต์)</li><li>เปิดโปรแกรมที่ใช้การ์ดจอหนักบนเครื่อง A (เช่นวิดีโอ 4K หลายจอ หรือ GPU benchmark) ค้างไว้ 5 นาที</li><li>ใช้บัญชี TikTok ผู้ชมบนมือถืออีกเครื่องเข้าห้องไลฟ์ (ตัดสินจากจอผู้ชม ไม่ใช่จอในแอป) แล้วพิมพ์คำถาม 2 ข้อระหว่างนั้น จับเวลาการตอบ</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ห้องไลฟ์ไม่ปิด ภาพไม่ดับ</li><li>คำตอบอาจช้ากว่าเกณฑ์ 15–25 วินาที แต่ยังตอบครบ (จดเวลาจริง)</li><li>ปิดโปรแกรมนั้นแล้วคุณภาพกลับมาเหมือนเดิมโดยไม่ต้องกดอะไร</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic TAKRA-1453 · TAKRA-1545 (ทางถอย: ชิ้นช้า · คำตอบไม่ทัน · VRAM เต็ม — ไลฟ์ต้องไม่หยุด)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-15100" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-15100" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-15100" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-15100" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-15100" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-15100"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-15100" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-15100">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="featrow" data-featkey="dt-q-prep"><td colspan="7">📁 Q7 · ความเร็วการเตรียมก่อนไลฟ์ <span class="rp"><span class="lv lvl-ui">🌐 2</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="dt-q-prep"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow" data-feat="dt-q" data-level="ui" data-prio="P1" data-kind="data" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-DT-Q.15</td>
+  <td class="ctitle">เวลารอที่ "ทดสอบฉาก" ประมาณไว้ ใกล้กับเวลาที่รอจริง <span class="kd kd-data">Data</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-15101"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-15101"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">เวลารอที่ "ทดสอบฉาก" ประมาณไว้ ใกล้กับเวลาที่รอจริง</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1453" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1453 ใน Jira">🧩 Epic TAKRA-1453</a> · Priority: <b>P1</b> · UI · ประเภท: <b>Data</b> <span class="hint">(empty · null · duplicate · existing · non-existing)</span> · Q · คุณภาพไลฟ์ LOCAL — ภาพ/ปาก/เสียงฝั่งผู้ชม</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เครื่อง A: Windows 10/11 x64 · การ์ด NVIDIA ผ่านสเปก · ติดตั้งแอป Takra Live รุ่นล่าสุดจาก UAT และติดตั้งตัวเรนเดอร์แล้ว</li><li>มีฉากใน "คลังฉาก" ที่ฉากแรกใช้อวาตาร์ของร้าน (ป้าย "ในเครื่อง") · มีเสียงที่ "พร้อมใช้ในแอปแล้ว" · ผูกสคริปต์ที่อนุมัติแล้วอย่างน้อย 1 สคริปต์</li><li>📝 หมายเหตุ: ไม่ต้องไลฟ์จริง</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป "Takra Live" บนเครื่อง A แล้วเข้าสู่ระบบผ่านหน้า TAKRA Hub ที่เปิดขึ้นในแอปด้วยบัญชี UAT เจ้าของ workspace</li><li>ไปที่เมนู "คลังฉาก" (กลุ่ม "คลังข้อมูล" ที่เมนูซ้าย) กด "แก้ไข" ที่ฉากที่ใช้อวาตาร์ของร้าน (บล็อกแรกยังไม่เคยเรนเดอร์ — แก้ข้อความเล็กน้อยแล้วบันทึกก่อน)</li><li>กด "ทดสอบฉากนี้" จดค่า "รออีกประมาณ …" ครั้งแรกที่ขึ้น แล้วจับเวลาจริงจนเริ่มอ่าน</li><li>ทำซ้ำกับฉากอื่นอีก 2 ฉาก</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>เครื่องที่เคยวัดความเร็วแล้ว แสดงเวลาประมาณเป็นตัวเลข (ยังไม่เคยวัด = "—")</li><li>เวลาที่รอจริงไม่ต่างจากที่ประมาณไว้มากจนหลอกผู้ใช้ (จดค่าประมาณ/ค่าจริงทั้ง 3 ฉากใน Actual)</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic TAKRA-1453 · TAKRA-1559 (ทดสอบฉากแสดงเวลาที่ต้องรอ — ความยาวเสียง × อัตราเร็วการ์ดที่วัดได้ · วัดไม่ได้ = —)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-15101" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-15101" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-15101" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-15101" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-15101" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-15101"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-15101" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-15101">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="dt-q" data-level="ui" data-prio="P1" data-kind="boundary" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-DT-Q.16</td>
+  <td class="ctitle">เรนเดอร์คลังบทก่อนไลฟ์เร็วกว่าเวลาพูดจริง (เวลาเรนเดอร์ทั้งคลัง &lt; ความยาวเสียงรวมของบท) <span class="kd kd-bnd">Boundary</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-15102"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-15102"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">เรนเดอร์คลังบทก่อนไลฟ์เร็วกว่าเวลาพูดจริง (เวลาเรนเดอร์ทั้งคลัง &lt; ความยาวเสียงรวมของบท)</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1453" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1453 ใน Jira">🧩 Epic TAKRA-1453</a> · Priority: <b>P1</b> · UI · ประเภท: <b>Boundary</b> <span class="hint">(min · max · ก่อนขอบ · ตรงขอบ · เกินขอบ)</span> · Q · คุณภาพไลฟ์ LOCAL — ภาพ/ปาก/เสียงฝั่งผู้ชม</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เครื่อง A: Windows 10/11 x64 · การ์ด NVIDIA ผ่านสเปก · ติดตั้งแอป Takra Live รุ่นล่าสุดจาก UAT และติดตั้งตัวเรนเดอร์แล้ว</li><li>มีฉากใน "คลังฉาก" ที่ฉากแรกใช้อวาตาร์ของร้าน (ป้าย "ในเครื่อง") · มีเสียงที่ "พร้อมใช้ในแอปแล้ว" · ผูกสคริปต์ที่อนุมัติแล้วอย่างน้อย 1 สคริปต์</li><li>📝 หมายเหตุ: ไม่ต้องไลฟ์จริง</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป "Takra Live" บนเครื่อง A แล้วเข้าสู่ระบบผ่านหน้า TAKRA Hub ที่เปิดขึ้นในแอปด้วยบัญชี UAT เจ้าของ workspace</li><li>ไปที่เมนู "คลังฉาก" (กลุ่ม "คลังข้อมูล" ที่เมนูซ้าย) แก้ข้อความทุกบรรทัดของฉากเล็กน้อยแล้วบันทึก (ให้ต้องเรนเดอร์ใหม่ทั้งหมด) จดเวลาที่กดบันทึก</li><li>ดูแถวในคลังฉากจนขึ้น "พร้อมไลฟ์" แล้วจดเวลา</li><li>เทียบเวลาที่ใช้กับความยาวเสียงรวมของบท (จับเวลาตอนไลฟ์ฉากนี้ว่าวนครบ 1 รอบใช้กี่นาที หรือประมาณจากจำนวนบรรทัด × ความยาวเฉลี่ยต่อบรรทัด)</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>เวลาเรนเดอร์ทั้งคลังน้อยกว่าความยาวเสียงรวมของบท (การ์ดเร็วกว่าเวลาจริง ตามเกณฑ์ตรวจเครื่อง ≤ 4 วิ ต่อเสียง 5 วิ)</li><li>ระหว่างเรนเดอร์ตัวนับ "กำลังเตรียม x/y" เดินขึ้นสม่ำเสมอ ไม่ค้างนานที่บรรทัดใด</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic TAKRA-1453 · TAKRA-1542 (เกณฑ์ความเร็วใหม่) · TAKRA-1507 · TAKRA-1529</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-15102" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-15102" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-15102" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-15102" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-15102" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-15102"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-15102" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-15102">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+
 <!-- dt-e2e -->
 <tr class="epicrow" data-epic="dt-e2e"><td colspan="7">🔄 Full E2E — ติดตั้งแอป → ตัวเรนเดอร์ → อวาตาร์ → เสียง → ฉาก → บัญชี TikTok → ไลฟ์จากเครื่อง → จบไลฟ์ (🔴 ไลฟ์จริง manual) <span class="rp">(1 เคส)</span> <a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1453" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1453 ใน Jira">🧩 Epic TAKRA-1453</a></td></tr>
 <tr class="featrow" data-featkey="dt-e2e"><td colspan="7">📁 ครบลูปบนเครื่อง Windows ใหม่ <span class="rp"> <span class="lv lvl-e2e">🔄 1</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="dt-e2e"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
@@ -2410,7 +2922,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 
 </div>
-<footer>TAKRA AI — แอปเดสก์ท็อป Takra Live (Windows) UI Manual Test Cases · 67 UI + 1 E2E = 68 TCs · UI only (manual) · แอป Takra Live บน Windows · UAT</footer>
+<footer>TAKRA AI — แอปเดสก์ท็อป Takra Live (Windows) UI Manual Test Cases · 83 UI + 1 E2E = 84 TCs · UI only (manual) · แอป Takra Live บน Windows · UAT</footer>
 
 <script>
 // ── Load store from embedded JSON ──
