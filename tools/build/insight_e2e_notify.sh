@@ -48,6 +48,9 @@ if [ "$DO_PULL" = 1 ] && [ -z "$RESULTS" ]; then
 fi
 
 BRANCH=$(git -C "$INSIGHT" branch --show-current)
+# --tier รับหลาย tier คั่นด้วย | ได้ (เช่น "regression|e2e" = ชุด stub + ไลฟ์จริง) → แปลงเป็น grep "@regression|@e2e"
+GREP="@$(printf '%s' "$TIER" | sed 's/|/|@/g')"
+
 # ป้าย env ยึดตาม tier เสมอ (ไม่ขึ้นกับว่ารันเองหรือส่ง --results มา) — กันรายงาน UAT ติดป้าย local
 if [ "$TIER" = uat ]; then
   NOTE="UAT · uat-hub.takra.ai จริง"
@@ -87,7 +90,7 @@ elif [ -z "$RESULTS" ]; then
   (cd "$INSIGHT" && env "${BLANKS[@]}" \
       CFFIXED_USER_HOME="$PROFILE" HOME="$PROFILE" \
       PLAYWRIGHT_JSON_OUTPUT_NAME="$RESULTS" \
-      npx playwright test --grep "@$TIER" --reporter=list,json 'e2e/(?!ti318)')
+      npx playwright test --grep "$GREP" --reporter=list,json 'e2e/(?!ti318)')
   set -e
   rm -rf "$PROFILE"
   [ -s "$RESULTS" ] || { echo "ไม่มี results.json — รันล้มก่อนถึง reporter" >&2; exit 1; }
