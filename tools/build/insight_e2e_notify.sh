@@ -48,7 +48,12 @@ if [ "$DO_PULL" = 1 ] && [ -z "$RESULTS" ]; then
 fi
 
 BRANCH=$(git -C "$INSIGHT" branch --show-current)
-NOTE="unconfigured · โปรไฟล์แยก (เทียบเท่า CI)"
+# ป้าย env ยึดตาม tier เสมอ (ไม่ขึ้นกับว่ารันเองหรือส่ง --results มา) — กันรายงาน UAT ติดป้าย local
+if [ "$TIER" = uat ]; then
+  NOTE="UAT · uat-hub.takra.ai จริง"
+else
+  NOTE="unconfigured · โปรไฟล์แยก (เทียบเท่า CI)"
+fi
 
 # ── 1. รันเทส (เว้นแต่ส่ง --results มา) ──────────────────────────────────────
 # tier "uat" = suite e2e/uat (playwright.uat.config.js) — สูตรกลับด้านกับ local:
