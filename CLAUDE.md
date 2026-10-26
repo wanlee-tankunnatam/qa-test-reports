@@ -67,7 +67,7 @@ repo นี้เก็บรายงาน manual test case (UI) ของท�
 >
 > **takra-ai Production smoke** (9 ต.ค. 2026) — 9 โฟลว์หลัก + 1 ครบลูป · 52 เคส P0 คัดจาก `reg_ai_bymenu_oct_cases.py` · prod = branch `production` · URL live.takra.ai / hub.takra.ai · แปลง URL/คำ UAT → production ตอน build · uid เดิม store แยก (`tools/build/ai_prod_smoke_cases.py` → `python3 tools/build/build_hub_report.py aiprod`) — แก้เนื้อเคสที่ชุดหลัก แก้ที่ไฟล์นี้แค่รายชื่อเคส/กติกา prod
 >
-> **takra-ai แอปเดสก์ท็อป Takra Live (Windows)** (26 ต.ค. 2026) — Electron ที่โหลดเว็บ UAT + ตัวเรนเดอร์อวาตาร์บน GPU ในเครื่อง · โค้ด `apps/desktop/src` (คำในหน้าต่าง/ข้อความ error ของแอปฝังไทยในโค้ด) + หน้าเว็บ `apps/web/src` (คำจาก i18n th) · สเปก = Jira Epic TAKRA-1453 + ใบย่อย (ไม่มีใน epics.md) · 86 เคส A–L + E2E · uid 15001+ · กลุ่ม L/E2E ไลฟ์จริง = manual (`tools/build/ai_desktop_cases.py` → `python3 tools/build/build_hub_report.py aidesktop`)
+> **takra-ai แอปเดสก์ท็อป Takra Live (Windows)** (26 ต.ค. 2026) — Electron ที่โหลดเว็บ UAT + ตัวเรนเดอร์อวาตาร์บน GPU ในเครื่อง · โค้ด `apps/desktop/src` (คำในหน้าต่าง/ข้อความ error ของแอปฝังไทยในโค้ด) + หน้าเว็บ `apps/web/src` (คำจาก i18n th) · สเปก = Jira Epic TAKRA-1453 + ใบย่อย (ไม่มีใน epics.md) · 68 เคส A–L + E2E (ตัด P2 26 ต.ค. · uid ตรึงใน `UID_MAP`) · uid 15001–15086 · กลุ่ม L/E2E ไลฟ์จริง = manual (`tools/build/ai_desktop_cases.py` → `python3 tools/build/build_hub_report.py aidesktop`)
 >
 > **takra-rerun คุณภาพ/ประสิทธิภาพการไลฟ์รีรัน** (9 ก.ย. 2026) — 14 เคส 3 รอบ อยู่ที่ `tools/build/rerun_quality_cases.py` → `python3 tools/build/build_hub_report.py rerunquality`
 >
