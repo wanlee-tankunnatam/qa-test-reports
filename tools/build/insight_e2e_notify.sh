@@ -117,8 +117,7 @@ fi
 COMPOSER="$INSIGHT/scripts/qa/e2e-nightly-summary.mjs"
 if [ "$TIER" = uat ]; then ENV_LABEL=uat; else ENV_LABEL=local; fi
 SUMMARY=$(cd "$INSIGHT" && node "$COMPOSER" --results "$RESULTS" --env "$ENV_LABEL" --tier "$GREP" \
-  --report "$URL" --branch "$BRANCH" --sha "$(git -C "$INSIGHT" rev-parse HEAD)" \
-  ${GITHUB_RUN_URL:+--run-url "$GITHUB_RUN_URL"})
+  --report "$URL" ${GITHUB_RUN_URL:+--run-url "$GITHUB_RUN_URL"})
 
 # เครื่อง QA: ค่า LINE อยู่ใน .env.development · CI: inject มาเป็น env ตรงๆ (GitHub Secrets) ไม่มีไฟล์นี้
 if [ "$DO_LINE" = 1 ] && [ -f "$INSIGHT/.env.development" ]; then
