@@ -230,3 +230,19 @@ Python HTTP server ไม่มี hot-reload — ถ้าแก้ server.py �
 - **Continuation rows** — แถวที่ col A ว่าง + col L (Step) มีค่า ถือว่าเป็น step ของ case ก่อนหน้า
 - **Status persistence** — เก็บใน `case_statuses` ของ collection JSON ไม่กระทบ xlsx ต้นทาง
 - **openpyxl mode** — server โหลด workbook ด้วย `data_only=True` (ไม่ใช่ `read_only=True`) เพราะ `read_only` ทำให้ `max_row` เป็น None
+
+## รายงาน e2e ของ takra-hub — ตรวจก่อนแก้ทุกครั้ง
+
+`tools/build/hub_e2e_run_report.py` สร้างรายงาน HTML ต่อรอบ ใช้ทั้งรอบบนเครื่อง QA (`hub_e2e_notify.sh`)
+และรอบ GitHub Actions ของ takra-hub (workflow clone repo นี้ทุกรอบ ⇒ แก้ที่นี่ = มีผลรอบถัดไปทันที)
+
+**แก้ HTML/JS ในไฟล์นี้เมื่อไหร่ ต้องรัน:**
+
+```bash
+node tools/build/check_hub_report_ui.mjs   # ✅ = เปิด/ปิดรายละเอียดได้ทุกเส้นทาง · ❌ = บอกข้อที่พัง (exit 1)
+```
+
+- เปิดในเบราว์เซอร์จริง (Playwright) ตรวจ: กดแถวที่ตก · หลังกดตัวกรอง FAIL/PASS · หลังกดฟีเจอร์ในตารางสรุป
+- หา Playwright จาก `PLAYWRIGHT_MODULE` → `playwright` → node_modules ของ takra-hub
+- การแสดงผลตารางคิดจากสถานะชุดเดียวใน `render()` (ตัวกรอง `F` + แถวที่เปิด `OPEN`) — **ห้ามแก้คลาส hide/show ตรง ๆ ที่อื่น**
+- ที่มา: 27 ต.ค. 2569 เปิดรายละเอียดตัวที่ไม่ผ่านไม่ได้หลังกดตัวกรอง/ฟีเจอร์ (สองที่แก้คลาสเดียวกันแล้วขัดกัน)

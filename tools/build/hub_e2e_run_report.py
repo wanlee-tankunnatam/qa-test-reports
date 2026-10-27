@@ -432,33 +432,37 @@ footer{{color:var(--muted);font-size:12px;text-align:center;padding:20px}}
 </div>
 <footer>generate โดย tools/build/hub_e2e_run_report.py · QA takra-hub</footer>
 <script>
+// 🔴 การแสดงผลทั้งตารางคิดจาก **สถานะชุดเดียว** (F = ตัวกรอง · OPEN = แถวที่กดเปิด) ใน render() ที่เดียว
+//    ห้ามไปแก้คลาส hide/show ตรง ๆ ที่อื่น — เดิมมี 2 ที่แก้คลาสเดียวกันแล้วขัดกัน: กดกรอง/ฟีเจอร์แล้ว
+//    เปิดรายละเอียดตัวที่ไม่ผ่านไม่ได้ (QA เจอ 27 ต.ค. 2569) · แก้ส่วนนี้แล้วรัน tools/build/check_hub_report_ui.mjs
 const F={{st:null,file:null}};
-function apply(){{
-  document.querySelectorAll('tr.trow,tr.detail').forEach(tr=>{{
+const OPEN=new Set();
+function render(){{
+  document.querySelectorAll('tr.trow').forEach(tr=>{{
     const ok=(!F.st||tr.dataset.st===F.st)&&(!F.file||tr.dataset.file===F.file);
-    // แถวรายละเอียดซ่อนเมื่อไม่ผ่านตัวกรอง **หรือ** ยังไม่ได้กดเปิด — แถวทดสอบดูแค่ตัวกรอง
-    const isDetail=tr.classList.contains('detail');
-    tr.classList.toggle('hide',!ok||(isDetail&&!tr.classList.contains('show')));
+    const open=OPEN.has(tr.dataset.uid);
+    tr.classList.toggle('hide',!ok);
+    tr.classList.toggle('open',open);
+    const d=document.querySelector(`tr.detail[data-uid="${{tr.dataset.uid}}"]`);
+    if(d){{d.classList.toggle('show',ok&&open);d.classList.toggle('hide',!(ok&&open));}}
   }});
   document.querySelectorAll('tr.featrow').forEach(fr=>{{
     const any=[...document.querySelectorAll(`tr.trow[data-file="${{CSS.escape(fr.dataset.file)}}"]`)].some(r=>!r.classList.contains('hide'));
     fr.classList.toggle('hide',!any);
   }});
 }}
+const apply=render;
 document.querySelectorAll('.fchip').forEach(b=>b.addEventListener('click',()=>{{
   const f=b.dataset.f,v=b.dataset.v,on=b.classList.contains('active');
   document.querySelectorAll(`.fchip[data-f="${{f}}"]`).forEach(x=>x.classList.remove('active'));
   F[f==='st'?'st':'file']=on?null:v;
   if(!on)b.classList.add('active');
-  apply();
+  render();
 }}));
 document.querySelectorAll('tr.trow').forEach(tr=>tr.addEventListener('click',()=>{{
-  const d=document.querySelector(`tr.detail[data-uid="${{tr.dataset.uid}}"]`);
-  if(!d)return;
-  // 🔴 ต้องถอด 'hide' ด้วย — หลังกดตัวกรอง/ฟีเจอร์ apply() ใส่ 'hide' ให้แถวรายละเอียด
-  //    ('hide' เป็น display:none!important ชนะ 'show') เดิมกดเปิดแล้วไม่ขึ้น (QA เจอ 27 ต.ค. 2569)
-  const open=!d.classList.contains('show');
-  tr.classList.toggle('open',open); d.classList.toggle('show',open); d.classList.toggle('hide',!open);
+  if(!document.querySelector(`tr.detail[data-uid="${{tr.dataset.uid}}"]`))return;
+  OPEN.has(tr.dataset.uid)?OPEN.delete(tr.dataset.uid):OPEN.add(tr.dataset.uid);
+  render();
 }}));
 function gotoFeature(file,anchorId){{
   const off=F.file===file;
