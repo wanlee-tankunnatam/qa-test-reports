@@ -116,8 +116,9 @@ fi
 #   🧪 ผลรัน — <env> — takra-insight — e2e — <tier> / GATE / ผ่าน-ไม่ผ่าน-flaky-ข้าม บรรทัดละข้อ / เวลา / (ว่าง) / run / 📄 รายงาน
 COMPOSER="$INSIGHT/scripts/qa/e2e-nightly-summary.mjs"
 if [ "$TIER" = uat ]; then ENV_LABEL=uat; else ENV_LABEL=local; fi
-SUMMARY=$(cd "$INSIGHT" && node "$COMPOSER" --results "$RESULTS" --env "$ENV_LABEL" --tier "$GREP" \
-  --report "$URL" ${GITHUB_RUN_URL:+--run-url "$GITHUB_RUN_URL"})
+COMPOSE_ARGS=(--results "$RESULTS" --env "$ENV_LABEL" --tier "$GREP" --report "$URL")
+[ -n "${GITHUB_RUN_URL:-}" ] && COMPOSE_ARGS+=(--run-url "$GITHUB_RUN_URL")
+SUMMARY=$(cd "$INSIGHT" && node "$COMPOSER" "${COMPOSE_ARGS[@]}")
 
 # เครื่อง QA: ค่า LINE อยู่ใน .env.development · CI: inject มาเป็น env ตรงๆ (GitHub Secrets) ไม่มีไฟล์นี้
 if [ "$DO_LINE" = 1 ] && [ -f "$INSIGHT/.env.development" ]; then
@@ -140,15 +141,12 @@ if [ "$DO_LINE" = 1 ]; then
     QUOTA_LINE="
 ⚠️ โควตา LINE เดือนนี้ใกล้เต็ม: $USED/$LIMIT — พิจารณาแจ้งเฉพาะ FAIL หรืออัปแพลน"
   fi
-  TEXT="$SUMMARY$QUOTA_LINE"
-  CODE=$(python3 - "$E2E_INS_LINE_TOKEN" "$E2E_INS_LINE_GROUP_ID" "$TEXT" <<'EOF'
-import sys, json, urllib.request
-tok, gid, text = sys.argv[1], sys.argv[2], sys.argv[3]
-req = urllib.request.Request("https://api.line.me/v2/bot/message/push",
-    data=json.dumps({"to": gid, "messages": [{"type": "text", "text": text}]}).encode(),
-    headers={"Authorization": f"Bearer {tok}", "Content-Type": "application/json"})
-print(urllib.request.urlopen(req).status)
-EOF
-)
+  EXTRA_FILE=$(mktemp); printf '%s\n' "${QUOTA_LINE#$'\n'}" > "$EXTRA_FILE"
+  PAYLOAD=$(mktemp)
+  # Flex bubble (ตัวหนาจริง สี GATE ปุ่มเปิด Run/Report) — altText = ข้อความธรรมดาด้านบน · composer เขียน body ทั้งก้อน
+  (cd "$INSIGHT" && node "$COMPOSER" "${COMPOSE_ARGS[@]}" --extra "$EXTRA_FILE" --format push --to "$E2E_INS_LINE_GROUP_ID") > "$PAYLOAD"
+  CODE=$(curl -sS --retry 2 -o /dev/null -w '%{http_code}' -X POST https://api.line.me/v2/bot/message/push \
+    -H "Authorization: Bearer $E2E_INS_LINE_TOKEN" -H 'Content-Type: application/json' --data-binary @"$PAYLOAD")
+  rm -f "$EXTRA_FILE" "$PAYLOAD"
   echo "LINE push: HTTP $CODE"
 fi
