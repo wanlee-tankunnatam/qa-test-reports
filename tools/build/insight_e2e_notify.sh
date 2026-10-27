@@ -112,36 +112,13 @@ if [ "$DO_PUSH" = 1 ]; then
 fi
 
 # ── 4. สรุป + ส่ง LINE ───────────────────────────────────────────────────────
-SUMMARY=$(python3 - "$RESULTS" <<'EOF'
-import json, sys
-d = json.load(open(sys.argv[1]))
-s = d.get("stats", {})
-fails = []
-def walk(suites):
-    for su in suites:
-        for sp in su.get("specs", []):
-            for t in sp.get("tests", []):
-                if t.get("status") in ("unexpected", "flaky"):
-                    mark = "❌" if t["status"] == "unexpected" else "⚠️"
-                    title = sp["title"].split(" @")[0]
-                    fails.append(f"{mark} {title[:70]}")
-        walk(su.get("suites", []))
-walk(d.get("suites", []))
-m, sec = divmod(int(s.get("duration", 0) / 1000), 60)
-fail = s.get("unexpected", 0); flaky = s.get("flaky", 0)
-if fail:
-    print(f"🔴 GATE ไม่ผ่าน — ตก {fail} เคส")
-elif flaky:
-    print(f"🟡 GATE ผ่านแบบมีเงื่อนไข — flaky {flaky} เคส ควรจับตา")
-else:
-    print("🟢 GATE ผ่าน")
-print(f"✅ ผ่าน {s.get('expected',0)} · ❌ ตก {fail} · ⚠️ flaky {flaky} · ⏭ ข้าม {s.get('skipped',0)} · ⏱ {m} นาที {sec} วิ")
-for f in fails[:8]:
-    print(f)
-if len(fails) > 8:
-    print(f"…และอีก {len(fails)-8} เคส (ดูในรายงาน)")
-EOF
-)
+# ข้อความ LINE ประกอบด้วยตัวเดียวกับที่ CI ใช้ (scripts/qa/e2e-nightly-summary.mjs ใน repo insight) — layout เดียวกันทุกช่องทาง:
+#   🧪 ผลรัน — <env> — takra-insight — e2e — <tier> / GATE / ผ่าน-ไม่ผ่าน-flaky-ข้าม บรรทัดละข้อ / เวลา / (ว่าง) / run / 📄 รายงาน
+COMPOSER="$INSIGHT/scripts/qa/e2e-nightly-summary.mjs"
+if [ "$TIER" = uat ]; then ENV_LABEL=uat; else ENV_LABEL=local; fi
+SUMMARY=$(cd "$INSIGHT" && node "$COMPOSER" --results "$RESULTS" --env "$ENV_LABEL" --tier "$GREP" \
+  --report "$URL" --branch "$BRANCH" --sha "$(git -C "$INSIGHT" rev-parse HEAD)" \
+  ${GITHUB_RUN_URL:+--run-url "$GITHUB_RUN_URL"})
 
 # เครื่อง QA: ค่า LINE อยู่ใน .env.development · CI: inject มาเป็น env ตรงๆ (GitHub Secrets) ไม่มีไฟล์นี้
 if [ "$DO_LINE" = 1 ] && [ -f "$INSIGHT/.env.development" ]; then
@@ -164,11 +141,7 @@ if [ "$DO_LINE" = 1 ]; then
     QUOTA_LINE="
 ⚠️ โควตา LINE เดือนนี้ใกล้เต็ม: $USED/$LIMIT — พิจารณาแจ้งเฉพาะ FAIL หรืออัปแพลน"
   fi
-  TEXT="🧪 ผลรัน e2e @$TIER — takra-insight
-$SUMMARY
-env: $NOTE
-branch: $BRANCH
-📄 รายงาน: $URL$QUOTA_LINE"
+  TEXT="$SUMMARY$QUOTA_LINE"
   CODE=$(python3 - "$E2E_INS_LINE_TOKEN" "$E2E_INS_LINE_GROUP_ID" "$TEXT" <<'EOF'
 import sys, json, urllib.request
 tok, gid, text = sys.argv[1], sys.argv[2], sys.argv[3]
