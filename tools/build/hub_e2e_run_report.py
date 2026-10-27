@@ -436,8 +436,9 @@ const F={{st:null,file:null}};
 function apply(){{
   document.querySelectorAll('tr.trow,tr.detail').forEach(tr=>{{
     const ok=(!F.st||tr.dataset.st===F.st)&&(!F.file||tr.dataset.file===F.file);
-    tr.classList.toggle('hide',!ok);
-    if(tr.classList.contains('detail')&&!tr.classList.contains('show'))tr.classList.add('hide')===false;
+    // แถวรายละเอียดซ่อนเมื่อไม่ผ่านตัวกรอง **หรือ** ยังไม่ได้กดเปิด — แถวทดสอบดูแค่ตัวกรอง
+    const isDetail=tr.classList.contains('detail');
+    tr.classList.toggle('hide',!ok||(isDetail&&!tr.classList.contains('show')));
   }});
   document.querySelectorAll('tr.featrow').forEach(fr=>{{
     const any=[...document.querySelectorAll(`tr.trow[data-file="${{CSS.escape(fr.dataset.file)}}"]`)].some(r=>!r.classList.contains('hide'));
@@ -453,7 +454,11 @@ document.querySelectorAll('.fchip').forEach(b=>b.addEventListener('click',()=>{{
 }}));
 document.querySelectorAll('tr.trow').forEach(tr=>tr.addEventListener('click',()=>{{
   const d=document.querySelector(`tr.detail[data-uid="${{tr.dataset.uid}}"]`);
-  if(!d)return; tr.classList.toggle('open'); d.classList.toggle('show');
+  if(!d)return;
+  // 🔴 ต้องถอด 'hide' ด้วย — หลังกดตัวกรอง/ฟีเจอร์ apply() ใส่ 'hide' ให้แถวรายละเอียด
+  //    ('hide' เป็น display:none!important ชนะ 'show') เดิมกดเปิดแล้วไม่ขึ้น (QA เจอ 27 ต.ค. 2569)
+  const open=!d.classList.contains('show');
+  tr.classList.toggle('open',open); d.classList.toggle('show',open); d.classList.toggle('hide',!open);
 }}));
 function gotoFeature(file,anchorId){{
   const off=F.file===file;
