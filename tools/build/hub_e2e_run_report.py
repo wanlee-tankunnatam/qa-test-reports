@@ -19,6 +19,7 @@ ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 PAGES_BASE = "https://wanlee-tankunnatam.github.io/qa-test-reports"
 
 ANSI = re.compile(r"\x1b\[[0-9;]*m")
+TC_ID = re.compile(r"^(TC-[A-Z0-9]+(?:-[A-Za-z0-9]+)*)\b")
 STATUS_MAP = {"expected": "pass", "unexpected": "fail", "flaky": "flaky", "skipped": "skip"}
 STATUS_TH = {"pass": "PASS", "fail": "FAIL", "flaky": "FLAKY", "skip": "SKIP"}
 
@@ -139,9 +140,17 @@ def collect(results_path):
                     title = sp.get("title", "")
                     tags = re.findall(r"@[\w-]+", title) or [
                         t if str(t).startswith("@") else f"@{t}" for t in sp.get("tags", [])]
+                    clean = re.sub(r"\s*@[\w-]+", "", title).strip()
+                    # TC id จาก case doc กลาง (เช่น TC-WM-AC1-UI-POS-01 · TC-INV-AC1-UI-POS-01b) — ตัวแรกในชื่อ
+                    # ชื่อแบบ "TC-… (ครอบ TC-…) · คำอธิบาย" → id = ตัวแรก · ชื่อ = ส่วนหลัง " · " · ไม่มี id (harness) = "—"
+                    m = TC_ID.match(clean)
+                    tc_id = m.group(1) if m else ""
+                    if m:
+                        clean = clean.split(" · ", 1)[1].strip() if " · " in clean else clean[m.end():].strip()
                     rows.append({
                         "file": sp.get("file") or su.get("file") or su.get("title", ""),
-                        "title": re.sub(r"\s*@[\w-]+", "", title).strip(),
+                        "id": tc_id,
+                        "title": clean,
                         "tags": tags, "status": st, "dur": dur, "err": err,
                         "why": (fail_hint(err) if st in ("fail", "flaky")
                                 else skip_hint(skip_reason(t)) if st == "skip" else ""),
@@ -230,7 +239,7 @@ def build_html(stats, rows, tier, branch, note, run_at):
         frows = [r for r in rows if r["file"] == fname]
         fp = sum(1 for r in frows if r["status"] == "pass")
         body_rows.append(
-            f'<tr class="featrow" id="{anchor(fname)}" data-file="{html.escape(fname)}"><td colspan="5">{html.escape(feature_name(fname))}'
+            f'<tr class="featrow" id="{anchor(fname)}" data-file="{html.escape(fname)}"><td colspan="6">{html.escape(feature_name(fname))}'
             f'<span class="rp">ผ่าน {fp}/{len(frows)} · {html.escape(fname)}</span></td></tr>')
         for r in frows:
             uid += 1
@@ -244,6 +253,7 @@ def build_html(stats, rows, tier, branch, note, run_at):
             body_rows.append(
                 f'<tr class="trow" data-uid="{uid}" data-st="{st}" data-file="{html.escape(fname)}">'
                 f'<td>{tog}</td>'
+                f'<td class="tcid">{html.escape(r["id"]) or "—"}</td>'
                 f'<td class="ctitle">{html.escape(r["title"])}'
                 + (f'<div class="why">{"⏭" if st == "skip" else "💬"} {html.escape(r["why"])}</div>' if r["why"] else '')
                 + f'</td>'
@@ -259,13 +269,13 @@ def build_html(stats, rows, tier, branch, note, run_at):
                                + (f'<p class="exhead">{html.escape(headline)}</p>' if headline else "")
                                + f'<p class="exbody">{html.escape(body_txt)}</p></div>')
                 body_rows.append(
-                    f'<tr class="detail" data-uid="{uid}" data-st="{st}" data-file="{html.escape(fname)}"><td colspan="5">'
+                    f'<tr class="detail" data-uid="{uid}" data-st="{st}" data-file="{html.escape(fname)}"><td colspan="6">'
                     f'<div class="card">{ex_html}<div class="sec"><h4>Error (ดิบ)</h4>'
                     f'<pre class="errpre">{html.escape(r["err"][:3000])}</pre></div></div></td></tr>')
             elif skip_detail:
                 items = "".join(f'<li>{html.escape(p)}</li>' for p in raw_segments)
                 body_rows.append(
-                    f'<tr class="detail" data-uid="{uid}" data-st="{st}" data-file="{html.escape(fname)}"><td colspan="5">'
+                    f'<tr class="detail" data-uid="{uid}" data-st="{st}" data-file="{html.escape(fname)}"><td colspan="6">'
                     f'<div class="card"><div class="sec"><h4>เหตุผลที่ SKIP (จากใน spec)</h4>'
                     f'<ul class="exlist">{items}</ul></div></div></td></tr>')
 
@@ -338,6 +348,7 @@ tr.trow{{cursor:pointer}}tr.trow:hover{{background:#f7f9fc}}tr.trow.open{{backgr
 tr.trow.open .tog{{transform:rotate(90deg);color:var(--accent)}}
 .cid{{font-family:monospace;font-size:10px;color:var(--muted);white-space:nowrap}}
 .ctitle{{font-weight:600;font-size:12.5px;max-width:520px}}
+.tcid{{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;white-space:nowrap;color:#1e3a8a}}
 td.lvl{{white-space:nowrap}}
 .lv{{font-size:10px;font-weight:700;padding:2px 7px;border-radius:5px;border:1px solid;background:#fff;display:inline-block;vertical-align:middle;margin-right:3px}}
 .lv.lvl-ui{{color:var(--lv-ui);border-color:var(--lv-ui)}}
@@ -415,7 +426,7 @@ footer{{color:var(--muted);font-size:12px;text-align:center;padding:20px}}
     <div class="row"><label>ไฟล์</label>{file_chips}</div>
   </div>
   <div class="tablewrap"><table class="tc">
-    <thead><tr><th></th><th>Test case</th><th>Tags</th><th>ผล</th><th>เวลา</th></tr></thead>
+    <thead><tr><th></th><th>ID</th><th>Test case</th><th>Tags</th><th>ผล</th><th>เวลา</th></tr></thead>
     <tbody>{''.join(body_rows)}</tbody>
   </table></div>
 </div>
