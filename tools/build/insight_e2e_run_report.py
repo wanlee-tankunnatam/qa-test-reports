@@ -416,6 +416,47 @@ if(location.hash.startsWith('#feat-')){{
 </body></html>"""
 
 
+PAGES_BASE = "https://wanlee-tankunnatam.github.io/qa-test-reports"
+
+
+def update_index(out, rows, tier, note, run_at):
+    """หน้า index (?project=insight) เป็นแถวเขียนมือ — รายงานอัตโนมัติต่อรอบจึงไม่เคยขึ้น (QA ชี้ 27 ต.ค. 2569)
+    ใส่ **แถวเดียวต่อ tier** ("ผลรันล่าสุด") แทนที่ของรอบก่อน ไม่ใช่เพิ่มแถวทุกคืนจนหน้าล้น · ประวัติทุกรอบอยู่ในโฟลเดอร์ reports/
+    marker = data-e2e="<tier>" · แถวใหม่แทรกบนสุดของ tbody ส่วน insight · นับ reports เพิ่มเฉพาะตอนแถวใหม่"""
+    idx = os.path.join(ROOT, "index.html")
+    if not os.path.exists(idx):
+        return
+    src = open(idx, encoding="utf-8").read()
+    rel = os.path.relpath(out, ROOT).replace(os.sep, "/")
+    href = f"{PAGES_BASE}/{rel}"
+    n = {k: sum(1 for r in rows if r["status"] == k) for k in ("pass", "fail", "flaky", "skip")}
+    gate = ("⛔ ไม่ผ่าน — ตก " + str(n["fail"])) if n["fail"] else ("⚪ ข้ามทั้งหมด" if not (n["pass"] + n["flaky"]) and n["skip"] else ("🟡 ผ่านแบบมีเงื่อนไข" if n["flaky"] else "✅ ผ่าน"))
+    title = f"[E2E อัตโนมัติ · @{html.escape(tier)}] ผลรันล่าสุด {run_at:%d/%m %H:%M} — GATE {gate}"
+    desc = f"ผ่าน {n['pass']} · ไม่ผ่าน {n['fail']} · flaky {n['flaky']} · ข้าม {n['skip']} · {html.escape(note)}" if note else \
+           f"ผ่าน {n['pass']} · ไม่ผ่าน {n['fail']} · flaky {n['flaky']} · ข้าม {n['skip']}"
+    keywords = html.escape(f"e2e อัตโนมัติ playwright nightly {tier} ผลรัน takra insight {note}".lower(), quote=True)
+    row = (f'            <tr data-type="test" data-e2e="{html.escape(tier, quote=True)}" data-title="{keywords}" data-href="{href}">\n'
+           f'              <td class="c-report"><a class="rlink" href="{href}">{title} <span class="pill-new">ล่าสุด</span></a><div class="rdesc">{desc}</div></td>\n'
+           f'              <td class="c-type"><span class="badge test">ผลทดสอบ</span></td>\n'
+           f'              <td class="c-date">{run_at:%Y-%m-%d} <span class="arrow">↗</span></td>\n'
+           f'            </tr>\n')
+    sec = re.search(r'<section class="group" data-project="insight" id="sec-insight">[\s\S]*?</section>', src)
+    if not sec:
+        return
+    block = sec.group(0)
+    marker = re.compile(r'\n[ \t]*<tr data-type="test" data-e2e="' + re.escape(tier) + r'"[\s\S]*?</tr>')
+    had = bool(marker.search(block))
+    block = marker.sub("", block, count=1)
+    block = block.replace("<tbody>\n", "<tbody>\n" + row, 1)
+    if not had:
+        block = re.sub(r'<span class="count">(\d+) reports</span>', lambda m: f'<span class="count">{int(m.group(1)) + 1} reports</span>', block, count=1)
+    src = src[:sec.start()] + block + src[sec.end():]
+    if not had:
+        src = re.sub(r'(data-project="insight">[\s\S]*?<span class="n">)(\d+)(</span>)', lambda m: f"{m.group(1)}{int(m.group(2)) + 1}{m.group(3)}", src, count=1)
+    with open(idx, "w", encoding="utf-8") as f:
+        f.write(src)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--results", required=True)
@@ -423,6 +464,7 @@ def main():
     ap.add_argument("--branch", default="")
     ap.add_argument("--note", default="")
     ap.add_argument("--out", default=None)
+    ap.add_argument("--no-index", action="store_true", help="ไม่แตะ index.html (แถว 'ผลรันล่าสุด' ของ tier นี้)")
     a = ap.parse_args()
     stats, rows = collect(a.results)
     run_at = datetime.fromisoformat(stats.get("startTime", "").replace("Z", "+00:00")).astimezone() if stats.get("startTime") else datetime.now()
@@ -432,6 +474,8 @@ def main():
     os.makedirs(os.path.dirname(out), exist_ok=True)
     with open(out, "w", encoding="utf-8") as f:
         f.write(build_html(stats, rows, a.tier, a.branch, a.note, run_at))
+    if not a.no_index:
+        update_index(out, rows, a.tier, a.note, run_at)   # stdout stays the report path only (CI captures it)
     print(out)
 
 

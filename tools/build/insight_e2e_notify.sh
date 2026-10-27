@@ -105,8 +105,8 @@ echo "report: $OUT"
 
 # ── 3. commit + push ให้ลิงก์ Pages ใช้ได้ ───────────────────────────────────
 if [ "$DO_PUSH" = 1 ]; then
-  git -C "$REPORTS_ROOT" add "$REL"
-  git -C "$REPORTS_ROOT" commit -q -m "report(insight): e2e @$TIER $(date +%d/%m' '%H:%M) อัตโนมัติ" -- "$REL"
+  git -C "$REPORTS_ROOT" add "$REL" index.html   # index.html = แถว "ผลรันล่าสุด" ของ tier นี้ (ตัวสร้างรายงานอัปเดตให้)
+  git -C "$REPORTS_ROOT" commit -q -m "report(insight): e2e @$TIER $(date +%d/%m' '%H:%M) อัตโนมัติ" -- "$REL" index.html
   git -C "$REPORTS_ROOT" push -q
   echo "pushed: $URL"
 fi
