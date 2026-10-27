@@ -112,11 +112,12 @@ if [ "$DO_PUSH" = 1 ]; then
 fi
 
 # ── 4. สรุป + ส่ง LINE ───────────────────────────────────────────────────────
-# ข้อความ LINE ประกอบด้วยตัวเดียวกับที่ CI ใช้ (scripts/qa/e2e-nightly-summary.mjs ใน repo insight) — layout เดียวกันทุกช่องทาง:
-#   🧪 ผลรัน — <env> — takra-insight — e2e — <tier> / GATE / ผ่าน-ไม่ผ่าน-flaky-ข้าม บรรทัดละข้อ / เวลา / (ว่าง) / run / 📄 รายงาน
+# ข้อความ LINE ประกอบด้วยตัวเดียวกับที่ CI ใช้ (scripts/qa/e2e-nightly-summary.mjs ใน repo insight) — การ์ด Flex layout เดียวกันทุกช่องทาง:
+#   🧪 E2E Test Report | UAT/LOCAL · Project · Tag · Commit <branch @ sha7> / GATE / 📊 ผ่าน-ไม่ผ่าน-Flaky-ข้าม / ⏱ เวลา / ปุ่ม 🔗 Run · 📄 Test Report
 COMPOSER="$INSIGHT/scripts/qa/e2e-nightly-summary.mjs"
 if [ "$TIER" = uat ]; then ENV_LABEL=uat; else ENV_LABEL=local; fi
-COMPOSE_ARGS=(--results "$RESULTS" --env "$ENV_LABEL" --tier "$GREP" --report "$URL")
+COMPOSE_ARGS=(--results "$RESULTS" --env "$ENV_LABEL" --tier "$GREP" --report "$URL" \
+  --branch "$BRANCH" --sha "$(git -C "$INSIGHT" rev-parse HEAD)")
 [ -n "${GITHUB_RUN_URL:-}" ] && COMPOSE_ARGS+=(--run-url "$GITHUB_RUN_URL")
 SUMMARY=$(cd "$INSIGHT" && node "$COMPOSER" "${COMPOSE_ARGS[@]}")
 
