@@ -45,7 +45,7 @@ MODULES = {'mvp1': 'hub_cases', 'mvp2': 'hub_mvp2_cases', 'mvp2rbac': 'hub_mvp2_
            'aiquality': 'ai_quality_cases',
            'lipsync': 'lipsync_cases',
            'radar': 'radar_cases',
-           'regradar': 'reg_radar_oct_cases', 'regfarm': 'reg_farm_oct_cases',
+           'regradar': 'reg_radar_oct_cases', 'regfarm': 'reg_farm_oct_cases', 'farmtf155': 'farm_tf155_cases',
            'regai1': 'reg_ai_happy_oct_cases', 'regai2': 'reg_ai_failfeat_oct_cases', 'regaimenu': 'reg_ai_bymenu_oct_cases', 'aiprod': 'ai_prod_smoke_cases', 'aidesktop': 'ai_desktop_cases',
            'regrerun': 'reg_rerun_oct_cases', 'reginsight': 'reg_insight_oct_cases'}
 _which = next((a for a in sys.argv[1:] if a in MODULES), 'mvp1')
@@ -85,7 +85,7 @@ OWNER_SEL = ('<span class="epic-owner-wrap">👤 <select class="feat-owner" data
              '<option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span>')
 PRIO_CLS = {'P0': 'p0', 'P1': 'p1', 'P2': 'p2'}
 KIND_CLS = {'happy': 'kd-happy', 'negative': 'kd-neg', 'boundary': 'kd-bnd', 'validation': 'kd-val',
-            'exception': 'kd-exc', 'permission': 'kd-perm', 'data': 'kd-data'}
+            'exception': 'kd-exc', 'permission': 'kd-perm', 'data': 'kd-data', 'regression': 'kd-reg'}
 
 EXTRA_CSS = """
 /* ประเภทเคส (kind) */
@@ -97,6 +97,7 @@ EXTRA_CSS = """
 .kd-exc{color:#be123c;background:#fff1f2;border-color:#fecdd3}
 .kd-perm{color:#0f766e;background:#f0fdfa;border-color:#99f6e4}
 .kd-data{color:#1d4ed8;background:#eff6ff;border-color:#bfdbfe}
+.kd-reg{color:#475569;background:#f8fafc;border-color:#cbd5e1}
 .chk{margin-top:4px;padding:6px 8px;border-left:3px solid #16a34a;background:rgba(22,163,74,.07)}
 .noui{display:inline-block;margin-left:6px;padding:0 6px;border-radius:4px;font-size:9.5px;font-weight:700;vertical-align:middle;color:#991b1b;background:#fee2e2;border:1px solid #fca5a5;white-space:nowrap}
 """
