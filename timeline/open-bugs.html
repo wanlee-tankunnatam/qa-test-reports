@@ -124,7 +124,7 @@ footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--line);color:v
 <body>
 <div class="wrap">
   <h1>บั๊กค้างรอบส่งงาน</h1>
-  <p class="sub">บั๊กที่ยังไม่ปิดจากทุกโปรเจกต์ใน Jira แยกตามรอบส่ง แล้วแยกตามผู้รับผิดชอบ · ในแต่ละคนเรียงตามขั้นที่ลูกค้าเจอใน user journey · ข้อมูล ณ 28 ต.ค. 2026 13:00 น. (อัปเดตอัตโนมัติ 09:00 / 13:00 หรือกดปุ่มดึงข้อมูลจาก Jira)</p>
+  <p class="sub">บั๊กที่ยังไม่ปิดจากทุกโปรเจกต์ใน Jira แยกตามรอบส่ง แล้วแยกตามผู้รับผิดชอบ · ในแต่ละคนเรียงตามขั้นที่ลูกค้าเจอใน user journey · ข้อมูล ณ 29 ต.ค. 2026 13:00 น. (อัปเดตอัตโนมัติ 09:00 / 13:00 หรือกดปุ่มดึงข้อมูลจาก Jira)</p>
   <div class="sync"><button type="button" class="f" id="sync">ดึงข้อมูลจาก Jira</button><span id="syncat"></span><span id="syncmsg" role="status"></span></div>
   <div class="proj" id="fj" role="group" aria-label="โปรเจกต์"></div>
   <div class="tot" id="tot"></div>
@@ -281,10 +281,10 @@ const ROWS = [
 ["23-OCT", "James", "TI-321", "Low", "Windows: the &quot;restart&quot; button opens a full installer wizard — and going silent races our own quit sequence", "To Do"],
 ["30-OCT", "James", "TI-400", "Medium", "[P0][M1][backend] POST /v1/compliance/ml-models/rollback ไม่มี role gate + workspaceId จาก body ⇒ rollback model ของ tenant อื่นได้ (cross-tenant)", "READY TO TEST"],
 ["30-OCT", "James", "TI-401", "Medium", "[P0][M1][backend] ตารางทั้ง schema compliance ไม่มี RLS + rls-introspect ตรวจเฉพาะ public ⇒ rls:check ตาบอด · tenant isolation ของ audit/tos/rollback/breach พึ่ง WHERE มือล้วน", "READY TO TEST"],
-["30-OCT", "James", "TI-403", "Medium", "[P1][M1][backend] DEK lifecycle หลัง erasure: ingest ไม่เคยอ่าน erasure_tombstone (subject ไม่มี DEK ตอน erase → mint ใหม่ = resurrection) + re-consent หลัง shred = lockout ถาวร", "To Do"],
-["30-OCT", "James", "TI-405", "Medium", "[P1][M1][backend] consent upsert idempotency กลืน 2 กรณี: submit audit loop หลัง commit + retry ⇒ decision unaudited ถาวร · re-consent ต่าง policyVersion ถูกทิ้งเงียบ (setWhere เช็คแค่ status)", "To Do"],
-["30-OCT", "James", "TI-406", "Medium", "[P1][M1][backend] compliance sink fail-open ทั้งชุด: WORM mirror = Noop ทุก env (ไม่มี prod boot guard) · breach trigger a/b/c ไม่ wire + NoopAlertSink · reconciler ทั้งหมด = Story 1.8 ที่ยังไม่มี", "To Do"],
-["30-OCT", "James", "TI-407", "Medium", "[P1][M1][backend] comment.captured ingest ไม่มี consent gate + ไม่ bind subjectRef ⇒ PII ของ commenter บุคคลที่สามถูก provision DEK + เก็บ · registry บอก erasure \"deferred\" = ลบไม่ได้", "To Do"],
+["30-OCT", "James", "TI-403", "Medium", "[P1][M1][backend] DEK lifecycle หลัง erasure: ingest ไม่เคยอ่าน erasure_tombstone (subject ไม่มี DEK ตอน erase → mint ใหม่ = resurrection) + re-consent หลัง shred = lockout ถาวร", "In Progress"],
+["30-OCT", "James", "TI-405", "Medium", "[P1][M1][backend] consent upsert idempotency กลืน 2 กรณี: submit audit loop หลัง commit + retry ⇒ decision unaudited ถาวร · re-consent ต่าง policyVersion ถูกทิ้งเงียบ (setWhere เช็คแค่ status)", "In Progress"],
+["30-OCT", "James", "TI-406", "Medium", "[P1][M1][backend] compliance sink fail-open ทั้งชุด: WORM mirror = Noop ทุก env (ไม่มี prod boot guard) · breach trigger a/b/c ไม่ wire + NoopAlertSink · reconciler ทั้งหมด = Story 1.8 ที่ยังไม่มี", "In Progress"],
+["30-OCT", "James", "TI-407", "Medium", "[P1][M1][backend] comment.captured ingest ไม่มี consent gate + ไม่ bind subjectRef ⇒ PII ของ commenter บุคคลที่สามถูก provision DEK + เก็บ · registry บอก erasure \"deferred\" = ลบไม่ได้", "In Progress"],
 ["16-OCT", "James", "TI-435", "Medium", "TAKRA Insight - Hub Overlay ไม่สามารถคลิกและลากย้ายตำแหน่งได้ ทำให้บดบังข้อมูลสำคัญบนหน้าจอ", "To Do"],
 ["9-OCT", "James", "TI-436", "High", "TAKRA Insight - แท็บ บทพูด หลังจบ Record ไลฟ์ ไม่แสดงสถานะผู้พูดหรือเสียงที่ระบบตรวจจับได้", "To Do"],
 ["9-OCT", "James", "TI-437", "High", "TAKRA Insight - แท็บ บทพูด ตรวจจับเสียงของ Host คนเดียวเป็นหลาย Speaker", "To Do"],
@@ -325,7 +325,7 @@ const ROWS = [
 ["2-OCT", "Hope", "TAK-619", "Medium", "📌 [Bug / API Error] TAKRA Rerun: กดเริ่มไลฟ์ไม่ได้ ขึ้น Error \"ROOM_CREATE_FAILED\" (TikTok ปฏิเสธคำขอเปิดห้อง)", "IN REVIEW"],
 ["15-SEP", "Ice", "TAK-621", "Medium", "[QA][UAT e2e] TAKRA Rerun: TC-UAT-05 Diagnostics ตกทุกครั้ง — spec ยังรอดาวน์โหลดทันที ทั้งที่ TAK-540 เปลี่ยนเป็น dialog เลือกทางก่อน", "To Do"],
 ["15-SEP", "Ice", "TAK-622", "Low", "[QA][Stub e2e][Flaky] TAKRA Rerun: TC-24.4-01/04 live-uptime ตกเป็นครั้งคราว — `page.clock.install` ไม่หยุดเวลา ค่าที่ assert วิ่งหนีทีละวินาที", "To Do"],
-["2-OCT", "Hope", "TAK-641", "High", "[Bug] แพ็กเกจ Agency เพิ่มบัญชีที่ 9 ไม่ได้ — central นับ slot ค้าง (ACCOUNT_CAP ทั้งที่ cap = 9)", "To Do"],
+["2-OCT", "Hope", "TAK-641", "High", "[Bug] แพ็กเกจ Agency เพิ่มบัญชีที่ 9 ไม่ได้ — central นับ slot ค้าง (ACCOUNT_CAP ทั้งที่ cap = 9)", "IN REVIEW"],
 ["25-SEP", "Berm", "TKRD-174", "Medium", "[Trendora] หน้าเข้าสู่ระบบ — แสดง \"วันนี้สลับเครื่องครบแล้ว\" และบล็อกการ login ทั้งที่เพิ่งเปิดหน้า ยังไม่ได้สลับเครื่องใด ๆ (ผู้ใช้เข้าระบบไม่ได้เลย)", "Need Advise"],
 ["2-OCT", "Berm", "TKRD-282", "High", "[Trendora] บัญชีใช้อุปกรณ์เกินเกณฑ์ต่อเดือนแล้วไม่ถูกติดธง ล็อกอินครั้งถัดไปไม่ถูกจำกัด", "Need Advise"],
 ["25-SEP", "Berm", "TKRD-287", "Medium", "[Trendora] หน้าเข้าสู่ระบบ — ข้อความตอนถูกจำกัดการสลับเครื่องไม่บอกสาเหตุ และไม่มีทางออกให้ผู้ใช้", "To Do"],
@@ -366,7 +366,6 @@ const ROWS = [
 ["2-OCT", "No", "TKH-238", "Medium", "TAKRA Hub - Dashboard section ทีม และ Subscription แสดงรายการทั้งหมด ทำให้ยาวเกินไป", "To Do"],
 ["ยังไม่มีรอบ", "GOLF", "TAKRA-274", "Medium", "[BUG#6][High] 'ไลฟ์ของฉัน' ทุกแท็บแสดง empty state — ยังไม่โหลดรายการไลฟ์ (TC-3.11-04 FAIL) ทั้งที่ dashboard แสดงว่ามีไลฟ์ active 3 รายการ", "TESTING"],
 ["ยังไม่มีรอบ", "Ice", "TAKRA-627", "Medium", "[MVP1] ไม่พบฟีเจอร์ Template ของฉากใน Studio เลยบน UAT build", "To Do"],
-["2-OCT", "ไม่มีคนรับ", "TAK-731", "High", "วรรณยุกต์ไทยบางตัวหายจากข้อความบนโอเวอร์เลย์ตอนออกอากาศ (drawtext ไม่มีตัวจัดวางอักขระ)", "READY TO TEST"],
 ["9-OCT", "James", "TI-585", "Medium", "TAKRA Insight - AI SUMMARY / AI COACH: ปุ่ม \"ลองใหม่\" บนแถบแจ้งเตือน AI แทนที่ข้อความเดิมและล้าง 👍 ทันทีโดยไม่มี popup ยืนยัน (AiSummaryBar.jsx:235 · AiCoachBar.jsx:234 onRetry={generate})", "READY TO TEST"],
 ["15-OCT", "Boat", "TAKRA-1371", "High", "[BE] ด่านการขายหลังแก้ TAKRA-1332 จับสำนวนชุดใหม่ได้ 42 จาก 57 ประโยค — โอนมาได้เลยค่ะ · เดี๋ยวออกบิลให้ · เดี๋ยวคิดยอดให้ · ติดต่อทางวอทส์แอป · SALE วันนี้วันเดียว ออกอากาศได้ (ต่อจาก TAKRA-1332)", "READY TO TEST"],
 ["23-OCT", "Boat", "TAKRA-1373", "Medium", "[BE] ด่านการขายยังหลบได้ด้วยอักขระล่องหนในส่วนที่ TAKRA-1333 ไม่ได้แก้ — ZWSP คั่นราคา/โปรโมชัน (\"590​ค่ะ\" · \"วันนี้​ลด​ให้\") และอักขระล่องหนตัวอื่น (word joiner · soft hyphen) ผ่านด่าน (ต่อจาก TAKRA-1333)", "READY TO TEST"],
@@ -453,12 +452,11 @@ const ROWS = [
 ["15-OCT", "Mae", "TAK-165", "Medium", "(Overlay) Text/layer ล้นออกนอกเฟรม ไม่มี clamp/wrap — ข้อความยาวหรือวางใกล้ขอบวิ่งเลยเฟรมแล้วถูกตัดหาย", "IN REVIEW"],
 ["15-OCT", "Hope", "TAK-628", "High", "[BE] คลิปที่มีเสียง/ภาพหลายแทร็กทำให้ไลฟ์ (เส้น re-encode/overlay) + คิวแปลง + preview ล้มตั้งแต่วินาทีแรก — map แทร็กแรกเสมอ + probe นับแทร็ก (regression จาก TAK-536 · เคส ITS-15)", "IN REVIEW"],
 ["15-OCT", "Hope", "TAK-758", "Medium", "[BE][Test] data race ใน TestClock_MachineZoneDoesNotMatter — เทสเขียน time.Local ขณะ goroutine อื่นอ่านอยู่", "To Do"],
-["15-OCT", "Hope", "TAK-761", "Medium", "[BE/FE] หน้าสถานะไลฟ์ — นับถอยหลัง \"จะปิดไลฟ์ในอีก\" ไม่ตรงกับเวลาที่ระบบปิดไลฟ์จริง (แก้ค่ากลางไลฟ์แล้วจอใช้ค่าใหม่แต่ระบบปิดตามค่าเดิม · นับจากเวลาสร้างห้องแทนเวลาที่เริ่มส่งภาพ)", "To Do"],
+["15-OCT", "Hope", "TAK-761", "Medium", "[BE/FE] หน้าสถานะไลฟ์ — นับถอยหลัง \"จะปิดไลฟ์ในอีก\" ไม่ตรงกับเวลาที่ระบบปิดไลฟ์จริง (แก้ค่ากลางไลฟ์แล้วจอใช้ค่าใหม่แต่ระบบปิดตามค่าเดิม · นับจากเวลาสร้างห้องแทนเวลาที่เริ่มส่งภาพ)", "IN REVIEW"],
 ["15-OCT", "Hope", "TAK-763", "Medium", "[BE] สรุปไลฟ์ย้อนหลัง — ตัวเลข \"ตอบอัตโนมัติ\" นับรวมข้อความที่ผู้ขายพิมพ์ตอบเองด้วย", "To Do"],
 ["15-OCT", "Hope", "TAK-764", "Medium", "[BE] POST /sessions/{id}/chat-reply รับข้อความตอบแชทของไลฟ์ที่จบแล้ว/ยังไม่ live เป็น 202 แล้วค้างอยู่ในคิวตลอดอายุ process (ไม่ตอบ 409 แบบ /pin)", "To Do"],
 ["15-OCT", "Hope", "TAK-768", "High", "[BE] ไลฟ์ — ช่วงเน็ตล่ม (ping ไม่ผ่าน) ffmpeg ถูก respawn ทุก ~1 วินาทีตลอด ~3 นาที เพราะ backoff ใช้ตัวนับที่ถูก freeze (ไม่ exponential)", "IN REVIEW"],
 ["15-OCT", "Hope", "TAK-769", "High", "[BE] POST /accounts/{id}/start-mode/check ด้วยบัญชีของ workspace อื่น (หรือ id ที่ไม่มี) ได้ 200 {conflict:\"none\", nextRunAt} แทน 404", "IN REVIEW"],
-["15-OCT", "Mae", "TAK-770", "Medium", "[FE] เริ่มไลฟ์ตามเวลา — ปิดเครื่องหลายวันแล้วกลับมาในหน้าต่างของรอบวันนี้ ไม่มีแจ้งเตือนในแอปว่าข้ามไปหลายรอบ (notice skipped_multi หาย)", "READY TO TEST"],
 ["15-OCT", "Hope", "TAK-772", "Medium", "[BE] PUT /accounts/{id}/live-settings รับหมวดหมู่ไลฟ์ที่ไม่มีใน catalog / ไม่มีชื่อ แล้วเก็บและส่งเป็น hashtag_id ไป TikTok ตอนเปิดห้อง", "To Do"],
 ["15-OCT", "Hope", "TAK-773", "Medium", "[BE] ไลฟ์เพลย์ลิสต์/พราง — ตัวเฝ้าเสียงเงียบ (silence stop) ฟังแค่คลิปแรก ไม่ใช่สิ่งที่ออกอากาศจริง → ไม่จับคลิปที่ 2+ ที่เงียบ และอาจหยุดไลฟ์ผิดจังหวะ", "To Do"],
 ["15-OCT", "Hope", "TAK-776", "High", "[BE] API บันทึกโอเวอร์เลย์ไม่ตรวจค่า `color`/`bg` และชนิด/ช่วงค่าของเลเยอร์ → ค่าถูกต่อเข้า `-filter_complex` ตรง ๆ ทำให้ไลฟ์บัญชีนั้นไม่ขึ้น และเปิดทางแทรก option/filter ของ ffmpeg", "IN REVIEW"],
@@ -486,7 +484,7 @@ const ROWS = [
 ["15-OCT", "Mae", "TAK-820", "Medium", "[FE][a11y] ป้าย/ข้อความหลายจุด contrast ต่ำกว่า WCAG AA 4.5:1 — ป้ายสถานะหัวหน้าบัญชี (amber 4.48:1 · เขียว 3.65:1) · การ์ดห้องควบคุม (AUTO นับถอยหลัง 4.02:1 · \"ตรวจแล้ว\" 3.65:1) · พรีวิวป้ายนับถอยหลัง LED 4.22:1 · ป้ายข้อจำกัดบัญชีสีแดงในโหมดมืด 4.3", "IN REVIEW"],
 ["15-OCT", "Mae", "TAK-821", "Low", "[FE][a11y] เพลย์ลิสต์ — dialog ซ้อน 2 ชั้น: ลบคีย์เวิร์ดใน «จัดการคีย์เวิร์ด» เปิด dialog ยืนยันทับ และใน «จัดการคลิปในเพลย์ลิสต์» ปุ่ม เพิ่มคลิป / ตั้งโอเวอร์เลย์เฉพาะคลิป / จัดฉาก เปิด dialog ที่สองทับ (ขัดกติกา modal stack ≤ 1)", "IN REVIEW"],
 ["15-OCT", "Mae", "TAK-824", "Low", "[FE] ตั้งค่า › ระบบ › การ์ดเวอร์ชัน — บนจอกว้าง 375px รหัส SHA แบบเต็ม 40 ตัว (build จาก release.yml) วิ่งล้นออกนอกการ์ด ไม่ตัดบรรทัด/ไม่ย่อ", "IN REVIEW"],
-["15-OCT", "Hope", "TAK-825", "Medium", "[FE] ออกจากระบบในแท็บ A แล้วกด action ในแท็บ B (ไม่รีเฟรช) — ได้ 401 แต่แอปแสดง toast \"ตรวจสอบไม่สำเร็จ\" ค้างอยู่หน้าเดิม ไม่พาไปหน้าเข้าสู่ระบบ", "To Do"],
+["15-OCT", "Hope", "TAK-825", "Medium", "[FE] ออกจากระบบในแท็บ A แล้วกด action ในแท็บ B (ไม่รีเฟรช) — ได้ 401 แต่แอปแสดง toast \"ตรวจสอบไม่สำเร็จ\" ค้างอยู่หน้าเดิม ไม่พาไปหน้าเข้าสู่ระบบ", "IN REVIEW"],
 ["15-OCT", "Mae", "TAK-826", "Low", "[FE] คลังวิดีโอบนจอมือถือ 390px — การ์ดคลิปกว้าง 462px ในคอลัมน์ 342px ล้นจอ คอลัมน์การ์ดที่ 2 และแถบพื้นที่จัดเก็บถูกตัดขอบขวา หน้าเลื่อนแนวนอน", "IN REVIEW"],
 ["15-OCT", "Mae", "TAK-827", "Low", "[FE] ตั้งค่า › ระบบ บนมือถือ — ปุ่มกดเล็กกว่า 44px: «รีเฟรช» 32px · «ลองใหม่» (ตอนโหลดไม่สำเร็จ) 36px · ตัวเปิด «ดูรายละเอียดทางเทคนิค» เล็กกว่านั้นอีก", "IN REVIEW"],
 ["15-OCT", "Hope", "TAK-828", "High", "[Hotfix] อัปเดต golang.org/x/net 0.60.0 + build backend ด้วย Go 1.26.9 — Release บน production ตกด่านสแกนช่องโหว่ (CVE-2026-78669)", "IN REVIEW"],
@@ -498,15 +496,14 @@ const ROWS = [
 ["15-OCT", "Book", "TF-130", "Medium", "[Defect][BE] กดลองใหม่แล้วเหตุผลที่คลิปล้มครั้งก่อนหายจากฐานข้อมูล", "READY TO TEST"],
 ["15-OCT", "Book", "TF-131", "Low", "[Defect][BE] ยกเลิก task แล้วลองใหม่คลิปเดียว → task จบเป็น \"failed\" ทั้งที่ไม่มีคลิปล้ม", "READY TO TEST"],
 ["16-OCT", "Mae", "TAK-831", "Medium", "[FE][a11y] แถบแพ็กเกจหมดอายุ (lapsed) และป้าย \"แพลนหมดอายุ\"/\"ยังไม่มีแพลน\" ในรายการเวิร์กสเปซ contrast ต่ำกว่า WCAG AA 4.5:1 — ข้อความแถบ 3.96:1 · ข้อความติดต่อผู้ดูแลบนแถบ 3.22:1 · ป้ายแพลน 4.12:1", "IN REVIEW"],
-["16-OCT", "Mae", "TAK-832", "High", "[FE] กล่องยืนยันลบวิดีโอบอกว่า \"ไฟล์ยังถูกเก็บไว้บนคลาวด์\" ทั้งที่เครื่องอื่นลบออกจากคลาวด์ไปแล้ว — ตัดสินจากคิวอัปโหลดในเครื่อง ไม่ใช่ cloud index (จุดที่ TAK-438 ไม่ครอบ)", "READY TO TEST"],
 ["16-OCT", "Mae", "TAK-833", "Medium", "[FE][Desktop] การ์ดอัปเดต — กด «เตือนเมื่อไลฟ์จบ» แล้วรีโหลดหน้าต่าง/เปิดหน้าต่างใหม่ระหว่างไลฟ์ การ์ดกลับมาทันที (การเลื่อนไม่ถูกเก็บถาวร)", "IN REVIEW"],
-["16-OCT", "Hope", "TAK-835", "High", "[Desktop][Security] แอปที่ ship ยังเปิด Electron fuses RunAsNode / NODE_OPTIONS / --inspect — รัน JS ด้วย runtime ของแอป + แนบ debugger ได้ ข้ามการ obfuscate (Anti-Piracy)", "To Do"],
+["16-OCT", "Hope", "TAK-835", "High", "[Desktop][Security] แอปที่ ship ยังเปิด Electron fuses RunAsNode / NODE_OPTIONS / --inspect — รัน JS ด้วย runtime ของแอป + แนบ debugger ได้ ข้ามการ obfuscate (Anti-Piracy)", "IN REVIEW"],
 ["16-OCT", "ไม่มีคนรับ", "TF-132", "Low", "[Defect][BE] TikTok: ขั้น tap_upload หาปุ่ม \"สร้าง\" ไม่เจอ แล้วกดพิกัดที่จำไว้ก็ไม่เปิดหน้าอัปโหลด", "READY TO TEST"],
 ["16-OCT", "ไม่มีคนรับ", "TF-133", "Medium", "[Defect][FE] \"รันเดี๋ยวนี้\" ที่หน้าสร้าง Task ไม่เริ่มงานเมื่อช่อง/เครื่องอยู่ในช่วงเว้นระยะ และไม่บอกเหตุผล — ต้องไปกดซ้ำที่มอนิเตอร์", "READY TO TEST"],
 ["16-OCT", "ไม่มีคนรับ", "TF-134", "Medium", "[Defect][FE] สร้าง Task: \"เลือกที่พร้อมทั้งหมด\" แล้วกดสร้าง ได้ task 159 คลิปทันทีโดยไม่มีกล่องยืนยัน", "READY TO TEST"],
 ["16-OCT", "James", "TI-674", "Low", "[Defect][FE][Electron] ป้าย AI บนหัวจอขึ้นคำว่า \"AI · null\" ราว 10 วิ ตอน engine ตัวใหม่กำลังขึ้นหลัง engine ตาย", "To Do"],
 ["23-OCT", "Hope", "TAK-861", "Medium", "[BE] ไลฟ์ถูกหยุดเพราะเสียสิทธิ์ไลฟ์ให้เครื่องอื่น (LOCK_LOST) แล้วจบเงียบ — ไม่มี Telegram และการ์ดไม่บอกเหตุ ดูเหมือนผู้ขายกดหยุดเอง", "To Do"],
-["23-OCT", "Hope", "TAK-862", "Medium", "[BE] กด «เริ่มไลฟ์» ซ้ำบนบัญชีที่ไลฟ์อยู่แล้ว ขณะ workspace เต็มเพดานไลฟ์พร้อมกัน → ได้ 403 \"เกินเพดานของแพ็กเกจ\" แทน 200 คืนไลฟ์เดิม", "To Do"],
+["23-OCT", "Hope", "TAK-862", "Medium", "[BE] กด «เริ่มไลฟ์» ซ้ำบนบัญชีที่ไลฟ์อยู่แล้ว ขณะ workspace เต็มเพดานไลฟ์พร้อมกัน → ได้ 403 \"เกินเพดานของแพ็กเกจ\" แทน 200 คืนไลฟ์เดิม", "IN REVIEW"],
 ["23-OCT", "Hope", "TAK-863", "Medium", "[BE] ส่งรายงานวินิจฉัยให้ทีม แล้วสลับเวิร์กสเปซระหว่างที่ระบบกำลังรวบรวม ZIP → ZIP ของเวิร์กสเปซเดิมถูกอัปโหลดไปอยู่ใต้เคสของเวิร์กสเปซใหม่", "To Do"],
 ["23-OCT", "Hope", "TAK-869", "Low", "[BE] ไลฟ์ที่ล้มก่อนออกอากาศ (ไม่เคยถึงสถานะกำลังไลฟ์) ยังได้แถวสรุปศูนย์ในเมนู «สรุปไลฟ์ย้อนหลัง» และถูกนับเป็น 1 ไลฟ์ในยอดรวม", "To Do"],
 ["23-OCT", "Mae", "TAK-870", "Low", "[BE/FE] ลบวิดีโอแล้วระบบลบไฟล์ในเครื่องไม่ได้ (เช่น ไม่มีสิทธิ์เขียนโฟลเดอร์) → กล่อง «ลบวิดีโอ» ขึ้นข้อความอังกฤษดิบ \"internal error\" (500) ไม่บอกเหตุและไม่บอกว่าลองใหม่ได้", "IN REVIEW"],
@@ -526,11 +523,9 @@ const ROWS = [
 ["ยังไม่มีรอบ", "No", "TAKRA-1501", "Medium", "[BE] AI ตอบคอมเมนต์มีเศษขยะต่อท้ายประโยคออกอากาศ (อักษรต่างชาติ · \"เว็บพนัน?\" · \"马会\" · เครื่องหมายคำพูด/จุดซ้ำ) ~3% ของคำตอบบน prod", "READY TO TEST"],
 ["ยังไม่มีรอบ", "No", "TAKRA-1503", "Medium", "[BE] ทางลัด FAQ ตอบคำถามที่มีตัวเลขผิด (\"นา 800 ไร่ ต้องซื้อกี่ชุด\" → \"15 ไร่\") และพูดคำตอบ FAQ แบบโน้ตสั้น ๆ ออกไมค์ตรง ๆ ฟังไม่เหมือนคน", "READY TO TEST"],
 ["ยังไม่มีรอบ", "No", "TAKRA-1505", "Medium", "[BE] API ล่มทั้งพอด เมื่อไลฟ์เสียงไม่ออกครบเพดาน — stop() นอก workspace context เป็น unhandled rejection", "To Do"],
-["23-OCT", "Hope", "TAK-884", "High", "AUTO ค้างเป็น \"กำลังไลฟ์\" หลังไลฟ์ในลูปล้มหรือหยุดเพราะเงียบ — ล็อกบัญชีค้าง ลบบัญชีและแก้พร็อกซีไม่ได้", "To Do"],
+["23-OCT", "Hope", "TAK-884", "High", "AUTO ค้างเป็น \"กำลังไลฟ์\" หลังไลฟ์ในลูปล้มหรือหยุดเพราะเงียบ — ล็อกบัญชีค้าง ลบบัญชีและแก้พร็อกซีไม่ได้", "IN REVIEW"],
 ["ยังไม่มีรอบ", "ไม่มีคนรับ", "TAKRA-1517", "Low", "[BE] กระดิ่งยังส่งถึงอดีตสมาชิก — สองเส้นทางที่อ่านสำเนารายชื่อตรง ๆ (แยกจาก TAKRA-1483)", "To Do"],
 ["ยังไม่มีรอบ", "Boat", "TAKRA-1518", "High", "[Defect][BE][FE] sync สินค้า TikTok Shop: แยกเหตุดึง SKU ไม่ได้ + ป้าย/ตัวกรองสถานะบน TikTok + กันสินค้าที่โปรไฟล์ถูกลบไม่ให้ไลฟ์", "READY TO TEST"],
-["23-OCT", "No", "TKH-278", "Medium", "TAKRA Hub - หน้าชำระเงิน/ตรวจสลิป/โปรไฟล์ เลื่อนซ้ายขวาได้ 16px ที่จอกว้างตั้งแต่ 1024px", "READY TO TEST"],
-["23-OCT", "No", "TKH-279", "Medium", "TAKRA Hub - เมนูข้างไม่มีแถบเลื่อน ทำให้จอเตี้ยกดปุ่มสลับทีมไม่ได้", "READY TO TEST"],
 ["23-OCT", "No", "TKH-289", "High", "[Defect][FE] /admin/billing — บันทึกอัตรา VAT ทับของคนอื่นเงียบ ๆ คำเตือน superseded ไม่มีทางยิง (dead path)", "To Do"],
 ["ยังไม่มีรอบ", "No", "TAKRA-1529", "Medium", "Desktop คลังฉาก: ฉาก avatar ในเครื่องขึ้น \"เช็คสถานะไม่ได้\" ตลอด ทั้งที่แอปกำลังเรนเดอร์อยู่", "READY TO TEST"],
 ["ยังไม่มีรอบ", "No", "TAKRA-1530", "Medium", "Renderer prepare: คลิปเต็มตัวแนวตั้งหาหน้าไม่เจอ · ท่าวนสั้นเพราะเกณฑ์กะพริบตาเข้มเกิน", "READY TO TEST"],
@@ -540,10 +535,6 @@ const ROWS = [
 ["23-OCT", "James", "TI-696", "Low", "[Defect][BE] สลับบัญชีกลางไลฟ์: stream-pulse (feed-release) ของไลฟ์บัญชีเก่ายิง engine ตอน restart ได้ 401 (teardown/finalize สำเร็จ ข้อมูลไม่หาย)", "READY TO TEST"],
 ["23-OCT", "James", "TI-698", "Medium", "[Defect][BE] engine เปิด TLS ไป IP ของ Google LLC (~2 นาที) ช่วง loading models หลัง login และ consent — ไม่ผ่าน env proxy, นอกเหนือ egress ที่ประกาศ (CDN เท่านั้น)", "To Do"],
 ["ยังไม่มีรอบ", "Boat", "TAKRA-1550", "High", "[Defect][FE][BE][Electron] ทดสอบฉากข้ามประโยคที่เรนเดอร์ไม่สำเร็จและไม่มี ducking เพลงพื้นหลัง · เพิ่มการปรับระดับ ducking ต่อไลฟ์ (ค่าเริ่มต้น 30%)", "READY TO TEST"],
-["30-OCT", "No", "TKH-300", "Medium", "TAKRA Hub - อีเมลแคมเปญ: ปุ่มส่งทดสอบไม่เช็กรายชื่อห้ามส่ง ทำให้เกิด bounce ซ้ำกับบัญชี SES", "READY TO TEST"],
-["30-OCT", "No", "TKH-301", "Medium", "TAKRA Hub - อีเมลแคมเปญ: ส่งครบแล้วดูสถานะรายคนไม่ได้ (ใครได้/ล้ม/เมื่อไหร่)", "READY TO TEST"],
-["30-OCT", "No", "TKH-302", "Low", "TAKRA Hub - อีเมลแคมเปญ: \"ไม่ตรงกฎข้อไหน\" แสดง 0 คน ระหว่างที่ค่าสำรองยังไม่ได้เลือกโค้ด", "READY TO TEST"],
-["30-OCT", "No", "TKH-303", "Low", "TAKRA Hub - หน้าชำระเงิน: เปิด id ที่ไม่มีอยู่จริงแล้วขึ้น \"เชื่อมต่อ API ไม่ได้\" แทน \"ไม่พบรายการ\"", "READY TO TEST"],
 ["ยังไม่มีรอบ", "Boat", "TAKRA-1559", "High", "[Defect][FE][Electron] ทดสอบฉาก/เช็คเครื่องล้มด้วย error อ่านไม่ออก เมื่ออวาตาร์ไม่ได้อยู่ในเครื่องนี้ + ทดสอบฉากไม่บอกเวลาที่ต้องรอ", "In Progress"],
 ["ยังไม่มีรอบ", "Boat", "TAKRA-1560", "High", "[Defect][FE][Electron] เครื่องที่ยังเป็นตัวเรนเดอร์ FlashHead ทดสอบฉาก/เริ่มไลฟ์ไม่ได้ และไม่บอกให้ติดตั้งตัวเรนเดอร์ใหม่ · ทดสอบฉากตอนตัวเรนเดอร์กำลังเปิดขึ้น error อ่านไม่ออก", "In Progress"],
 ["30-OCT", "Hope", "TAK-886", "Medium", "ไลฟ์ค้างช่วงที่แอปสำรองคลิปขึ้นคลาวด์ → ชะลอการสำรองระหว่างไลฟ์", "IN REVIEW"],
@@ -573,6 +564,27 @@ const ROWS = [
 ["ยังไม่มีรอบ", "ไม่มีคนรับ", "TAKRA-1608", "Medium", "🔴 BYOK: เรียก LLM ของลูกค้าช้าเกิน 60 วิ → Postgres ตัด transaction → 500 · และ 429 \"เครดิตหมด\" ขึ้นข้อความว่าให้รอ", "To Do"],
 ["ยังไม่มีรอบ", "Boat", "TAKRA-1611", "High", "[Defect][BE][FE][Electron] ล็อกอิน TikTok จากหน้าเริ่มไลฟ์ในแอป desktop แล้วใส่ตะกร้าล้มทั้งหมด ไลฟ์ทั้งรอบไม่ปักสินค้า", "In Progress"],
 ["ยังไม่มีรอบ", "ไม่มีคนรับ", "TAKRA-1612", "Medium", "🔴 [Electron] เตรียมเสียงล่วงหน้าวนซ้ำไม่หยุด — เผาเครดิต MiniMax หมดใน 2 วัน (ไม่หยุดแม้ปลายทางบอกว่าเครดิตหมด)", "To Do"],
+["ยังไม่มีรอบ", "No", "TAKRA-1614", "Medium", "คลังฉากถามสถานะซ้ำทุก 5 วินาทีไม่เลิก แม้ server ตอบแล้วว่าฉากนี้ไม่มีคลังให้เตรียมในเครื่อง (404)", "To Do"],
+["ยังไม่มีรอบ", "No", "TAKRA-1616", "Medium", "[Defect][BE] เรื่องชวนคุย: กด \"ใช้เรื่องนี้\" แล้วได้ 0 บท — ตัวกรองชื่อสินค้าทิ้งทุกบทแบบเงียบ ๆ เมื่อชื่อสินค้ามีคำเรียกประเภท", "READY TO TEST"],
+["30-OCT", "James", "TI-708", "High", "[Defect][FE][Electron] ปิดแอปตอน engine ค้าง แอปปิดเองไม่ได้ — ขั้นปิดงานวนซ้ำทุก 10 วิ และคำสั่ง finalize ไม่หมดเวลาเองใน 4 วิ", "To Do"],
+["30-OCT", "James", "TI-709", "High", "[Defect][FE][Electron] เริ่มบันทึกไลฟ์ที่ยังออกอากาศแล้ววิดีโอไม่ขึ้น (video-never-started) — reload หน้าเองแล้วยังกู้ไม่ได้ทุกครั้ง", "To Do"],
+["30-OCT", "ไม่มีคนรับ", "TKRD-482", "Medium", "ลิงก์ affiliate อาจพาไปหน้าสินค้าของอีกร้าน เมื่อ itemid เดียวกันอยู่ใต้สองร้าน — content ล่าสุดถูก join ด้วย itemid อย่างเดียว", "To Do"],
+["30-OCT", "ไม่มีคนรับ", "TKRD-484", "Medium", "event search.performed เก็บชื่อหมวดหมู่ย่อย (categoryL2) เป็นข้อความดิบ — ขัด PDPA แบบเดียวกับที่ categoryL1 แก้ไปแล้ว", "To Do"],
+["30-OCT", "ไม่มีคนรับ", "TKRD-485", "Medium", "ย้อนสลิปพร้อมกับปล่อย referral ที่ถูกพักของคนเดียวกัน → deadlock ตอบ 500 แทน 409 (GAP-8-27)", "To Do"],
+["30-OCT", "Gong", "TKRD-486", "High", "[หน้าค้นหา] สลับบัญชีในแท็บเดียวกัน — บัญชีที่เข้าทีหลังเห็นคำค้นของบัญชีก่อนหน้า เพราะข้อมูลการค้นหาใน sessionStorage ไม่ถูกล้างตอนออกจากระบบ", "In Progress"],
+["30-OCT", "ไม่มีคนรับ", "TKRD-487", "Medium", "CHECK ของ discount_code ปล่อยแถวที่ไม่มีทั้งส่วนลด % และส่วนลดบาทผ่านได้ (NULL ทั้งคู่)", "To Do"],
+["30-OCT", "ไม่มีคนรับ", "TKRD-488", "Medium", "engine-strict ใน .npmrc ไม่มีผลกับ pnpm 11 — install บน Node 22 ผ่าน (แค่ warn) ทั้งที่ repo กำหนด Node 24", "To Do"],
+["30-OCT", "ไม่มีคนรับ", "TKRD-489", "Medium", "การคำนวณวันตามเวลาไทยมีหลายที่ — product-csv.ts และ AdminReferralsPanel.tsx คำนวณเอง ไม่ผ่าน bangkok-day.ts", "To Do"],
+["30-OCT", "Gong", "TKRD-490", "Medium", "[หลังบ้าน › แจ้งชำระเงิน] ค้นหาคิวสลิปด้วยชื่อผู้ใช้แล้วชื่อผู้ใช้ไปอยู่ใน URL (GET /admin/slips?q=) และถูกบันทึกลง request log ของ api", "To Do"],
+["30-OCT", "Gong", "TKRD-491", "Medium", "[หลังบ้าน › สิทธิ์ลูกค้า] ค้นหาบัญชีแล้วชื่อผู้ใช้ไปอยู่ใน URL (GET /admin/entitlements?username=) และถูกบันทึกลง request log ของ api", "To Do"],
+["30-OCT", "Gong", "TKRD-492", "Low", "[ลิงก์ที่สร้างไว้] เปิด /links ด้วยตัวกรองใน URL ที่ API ไม่รับ (วันที่ที่ไม่มีจริง · ก่อน 1970 · shopid เกิน BIGINT) แล้วหน้าค้างที่ \"โหลดลิงก์ไม่สำเร็จ\" และกด \"ลองใหม่\" ก็ล้มซ้ำ", "To Do"],
+["30-OCT", "Gong", "TKRD-493", "Low", "[ค้นหา] มิเตอร์ \"ค้นหาวันนี้\" ถอยกลับเป็นตัวเลขเก่า เมื่อเปลี่ยนการเรียงกลับไปที่ผลที่ยังอยู่ในแคช (เช่น 2 / 200 → 1 / 200) ทั้งที่ server นับ 2", "To Do"],
+["30-OCT", "Gong", "TKRD-494", "Medium", "[ค้นหา] ค้นด้วยตัวกรองอย่างเดียว (ไม่พิมพ์คำค้น) แล้วไปเมนูอื่นและกลับมา — ตัวกรองและผลหายกลับเป็นหน้าเริ่มต้น \"ค้นหาดีลที่ให้ค่าคอมคุ้มค่า\"", "To Do"],
+["30-OCT", "Gong", "TKRD-495", "Medium", "[ค้นหา › บันทึกหลายสินค้า] เลือกปนสินค้าที่บันทึกไว้แล้ว ปุ่ม \"บันทึก N สินค้า\" ถูกกันด้วย \"เลือกไว้ N สินค้า แต่บันทึกได้อีก…\" ทั้งที่สินค้าใหม่จริงไม่เกินช่องที่เหลือ และ server รับได้", "To Do"],
+["30-OCT", "Gong", "TKRD-496", "Low", "[หลังบ้าน › ประเภทแพคเกจ] สร้างหมวดที่จำนวนวันซ้ำกับหมวดที่เปิดขายอยู่ แล้วขึ้นแค่ข้อความทั่วไป ไม่บอกว่า \"มีหมวดที่ใช้จำนวนวันนี้เปิดขายอยู่แล้ว\"", "To Do"],
+["30-OCT", "Gong", "TKRD-497", "Low", "[ตั้งค่า › อุปกรณ์และการเข้าใช้งาน] ประโยค \"ทำได้วันละ 1 ครั้ง\" เป็นข้อความตายตัว ไม่ตามค่า \"สลับเครื่องได้ต่อวัน\" ที่แอดมินตั้ง (UAT ตั้งไว้ 1000)", "To Do"],
+["30-OCT", "Gong", "TKRD-498", "Low", "[เช็คจอ › ลิงก์สินค้า] มือถือ: ปิดตัวกรองสถานะทั้งสามแล้วการ์ดขึ้น \"ไม่มีสินค้าที่ตรงกับตัวกรองนี้…\" ขณะที่ตารางบนจอใหญ่ของหน้าเดียวกันขึ้น \"ไม่มีลิงก์ที่ตรงกับตัวกรองนี้…\"", "To Do"],
+["30-OCT", "Gong", "TKRD-499", "Medium", "[คลิปขายยาว] เขียนบทใหม่หลังสร้างคลิปครบแล้ว กด \"สร้างใหม่ทั้งคลิป\" — ระบบไม่พากย์เสียงใหม่เลย และต่อคลิปจากเสียงของบทเก่าใต้คำบรรยายของบทใหม่", "To Do"],
 ];
 // Projects: the Jira key prefix decides the project, so rows from another project
 // show up here as soon as they are added to ROWS. Add a line to PROJECTS to give it a name.
@@ -651,7 +663,7 @@ ROWS.forEach(r=>{const s=JOURNEY[r[2]]; r[7]=s?s:(r[2].startsWith("TAKRA-")?99:0
 const scCls=v=>v===SCOPE_LABEL.ui?"c-ui":v===SCOPE_LABEL.sys?"c-sys":"c-tool";
 
 // เวลาที่ดึงจาก Jira ล่าสุดรายโปรเจกต์ — ตัวซิงก์ (update_open_bugs.py) เขียนบรรทัดนี้เอง ต้องอยู่บรรทัดเดียว
-const SYNCED = {"TAKRA": "28 ต.ค. 2026 13:00", "TI": "28 ต.ค. 2026 13:00", "TAK": "28 ต.ค. 2026 13:00", "TKRD": "28 ต.ค. 2026 13:00", "TF": "28 ต.ค. 2026 13:00", "TKH": "28 ต.ค. 2026 13:00"};
+const SYNCED = {"TAKRA": "29 ต.ค. 2026 13:00", "TI": "29 ต.ค. 2026 13:00", "TAK": "29 ต.ค. 2026 13:00", "TKRD": "29 ต.ค. 2026 13:00", "TF": "29 ต.ค. 2026 13:00", "TKH": "29 ต.ค. 2026 13:00"};
 const PROJECTS={
   TAKRA:{name:"Takra AI", jira:"https://kitdi.atlassian.net"},
   TI:{name:"Takra Insight", jira:"https://kitdi.atlassian.net"},
