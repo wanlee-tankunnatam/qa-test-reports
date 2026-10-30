@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="th"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>[E2E @uat-regression] TAKRA Hub — ผลรันอัตโนมัติ 30 Oct 2026 18:20</title>
+<style>
+:root{--bg:#f5f6f8;--card:#fff;--card2:#f0f2f5;--line:#dce0e7;--txt:#1f2430;--muted:#6b7280;--accent:#2563eb;
+--pass:#16a34a;--fail:#dc2626;--hold:#d97706;--skip:#9ca3af;--lv-ui:#db2777}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--txt);font-family:"Segoe UI","Sarabun",system-ui,sans-serif;line-height:1.5;font-size:13px}
+a{color:var(--accent)}
+header.top{padding:20px 28px 14px;border-bottom:1px solid var(--line);background:linear-gradient(135deg,#166534,#16a34a);color:#fff}
+header.top.hasfail{background:linear-gradient(135deg,#7f1d1d,#dc2626)}
+header.top h1{margin:0 0 4px;font-size:20px}
+header.top .sub{font-size:12.5px;opacity:.88}
+header.top .meta{margin-top:10px;display:flex;flex-wrap:wrap;gap:8px}
+.pill{display:inline-block;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:600;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.35);color:#fff}
+.wrap{padding:16px 22px 80px;max-width:1100px;margin:0 auto}
+.counts{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 12px}
+.cnt{font-size:12px;font-weight:700;padding:5px 12px;border-radius:8px;border:1px solid var(--line);background:#fff}
+.cnt b{font-size:14px}
+.cnt.pass{color:var(--pass);border-color:#bbf7d0}.cnt.fail{color:var(--fail);border-color:#fecaca}
+.cnt.flaky{color:var(--hold);border-color:#fde68a}.cnt.skip{color:var(--skip)}
+.progress{height:10px;background:var(--card2);border-radius:6px;overflow:hidden;border:1px solid var(--line);margin:0 0 14px}
+.progressbar{height:100%;background:var(--pass);width:0%}
+.filters{background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:0 0 14px}
+.filters .row{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:3px 0}
+.filters label{font-size:11px;font-weight:700;color:var(--muted);min-width:60px}
+.fchip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:3px 11px;font-size:11.5px;cursor:pointer;color:var(--txt)}
+.fchip:hover{border-color:var(--accent);color:var(--accent)}
+.fchip.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:#fff}
+table.tc{border-collapse:collapse;width:100%;min-width:760px;background:#fff}
+table.tc th,table.tc td{padding:8px 10px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+table.tc thead th{position:sticky;top:0;background:var(--card2);color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.4px;z-index:3;border-bottom:2px solid var(--line)}
+tr.featrow td{background:#eaf1fb;color:#1d4ed8;font-weight:700;font-size:12px}
+tr.featrow .rp{font-weight:500;font-size:11px;color:#3b6fc4;margin-left:8px}
+tr.trow{cursor:pointer}tr.trow:hover{background:#f7f9fc}tr.trow.open{background:#eef4fe}
+.tog{display:inline-block;width:14px;color:var(--muted);transition:transform .15s;font-size:11px}
+tr.trow.open .tog{transform:rotate(90deg);color:var(--accent)}
+.cid{font-family:monospace;font-size:10px;color:var(--muted);white-space:nowrap}
+.ctitle{font-weight:600;font-size:12.5px;max-width:520px}
+.tcid{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;white-space:nowrap;color:#1e3a8a}
+td.lvl{white-space:nowrap}
+.lv{font-size:10px;font-weight:700;padding:2px 7px;border-radius:5px;border:1px solid;background:#fff;display:inline-block;vertical-align:middle;margin-right:3px}
+.lv.lvl-ui{color:var(--lv-ui);border-color:var(--lv-ui)}
+td.status{white-space:nowrap}
+.stb{font-weight:700;font-size:10px;padding:3px 8px;border-radius:5px;display:inline-block}
+.stb.pass{background:var(--pass);color:#fff}.stb.fail{background:var(--fail);color:#fff}
+.stb.flaky{background:var(--hold);color:#fff}.stb.skip{background:var(--skip);color:#fff}
+tr.detail{display:none}tr.detail.show{display:table-row}
+tr.detail>td{background:#fafbfc;padding:0;border-bottom:2px solid var(--line)}
+.card{padding:16px 20px}
+.card .sec h4{margin:0 0 5px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.3px;color:#374151}
+.errpre{white-space:pre-wrap;background:#fff;border:1px dashed #fecaca;border-radius:7px;padding:9px 12px;font-size:11.5px;color:#991b1b;margin:0}
+tr.hide{display:none!important}
+.note-box{background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:8px 12px;font-size:12px;color:#92400e;margin:0 0 12px}
+.why{font-weight:400;font-size:11.5px;color:#92400e;margin-top:2px}
+tr.trow[data-st="skip"] .why{color:#6b7280}
+.whyraw{color:#9ca3af;font-size:10.5px}
+.exlist{margin:0;padding-left:18px;font-size:12.5px;color:#4b5563}
+.exlist li{margin:3px 0}
+.exhead{margin:0 0 4px;font-weight:700;font-size:13px}
+.exbody{margin:0;font-size:13px;border-left:3px solid var(--hold);padding:4px 12px;color:var(--txt)}
+.featsum{background:#fff;border:1px solid var(--line);border-radius:12px;padding:6px 10px;margin:0 0 14px;overflow-x:auto}
+table.fs{border-collapse:collapse;width:100%;min-width:560px;font-size:12.5px}
+table.fs th{color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.4px;text-align:left;padding:6px 10px;border-bottom:2px solid var(--line)}
+table.fs td{padding:5px 10px;border-bottom:1px solid var(--line)}
+table.fs tr:last-child td{border-bottom:none}
+tr.fsrow{cursor:pointer}tr.fsrow:hover td{background:#f7f9fc}
+tr.fsrow.active td{background:rgba(37,99,235,.14)}
+td.num{text-align:right;font-variant-numeric:tabular-nums;width:52px}
+td.num.ok{color:var(--pass);font-weight:700}td.num.bad{color:var(--fail);font-weight:700}
+.fsfile{display:block;font-family:monospace;font-size:10px;color:var(--muted)}
+.gatebox{border-radius:12px;padding:14px 20px;margin:0 0 14px;font-size:24px;font-weight:900;text-align:center;background:#111827;letter-spacing:.3px;border-bottom:6px solid}
+.gatebox.pass{color:#4ade80;border-color:#4ade80}
+.gatebox.fail{color:#fbbf24;border-color:#fbbf24}
+.gatebox small{display:block;font-size:13px;font-weight:600;color:#9ca3af;margin-top:4px}
+.whyfull{margin:0;font-size:12.5px;background:#fffbeb;border:1px solid #fde68a;border-radius:7px;padding:8px 12px;color:#92400e}
+.skipbox{background:#fff;border:1px solid var(--line);border-radius:10px;padding:8px 14px;margin:0 0 14px;font-size:12px}
+.skipbox summary{cursor:pointer;font-weight:700;color:#374151}
+.skipbox ul{margin:8px 0 4px;padding-left:18px}
+.skipbox li{margin:3px 0;color:#4b5563}
+footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
+</style>
+</head>
+<body>
+<a id="hub-back-btn" href="https://wanlee-tankunnatam.github.io/qa-test-reports/?project=hub" title="กลับไปหน้ารวมรายงาน (Hub)" style="position:fixed;top:12px;right:14px;z-index:99999;display:inline-flex;align-items:center;gap:7px;padding:10px 18px;border-radius:999px;background:#fff;color:#1e3a8a;font-size:14px;font-weight:800;text-decoration:none;box-shadow:0 4px 16px rgba(0,0,0,.35);border:2px solid #1e3a8a;font-family:'Segoe UI','Sarabun',system-ui,sans-serif">🏠 รายงานทั้งหมด</a>
+<header class="top">
+  <h1>🤖 [E2E @uat-regression] TAKRA Hub — ผลรันอัตโนมัติ</h1>
+  <div class="sub">Playwright web e2e (ยิง UAT) · รันเมื่อ Fri 30 Oct 2026 18:20 · generate อัตโนมัติจาก results.json (read-only)</div>
+  <div class="meta">
+    <span class="pill">branch: develop</span>
+    <span class="pill">⏱ 4 นาที 56 วิ</span>
+    <span class="pill">GitHub Actions · uat-hub.takra.ai · trigger workflow_run · run 41046065520</span>
+  </div>
+</header>
+<div class="wrap">
+  <div class="counts">
+    <span class="cnt pass">PASS <b>0</b></span>
+    <span class="cnt fail">FAIL <b>0</b></span>
+    <span class="cnt flaky">FLAKY <b>0</b></span>
+    <span class="cnt skip">SKIP <b>0</b></span>
+    <span class="cnt">รวม <b>0</b> · ผ่าน 0% ของที่รัน</span>
+  </div>
+  <div class="progress"><div class="progressbar"></div></div>
+  <div class="gatebox pass">✅ GATE: ผ่าน — ไม่มีเคสตก</div>
+  <div class="featsum"><table class="fs"><thead><tr><th>ฟีเจอร์</th><th>ผ่าน</th><th>ตก</th><th>flaky</th><th>ข้าม</th><th>สรุป</th></tr></thead><tbody></tbody></table></div>
+  
+  
+  <div class="filters">
+    <div class="row"><label>สถานะ</label>
+      <button class="fchip" data-f="st" data-v="pass">✅ PASS</button>
+      <button class="fchip" data-f="st" data-v="fail">❌ FAIL</button>
+      <button class="fchip" data-f="st" data-v="flaky">⚠️ FLAKY</button>
+      <button class="fchip" data-f="st" data-v="skip">⏭ SKIP</button>
+    </div>
+    <div class="row"><label>ไฟล์</label></div>
+  </div>
+  <div class="tablewrap"><table class="tc">
+    <thead><tr><th></th><th>ID</th><th>Test case</th><th>Tags</th><th>ผล</th><th>เวลา</th></tr></thead>
+    <tbody></tbody>
+  </table></div>
+</div>
+<footer>generate โดย tools/build/hub_e2e_run_report.py · QA takra-hub</footer>
+<script>
+// 🔴 การแสดงผลทั้งตารางคิดจาก **สถานะชุดเดียว** (F = ตัวกรอง · OPEN = แถวที่กดเปิด) ใน render() ที่เดียว
+//    ห้ามไปแก้คลาส hide/show ตรง ๆ ที่อื่น — เดิมมี 2 ที่แก้คลาสเดียวกันแล้วขัดกัน: กดกรอง/ฟีเจอร์แล้ว
+//    เปิดรายละเอียดตัวที่ไม่ผ่านไม่ได้ (QA เจอ 27 ต.ค. 2569) · แก้ส่วนนี้แล้วรัน tools/build/check_hub_report_ui.mjs
+const F={st:null,file:null};
+const OPEN=new Set();
+function render(){
+  document.querySelectorAll('tr.trow').forEach(tr=>{
+    const ok=(!F.st||tr.dataset.st===F.st)&&(!F.file||tr.dataset.file===F.file);
+    const open=OPEN.has(tr.dataset.uid);
+    tr.classList.toggle('hide',!ok);
+    tr.classList.toggle('open',open);
+    const d=document.querySelector(`tr.detail[data-uid="${tr.dataset.uid}"]`);
+    if(d){d.classList.toggle('show',ok&&open);d.classList.toggle('hide',!(ok&&open));}
+  });
+  document.querySelectorAll('tr.featrow').forEach(fr=>{
+    const any=[...document.querySelectorAll(`tr.trow[data-file="${CSS.escape(fr.dataset.file)}"]`)].some(r=>!r.classList.contains('hide'));
+    fr.classList.toggle('hide',!any);
+  });
+}
+const apply=render;
+document.querySelectorAll('.fchip').forEach(b=>b.addEventListener('click',()=>{
+  const f=b.dataset.f,v=b.dataset.v,on=b.classList.contains('active');
+  document.querySelectorAll(`.fchip[data-f="${f}"]`).forEach(x=>x.classList.remove('active'));
+  F[f==='st'?'st':'file']=on?null:v;
+  if(!on)b.classList.add('active');
+  render();
+}));
+document.querySelectorAll('tr.trow').forEach(tr=>tr.addEventListener('click',()=>{
+  if(!document.querySelector(`tr.detail[data-uid="${tr.dataset.uid}"]`))return;
+  OPEN.has(tr.dataset.uid)?OPEN.delete(tr.dataset.uid):OPEN.add(tr.dataset.uid);
+  render();
+}));
+function gotoFeature(file,anchorId){
+  const off=F.file===file;
+  F.file=off?null:file;
+  document.querySelectorAll('tr.fsrow').forEach(x=>x.classList.toggle('active',!off&&x.dataset.file===file));
+  apply();
+  if(!off){const row=document.getElementById(anchorId);
+    if(row)row.scrollIntoView({behavior:'smooth',block:'start'});}
+}
+document.querySelectorAll('tr.fsrow').forEach(tr=>tr.addEventListener('click',e=>{
+  e.preventDefault(); gotoFeature(tr.dataset.file,tr.dataset.anchor);
+}));
+if(location.hash.startsWith('#feat-')){
+  const row=document.getElementById(location.hash.slice(1));
+  if(row)gotoFeature(row.dataset.file,row.id);
+}
+</script>
+</body></html>
