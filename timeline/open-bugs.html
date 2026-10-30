@@ -124,7 +124,7 @@ footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--line);color:v
 <body>
 <div class="wrap">
   <h1>บั๊กค้างรอบส่งงาน</h1>
-  <p class="sub">บั๊กที่ยังไม่ปิดจากทุกโปรเจกต์ใน Jira แยกตามรอบส่ง แล้วแยกตามผู้รับผิดชอบ · ในแต่ละคนเรียงตามขั้นที่ลูกค้าเจอใน user journey · ข้อมูล ณ 29 ต.ค. 2026 13:00 น. (อัปเดตอัตโนมัติ 09:00 / 13:00 หรือกดปุ่มดึงข้อมูลจาก Jira)</p>
+  <p class="sub">บั๊กที่ยังไม่ปิดจากทุกโปรเจกต์ใน Jira แยกตามรอบส่ง แล้วแยกตามผู้รับผิดชอบ · ในแต่ละคนเรียงตามขั้นที่ลูกค้าเจอใน user journey · ข้อมูล ณ 30 ต.ค. 2026 09:00 น. (อัปเดตอัตโนมัติ 09:00 / 13:00 หรือกดปุ่มดึงข้อมูลจาก Jira)</p>
   <div class="sync"><button type="button" class="f" id="sync">ดึงข้อมูลจาก Jira</button><span id="syncat"></span><span id="syncmsg" role="status"></span></div>
   <div class="proj" id="fj" role="group" aria-label="โปรเจกต์"></div>
   <div class="tot" id="tot"></div>
@@ -281,10 +281,10 @@ const ROWS = [
 ["23-OCT", "James", "TI-321", "Low", "Windows: the &quot;restart&quot; button opens a full installer wizard — and going silent races our own quit sequence", "To Do"],
 ["30-OCT", "James", "TI-400", "Medium", "[P0][M1][backend] POST /v1/compliance/ml-models/rollback ไม่มี role gate + workspaceId จาก body ⇒ rollback model ของ tenant อื่นได้ (cross-tenant)", "READY TO TEST"],
 ["30-OCT", "James", "TI-401", "Medium", "[P0][M1][backend] ตารางทั้ง schema compliance ไม่มี RLS + rls-introspect ตรวจเฉพาะ public ⇒ rls:check ตาบอด · tenant isolation ของ audit/tos/rollback/breach พึ่ง WHERE มือล้วน", "READY TO TEST"],
-["30-OCT", "James", "TI-403", "Medium", "[P1][M1][backend] DEK lifecycle หลัง erasure: ingest ไม่เคยอ่าน erasure_tombstone (subject ไม่มี DEK ตอน erase → mint ใหม่ = resurrection) + re-consent หลัง shred = lockout ถาวร", "In Progress"],
-["30-OCT", "James", "TI-405", "Medium", "[P1][M1][backend] consent upsert idempotency กลืน 2 กรณี: submit audit loop หลัง commit + retry ⇒ decision unaudited ถาวร · re-consent ต่าง policyVersion ถูกทิ้งเงียบ (setWhere เช็คแค่ status)", "In Progress"],
-["30-OCT", "James", "TI-406", "Medium", "[P1][M1][backend] compliance sink fail-open ทั้งชุด: WORM mirror = Noop ทุก env (ไม่มี prod boot guard) · breach trigger a/b/c ไม่ wire + NoopAlertSink · reconciler ทั้งหมด = Story 1.8 ที่ยังไม่มี", "In Progress"],
-["30-OCT", "James", "TI-407", "Medium", "[P1][M1][backend] comment.captured ingest ไม่มี consent gate + ไม่ bind subjectRef ⇒ PII ของ commenter บุคคลที่สามถูก provision DEK + เก็บ · registry บอก erasure \"deferred\" = ลบไม่ได้", "In Progress"],
+["30-OCT", "James", "TI-403", "Medium", "[P1][M1][backend] DEK lifecycle หลัง erasure: ingest ไม่เคยอ่าน erasure_tombstone (subject ไม่มี DEK ตอน erase → mint ใหม่ = resurrection) + re-consent หลัง shred = lockout ถาวร", "IN REVIEW"],
+["30-OCT", "James", "TI-405", "Medium", "[P1][M1][backend] consent upsert idempotency กลืน 2 กรณี: submit audit loop หลัง commit + retry ⇒ decision unaudited ถาวร · re-consent ต่าง policyVersion ถูกทิ้งเงียบ (setWhere เช็คแค่ status)", "IN REVIEW"],
+["30-OCT", "James", "TI-406", "Medium", "[P1][M1][backend] compliance sink fail-open ทั้งชุด: WORM mirror = Noop ทุก env (ไม่มี prod boot guard) · breach trigger a/b/c ไม่ wire + NoopAlertSink · reconciler ทั้งหมด = Story 1.8 ที่ยังไม่มี", "IN REVIEW"],
+["30-OCT", "James", "TI-407", "Medium", "[P1][M1][backend] comment.captured ingest ไม่มี consent gate + ไม่ bind subjectRef ⇒ PII ของ commenter บุคคลที่สามถูก provision DEK + เก็บ · registry บอก erasure \"deferred\" = ลบไม่ได้", "IN REVIEW"],
 ["16-OCT", "James", "TI-435", "Medium", "TAKRA Insight - Hub Overlay ไม่สามารถคลิกและลากย้ายตำแหน่งได้ ทำให้บดบังข้อมูลสำคัญบนหน้าจอ", "To Do"],
 ["9-OCT", "James", "TI-436", "High", "TAKRA Insight - แท็บ บทพูด หลังจบ Record ไลฟ์ ไม่แสดงสถานะผู้พูดหรือเสียงที่ระบบตรวจจับได้", "To Do"],
 ["9-OCT", "James", "TI-437", "High", "TAKRA Insight - แท็บ บทพูด ตรวจจับเสียงของ Host คนเดียวเป็นหลาย Speaker", "To Do"],
@@ -447,7 +447,7 @@ const ROWS = [
 ["15-OCT", "Berm", "TKRD-383", "Medium", "[Trendora] ปรับ UI Admin › ช่วยเหลือ", "To Do"],
 ["15-OCT", "Berm", "TKRD-384", "Medium", "[Trendora] ปรับ UI Admin › เฝ้าระวังการดึงข้อมูล", "To Do"],
 ["15-OCT", "Berm", "TKRD-385", "Medium", "[Trendora] ปรับ UI Admin › ตั้งค่าระบบ", "To Do"],
-["15-OCT", "Berm", "TKRD-386", "Medium", "[Trendora] ปรับ UI Admin › ลบข้อมูล", "To Do"],
+["15-OCT", "Berm", "TKRD-386", "Medium", "[Trendora] ปรับ UI Admin › ลบข้อมูล", "IN REVIEW"],
 ["15-OCT", "Mae", "TAK-757", "Medium", "ชื่อที่แสดงของคลิปไม่ขึ้นที่จอเรื่องฉาก · ข้อความเตือนตอนเริ่มไลฟ์ · ผลรอบ · และตอนลบรูปโอเวอร์เลย์ (ต่อจาก TAK-745)", "READY TO TEST"],
 ["15-OCT", "Mae", "TAK-165", "Medium", "(Overlay) Text/layer ล้นออกนอกเฟรม ไม่มี clamp/wrap — ข้อความยาวหรือวางใกล้ขอบวิ่งเลยเฟรมแล้วถูกตัดหาย", "IN REVIEW"],
 ["15-OCT", "Hope", "TAK-628", "High", "[BE] คลิปที่มีเสียง/ภาพหลายแทร็กทำให้ไลฟ์ (เส้น re-encode/overlay) + คิวแปลง + preview ล้มตั้งแต่วินาทีแรก — map แทร็กแรกเสมอ + probe นับแทร็ก (regression จาก TAK-536 · เคส ITS-15)", "IN REVIEW"],
@@ -571,7 +571,7 @@ const ROWS = [
 ["30-OCT", "ไม่มีคนรับ", "TKRD-482", "Medium", "ลิงก์ affiliate อาจพาไปหน้าสินค้าของอีกร้าน เมื่อ itemid เดียวกันอยู่ใต้สองร้าน — content ล่าสุดถูก join ด้วย itemid อย่างเดียว", "To Do"],
 ["30-OCT", "ไม่มีคนรับ", "TKRD-484", "Medium", "event search.performed เก็บชื่อหมวดหมู่ย่อย (categoryL2) เป็นข้อความดิบ — ขัด PDPA แบบเดียวกับที่ categoryL1 แก้ไปแล้ว", "To Do"],
 ["30-OCT", "ไม่มีคนรับ", "TKRD-485", "Medium", "ย้อนสลิปพร้อมกับปล่อย referral ที่ถูกพักของคนเดียวกัน → deadlock ตอบ 500 แทน 409 (GAP-8-27)", "To Do"],
-["30-OCT", "Gong", "TKRD-486", "High", "[หน้าค้นหา] สลับบัญชีในแท็บเดียวกัน — บัญชีที่เข้าทีหลังเห็นคำค้นของบัญชีก่อนหน้า เพราะข้อมูลการค้นหาใน sessionStorage ไม่ถูกล้างตอนออกจากระบบ", "In Progress"],
+["30-OCT", "Gong", "TKRD-486", "High", "[หน้าค้นหา] สลับบัญชีในแท็บเดียวกัน — บัญชีที่เข้าทีหลังเห็นคำค้นของบัญชีก่อนหน้า เพราะข้อมูลการค้นหาใน sessionStorage ไม่ถูกล้างตอนออกจากระบบ", "IN REVIEW"],
 ["30-OCT", "ไม่มีคนรับ", "TKRD-487", "Medium", "CHECK ของ discount_code ปล่อยแถวที่ไม่มีทั้งส่วนลด % และส่วนลดบาทผ่านได้ (NULL ทั้งคู่)", "To Do"],
 ["30-OCT", "ไม่มีคนรับ", "TKRD-488", "Medium", "engine-strict ใน .npmrc ไม่มีผลกับ pnpm 11 — install บน Node 22 ผ่าน (แค่ warn) ทั้งที่ repo กำหนด Node 24", "To Do"],
 ["30-OCT", "ไม่มีคนรับ", "TKRD-489", "Medium", "การคำนวณวันตามเวลาไทยมีหลายที่ — product-csv.ts และ AdminReferralsPanel.tsx คำนวณเอง ไม่ผ่าน bangkok-day.ts", "To Do"],
@@ -585,6 +585,17 @@ const ROWS = [
 ["30-OCT", "Gong", "TKRD-497", "Low", "[ตั้งค่า › อุปกรณ์และการเข้าใช้งาน] ประโยค \"ทำได้วันละ 1 ครั้ง\" เป็นข้อความตายตัว ไม่ตามค่า \"สลับเครื่องได้ต่อวัน\" ที่แอดมินตั้ง (UAT ตั้งไว้ 1000)", "To Do"],
 ["30-OCT", "Gong", "TKRD-498", "Low", "[เช็คจอ › ลิงก์สินค้า] มือถือ: ปิดตัวกรองสถานะทั้งสามแล้วการ์ดขึ้น \"ไม่มีสินค้าที่ตรงกับตัวกรองนี้…\" ขณะที่ตารางบนจอใหญ่ของหน้าเดียวกันขึ้น \"ไม่มีลิงก์ที่ตรงกับตัวกรองนี้…\"", "To Do"],
 ["30-OCT", "Gong", "TKRD-499", "Medium", "[คลิปขายยาว] เขียนบทใหม่หลังสร้างคลิปครบแล้ว กด \"สร้างใหม่ทั้งคลิป\" — ระบบไม่พากย์เสียงใหม่เลย และต่อคลิปจากเสียงของบทเก่าใต้คำบรรยายของบทใหม่", "To Do"],
+["ยังไม่มีรอบ", "No", "TAKRA-1627", "Medium", "[FE] คลังฉาก ปุ่ม \"ไลฟ์เลย\" ไม่ถามความยาว — ไลฟ์จบเองที่ 60 นาทีเสมอ (ตั้ง 540 นาทีก็จบที่ 60)", "READY TO TEST"],
+["ยังไม่มีรอบ", "No", "TAKRA-1628", "Medium", "[BE] แอป desktop หลุดล็อกอินกลางไลฟ์ — คุกกี้ refresh/id_token ไม่มีวันหมดอายุ ถูก Electron ทิ้งตอนปิดแอป", "READY TO TEST"],
+["ยังไม่มีรอบ", "No", "TAKRA-1629", "Medium", "[FE] session หมดระหว่างออกอากาศ แอปพาออกจากหน้าไลฟ์ไปหน้าล็อกอิน = ไลฟ์ตาย", "READY TO TEST"],
+["ยังไม่มีรอบ", "No", "TAKRA-1630", "Medium", "[BE] /auth/refresh โดน rate limit 10/นาที แบบนับรวมทุกคน (key = IP ของ ingress) → ผู้ใช้หลุดล็อกอินเมื่อคนอื่นต่ออายุพร้อมกัน", "READY TO TEST"],
+["ยังไม่มีรอบ", "No", "TAKRA-1638", "Medium", "[FE][test] live-studio-preflight-error.spec \"ลองเสียงแล้วผ่าน → ไม่เตือน\" ตกบน CI — คำเตือน \"ล้ำเขตปลอดภัย\" โผล่ (ผ่านในเครื่อง)", "To Do"],
+["ยังไม่มีรอบ", "Boat", "TAKRA-1639", "Medium", "[Defect][FS] หน้า Takra AI Live หลุด design 12 จุด — ฉาก · อวาตาร์ · focus ช่องกรอก · ตารางคลัง · เสียง · สรุปไลฟ์ · ตั้งค่า", "In Progress"],
+["ยังไม่มีรอบ", "James", "TI-710", "Low", "[Bug][BE] แถว subject_dek ที่เสีย (wrapped_dek ว่างแต่ยังไม่ถูกทำลาย) ทำให้ ingest ตอบ retryable ไม่จบ → upload ของ session ค้าง", "To Do"],
+["ยังไม่มีรอบ", "James", "TI-711", "Medium", "[Bug][BE] ยอมรับนโยบายเวอร์ชันใหม่ทับ decided_at ของการให้ความยินยอม → การลบที่ค้างแล้วรันซ้ำทีหลัง ลบคอมเมนต์ที่เก็บถูกต้องและทำลายกุญแจของ host", "To Do"],
+["ยังไม่มีรอบ", "Gong", "TKRD-502", "Medium", "[แจ้งเตือนสลิป Telegram] สลิปไฟล์ .webp ขึ้นในแชตเป็นสติกเกอร์ ไม่มี caption — แอดมินไม่รู้ว่าเป็นสลิปรหัสไหนของลูกค้าคนไหน", "To Do"],
+["ยังไม่มีรอบ", "Gong", "TKRD-503", "Low", "[ลิงก์ที่สร้างไว้] เลือกช่วงวันที่กลับด้าน (\"สร้างตั้งแต่วันที่\" หลัง \"ถึงวันที่\") แล้วกด \"ค้นหา\" — หน้าขึ้น \"โหลดลิงก์ไม่สำเร็จ\" แทนรายการ", "To Do"],
+["ยังไม่มีรอบ", "Gong", "TKRD-504", "Low", "[แพ็กเกจของฉัน] หลังแอดมิน \"ยกเลิกการอนุมัติ\" สลิปที่อนุมัติแล้ว ลูกค้าไม่มีปุ่ม \"ต่ออายุ\" อีก เพราะสิทธิ์ถูกคืนเป็น standard โดยไม่ผูกแพ็กเกจ (ยืนยันจากโค้ด)", "To Do"],
 ];
 // Projects: the Jira key prefix decides the project, so rows from another project
 // show up here as soon as they are added to ROWS. Add a line to PROJECTS to give it a name.
@@ -663,7 +674,7 @@ ROWS.forEach(r=>{const s=JOURNEY[r[2]]; r[7]=s?s:(r[2].startsWith("TAKRA-")?99:0
 const scCls=v=>v===SCOPE_LABEL.ui?"c-ui":v===SCOPE_LABEL.sys?"c-sys":"c-tool";
 
 // เวลาที่ดึงจาก Jira ล่าสุดรายโปรเจกต์ — ตัวซิงก์ (update_open_bugs.py) เขียนบรรทัดนี้เอง ต้องอยู่บรรทัดเดียว
-const SYNCED = {"TAKRA": "29 ต.ค. 2026 13:00", "TI": "29 ต.ค. 2026 13:00", "TAK": "29 ต.ค. 2026 13:00", "TKRD": "29 ต.ค. 2026 13:00", "TF": "29 ต.ค. 2026 13:00", "TKH": "29 ต.ค. 2026 13:00"};
+const SYNCED = {"TAKRA": "30 ต.ค. 2026 09:00", "TI": "30 ต.ค. 2026 09:00", "TAK": "30 ต.ค. 2026 09:00", "TKRD": "30 ต.ค. 2026 09:00", "TF": "30 ต.ค. 2026 09:00", "TKH": "30 ต.ค. 2026 09:00"};
 const PROJECTS={
   TAKRA:{name:"Takra AI", jira:"https://kitdi.atlassian.net"},
   TI:{name:"Takra Insight", jira:"https://kitdi.atlassian.net"},
