@@ -69,6 +69,8 @@ repo นี้เก็บรายงาน manual test case (UI) ของท�
 >
 > **takra-ai แอปเดสก์ท็อป Takra Live (Windows)** (26 ต.ค. 2026) — Electron ที่โหลดเว็บ UAT + ตัวเรนเดอร์อวาตาร์บน GPU ในเครื่อง · โค้ด `apps/desktop/src` (คำในหน้าต่าง/ข้อความ error ของแอปฝังไทยในโค้ด) + หน้าเว็บ `apps/web/src` (คำจาก i18n th) · สเปก = Jira Epic TAKRA-1453 + ใบย่อย (ไม่มีใน epics.md) · 139 เคส A–L + M หลายฉาก/N เพลง/O เสียง/P ตะกร้า/R ตอบคอมเมนต์ + Q คุณภาพไลฟ์ + E2E (ตัด P2 26 ต.ค. · uid ตรึงใน `UID_MAP` · Q = 15087–15102 · M–R = 15103–15134 · Q.17–39 = 15135–15157) · กลุ่ม L/Q/R + เคสออกอากาศของ M–P + E2E ไลฟ์จริง = manual (`tools/build/ai_desktop_cases.py` → `python3 tools/build/build_hub_report.py aidesktop`)
 >
+> **takra-ai UI ใหม่ แบ่งตามเมนู** (30 ต.ค. 2026) — redesign TAKRA-1500/1586 · โค้ด origin/uat @ d20046bc · 16 เมนูตามแถบซ้ายใหม่ · 395 เคส P0+P1 (ไม่มี P2) · ไฟล์ใหม่ (regaimenu เดิมคงไว้พร้อมผล) · เคสเก็บเป็น JSON ต่อกลุ่มที่ `tools/build/takra-ai-bymenu-sources/<CODE>.json` (เมนูเดียวกันแบ่งหลายไฟล์ได้ ตัวรวมต่อชุดให้) · uid ตรึงใน `uid_map.json` (21001–) id ใหม่ได้ uid ต่อท้ายเอง (`tools/build/ai_bymenu_ui_cases.py` → `python3 tools/build/build_hub_report.py aimenu`) — แก้เคสที่ JSON แล้ว build ใหม่ อย่าแก้ HTML ตรงๆ
+>
 > **takra-rerun คุณภาพ/ประสิทธิภาพการไลฟ์รีรัน** (9 ก.ย. 2026) — 14 เคส 3 รอบ อยู่ที่ `tools/build/rerun_quality_cases.py` → `python3 tools/build/build_hub_report.py rerunquality`
 >
 > **takra-insight Live Readiness** (9 ก.ย. 2026) — เคสคุณภาพข้าม epic 33 เคส 8 มิติ อยู่ที่ `tools/build/insight_live_readiness_cases.py` → `python3 tools/build/build_hub_report.py lrready`
