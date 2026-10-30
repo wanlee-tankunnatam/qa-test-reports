@@ -156,17 +156,17 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <h1>📲 [TKRD-403] TAKRA Radar (Trendora) — เช็คจอ · ลิงก์สินค้า แบบสด</h1>
   <div class="sub">เทสด้วยมือ · Story <b>TKRD-403</b> เช็คจอ · ลิงก์สินค้า (BETA) อ่านสดผ่าน Cloud-Box แทน /checklink เดิม · 👤 ลูกค้า (A–E) + 🛠️ แอดมิน (F)</div>
   <div class="meta">
-    <span class="pill">32 เคส + E2E 3 = 35</span>
+    <span class="pill">36 เคส + E2E 3 = 39</span>
     <span class="pill">6 กลุ่ม: ลูกค้า (A–E) + แอดมิน (F)</span>
     <span class="pill">UI + E2E · manual</span>
-    <span class="pill">P0 11 · P1 16 · P2 8</span>
-    <span class="pill">ประเภท: Happy 14 · Negative 2 · Boundary 7 · Validation 3 · Exception 1 · Permission 3 · Data 5</span>
+    <span class="pill">P0 11 · P1 19 · P2 9</span>
+    <span class="pill">ประเภท: Happy 14 · Negative 2 · Boundary 9 · Validation 3 · Exception 1 · Permission 3 · Data 7</span>
   </div>
 </header>
 
 <div class="wrap">
 
-  <div class="note-box">⛔ <b>ยังเทสบน UAT ไม่ได้ (30 ต.ค.):</b> โค้ดอยู่ที่ branch <code>feature/TKRD-403-checklink-capture</code> @ <code>e85998f1</code> ยังไม่ merge develop / ไม่ขึ้น UAT · Jira ยัง To Do · เคสเขียนล่วงหน้าจากโค้ด dev — ถ้ายังไม่ deploy ให้ลง <b>BLOCKED</b><br>🔧 <b>ก่อนรันต้องมี (ฝั่ง DEV/DevOps):</b> worker มี <code>CLOUDBOX_URL</code> + <code>CLOUDBOX_TOKEN</code> · เปิด <code>CAPTURE_DW_WRITE=on</code> (กลุ่ม E) · สวิตช์ <code>checkjoVisible</code> ของ UAT ต้องเปิด (รอบ 27 ต.ค. เป็น <code>false</code> → หน้า /checklink จะเด้งไปหน้าหลัก) · ฟลีต Cloud-Box ต้องรับงาน (21 ต.ค. เคยค้าง)<br>⚠️ <b>ข้อควรรู้:</b> UAT เขียนผลลง ClickHouse ตัวเดียวกับ prod (เจ้าของตัดสินใจ 21 ต.ค.) — ผลเช็คตอนเทสจะลงข้อมูลจริงของหน้าค้นหา ใช้ลิงก์สินค้าจริงที่ขายอยู่ ไม่ต้องสร้างข้อมูลปลอม · ทุกการเช็คกินโควต้าวันนี้ของบัญชี — แอดมินเพิ่มให้ได้ที่ "สิทธิ์เช็คจอรายวัน" (กลุ่ม F) · ห้ามรันชุดใหญ่พร้อมคนอื่นบนบัญชีเดียวกัน<br>👥 <b>บัญชี:</b> ลูกค้าที่มีแพ็กเกจซึ่ง "เช็คจอได้ต่อวัน" > 0 · ลูกค้าที่แพ็กเกจตั้ง 0 · ลูกค้ายังไม่เปิดใช้งาน · แอดมิน · <b>ลิงก์:</b> ลิงก์สินค้า Shopee จริง 30+ ลิงก์ (ทั้งแบบ shopee.co.th/product/… และ …-i.shop.item) · ลิงก์เสีย/ไม่ใช่สินค้า · ลิงก์สั้น s.shopee.co.th (ยังไม่รองรับ)<br>📎 <b>ที่มา:</b> Jira TKRD-403 + คอมเมนต์ dev 21 ต.ค. · โค้ด branch dev (ไฟล์ <code>LinkCapture.tsx</code> · <code>LiveMarksModal.tsx</code> · <code>AdminEntitlementPanel.tsx</code>) · คำ UI จาก <code>th-checkjo.ts</code> (captureMessagesTh) · <code>th-search.ts</code> · <code>th-shell.ts</code><br>🏷️ <b>ประเภทเคส (กรองได้):</b> Happy Path · Negative · Boundary · Validation · Exception · Permission · Data · <b>Priority:</b> P0 = เกณฑ์ผ่านใน Jira · P1 = สำคัญ · P2 = รอง</div>
+  <div class="note-box">🔄 <b>อัปเดต 30 ต.ค.:</b> branch <code>feature/TKRD-403-checklink-capture</code> merge เข้า <code>develop</code> แล้ว (PR #390 · #391) · เคสเทียบกับ develop @ <code>2b3fe777</code> · เช็คก่อนรันว่า UAT deploy รุ่นที่มี TKRD-403 แล้ว — ถ้ายังไม่มีหน้า "ลิงก์สินค้า" ให้ลง <b>BLOCKED</b><br>🔧 <b>ก่อนรันต้องมี (ฝั่ง DEV/DevOps):</b> worker มี <code>CLOUDBOX_URL</code> + <code>CLOUDBOX_TOKEN</code> · เปิด <code>CAPTURE_DW_WRITE=on</code> (กลุ่ม E) · สวิตช์ <code>checkjoVisible</code> ของ UAT ต้องเปิด (รอบ 27 ต.ค. เป็น <code>false</code> → หน้า /checklink จะเด้งไปหน้าหลัก) · ฟลีต Cloud-Box ต้องรับงาน (21 ต.ค. เคยค้าง)<br>⚠️ <b>ข้อควรรู้:</b> UAT เขียนผลลง ClickHouse ตัวเดียวกับ prod (เจ้าของตัดสินใจ 21 ต.ค.) — ผลเช็คตอนเทสจะลงข้อมูลจริงของหน้าค้นหา ใช้ลิงก์สินค้าจริงที่ขายอยู่ ไม่ต้องสร้างข้อมูลปลอม · ทุกการเช็คกินโควต้าวันนี้ของบัญชี — แอดมินเพิ่มให้ได้ที่ "สิทธิ์เช็คจอรายวัน" (กลุ่ม F) · การกด "เช็คจอ" ในหน้า "ลิงก์สินค้า" นับ "ค้นหาวันนี้" 1 ครั้งต่อรอบด้วย · ห้ามรันชุดใหญ่พร้อมคนอื่นบนบัญชีเดียวกัน<br>👥 <b>บัญชี:</b> ลูกค้าที่มีแพ็กเกจซึ่ง "เช็คจอได้ต่อวัน" > 0 · ลูกค้าที่แพ็กเกจตั้ง 0 · ลูกค้ายังไม่เปิดใช้งาน · แอดมิน · <b>ลิงก์:</b> ลิงก์สินค้า Shopee จริง 30+ ลิงก์ (ทั้งแบบ shopee.co.th/product/… และ …-i.shop.item) · ลิงก์เสีย/ไม่ใช่สินค้า · ลิงก์สั้น s.shopee.co.th (ยังไม่รองรับ)<br>📎 <b>ที่มา:</b> Jira TKRD-403 + คอมเมนต์ dev 21 ต.ค. · โค้ด develop (ไฟล์ <code>LinkCapture.tsx</code> · <code>LiveMarksModal.tsx</code> · <code>AdminEntitlementPanel.tsx</code>) · คำ UI จาก <code>th-checkjo.ts</code> (captureMessagesTh) · <code>th-search.ts</code> · <code>th-shell.ts</code><br>🏷️ <b>ประเภทเคส (กรองได้):</b> Happy Path · Negative · Boundary · Validation · Exception · Permission · Data · <b>Priority:</b> P0 = เกณฑ์ผ่านใน Jira · P1 = สำคัญ · P2 = รอง</div>
 
   <div class="runsum">
     <h3>📊 สรุปผล Manual Test</h3>
@@ -176,10 +176,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
       <span class="cnt hold">HOLD <b id="sum-hold">0</b></span>
       <span class="cnt block">BLOCKED <b id="sum-block">0</b></span>
       <span class="cnt skip">SKIP <b id="sum-skip">0</b></span>
-      <span class="cnt pending">รอเทส <b id="sum-pending">35</b></span>
+      <span class="cnt pending">รอเทส <b id="sum-pending">39</b></span>
     </div>
     <div class="progress"><div id="sumbar" class="progressbar" style="width:0%"></div></div>
-    <div class="hint" id="sumpct" style="margin-top:5px">0% ทดสอบแล้ว (0/35)</div>
+    <div class="hint" id="sumpct" style="margin-top:5px">0% ทดสอบแล้ว (0/39)</div>
   </div>
 
   <div class="toolbar">
@@ -199,11 +199,11 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
   <div class="filters">
     <div class="row"><label>กลุ่ม</label>
-      <button class="fchip" data-f="feat" data-v="cla">👤 CL·A (6)</button><button class="fchip" data-f="feat" data-v="clb">👤 CL·B (8)</button><button class="fchip" data-f="feat" data-v="clc">👤 CL·C (7)</button><button class="fchip" data-f="feat" data-v="cld">👤 CL·D (6)</button><button class="fchip" data-f="feat" data-v="cle">👤 CL·E (4)</button><button class="fchip" data-f="feat" data-v="clf">🛠️ CL·F (4)</button>
+      <button class="fchip" data-f="feat" data-v="cla">👤 CL·A (6)</button><button class="fchip" data-f="feat" data-v="clb">👤 CL·B (8)</button><button class="fchip" data-f="feat" data-v="clc">👤 CL·C (7)</button><button class="fchip" data-f="feat" data-v="cld">👤 CL·D (8)</button><button class="fchip" data-f="feat" data-v="cle">👤 CL·E (4)</button><button class="fchip" data-f="feat" data-v="clf">🛠️ CL·F (6)</button>
       <button class="clearbtn" data-clear="feat">✕</button>
     </div>
     <div class="row"><label>ประเภท</label>
-      <button class="fchip" data-f="kind" data-v="happy" title="flow ปกติ">Happy Path (14)</button><button class="fchip" data-f="kind" data-v="negative" title="ข้อมูลผิด / action ผิด">Negative (2)</button><button class="fchip" data-f="kind" data-v="boundary" title="min · max · ก่อนขอบ · ตรงขอบ · เกินขอบ">Boundary (7)</button><button class="fchip" data-f="kind" data-v="validation" title="format · required · character · length">Validation (3)</button><button class="fchip" data-f="kind" data-v="exception" title="API fail · network fail · server error · timeout">Exception (1)</button><button class="fchip" data-f="kind" data-v="permission" title="role/สิทธิ์ ไหนทำได้ / ทำไม่ได้">Permission (3)</button><button class="fchip" data-f="kind" data-v="data" title="empty · null · duplicate · existing · non-existing">Data (5)</button>
+      <button class="fchip" data-f="kind" data-v="happy" title="flow ปกติ">Happy Path (14)</button><button class="fchip" data-f="kind" data-v="negative" title="ข้อมูลผิด / action ผิด">Negative (2)</button><button class="fchip" data-f="kind" data-v="boundary" title="min · max · ก่อนขอบ · ตรงขอบ · เกินขอบ">Boundary (9)</button><button class="fchip" data-f="kind" data-v="validation" title="format · required · character · length">Validation (3)</button><button class="fchip" data-f="kind" data-v="exception" title="API fail · network fail · server error · timeout">Exception (1)</button><button class="fchip" data-f="kind" data-v="permission" title="role/สิทธิ์ ไหนทำได้ / ทำไม่ได้">Permission (3)</button><button class="fchip" data-f="kind" data-v="data" title="empty · null · duplicate · existing · non-existing">Data (7)</button>
       <button class="clearbtn" data-clear="kind">✕</button>
     </div>
     <div class="row"><label>Priority</label>
@@ -874,8 +874,8 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 
 <!-- cld -->
-<tr class="epicrow" data-epic="cld"><td colspan="7">🎟️ 👤 ลูกค้า · D โควต้าเช็คจอต่อวันตามแพ็กเกจ <span class="rp">(6 เคส)</span> <a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-403" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-403 ใน Jira">🧩 Epic TKRD-403</a></td></tr>
-<tr class="featrow" data-featkey="cld"><td colspan="7">📁 👤 ลูกค้า · D โควต้าเช็คจอต่อวันตามแพ็กเกจ <span class="rp"><span class="lv lvl-ui">🌐 6</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="cld"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="epicrow" data-epic="cld"><td colspan="7">🎟️ 👤 ลูกค้า · D โควต้าเช็คจอต่อวันตามแพ็กเกจ <span class="rp">(8 เคส)</span> <a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-403" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-403 ใน Jira">🧩 Epic TKRD-403</a></td></tr>
+<tr class="featrow" data-featkey="cld"><td colspan="7">📁 👤 ลูกค้า · D โควต้าเช็คจอต่อวันตามแพ็กเกจ <span class="rp"><span class="lv lvl-ui">🌐 8</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="cld"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
 <tr class="trow" data-feat="cld" data-level="ui" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">CL-D.1</td>
   <td class="ctitle">บรรทัด "วันนี้เช็คไปแล้ว X / Y ลิงก์" เพิ่มตามจำนวนลิงก์ที่เข้าเช็ค และ Y ตรงกับแพ็กเกจ + ที่แอดมินเพิ่มให้ <span class="kd kd-happy">Happy Path</span></td>
@@ -919,7 +919,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-403" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-403 ใน Jira">🧩 Epic TKRD-403</a> · Priority: <b>P0</b> · UI · ประเภท: <b>Boundary</b> <span class="hint">(min · max · ก่อนขอบ · ตรงขอบ · เกินขอบ)</span> · 👤 ลูกค้า · D โควต้าเช็คจอต่อวันตามแพ็กเกจ</div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ Trendora (takra-radar) รุ่น UAT ที่ https://uat-radar.takra.ai (ผ่าน Cloudflare Access แล้ว) แล้วเข้าสู่ระบบด้วยบัญชีลูกค้าที่โควต้าวันนี้เหลือน้อย (ให้แอดมินตั้งให้เหลือ เช่น 2)</li><li>ไปที่เมนู "เช็คจอ" → "ลิงก์สินค้า" จด X / Y</li><li>วางลิงก์ในช่อง "ลิงก์สินค้า" (1 ลิงก์ต่อ 1 บรรทัด) แล้วกด "เช็คจอ" โดยวางลิงก์ใหม่มากกว่าที่เหลือ 1 ลิงก์ (เช่น เหลือ 2 วาง 3)</li><li>วางใหม่เท่ากับที่เหลือพอดีแล้วกด "เช็คจอ"</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>เกิน: ขึ้นข้อความ "วันนี้เช็คครบแล้ว หรือชุดนี้จะเกินจำนวนที่เหลือ · เช็คได้อีกครั้งพรุ่งนี้ 00:00" · ไม่มีแถวใหม่ · X ไม่เปลี่ยน (ไม่ตัดเหลือบางลิงก์)</li><li>เท่ากับที่เหลือพอดี: เช็คได้ทุกลิงก์ และ X = Y</li></ul><div class="hint" style="margin-top:6px">ที่มา: Jira TKRD-403 เกณฑ์ผ่าน ("เกินโควต้าแพ็กเกจ → ถูกปฏิเสธทั้งชุดพร้อมข้อความ")</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>เกิน: ขึ้นข้อความ "วันนี้เช็คครบ Y รายการแล้ว หรือชุดนี้จะเกินจำนวนที่เหลือ · เช็คได้อีกครั้งพรุ่งนี้ 00:00" (Y = โควต้าต่อวันของบัญชี) · ไม่มีแถวใหม่ · X ไม่เปลี่ยน (ไม่ตัดเหลือบางลิงก์) · "ค้นหาวันนี้" ไม่เพิ่ม</li><li>เท่ากับที่เหลือพอดี: เช็คได้ทุกลิงก์ และ X = Y</li></ul><div class="hint" style="margin-top:6px">ที่มา: Jira TKRD-403 เกณฑ์ผ่าน ("เกินโควต้าแพ็กเกจ → ถูกปฏิเสธทั้งชุดพร้อมข้อความ") · th.ts dailyLimitMessageTh.CHECKJO_DAILY_LIMIT · b80faaad (ชุดที่ถูกปฏิเสธไม่ถูกหักเพดานไหนเลย)</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -949,7 +949,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-403" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-403 ใน Jira">🧩 Epic TKRD-403</a> · Priority: <b>P1</b> · UI · ประเภท: <b>Boundary</b> <span class="hint">(min · max · ก่อนขอบ · ตรงขอบ · เกินขอบ)</span> · 👤 ลูกค้า · D โควต้าเช็คจอต่อวันตามแพ็กเกจ</div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ Trendora (takra-radar) รุ่น UAT ที่ https://uat-radar.takra.ai (ผ่าน Cloudflare Access แล้ว) แล้วเข้าสู่ระบบด้วยบัญชีลูกค้าที่ใช้โควต้าวันนี้ครบแล้ว (X = Y)</li><li>ไปที่เมนู "เช็คจอ" → "ลิงก์สินค้า" แล้วกด "เช็คใหม่" ที่แถวหนึ่ง (ถ้ามี) หรือเช็คลิงก์ใหม่ 1 ลิงก์</li><li>เปิดหน้าต่างจอของสินค้าในหน้าค้นหา แล้วกด "เช็คจอตอนนี้"</li><li>หลัง 00:00 ของวันถัดไป เข้าหน้าเดิมแล้วเช็ค 1 ลิงก์</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ทุกทางถูกปฏิเสธด้วยข้อความโควต้าวันนี้ และไม่มีปุ่มให้ลองซ้ำในหน้าต่างจอ</li><li>หลังเที่ยงคืน เช็คได้และบรรทัดโควต้าเริ่มนับใหม่ ("วันนี้เช็คไปแล้ว 1 / Y ลิงก์")</li></ul><div class="hint" style="margin-top:6px">ที่มา: Jira TKRD-403 · th.ts CHECKJO_DAILY_LIMIT</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ทุกทาง ("เช็คใหม่" / เช็คลิงก์ใหม่ / "เช็คจอตอนนี้" ในหน้าต่างจอ) ถูกปฏิเสธด้วย "วันนี้เช็คครบ Y รายการแล้ว หรือชุดนี้จะเกินจำนวนที่เหลือ · เช็คได้อีกครั้งพรุ่งนี้ 00:00" และไม่มีปุ่มให้ลองซ้ำในหน้าต่างจอ</li><li>หลังเที่ยงคืน เช็คได้และบรรทัดโควต้าเริ่มนับใหม่ ("วันนี้เช็คไปแล้ว 1 / Y ลิงก์")</li></ul><div class="hint" style="margin-top:6px">ที่มา: Jira TKRD-403 · th.ts CHECKJO_DAILY_LIMIT · ca03ea73 (เช็คจอตอนนี้ ยังนับโควต้าเช็คจอ — ที่ไม่นับคือ ค้นหาวันนี้)</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -998,18 +998,18 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 <tr class="trow" data-feat="cld" data-level="ui" data-prio="P1" data-kind="data" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">CL-D.5</td>
-  <td class="ctitle">เช็คสินค้าเดิมซ้ำภายใน 10 นาที → ได้ผลเดิมทันทีและไม่กินโควต้า · "เช็คใหม่" กินโควต้า +1 <span class="kd kd-data">Data</span></td>
+  <td class="ctitle">เช็คสินค้าเดิมซ้ำภายใน 10 นาที (วางลิงก์ซ้ำ หรือกด "เช็คจอตอนนี้") → ได้ผลเดิมทันทีและไม่กินโควต้า · พ้น 10 นาทีแล้วเช็คใหม่จริงและกินโควต้า +1 <span class="kd kd-data">Data</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
   <td class="status" data-uid="tc-20026"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-20026"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">เช็คสินค้าเดิมซ้ำภายใน 10 นาที → ได้ผลเดิมทันทีและไม่กินโควต้า · "เช็คใหม่" กินโควต้า +1</div>
+  <div class="h-title">เช็คสินค้าเดิมซ้ำภายใน 10 นาที (วางลิงก์ซ้ำ หรือกด "เช็คจอตอนนี้") → ได้ผลเดิมทันทีและไม่กินโควต้า · พ้น 10 นาทีแล้วเช็คใหม่จริงและกินโควต้า +1</div>
   <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-403" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-403 ใน Jira">🧩 Epic TKRD-403</a> · Priority: <b>P1</b> · UI · ประเภท: <b>Data</b> <span class="hint">(empty · null · duplicate · existing · non-existing)</span> · 👤 ลูกค้า · D โควต้าเช็คจอต่อวันตามแพ็กเกจ</div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ Trendora (takra-radar) รุ่น UAT ที่ https://uat-radar.takra.ai (ผ่าน Cloudflare Access แล้ว) แล้วเข้าสู่ระบบด้วยบัญชีลูกค้าที่มีแพ็กเกจเช็คจอได้ (โควต้าวันนี้ยังเหลือ)</li><li>ไปที่เมนู "เช็คจอ" → "ลิงก์สินค้า"</li><li>วางลิงก์ในช่อง "ลิงก์สินค้า" (1 ลิงก์ต่อ 1 บรรทัด) แล้วกด "เช็คจอ" (1 ลิงก์) รอจนเสร็จ แล้วจดบรรทัดโควต้าและ "ข้อมูลล่าสุดเมื่อ" ในหน้าต่างจอ</li><li>ภายใน 10 นาที วางลิงก์เดิมแล้วกด "เช็คจอ" อีกครั้ง</li><li>กด "เช็คจอตอนนี้" ในหน้าต่างจอของสินค้านั้น (บังคับเช็คใหม่)</li></ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ Trendora (takra-radar) รุ่น UAT ที่ https://uat-radar.takra.ai (ผ่าน Cloudflare Access แล้ว) แล้วเข้าสู่ระบบด้วยบัญชีลูกค้าที่มีแพ็กเกจเช็คจอได้ (โควต้าวันนี้ยังเหลือ)</li><li>ไปที่เมนู "เช็คจอ" → "ลิงก์สินค้า" แล้ววางลิงก์ในช่อง "ลิงก์สินค้า" (1 ลิงก์ต่อ 1 บรรทัด) แล้วกด "เช็คจอ" (1 ลิงก์) รอจนเสร็จ จดบรรทัดโควต้า และ "ข้อมูลล่าสุดเมื่อ" ในหน้าต่างจอของแถวนั้น</li><li>ภายใน 10 นาที วางลิงก์เดิมแล้วกด "เช็คจอ" อีกครั้ง</li><li>ภายใน 10 นาทีเช่นกัน ไปที่เมนู "ค้นหา" ค้นสินค้าเดียวกัน เปิดหน้าต่างจอ แล้วกด "เช็คจอตอนนี้"</li><li>รอให้พ้น 10 นาทีจากเวลาที่เช็คเสร็จ แล้วกลับไปหน้า "ลิงก์สินค้า" วางลิงก์เดิมกด "เช็คจอ" อีกครั้ง</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ภายใน 10 นาที: แถวเสร็จเร็วด้วยผลชุดเดิม ("ข้อมูลล่าสุดเมื่อ" เวลาเดิม) และโควต้าไม่เพิ่ม</li><li>กดเช็คใหม่: เดินสถานะใหม่ เวลาในหน้าต่างจอเป็นเวลาใหม่ และโควต้าเพิ่ม 1</li></ul><div class="hint" style="margin-top:6px">ที่มา: 4128e0f7 (ใช้ผลอายุไม่เกิน 10 นาทีซ้ำโดยไม่นับโควต้า) · คอมเมนต์ dev 21 ต.ค. (เช็คใหม่ นับโควต้า +1)</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ภายใน 10 นาที (ทั้งวางลิงก์ซ้ำและ "เช็คจอตอนนี้"): แถวเสร็จเร็วด้วยผลชุดเดิม ("ข้อมูลล่าสุดเมื่อ" เวลาเดิม) และ "วันนี้เช็คไปแล้ว X / Y ลิงก์" ไม่เพิ่ม</li><li>พ้น 10 นาที: แถวเดินสถานะใหม่จนจบ "ข้อมูลล่าสุดเมื่อ" เป็นเวลาใหม่ และโควต้าเพิ่ม 1</li></ul><div class="hint" style="margin-top:6px">ที่มา: 4128e0f7 (ใช้ผลอายุไม่เกิน 10 นาทีซ้ำโดยไม่นับโควต้า) · develop capture.service recentReadings + CAPTURE_CONFIG.cacheMs = 10 นาที (ใช้กับทั้งวางลิงก์และ เช็คจอตอนนี้)</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1056,24 +1056,20 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 </div></td></tr>
 
-
-<!-- cle -->
-<tr class="epicrow" data-epic="cle"><td colspan="7">🔎 👤 ลูกค้า · E หน้าค้นหา — เช็คจอตอนนี้ และผลเช็คขึ้นในหน้าค้นหา <span class="rp">(4 เคส)</span> <a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-403" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-403 ใน Jira">🧩 Epic TKRD-403</a></td></tr>
-<tr class="featrow" data-featkey="cle"><td colspan="7">📁 👤 ลูกค้า · E หน้าค้นหา — เช็คจอตอนนี้ และผลเช็คขึ้นในหน้าค้นหา <span class="rp"><span class="lv lvl-ui">🌐 3</span> <span class="lv lvl-e2e">🔄 1</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="cle"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
-<tr class="trow" data-feat="cle" data-level="ui" data-prio="P1" data-kind="happy" data-ui="yes" onclick="tg(this)">
-  <td><span class="tog">▸</span></td><td class="cid">CL-E.1</td>
-  <td class="ctitle">หน้าค้นหา: หน้าต่างจอ/วิดีโอมีปุ่ม "เช็คจอตอนนี้" → เช็คสดแล้วอัปเดตแถวนั้น <span class="kd kd-happy">Happy Path</span></td>
+<tr class="trow" data-feat="cld" data-level="ui" data-prio="P1" data-kind="data" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">CL-D.7</td>
+  <td class="ctitle">กด "เช็คจอ" ในหน้า "ลิงก์สินค้า" หนึ่งรอบ นับ "ค้นหาวันนี้" 1 ครั้ง ไม่ว่าวางกี่ลิงก์ <span class="kd kd-data">Data</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
   <td class="status" data-uid="tc-20028"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-20028"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">หน้าค้นหา: หน้าต่างจอ/วิดีโอมีปุ่ม "เช็คจอตอนนี้" → เช็คสดแล้วอัปเดตแถวนั้น</div>
-  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-403" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-403 ใน Jira">🧩 Epic TKRD-403</a> · Priority: <b>P1</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · 👤 ลูกค้า · E หน้าค้นหา — เช็คจอตอนนี้ และผลเช็คขึ้นในหน้าค้นหา</div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ Trendora (takra-radar) รุ่น UAT ที่ https://uat-radar.takra.ai (ผ่าน Cloudflare Access แล้ว) แล้วเข้าสู่ระบบด้วยบัญชีลูกค้าที่มีแพ็กเกจเช็คจอได้ (โควต้าวันนี้ยังเหลือ)</li><li>ไปที่เมนู "ค้นหา" ค้นสินค้า แล้วกดไอคอนจอ/วิดีโอของสินค้าหนึ่ง</li><li>กด "เช็คจอตอนนี้" แล้วรอ</li><li>ปิดหน้าต่างแล้วเปิดใหม่</li></ol></div>
+  <div class="h-title">กด "เช็คจอ" ในหน้า "ลิงก์สินค้า" หนึ่งรอบ นับ "ค้นหาวันนี้" 1 ครั้ง ไม่ว่าวางกี่ลิงก์</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-403" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-403 ใน Jira">🧩 Epic TKRD-403</a> · Priority: <b>P1</b> · UI · ประเภท: <b>Data</b> <span class="hint">(empty · null · duplicate · existing · non-existing)</span> · 👤 ลูกค้า · D โควต้าเช็คจอต่อวันตามแพ็กเกจ</div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ Trendora (takra-radar) รุ่น UAT ที่ https://uat-radar.takra.ai (ผ่าน Cloudflare Access แล้ว) แล้วเข้าสู่ระบบด้วยบัญชีลูกค้าที่มีแพ็กเกจเช็คจอได้ (โควต้าเช็คจอและ "ค้นหาวันนี้" ยังเหลือ) แล้วจดตัวเลข "ค้นหาวันนี้" ที่เมนูด้านข้าง</li><li>ไปที่เมนู "เช็คจอ" → "ลิงก์สินค้า" แล้ววางลิงก์ในช่อง "ลิงก์สินค้า" (1 ลิงก์ต่อ 1 บรรทัด) แล้วกด "เช็คจอ" โดยวาง 5 ลิงก์ใหม่ในรอบเดียว รอจนเสร็จ</li><li>รีเฟรชหน้า แล้วดู "ค้นหาวันนี้" อีกครั้ง</li><li>วางลิงก์ใหม่อีก 1 ลิงก์แล้วกด "เช็คจอ" รีเฟรชหน้า แล้วดู "ค้นหาวันนี้"</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ระหว่างเช็ค ปุ่มแสดงสถานะการเช็คแบบเดียวกับหน้า "ลิงก์สินค้า"</li><li>เสร็จแล้วหน้าต่างแสดงจอ/วิดีโอจากผลเช็คล่าสุด ("ข้อมูลล่าสุดเมื่อ" เป็นเวลาตอนนี้) และไอคอนในแถวอัปเดตตาม</li><li>เปิดหน้าต่างใหม่ยังเห็นผลที่เพิ่งเช็ค · โควต้าวันนี้เพิ่ม 1</li></ul><div class="hint" style="margin-top:6px">ที่มา: 383f982c · 76902531 · 38500b9c (เช็คจอตอนนี้ในหน้าต่างจอ/วิดีโอ)</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>หลังรอบ 5 ลิงก์: "ค้นหาวันนี้" เพิ่ม 1 ครั้ง (ไม่ใช่ 5) · "วันนี้เช็คไปแล้ว X / Y ลิงก์" เพิ่ม 5</li><li>หลังรอบ 1 ลิงก์: "ค้นหาวันนี้" เพิ่มอีก 1 ครั้ง</li></ul><div class="hint" style="margin-top:6px">ที่มา: b80faaad (เจ้าของ 30 ต.ค. "หนึ่งรอบคือหนึ่งการค้นหา") · th-search meterLabel / meterValue</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1090,20 +1086,20 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 </div></td></tr>
 
-<tr class="trow" data-feat="cle" data-level="ui" data-prio="P1" data-kind="data" data-ui="yes" onclick="tg(this)">
-  <td><span class="tog">▸</span></td><td class="cid">CL-E.2</td>
-  <td class="ctitle">สินค้าที่ยังไม่เคยเช็คจอ: แถวในหน้าค้นหาแสดงปุ่ม "เช็คจอ" แทนไอคอน + ข้อความในหน้าต่าง <span class="kd kd-data">Data</span></td>
+<tr class="trow" data-feat="cld" data-level="ui" data-prio="P1" data-kind="boundary" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">CL-D.8</td>
+  <td class="ctitle">"ค้นหาวันนี้" ครบแล้ว → กด "เช็คจอ" ในหน้า "ลิงก์สินค้า" ถูกปฏิเสธทั้งรอบ และไม่กินโควต้าเช็คจอ <span class="kd kd-bnd">Boundary</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
   <td class="status" data-uid="tc-20029"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-20029"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">สินค้าที่ยังไม่เคยเช็คจอ: แถวในหน้าค้นหาแสดงปุ่ม "เช็คจอ" แทนไอคอน + ข้อความในหน้าต่าง</div>
-  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-403" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-403 ใน Jira">🧩 Epic TKRD-403</a> · Priority: <b>P1</b> · UI · ประเภท: <b>Data</b> <span class="hint">(empty · null · duplicate · existing · non-existing)</span> · 👤 ลูกค้า · E หน้าค้นหา — เช็คจอตอนนี้ และผลเช็คขึ้นในหน้าค้นหา</div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ Trendora (takra-radar) รุ่น UAT ที่ https://uat-radar.takra.ai (ผ่าน Cloudflare Access แล้ว) แล้วเข้าสู่ระบบด้วยบัญชีลูกค้าที่มีแพ็กเกจเช็คจอได้ (โควต้าวันนี้ยังเหลือ)</li><li>ไปที่เมนู "ค้นหา" แล้วหาสินค้าที่ยังไม่มีข้อมูลจอ (ไอคอนจอ/วิดีโอไม่มี)</li><li>ชี้เมาส์ที่ปุ่มในคอลัมน์ "จอ · วิดีโอ" แล้วกดเปิด</li></ol></div>
+  <div class="h-title">"ค้นหาวันนี้" ครบแล้ว → กด "เช็คจอ" ในหน้า "ลิงก์สินค้า" ถูกปฏิเสธทั้งรอบ และไม่กินโควต้าเช็คจอ</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-403" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-403 ใน Jira">🧩 Epic TKRD-403</a> · Priority: <b>P1</b> · UI · ประเภท: <b>Boundary</b> <span class="hint">(min · max · ก่อนขอบ · ตรงขอบ · เกินขอบ)</span> · 👤 ลูกค้า · D โควต้าเช็คจอต่อวันตามแพ็กเกจ</div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ Trendora (takra-radar) รุ่น UAT ที่ https://uat-radar.takra.ai (ผ่าน Cloudflare Access แล้ว) แล้วเข้าสู่ระบบด้วยบัญชีลูกค้าที่ "ค้นหาวันนี้" ครบแล้ว (ค้นหาจนมิเตอร์ที่เมนูด้านข้างขึ้น "ครบแล้ว") แต่โควต้าเช็คจอยังเหลือ</li><li>ไปที่เมนู "เช็คจอ" → "ลิงก์สินค้า" จด "วันนี้เช็คไปแล้ว X / Y ลิงก์"</li><li>วางลิงก์ในช่อง "ลิงก์สินค้า" (1 ลิงก์ต่อ 1 บรรทัด) แล้วกด "เช็คจอ" (ลิงก์ใหม่ 2 ลิงก์)</li><li>สังเกตข้อความ ตาราง "ผลเช็คจอ" และบรรทัดโควต้า</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>แถวแสดงปุ่ม "เช็คจอ" แทนสองไอคอน (คำอธิบาย "ยังไม่เคยเช็คจอสินค้านี้ · เปิดเพื่อเช็คจอ")</li><li>หน้าต่างขึ้น "ยังไม่เคยเช็คจอสินค้านี้ — กด เช็คจอตอนนี้ เพื่อดูว่าตอนนี้ขึ้นจอไหน และมีวิดีโออะไรบ้าง" + ปุ่ม "เช็คจอตอนนี้"</li></ul><div class="hint" style="margin-top:6px">ที่มา: 76902531 (เช็คจอตอนนี้ไปถึงแถวที่ไม่เคยอ่าน) · th-search checkUnread / unreadBody</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ขึ้นข้อความ "วันนี้ค้นหาครบ N ครั้งแล้ว · ค้นหาได้อีกครั้งพรุ่งนี้ 00:00" (N = เพดานค้นหาต่อวัน)</li><li>ไม่มีแถวใหม่เข้าเช็ค · X ไม่เปลี่ยน (รอบที่ถูกปฏิเสธไม่ถูกหักเพดานไหนเลย)</li></ul><div class="hint" style="margin-top:6px">ที่มา: b80faaad (รอบเช็คจอนับและถูกกั้นด้วยเพดานค้นหา · ปฏิเสธแล้วไม่หัก) · th.ts dailyLimitMessageTh.SEARCH_DAILY_LIMIT</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1120,20 +1116,24 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 </div></td></tr>
 
-<tr class="trow" data-feat="cle" data-level="e2e" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
-  <td><span class="tog">▸</span></td><td class="cid">CL-E.3</td>
-  <td class="ctitle">เปิดเขียนผลลงคลังข้อมูลแล้ว: สินค้าที่เพิ่งเช็คในหน้า "ลิงก์สินค้า" ขึ้นจอ/วิดีโอในหน้าค้นหาด้วย <span class="kd kd-happy">Happy Path</span></td>
-  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
-  <td><span class="prio p0">P0</span></td>
+
+<!-- cle -->
+<tr class="epicrow" data-epic="cle"><td colspan="7">🔎 👤 ลูกค้า · E หน้าค้นหา — เช็คจอตอนนี้ และผลเช็คขึ้นในหน้าค้นหา <span class="rp">(4 เคส)</span> <a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-403" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-403 ใน Jira">🧩 Epic TKRD-403</a></td></tr>
+<tr class="featrow" data-featkey="cle"><td colspan="7">📁 👤 ลูกค้า · E หน้าค้นหา — เช็คจอตอนนี้ และผลเช็คขึ้นในหน้าค้นหา <span class="rp"><span class="lv lvl-ui">🌐 3</span> <span class="lv lvl-e2e">🔄 1</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="cle"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow" data-feat="cle" data-level="ui" data-prio="P1" data-kind="happy" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">CL-E.1</td>
+  <td class="ctitle">หน้าค้นหา: หน้าต่างจอ/วิดีโอมีปุ่ม "เช็คจอตอนนี้" → เช็คสดแล้วอัปเดตแถวนั้น (นับโควต้าเช็คจอ แต่ไม่นับ "ค้นหาวันนี้") <span class="kd kd-happy">Happy Path</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
   <td class="status" data-uid="tc-20030"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-20030"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">เปิดเขียนผลลงคลังข้อมูลแล้ว: สินค้าที่เพิ่งเช็คในหน้า "ลิงก์สินค้า" ขึ้นจอ/วิดีโอในหน้าค้นหาด้วย</div>
-  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-403" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-403 ใน Jira">🧩 Epic TKRD-403</a> · Priority: <b>P0</b> · E2E · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · 👤 ลูกค้า · E หน้าค้นหา — เช็คจอตอนนี้ และผลเช็คขึ้นในหน้าค้นหา</div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ Trendora (takra-radar) รุ่น UAT ที่ https://uat-radar.takra.ai (ผ่าน Cloudflare Access แล้ว) แล้วเข้าสู่ระบบด้วยบัญชีลูกค้าที่มีแพ็กเกจเช็คจอได้ (โควต้าวันนี้ยังเหลือ)</li><li>ไปที่เมนู "เช็คจอ" → "ลิงก์สินค้า" แล้วเช็คสินค้าที่ยังไม่มีข้อมูลจอในหน้าค้นหา (จาก CL-E.2) รอจนเสร็จและมีจอ ≥ 1</li><li>ไปที่เมนู "ค้นหา" ค้นสินค้าเดียวกัน (รีเฟรชถ้าจำเป็น รอไม่กี่นาที)</li><li>กดไอคอนจอของสินค้านั้น</li></ol></div>
+  <div class="h-title">หน้าค้นหา: หน้าต่างจอ/วิดีโอมีปุ่ม "เช็คจอตอนนี้" → เช็คสดแล้วอัปเดตแถวนั้น (นับโควต้าเช็คจอ แต่ไม่นับ "ค้นหาวันนี้")</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-403" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-403 ใน Jira">🧩 Epic TKRD-403</a> · Priority: <b>P1</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · 👤 ลูกค้า · E หน้าค้นหา — เช็คจอตอนนี้ และผลเช็คขึ้นในหน้าค้นหา</div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ Trendora (takra-radar) รุ่น UAT ที่ https://uat-radar.takra.ai (ผ่าน Cloudflare Access แล้ว) แล้วเข้าสู่ระบบด้วยบัญชีลูกค้าที่มีแพ็กเกจเช็คจอได้ (โควต้าวันนี้ยังเหลือ)</li><li>ไปที่เมนู "ค้นหา" ค้นสินค้า แล้วกดไอคอนจอ/วิดีโอของสินค้าหนึ่ง จดตัวเลข "ค้นหาวันนี้" ที่เมนูด้านข้าง</li><li>กด "เช็คจอตอนนี้" แล้วรอ</li><li>ปิดหน้าต่างแล้วเปิดใหม่ แล้วดู "ค้นหาวันนี้" อีกครั้ง</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ในหน้าค้นหา สินค้านั้นมีไอคอนจอ/วิดีโอแทนปุ่ม "เช็คจอ" และจำนวนตรงกับผลในหน้า "ลิงก์สินค้า"</li><li>หน้าต่างจอแสดงจอชุดเดียวกัน พร้อม "ข้อมูลล่าสุดเมื่อ" เวลาที่เช็ค</li></ul><div class="hint" style="margin-top:6px">ที่มา: Jira TKRD-403 เกณฑ์ผ่าน ("เปิด CAPTURE_DW_WRITE แล้วสินค้าที่เช็คขึ้นจอ/วิดีโอในหน้าค้นหา")</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ระหว่างเช็ค ปุ่มแสดงสถานะการเช็คแบบเดียวกับหน้า "ลิงก์สินค้า"</li><li>เสร็จแล้วหน้าต่างแสดงจอ/วิดีโอจากผลเช็คล่าสุด ("ข้อมูลล่าสุดเมื่อ" เป็นเวลาตอนนี้) และไอคอนในแถวอัปเดตตาม</li><li>เปิดหน้าต่างใหม่ยังเห็นผลที่เพิ่งเช็ค · โควต้าเช็คจอวันนี้เพิ่ม 1 (ดู "วันนี้เช็คไปแล้ว X / Y ลิงก์" ในหน้า "ลิงก์สินค้า")</li><li>"ค้นหาวันนี้" ที่เมนูด้านข้างไม่เพิ่มจากการกด "เช็คจอตอนนี้" (เพิ่มเฉพาะตอนค้นหา)</li></ul><div class="hint" style="margin-top:6px">ที่มา: 383f982c · 76902531 · 38500b9c (เช็คจอตอนนี้ในหน้าต่างจอ/วิดีโอ) · ca03ea73 (เช็คจอตอนนี้ ไม่กินโควต้าค้นหา — เปิดมาจากแถวที่ค้นหาไปแล้ว)</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1150,20 +1150,20 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 </div></td></tr>
 
-<tr class="trow" data-feat="cle" data-level="ui" data-prio="P2" data-kind="validation" data-ui="yes" onclick="tg(this)">
-  <td><span class="tog">▸</span></td><td class="cid">CL-E.4</td>
-  <td class="ctitle">คะแนน (score) ของจอบอกว่าเทียบได้เฉพาะเครื่องเดียวกัน — ไม่มีคำบอกอุปกรณ์บนหน้าจอลูกค้า <span class="kd kd-val">Validation</span></td>
+<tr class="trow" data-feat="cle" data-level="ui" data-prio="P1" data-kind="data" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">CL-E.2</td>
+  <td class="ctitle">สินค้าที่ยังไม่เคยเช็คจอ: แถวในหน้าค้นหาแสดงปุ่ม "เช็คจอ" แทนไอคอน + ข้อความในหน้าต่าง <span class="kd kd-data">Data</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
-  <td><span class="prio p2">P2</span></td>
+  <td><span class="prio p1">P1</span></td>
   <td class="status" data-uid="tc-20031"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-20031"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">คะแนน (score) ของจอบอกว่าเทียบได้เฉพาะเครื่องเดียวกัน — ไม่มีคำบอกอุปกรณ์บนหน้าจอลูกค้า</div>
-  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-403" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-403 ใน Jira">🧩 Epic TKRD-403</a> · Priority: <b>P2</b> · UI · ประเภท: <b>Validation</b> <span class="hint">(format · required · character · length)</span> · 👤 ลูกค้า · E หน้าค้นหา — เช็คจอตอนนี้ และผลเช็คขึ้นในหน้าค้นหา</div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ Trendora (takra-radar) รุ่น UAT ที่ https://uat-radar.takra.ai (ผ่าน Cloudflare Access แล้ว) แล้วเข้าสู่ระบบด้วยบัญชีลูกค้าที่มีแพ็กเกจเช็คจอได้ (โควต้าวันนี้ยังเหลือ)</li><li>ไปที่เมนู "เช็คจอ" → "ลิงก์สินค้า" แล้วเช็คสินค้าที่มีจอ รอจนเสร็จ</li><li>เปิดหน้าต่างจอ อ่านทุกบรรทัด และค้นคำ "มือถือ" / "โทรศัพท์" / "คิว" ในหน้า (Cmd/Ctrl+F)</li></ol></div>
+  <div class="h-title">สินค้าที่ยังไม่เคยเช็คจอ: แถวในหน้าค้นหาแสดงปุ่ม "เช็คจอ" แทนไอคอน + ข้อความในหน้าต่าง</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-403" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-403 ใน Jira">🧩 Epic TKRD-403</a> · Priority: <b>P1</b> · UI · ประเภท: <b>Data</b> <span class="hint">(empty · null · duplicate · existing · non-existing)</span> · 👤 ลูกค้า · E หน้าค้นหา — เช็คจอตอนนี้ และผลเช็คขึ้นในหน้าค้นหา</div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ Trendora (takra-radar) รุ่น UAT ที่ https://uat-radar.takra.ai (ผ่าน Cloudflare Access แล้ว) แล้วเข้าสู่ระบบด้วยบัญชีลูกค้าที่มีแพ็กเกจเช็คจอได้ (โควต้าวันนี้ยังเหลือ)</li><li>ไปที่เมนู "ค้นหา" แล้วหาสินค้าที่ยังไม่มีข้อมูลจอ (ไอคอนจอ/วิดีโอไม่มี)</li><li>ชี้เมาส์ที่ปุ่มในคอลัมน์ "จอ · วิดีโอ" แล้วกดเปิด</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ไม่พบคำ "มือถือ" / "โทรศัพท์" / "คิว" ในหน้า "ลิงก์สินค้า" และหน้าต่างจอ</li><li>จดว่ามีตัวเลข score แสดงหรือไม่ — Jira ขอให้แสดง score แต่โค้ดฝั่งเว็บยังไม่พบคำ score (ถ้าไม่เห็นให้ลง HOLD และถาม dev)</li></ul><div class="hint" style="margin-top:6px">ที่มา: Jira TKRD-403 ("score คู่กับเครื่องที่วัด — เทียบข้ามเครื่องไม่ได้") · เจ้าของ 21 ต.ค. / CEO 28 ต.ค. (ไม่บอกอุปกรณ์ ไม่ใช้คำ คิว)</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>แถวแสดงปุ่ม "เช็คจอ" แทนสองไอคอน (คำอธิบาย "ยังไม่เคยเช็คจอสินค้านี้ · เปิดเพื่อเช็คจอ")</li><li>หน้าต่างขึ้น "ยังไม่เคยเช็คจอสินค้านี้ — กด เช็คจอตอนนี้ เพื่อดูว่าตอนนี้ขึ้นจอไหน และมีวิดีโออะไรบ้าง" + ปุ่ม "เช็คจอตอนนี้"</li></ul><div class="hint" style="margin-top:6px">ที่มา: 76902531 (เช็คจอตอนนี้ไปถึงแถวที่ไม่เคยอ่าน) · th-search checkUnread / unreadBody</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1180,24 +1180,20 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 </div></td></tr>
 
-
-<!-- clf -->
-<tr class="epicrow" data-epic="clf"><td colspan="7">🛠️ 🛠️ แอดมิน · F ตั้งโควต้า — ฟอร์มแพ็กเกจ + สิทธิ์เช็คจอรายวันต่อบัญชี <span class="rp">(4 เคส)</span> <a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-403" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-403 ใน Jira">🧩 Epic TKRD-403</a></td></tr>
-<tr class="featrow" data-featkey="clf"><td colspan="7">📁 🛠️ แอดมิน · F ตั้งโควต้า — ฟอร์มแพ็กเกจ + สิทธิ์เช็คจอรายวันต่อบัญชี <span class="rp"><span class="lv lvl-ui">🌐 4</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="clf"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
-<tr class="trow" data-feat="clf" data-level="ui" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
-  <td><span class="tog">▸</span></td><td class="cid">CL-F.1</td>
-  <td class="ctitle">ฟอร์มแพ็กเกจมีช่อง "เช็คจอได้ต่อวัน (ลิงก์)" + คำอธิบาย "0 = ปิดฟีเจอร์นี้" · แก้แล้วบันทึกได้ <span class="kd kd-happy">Happy Path</span></td>
-  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+<tr class="trow" data-feat="cle" data-level="e2e" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">CL-E.3</td>
+  <td class="ctitle">เปิดเขียนผลลงคลังข้อมูลแล้ว: สินค้าที่เพิ่งเช็คในหน้า "ลิงก์สินค้า" ขึ้นจอ/วิดีโอในหน้าค้นหาด้วย <span class="kd kd-happy">Happy Path</span></td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
   <td><span class="prio p0">P0</span></td>
   <td class="status" data-uid="tc-20032"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-20032"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">ฟอร์มแพ็กเกจมีช่อง "เช็คจอได้ต่อวัน (ลิงก์)" + คำอธิบาย "0 = ปิดฟีเจอร์นี้" · แก้แล้วบันทึกได้</div>
-  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-403" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-403 ใน Jira">🧩 Epic TKRD-403</a> · Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · 🛠️ แอดมิน · F ตั้งโควต้า — ฟอร์มแพ็กเกจ + สิทธิ์เช็คจอรายวันต่อบัญชี</div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ Trendora (takra-radar) รุ่น UAT ที่ https://uat-radar.takra.ai (ผ่าน Cloudflare Access แล้ว) แล้วเข้าสู่ระบบด้วยบัญชีแอดมิน (เช่น qa01) ในโซนผู้ดูแลระบบ ไปที่เมนู "แพคเกจที่ขาย"</li><li>กดแก้ไขแพ็กเกจทดสอบ แล้วหาช่อง "เช็คจอได้ต่อวัน (ลิงก์)" จดค่าเดิม</li><li>แก้เป็นค่าอื่นแล้วบันทึก รีโหลดฟอร์ม แล้วคืนค่าเดิม</li></ol></div>
+  <div class="h-title">เปิดเขียนผลลงคลังข้อมูลแล้ว: สินค้าที่เพิ่งเช็คในหน้า "ลิงก์สินค้า" ขึ้นจอ/วิดีโอในหน้าค้นหาด้วย</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-403" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-403 ใน Jira">🧩 Epic TKRD-403</a> · Priority: <b>P0</b> · E2E · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · 👤 ลูกค้า · E หน้าค้นหา — เช็คจอตอนนี้ และผลเช็คขึ้นในหน้าค้นหา</div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ Trendora (takra-radar) รุ่น UAT ที่ https://uat-radar.takra.ai (ผ่าน Cloudflare Access แล้ว) แล้วเข้าสู่ระบบด้วยบัญชีลูกค้าที่มีแพ็กเกจเช็คจอได้ (โควต้าวันนี้ยังเหลือ)</li><li>ไปที่เมนู "เช็คจอ" → "ลิงก์สินค้า" แล้วเช็คสินค้าที่ยังไม่มีข้อมูลจอในหน้าค้นหา (จาก CL-E.2) รอจนเสร็จและมีจอ ≥ 1</li><li>ไปที่เมนู "ค้นหา" ค้นสินค้าเดียวกัน (รีเฟรชถ้าจำเป็น รอไม่กี่นาที)</li><li>กดไอคอนจอของสินค้านั้น</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>มีช่อง "เช็คจอได้ต่อวัน (ลิงก์)" + "จำนวนลิงก์ที่ผู้ซื้อแพคเกจนี้เช็คจอแบบเรียลไทม์ได้ต่อวัน · 0 = ปิดฟีเจอร์นี้"</li><li>บันทึกแล้วรีโหลดเห็นค่าใหม่ · การ์ดแพ็กเกจฝั่งลูกค้าแสดงค่าใหม่</li></ul><div class="hint" style="margin-top:6px">ที่มา: Jira TKRD-403 ข้อ 1 (capture_daily_cap ในฟอร์ม admin แพ็กเกจ)</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ในหน้าค้นหา สินค้านั้นมีไอคอนจอ/วิดีโอแทนปุ่ม "เช็คจอ" และจำนวนตรงกับผลในหน้า "ลิงก์สินค้า"</li><li>หน้าต่างจอแสดงจอชุดเดียวกัน พร้อม "ข้อมูลล่าสุดเมื่อ" เวลาที่เช็ค</li></ul><div class="hint" style="margin-top:6px">ที่มา: Jira TKRD-403 เกณฑ์ผ่าน ("เปิด CAPTURE_DW_WRITE แล้วสินค้าที่เช็คขึ้นจอ/วิดีโอในหน้าค้นหา")</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1214,20 +1210,20 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 </div></td></tr>
 
-<tr class="trow" data-feat="clf" data-level="ui" data-prio="P2" data-kind="validation" data-ui="yes" onclick="tg(this)">
-  <td><span class="tog">▸</span></td><td class="cid">CL-F.2</td>
-  <td class="ctitle">ช่อง "เช็คจอได้ต่อวัน (ลิงก์)" รับเฉพาะเลขจำนวนเต็มตั้งแต่ 0 — ค่าติดลบ/ทศนิยม/ว่างบันทึกไม่ได้ <span class="kd kd-val">Validation</span></td>
+<tr class="trow" data-feat="cle" data-level="ui" data-prio="P2" data-kind="validation" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">CL-E.4</td>
+  <td class="ctitle">คะแนน (score) ของจอบอกว่าเทียบได้เฉพาะเครื่องเดียวกัน — ไม่มีคำบอกอุปกรณ์บนหน้าจอลูกค้า <span class="kd kd-val">Validation</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p2">P2</span></td>
   <td class="status" data-uid="tc-20033"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-20033"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">ช่อง "เช็คจอได้ต่อวัน (ลิงก์)" รับเฉพาะเลขจำนวนเต็มตั้งแต่ 0 — ค่าติดลบ/ทศนิยม/ว่างบันทึกไม่ได้</div>
-  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-403" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-403 ใน Jira">🧩 Epic TKRD-403</a> · Priority: <b>P2</b> · UI · ประเภท: <b>Validation</b> <span class="hint">(format · required · character · length)</span> · 🛠️ แอดมิน · F ตั้งโควต้า — ฟอร์มแพ็กเกจ + สิทธิ์เช็คจอรายวันต่อบัญชี</div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ Trendora (takra-radar) รุ่น UAT ที่ https://uat-radar.takra.ai (ผ่าน Cloudflare Access แล้ว) แล้วเข้าสู่ระบบด้วยบัญชีแอดมิน (เช่น qa01) ในเมนู "แพคเกจที่ขาย" กดแก้ไขแพ็กเกจทดสอบ</li><li>ใส่ทีละค่า -1 · 1.5 · ว่าง ในช่อง "เช็คจอได้ต่อวัน (ลิงก์)" แล้วกดบันทึก</li><li>ใส่ 0 แล้วบันทึก จากนั้นคืนค่าเดิม</li></ol></div>
+  <div class="h-title">คะแนน (score) ของจอบอกว่าเทียบได้เฉพาะเครื่องเดียวกัน — ไม่มีคำบอกอุปกรณ์บนหน้าจอลูกค้า</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-403" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-403 ใน Jira">🧩 Epic TKRD-403</a> · Priority: <b>P2</b> · UI · ประเภท: <b>Validation</b> <span class="hint">(format · required · character · length)</span> · 👤 ลูกค้า · E หน้าค้นหา — เช็คจอตอนนี้ และผลเช็คขึ้นในหน้าค้นหา</div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ Trendora (takra-radar) รุ่น UAT ที่ https://uat-radar.takra.ai (ผ่าน Cloudflare Access แล้ว) แล้วเข้าสู่ระบบด้วยบัญชีลูกค้าที่มีแพ็กเกจเช็คจอได้ (โควต้าวันนี้ยังเหลือ)</li><li>ไปที่เมนู "เช็คจอ" → "ลิงก์สินค้า" แล้วเช็คสินค้าที่มีจอ รอจนเสร็จ</li><li>เปิดหน้าต่างจอ อ่านทุกบรรทัด และค้นคำ "มือถือ" / "โทรศัพท์" / "คิว" ในหน้า (Cmd/Ctrl+F)</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>-1 · 1.5 · ว่าง: บันทึกไม่ได้หรือมีข้อความเตือนที่ช่อง (จดข้อความจริงลง Actual)</li><li>0 บันทึกได้ และลูกค้าในแพ็กเกจนั้นเช็คไม่ได้ (ดู CL-B.8)</li></ul><div class="hint" style="margin-top:6px">ที่มา: Jira TKRD-403 ข้อ 1 · th-admin-catalog captureHint</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>ไม่พบคำ "มือถือ" / "โทรศัพท์" / "คิว" ในหน้า "ลิงก์สินค้า" และหน้าต่างจอ</li><li>จดว่ามีตัวเลข score แสดงหรือไม่ — Jira ขอให้แสดง score แต่โค้ดฝั่งเว็บยังไม่พบคำ score (ถ้าไม่เห็นให้ลง HOLD และถาม dev)</li></ul><div class="hint" style="margin-top:6px">ที่มา: Jira TKRD-403 ("score คู่กับเครื่องที่วัด — เทียบข้ามเครื่องไม่ได้") · เจ้าของ 21 ต.ค. / CEO 28 ต.ค. (ไม่บอกอุปกรณ์ ไม่ใช้คำ คิว)</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1244,20 +1240,24 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 </div></td></tr>
 
-<tr class="trow" data-feat="clf" data-level="ui" data-prio="P1" data-kind="happy" data-ui="yes" onclick="tg(this)">
-  <td><span class="tog">▸</span></td><td class="cid">CL-F.3</td>
-  <td class="ctitle">สิทธิ์ของลูกค้าแต่ละบัญชี: การ์ด "สิทธิ์เช็คจอรายวัน" แสดง "เช็คจอวันนี้" · "จากแพ็กเกจ" · "เพิ่มให้" และเพิ่มให้ได้ <span class="kd kd-happy">Happy Path</span></td>
+
+<!-- clf -->
+<tr class="epicrow" data-epic="clf"><td colspan="7">🛠️ 🛠️ แอดมิน · F ตั้งโควต้า — ฟอร์มแพ็กเกจ + สิทธิ์เช็คจอรายวันต่อบัญชี <span class="rp">(6 เคส)</span> <a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-403" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-403 ใน Jira">🧩 Epic TKRD-403</a></td></tr>
+<tr class="featrow" data-featkey="clf"><td colspan="7">📁 🛠️ แอดมิน · F ตั้งโควต้า — ฟอร์มแพ็กเกจ + สิทธิ์เช็คจอรายวันต่อบัญชี <span class="rp"><span class="lv lvl-ui">🌐 6</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="clf"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow" data-feat="clf" data-level="ui" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">CL-F.1</td>
+  <td class="ctitle">ฟอร์มแพ็กเกจมีช่อง "เช็คจอได้ต่อวัน (ลิงก์)" + คำอธิบาย "0 = ปิดฟีเจอร์นี้" · แก้แล้วบันทึกได้ <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
-  <td><span class="prio p1">P1</span></td>
+  <td><span class="prio p0">P0</span></td>
   <td class="status" data-uid="tc-20034"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-20034"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">สิทธิ์ของลูกค้าแต่ละบัญชี: การ์ด "สิทธิ์เช็คจอรายวัน" แสดง "เช็คจอวันนี้" · "จากแพ็กเกจ" · "เพิ่มให้" และเพิ่มให้ได้</div>
-  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-403" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-403 ใน Jira">🧩 Epic TKRD-403</a> · Priority: <b>P1</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · 🛠️ แอดมิน · F ตั้งโควต้า — ฟอร์มแพ็กเกจ + สิทธิ์เช็คจอรายวันต่อบัญชี</div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ Trendora (takra-radar) รุ่น UAT ที่ https://uat-radar.takra.ai (ผ่าน Cloudflare Access แล้ว) แล้วเข้าสู่ระบบด้วยบัญชีแอดมิน (เช่น qa01) ในโซนผู้ดูแลระบบ ไปที่เมนู "สิทธิ์ลูกค้า" แล้วเปิดบัญชีลูกค้าทดสอบ</li><li>ดูการ์ด "สิทธิ์เช็คจอรายวัน"</li><li>ใส่ "จำนวนลิงก์ต่อวันที่เพิ่มให้" เป็นค่าใหม่ ดูบรรทัดสรุป แล้วกด "บันทึกสิทธิ์เช็คจอ"</li><li>ให้ลูกค้าคนนั้นเปิดหน้า "ลิงก์สินค้า" แล้วเช็ค 1 ลิงก์ดู Y ในบรรทัดโควต้า</li></ol></div>
+  <div class="h-title">ฟอร์มแพ็กเกจมีช่อง "เช็คจอได้ต่อวัน (ลิงก์)" + คำอธิบาย "0 = ปิดฟีเจอร์นี้" · แก้แล้วบันทึกได้</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-403" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-403 ใน Jira">🧩 Epic TKRD-403</a> · Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · 🛠️ แอดมิน · F ตั้งโควต้า — ฟอร์มแพ็กเกจ + สิทธิ์เช็คจอรายวันต่อบัญชี</div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ Trendora (takra-radar) รุ่น UAT ที่ https://uat-radar.takra.ai (ผ่าน Cloudflare Access แล้ว) แล้วเข้าสู่ระบบด้วยบัญชีแอดมิน (เช่น qa01) ในโซนผู้ดูแลระบบ ไปที่เมนู "แพคเกจที่ขาย"</li><li>กดแก้ไขแพ็กเกจทดสอบ แล้วหาช่อง "เช็คจอได้ต่อวัน (ลิงก์)" จดค่าเดิม</li><li>แก้เป็นค่าอื่นแล้วบันทึก รีโหลดฟอร์ม แล้วคืนค่าเดิม</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>การ์ดมี "เช็คจอวันนี้" (X / Y ลิงก์) · "จากแพ็กเกจ" · "เพิ่มให้" · ช่อง "จำนวนลิงก์ต่อวันที่เพิ่มให้" + "บวกจากสิทธิ์ของแพ็กเกจทุกวัน ไม่หมดอายุ และยังอยู่แม้เปลี่ยนแพ็กเกจ ตั้งเป็นศูนย์เพื่อเอาออก"</li><li>พิมพ์ค่าแล้วขึ้น "หลังบันทึก เช็คได้วันละ &lt;จากแพ็กเกจ + เพิ่มให้&gt; ลิงก์" · ค่าเท่าเดิมปุ่ม "บันทึกสิทธิ์เช็คจอ" กดไม่ได้</li><li>บันทึกแล้ว Y ฝั่งลูกค้าเท่ากับตัวเลขในบรรทัดสรุป</li></ul><div class="hint" style="margin-top:6px">ที่มา: 4128e0f7 (app_user.capture_bonus · admin เพิ่มสิทธิ์ต่อบัญชี · บันทึก audit)</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>มีช่อง "เช็คจอได้ต่อวัน (ลิงก์)" + "จำนวนลิงก์ที่ผู้ซื้อแพคเกจนี้เช็คจอแบบเรียลไทม์ได้ต่อวัน · 0 = ปิดฟีเจอร์นี้"</li><li>บันทึกแล้วรีโหลดเห็นค่าใหม่ · การ์ดแพ็กเกจฝั่งลูกค้าแสดงค่าใหม่</li></ul><div class="hint" style="margin-top:6px">ที่มา: Jira TKRD-403 ข้อ 1 (capture_daily_cap ในฟอร์ม admin แพ็กเกจ)</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1274,20 +1274,20 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 </div></td></tr>
 
-<tr class="trow" data-feat="clf" data-level="ui" data-prio="P2" data-kind="data" data-ui="yes" onclick="tg(this)">
-  <td><span class="tog">▸</span></td><td class="cid">CL-F.4</td>
-  <td class="ctitle">ตั้ง "เพิ่มให้" เป็น 0 → สิทธิ์กลับเท่าแพ็กเกจ · ค่าที่เพิ่มยังอยู่หลังเปลี่ยนแพ็กเกจ <span class="kd kd-data">Data</span></td>
+<tr class="trow" data-feat="clf" data-level="ui" data-prio="P2" data-kind="validation" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">CL-F.2</td>
+  <td class="ctitle">ช่อง "เช็คจอได้ต่อวัน (ลิงก์)" รับเฉพาะเลขจำนวนเต็มตั้งแต่ 0 — ค่าติดลบ/ทศนิยม/ว่างบันทึกไม่ได้ <span class="kd kd-val">Validation</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p2">P2</span></td>
   <td class="status" data-uid="tc-20035"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-20035"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">ตั้ง "เพิ่มให้" เป็น 0 → สิทธิ์กลับเท่าแพ็กเกจ · ค่าที่เพิ่มยังอยู่หลังเปลี่ยนแพ็กเกจ</div>
-  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-403" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-403 ใน Jira">🧩 Epic TKRD-403</a> · Priority: <b>P2</b> · UI · ประเภท: <b>Data</b> <span class="hint">(empty · null · duplicate · existing · non-existing)</span> · 🛠️ แอดมิน · F ตั้งโควต้า — ฟอร์มแพ็กเกจ + สิทธิ์เช็คจอรายวันต่อบัญชี</div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ Trendora (takra-radar) รุ่น UAT ที่ https://uat-radar.takra.ai (ผ่าน Cloudflare Access แล้ว) แล้วเข้าสู่ระบบด้วยบัญชีแอดมิน (เช่น qa01) ในเมนู "สิทธิ์ลูกค้า" เปิดบัญชีที่ "เพิ่มให้" &gt; 0</li><li>เปลี่ยนแพ็กเกจของบัญชีนี้ (ถ้าทำได้บนบัญชีทดสอบ) แล้วดู "เพิ่มให้"</li><li>ตั้ง "จำนวนลิงก์ต่อวันที่เพิ่มให้" เป็น 0 แล้วกด "บันทึกสิทธิ์เช็คจอ"</li></ol></div>
+  <div class="h-title">ช่อง "เช็คจอได้ต่อวัน (ลิงก์)" รับเฉพาะเลขจำนวนเต็มตั้งแต่ 0 — ค่าติดลบ/ทศนิยม/ว่างบันทึกไม่ได้</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-403" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-403 ใน Jira">🧩 Epic TKRD-403</a> · Priority: <b>P2</b> · UI · ประเภท: <b>Validation</b> <span class="hint">(format · required · character · length)</span> · 🛠️ แอดมิน · F ตั้งโควต้า — ฟอร์มแพ็กเกจ + สิทธิ์เช็คจอรายวันต่อบัญชี</div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ Trendora (takra-radar) รุ่น UAT ที่ https://uat-radar.takra.ai (ผ่าน Cloudflare Access แล้ว) แล้วเข้าสู่ระบบด้วยบัญชีแอดมิน (เช่น qa01) ในเมนู "แพคเกจที่ขาย" กดแก้ไขแพ็กเกจทดสอบ</li><li>ใส่ทีละค่า -1 · 1.5 · ว่าง ในช่อง "เช็คจอได้ต่อวัน (ลิงก์)" แล้วกดบันทึก</li><li>ใส่ 0 แล้วบันทึก จากนั้นคืนค่าเดิม</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>หลังเปลี่ยนแพ็กเกจ "เพิ่มให้" ยังเป็นค่าเดิม และ "จากแพ็กเกจ" เปลี่ยนตามแพ็กเกจใหม่</li><li>ตั้ง 0 แล้ว "เพิ่มให้" = 0 และ Y ฝั่งลูกค้า = ค่าของแพ็กเกจ</li></ul><div class="hint" style="margin-top:6px">ที่มา: th-shell captureHelp ("ยังอยู่แม้เปลี่ยนแพ็กเกจ ตั้งเป็นศูนย์เพื่อเอาออก")</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>-1 · 1.5 · ว่าง: บันทึกไม่ได้หรือมีข้อความเตือนที่ช่อง (จดข้อความจริงลง Actual)</li><li>0 บันทึกได้ และลูกค้าในแพ็กเกจนั้นเช็คไม่ได้ (ดู CL-B.8)</li></ul><div class="hint" style="margin-top:6px">ที่มา: Jira TKRD-403 ข้อ 1 · th-admin-catalog captureHint</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1304,12 +1304,132 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 </div></td></tr>
 
+<tr class="trow" data-feat="clf" data-level="ui" data-prio="P1" data-kind="happy" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">CL-F.3</td>
+  <td class="ctitle">สิทธิ์ของลูกค้าแต่ละบัญชี: การ์ด "สิทธิ์เช็คจอรายวัน" แสดง "เช็คจอวันนี้" · "จากแพ็กเกจ" · "เพิ่มให้" และเพิ่มให้ได้ <span class="kd kd-happy">Happy Path</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-20036"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-20036"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">สิทธิ์ของลูกค้าแต่ละบัญชี: การ์ด "สิทธิ์เช็คจอรายวัน" แสดง "เช็คจอวันนี้" · "จากแพ็กเกจ" · "เพิ่มให้" และเพิ่มให้ได้</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-403" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-403 ใน Jira">🧩 Epic TKRD-403</a> · Priority: <b>P1</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · 🛠️ แอดมิน · F ตั้งโควต้า — ฟอร์มแพ็กเกจ + สิทธิ์เช็คจอรายวันต่อบัญชี</div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ Trendora (takra-radar) รุ่น UAT ที่ https://uat-radar.takra.ai (ผ่าน Cloudflare Access แล้ว) แล้วเข้าสู่ระบบด้วยบัญชีแอดมิน (เช่น qa01) ในโซนผู้ดูแลระบบ ไปที่เมนู "สิทธิ์ลูกค้า" แล้วเปิดบัญชีลูกค้าทดสอบ</li><li>ดูการ์ด "สิทธิ์เช็คจอรายวัน"</li><li>ใส่ "จำนวนลิงก์ต่อวันที่เพิ่มให้" เป็นค่าใหม่ ดูบรรทัดสรุป แล้วกด "บันทึกสิทธิ์เช็คจอ"</li><li>ให้ลูกค้าคนนั้นเปิดหน้า "ลิงก์สินค้า" แล้วเช็ค 1 ลิงก์ดู Y ในบรรทัดโควต้า</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>การ์ดมี "เช็คจอวันนี้" (X / Y ลิงก์) · "จากแพ็กเกจ" · "เพิ่มให้" · ช่อง "จำนวนลิงก์ต่อวันที่เพิ่มให้" + "บวกจากสิทธิ์ของแพ็กเกจทุกวัน ไม่หมดอายุ และยังอยู่แม้เปลี่ยนแพ็กเกจ ตั้งเป็นศูนย์เพื่อเอาออก"</li><li>พิมพ์ค่าแล้วขึ้น "หลังบันทึก เช็คได้วันละ &lt;จากแพ็กเกจ + เพิ่มให้&gt; ลิงก์" · ค่าเท่าเดิมปุ่ม "บันทึกสิทธิ์เช็คจอ" กดไม่ได้</li><li>บันทึกแล้ว Y ฝั่งลูกค้าเท่ากับตัวเลขในบรรทัดสรุป</li></ul><div class="hint" style="margin-top:6px">ที่มา: 4128e0f7 (app_user.capture_bonus · admin เพิ่มสิทธิ์ต่อบัญชี · บันทึก audit)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-20036" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-20036" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-20036" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-20036" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-20036" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-20036"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-20036" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-20036">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="clf" data-level="ui" data-prio="P2" data-kind="data" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">CL-F.4</td>
+  <td class="ctitle">ตั้ง "เพิ่มให้" เป็น 0 → สิทธิ์กลับเท่าแพ็กเกจ · ค่าที่เพิ่มยังอยู่หลังเปลี่ยนแพ็กเกจ <span class="kd kd-data">Data</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p2">P2</span></td>
+  <td class="status" data-uid="tc-20037"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-20037"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ตั้ง "เพิ่มให้" เป็น 0 → สิทธิ์กลับเท่าแพ็กเกจ · ค่าที่เพิ่มยังอยู่หลังเปลี่ยนแพ็กเกจ</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-403" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-403 ใน Jira">🧩 Epic TKRD-403</a> · Priority: <b>P2</b> · UI · ประเภท: <b>Data</b> <span class="hint">(empty · null · duplicate · existing · non-existing)</span> · 🛠️ แอดมิน · F ตั้งโควต้า — ฟอร์มแพ็กเกจ + สิทธิ์เช็คจอรายวันต่อบัญชี</div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ Trendora (takra-radar) รุ่น UAT ที่ https://uat-radar.takra.ai (ผ่าน Cloudflare Access แล้ว) แล้วเข้าสู่ระบบด้วยบัญชีแอดมิน (เช่น qa01) ในเมนู "สิทธิ์ลูกค้า" เปิดบัญชีที่ "เพิ่มให้" &gt; 0</li><li>เปลี่ยนแพ็กเกจของบัญชีนี้ (ถ้าทำได้บนบัญชีทดสอบ) แล้วดู "เพิ่มให้"</li><li>ตั้ง "จำนวนลิงก์ต่อวันที่เพิ่มให้" เป็น 0 แล้วกด "บันทึกสิทธิ์เช็คจอ"</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>หลังเปลี่ยนแพ็กเกจ "เพิ่มให้" ยังเป็นค่าเดิม และ "จากแพ็กเกจ" เปลี่ยนตามแพ็กเกจใหม่</li><li>ตั้ง 0 แล้ว "เพิ่มให้" = 0 และ Y ฝั่งลูกค้า = ค่าของแพ็กเกจ</li></ul><div class="hint" style="margin-top:6px">ที่มา: th-shell captureHelp ("ยังอยู่แม้เปลี่ยนแพ็กเกจ ตั้งเป็นศูนย์เพื่อเอาออก")</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-20037" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-20037" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-20037" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-20037" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-20037" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-20037"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-20037" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-20037">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="clf" data-level="ui" data-prio="P1" data-kind="data" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">CL-F.5</td>
+  <td class="ctitle">แก้ "เช็คจอได้ต่อวัน (ลิงก์)" ของแพ็กเกจ → ลูกค้าที่ถือแพ็กเกจนั้นอยู่แล้วได้ค่าใหม่ทันที ไม่ต้องซื้อใหม่ <span class="kd kd-data">Data</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-20038"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-20038"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">แก้ "เช็คจอได้ต่อวัน (ลิงก์)" ของแพ็กเกจ → ลูกค้าที่ถือแพ็กเกจนั้นอยู่แล้วได้ค่าใหม่ทันที ไม่ต้องซื้อใหม่</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-403" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-403 ใน Jira">🧩 Epic TKRD-403</a> · Priority: <b>P1</b> · UI · ประเภท: <b>Data</b> <span class="hint">(empty · null · duplicate · existing · non-existing)</span> · 🛠️ แอดมิน · F ตั้งโควต้า — ฟอร์มแพ็กเกจ + สิทธิ์เช็คจอรายวันต่อบัญชี</div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ Trendora (takra-radar) รุ่น UAT ที่ https://uat-radar.takra.ai (ผ่าน Cloudflare Access แล้ว) แล้วเข้าสู่ระบบด้วยบัญชีแอดมิน (เช่น qa01) ในโซนผู้ดูแลระบบ ไปที่เมนู "สิทธิ์ลูกค้า" เปิดบัญชีลูกค้าทดสอบที่ถือแพ็กเกจทดสอบอยู่ จด "จากแพ็กเกจ" ในการ์ด "สิทธิ์เช็คจอรายวัน"</li><li>ไปที่เมนู "แพคเกจที่ขาย" กดแก้ไขแพ็กเกจทดสอบนั้น เปลี่ยน "เช็คจอได้ต่อวัน (ลิงก์)" เป็นค่าใหม่แล้วบันทึก</li><li>กลับไปเปิดบัญชีลูกค้าเดิมใน "สิทธิ์ลูกค้า" ดูการ์ด "สิทธิ์เช็คจอรายวัน" อีกครั้ง</li><li>ให้ลูกค้าคนนั้นเปิดหน้า "ลิงก์สินค้า" เช็ค 1 ลิงก์ ดู Y ในบรรทัดโควต้า แล้วแอดมินคืนค่าเดิมของแพ็กเกจ</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>"จากแพ็กเกจ" ของบัญชีเดิมเปลี่ยนเป็นค่าใหม่ทันทีโดยลูกค้าไม่ต้องซื้อ/ต่ออายุ</li><li>ฝั่งลูกค้า Y ในบรรทัด "วันนี้เช็คไปแล้ว X / Y ลิงก์" = ค่าใหม่ + "เพิ่มให้"</li><li>สิทธิ์อื่นที่ซื้อไปแล้ว (เช่น จำนวนเฝ้าดู · ผลค้นหาต่อหน้า) ไม่เปลี่ยนตาม</li></ul><div class="hint" style="margin-top:6px">ที่มา: b80faaad (เจ้าของ 30 ต.ค. — โควต้าเช็คจออ่านสดจากแพ็กเกจ · ของที่ขายจริงยังแช่แข็ง)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-20038" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-20038" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-20038" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-20038" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-20038" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-20038"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-20038" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-20038">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="clf" data-level="ui" data-prio="P2" data-kind="boundary" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">CL-F.6</td>
+  <td class="ctitle">เพดานระบบ "เช็คลิงก์ในเช็คจอได้ต่อวัน (ลิงก์)" ต่ำกว่าโควต้าแพ็กเกจ → ชุดที่จะเกินเพดานระบบถูกปฏิเสธทั้งชุด <span class="kd kd-bnd">Boundary</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p2">P2</span></td>
+  <td class="status" data-uid="tc-20039"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-20039"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">เพดานระบบ "เช็คลิงก์ในเช็คจอได้ต่อวัน (ลิงก์)" ต่ำกว่าโควต้าแพ็กเกจ → ชุดที่จะเกินเพดานระบบถูกปฏิเสธทั้งชุด</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-403" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-403 ใน Jira">🧩 Epic TKRD-403</a> · Priority: <b>P2</b> · UI · ประเภท: <b>Boundary</b> <span class="hint">(min · max · ก่อนขอบ · ตรงขอบ · เกินขอบ)</span> · 🛠️ แอดมิน · F ตั้งโควต้า — ฟอร์มแพ็กเกจ + สิทธิ์เช็คจอรายวันต่อบัญชี</div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ Trendora (takra-radar) รุ่น UAT ที่ https://uat-radar.takra.ai (ผ่าน Cloudflare Access แล้ว) แล้วเข้าสู่ระบบด้วยบัญชีแอดมิน (เช่น qa01) ในโซนผู้ดูแลระบบ ไปที่เมนู "ตั้งค่าระบบ" หัวข้อ "เพดานการดึงข้อมูลสินค้าต่อบัญชี" จดค่า "เช็คลิงก์ในเช็คจอได้ต่อวัน (ลิงก์)" แล้วตั้งให้ต่ำกว่าโควต้าแพ็กเกจของลูกค้าทดสอบ (เช่น 3) แล้วบันทึก</li><li>ให้ลูกค้าทดสอบไปที่เมนู "เช็คจอ" → "ลิงก์สินค้า" วาง 4 ลิงก์ (รวมลิงก์ที่เพิ่งเช็คภายใน 10 นาทีได้) แล้วกด "เช็คจอ"</li><li>วาง 3 ลิงก์ แล้วกด "เช็คจอ"</li><li>แอดมินคืนค่าเดิมของ "เช็คลิงก์ในเช็คจอได้ต่อวัน (ลิงก์)" แล้วบันทึก</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>4 ลิงก์: ขึ้น "วันนี้เช็คครบ 3 รายการแล้ว หรือชุดนี้จะเกินจำนวนที่เหลือ · เช็คได้อีกครั้งพรุ่งนี้ 00:00" · ไม่มีแถวใหม่ · โควต้าแพ็กเกจและ "ค้นหาวันนี้" ไม่เปลี่ยน</li><li>3 ลิงก์: เช็คได้ครบทุกลิงก์ · ลิงก์ที่ใช้ผลเดิมภายใน 10 นาทีก็นับในเพดานนี้ (แต่ไม่นับโควต้าแพ็กเกจ) · บรรทัดที่อ่านไม่ออกไม่นับ</li></ul><div class="hint" style="margin-top:6px">ที่มา: b80faaad (catalog.usage_limits.dailyLinks นับลิงก์ที่อ่านออก รวมผลแคช) · th-shell catalogUsageKnobLabel / tunableSectionTitle</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-20039" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-20039" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-20039" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-20039" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-20039" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-20039"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-20039" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-20039">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
 </tbody>
   </table>
   </div>
 
 </div>
-<footer>[TKRD-403] TAKRA Radar (Trendora) — เช็คจอ · ลิงก์สินค้า แบบสด · 32 UI + 3 E2E = 35 TCs · UI only (manual) · Trendora (takra-radar) UAT · TKRD-403 เช็คจอ · ลิงก์สินค้า แบบสด · Jira TKRD</footer>
+<footer>[TKRD-403] TAKRA Radar (Trendora) — เช็คจอ · ลิงก์สินค้า แบบสด · 36 UI + 3 E2E = 39 TCs · UI only (manual) · Trendora (takra-radar) UAT · TKRD-403 เช็คจอ · ลิงก์สินค้า แบบสด · Jira TKRD</footer>
 
 <script>
 // ── Load store from embedded JSON ──
