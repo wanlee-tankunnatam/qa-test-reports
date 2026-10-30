@@ -16,9 +16,9 @@ from pathlib import Path
 SRC = Path(__file__).resolve().parent / 'takra-ai-bymenu-sources'
 
 # ลำดับไฟล์ = ลำดับเมนูบนแถบซ้าย → เครื่องมือ → เมนูบัญชี
-_FILES = ['SHELL', 'DASH', 'DRAFT', 'STUDIO', 'STP', 'STB', 'MLR', 'MYLIVE', 'LIBP', 'LIBS', 'SCR', 'LIBW', 'SET', 'SETB']
+_FILES = ['SHELL', 'DASH', 'DRAFT', 'STUDIO', 'STP', 'STB', 'MLR', 'MYLIVE', 'QAV', 'QAC', 'QAR', 'LIBP', 'LIBS', 'SCR', 'LIBW', 'SET', 'SETB']
 # ลำดับเมนูในรายงาน (key จากไฟล์ JSON) — เมนูที่ไม่อยู่ในรายการนี้ต่อท้ายตามลำดับไฟล์
-_ORDER = ['m-shell', 'm-dash', 'm-draft', 'm-studio', 'm-mylive',
+_ORDER = ['m-shell', 'm-dash', 'm-draft', 'm-studio', 'm-mylive', 'm-quality',
           'm-lib-people', 'm-lib-products', 'm-lib-scripts', 'm-lib-media',
           'm-lib-words', 'm-lib-readings', 'm-lib-talk', 'm-lib-scenes',
           'm-preflight', 'm-settings', 'm-staff']
