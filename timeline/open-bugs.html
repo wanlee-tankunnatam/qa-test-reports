@@ -124,7 +124,7 @@ footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--line);color:v
 <body>
 <div class="wrap">
   <h1>บั๊กค้างรอบส่งงาน</h1>
-  <p class="sub">บั๊กที่ยังไม่ปิดจากทุกโปรเจกต์ใน Jira แยกตามรอบส่ง แล้วแยกตามผู้รับผิดชอบ · ในแต่ละคนเรียงตามขั้นที่ลูกค้าเจอใน user journey · ข้อมูล ณ 30 ต.ค. 2026 09:00 น. (อัปเดตอัตโนมัติ 09:00 / 13:00 หรือกดปุ่มดึงข้อมูลจาก Jira)</p>
+  <p class="sub">บั๊กที่ยังไม่ปิดจากทุกโปรเจกต์ใน Jira แยกตามรอบส่ง แล้วแยกตามผู้รับผิดชอบ · ในแต่ละคนเรียงตามขั้นที่ลูกค้าเจอใน user journey · ข้อมูล ณ 30 ต.ค. 2026 13:00 น. (อัปเดตอัตโนมัติ 09:00 / 13:00 หรือกดปุ่มดึงข้อมูลจาก Jira)</p>
   <div class="sync"><button type="button" class="f" id="sync">ดึงข้อมูลจาก Jira</button><span id="syncat"></span><span id="syncmsg" role="status"></span></div>
   <div class="proj" id="fj" role="group" aria-label="โปรเจกต์"></div>
   <div class="tot" id="tot"></div>
@@ -179,10 +179,10 @@ const ROWS = [
 ["23-OCT", "No", "TAKRA-972", "Medium", "TAKRA Live / TAKRA Hub - ปุ่มที่ลิงก์ไป TAKRA Hub (หน้าแรก uat-hub.takra.ai) แสดง UI ให้กด เข้าสู่ระบบ ใหม่ทุกครั้ง ทั้งที่ล็อกอิน TAKRA Live อยู่แล้ว", "To Do"],
 ["30-SEP", "Boat", "TAKRA-975", "High", "[รอ Epic13] TAKRA Live - AI ตอบคอมเมนต์ต้องตอบข้อความปฏิเสธ (canned refusal) เมื่อพบคำเสี่ยง ไม่ว่าสถานะใด (Block/Warn/Review)", "IN REVIEW"],
 ["30-SEP", "Boat", "TAKRA-976", "High", "[รอ Epic13] TAKRA Live - อวตารต้องไม่พูดตอบข้อมูลคำเสี่ยง และต้องพูดข้อความปฏิเสธแทน ทุกสถานะ (Block/Warn/Review)", "IN REVIEW"],
-["23-OCT", "Boat", "TAKRA-983", "Low", "TAKRA Live - ชื่อ preset ในคลังสื่อ Studio ไม่ตรงกับภาพที่แสดง (ฉากหลังโทนเขียว / Product showcase / Confetti)", "In Progress"],
+["23-OCT", "Boat", "TAKRA-983", "Low", "TAKRA Live - ชื่อ preset ในคลังสื่อ Studio ไม่ตรงกับภาพที่แสดง (ฉากหลังโทนเขียว / Product showcase / Confetti)", "READY TO TEST"],
 ["23-OCT", "Boat", "TAKRA-998", "Low", "TAKRA AI — กล่องแจ้งเตือน (toast) ใช้ aria-label บน <div> ที่ไม่มี role ทำให้ screen reader ไม่อ่านชื่อพื้นที่แจ้งเตือน (axe: aria-prohibited-attr · ทุกหน้า)", "To Do"],
 ["23-OCT", "Boat", "TAKRA-999", "Low", "TAKRA AI — ธีมสว่าง: สีข้อความรอง (--text-faint #8a939c) บนพื้นขาวมีคอนทราสต์ 3.12:1 ต่ำกว่าเกณฑ์ WCAG AA 4.5:1 (axe color-contrast 24 จุดบนหน้าตารางไลฟ์)", "To Do"],
-["30-OCT", "Boat", "TAKRA-1004", "Low", "[FE] use-session-events.spec.ts ไม่มี test พยานว่า alert.clear ถอนแบนเนอร์ preload_failed (AC3 ของ TAKRA-799) — ทั้งเฟรมสดและเฟรม replay", "In Progress"],
+["30-OCT", "Boat", "TAKRA-1004", "Low", "[FE] use-session-events.spec.ts ไม่มี test พยานว่า alert.clear ถอนแบนเนอร์ preload_failed (AC3 ของ TAKRA-799) — ทั้งเฟรมสดและเฟรม replay", "READY TO TEST"],
 ["15-OCT", "No", "TAKRA-1008", "High", "[Infra] Cloudflare แทน 502 ทุกตัวของ API ด้วยหน้าของตัวเอง — ข้อความ error ที่ผู้ใช้ต้องอ่าน (voice clone/preview · script-gen · re-air) ไม่เคยถึง browser บน UAT/prod", "To Do"],
 ["15-OCT", "No", "TAKRA-1009", "Medium", "[BE] ข้อความ 503 ที่ \"อย่า retry แจ้งทีมงาน\" จาก TAKRA-758 ไม่ถึงผู้ใช้ — guardProvider ยังตอบ \"Voice clone provider is unreachable\" กับทุก 503", "To Do"],
 ["9-OCT", "No", "TAKRA-1010", "Medium", "TikTok ตัดสาย RTMP กลางไลฟ์แล้วไม่มีอะไรรู้เลย — watchdog เฝ้าขาเข้า ไม่มีใครเฝ้าขาออก", "To Do"],
@@ -194,7 +194,7 @@ const ROWS = [
 ["30-OCT", "Boat", "TAKRA-1145", "Low", "[FE] กฎ ESLint กัน mock ยังจับไม่ได้ 2 ทาง — import แบบ template literal และไฟล์ .js ใต้ src (ต่อจาก TAKRA-790)", "To Do"],
 ["15-OCT", "Boat", "TAKRA-1151", "Medium", "TAKRA Live - Studio ยังขึ้น \"ฉบับร่าง · บันทึกอัตโนมัติ\" และบอกตอนออกว่า \"งานของคุณถูกบันทึกอัตโนมัติแล้ว\" ทั้งที่หยุดบันทึกไปแล้ว หลังเปิดร่างที่ไม่ได้อยู่ใน Workspace ที่ใช้งาน", "READY TO TEST"],
 ["23-OCT", "Boat", "TAKRA-1152", "Low", "TAKRA Live - ร่างขยะ launch-7f0735a3 ที่เกิดจากบั๊กบันทึกข้าม Workspace (TAKRA-944) ยังค้างใน Workspace ทีมของ QA Tester ผู้ใช้มองไม่เห็นและลบเองไม่ได้", "READY TO TEST"],
-["30-OCT", "Boat", "TAKRA-1154", "Low", "[FE] เทสต์ Studio ไม่คุมตัวกันบันทึกตอนกด \"เริ่มไลฟ์\"/\"ตั้งเวลา\" เมื่อร่างไม่ได้อยู่ใน Workspace ที่ใช้งาน (flushPendingSave · ต่อจาก TAKRA-944)", "In Progress"],
+["30-OCT", "Boat", "TAKRA-1154", "Low", "[FE] เทสต์ Studio ไม่คุมตัวกันบันทึกตอนกด \"เริ่มไลฟ์\"/\"ตั้งเวลา\" เมื่อร่างไม่ได้อยู่ใน Workspace ที่ใช้งาน (flushPendingSave · ต่อจาก TAKRA-944)", "READY TO TEST"],
 ["15-OCT", "No", "TAKRA-1164", "Medium", "[Test] เทสต์ส่งสคริปต์พร้อมกันล้มสุ่มบน CI แล้วกลืนสาเหตุจริงทิ้ง — รู้แค่ว่า &quot;ไม่ใช่ 409&quot; ไล่ต่อไม่ได้", "To Do"],
 ["15-OCT", "Boat", "TAKRA-1165", "Medium", "TAKRA Live - หน้าตารางไลฟ์ (/schedule) ไม่มีการแบ่งหน้า / per page — สร้างรอบไลฟ์มาเท่าไรแสดงทั้งหมดในหน้าเดียว", "READY TO TEST"],
 ["30-SEP", "No", "TAKRA-1167", "Medium", "[FS] เราทิ้ง say_error ของ Realfact เงียบ ๆ — บรรทัดที่ TTS ล้มทำผู้ชมเงียบ 30-35 วินาทีโดยไม่มีอะไรอธิบาย", "IN REVIEW"],
@@ -203,8 +203,8 @@ const ROWS = [
 ["9-OCT", "No", "TAKRA-1174", "Medium", "[BE] pod ถูก kill กลางไลฟ์ → boot recovery เปิด avatar session ใหม่ทับ ตัวเก่าเผา credit ต่อโดยไม่มีใครปิด", "To Do"],
 ["9-OCT", "No", "TAKRA-1175", "Medium", "[BE] avatar session สำรอง (warm successor) ไม่มีใครปิด — ทุกทางจบไลฟ์ปล่อยทิ้งไว้เผา credit", "To Do"],
 ["15-OCT", "Boat", "TAKRA-1183", "Low", "TAKRA Live — ข้อความ validation ของ API ยังเป็นภาษาอังกฤษของ zod (\"String must contain at most 120 character(s) (label)\" · \"Required (title)\") ขึ้นถึง detail และ toast บนหน้าจอภาษาไทย", "READY TO TEST"],
-["30-OCT", "Boat", "TAKRA-1184", "Low", "TAKRA Live — API ของ My Lives และ \"สรุปวันนี้\" ตอบ 422 ด้วยข้อความคงที่ (\"invalid my-lives query\" · \"invalid daily-summary query\") — เหตุผลจริงซ่อนอยู่ใน errors[] แบบเดียวกับ TAKRA-1000", "In Progress"],
-["30-OCT", "Boat", "TAKRA-1186", "Low", "TAKRA Live - เทสต์ตัวเล่นเสียง (waveform-player.spec) ไม่จับกรณี \"กดลองใหม่แล้วได้โควตา 2 ครั้ง\" — ลบ attemptsRef.current = 0 แล้วเทสต์ยังเขียว", "In Progress"],
+["30-OCT", "Boat", "TAKRA-1184", "Low", "TAKRA Live — API ของ My Lives และ \"สรุปวันนี้\" ตอบ 422 ด้วยข้อความคงที่ (\"invalid my-lives query\" · \"invalid daily-summary query\") — เหตุผลจริงซ่อนอยู่ใน errors[] แบบเดียวกับ TAKRA-1000", "READY TO TEST"],
+["30-OCT", "Boat", "TAKRA-1186", "Low", "TAKRA Live - เทสต์ตัวเล่นเสียง (waveform-player.spec) ไม่จับกรณี \"กดลองใหม่แล้วได้โควตา 2 ครั้ง\" — ลบ attemptsRef.current = 0 แล้วเทสต์ยังเขียว", "READY TO TEST"],
 ["9-OCT", "No", "TAKRA-1189", "Medium", "TAKRA Live - คำเตือน \"ผู้ชมไม่เห็นภาพแล้ว\" หายไปเองและการ์ดกลับเป็น \"กำลังไลฟ์\" ทั้งที่ปลายทางยังมืด เมื่อการถามสถานะล้มเพียงครั้งเดียว", "To Do"],
 ["30-OCT", "No", "TAKRA-1190", "Low", "[FE] เทสต์ไม่จับกรณี \"เจอ 404 แล้วยังถามสถานะปลายทางซ้ำทุก 10 วินาที\" — ถอดตัวหยุด poll ของ TAKRA-1179 ออกแล้วเทสต์ยังเขียว 53/53", "To Do"],
 ["30-OCT", "No", "TAKRA-1191", "Low", "[FE] ตัวถามสถานะปลายทางใช้ไม่ได้ทั้งไลฟ์ก็ยังเงียบ — ไม่มี log/ตัวนับบอกว่าคำเตือน \"ผู้ชมไม่เห็นภาพแล้ว\" กำลังตายอยู่ (ขอบเขตข้อ 3 ของ TAKRA-1179 ที่ยังไม่ได้ทำ)", "To Do"],
@@ -414,7 +414,7 @@ const ROWS = [
 ["23-OCT", "Boat", "TAKRA-1426", "Low", "TAKRA Live - กด \"บังคับปิดไลฟ์\" ในห้องคุมไลฟ์แล้วไม่มีข้อความยืนยัน \"บังคับปิดไลฟ์แล้ว · ปิดสตรีม TikTok N รายการ\" — หน้าเปลี่ยนเป็น \"ไลฟ์รอบนี้จบแล้ว\" ก่อนข้อความจะขึ้น", "To Do"],
 ["15-OCT", "Boat", "TAKRA-1428", "High", "TAKRA Live - คำเสี่ยง: แก้คำที่เพิ่มเองให้ซ้ำกับคำที่มีอยู่แล้ว ระบบแจ้งว่าบันทึกไม่สำเร็จ แต่คำเดิมถูกลบทิ้งถาวร", "READY TO TEST"],
 ["15-OCT", "Boat", "TAKRA-1429", "Medium", "TAKRA Live - คลังสคริปต์: ปิด Content ในบล็อก (\"ปิดอยู่ · AI ไม่หยิบไปพูด\") แล้วกดบันทึก พอเปิดแก้ไขใหม่ Content นั้นกลับมาเปิดใช้เอง", "READY TO TEST"],
-["30-OCT", "Boat", "TAKRA-1430", "Medium", "TAKRA Live - Studio: หน้าต่าง Preview (กด Space) ไม่แสดงรูปที่อัปโหลดเองจากคลังสื่อ เห็นแค่พื้นดำ ทั้งที่แคนวาสแสดงรูปเต็มเฟรม", "In Progress"],
+["30-OCT", "Boat", "TAKRA-1430", "Medium", "TAKRA Live - Studio: หน้าต่าง Preview (กด Space) ไม่แสดงรูปที่อัปโหลดเองจากคลังสื่อ เห็นแค่พื้นดำ ทั้งที่แคนวาสแสดงรูปเต็มเฟรม", "READY TO TEST"],
 ["15-OCT", "Boat", "TAKRA-1431", "High", "TAKRA Live - ไลฟ์ส่งตรง TikTok: หน้าออกอากาศบอกว่า TikTok เปิดเผยเนื้อหาเชิงพาณิชย์ให้แล้ว แต่ห้องไลฟ์ที่ผู้ชมเห็นไม่มีป้าย \"Promotional content\"", "READY TO TEST"],
 ["15-OCT", "Boat", "TAKRA-1433", "Medium", "TAKRA Live - เพิ่มหน้า \"เช็คความพร้อมก่อนออกอากาศ\": ตรวจเครือข่าย · เสียงของเครื่อง · สุขภาพบริการ AI 6 ตัว ก่อนกดเริ่มออกอากาศ (ตอนนี้ไม่มีที่ไหนตรวจเลย)", "READY TO TEST"],
 ["9-OCT", "Book", "TF-119", "High", "งานที่ตั้งเวลาจากหน้าสร้าง Task ถูกนับว่า \"ถึงเวลาแล้ว\" ก่อนเวลาจริงได้ถึง 7 ชม. — run_at เก็บสองรูปแบบ (UTC กับ +07:00) แล้วเทียบกันแบบข้อความ (แยกจาก ITS-36)", "READY TO TEST"],
@@ -535,13 +535,13 @@ const ROWS = [
 ["23-OCT", "James", "TI-696", "Low", "[Defect][BE] สลับบัญชีกลางไลฟ์: stream-pulse (feed-release) ของไลฟ์บัญชีเก่ายิง engine ตอน restart ได้ 401 (teardown/finalize สำเร็จ ข้อมูลไม่หาย)", "READY TO TEST"],
 ["23-OCT", "James", "TI-698", "Medium", "[Defect][BE] engine เปิด TLS ไป IP ของ Google LLC (~2 นาที) ช่วง loading models หลัง login และ consent — ไม่ผ่าน env proxy, นอกเหนือ egress ที่ประกาศ (CDN เท่านั้น)", "To Do"],
 ["ยังไม่มีรอบ", "Boat", "TAKRA-1550", "High", "[Defect][FE][BE][Electron] ทดสอบฉากข้ามประโยคที่เรนเดอร์ไม่สำเร็จและไม่มี ducking เพลงพื้นหลัง · เพิ่มการปรับระดับ ducking ต่อไลฟ์ (ค่าเริ่มต้น 30%)", "READY TO TEST"],
-["ยังไม่มีรอบ", "Boat", "TAKRA-1559", "High", "[Defect][FE][Electron] ทดสอบฉาก/เช็คเครื่องล้มด้วย error อ่านไม่ออก เมื่ออวาตาร์ไม่ได้อยู่ในเครื่องนี้ + ทดสอบฉากไม่บอกเวลาที่ต้องรอ", "In Progress"],
-["ยังไม่มีรอบ", "Boat", "TAKRA-1560", "High", "[Defect][FE][Electron] เครื่องที่ยังเป็นตัวเรนเดอร์ FlashHead ทดสอบฉาก/เริ่มไลฟ์ไม่ได้ และไม่บอกให้ติดตั้งตัวเรนเดอร์ใหม่ · ทดสอบฉากตอนตัวเรนเดอร์กำลังเปิดขึ้น error อ่านไม่ออก", "In Progress"],
+["ยังไม่มีรอบ", "Boat", "TAKRA-1559", "High", "[Defect][FE][Electron] ทดสอบฉาก/เช็คเครื่องล้มด้วย error อ่านไม่ออก เมื่ออวาตาร์ไม่ได้อยู่ในเครื่องนี้ + ทดสอบฉากไม่บอกเวลาที่ต้องรอ", "READY TO TEST"],
+["ยังไม่มีรอบ", "Boat", "TAKRA-1560", "High", "[Defect][FE][Electron] เครื่องที่ยังเป็นตัวเรนเดอร์ FlashHead ทดสอบฉาก/เริ่มไลฟ์ไม่ได้ และไม่บอกให้ติดตั้งตัวเรนเดอร์ใหม่ · ทดสอบฉากตอนตัวเรนเดอร์กำลังเปิดขึ้น error อ่านไม่ออก", "READY TO TEST"],
 ["30-OCT", "Hope", "TAK-886", "Medium", "ไลฟ์ค้างช่วงที่แอปสำรองคลิปขึ้นคลาวด์ → ชะลอการสำรองระหว่างไลฟ์", "IN REVIEW"],
 ["30-OCT", "Mae", "TAK-887", "Low", "[FE] คลังวิดีโอ / แท็บวินิจฉัย — บรรทัดเตือน «โหลดรายการเพิ่มไม่สำเร็จ» ใช้สีแดงที่ contrast ตก AA (~3.96:1)", "IN REVIEW"],
 ["30-OCT", "Hope", "TAK-888", "High", "[BE/FE] ไลฟ์ล้มกลางทางแล้วห้อง TikTok ค้าง LIVE + ลิงก์ส่งภาพหมดอายุ (ห้องเปิด ~7 วัน) ต่อกลับไม่ได้โดยไม่บอกสาเหตุ — ปิดห้องให้ · บอกเหตุตรง 3 ช่องทาง · เตือนก่อนหมดอายุ", "IN REVIEW"],
 ["30-OCT", "Mae", "TAK-889", "Low", "[FE][a11y] จัดฉาก — ตัวดูโมเดล 3 มิติเปิดทับแล้วยังนับเป็น dialog ซ้อน 2 ชั้น (ไม่ผ่านกลไกกลางของ TAK-821)", "IN REVIEW"],
-["ยังไม่มีรอบ", "Boat", "TAKRA-1561", "High", "[Defect][FE][BE][Electron] ข้อผิดพลาดของตัวเรนเดอร์/เสียงอ่านไม่ออก: ไม่รู้ว่าตัวเรนเดอร์พร้อมหรือยัง · error ดิบของ Electron · \"เช็คสถานะไม่ได้\" ไม่บอกเหตุ · ทดสอบฉากขึ้น \"tts 503\"", "In Progress"],
+["ยังไม่มีรอบ", "Boat", "TAKRA-1561", "High", "[Defect][FE][BE][Electron] ข้อผิดพลาดของตัวเรนเดอร์/เสียงอ่านไม่ออก: ไม่รู้ว่าตัวเรนเดอร์พร้อมหรือยัง · error ดิบของ Electron · \"เช็คสถานะไม่ได้\" ไม่บอกเหตุ · ทดสอบฉากขึ้น \"tts 503\"", "READY TO TEST"],
 ["ยังไม่มีรอบ", "No", "TAKRA-1565", "Medium", "[Defect][BE][Electron] คำที่เพิ่มในคลังคำอ่านไม่มีผลกับบรรทัดที่แอป desktop เคยเรนเดอร์ไว้แล้ว (แคชเสียง/คลิปไม่รู้จักคลังคำอ่าน)", "READY TO TEST"],
 ["30-OCT", "Gong", "TKRD-438", "High", "[หลังบ้าน › ผู้ใช้ทั้งหมด] ค้นหาด้วยเบอร์มือถือแล้วเบอร์ลูกค้าถูกบันทึกลง request log ของ api (ขัด TKRD-401)", "READY TO TEST"],
 ["30-OCT", "Gong", "TKRD-439", "Medium", "[เช็คจอ] ปิด \"เปิดให้ลูกค้าเห็นข้อมูลจอ\" แต่เปิดเช็คจอไว้ — เมนูและหน้าเช็คจอยังเปิดได้ แต่กดตรวจสอบแล้วได้ 503", "To Do"],
@@ -553,16 +553,16 @@ const ROWS = [
 ["30-OCT", "Hope", "TAK-892", "High", "[BE/FE] เครื่องเดียวใช้หลายคน — คนที่ล็อกอินทีหลังเห็นบัญชี/คลิปของเวิร์กสเปซคนก่อนแวบหนึ่ง (เวิร์กสเปซที่เลือกผูกกับเครื่อง ไม่ผูกกับคน)", "IN REVIEW"],
 ["30-OCT", "Hope", "TAK-893", "Medium", "[BE/FE] เริ่มไลฟ์ตามเวลา — ปิดแอปหลายวันแล้วเปิดใหม่ในช่วงรอบวันนี้ ในแอปไม่แจ้งว่าข้ามไปกี่รอบ (ข่าวข้ามรอบถูกผลรอบวันนี้ทับ)", "IN REVIEW"],
 ["30-OCT", "Mae", "TAK-894", "Low", "[FE] หน้าสถานะไลฟ์ — ตัวนับถอยหลังของสินค้าที่ปักตั้ง setInterval แยกของตัวเอง (timer ตัวที่ 2 ของหน้า) และนับแบบลบสะสม ค่าค้างหลังสลับแท็บ/เครื่องหลับ", "IN REVIEW"],
-["ยังไม่มีรอบ", "Boat", "TAKRA-1567", "High", "[Defect][BE][FE][Electron] sync สินค้า TikTok Shop ติด captcha ดึง SKU ไม่ได้ — แอป desktop ให้ผู้ใช้แก้ captcha เอง + แยก captcha จริงออกจากหน้าสินค้าใช้ไม่ได้", "In Progress"],
-["ยังไม่มีรอบ", "Boat", "TAKRA-1571", "High", "[Defect][BE] อนุมัติสคริปต์แล้ว ฉากในไลฟ์ที่ใช้สคริปต์นั้นยังเป็นร่าง เริ่มไลฟ์ไม่ได้ และไม่มีป้ายแจ้งอัปเดต", "In Progress"],
-["ยังไม่มีรอบ", "Boat", "TAKRA-1572", "High", "[Defect][BE] อวตาร์ตอบคอมเมนต์ว่ามีปักตะกร้า ทั้งที่ไลฟ์นี้ไม่ได้ปักตะกร้า", "In Progress"],
+["ยังไม่มีรอบ", "Boat", "TAKRA-1567", "High", "[Defect][BE][FE][Electron] sync สินค้า TikTok Shop ติด captcha ดึง SKU ไม่ได้ — แอป desktop ให้ผู้ใช้แก้ captcha เอง + แยก captcha จริงออกจากหน้าสินค้าใช้ไม่ได้", "READY TO TEST"],
+["ยังไม่มีรอบ", "Boat", "TAKRA-1571", "High", "[Defect][BE] อนุมัติสคริปต์แล้ว ฉากในไลฟ์ที่ใช้สคริปต์นั้นยังเป็นร่าง เริ่มไลฟ์ไม่ได้ และไม่มีป้ายแจ้งอัปเดต", "READY TO TEST"],
+["ยังไม่มีรอบ", "Boat", "TAKRA-1572", "High", "[Defect][BE] อวตาร์ตอบคอมเมนต์ว่ามีปักตะกร้า ทั้งที่ไลฟ์นี้ไม่ได้ปักตะกร้า", "READY TO TEST"],
 ["ยังไม่มีรอบ", "No", "TAKRA-1579", "Medium", "[Defect][Electron] แคชคลิปเพดาน 5 GB เล็กเกินสำหรับ MuseTalk — ฉากที่เตรียมครบแล้วกลับไปเรนเดอร์ใหม่หลังไลฟ์", "READY TO TEST"],
-["ยังไม่มีรอบ", "Boat", "TAKRA-1580", "High", "[Defect][BE][FE][Electron] sync สินค้า TikTok บนเครือข่ายที่ TikTok บล็อกตามประเทศ — แอปบอกผิดว่าเป็น captcha และหน้าต่างยืนยันตัวตนค้าง", "In Progress"],
+["ยังไม่มีรอบ", "Boat", "TAKRA-1580", "High", "[Defect][BE][FE][Electron] sync สินค้า TikTok บนเครือข่ายที่ TikTok บล็อกตามประเทศ — แอปบอกผิดว่าเป็น captcha และหน้าต่างยืนยันตัวตนค้าง", "READY TO TEST"],
 ["ยังไม่มีรอบ", "ไม่มีคนรับ", "TAKRA-1605", "Medium", "flaky test: blocked-words.service.spec.ts ตกสลับบน CI — รอด้วยนาฬิกาจริง 20 ms", "To Do"],
 ["ยังไม่มีรอบ", "No", "TAKRA-1606", "Medium", "[BE] prod 2 replica: คำสั่งระหว่างไลฟ์ (สวิตช์ AI ตอบ · แก้บรรทัดนี้) ได้ 404 ราวครึ่งหนึ่ง เมื่อคำขอไปตก pod ที่ไม่ได้ถือรอบ", "READY TO TEST"],
 ["ยังไม่มีรอบ", "ไม่มีคนรับ", "TAKRA-1607", "Medium", "[BE][Electron] BYOK: แคชเสียง/คลิปในเครื่องไม่รู้ว่าเสียงมาจากบัญชีผู้ให้บริการไหน — ใส่คีย์ตัวเองแล้วยังได้เสียงจากคีย์กลาง", "To Do"],
 ["ยังไม่มีรอบ", "ไม่มีคนรับ", "TAKRA-1608", "Medium", "🔴 BYOK: เรียก LLM ของลูกค้าช้าเกิน 60 วิ → Postgres ตัด transaction → 500 · และ 429 \"เครดิตหมด\" ขึ้นข้อความว่าให้รอ", "To Do"],
-["ยังไม่มีรอบ", "Boat", "TAKRA-1611", "High", "[Defect][BE][FE][Electron] ล็อกอิน TikTok จากหน้าเริ่มไลฟ์ในแอป desktop แล้วใส่ตะกร้าล้มทั้งหมด ไลฟ์ทั้งรอบไม่ปักสินค้า", "In Progress"],
+["ยังไม่มีรอบ", "Boat", "TAKRA-1611", "High", "[Defect][BE][FE][Electron] ล็อกอิน TikTok จากหน้าเริ่มไลฟ์ในแอป desktop แล้วใส่ตะกร้าล้มทั้งหมด ไลฟ์ทั้งรอบไม่ปักสินค้า", "READY TO TEST"],
 ["ยังไม่มีรอบ", "ไม่มีคนรับ", "TAKRA-1612", "Medium", "🔴 [Electron] เตรียมเสียงล่วงหน้าวนซ้ำไม่หยุด — เผาเครดิต MiniMax หมดใน 2 วัน (ไม่หยุดแม้ปลายทางบอกว่าเครดิตหมด)", "To Do"],
 ["ยังไม่มีรอบ", "No", "TAKRA-1614", "Medium", "คลังฉากถามสถานะซ้ำทุก 5 วินาทีไม่เลิก แม้ server ตอบแล้วว่าฉากนี้ไม่มีคลังให้เตรียมในเครื่อง (404)", "To Do"],
 ["ยังไม่มีรอบ", "No", "TAKRA-1616", "Medium", "[Defect][BE] เรื่องชวนคุย: กด \"ใช้เรื่องนี้\" แล้วได้ 0 บท — ตัวกรองชื่อสินค้าทิ้งทุกบทแบบเงียบ ๆ เมื่อชื่อสินค้ามีคำเรียกประเภท", "READY TO TEST"],
@@ -590,12 +590,29 @@ const ROWS = [
 ["ยังไม่มีรอบ", "No", "TAKRA-1629", "Medium", "[FE] session หมดระหว่างออกอากาศ แอปพาออกจากหน้าไลฟ์ไปหน้าล็อกอิน = ไลฟ์ตาย", "READY TO TEST"],
 ["ยังไม่มีรอบ", "No", "TAKRA-1630", "Medium", "[BE] /auth/refresh โดน rate limit 10/นาที แบบนับรวมทุกคน (key = IP ของ ingress) → ผู้ใช้หลุดล็อกอินเมื่อคนอื่นต่ออายุพร้อมกัน", "READY TO TEST"],
 ["ยังไม่มีรอบ", "No", "TAKRA-1638", "Medium", "[FE][test] live-studio-preflight-error.spec \"ลองเสียงแล้วผ่าน → ไม่เตือน\" ตกบน CI — คำเตือน \"ล้ำเขตปลอดภัย\" โผล่ (ผ่านในเครื่อง)", "To Do"],
-["ยังไม่มีรอบ", "Boat", "TAKRA-1639", "Medium", "[Defect][FS] หน้า Takra AI Live หลุด design 12 จุด — ฉาก · อวาตาร์ · focus ช่องกรอก · ตารางคลัง · เสียง · สรุปไลฟ์ · ตั้งค่า", "In Progress"],
+["ยังไม่มีรอบ", "Boat", "TAKRA-1639", "Medium", "[Defect][FS] หน้า Takra AI Live หลุด design 12 จุด — ฉาก · อวาตาร์ · focus ช่องกรอก · ตารางคลัง · เสียง · สรุปไลฟ์ · ตั้งค่า", "READY TO TEST"],
 ["ยังไม่มีรอบ", "James", "TI-710", "Low", "[Bug][BE] แถว subject_dek ที่เสีย (wrapped_dek ว่างแต่ยังไม่ถูกทำลาย) ทำให้ ingest ตอบ retryable ไม่จบ → upload ของ session ค้าง", "To Do"],
 ["ยังไม่มีรอบ", "James", "TI-711", "Medium", "[Bug][BE] ยอมรับนโยบายเวอร์ชันใหม่ทับ decided_at ของการให้ความยินยอม → การลบที่ค้างแล้วรันซ้ำทีหลัง ลบคอมเมนต์ที่เก็บถูกต้องและทำลายกุญแจของ host", "To Do"],
 ["ยังไม่มีรอบ", "Gong", "TKRD-502", "Medium", "[แจ้งเตือนสลิป Telegram] สลิปไฟล์ .webp ขึ้นในแชตเป็นสติกเกอร์ ไม่มี caption — แอดมินไม่รู้ว่าเป็นสลิปรหัสไหนของลูกค้าคนไหน", "To Do"],
 ["ยังไม่มีรอบ", "Gong", "TKRD-503", "Low", "[ลิงก์ที่สร้างไว้] เลือกช่วงวันที่กลับด้าน (\"สร้างตั้งแต่วันที่\" หลัง \"ถึงวันที่\") แล้วกด \"ค้นหา\" — หน้าขึ้น \"โหลดลิงก์ไม่สำเร็จ\" แทนรายการ", "To Do"],
 ["ยังไม่มีรอบ", "Gong", "TKRD-504", "Low", "[แพ็กเกจของฉัน] หลังแอดมิน \"ยกเลิกการอนุมัติ\" สลิปที่อนุมัติแล้ว ลูกค้าไม่มีปุ่ม \"ต่ออายุ\" อีก เพราะสิทธิ์ถูกคืนเป็น standard โดยไม่ผูกแพ็กเกจ (ยืนยันจากโค้ด)", "To Do"],
+["ยังไม่มีรอบ", "No", "TAKRA-1650", "High", "[BE] BYOK: TTS ไม่เคยใช้คีย์ MiniMax ของร้าน — Nest ฉีดตัวเก็บคีย์เป็น undefined ⇒ ทุกร้านพูดด้วยบัญชีเรา (ต่อจาก TAKRA-1576)", "In Progress"],
+["ยังไม่มีรอบ", "Book", "TF-176", "High", "[Defect][FlowRunner] ตัวควบคุมตายตอนกดปุ่มตามชื่อ → กู้คืนได้แต่ขั้นนั้นพัง \"ไม่พบ ถัดไป\" ทั้งที่ปุ่มอยู่บนจอ", "To Do"],
+["ยังไม่มีรอบ", "Book", "TF-177", "High", "[Defect][FlowRunner] แผงแจ้งเตือนถูกดึงลงค้าง → งานพังทันที APP_NOT_IN_FRONT และบอกให้ \"ปลดล็อกหน้าจอ\" ซึ่งไม่ใช่สาเหตุ", "To Do"],
+["ยังไม่มีรอบ", "Book", "TF-178", "High", "[Defect][FlowRunner] กล่อง Google Play Protect บังคลังภาพ Shopee → พังที่เลือกคลิปพร้อมข้อความผิด \"ดูว่ามีวิดีโอในเครื่องไหม\"", "To Do"],
+["ยังไม่มีรอบ", "Book", "TF-179", "High", "[Defect][App] ลิงก์สินค้า TikTok ไม่พร้อมจำหน่าย (PRODUCT_UNAVAILABLE) แต่แอปยังส่งคลิปที่ใช้ลิงก์เดียวกันไปพังทีละคลิป (325 คลิป) และทิ้งหน้าโพสต์ค้าง", "To Do"],
+["ยังไม่มีรอบ", "Book", "TF-180", "Medium", "[Defect][FlowRunner] คืนคีย์บอร์ดผิดตัว: เครื่องที่ค้าง ADB Keyboard จบงานแล้วได้ \"พิมพ์ด้วยเสียงของ Google\" แทน Gboard", "To Do"],
+["ยังไม่มีรอบ", "Book", "TF-181", "Medium", "[Defect][FlowRunner] เน็ตหลุด 20 วิระหว่างแนบสินค้า TikTok → ทั้งโพสต์พัง \"URL screen never showed\" ไม่ลองใหม่และไม่บอกว่าเน็ตหลุด", "To Do"],
+["ยังไม่มีรอบ", "Book", "TF-182", "Medium", "[Defect][FlowRunner] แนบสินค้า TikTok ไม่ติด 1/25 รอบ (กดปุ่มเพิ่มที่ล่างสุด y=2027) แล้วรายงานผิดว่า \"อาจหมดสต็อก\"", "To Do"],
+["ยังไม่มีรอบ", "Book", "TF-183", "Low", "[Defect][FlowRunner] ใส่ลิงก์สินค้า TikTok ซ้ำกัน → ชิ้นที่สองรายงานผิดว่า \"ไม่มีปุ่มเพิ่ม (หมดสต็อก)\"", "To Do"],
+["ยังไม่มีรอบ", "Book", "TF-184", "Low", "[Defect][FlowRunner] ขั้นพิมพ์แคปชันตรวจแค่คำแรก — ข้อความถูกตัดท้ายหรืออีโมจิหายก็ยังรายงานว่าผ่าน", "To Do"],
+["ยังไม่มีรอบ", "Book", "TF-185", "Medium", "[Defect][App] วอร์มช่องเกินเพดานนาทีต่อวัน (@titktokpoco 175 นาที > 160) — ไม่ตัดความยาวเซสชันให้เหลือเท่าเวลาที่เหลือ", "To Do"],
+["ยังไม่มีรอบ", "Book", "TF-186", "Medium", "[Defect][FE] หน้าภาพรวม \"ตอนนี้/ถัดไป\" ขัดกันเอง: \"พักถึง 30 ต.ค. 08:00\" คู่กับ \"ถัดไป วอร์ม TikTok 21:00\" แต่ 21:00 ไม่วอร์มจริงเพราะงบหมด", "To Do"],
+["ยังไม่มีรอบ", "Book", "TF-187", "Low", "[Defect][FlowRunner] วอร์ม Shopee: กด LIVE แล้วอ่านหน้าไลฟ์ไม่ทันในครั้งแรก นับเป็นพลาด", "To Do"],
+["ยังไม่มีรอบ", "Book", "TF-188", "Low", "[Defect][FlowRunner] เส้นทางโหมดปกติ (ไม่ใช่โหมดเร็ว) ไม่กด \"เพิ่ม\" ในกล่อง \"เพิ่มสินค้าหรือไม่\" ที่อยู่กลางจอ (dialog_add_min_fy 0.72)", "To Do"],
+["ยังไม่มีรอบ", "Book", "TF-189", "Low", "[Defect][FlowRunner] โฟลว์เก่า tiktok_video_draft_v0.2 ยังอยู่ใน pack — ไม่ส่งคลิปเข้าเครื่อง และขั้นเลือกคลิปรายงานผ่านทั้งที่คลังภาพว่าง", "To Do"],
+["ยังไม่มีรอบ", "Book", "TF-190", "Low", "[Defect][App] log [update] ไม่แสดงเลข +N ของ build UAT และมี warning \"[TAURI] Couldn't find callback id\" ที่หน้าตั้งค่า", "To Do"],
+["ยังไม่มีรอบ", "Book", "TF-191", "Medium", "[Defect][App] หน่วยความจำ GPU ของแอปสูง 900–1,400 MB ต่อมือถือ 1 เครื่อง (หมุนเวียน ~20 MB/วิ) — เสี่ยงกับ 20 เครื่องบนเครื่อง RAM 8 GB", "To Do"],
 ];
 // Projects: the Jira key prefix decides the project, so rows from another project
 // show up here as soon as they are added to ROWS. Add a line to PROJECTS to give it a name.
@@ -674,7 +691,7 @@ ROWS.forEach(r=>{const s=JOURNEY[r[2]]; r[7]=s?s:(r[2].startsWith("TAKRA-")?99:0
 const scCls=v=>v===SCOPE_LABEL.ui?"c-ui":v===SCOPE_LABEL.sys?"c-sys":"c-tool";
 
 // เวลาที่ดึงจาก Jira ล่าสุดรายโปรเจกต์ — ตัวซิงก์ (update_open_bugs.py) เขียนบรรทัดนี้เอง ต้องอยู่บรรทัดเดียว
-const SYNCED = {"TAKRA": "30 ต.ค. 2026 09:00", "TI": "30 ต.ค. 2026 09:00", "TAK": "30 ต.ค. 2026 09:00", "TKRD": "30 ต.ค. 2026 09:00", "TF": "30 ต.ค. 2026 09:00", "TKH": "30 ต.ค. 2026 09:00"};
+const SYNCED = {"TAKRA": "30 ต.ค. 2026 13:00", "TI": "30 ต.ค. 2026 13:00", "TAK": "30 ต.ค. 2026 13:00", "TKRD": "30 ต.ค. 2026 13:00", "TF": "30 ต.ค. 2026 13:00", "TKH": "30 ต.ค. 2026 13:00"};
 const PROJECTS={
   TAKRA:{name:"Takra AI", jira:"https://kitdi.atlassian.net"},
   TI:{name:"Takra Insight", jira:"https://kitdi.atlassian.net"},
