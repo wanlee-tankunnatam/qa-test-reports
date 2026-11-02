@@ -156,17 +156,17 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <h1>🖥️ TAKRA AI — แอปเดสก์ท็อป Takra Live (Windows) UI Manual Test Cases</h1>
   <div class="sub">เทส UI ด้วยมือ · แอป <b>Takra Live</b> บน Windows (Electron) ที่โหลดเว็บ TAKRA AI UAT แล้วเรนเดอร์อวาตาร์ด้วยการ์ดจอของเครื่อง · โค้ด <b>origin/develop @ 21effeba</b> (= uat 3f791497 · อัปเดตเคส 2 พ.ย. 2569) · Epic <b>TAKRA-1453</b></div>
   <div class="meta">
-    <span class="pill">164 เคส + E2E 1 = 165</span>
+    <span class="pill">159 เคส + E2E 1 = 160</span>
     <span class="pill">18 กลุ่ม (A–L · M หลายฉาก · N เพลง · O เสียง · P สินค้า/ตะกร้า · R ตอบคอมเมนต์ · Q คุณภาพ) + E2E</span>
     <span class="pill">UI + E2E · manual</span>
-    <span class="pill">P0 59 · P1 106 · P2 0</span>
-    <span class="pill">ประเภท: Happy 55 · Negative 16 · Boundary 19 · Validation 11 · Exception 24 · Permission 8 · Data 32</span>
+    <span class="pill">P0 57 · P1 103 · P2 0</span>
+    <span class="pill">ประเภท: Happy 55 · Negative 16 · Boundary 19 · Validation 11 · Exception 24 · Permission 4 · Data 31</span>
   </div>
 </header>
 
 <div class="wrap">
 
-  <div class="note-box">🆕 <b>อัปเดต 2 พ.ย. ตาม UI ใหม่ (redesign TAKRA-1500/1586):</b> "คลังอวาตาร์" → "คลัง" แท็บ "โฮสไลฟ์" · "คลังฉาก" รวมเข้า "ร่างไลฟ์" · เพลง → "คลัง" แท็บ "สื่อประกอบ" · สินค้า → "คลัง" แท็บ "สินค้า" · บัญชี TikTok → เมนูบัญชี "การตั้งค่า" หมวด "บัญชีไลฟ์" · Studio เป็นขั้นตอน · เพิ่ม 27 เคส: อัปเดตในแอป · ไม่หลุดล็อกอิน · ถามก่อนออกจากหน้า · "สุ่มบทใหม่" · API Keys ของร้าน · ล็อกอิน TikTok แบบใหม่ · คำอ่านมีผลกับบรรทัดที่เรนเดอร์แล้ว · ลบ Q.30 (ไม่มีปุ่มพักไลฟ์แล้ว)<br>🖥️ <b>Test target:</b> แอป <b>Takra Live</b> (ตัวติดตั้ง <code>Takra-Live-x64.exe</code>) บน Windows 10/11 x64 · แอปเปิดเว็บ <code>https://uat-live.takra.ai</code> ในหน้าต่างของแอป · ล็อกอินผ่านหน้า TAKRA Hub ที่เปิดในแอป · ชื่อหน้าต่างขึ้น "… — Takra AI Live <เวอร์ชัน> (uat)"<br>🧰 <b>เครื่องที่ต้องเตรียม:</b> (1) <b>เครื่อง A</b> Windows + การ์ด NVIDIA ผ่านสเปก (VRAM ≥ 16 GB · ไดรเวอร์ ≥ 570 · RAM 32 GB · CPU 8 คอร์ · ดิสก์ว่าง 50 GB) · (2) <b>เครื่อง B</b> Windows อีกเครื่อง ร้านเดียวกัน (เคสส่งออก/นำเข้า · อวาตาร์ไม่อยู่ในเครื่อง) · (3) เครื่องที่ไม่ผ่านสเปกหรือไม่มีการ์ด NVIDIA (เคสตรวจเครื่อง) · (4) เบราว์เซอร์ปกติ (Chrome) เปิด UAT เดียวกัน (เคสเทียบ "นอกแอป")<br>🔑 <b>API Keys ของร้าน (TAKRA-1651):</b> ไม่มีคีย์กลางสำรองแล้ว เคสไลฟ์จริงทุกเคสต้องตั้งคีย์ MiniMax และคีย์ Gemini/OpenAI ที่หมวด "API Keys" ก่อน ไม่งั้นเริ่มออกอากาศไม่ได้<br>📎 <b>ที่มาของเคส:</b> โค้ดจริงใน <code>apps/desktop/src</code> + <code>apps/web/src</code> · คำ UI ลอกจาก <code>apps/web/src/i18n/locales/th/*.ts</code> และข้อความในแอปจาก <code>apps/desktop/src/*.js</code> · Expected ยึด Jira Epic TAKRA-1453 และใบย่อยที่อ้างในแต่ละเคส<br>🎯 <b>กลุ่ม Q คุณภาพไลฟ์:</b> ตัดสินจาก<b>จอมือถือผู้ชม</b> (อัดหน้าจอ 60 fps แนบใน Actual) ไม่ใช่จอในแอป · เกณฑ์ตัวเลขจากใบงาน: ปาก/เสียงเหลื่อม ≤ 40 ms + ไลฟ์ 2 ชม.ไม่หลุด (TAKRA-1462/1467) · ตอบคอมเมนต์ 15–25 วิ (TAKRA-1461/1467) · soak 6 ชม. VRAM ไม่โต + ทางถอย (TAKRA-1545) · หน้านิ่ง (TAKRA-1521) · ลดเพลง 30% (TAKRA-1550) · จดสเปกเครื่อง + เน็ตขาขึ้นทุกครั้ง<br>🧩 <b>กลุ่ม M–R:</b> ไลฟ์หลายฉาก · เพลงประกอบ · เสียงของแอป · สินค้า/ปักตะกร้าตามฉาก · ตอบคอมเมนต์ — เน้นพฤติกรรมเมื่ออวาตาร์เรนเดอร์ในเครื่องและแอปเป็นตัวคุยกับ TikTok · คำในแถว "ตรวจก่อนไลฟ์" ลอกจากข้อความที่ระบบส่งขึ้นจอ · Expected อ้าง epics-mvp2.md Epic 9/10/13/21 + Jira<br>🔴 <b>ไลฟ์จริง = manual เท่านั้น:</b> เคสกลุ่ม L, Q, R, เคสออกอากาศของ M–P และ E2E ออกอากาศเข้า TikTok จริง ห้ามเขียนเป็นสคริปต์อัตโนมัติ · ห้ามใช้บัญชี/ห้องไลฟ์เดียวกับรอบทดสอบอื่นพร้อมกัน<br>⚠️ <b>ไม่อยู่ในชุดนี้ (ตามโค้ด 2 พ.ย.):</b> TikTok LIVE Studio + กล้องเสมือน · ช่อง production ของแอป (มีแค่ UAT) · ตัวติดตั้งยังไม่มี code signing — Windows อาจเตือน unknown publisher ไม่นับเป็น FAIL<br>🔍 <b>ยืนยันจากโค้ด ยังไม่ได้เดินบนจอจริง:</b> เคสที่อ้างหน้าการ์ดบริการบน TAKRA Hub ยืนยันจาก repo นี้ไม่ได้ · ถ้าคำบนจอต่างจากเคส ให้จดคำจริงใน Actual<br>📏 <b>เกณฑ์สเปก:</b> Epic TAKRA-1453 (15 ต.ค.) เขียน VRAM ≥ 24 GB แต่โค้ดปัจจุบันใช้เกณฑ์ใหม่ของ TAKRA-1542/1464 (VRAM 16 GB · ความเร็วเรนเดอร์ ≤ 4 วิ ต่อเสียง 5 วิ) — เคสยึดตัวเลขในแอป ถ้า BA ยืนยันตัวเลขอื่นให้แก้ที่เคสกลุ่ม C</div>
+  <div class="note-box">🆕 <b>อัปเดต 2 พ.ย. ตาม UI ใหม่ (redesign TAKRA-1500/1586):</b> "คลังอวาตาร์" → "คลัง" แท็บ "โฮสไลฟ์" · "คลังฉาก" รวมเข้า "ร่างไลฟ์" · เพลง → "คลัง" แท็บ "สื่อประกอบ" · สินค้า → "คลัง" แท็บ "สินค้า" · บัญชี TikTok → เมนูบัญชี "การตั้งค่า" หมวด "บัญชีไลฟ์" · Studio เป็นขั้นตอน · เพิ่ม 27 เคส: อัปเดตในแอป · ไม่หลุดล็อกอิน · ถามก่อนออกจากหน้า · "สุ่มบทใหม่" · API Keys ของร้าน · ล็อกอิน TikTok แบบใหม่ · คำอ่านมีผลกับบรรทัดที่เรนเดอร์แล้ว · ลบ Q.30 (ไม่มีปุ่มพักไลฟ์แล้ว) · ตัดเคสที่ทดสอบผ่าน URL บนเบราว์เซอร์ออก (H.3 · I.9 · J.1 · J.5 · K.4) — ทุกเคสทดสอบในโปรแกรม Takra Live<br>🖥️ <b>Test target:</b> แอป <b>Takra Live</b> (ตัวติดตั้ง <code>Takra-Live-x64.exe</code>) บน Windows 10/11 x64 · แอปเปิดเว็บ <code>https://uat-live.takra.ai</code> ในหน้าต่างของแอป · ล็อกอินผ่านหน้า TAKRA Hub ที่เปิดในแอป · ชื่อหน้าต่างขึ้น "… — Takra AI Live <เวอร์ชัน> (uat)"<br>🧰 <b>เครื่องที่ต้องเตรียม:</b> (1) <b>เครื่อง A</b> Windows + การ์ด NVIDIA ผ่านสเปก (VRAM ≥ 16 GB · ไดรเวอร์ ≥ 570 · RAM 32 GB · CPU 8 คอร์ · ดิสก์ว่าง 50 GB) · (2) <b>เครื่อง B</b> Windows อีกเครื่อง ร้านเดียวกัน (เคสส่งออก/นำเข้า · อวาตาร์ไม่อยู่ในเครื่อง) · (3) เครื่องที่ไม่ผ่านสเปกหรือไม่มีการ์ด NVIDIA (เคสตรวจเครื่อง)<br>🔑 <b>API Keys ของร้าน (TAKRA-1651):</b> ไม่มีคีย์กลางสำรองแล้ว เคสไลฟ์จริงทุกเคสต้องตั้งคีย์ MiniMax และคีย์ Gemini/OpenAI ที่หมวด "API Keys" ก่อน ไม่งั้นเริ่มออกอากาศไม่ได้<br>📎 <b>ที่มาของเคส:</b> โค้ดจริงใน <code>apps/desktop/src</code> + <code>apps/web/src</code> · คำ UI ลอกจาก <code>apps/web/src/i18n/locales/th/*.ts</code> และข้อความในแอปจาก <code>apps/desktop/src/*.js</code> · Expected ยึด Jira Epic TAKRA-1453 และใบย่อยที่อ้างในแต่ละเคส<br>🎯 <b>กลุ่ม Q คุณภาพไลฟ์:</b> ตัดสินจาก<b>จอมือถือผู้ชม</b> (อัดหน้าจอ 60 fps แนบใน Actual) ไม่ใช่จอในแอป · เกณฑ์ตัวเลขจากใบงาน: ปาก/เสียงเหลื่อม ≤ 40 ms + ไลฟ์ 2 ชม.ไม่หลุด (TAKRA-1462/1467) · ตอบคอมเมนต์ 15–25 วิ (TAKRA-1461/1467) · soak 6 ชม. VRAM ไม่โต + ทางถอย (TAKRA-1545) · หน้านิ่ง (TAKRA-1521) · ลดเพลง 30% (TAKRA-1550) · จดสเปกเครื่อง + เน็ตขาขึ้นทุกครั้ง<br>🧩 <b>กลุ่ม M–R:</b> ไลฟ์หลายฉาก · เพลงประกอบ · เสียงของแอป · สินค้า/ปักตะกร้าตามฉาก · ตอบคอมเมนต์ — เน้นพฤติกรรมเมื่ออวาตาร์เรนเดอร์ในเครื่องและแอปเป็นตัวคุยกับ TikTok · คำในแถว "ตรวจก่อนไลฟ์" ลอกจากข้อความที่ระบบส่งขึ้นจอ · Expected อ้าง epics-mvp2.md Epic 9/10/13/21 + Jira<br>🔴 <b>ไลฟ์จริง = manual เท่านั้น:</b> เคสกลุ่ม L, Q, R, เคสออกอากาศของ M–P และ E2E ออกอากาศเข้า TikTok จริง ห้ามเขียนเป็นสคริปต์อัตโนมัติ · ห้ามใช้บัญชี/ห้องไลฟ์เดียวกับรอบทดสอบอื่นพร้อมกัน<br>⚠️ <b>ไม่อยู่ในชุดนี้ (ตามโค้ด 2 พ.ย.):</b> TikTok LIVE Studio + กล้องเสมือน · ช่อง production ของแอป (มีแค่ UAT) · ตัวติดตั้งยังไม่มี code signing — Windows อาจเตือน unknown publisher ไม่นับเป็น FAIL<br>🔍 <b>ยืนยันจากโค้ด ยังไม่ได้เดินบนจอจริง:</b> เคสที่อ้างหน้าการ์ดบริการบน TAKRA Hub ยืนยันจาก repo นี้ไม่ได้ · ถ้าคำบนจอต่างจากเคส ให้จดคำจริงใน Actual<br>📏 <b>เกณฑ์สเปก:</b> Epic TAKRA-1453 (15 ต.ค.) เขียน VRAM ≥ 24 GB แต่โค้ดปัจจุบันใช้เกณฑ์ใหม่ของ TAKRA-1542/1464 (VRAM 16 GB · ความเร็วเรนเดอร์ ≤ 4 วิ ต่อเสียง 5 วิ) — เคสยึดตัวเลขในแอป ถ้า BA ยืนยันตัวเลขอื่นให้แก้ที่เคสกลุ่ม C</div>
 
   <div class="runsum">
     <h3>📊 สรุปผล Manual Test</h3>
@@ -176,10 +176,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
       <span class="cnt hold">HOLD <b id="sum-hold">0</b></span>
       <span class="cnt block">BLOCKED <b id="sum-block">0</b></span>
       <span class="cnt skip">SKIP <b id="sum-skip">0</b></span>
-      <span class="cnt pending">รอเทส <b id="sum-pending">165</b></span>
+      <span class="cnt pending">รอเทส <b id="sum-pending">160</b></span>
     </div>
     <div class="progress"><div id="sumbar" class="progressbar" style="width:0%"></div></div>
-    <div class="hint" id="sumpct" style="margin-top:5px">0% ทดสอบแล้ว (0/165)</div>
+    <div class="hint" id="sumpct" style="margin-top:5px">0% ทดสอบแล้ว (0/160)</div>
   </div>
 
   <div class="toolbar">
@@ -199,11 +199,11 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
   <div class="filters">
     <div class="row"><label>กลุ่ม</label>
-      <button class="fchip" data-f="feat" data-v="dt-a">📦 A · ติดตั้ง/เปิดแอป (10)</button><button class="fchip" data-f="feat" data-v="dt-b">⚙️ B · ตัวเรนเดอร์ (6)</button><button class="fchip" data-f="feat" data-v="dt-c">🔍 C · ตรวจเครื่อง (6)</button><button class="fchip" data-f="feat" data-v="dt-d">🧑 D · อวาตาร์ของร้าน (10)</button><button class="fchip" data-f="feat" data-v="dt-e">👄 E · ฝึกปาก (3)</button><button class="fchip" data-f="feat" data-v="dt-f">📤 F · ส่งออก/นำเข้า (7)</button><button class="fchip" data-f="feat" data-v="dt-g">🎙️ G · เสียงสำหรับแอป (5)</button><button class="fchip" data-f="feat" data-v="dt-h">▶️ H · ทดสอบฉาก (7)</button><button class="fchip" data-f="feat" data-v="dt-i">🎞️ I · ร่างไลฟ์ (9)</button><button class="fchip" data-f="feat" data-v="dt-j">🎵 J · บัญชี TikTok ในแอป (10)</button><button class="fchip" data-f="feat" data-v="dt-k">✅ K · เตรียมไลฟ์ LOCAL (4)</button><button class="fchip" data-f="feat" data-v="dt-l">📡 L · ออกอากาศจากเครื่อง (12)</button><button class="fchip" data-f="feat" data-v="dt-m">🎬 M · ไลฟ์หลายฉาก (7)</button><button class="fchip" data-f="feat" data-v="dt-n">🎶 N · เพลงประกอบ (6)</button><button class="fchip" data-f="feat" data-v="dt-o">🗣️ O · เสียงในแอป (7)</button><button class="fchip" data-f="feat" data-v="dt-p">🛒 P · สินค้าและตะกร้า (7)</button><button class="fchip" data-f="feat" data-v="dt-r">💬 R · ตอบคอมเมนต์ (9)</button><button class="fchip" data-f="feat" data-v="dt-q">🎯 Q · คุณภาพไลฟ์ (39)</button><button class="fchip" data-f="feat" data-v="dt-e2e">🔄 Full E2E (1)</button>
+      <button class="fchip" data-f="feat" data-v="dt-a">📦 A · ติดตั้ง/เปิดแอป (10)</button><button class="fchip" data-f="feat" data-v="dt-b">⚙️ B · ตัวเรนเดอร์ (6)</button><button class="fchip" data-f="feat" data-v="dt-c">🔍 C · ตรวจเครื่อง (6)</button><button class="fchip" data-f="feat" data-v="dt-d">🧑 D · อวาตาร์ของร้าน (10)</button><button class="fchip" data-f="feat" data-v="dt-e">👄 E · ฝึกปาก (3)</button><button class="fchip" data-f="feat" data-v="dt-f">📤 F · ส่งออก/นำเข้า (7)</button><button class="fchip" data-f="feat" data-v="dt-g">🎙️ G · เสียงสำหรับแอป (5)</button><button class="fchip" data-f="feat" data-v="dt-h">▶️ H · ทดสอบฉาก (6)</button><button class="fchip" data-f="feat" data-v="dt-i">🎞️ I · ร่างไลฟ์ (8)</button><button class="fchip" data-f="feat" data-v="dt-j">🎵 J · บัญชี TikTok ในแอป (8)</button><button class="fchip" data-f="feat" data-v="dt-k">✅ K · เตรียมไลฟ์ LOCAL (3)</button><button class="fchip" data-f="feat" data-v="dt-l">📡 L · ออกอากาศจากเครื่อง (12)</button><button class="fchip" data-f="feat" data-v="dt-m">🎬 M · ไลฟ์หลายฉาก (7)</button><button class="fchip" data-f="feat" data-v="dt-n">🎶 N · เพลงประกอบ (6)</button><button class="fchip" data-f="feat" data-v="dt-o">🗣️ O · เสียงในแอป (7)</button><button class="fchip" data-f="feat" data-v="dt-p">🛒 P · สินค้าและตะกร้า (7)</button><button class="fchip" data-f="feat" data-v="dt-r">💬 R · ตอบคอมเมนต์ (9)</button><button class="fchip" data-f="feat" data-v="dt-q">🎯 Q · คุณภาพไลฟ์ (39)</button><button class="fchip" data-f="feat" data-v="dt-e2e">🔄 Full E2E (1)</button>
       <button class="clearbtn" data-clear="feat">✕</button>
     </div>
     <div class="row"><label>ประเภท</label>
-      <button class="fchip" data-f="kind" data-v="happy" title="flow ปกติ">Happy Path (55)</button><button class="fchip" data-f="kind" data-v="negative" title="ข้อมูลผิด / action ผิด">Negative (16)</button><button class="fchip" data-f="kind" data-v="boundary" title="min · max · ก่อนขอบ · ตรงขอบ · เกินขอบ">Boundary (19)</button><button class="fchip" data-f="kind" data-v="validation" title="format · required · character · length">Validation (11)</button><button class="fchip" data-f="kind" data-v="exception" title="API fail · network fail · server error · timeout">Exception (24)</button><button class="fchip" data-f="kind" data-v="permission" title="role ไหนทำได้ / ทำไม่ได้">Permission (8)</button><button class="fchip" data-f="kind" data-v="data" title="empty · null · duplicate · existing · non-existing">Data (32)</button>
+      <button class="fchip" data-f="kind" data-v="happy" title="flow ปกติ">Happy Path (55)</button><button class="fchip" data-f="kind" data-v="negative" title="ข้อมูลผิด / action ผิด">Negative (16)</button><button class="fchip" data-f="kind" data-v="boundary" title="min · max · ก่อนขอบ · ตรงขอบ · เกินขอบ">Boundary (19)</button><button class="fchip" data-f="kind" data-v="validation" title="format · required · character · length">Validation (11)</button><button class="fchip" data-f="kind" data-v="exception" title="API fail · network fail · server error · timeout">Exception (24)</button><button class="fchip" data-f="kind" data-v="permission" title="role ไหนทำได้ / ทำไม่ได้">Permission (4)</button><button class="fchip" data-f="kind" data-v="data" title="empty · null · duplicate · existing · non-existing">Data (31)</button>
       <button class="clearbtn" data-clear="kind">✕</button>
     </div>
     <div class="row"><label>Priority</label>
@@ -932,19 +932,19 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="featrow" data-featkey="dt-avatar-library"><td colspan="7">📁 แท็บ "โฮสไลฟ์" ของเมนู "คลัง" ในแอป <span class="rp"><span class="lv lvl-ui">🌐 1</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="dt-avatar-library"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
 <tr class="trow" data-feat="dt-d" data-level="ui" data-prio="P1" data-kind="happy" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-DT-D.1</td>
-  <td class="ctitle">แท็บ "โฮสไลฟ์" แสดงเฉพาะการ์ด "อวาตาร์ของร้าน" ทั้งในแอปและเบราว์เซอร์ — ไม่มีชั้นอวาตาร์ที่ทีมจัดเตรียม · ปุ่ม "นำเข้าอวาตาร์" มีเฉพาะในแอป <span class="kd kd-happy">Happy Path</span></td>
+  <td class="ctitle">แท็บ "โฮสไลฟ์" แสดงเฉพาะการ์ด "อวาตาร์ของร้าน" — ไม่มีชั้นอวาตาร์ที่ทีมจัดเตรียม และมีปุ่ม "นำเข้าอวาตาร์" <span class="kd kd-happy">Happy Path</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p1">P1</span></td>
   <td class="status" data-uid="tc-15024"><span class="stb pending">รอเทส</span></td>
   <td class="jira-cell" data-uid="tc-15024"></td>
 </tr>
 <tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">แท็บ "โฮสไลฟ์" แสดงเฉพาะการ์ด "อวาตาร์ของร้าน" ทั้งในแอปและเบราว์เซอร์ — ไม่มีชั้นอวาตาร์ที่ทีมจัดเตรียม · ปุ่ม "นำเข้าอวาตาร์" มีเฉพาะในแอป</div>
+  <div class="h-title">แท็บ "โฮสไลฟ์" แสดงเฉพาะการ์ด "อวาตาร์ของร้าน" — ไม่มีชั้นอวาตาร์ที่ทีมจัดเตรียม และมีปุ่ม "นำเข้าอวาตาร์"</div>
   <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1453" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1453 ใน Jira">🧩 Epic TAKRA-1453</a> · Priority: <b>P1</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · D · อวาตาร์ของร้านในแอป (คลัง › โฮสไลฟ์) — สร้างอวาตาร์จากคลิปด้วยตัวเรนเดอร์ในเครื่อง (TAKRA-1475</div>
   <div class="sec"><h4>Precondition</h4><ul><li>เครื่อง A: Windows 10/11 x64 · การ์ด NVIDIA ผ่านสเปก · ติดตั้งแอป Takra Live รุ่นล่าสุดจาก UAT และติดตั้งตัวเรนเดอร์แล้ว</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป "Takra Live" บนเครื่อง A แล้วเข้าสู่ระบบผ่านหน้า TAKRA Hub ที่เปิดขึ้นในแอปด้วยบัญชี UAT ของ workspace</li><li>กดเมนู "คลัง" ในกลุ่ม "ทั่วไป" ที่แถบซ้าย แล้วเลือกแท็บ "โฮสไลฟ์" เลื่อนดูทั้งหน้าและหัวการ์ด "อวาตาร์ของร้าน"</li><li>เปิดเบราว์เซอร์ Chrome ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบผ่าน TAKRA Hub ด้วยบัญชี UAT ของ workspace (ไม่ใช้แอป)</li><li>กดเมนู "คลัง" ในกลุ่ม "ทั่วไป" ที่แถบซ้าย แล้วเลือกแท็บ "โฮสไลฟ์" ในเบราว์เซอร์ แล้วดูหัวการ์ดเดียวกันเพื่อเทียบกับในแอป</li></ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป "Takra Live" บนเครื่อง A แล้วเข้าสู่ระบบผ่านหน้า TAKRA Hub ที่เปิดขึ้นในแอปด้วยบัญชี UAT ของ workspace</li><li>กดเมนู "คลัง" ในกลุ่ม "ทั่วไป" ที่แถบซ้าย แล้วเลือกแท็บ "โฮสไลฟ์" เลื่อนดูทั้งหน้าและหัวการ์ด "อวาตาร์ของร้าน"</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ทั้งแอปและเบราว์เซอร์: มีการ์ด "อวาตาร์ของร้าน" พร้อมตัวนับรูปแบบ n/5 และปุ่ม "สร้างอวาตาร์จากวิดีโอ" · ไม่มีชั้นอวาตาร์ที่ทีมจัดเตรียม และไม่มีส่วน "อวาตาร์ของฉัน"</li><li>ในแอป: หัวการ์ดมีปุ่ม "นำเข้าอวาตาร์" เพิ่มมาคู่กับปุ่มสร้าง</li><li>ในเบราว์เซอร์: ไม่มีปุ่ม "นำเข้าอวาตาร์"</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic TAKRA-1453 · TAKRA-1533 · TAKRA-1586 · TAKRA-1625 (เลือกใช้ได้เฉพาะอวาตาร์ของร้าน)</div></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>มีการ์ด "อวาตาร์ของร้าน" พร้อมตัวนับรูปแบบ n/5 และปุ่ม "สร้างอวาตาร์จากวิดีโอ" · ไม่มีชั้นอวาตาร์ที่ทีมจัดเตรียม และไม่มีส่วน "อวาตาร์ของฉัน"</li><li>หัวการ์ดมีปุ่ม "นำเข้าอวาตาร์" คู่กับปุ่มสร้าง</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic TAKRA-1453 · TAKRA-1533 · TAKRA-1586 · TAKRA-1625 (เลือกใช้ได้เฉพาะอวาตาร์ของร้าน)</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4><div class="statusrow">
@@ -1729,8 +1729,8 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 
 <!-- dt-h -->
-<tr class="epicrow" data-epic="dt-h"><td colspan="7">▶️ H · Studio — "ทดสอบฉาก" ให้อวาตาร์ในเครื่องอ่านบล็อกแรก (TAKRA-1537 · 1547 · 1559 · 1560) <span class="rp">(7 เคส)</span> <a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1453" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1453 ใน Jira">🧩 Epic TAKRA-1453</a></td></tr>
-<tr class="featrow" data-featkey="dt-scene-preview"><td colspan="7">📁 ปุ่ม "ทดสอบฉากนี้" · ความคืบหน้า · เวลารอ <span class="rp"><span class="lv lvl-ui">🌐 7</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="dt-scene-preview"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="epicrow" data-epic="dt-h"><td colspan="7">▶️ H · Studio — "ทดสอบฉาก" ให้อวาตาร์ในเครื่องอ่านบล็อกแรก (TAKRA-1537 · 1547 · 1559 · 1560) <span class="rp">(6 เคส)</span> <a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1453" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1453 ใน Jira">🧩 Epic TAKRA-1453</a></td></tr>
+<tr class="featrow" data-featkey="dt-scene-preview"><td colspan="7">📁 ปุ่ม "ทดสอบฉากนี้" · ความคืบหน้า · เวลารอ <span class="rp"><span class="lv lvl-ui">🌐 6</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="dt-scene-preview"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
 <tr class="trow" data-feat="dt-h" data-level="ui" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-DT-H.1</td>
   <td class="ctitle">กด "ทดสอบฉากนี้" — เห็นขั้นการเตรียม เวลารอ แล้วอวาตาร์อ่านบล็อกแรกครั้งเดียวจนจบ <span class="kd kd-happy">Happy Path</span></td>
@@ -1789,37 +1789,6 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
     <div class="jira-list" data-uid="tc-15051"></div>
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-15051" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-15051">+ เพิ่มลิงก์</button></div>
-  </div>
-
-</div></td></tr>
-
-<tr class="trow" data-feat="dt-h" data-level="ui" data-prio="P1" data-kind="permission" data-ui="yes" onclick="tg(this)">
-  <td><span class="tog">▸</span></td><td class="cid">TC-DT-H.3</td>
-  <td class="ctitle">เปิด Studio ในเบราว์เซอร์ — ปุ่ม "ทดสอบฉากนี้" กดไม่ได้ และบอก "ใช้ได้ในแอป Takra บนคอมพิวเตอร์ที่มีตัวเรนเดอร์อวาตาร์เท่านั้น" <span class="kd kd-perm">Permission</span></td>
-  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
-  <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-15052"><span class="stb pending">รอเทส</span></td>
-  <td class="jira-cell" data-uid="tc-15052"></td>
-</tr>
-<tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">เปิด Studio ในเบราว์เซอร์ — ปุ่ม "ทดสอบฉากนี้" กดไม่ได้ และบอก "ใช้ได้ในแอป Takra บนคอมพิวเตอร์ที่มีตัวเรนเดอร์อวาตาร์เท่านั้น"</div>
-  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1453" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1453 ใน Jira">🧩 Epic TAKRA-1453</a> · Priority: <b>P1</b> · UI · ประเภท: <b>Permission</b> <span class="hint">(role ไหนทำได้ / ทำไม่ได้)</span> · H · Studio — "ทดสอบฉาก" ให้อวาตาร์ในเครื่องอ่านบล็อกแรก (TAKRA-1537</div>
-  <div class="sec"><h4>Precondition</h4><ul><li>มีร่างไลฟ์ในเมนู "ร่างไลฟ์" ที่ฉากแรกใช้อวาตาร์ของร้านที่สร้างบนเครื่องนี้ · มีเสียงที่ "พร้อมใช้ในแอปแล้ว" · ผูกสคริปต์แล้วอย่างน้อย 1 สคริปต์</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ Chrome ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบผ่าน TAKRA Hub ด้วยบัญชี UAT ของ workspace (ไม่ใช้แอป)</li><li>กดเมนู "ร่างไลฟ์" ในกลุ่ม "ทั่วไป" ที่แถบซ้าย ที่ร่างที่ใช้อวาตาร์ของร้านกดปุ่มเมนูสามจุด ("ตัวเลือกของ …") แล้วเลือก "แก้ไข" รอจน Studio เปิดที่ขั้น "ฉาก"</li><li>ดูปุ่ม "ทดสอบฉากนี้" ที่แถบบนของจอภาพ และอ่านกล่องข้อความใต้คำบรรยายจอ ("ฉาก 1 · …")</li></ol></div>
-  <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ปุ่ม "ทดสอบฉากนี้" กดไม่ได้</li><li>กล่องข้อความขึ้น "ใช้ได้ในแอป Takra บนคอมพิวเตอร์ที่มีตัวเรนเดอร์อวาตาร์เท่านั้น"</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic TAKRA-1453 · TAKRA-1537 · TAKRA-1570 (กล่องเหตุผล)</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
-  </div>
-  <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-15052" data-st="pass">PASS</span>
-    <span class="opt fail" data-uid="tc-15052" data-st="fail">FAIL</span>
-    <span class="opt hold" data-uid="tc-15052" data-st="hold">HOLD</span>
-    <span class="opt block" data-uid="tc-15052" data-st="block">BLOCKED</span>
-    <span class="opt skip" data-uid="tc-15052" data-st="skip">SKIP</span>
-  </div></div>
-  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
-    <div class="jira-list" data-uid="tc-15052"></div>
-    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-15052" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-15052">+ เพิ่มลิงก์</button></div>
   </div>
 
 </div></td></tr>
@@ -1951,8 +1920,8 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 
 <!-- dt-i -->
-<tr class="epicrow" data-epic="dt-i"><td colspan="7">🎞️ I · ร่างไลฟ์ (เดิมคลังฉาก) — เรนเดอร์บทล่วงหน้าตอนบันทึกฉาก · ป้ายสถานะจากแอป · สุ่มบทใหม่ (TAKRA-1507 · 1529 · 1531 · 1652) <span class="rp">(9 เคส)</span> <a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1453" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1453 ใน Jira">🧩 Epic TAKRA-1453</a></td></tr>
-<tr class="featrow" data-featkey="dt-scene-library"><td colspan="7">📁 ป้ายสถานะแถวร่างไลฟ์ · "เตรียมตอนนี้" · "สุ่มบทใหม่" · เริ่มไลฟ์จากร่างไลฟ์ <span class="rp"><span class="lv lvl-ui">🌐 9</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="dt-scene-library"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="epicrow" data-epic="dt-i"><td colspan="7">🎞️ I · ร่างไลฟ์ (เดิมคลังฉาก) — เรนเดอร์บทล่วงหน้าตอนบันทึกฉาก · ป้ายสถานะจากแอป · สุ่มบทใหม่ (TAKRA-1507 · 1529 · 1531 · 1652) <span class="rp">(8 เคส)</span> <a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1453" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1453 ใน Jira">🧩 Epic TAKRA-1453</a></td></tr>
+<tr class="featrow" data-featkey="dt-scene-library"><td colspan="7">📁 ป้ายสถานะแถวร่างไลฟ์ · "เตรียมตอนนี้" · "สุ่มบทใหม่" · เริ่มไลฟ์จากร่างไลฟ์ <span class="rp"><span class="lv lvl-ui">🌐 8</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="dt-scene-library"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
 <tr class="trow" data-feat="dt-i" data-level="ui" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-DT-I.1</td>
   <td class="ctitle">บันทึกฉากใน Studio ของแอป — กลับมาที่ร่างไลฟ์แล้วแถวขึ้น "ยังไม่พร้อม" พร้อมตัวนับบรรทัดที่นับขึ้นจนเป็น "พร้อมไลฟ์" <span class="kd kd-happy">Happy Path</span></td>
@@ -2170,37 +2139,6 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 </div></td></tr>
 
-<tr class="trow" data-feat="dt-i" data-level="ui" data-prio="P1" data-kind="permission" data-ui="yes" onclick="tg(this)">
-  <td><span class="tog">▸</span></td><td class="cid">TC-DT-I.9</td>
-  <td class="ctitle">เปิดร่างไลฟ์ในเบราว์เซอร์ — เมนูสามจุดไม่มี "สุ่มบทใหม่" (ทำได้เฉพาะในแอป) <span class="kd kd-perm">Permission</span></td>
-  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
-  <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-15172"><span class="stb pending">รอเทส</span></td>
-  <td class="jira-cell" data-uid="tc-15172"></td>
-</tr>
-<tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">เปิดร่างไลฟ์ในเบราว์เซอร์ — เมนูสามจุดไม่มี "สุ่มบทใหม่" (ทำได้เฉพาะในแอป)</div>
-  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1453" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1453 ใน Jira">🧩 Epic TAKRA-1453</a> · Priority: <b>P1</b> · UI · ประเภท: <b>Permission</b> <span class="hint">(role ไหนทำได้ / ทำไม่ได้)</span> · I · ร่างไลฟ์ (เดิมคลังฉาก) — เรนเดอร์บทล่วงหน้าตอนบันทึกฉาก</div>
-  <div class="sec"><h4>Precondition</h4><ul><li>มีร่างไลฟ์ในเมนู "ร่างไลฟ์" ที่ฉากแรกใช้อวาตาร์ของร้านที่สร้างบนเครื่องนี้ · มีเสียงที่ "พร้อมใช้ในแอปแล้ว" · ผูกสคริปต์แล้วอย่างน้อย 1 สคริปต์</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ Chrome ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบผ่าน TAKRA Hub ด้วยบัญชี UAT ของ workspace (ไม่ใช้แอป)</li><li>กดเมนู "ร่างไลฟ์" ในกลุ่ม "ทั่วไป" ที่แถบซ้าย ที่แถวของร่างที่ใช้อวาตาร์ของร้าน กดปุ่มเมนูสามจุด ("ตัวเลือกของ …")</li><li>อ่านรายการในเมนู</li></ol></div>
-  <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>เมนูมี "แก้ไข" "ชวนคุย (…)" "ซ้อมถาม-ตอบ" และ "ลบ"</li><li>ไม่มี "สุ่มบทใหม่"</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic TAKRA-1453 · TAKRA-1652 (เมนูเฉพาะแอปรุ่นที่มี)</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
-  </div>
-  <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-15172" data-st="pass">PASS</span>
-    <span class="opt fail" data-uid="tc-15172" data-st="fail">FAIL</span>
-    <span class="opt hold" data-uid="tc-15172" data-st="hold">HOLD</span>
-    <span class="opt block" data-uid="tc-15172" data-st="block">BLOCKED</span>
-    <span class="opt skip" data-uid="tc-15172" data-st="skip">SKIP</span>
-  </div></div>
-  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
-    <div class="jira-list" data-uid="tc-15172"></div>
-    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-15172" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-15172">+ เพิ่มลิงก์</button></div>
-  </div>
-
-</div></td></tr>
-
 <tr class="trow" data-feat="dt-i" data-level="ui" data-prio="P1" data-kind="data" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-DT-I.10</td>
   <td class="ctitle">เพิ่มคำในแท็บ "คำอ่าน" หลังบทเรนเดอร์ครบแล้ว — เตรียมใหม่เฉพาะบรรทัดที่มีคำนั้น แล้วอวาตาร์อ่านตามคำอ่านใหม่ <span class="kd kd-data">Data</span></td>
@@ -2235,39 +2173,8 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 
 <!-- dt-j -->
-<tr class="epicrow" data-epic="dt-j"><td colspan="7">🎵 J · บัญชี TikTok — เพิ่ม/ล็อกอินในแอป · sync สินค้าจากเครื่องลูกค้า (TAKRA-1546 · 1547 · 1567 · 1580 · 1656) <span class="rp">(10 เคส)</span> <a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1453" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1453 ใน Jira">🧩 Epic TAKRA-1453</a></td></tr>
-<tr class="featrow" data-featkey="dt-tiktok-account"><td colspan="7">📁 การตั้งค่า → "บัญชีไลฟ์" · คลัง → "สินค้า" <span class="rp"><span class="lv lvl-ui">🌐 10</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="dt-tiktok-account"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
-<tr class="trow" data-feat="dt-j" data-level="ui" data-prio="P0" data-kind="permission" data-ui="yes" onclick="tg(this)">
-  <td><span class="tog">▸</span></td><td class="cid">TC-DT-J.1</td>
-  <td class="ctitle">เปิดหมวด "บัญชีไลฟ์" ในเบราว์เซอร์ — "เพิ่มบัญชี" เปิดกล่องบอกให้ไปเพิ่มในแอป และแท็บ "สินค้า" ไม่มีปุ่มซิงก์ <span class="kd kd-perm">Permission</span></td>
-  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
-  <td><span class="prio p0">P0</span></td>
-  <td class="status" data-uid="tc-15062"><span class="stb pending">รอเทส</span></td>
-  <td class="jira-cell" data-uid="tc-15062"></td>
-</tr>
-<tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">เปิดหมวด "บัญชีไลฟ์" ในเบราว์เซอร์ — "เพิ่มบัญชี" เปิดกล่องบอกให้ไปเพิ่มในแอป และแท็บ "สินค้า" ไม่มีปุ่มซิงก์</div>
-  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1453" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1453 ใน Jira">🧩 Epic TAKRA-1453</a> · Priority: <b>P0</b> · UI · ประเภท: <b>Permission</b> <span class="hint">(role ไหนทำได้ / ทำไม่ได้)</span> · J · บัญชี TikTok — เพิ่ม/ล็อกอินในแอป</div>
-  <div class="sec"><h4>Precondition</h4><ul><li>workspace มีบัญชี TikTok อย่างน้อย 1 บัญชี</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ Chrome ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบผ่าน TAKRA Hub ด้วยบัญชี UAT ของ workspace (ไม่ใช้แอป)</li><li>กดเมนูบัญชีที่มุมขวาบน เลือก "การตั้งค่า" แล้วเลือกหมวด "บัญชีไลฟ์" แล้วอ่านคำอธิบายการ์ดและแถวบัญชี</li><li>กดปุ่ม "เพิ่มบัญชี" อ่านกล่องที่ขึ้นมา แล้วกด "ปิด"</li><li>กดลิงก์ "คลัง › สินค้า" ในคำอธิบายการ์ด แล้วดูปุ่มที่หัวรายการสินค้า</li></ol></div>
-  <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>คำอธิบายการ์ดลงท้ายด้วย "ซิงก์สินค้าได้ที่" ตามด้วยลิงก์ "คลัง › สินค้า" และแถวบัญชีไม่มีปุ่มซิงก์</li><li>กล่อง "เพิ่มบัญชีในแอป Takra desktop" ขึ้น "เพิ่มบัญชี TikTok ได้ในแอป Takra desktop เท่านั้น — เปิดแอปแล้วกด "เพิ่มบัญชี"" พร้อม 3 ขั้นตอน และกล่องเตือน "ห้ามกด "ออกจากระบบทุกอุปกรณ์" ในแอป TikTok" · ไม่มีกล่อง "ก่อนเริ่ม โปรดอ่านและยืนยัน"</li><li>ลิงก์พาไปเมนู "คลัง" แท็บ "สินค้า" และไม่มีปุ่ม "ซิงก์จาก TikTok Shop"</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic TAKRA-1453 · TAKRA-1546 (แอป desktop เป็นทางเดียวที่คุยกับ TikTok) · TAKRA-1598 · TAKRA-1617 (ซิงก์ย้ายไปคลัง › สินค้า)</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
-  </div>
-  <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-15062" data-st="pass">PASS</span>
-    <span class="opt fail" data-uid="tc-15062" data-st="fail">FAIL</span>
-    <span class="opt hold" data-uid="tc-15062" data-st="hold">HOLD</span>
-    <span class="opt block" data-uid="tc-15062" data-st="block">BLOCKED</span>
-    <span class="opt skip" data-uid="tc-15062" data-st="skip">SKIP</span>
-  </div></div>
-  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
-    <div class="jira-list" data-uid="tc-15062"></div>
-    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-15062" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-15062">+ เพิ่มลิงก์</button></div>
-  </div>
-
-</div></td></tr>
-
+<tr class="epicrow" data-epic="dt-j"><td colspan="7">🎵 J · บัญชี TikTok — เพิ่ม/ล็อกอินในแอป · sync สินค้าจากเครื่องลูกค้า (TAKRA-1546 · 1547 · 1567 · 1580 · 1656) <span class="rp">(8 เคส)</span> <a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1453" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1453 ใน Jira">🧩 Epic TAKRA-1453</a></td></tr>
+<tr class="featrow" data-featkey="dt-tiktok-account"><td colspan="7">📁 การตั้งค่า → "บัญชีไลฟ์" · คลัง → "สินค้า" <span class="rp"><span class="lv lvl-ui">🌐 8</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="dt-tiktok-account"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
 <tr class="trow" data-feat="dt-j" data-level="ui" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-DT-J.2</td>
   <td class="ctitle">เพิ่มบัญชี TikTok ในแอป — กล่องยินยอมบอกทางล็อกอินที่ใช้ได้ หน้าต่างเปิดหน้าล็อกอินทันทีไม่ผ่านหน้าโฆษณา บัญชีใหม่ขึ้นในรายการ <span class="kd kd-happy">Happy Path</span></td>
@@ -2326,37 +2233,6 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
     <div class="jira-list" data-uid="tc-15064"></div>
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-15064" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-15064">+ เพิ่มลิงก์</button></div>
-  </div>
-
-</div></td></tr>
-
-<tr class="trow" data-feat="dt-j" data-level="ui" data-prio="P1" data-kind="data" data-ui="yes" onclick="tg(this)">
-  <td><span class="tog">▸</span></td><td class="cid">TC-DT-J.5</td>
-  <td class="ctitle">ปิดแอปแล้วดูบัญชีจากเบราว์เซอร์ — แถวขึ้น "แอปปิดอยู่" และกล่องเตือนเหนือรายการ "แอปปิดอยู่ — ประวัติโทษ คำต้องห้าม และสิทธิ์ร้านของบัญชีนี้หยุดอัปเดตจนกว่าจะเปิดแอป" <span class="kd kd-data">Data</span></td>
-  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
-  <td><span class="prio p1">P1</span></td>
-  <td class="status" data-uid="tc-15066"><span class="stb pending">รอเทส</span></td>
-  <td class="jira-cell" data-uid="tc-15066"></td>
-</tr>
-<tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">ปิดแอปแล้วดูบัญชีจากเบราว์เซอร์ — แถวขึ้น "แอปปิดอยู่" และกล่องเตือนเหนือรายการ "แอปปิดอยู่ — ประวัติโทษ คำต้องห้าม และสิทธิ์ร้านของบัญชีนี้หยุดอัปเดตจนกว่าจะเปิดแอป"</div>
-  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1453" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1453 ใน Jira">🧩 Epic TAKRA-1453</a> · Priority: <b>P1</b> · UI · ประเภท: <b>Data</b> <span class="hint">(empty · null · duplicate · existing · non-existing)</span> · J · บัญชี TikTok — เพิ่ม/ล็อกอินในแอป</div>
-  <div class="sec"><h4>Precondition</h4><ul><li>เครื่อง A: Windows 10/11 x64 · การ์ด NVIDIA ผ่านสเปก · ติดตั้งแอป Takra Live รุ่นล่าสุดจาก UAT และติดตั้งตัวเรนเดอร์แล้ว</li><li>มีบัญชี TikTok ทดสอบที่ไลฟ์ได้ (ไม่ใช่บัญชีที่รอบทดสอบอื่นกำลังใช้)</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป "Takra Live" บนเครื่อง A แล้วเข้าสู่ระบบ ให้บัญชี TikTok ล็อกอินในแอปตาม TC-DT-J.2 แล้วกด X ปิดแอป</li><li>เปิดเบราว์เซอร์ Chrome ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบผ่าน TAKRA Hub ด้วยบัญชี UAT ของ workspace (ไม่ใช้แอป)</li><li>กดเมนูบัญชีที่มุมขวาบน เลือก "การตั้งค่า" แล้วเลือกหมวด "บัญชีไลฟ์" แล้วรอ 2–3 นาที กดรีเฟรช</li><li>อ่านกล่องเหนือรายการและบรรทัดของบัญชีนั้น</li><li>กดปุ่มเมนูสามจุด ("ตัวเลือกของ …") ของบัญชีนั้น เลือก "ประวัติโทษ" แล้วอ่านลิ้นชักที่เปิดขึ้น</li></ol></div>
-  <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>เหนือรายการมีกล่องเตือน "แอปปิดอยู่ — ประวัติโทษ คำต้องห้าม และสิทธิ์ร้านของบัญชีนี้หยุดอัปเดตจนกว่าจะเปิดแอป"</li><li>บรรทัดของบัญชีมี "ยิงจากแอป Takra" และ "แอปปิดอยู่" และไม่มีป้าย "พร้อม"</li><li>ลิ้นชัก "ประวัติโทษ · …" ขึ้น "บัญชีนี้อ่านผ่านแอป Takra เท่านั้น — แอปปิดอยู่จึงยังไม่มีข้อมูลใหม่ ด้านล่างคือค่าที่อ่านได้ล่าสุด เปิดแอปแล้วระบบจะอ่านให้อีกครั้ง"</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic TAKRA-1453 · TAKRA-1546 (มติ ข้อ 5: แอปปิด → penalty/คำต้องห้าม/สิทธิ์ร้านหยุด รอแอปเปิด) · TAKRA-1617</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
-  </div>
-  <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-15066" data-st="pass">PASS</span>
-    <span class="opt fail" data-uid="tc-15066" data-st="fail">FAIL</span>
-    <span class="opt hold" data-uid="tc-15066" data-st="hold">HOLD</span>
-    <span class="opt block" data-uid="tc-15066" data-st="block">BLOCKED</span>
-    <span class="opt skip" data-uid="tc-15066" data-st="skip">SKIP</span>
-  </div></div>
-  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
-    <div class="jira-list" data-uid="tc-15066"></div>
-    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-15066" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-15066">+ เพิ่มลิงก์</button></div>
   </div>
 
 </div></td></tr>
@@ -2551,8 +2427,8 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 
 <!-- dt-k -->
-<tr class="epicrow" data-epic="dt-k"><td colspan="7">✅ K · หน้าเช็คความพร้อมก่อนออกอากาศ ของไลฟ์ที่อวาตาร์เรนเดอร์ในเครื่อง (TAKRA-1474 · 1507 · 1504) <span class="rp">(4 เคส)</span> <a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1453" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1453 ใน Jira">🧩 Epic TAKRA-1453</a></td></tr>
-<tr class="featrow" data-featkey="dt-prep"><td colspan="7">📁 คลังบทเรนเดอร์ในเครื่อง · ปุ่มเริ่มออกอากาศ <span class="rp"><span class="lv lvl-ui">🌐 4</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="dt-prep"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="epicrow" data-epic="dt-k"><td colspan="7">✅ K · หน้าเช็คความพร้อมก่อนออกอากาศ ของไลฟ์ที่อวาตาร์เรนเดอร์ในเครื่อง (TAKRA-1474 · 1507 · 1504) <span class="rp">(3 เคส)</span> <a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1453" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1453 ใน Jira">🧩 Epic TAKRA-1453</a></td></tr>
+<tr class="featrow" data-featkey="dt-prep"><td colspan="7">📁 คลังบทเรนเดอร์ในเครื่อง · ปุ่มเริ่มออกอากาศ <span class="rp"><span class="lv lvl-ui">🌐 3</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="dt-prep"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
 <tr class="trow" data-feat="dt-k" data-level="ui" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-DT-K.1</td>
   <td class="ctitle">เปิดหน้าเริ่มไลฟ์ — กล่องคลังบทนับ "เรนเดอร์แล้ว x/y บรรทัด — เริ่มไลฟ์ได้เมื่อครบ" และปุ่ม "เริ่มออกอากาศ" ปลดเมื่อครบเท่านั้น <span class="kd kd-happy">Happy Path</span></td>
@@ -2564,7 +2440,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">เปิดหน้าเริ่มไลฟ์ — กล่องคลังบทนับ "เรนเดอร์แล้ว x/y บรรทัด — เริ่มไลฟ์ได้เมื่อครบ" และปุ่ม "เริ่มออกอากาศ" ปลดเมื่อครบเท่านั้น</div>
   <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1453" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1453 ใน Jira">🧩 Epic TAKRA-1453</a> · Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · K · หน้าเช็คความพร้อมก่อนออกอากาศ ของไลฟ์ที่อวาตาร์เรนเดอร์ในเครื่อง (TAKRA-1474</div>
-  <div class="sec"><h4>Precondition</h4><ul><li>เครื่อง A: Windows 10/11 x64 · การ์ด NVIDIA ผ่านสเปก · ติดตั้งแอป Takra Live รุ่นล่าสุดจาก UAT และติดตั้งตัวเรนเดอร์แล้ว</li><li>มีร่างไลฟ์ในเมนู "ร่างไลฟ์" ที่ฉากแรกใช้อวาตาร์ของร้านที่สร้างบนเครื่องนี้ · มีเสียงที่ "พร้อมใช้ในแอปแล้ว" · ผูกสคริปต์แล้วอย่างน้อย 1 สคริปต์</li><li>ร่างนั้นเลือกบัญชีไลฟ์แล้ว และแถวในเมนู "ร่างไลฟ์" ยังไม่ขึ้น "พร้อมไลฟ์" (เช่น เพิ่งบันทึกจากเบราว์เซอร์ด้วยข้อความใหม่)</li><li>workspace มีคีย์ MiniMax และคีย์ Gemini หรือ OpenAI ของทีมที่ใช้งานได้ (ไม่มีคีย์เสียง = แถว "คีย์เสียง MiniMax ของทีม" กั้นปุ่มเริ่มออกอากาศ)</li></ul></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เครื่อง A: Windows 10/11 x64 · การ์ด NVIDIA ผ่านสเปก · ติดตั้งแอป Takra Live รุ่นล่าสุดจาก UAT และติดตั้งตัวเรนเดอร์แล้ว</li><li>มีร่างไลฟ์ในเมนู "ร่างไลฟ์" ที่ฉากแรกใช้อวาตาร์ของร้านที่สร้างบนเครื่องนี้ · มีเสียงที่ "พร้อมใช้ในแอปแล้ว" · ผูกสคริปต์แล้วอย่างน้อย 1 สคริปต์</li><li>ร่างนั้นเลือกบัญชีไลฟ์แล้ว และแถวในเมนู "ร่างไลฟ์" ยังไม่ขึ้น "พร้อมไลฟ์" (เช่น เพิ่งแก้บทใน Studio แล้วบันทึก)</li><li>workspace มีคีย์ MiniMax และคีย์ Gemini หรือ OpenAI ของทีมที่ใช้งานได้ (ไม่มีคีย์เสียง = แถว "คีย์เสียง MiniMax ของทีม" กั้นปุ่มเริ่มออกอากาศ)</li></ul></div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป "Takra Live" บนเครื่อง A แล้วเข้าสู่ระบบผ่านหน้า TAKRA Hub ที่เปิดขึ้นในแอปด้วยบัญชี UAT ของ workspace</li><li>กดเมนู "ร่างไลฟ์" ในกลุ่ม "ทั่วไป" ที่แถบซ้าย ที่ร่างที่ใช้อวาตาร์ของร้านกดปุ่มเมนูสามจุด ("ตัวเลือกของ …") แล้วเลือก "แก้ไข" รอจน Studio เปิดที่ขั้น "ฉาก"</li><li>กด "ถัดไป: ตอบคอมเมนต์" แล้วกด "ถัดไป: ตรวจและเริ่ม" เลือก "ไลฟ์เลย" แล้วกดปุ่ม "เริ่มไลฟ์" ที่แถบล่าง</li><li>ที่หน้า "เช็คความพร้อมก่อนออกอากาศ" สังเกตแถว "ระบบ" กล่องคลังบท แถบความคืบหน้า และปุ่ม "เริ่มออกอากาศ" จนเรนเดอร์ครบ</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ระหว่างเรนเดอร์กล่องคลังบทขึ้น "เรนเดอร์แล้ว x/y บรรทัด — เริ่มไลฟ์ได้เมื่อครบ" มีแถบความคืบหน้า และเวลาที่เหลือ "เสร็จในอีกประมาณ … นาที" หรือ "เสร็จในอีกไม่ถึงนาที"</li><li>ปุ่ม "เริ่มออกอากาศ" กดไม่ได้ ข้อความข้างปุ่ม "รอคลังบทเตรียมเสียงให้เสร็จก่อน"</li><li>ครบแล้วกล่องคลังบทหายไป จุด "คลังบท" ในแถว "ระบบ" เป็นสีเขียว และปุ่มกดได้</li><li>แถว "ระบบ" ไม่นับ avatar / tts ของผู้ให้บริการเป็นข้อไม่ผ่าน · หน้านี้ไม่มีป้าย "วิธีออกอากาศ"</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic TAKRA-1453 · TAKRA-1474 (มติ 16 ต.ค.: เริ่มได้เมื่อทุกบรรทัดรวมคำลาเรนเดอร์ครบ) · TAKRA-1473 · TAKRA-1592 (ไม่มีวิธีออกอากาศ) · TAKRA-1597</div></div>
@@ -2643,37 +2519,6 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
     <div class="jira-list" data-uid="tc-15073"></div>
     <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-15073" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-15073">+ เพิ่มลิงก์</button></div>
-  </div>
-
-</div></td></tr>
-
-<tr class="trow" data-feat="dt-k" data-level="ui" data-prio="P0" data-kind="permission" data-ui="yes" onclick="tg(this)">
-  <td><span class="tog">▸</span></td><td class="cid">TC-DT-K.4</td>
-  <td class="ctitle">เปิดหน้าเริ่มไลฟ์ของอวาตาร์ในเครื่องจากเบราว์เซอร์ — บอกให้เปิดในแอป และเริ่มออกอากาศไม่ได้ <span class="kd kd-perm">Permission</span></td>
-  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
-  <td><span class="prio p0">P0</span></td>
-  <td class="status" data-uid="tc-15074"><span class="stb pending">รอเทส</span></td>
-  <td class="jira-cell" data-uid="tc-15074"></td>
-</tr>
-<tr class="detail"><td colspan="7"><div class="card">
-  <div class="h-title">เปิดหน้าเริ่มไลฟ์ของอวาตาร์ในเครื่องจากเบราว์เซอร์ — บอกให้เปิดในแอป และเริ่มออกอากาศไม่ได้</div>
-  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1453" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1453 ใน Jira">🧩 Epic TAKRA-1453</a> · Priority: <b>P0</b> · UI · ประเภท: <b>Permission</b> <span class="hint">(role ไหนทำได้ / ทำไม่ได้)</span> · K · หน้าเช็คความพร้อมก่อนออกอากาศ ของไลฟ์ที่อวาตาร์เรนเดอร์ในเครื่อง (TAKRA-1474</div>
-  <div class="sec"><h4>Precondition</h4><ul><li>มีร่างไลฟ์ในเมนู "ร่างไลฟ์" ที่ฉากแรกใช้อวาตาร์ของร้านที่สร้างบนเครื่องนี้ · มีเสียงที่ "พร้อมใช้ในแอปแล้ว" · ผูกสคริปต์แล้วอย่างน้อย 1 สคริปต์</li><li>ร่างนั้นเลือกบัญชีไลฟ์แล้ว · ไม่มีแอปเปิดอยู่บนเครื่องใดในช่วง 2 นาทีก่อนเริ่ม</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเบราว์เซอร์ Chrome ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบผ่าน TAKRA Hub ด้วยบัญชี UAT ของ workspace (ไม่ใช้แอป)</li><li>กดเมนู "ร่างไลฟ์" ในกลุ่ม "ทั่วไป" ที่แถบซ้าย ที่แถวของร่างที่ใช้อวาตาร์ของร้าน สังเกตป้ายและปุ่มท้ายแถว แล้วกด "เปิดใน Studio"</li><li>กด "ถัดไป: ตอบคอมเมนต์" แล้วกด "ถัดไป: ตรวจและเริ่ม" เลือก "ไลฟ์เลย" แล้วกดปุ่ม "เริ่มไลฟ์" ที่แถบล่าง</li><li>อ่านข้อความในหน้าเช็คความพร้อม และดูปุ่ม "เริ่มออกอากาศ"</li></ol></div>
-  <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>ในเบราว์เซอร์ ป้ายแถวเป็น "เช็คสถานะไม่ได้" ปุ่มท้ายแถวเป็น "เปิดใน Studio" (ไม่มี "เริ่มไลฟ์" และ "เตรียมตอนนี้")</li><li>หน้าเช็คความพร้อมขึ้น "อวาตาร์นี้สร้างในแอป desktop — เปิดหน้านี้ในแอป desktop เพื่อเรนเดอร์บทในเครื่อง แล้วจึงเริ่มไลฟ์ได้"</li><li>กล่องคลังบทขึ้น "— ยังไม่ได้รับสถานะจากแอป desktop · เปิดหน้านี้ในแอป desktop แล้วรอเรนเดอร์ให้ครบ"</li><li>ปุ่ม "เริ่มออกอากาศ" กดไม่ได้ ข้อความข้างปุ่ม "รอคลังบทเตรียมเสียงให้เสร็จก่อน" · ไม่มีทางลัด "เริ่มเลยแม้ยังไม่พร้อม"</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic TAKRA-1453 · TAKRA-1474 · TAKRA-1597</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
-  </div>
-  <div class="sec"><h4>Status</h4><div class="statusrow">
-    <span class="opt pass" data-uid="tc-15074" data-st="pass">PASS</span>
-    <span class="opt fail" data-uid="tc-15074" data-st="fail">FAIL</span>
-    <span class="opt hold" data-uid="tc-15074" data-st="hold">HOLD</span>
-    <span class="opt block" data-uid="tc-15074" data-st="block">BLOCKED</span>
-    <span class="opt skip" data-uid="tc-15074" data-st="skip">SKIP</span>
-  </div></div>
-  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
-    <div class="jira-list" data-uid="tc-15074"></div>
-    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-15074" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-15074">+ เพิ่มลิงก์</button></div>
   </div>
 
 </div></td></tr>
@@ -2911,7 +2756,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="h-title">กด X ปิดแอประหว่างไลฟ์ — แอปถามก่อน ยืนยันแล้วปิดภายในไม่กี่วินาที และห้องไลฟ์ใน TikTok ปิดตาม ไม่ค้าง</div>
   <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1453" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1453 ใน Jira">🧩 Epic TAKRA-1453</a> · Priority: <b>P0</b> · UI · ประเภท: <b>Exception</b> <span class="hint">(API fail · network fail · server error · timeout)</span> · L · ออกอากาศไลฟ์ LOCAL — แอปเปิดห้อง TikTok + ดัน RTMP จากเครื่อง</div>
   <div class="sec"><h4>Precondition</h4><ul><li>เครื่อง A: Windows 10/11 x64 · การ์ด NVIDIA ผ่านสเปก · ติดตั้งแอป Takra Live รุ่นล่าสุดจาก UAT และติดตั้งตัวเรนเดอร์แล้ว</li><li>มีร่างไลฟ์ในเมนู "ร่างไลฟ์" ที่ฉากแรกใช้อวาตาร์ของร้านที่สร้างบนเครื่องนี้ · มีเสียงที่ "พร้อมใช้ในแอปแล้ว" · ผูกสคริปต์แล้วอย่างน้อย 1 สคริปต์</li><li>มีบัญชี TikTok ทดสอบที่ไลฟ์ได้ (ไม่ใช่บัญชีที่รอบทดสอบอื่นกำลังใช้)</li><li>🔴 ไลฟ์จริงเข้า TikTok — ทดสอบด้วยมือเท่านั้น</li><li>ทีมตั้งคีย์ MiniMax และคีย์ Gemini/OpenAI ในหมวด "API Keys" ที่เมนูบัญชี › "การตั้งค่า" แล้ว</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป "Takra Live" บนเครื่อง A แล้วเข้าสู่ระบบผ่านหน้า TAKRA Hub ที่เปิดขึ้นในแอปด้วยบัญชี UAT ของ workspace</li><li>เริ่มไลฟ์ LOCAL ให้ออกอากาศตาม TC-DT-L.1</li><li>กด X ที่หน้าต่างหลักของแอป อ่านกล่องที่ขึ้นมา แล้วกด "อยู่หน้านี้ต่อ" ดูมือถือผู้ชม 10 วินาที</li><li>กด X อีกครั้ง แล้วกด "ออกจากหน้านี้" จับเวลาจนหน้าต่างหาย</li><li>ดูห้อง TikTok บนมือถือผู้ชม แล้วจากเบราว์เซอร์เปิดเมนู "ไลฟ์ของฉัน" แท็บ "ที่ผ่านมา" เพื่อดูสถานะรอบนี้</li></ol></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป "Takra Live" บนเครื่อง A แล้วเข้าสู่ระบบผ่านหน้า TAKRA Hub ที่เปิดขึ้นในแอปด้วยบัญชี UAT ของ workspace</li><li>เริ่มไลฟ์ LOCAL ให้ออกอากาศตาม TC-DT-L.1</li><li>กด X ที่หน้าต่างหลักของแอป อ่านกล่องที่ขึ้นมา แล้วกด "อยู่หน้านี้ต่อ" ดูมือถือผู้ชม 10 วินาที</li><li>กด X อีกครั้ง แล้วกด "ออกจากหน้านี้" จับเวลาจนหน้าต่างหาย</li><li>ดูห้อง TikTok บนมือถือผู้ชม แล้วเปิดแอป "Takra Live" ใหม่ กดเมนู "ไลฟ์ของฉัน" แท็บ "ที่ผ่านมา" เพื่อดูสถานะรอบนี้</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ขึ้นกล่อง "ออกจากหน้านี้ไหม" · กด "อยู่หน้านี้ต่อ" แล้วแอปยังเปิดและภาพบนมือถือไม่ดับ</li><li>หลังกด "ออกจากหน้านี้" แอปปิดภายในประมาณ 8 วินาที ไม่มีโปรเซสค้าง</li><li>ห้องไลฟ์ใน TikTok ปิด (ไม่ค้างภาพนิ่ง) ภายใน 2 นาที</li><li>รอบไลฟ์ไม่ค้างสถานะกำลังไลฟ์ ย้ายมาแท็บ "ที่ผ่านมา" สถานะ "จบแล้ว" ภายใน 2 นาที</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic TAKRA-1453 · TAKRA-1508 (ปิดแอป/แอปค้างกลางไลฟ์ → ปิดห้อง TikTok ไม่ค้าง) · TAKRA-1551 · TAKRA-1633 (กล่องถามก่อนออก)</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
@@ -3576,8 +3421,8 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 <tr class="detail"><td colspan="7"><div class="card">
   <div class="h-title">ฉากใช้เสียงที่ยังไม่ได้เตรียมสำหรับแอป — ตรวจก่อนไลฟ์บอกให้กด "เตรียมเสียงสำหรับแอป" หรือเลือกเสียงอื่น</div>
   <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1453" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1453 ใน Jira">🧩 Epic TAKRA-1453</a> · Priority: <b>P1</b> · UI · ประเภท: <b>Validation</b> <span class="hint">(format · required · character · length)</span> · O · เสียงสำหรับไลฟ์ในแอป — เสียงของร้านที่เตรียมแล้ว + เสียงระบบ MiniMax</div>
-  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #d97706;background:rgba(217,119,6,.07)">📌 <b>หมายเหตุ:</b> ตัวเลือกเสียงของอวาตาร์ในเครื่องซ่อนเสียงที่ยังไม่เตรียมทั้งในแอปและในเบราว์เซอร์ จึงสร้างร่างแบบนี้ใหม่จากหน้าจอไม่ได้ — ถ้าไม่มีร่างเดิมให้บันทึก BLOCKED</div></div>
-  <div class="sec"><h4>Precondition</h4><ul><li>เครื่อง A: Windows 10/11 x64 · การ์ด NVIDIA ผ่านสเปก · ติดตั้งแอป Takra Live รุ่นล่าสุดจาก UAT และติดตั้งตัวเรนเดอร์แล้ว</li><li>มีร่างไลฟ์เดิมที่ฉากใช้อวาตาร์ของร้าน และผูกเสียงของร้านที่ยังไม่มีป้าย "พร้อมใช้ในแอปแล้ว" (ร่างที่ตั้งไว้ก่อนมีเสียงสำหรับแอป)</li><li>📝 หมายเหตุ: ตัวเลือกเสียงของอวาตาร์ในเครื่องซ่อนเสียงที่ยังไม่เตรียมทั้งในแอปและในเบราว์เซอร์ จึงสร้างร่างแบบนี้ใหม่จากหน้าจอไม่ได้ — ถ้าไม่มีร่างเดิมให้บันทึก BLOCKED</li></ul></div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #d97706;background:rgba(217,119,6,.07)">📌 <b>หมายเหตุ:</b> ตัวเลือกเสียงของอวาตาร์ในเครื่องซ่อนเสียงที่ยังไม่เตรียม จึงสร้างร่างแบบนี้ใหม่จากหน้าจอไม่ได้ — ถ้าไม่มีร่างเดิมให้บันทึก BLOCKED</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เครื่อง A: Windows 10/11 x64 · การ์ด NVIDIA ผ่านสเปก · ติดตั้งแอป Takra Live รุ่นล่าสุดจาก UAT และติดตั้งตัวเรนเดอร์แล้ว</li><li>มีร่างไลฟ์เดิมที่ฉากใช้อวาตาร์ของร้าน และผูกเสียงของร้านที่ยังไม่มีป้าย "พร้อมใช้ในแอปแล้ว" (ร่างที่ตั้งไว้ก่อนมีเสียงสำหรับแอป)</li><li>📝 หมายเหตุ: ตัวเลือกเสียงของอวาตาร์ในเครื่องซ่อนเสียงที่ยังไม่เตรียม จึงสร้างร่างแบบนี้ใหม่จากหน้าจอไม่ได้ — ถ้าไม่มีร่างเดิมให้บันทึก BLOCKED</li></ul></div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป "Takra Live" บนเครื่อง A แล้วเข้าสู่ระบบผ่านหน้า TAKRA Hub ที่เปิดขึ้นในแอปด้วยบัญชี UAT ของ workspace</li><li>กดเมนู "ร่างไลฟ์" ในกลุ่ม "ทั่วไป" ที่แถบซ้าย ที่ร่างที่ใช้อวาตาร์ของร้านกดปุ่มเมนูสามจุด ("ตัวเลือกของ …") แล้วเลือก "แก้ไข" รอจน Studio เปิดที่ขั้น "ฉาก" (ใช้ร่างที่ผูกเสียงนั้นไว้) แล้วกด "ถัดไป: ตอบคอมเมนต์" และ "ถัดไป: ตรวจและเริ่ม"</li><li>ที่ "เริ่มเมื่อไร" เลือก "ไลฟ์เลย" แล้วอ่านแถว "เสียงที่เลือก" ในส่วน "ตรวจก่อนไลฟ์"</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>แถว "เสียงที่เลือก" สถานะ "ต้องแก้" ขึ้น "x ฉากใช้เสียงที่ยังไม่ได้เตรียมสำหรับแอป — กด "เตรียมเสียงสำหรับแอป" ในคลังเสียง หรือเลือกเสียงอื่น" (หรือ "… ใช้เสียงที่แอปพูดไม่ได้ — เลือกเสียงสำหรับแอป")</li><li>เริ่มไลฟ์ไม่ได้จนกว่าจะแก้</li></ul><div class="hint" style="margin-top:6px">ที่มา: TAKRA-1473 (ไลฟ์/ร่างที่ผูกเสียงเดิม: แสดงเหตุผลชัดเจน ไม่พังเงียบ) · ตรวจก่อนไลฟ์ "เสียงที่เลือก"</div></div>
@@ -5139,8 +4984,8 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <div class="h-title">คำเสี่ยงในบทยังถูกข้ามในชั่วโมงที่ 2 เท่ากับนาทีแรก</div>
   <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1453" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1453 ใน Jira">🧩 Epic TAKRA-1453</a> · Priority: <b>P1</b> · UI · ประเภท: <b>Negative</b> <span class="hint">(ข้อมูลผิด / action ผิด)</span> · Q · คุณภาพไลฟ์ LOCAL — ภาพ/ปาก/เสียงฝั่งผู้ชม</div>
   <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #d97706;background:rgba(217,119,6,.07)">📌 <b>หมายเหตุ:</b> เพิ่มคำหลังไลฟ์ขึ้นแล้ว เพราะถ้าเพิ่มก่อนจะติดป้าย "มีคำเสี่ยง — ใช้ไลฟ์ไม่ได้" และแถว "ตรวจคำเสี่ยง" กั้นปุ่มเริ่ม · บรรทัดที่อยู่ในคิวเล่นแล้วตอนกดเพิ่มอาจยังออกอากาศ 1 ครั้ง ให้เริ่มนับจากรอบถัดไป · เทสเสร็จลบคำทดสอบออกจากคลัง</div></div>
-  <div class="sec"><h4>Precondition</h4><ul><li>เครื่อง A: Windows 10/11 x64 · การ์ด NVIDIA ผ่านสเปก · ติดตั้งแอป Takra Live รุ่นล่าสุดจาก UAT และติดตั้งตัวเรนเดอร์แล้ว</li><li>มีร่างไลฟ์ในเมนู "ร่างไลฟ์" ที่ฉากแรกใช้อวาตาร์ของร้านที่สร้างบนเครื่องนี้ · มีเสียงที่ "พร้อมใช้ในแอปแล้ว" · ผูกสคริปต์แล้วอย่างน้อย 1 สคริปต์</li><li>มีบัญชี TikTok ทดสอบที่ไลฟ์ได้ (ไม่ใช่บัญชีที่รอบทดสอบอื่นกำลังใช้)</li><li>🔴 ไลฟ์จริงเข้า TikTok — ทดสอบด้วยมือเท่านั้น</li><li>จดรุ่นการ์ดจอ ไดรเวอร์ RAM และความเร็วเน็ตขาขึ้นของเครื่อง A ใน Actual ทุกครั้ง</li><li>คำทดสอบยังไม่อยู่ในแท็บ "คำเสี่ยง" ก่อนเริ่มไลฟ์ (ถ้ามีอยู่ก่อน Studio และ "ตรวจก่อนไลฟ์" จะกันไม่ให้เริ่ม)</li><li>มีเครื่องอื่นที่เปิด Chrome ได้</li><li>ทีมตั้งคีย์ MiniMax และคีย์ Gemini/OpenAI ในหมวด "API Keys" ที่เมนูบัญชี › "การตั้งค่า" แล้ว</li><li>📝 หมายเหตุ: เพิ่มคำหลังไลฟ์ขึ้นแล้ว เพราะถ้าเพิ่มก่อนจะติดป้าย "มีคำเสี่ยง — ใช้ไลฟ์ไม่ได้" และแถว "ตรวจคำเสี่ยง" กั้นปุ่มเริ่ม · บรรทัดที่อยู่ในคิวเล่นแล้วตอนกดเพิ่มอาจยังออกอากาศ 1 ครั้ง ให้เริ่มนับจากรอบถัดไป · เทสเสร็จลบคำทดสอบออกจากคลัง</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป "Takra Live" บนเครื่อง A แล้วเข้าสู่ระบบผ่านหน้า TAKRA Hub ที่เปิดขึ้นในแอปด้วยบัญชี UAT ของ workspace</li><li>เริ่มไลฟ์ LOCAL ให้ออกอากาศตาม TC-DT-L.1 ปล่อยออกอากาศอย่างน้อย 2 ชั่วโมง (ทำพร้อม TC-DT-Q.11 ได้)</li><li>พอไลฟ์ขึ้นแล้ว ใช้เครื่องอื่น: เปิดเบราว์เซอร์ Chrome ไปที่ https://uat-live.takra.ai แล้วเข้าสู่ระบบผ่าน TAKRA Hub ด้วยบัญชี UAT ของ workspace (ไม่ใช้แอป) กดเมนู "คลัง" ในกลุ่ม "ทั่วไป" ที่แถบซ้าย เลือกแท็บ "คำเสี่ยง" กด "เพิ่มคำเสี่ยง" พิมพ์คำที่อยู่ในบล็อกหนึ่งของสคริปต์ เลือก "ประเภทความเสี่ยง" ตั้ง "การจัดการ" เป็น "บล็อก" แล้วกด "เพิ่ม"</li><li>ใช้บัญชี TikTok ผู้ชมบนมือถืออีกเครื่องเข้าห้องไลฟ์ (ตัดสินจากจอผู้ชม ไม่ใช่จอในแอป) ฟังบล็อกนั้นทุกครั้งที่วนมา ทั้งในชั่วโมงแรกและในชั่วโมงที่ 2</li><li>ดูแผง "บล็อกล่าสุด" ในห้องคุมไลฟ์ระหว่างไลฟ์ และหลังไลฟ์จบกดเมนู "ไลฟ์ของฉัน" แท็บ "ที่ผ่านมา" กด "ดูสรุป"</li></ol></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เครื่อง A: Windows 10/11 x64 · การ์ด NVIDIA ผ่านสเปก · ติดตั้งแอป Takra Live รุ่นล่าสุดจาก UAT และติดตั้งตัวเรนเดอร์แล้ว</li><li>มีร่างไลฟ์ในเมนู "ร่างไลฟ์" ที่ฉากแรกใช้อวาตาร์ของร้านที่สร้างบนเครื่องนี้ · มีเสียงที่ "พร้อมใช้ในแอปแล้ว" · ผูกสคริปต์แล้วอย่างน้อย 1 สคริปต์</li><li>มีบัญชี TikTok ทดสอบที่ไลฟ์ได้ (ไม่ใช่บัญชีที่รอบทดสอบอื่นกำลังใช้)</li><li>🔴 ไลฟ์จริงเข้า TikTok — ทดสอบด้วยมือเท่านั้น</li><li>จดรุ่นการ์ดจอ ไดรเวอร์ RAM และความเร็วเน็ตขาขึ้นของเครื่อง A ใน Actual ทุกครั้ง</li><li>คำทดสอบยังไม่อยู่ในแท็บ "คำเสี่ยง" ก่อนเริ่มไลฟ์ (ถ้ามีอยู่ก่อน Studio และ "ตรวจก่อนไลฟ์" จะกันไม่ให้เริ่ม)</li><li>เครื่อง B ติดตั้งแอป Takra Live แล้ว</li><li>ทีมตั้งคีย์ MiniMax และคีย์ Gemini/OpenAI ในหมวด "API Keys" ที่เมนูบัญชี › "การตั้งค่า" แล้ว</li><li>📝 หมายเหตุ: เพิ่มคำหลังไลฟ์ขึ้นแล้ว เพราะถ้าเพิ่มก่อนจะติดป้าย "มีคำเสี่ยง — ใช้ไลฟ์ไม่ได้" และแถว "ตรวจคำเสี่ยง" กั้นปุ่มเริ่ม · บรรทัดที่อยู่ในคิวเล่นแล้วตอนกดเพิ่มอาจยังออกอากาศ 1 ครั้ง ให้เริ่มนับจากรอบถัดไป · เทสเสร็จลบคำทดสอบออกจากคลัง</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป "Takra Live" บนเครื่อง A แล้วเข้าสู่ระบบผ่านหน้า TAKRA Hub ที่เปิดขึ้นในแอปด้วยบัญชี UAT ของ workspace</li><li>เริ่มไลฟ์ LOCAL ให้ออกอากาศตาม TC-DT-L.1 ปล่อยออกอากาศอย่างน้อย 2 ชั่วโมง (ทำพร้อม TC-DT-Q.11 ได้)</li><li>พอไลฟ์ขึ้นแล้ว ใช้เครื่อง B: เปิดแอป "Takra Live" บนเครื่อง B แล้วเข้าสู่ระบบผ่านหน้า TAKRA Hub ที่เปิดขึ้นในแอปด้วยบัญชี UAT ของ workspace เดียวกับเครื่อง A กดเมนู "คลัง" ในกลุ่ม "ทั่วไป" ที่แถบซ้าย เลือกแท็บ "คำเสี่ยง" กด "เพิ่มคำเสี่ยง" พิมพ์คำที่อยู่ในบล็อกหนึ่งของสคริปต์ เลือก "ประเภทความเสี่ยง" ตั้ง "การจัดการ" เป็น "บล็อก" แล้วกด "เพิ่ม"</li><li>ใช้บัญชี TikTok ผู้ชมบนมือถืออีกเครื่องเข้าห้องไลฟ์ (ตัดสินจากจอผู้ชม ไม่ใช่จอในแอป) ฟังบล็อกนั้นทุกครั้งที่วนมา ทั้งในชั่วโมงแรกและในชั่วโมงที่ 2</li><li>ดูแผง "บล็อกล่าสุด" ในห้องคุมไลฟ์ระหว่างไลฟ์ และหลังไลฟ์จบกดเมนู "ไลฟ์ของฉัน" แท็บ "ที่ผ่านมา" กด "ดูสรุป"</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>หลังเพิ่มคำแล้ว ทุกครั้งที่บทนั้นวนมา ผู้ชมไม่ได้ยินบล็อกที่มีคำนั้น อวาตาร์พูดบล็อกถัดไปต่อ ไลฟ์ไม่หยุด ผลเหมือนกันทั้งรอบแรกหลังเพิ่มคำและชั่วโมงที่ 2</li><li>แผง "บล็อกล่าสุด" มีรายการทุกครั้งที่ข้าม พร้อมเหตุผล "บรรทัดสคริปต์มีคำต้องห้าม — ข้ามไป ไม่ได้พูดออกอากาศ"</li><li>สรุปไลฟ์แสดง "บรรทัดสคริปต์ถูกข้าม … ครั้ง" ตรงกับจำนวนครั้งที่บทนั้นวนมา</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 13 · Story 13.10 (ชั้นคำเสี่ยงบังคับ) · PRD FR44(d) (ตรวจซ้ำก่อนพูด · คำระดับบล็อกที่เพิ่มหลังเริ่มก็ไม่พูด · ไลฟ์ไม่หยุด) · TAKRA-1419 · FR52</div></div>
     <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
@@ -5495,7 +5340,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   </div>
 
 </div>
-<footer>TAKRA AI — แอปเดสก์ท็อป Takra Live (Windows) UI Manual Test Cases · 164 UI + 1 E2E = 165 TCs · UI only (manual) · แอป Takra Live บน Windows · UAT</footer>
+<footer>TAKRA AI — แอปเดสก์ท็อป Takra Live (Windows) UI Manual Test Cases · 159 UI + 1 E2E = 160 TCs · UI only (manual) · แอป Takra Live บน Windows · UAT</footer>
 
 <script>
 // ── Load store from embedded JSON ──
