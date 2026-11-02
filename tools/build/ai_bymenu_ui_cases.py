@@ -3,7 +3,8 @@
 """TAKRA AI (Live) — UI ใหม่ (redesign TAKRA-1500 / TAKRA-1586) · UI Manual Test Cases แบ่งตามเมนู
 
 สั่ง 2026-10-30: takra-ai อัปเดต UI → ทำ test case ใหม่ แบ่งตามเมนู · ไฟล์ใหม่ (regaimenu เดิมคงไว้ไม่แตะ) · ทุกเมนู P0+P1
-- โค้ด: takra-ai origin/uat @ d20046bc (30 ต.ค. 2569) · apps/web/src · คำ UI จาก apps/web/src/i18n/locales/th/*.ts
+- โค้ด: takra-ai origin/uat @ d20046bc (30 ต.ค. 2569) · apps/web/src
+- อัปเดต 2 พ.ย. 2569 ตามโค้ด develop ล่าสุด @ 60d0d782 (= uat 353b32fa · 30 ต.ค. 23:09 · 24 commit หน้าเว็บ) — แก้ 10 เคส · เพิ่ม 12 เคส (รวม 452) · คำ UI จาก apps/web/src/i18n/locales/th/*.ts
 - เมนูเรียงตามแถบซ้ายของแอปใหม่ (components/shell/app-shell.tsx · i18n th/shell.ts) แล้วต่อด้วยเมนูบัญชี
 - ข้อมูลเคสอยู่ที่ tools/build/takra-ai-bymenu-sources/<CODE>.json (แก้ที่นั่นแล้ว build ใหม่ — อย่าแก้ HTML ตรงๆ)
 - uid ตรึงด้วย takra-ai-bymenu-sources/uid_map.json · เคสใหม่ได้ uid ต่อท้ายอัตโนมัติ (เขียนกลับลงไฟล์ตอน build)
@@ -30,9 +31,11 @@ META = dict(
     download='takra-ai-new-ui-bymenu-ui-test-cases.html',
     back='https://wanlee-tankunnatam.github.io/qa-test-reports/?project=ai',
     sub=('เทส UI ด้วยมือ · เว็บ TAKRA AI Live <b>หน้าตาใหม่</b> (redesign TAKRA-1500 / TAKRA-1586) แบ่งตามเมนูของแถบซ้าย · '
-         'โค้ด <b>origin/uat @ d20046bc</b> (30 ต.ค. 2569) · เฉพาะ P0 + P1 · Target: <b>UAT</b> https://uat-live.takra.ai'),
+         'โค้ด <b>develop @ 60d0d782</b> (= uat 353b32fa · 30 ต.ค. 2569 23:09 · อัปเดตเคส 2 พ.ย.) · เฉพาะ P0 + P1 · Target: <b>UAT</b> https://uat-live.takra.ai'),
     groups_label='',   # เติมตอนโหลด
-    note=('🧭 <b>เมนูใหม่:</b> ทั่วไป ("แดชบอร์ด" · "ร่างไลฟ์" · "ไลฟ์ของฉัน" · "คลัง" 7 แท็บ) · เครื่องมือ ("สร้างอวาตาร์" · "โคลนเสียง" · "เขียนสคริปต์ AI" · "เตรียมพร้อมก่อนไลฟ์") · '
+    note=('🆕 <b>อัปเดต 2 พ.ย. ตามโค้ด develop ล่าสุด:</b> API Keys ใช้ key ของร้านเท่านั้น (TAKRA-1651) · แจ้งเตือน "Live ไม่ได้ออกอากาศตามแผน" (TAKRA-988) · '
+          'สินค้าไม่พร้อมขาย + ตัวกรอง (TAKRA-1657) · "เติมข้อมูลด้วย AI" (TAKRA-1653) · เครดิต MiniMax หมดระหว่างไลฟ์ (TAKRA-1644) · "เตรียมเสียงใหม่" (TAKRA-1650) · วิธีล็อกอิน TikTok (TAKRA-1656) · แพลตฟอร์ม "เร็ว ๆ นี้" (TAKRA-1654)<br>'
+          '🧭 <b>เมนูใหม่:</b> ทั่วไป ("แดชบอร์ด" · "ร่างไลฟ์" · "ไลฟ์ของฉัน" · "คลัง" 7 แท็บ) · เครื่องมือ ("สร้างอวาตาร์" · "โคลนเสียง" · "เขียนสคริปต์ AI" · "เตรียมพร้อมก่อนไลฟ์") · '
           'เมนูบัญชี ("การตั้งค่า" · "งานตั้งต้น") · "ประวัติการทำงาน AI" เฉพาะทีมแพลตฟอร์ม<br>'
           '🔐 <b>เข้าระบบ:</b> ผ่านหน้า TAKRA Hub ด้วยบัญชี UAT เจ้าของ workspace (เคสสิทธิ์ใช้บัญชีบทบาทอื่นตามที่ระบุในเคส)<br>'
           '🔴 <b>ไลฟ์จริง = manual เท่านั้น:</b> ใช้อวาตาร์ "Graham (พื้นหลังเขียว)" เท่านั้น · มีข้อความ "AI Live" หน้าสุด · สุ่มฉากหลัง · '
