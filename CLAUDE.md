@@ -77,6 +77,8 @@ repo นี้เก็บรายงาน manual test case (UI) ของท�
 >
 > **takra-insight MVP-2 Epic 4 + Epic 6** (9 ก.ย. 2026) — เคสอยู่ที่ `tools/build/insight_mvp2_e46_cases.py` → `python3 tools/build/build_hub_report.py insighte46` (แก้ที่ไฟล์ cases แล้ว build ใหม่ อย่าแก้ HTML ตรง ๆ)
 >
+> **takra-insight ฟีเจอร์ใหม่ พ.ย.** (3 พ.ย. 2026) — 5 ฟีเจอร์: ไลฟ์ Shopee (TI-681) · วิเคราะห์คลิป (TI-668) · แจ้งเตือน Telegram (TI-701) · เสียงไลฟ์หาย > 20 วิ (TI-699 · owner ปรับกรณีไม่มีสัญญาณเป็น 25 วิ) · จับคำหยาบ/คำต้องห้าม/ชวนออกนอก TikTok (TI-704) · โค้ด develop @ 74e035fc · 139 เคส P0+P1 · os_cols · เคสเก็บเป็น JSON ต่อฟีเจอร์ที่ `tools/build/takra-insight-m3-sources/<CODE>.json` (SHP · CLP · TG · AUD · WRD) · uid ตรึงใน `uid_map.json` (22001–) (`tools/build/insight_m3_features_cases.py` → `python3 tools/build/build_hub_report.py insightm3`) — แก้เคสที่ JSON แล้ว build ใหม่ อย่าแก้ HTML ตรงๆ
+>
 > **takra-lipsync** เข้าทะเบียน 14 ก.ย. 2026 · **ย้าย repo เป็น `takra-lib-sync` (production) วันเดียวกัน** — เคสชุดแรกเขียนจาก POC `poc-local` @ `fcfba85` ยังไม่ได้เทียบคำกับ repo ใหม่ · รายงานชุดแรก Desktop UI 69 เคส (37 เคสหน้า Console ติดป้าย "🔎 คำ UI รอยืนยัน") (`tools/build/lipsync_cases.py` → `python3 tools/build/build_hub_report.py lipsync`)
 >
 > **takra-farm** เข้าทะเบียน 7 ก.ย. 2026 · รายงานชุดแรก Desktop UI 59 เคส (ยังไม่รวม license — ยังไม่มีในรอบนี้) (`tools/build/farm_cases.py` → `python3 tools/build/build_hub_report.py farm`)
