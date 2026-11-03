@@ -222,6 +222,67 @@ td.status-win{white-space:nowrap}
     "st": "pass",
     "stw": "fail",
     "actual": "window วาง https://www.tiktok.com/@joseofficial.th/live ในช่องไลฟ์ กดเปิดดูไลฟ์ไม่แสดงไลฟ์อะไรเลย"
+  },
+  "tc-22017": {
+    "stw": "pass",
+    "actual": "🪟 Windows 11 Pro 26200 · บิลด์ UAT 0.1.113 · 3 พ.ย. 2569 — PASS (ตาม Expected Result ทั้ง 3 ข้อ)\nข้อมูลทดสอบ: ไลฟ์สังเคราะห์ seed ลง traka.db ของโปรไฟล์ UAT ไม่ได้ใช้ไลฟ์จริง — TikTok id 20261103_090000 · Shopee id 20261103_100000\nผลที่เห็น:\n1) แถว Shopee มีโลโก้ Shopee สีส้ม rgb(238,77,45) (= #ee4d2d) + @qa.seed.shopeeshop + ชื่อไลฟ์ ไม่ใช่ไอคอน \"?\" ✅\n2) ช่องคอมเมนต์ของแถว Shopee แสดง \"—\" ชี้แล้วขึ้น tooltip \"Shopee ไม่ส่งคอมเมนต์ให้\" (มี sr-only ข้อความเดียวกันด้วย) ไม่ใช่ 0 ✅\n3) แถว TikTok มีโลโก้ TikTok rgb(17,20,24) และคอมเมนต์ 120 ตามปกติ ✅\n\n⚠️ หมายเหตุ (ไม่นับเป็นข้อตกของเคสนี้ เพราะอยู่นอก precondition ที่เคสระบุ): ในรายการเดียวกันมีไลฟ์เก่าที่ไม่มีข้อมูลแพลตฟอร์ม (sessions.platform = NULL) อีก 1 แถว แถวนั้นขึ้นไอคอนวงกลมเครื่องหมายคำถามสีเทา rgb(139,143,150) ไม่มี aria-label/title ⇒ หัวเคสที่เขียนว่า \"แสดงโลโก้แพลตฟอร์มทุกแถว\" ยังไม่ครบในกรณีนั้น · เป็นสาเหตุเดียวกับ TC-SHP-D.2 ติดตามที่ TI-724\nยังไม่ได้เทสบน Mac (เครื่องทดสอบเป็น Windows) · บัญชีที่ล็อกอิน kachain.b@realfactory.co.th ไม่ใช่ qa.owner — เคสนี้ไม่ขึ้นกับบทบาท"
+  },
+  "tc-22018": {
+    "stw": "block",
+    "jira": [
+      "https://kitdi.atlassian.net/browse/TI-724"
+    ],
+    "actual": "🪟 Windows 11 Pro 26200 · บิลด์ UAT 0.1.113 · 3 พ.ย. 2569 — BLOCKED (รอบิลด์ UAT ใหม่ที่มีโค้ด TI-684 ครบ) · ตั๋ว TI-724\nคอมเมนต์ BLOCKED: เทสต่อไม่ได้แบบตัดสินผลจริง เพราะโค้ดของเงื่อนไข \"ไลฟ์ที่ไม่มีข้อมูลแพลตฟอร์ม = TikTok\" (TI-684 D9/E1) ยังไม่มีอยู่ในบิลด์ที่ส่งมาให้เทส — แกะ app.asar ของ 0.1.113 แล้วไม่พบ ขณะที่ develop มีแล้ว และ TI-684 ถูกปิด Done 2 พ.ย. 18:12 หลังบิลด์ 0.1.113 publish (2 พ.ย. 15:57)\nข้อมูลทดสอบ: ไลฟ์สังเคราะห์ 3 รายการในวันเดียวกัน — TikTok 20261103_090000 · Shopee 20261103_100000 · ไลฟ์เก่าไม่มี platform 20261103_080000 (ไม่ได้ใช้ไลฟ์จริง)\nผลที่เห็น:\n1) ตัวกรอง \"แพลตฟอร์ม\" มีตัวเลือก \"ทุกแพลตฟอร์ม\" / \"TikTok\" / \"Shopee\" ครบ ✅\n2) เลือก \"Shopee\" → เหลือเฉพาะไลฟ์ Shopee 1 แถว ไม่มี TikTok ปน ✅ (การ์ดสรุปคอมเมนต์ด้านบนขึ้น \"—  Shopee ไม่ส่งคอมเมนต์ให้\" ด้วย)\n3) เลือก \"TikTok\" → เหลือแค่ 20261103_090000 แถวเดียว ❌ ไลฟ์เก่าที่ไม่มีข้อมูลแพลตฟอร์ม (20261103_080000) ไม่ถูกรวมเข้ามา ขัดกับ Expected ข้อ 3\n4) เลือก \"ทุกแพลตฟอร์ม\" → กลับมาครบ 3 แถว ✅\nยังไม่ได้เทสบน Mac (เครื่องทดสอบเป็น Windows)"
+  },
+  "tc-22019": {
+    "stw": "pass",
+    "actual": "🪟 Windows 11 Pro 26200 · บิลด์ UAT 0.1.113 · 3 พ.ย. 2569 — PASS\nข้อมูลทดสอบ: ไลฟ์สังเคราะห์ (seed ลง traka.db ของโปรไฟล์ UAT) ไม่ได้ใช้ไลฟ์จริง — id 20261103_100000 platform=shopee, snapshot 2 ครั้ง (ครั้งหลัง ผู้ชม 655 / ไลก์ 2043 / แชร์ 37)\nผลที่เห็น:\n1) ใต้หัวรายงานมีป้าย \"ไลฟ์ Shopee ไม่มีคอมเมนต์ — เป็นข้อจำกัดของ Shopee\" + ข้อความ \"Shopee ไม่เปิดให้แอปอื่นเข้าถึงคอมเมนต์ของไลฟ์ ไม่ได้เกิดจากแอปหรือการตั้งค่าของคุณ — รายงานนี้จึงไม่มีคอมเมนต์ และคะแนนไม่ได้นับส่วนที่มาจากคอมเมนต์\" ครบตรงตามคาด\n2) มีการ์ด \"ตัวเลขจากหน้าไลฟ์ Shopee\" (ผู้ชม 655 · ไลก์ 2.0k · แชร์ 37) พร้อมบรรทัด \"ณ 10:26 ตอนเปิดหน้าครั้งล่าสุด · ไม่อัปเดตสด\" — อ่านจาก snapshot ครั้งล่าสุดถูกต้อง\n3) ส่วนอารมณ์ผู้พูด (Ekman 7) + ความเข้มของอารมณ์ตามเวลา + ช่วงอารมณ์ที่บันทึกไว้ มีข้อมูลครบ · การ์ดโฮสต์มี \"พลังงาน 85\" · มีแท็บ \"บทพูด\" ให้กด (คำพูดครบ)\n4) ส่วนคอมเมนต์แสดง \"Shopee ยังไม่ส่งคอมเมนต์ให้ — รายงานไลฟ์นี้จึงมีเฉพาะอารมณ์ผู้พูด พลังงาน และคำพูด\" · ไม่พบข้อความ \"ยังไม่มีคอมเมนต์ที่บันทึกไว้สำหรับไลฟ์นี้\" · การ์ดตัวเลข 4 ช่อง (คอมเมนต์ / ของขวัญ / ผู้ติดตามใหม่ / ผู้เข้าร่วม) ขึ้น \"Shopee ไม่ส่งให้\" ไม่ใช่เลข 0\n5) การ์ดคะแนนมีหมายเหตุ \"คะแนนนี้คิดจากสีหน้าเท่านั้น — Shopee ไม่ส่งคอมเมนต์และยอดผู้ชมสดให้\"\nหมายเหตุ: ยังไม่ได้เทสบน Mac (เครื่องทดสอบเป็น Windows) · บัญชีที่ล็อกอินบนเครื่องนี้คือ kachain.b@realfactory.co.th ไม่ใช่ qa.owner — เคสนี้ไม่ขึ้นกับบทบาท"
+  },
+  "tc-22020": {
+    "stw": "pass",
+    "actual": "🪟 Windows 11 Pro 26200 · บิลด์ UAT 0.1.113 · 3 พ.ย. 2569 — PASS\nข้อมูลทดสอบ: ไลฟ์ TikTok สังเคราะห์ id 20261103_090000 (คอมเมนต์ 120 · ผู้ชม/ไลก์/ของขวัญ/ผู้ติดตามครบ) ไม่ได้ใช้ไลฟ์จริง\nผลที่เห็น:\n1) ทั้งหน้าไม่มีคำว่า \"Shopee\" เลย (ตรวจด้วยการค้นข้อความทั้งหน้า) — ไม่มีป้าย \"ไลฟ์ Shopee ไม่มีคอมเมนต์\", ไม่มีการ์ด \"ตัวเลขจากหน้าไลฟ์ Shopee\", ไม่มี \"Shopee ไม่ส่งให้\", ไม่มีหมายเหตุคะแนนของ Shopee\n2) ส่วนคอมเมนต์และ KPI คอมเมนต์ทำงานตามปกติ: คอมเมนต์ 120 · Sentiment คอมเมนต์ · ประเภทคอมเมนต์ (Intent) · คอมเมนต์ที่ควรระวัง · คำที่คนดูพูดถึง · ผู้ส่งของขวัญสูงสุด · รายชื่อผู้ชม · Retention คนดู ครบเหมือนก่อนมีฟีเจอร์ Shopee\nหมายเหตุ: ยังไม่ได้เทสบน Mac (เครื่องทดสอบเป็น Windows)"
+  },
+  "tc-22021": {
+    "stw": "block",
+    "jira": [
+      "https://kitdi.atlassian.net/browse/TI-725"
+    ],
+    "actual": "🪟 Windows 11 Pro 26200 · บิลด์ UAT 0.1.113 · 3 พ.ย. 2569 — BLOCKED (รอบิลด์ UAT ใหม่ที่มีโค้ด TI-684 D13) · ตั๋ว TI-725\nคอมเมนต์ BLOCKED: ตัดสินผลข้อ 1 ไม่ได้ เพราะโค้ดวาดโลโก้แพลตฟอร์มในตารางรายงานประจำวันยังไม่มีอยู่ในบิลด์ที่ส่งมาให้เทส — แกะ app.asar ของ 0.1.113 แล้ว LivesTable วาดเฉพาะชื่อไลฟ์ + @handle ไม่มี PlatformIcon เลย ขณะที่ develop มีแล้ว (Reports.jsx: PlatformIcon platform={platformOrTikTok(row.platform)} // TI-684 D13) และ TI-684 ถูกปิด Done 2 พ.ย. 18:12 หลังบิลด์ 0.1.113 publish (2 พ.ย. 15:57)\nข้อมูลทดสอบ: ไลฟ์สังเคราะห์ในวันเดียวกัน (3 พ.ย.) — TikTok 20261103_090000 · Shopee 20261103_100000 · ไลฟ์เก่าไม่มี platform 20261103_080000 (ไม่ได้ใช้ไลฟ์จริง)\nผลที่เห็น:\n1) หน้า \"รายงานประจำวัน\" → แท็บ \"รายงานของฉัน\" → เลือกวันนี้ → ตาราง \"ไลฟ์ของวันนี้\" ขึ้นครบ 3 แถว (08:00 / 09:00 / 10:00) แต่ ❌ ไม่มีโลโก้แพลตฟอร์มหน้าชื่อไลฟ์เลยแม้แถวเดียว — มีแค่ชื่อไลฟ์ + @handle ขัดกับ Expected ข้อ 1\n2) ✅ ช่องคอมเมนต์ของแถว Shopee เป็น \"—\" ชี้แล้วขึ้น \"Shopee ไม่ส่งคอมเมนต์ให้\" ไม่ใช่ 0 (Expected ข้อ 2 ผ่าน)\n3) ✅ หน้าหลัก → ส่วน \"ไลฟ์ล่าสุด\" แสดงโลโก้ต่อไลฟ์ถูกต้อง: Shopee ส้ม rgb(238,77,45) · TikTok ดำ rgb(17,20,24) และคอมเมนต์ของแถว Shopee เป็น \"—\" + tooltip เดียวกัน (Expected ข้อ 3 ผ่าน) · แถวไลฟ์เก่าที่ไม่มี platform ได้ไอคอน \"?\" เทา — สาเหตุเดียวกับ TI-724\nหมายเหตุ precondition: แท็บเริ่มต้นของหน้านี้คือ \"ทุกโฮสต์\" ซึ่งไม่มีตารางไลฟ์ · ตารางไลฟ์อยู่แท็บ \"รายงานของฉัน\" เท่านั้น และนับเฉพาะไลฟ์ที่ id เป็นรูปแบบ YYYYMMDD_HHMMSS ที่ engine สร้างเอง\nยังไม่ได้เทสบน Mac (เครื่องทดสอบเป็น Windows)"
+  },
+  "tc-22001": {
+    "stw": "hold",
+    "actual": "[HOLD] ยังไม่ได้ทดสอบ — ไม่มีลิงก์สั้น th.shp.ee/\u003cโค้ด> ของห้องที่ \"กำลังไลฟ์\" ให้ใช้\nเหตุผล: ลิงก์สั้นสร้างเองไม่ได้ ต้องกดปุ่ม \"แชร์\" ในแอป Shopee ของไลฟ์ที่กำลังออกอากาศ · ใน apps/desktop/desktop/.env.development มีแต่ลิงก์เต็ม (SHOPEE_LIVE_URL / _2 / _3) ไม่มีลิงก์สั้น · ลิงก์สั้นที่อยู่ใน TC-SHP-C.1 (th.shp.ee/us9xD419, th.shp.ee/xbwz8eXt) เป็นไลฟ์ที่จบแล้ว ใช้กับเคสนี้ไม่ได้\nต้องทำต่อ: QA กด \"แชร์\" จากไลฟ์ Shopee ที่กำลังออกอากาศ แล้วรันเคสนี้ด้วยมือ\nหมายเหตุ: กลไกรับ+resolve ลิงก์สั้นเองทำงานได้ — พิสูจน์แล้วใน TC-SHP-A.7 (th.shp.ee/AAAAAAAA ถูก resolve จริงแล้วตอบ \"ลิงก์แชร์นี้ใช้ไม่ได้แล้ว\")\n— รัน 3 พ.ย. 2569 · 🪟 Windows 11 Pro 26200 · Takra Insight UAT v0.1.113 (uat-v0.1.113 = 6e3d872e) · บัญชี kachain.b@realfactory.co.th · ขับแอปที่ติดตั้งจริงด้วย Playwright-Electron (พิมพ์/คลิกในหน้าจอจริง ไม่ได้ mock) · models ทุกเลน current (intent 60db06ff9af0 v2 · asr f9f43cd349bd · diar 672195de0c25)"
+  },
+  "tc-22002": {
+    "stw": "pass",
+    "actual": "PASS — วางที่เมนู \"ไลฟ์\" หัวข้อ \"เพิ่มไลฟ์ที่จะบันทึก\" แล้วกด \"เปิดดูไลฟ์\"\nลิงก์ที่ใช้: https://live.shopee.co.th/share?from=live&session=28215654 (SHOPEE_LIVE_URL_2 ใน .env.development)\n• เข้าหน้าก่อนเริ่ม (#/session/new) ได้ — การ์ดร้านมีโลโก้ Shopee, ชื่อร้าน \"Panita Pattanahirun\", @panitapattanahirun, ชื่อไลฟ์ \"ราคาท้าลมหนาว! ลดพิเศษ 50% ในไลฟ์!!!\", สถานะ \"กำลังไลฟ์\"\n• การ์ด \"ตัวเลขจากหน้าไลฟ์ Shopee\" ขึ้น \"ณ 17:57 ตอนเปิดหน้า · ไม่อัปเดตสด\" (ผู้ชม 2 · ไลก์ 6,610 · แชร์ 11)\n• ภาพไลฟ์เล่นจริง — ตรวจที่ \u003cvideo> ใน view: readyState 4, paused=false, 1080x1920, currentTime เดิน 3.485 → 6.493 ใน 3 วินาที (screenshot จับภาพวิดีโอไม่ได้ เพราะ view เป็นคนละ webContents กับ renderer)\n• พารามิเตอร์ท้ายลิงก์ไม่ทำให้เปิดไม่ได้ — view โหลด URL canonical https://live.shopee.co.th/share?session=28215654 (from=live ถูกตัดทิ้ง)\n⚠️ หมายเหตุความถูกต้องของรอบเทส: รอบนี้ตั้งใจเลี่ยงไลฟ์จริง แต่ session 28215654 ใน .env.development บังเอิญกำลังออกอากาศอยู่ตอนรัน — ไม่ได้กด \"เริ่มติดตาม\" ไม่ได้บันทึกข้อมูลใด ๆ แค่เปิดดูหน้าก่อนเริ่มเท่านั้น\n— รัน 3 พ.ย. 2569 · 🪟 Windows 11 Pro 26200 · Takra Insight UAT v0.1.113 (uat-v0.1.113 = 6e3d872e) · บัญชี kachain.b@realfactory.co.th · ขับแอปที่ติดตั้งจริงด้วย Playwright-Electron (พิมพ์/คลิกในหน้าจอจริง ไม่ได้ mock) · models ทุกเลน current (intent 60db06ff9af0 v2 · asr f9f43cd349bd · diar 672195de0c25)"
+  },
+  "tc-22003": {
+    "stw": "pass",
+    "actual": "PASS\n• placeholder ในช่องลิงก์ = \"วางลิงก์ไลฟ์ TikTok หรือ Shopee ลิงก์แชร์จากแอป หรือ @ชื่อช่อง TikTok…\" ตรงกับที่คาดทุกตัวอักษร\n• ป้าย \"รองรับ\" ท้ายช่องแสดงผล (ไม่ถูกซ่อน) มี 2 ชิปพอดี เรียง \"TikTok\" แล้ว \"Shopee\" — ไม่มีชิปอื่นปน\n• แต่ละชิปมีโลโก้ของตัวเอง (พบ \u003csvg> ในทั้ง 2 ชิป)\n— รัน 3 พ.ย. 2569 · 🪟 Windows 11 Pro 26200 · Takra Insight UAT v0.1.113 (uat-v0.1.113 = 6e3d872e) · บัญชี kachain.b@realfactory.co.th · ขับแอปที่ติดตั้งจริงด้วย Playwright-Electron (พิมพ์/คลิกในหน้าจอจริง ไม่ได้ mock) · models ทุกเลน current (intent 60db06ff9af0 v2 · asr f9f43cd349bd · diar 672195de0c25)"
+  },
+  "tc-22004": {
+    "stw": "pass",
+    "actual": "PASS — 2/2 ลิงก์ได้ข้อความตามคาด\n• https://shopee.co.th/belongjeans.official (หน้าร้าน) → \"ลิงก์นี้เป็นหน้าสินค้าหรือหน้าร้านของ Shopee ไม่ใช่ไลฟ์ — เปิดไลฟ์ที่ต้องการในแอป Shopee แล้วกด “แชร์” เพื่อคัดลอกลิงก์ไลฟ์\"\n• https://shopee.co.th/เสื้อยืดคอกลม-i.123456789.987654321 (หน้าสินค้า) → ข้อความเดียวกัน\n• ทั้ง 2 ลิงก์ไม่เปลี่ยนหน้า (ยังอยู่ #/dashboard) และไม่เปิดหน้า Shopee ในเบราว์เซอร์ในตัว\n• ปุ่มไม่เคยขึ้น \"กำลังตรวจลิงก์…\" ⇒ ถูกปฏิเสธตั้งแต่ฝั่งแอป ไม่มีการยิงเน็ตออกไป\n— รัน 3 พ.ย. 2569 · 🪟 Windows 11 Pro 26200 · Takra Insight UAT v0.1.113 (uat-v0.1.113 = 6e3d872e) · บัญชี kachain.b@realfactory.co.th · ขับแอปที่ติดตั้งจริงด้วย Playwright-Electron (พิมพ์/คลิกในหน้าจอจริง ไม่ได้ mock) · models ทุกเลน current (intent 60db06ff9af0 v2 · asr f9f43cd349bd · diar 672195de0c25)"
+  },
+  "tc-22005": {
+    "stw": "pass",
+    "actual": "PASS — 4/4 ลิงก์ ได้ข้อความเดียวกันทุกตัว: \"ลิงก์นี้ไม่ใช่ไลฟ์ TikTok หรือ Shopee — ตอนนี้รองรับเฉพาะไลฟ์ TikTok และ Shopee ลองวางลิงก์แชร์จากแอป หรือ @ชื่อช่อง TikTok\"\n• https://shopee.com.my/ (Shopee มาเลเซีย)\n• https://live.shopee.co.th.evil.com/share?session=1 — โดเมนหน้าตาคล้าย ได้ข้อความนี้ถูกต้อง ไม่ใช่ข้อความหน้าร้าน/สินค้า Shopee\n• https://www.lazada.co.th/\n• https://www.facebook.com/belongjeans/live\n• ไม่มีลิงก์ไหนเปิดหน้าก่อนเริ่ม (ยังอยู่ #/dashboard ทุกครั้ง)\n— รัน 3 พ.ย. 2569 · 🪟 Windows 11 Pro 26200 · Takra Insight UAT v0.1.113 (uat-v0.1.113 = 6e3d872e) · บัญชี kachain.b@realfactory.co.th · ขับแอปที่ติดตั้งจริงด้วย Playwright-Electron (พิมพ์/คลิกในหน้าจอจริง ไม่ได้ mock) · models ทุกเลน current (intent 60db06ff9af0 v2 · asr f9f43cd349bd · diar 672195de0c25)"
+  },
+  "tc-22006": {
+    "stw": "fail",
+    "jira": [
+      "https://kitdi.atlassian.net/browse/TI-723"
+    ],
+    "actual": "[FAIL] 5/6 ผ่าน · ตกที่ลิงก์ http → ออกตั๋ว TI-723\n\nผ่าน (ขึ้น \"ลิงก์นี้เป็นหน้าสินค้าหรือหน้าร้านของ Shopee ไม่ใช่ไลฟ์ —…\" และไม่เปิดหน้าก่อนเริ่ม):\n• https://live.shopee.co.th/share\n• https://live.shopee.co.th/share?session=\n• https://live.shopee.co.th/share?session=abc\n• https://live.shopee.co.th/share?session=123456789012345678901 (21 หลัก)\n• https://th.shp.ee/\n\nไม่ผ่าน:\n• http://live.shopee.co.th/share?session=31480027 (http ไม่ใช่ https) → ไม่มีข้อความปฏิเสธใด ๆ · ราว 30 วิหลังกดปุ่ม เข้าหน้าก่อนเริ่ม (#/session/new) · view โหลด https://live.shopee.co.th/share?session=31480027 (แอปอัปเกรด http → https ให้เอง) แล้วแสดง \"Shopee ให้ดูไลฟ์นี้ในแอป Shopee เท่านั้น\" เพราะ session นั้นไม่ได้ออกอากาศ · ยืนยันซ้ำ 2 รอบ ได้ผลเดิม\n\n[FAIL] คอมเมนต์ — น่าจะเป็น \"เคส/สเปก ไม่ตรงกับของที่ทำจริง\" ไม่ใช่โค้ดพัง: renderer/src/lib/shopeeLiveUrl.js ฟังก์ชัน httpShareSessionId() รับ share URL แบบ http โดยตั้งใจ (คอมเมนต์ในไฟล์ระบุว่ามาจาก \"TI-683 code review R1\") และ main/lib/shopee-link-resolve.js normaliseShopeeInput() อัปเกรดเป็น https ก่อนโหลดเสมอ ⇒ ไม่มีการโหลดแบบ plaintext จริง และ start gate ยังบังคับ https ตามเดิม จึงไม่มีผลเสียด้านความปลอดภัย\nต้องตัดสินใจ (บันทึกไว้ใน TI-723): (ก) แก้โค้ดให้ปฏิเสธ http ตามเคส หรือ (ข) คงพฤติกรรมเดิม แล้วแก้ story TI-683 D3/AC7 + เคส TC-SHP-A.6 ให้ตรงกัน\n— รัน 3 พ.ย. 2569 · 🪟 Windows 11 Pro 26200 · Takra Insight UAT v0.1.113 (uat-v0.1.113 = 6e3d872e) · บัญชี kachain.b@realfactory.co.th · ขับแอปที่ติดตั้งจริงด้วย Playwright-Electron (พิมพ์/คลิกในหน้าจอจริง ไม่ได้ mock) · models ทุกเลน current (intent 60db06ff9af0 v2 · asr f9f43cd349bd · diar 672195de0c25)"
+  },
+  "tc-22007": {
+    "stw": "pass",
+    "actual": "PASS\n• วาง https://th.shp.ee/AAAAAAAA แล้วกด \"เปิดดูไลฟ์\" → ปุ่มขึ้น \"กำลังตรวจลิงก์…\" (main ตาม redirect ให้แบบไม่มีคุกกี้) แล้วขึ้นข้อความ \"ลิงก์แชร์นี้ใช้ไม่ได้แล้ว — กด “แชร์” ในหน้าไลฟ์ของแอป Shopee เพื่อคัดลอกลิงก์ใหม่\"\n• ไม่เปิดหน้าก่อนเริ่ม (ยังอยู่ #/dashboard) และไม่ได้ใช้ข้อความของ TikTok\n— รัน 3 พ.ย. 2569 · 🪟 Windows 11 Pro 26200 · Takra Insight UAT v0.1.113 (uat-v0.1.113 = 6e3d872e) · บัญชี kachain.b@realfactory.co.th · ขับแอปที่ติดตั้งจริงด้วย Playwright-Electron (พิมพ์/คลิกในหน้าจอจริง ไม่ได้ mock) · models ทุกเลน current (intent 60db06ff9af0 v2 · asr f9f43cd349bd · diar 672195de0c25)"
+  },
+  "tc-22008": {
+    "stw": "hold",
+    "actual": "[HOLD] ยังไม่ได้ทดสอบ — ต้องปิด Wi-Fi/ถอดสายแลนของทั้งเครื่อง\nเหตุผล: รอบนี้ขับแอปจากระยะไกล การตัดเน็ตจะตัดการเชื่อมต่อของผู้รันเทสเองไปด้วย ทำให้คุมขั้นตอนถัดไปและอ่านผลไม่ได้ · ไม่ใช้วิธีเลี่ยง (แก้ไฟล์ hosts หรือ firewall เฉพาะโดเมน Shopee) เพราะให้ error คนละชนิดกับ \"ไม่มีอินเทอร์เน็ต\" จริง ผลจะเชื่อถือไม่ได้\nต้องทำต่อ: QA รันด้วยมือที่หน้าเครื่อง — ปิด Wi-Fi แล้ววางลิงก์แชร์ Shopee กด \"เปิดดูไลฟ์\"\nคาดการณ์จากโค้ด (ยังไม่ยืนยันบนจอ): liveUrl.js SHOPEE_CODE_TO_ERROR แมป offline/timeout → shopeeOffline ⇒ ควรได้ \"เชื่อมต่อ Shopee ไม่ได้ — ตรวจสอบอินเทอร์เน็ตแล้วลองอีกครั้ง\" ไม่ใช่ข้อความของ TikTok\n— รัน 3 พ.ย. 2569 · 🪟 Windows 11 Pro 26200 · Takra Insight UAT v0.1.113 (uat-v0.1.113 = 6e3d872e) · บัญชี kachain.b@realfactory.co.th · ขับแอปที่ติดตั้งจริงด้วย Playwright-Electron (พิมพ์/คลิกในหน้าจอจริง ไม่ได้ mock) · models ทุกเลน current (intent 60db06ff9af0 v2 · asr f9f43cd349bd · diar 672195de0c25)"
   }
 }
 </script>
@@ -6300,17 +6361,19 @@ var SMAP = {
 // Restore saved statuses
 Object.keys(store).forEach(function(uid) {
   var st = store[uid] && store[uid].st;
-  if (!st || !SMAP[st]) return;
-  // badge
-  var rowStatus = document.querySelector('tr.trow td.status[data-uid="' + uid + '"]');
-  if (rowStatus) {
-    var stb = rowStatus.querySelector('.stb');
-    if (stb) { stb.className = 'stb ' + SMAP[st][0]; stb.textContent = SMAP[st][1]; }
+  if (st && SMAP[st]) {
+    // badge
+    var rowStatus = document.querySelector('tr.trow td.status[data-uid="' + uid + '"]');
+    if (rowStatus) {
+      var stb = rowStatus.querySelector('.stb');
+      if (stb) { stb.className = 'stb ' + SMAP[st][0]; stb.textContent = SMAP[st][1]; }
+    }
+    // opt button
+    var opt = document.querySelector('.opt[data-uid="' + uid + '"][data-st="' + st + '"]');
+    if (opt) opt.classList.add('sel');
   }
-  // opt button
-  var opt = document.querySelector('.opt[data-uid="' + uid + '"][data-st="' + st + '"]');
-  if (opt) opt.classList.add('sel');
-  // also restore actual result text
+  // restore actual result text — independent of which OS has a status (a Windows-only
+  // run sets only `stw`, and its notes must still show)
   if (store[uid].actual) {
     var boxes = document.querySelectorAll('tr.detail');
     boxes.forEach(function(d) {
