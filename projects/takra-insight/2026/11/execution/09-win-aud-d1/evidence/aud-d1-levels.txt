@@ -1,0 +1,27 @@
+TC-AUD-D.1 — level check of the simulated live before it was used
+=================================================================
+
+Built by scripts/build-aud-d1.ps1 from real Thai host speech already analysed on this machine.
+Timeline (330 s total, video continuous throughout):
+
+    0 -  90 s   real Thai speech
+   90 - 135 s   DIGITAL SILENCE (all zero samples) <- the "mic muted" window
+  135 - 330 s   speech again, so the episode can recover
+
+The engine's threshold for "silence" is -60 dBFS (SILENCE_DBFS, wall_alerts.py). Measured with
+the app's own bundled ffmpeg (resources/ffmpeg/ffmpeg.exe, pinned gyan 8.1.1) reading the FINISHED
+FLV back through the AAC decoder, so these are the levels the engine's audio tap actually sees —
+not the levels of the source wav before encoding.
+
+  stretch            RMS level
+  -----------------  -------------------------------
+  speech  60- 70 s   -18.976897 dBFS   (well above the threshold)
+  silence 100-130 s  -inf              (true digital zero, survives AAC)
+  speech  150-160 s  -13.901473 dBFS   (well above the threshold)
+
+Why this matters: AAC is lossy, so "I wrote zeros into the source" is not evidence that the
+decoder hands zeros to the engine. Reading the level back out of the built FLV is. -inf across a
+30 s probe inside the window confirms the silence rule is being fed what the case needs, and the
+two speech probes confirm the surrounding audio could never be mistaken for silence.
+
+No LHM_WALL_* override was set in the run, so the boundary under test is the shipped 20 s.
