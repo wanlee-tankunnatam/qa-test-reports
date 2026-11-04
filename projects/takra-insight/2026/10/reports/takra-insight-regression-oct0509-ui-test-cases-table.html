@@ -134,6 +134,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 .kd-exc{color:#be123c;background:#fff1f2;border-color:#fecdd3}
 .kd-perm{color:#0f766e;background:#f0fdfa;border-color:#99f6e4}
 .kd-data{color:#1d4ed8;background:#eff6ff;border-color:#bfdbfe}
+.kd-reg{color:#475569;background:#f8fafc;border-color:#cbd5e1}
 .chk{margin-top:4px;padding:6px 8px;border-left:3px solid #16a34a;background:rgba(22,163,74,.07)}
 .noui{display:inline-block;margin-left:6px;padding:0 6px;border-radius:4px;font-size:9.5px;font-weight:700;vertical-align:middle;color:#991b1b;background:#fee2e2;border:1px solid #fca5a5;white-space:nowrap}
 
@@ -149,15 +150,15 @@ td.status-win{white-space:nowrap}
 .optw.sel.hold{background:var(--hold);color:#fff}
 .optw.sel.block{background:var(--block);color:#fff}
 .optw.sel.skip{background:var(--skip);color:#fff}
+.actual-os-lbl{font-size:10px;font-weight:800;color:#475569;margin:9px 0 3px}
+.actual-os-lbl.first{margin-top:2px}
 </style>
 </head>
 <body>
 <a id="hub-back-btn" href="https://wanlee-tankunnatam.github.io/qa-test-reports/?project=insight" title="กลับไปหน้ารวมรายงาน (Hub)" style="position:fixed;top:12px;right:14px;z-index:99999;display:inline-flex;align-items:center;gap:7px;padding:10px 18px;border-radius:999px;background:#ffffff;color:#1e3a8a;font-size:14px;font-weight:800;text-decoration:none;box-shadow:0 4px 16px rgba(0,0,0,.35);border:2px solid #1e3a8a;font-family:'Segoe UI','Sarabun',system-ui,sans-serif">🏠 รายงานทั้งหมด</a>
 
 
-<script id="store-data" type="application/json">
-{}
-</script>
+<script id="store-data" type="application/json">{}</script>
 
 <header class="top">
   <h1>📊 [REG 5–9 ต.ค.] TAKRA Insight — Regression Test Cases (คู่ 🪟/🍎)</h1>
@@ -254,7 +255,7 @@ td.status-win{white-space:nowrap}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Insight (App) แล้ว Login ด้วยบัญชีที่มีสิทธิ์ใช้งาน (entitled)</li><li>ไปที่ หน้าหลัก → กด วิเคราะห์ไลฟ์ใหม่ → วาง URL ของร้าน แล้วเริ่มจับเวลาทันทีที่กด เปิดดูไลฟ์</li><li>บันทึกเวลาที่วิดีโอเริ่มเล่น (เฟรมแรกปรากฏ ไม่มี spinner กำลังโหลดวิดีโอ)</li><li>บันทึกเวลาที่คอมเมนต์แรกปรากฏบนแผงคอมเมนต์</li><li>เปิด traka.db ด้วย sqlite3 อ่าน ingest_time ของ engagement แถวแรกของ session เทียบเวลาเริ่ม</li><li>ทำซ้ำ 3 รอบ (ร้านเดิมหรือร้านถัดไปในลิสต์) แล้วบันทึกค่าทุกรอบ</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>วิดีโอเริ่มเล่นภายใน ≤ 15 วินาที (ค่าเสนอ · รอ PM เคาะ) ทั้ง 3 รอบ</li><li>คอมเมนต์แรกปรากฏภายใน ≤ 30 วินาที สำหรับร้านที่มีคอมเมนต์อยู่แล้ว</li><li>ไม่มีข้อความ error หรือ spinner ค้างระหว่างรอ</li><li>ค่าที่วัดถูกบันทึกเป็นตัวเลขจริงในรายงาน ไม่ใช่ "ผ่าน/ตก" ลอย ๆ</li></ul><div class="hint" style="margin-top:6px">ประเภท: Measure — คนทำ + เก็บตัวเลข · ที่มา: live-readiness-test-cases.html (QA · 2026-09-09) · แผนคู่: live-readiness-test-plan.html · วัดกับ develop @ b82bb4f</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
   <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
@@ -295,7 +296,7 @@ td.status-win{white-space:nowrap}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Insight (App) แล้ว Login ด้วยบัญชีที่มีสิทธิ์ใช้งาน (entitled)</li><li>ไปที่ หน้าหลัก → วิเคราะห์ไลฟ์ใหม่ → วาง URL ร้านที่ไม่ได้ไลฟ์ → เปิดดูไลฟ์</li><li>สังเกตข้อความและปุ่มที่ระบบแสดงภายใน 30 วินาที</li><li>กดย้อนกลับ แล้ววาง URL ที่ผิดรูปแบบ (เช่น หน้า for-you หรือลิงก์ที่ไม่ใช่ /live) → เปิดดูไลฟ์</li><li>สังเกตข้อความที่ระบบแสดง</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ร้านที่ไม่ได้ไลฟ์: ระบบแสดงข้อความชัดเจนว่าร้านนี้ไม่ได้ไลฟ์อยู่ ภายใน 30 วินาที</li><li>URL ผิดรูปแบบ: ช่องลิงก์ตรวจให้ตั้งแต่ก่อนเปิด — ขึ้นข้อความใต้ช่อง เช่น ลิงก์นี้ไม่ใช่ลิงก์ TikTok — ตอนนี้รองรับเฉพาะไลฟ์ TikTok ลองวางลิงก์จากแอป TikTok หรือ @ชื่อช่อง หรือ ลิงก์นี้ไม่ได้พาไปที่ช่องหรือไลฟ์ของ TikTok — คัดลอกลิงก์จากหน้าไลฟ์ หรือวาง @ชื่อช่องแทน (ช่องลิงก์เดียวกันทั้งหน้าหลักและหน้าหลายไลฟ์ · TI-504/TI-498)</li><li>ไม่มี spinner กำลังโหลดวิดีโอ หมุนค้างเกิน 30 วินาที</li><li>มีปุ่มให้ลองใหม่/กลับหน้าหลัก และไม่มี session ถูกสร้างค้างในหน้า เซสชัน</li><li>ไม่มีข้อความเชิงเทคนิค (error code, stack trace, null) โผล่บนหน้าจอ</li></ul><div class="hint" style="margin-top:6px">ประเภท: Manual — คนทำบนช่องจริง · ที่มา: live-readiness-test-cases.html (QA · 2026-09-09) · แผนคู่: live-readiness-test-plan.html · วัดกับ develop @ b82bb4f</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
   <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
@@ -336,7 +337,7 @@ td.status-win{white-space:nowrap}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Insight (App) แล้ว Login ด้วยบัญชีที่มีสิทธิ์ใช้งาน (entitled)</li><li>ไปที่ หน้าหลัก → วิเคราะห์ไลฟ์ใหม่ → วาง URL ร้านที่ไลฟ์อยู่ → เปิดดูไลฟ์</li><li>สังเกตว่าระบบพาไปหน้า Login TikTok หรือแสดงคำแนะนำให้ Login ก่อนหรือไม่</li><li>Login TikTok แต่ยังไม่กดติดตามช่อง แล้วสังเกตสถานะ</li><li>กด ติดตาม ช่องแล้วสังเกตว่าคอมเมนต์เริ่มไหลหรือไม่</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ก่อน Login: ระบบไม่เริ่ม session และแจ้งชัดว่าต้อง Login TikTok ก่อน</li><li>หลัง Login แต่ยังไม่ติดตาม: ระบบแจ้งให้ ติดตามช่อง ก่อน ไม่ปล่อยให้ monitor ครึ่งเดียว (วิดีโอมีแต่คอมเมนต์ 0 โดยไม่บอก)</li><li>หลังติดตาม: คอมเมนต์เริ่มไหลภายใน 30 วินาที</li><li>ไม่มีกรณีที่ผู้ใช้ต้องเดาเองว่าทำไมคอมเมนต์เป็น 0</li></ul><div class="hint" style="margin-top:6px">ประเภท: Manual — คนทำบนช่องจริง · ที่มา: live-readiness-test-cases.html (QA · 2026-09-09) · แผนคู่: live-readiness-test-plan.html · วัดกับ develop @ b82bb4f</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
   <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
@@ -381,7 +382,7 @@ td.status-win{white-space:nowrap}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Insight (App) แล้ว Login ด้วยบัญชีที่มีสิทธิ์ใช้งาน (entitled)</li><li>ไปที่ หน้าหลัก → กด วิเคราะห์ไลฟ์ใหม่ → วาง URL ของร้านที่กำลังไลฟ์อยู่ (ร้านในลิสต์ที่กำหนด · ตรวจด้วย probe ก่อนว่าไลฟ์จริง)</li><li>Login TikTok ในเบราว์เซอร์ในตัวและ ติดตามช่อง ตามที่ระบบบังคับ แล้วกด เปิดดูไลฟ์</li><li>รอจนวิดีโอเล่นและมีคอมเมนต์ไหลเข้ามาบนแผงด้านขวา</li><li>ให้บัญชีที่ 2 พิมพ์คอมเมนต์ sentinel รูปแบบ QA-{เวลา hh:mm:ss} จำนวน 5 ข้อความ ห่างกันข้อความละ 1 นาที บันทึกเวลาที่กดส่งจากนาฬิกาเดียวกัน</li><li>ปล่อย monitor ครบ 10 นาที (spec live-real-monitor จับค่าให้ทุก 30 วินาที)</li><li>อ่าน ingest_time ของ sentinel แต่ละตัวจาก traka.db เทียบเวลาที่กดส่ง</li><li>นับ dupGroups (ข้อความเดียวกัน ผู้ใช้เดียวกัน เวลาเดียวกัน ที่มีมากกว่า 1 แถว)</li><li>กด หยุดติดตาม (ยืนยัน หยุดติดตามและบันทึกเซสชันนี้?) แล้วอ่านค่า FINAL ของ spec</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>sentinel มาถึง 5/5 และ latency p95 &lt; 2 วินาที (NFR1.2)</li><li>dupGroups = 0 ตลอด 10 นาที</li><li>จำนวนคอมเมนต์บน UI = จำนวนใน DB ณ เวลาเดียวกัน (ต่างกันได้ไม่เกินข้อความที่กำลังไหลเข้า)</li><li>session finalize สำเร็จ มี ended_at</li></ul><div class="hint" style="margin-top:6px">ประเภท: Measure — คนทำ + เก็บตัวเลข · ที่มา: live-readiness-test-cases.html (QA · 2026-09-09) · แผนคู่: live-readiness-test-plan.html · วัดกับ develop @ b82bb4f</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
   <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
@@ -422,7 +423,7 @@ td.status-win{white-space:nowrap}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Insight (App) แล้ว Login ด้วยบัญชีที่มีสิทธิ์ใช้งาน (entitled)</li><li>ไปที่ หน้าหลัก → กด วิเคราะห์ไลฟ์ใหม่ → วาง URL ของร้านที่กำลังไลฟ์อยู่ (ร้านในลิสต์ที่กำหนด · ตรวจด้วย probe ก่อนว่าไลฟ์จริง)</li><li>Login TikTok ในเบราว์เซอร์ในตัวและ ติดตามช่อง ตามที่ระบบบังคับ แล้วกด เปิดดูไลฟ์</li><li>รอจนวิดีโอเล่นและมีคอมเมนต์ไหลเข้ามาบนแผงด้านขวา</li><li>เริ่มบันทึกหน้าจอ TikTok live (จอที่ 2) พร้อมกับเวลาเริ่ม monitor ในแอป</li><li>ปล่อยไป 5 นาที แล้วหยุดทั้งสองฝั่งพร้อมกัน</li><li>นับคอมเมนต์จากวิดีโอที่บันทึก (ทีละข้อความ) ในช่วง 5 นาทีนั้น = N_seen</li><li>นับคอมเมนต์ใน traka.db ของ session ในช่วงเวลาเดียวกัน (ไม่นับ history ก่อนเริ่ม) = N_db</li><li>คำนวณ completeness = N_db / N_seen และบันทึกรายการที่หายไป (ถ้ามี) พร้อมข้อความและเวลา</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>completeness ≥ 99% ในสภาพปกติ (NFR2.2) · ≥ 95% ถ้ามีหลักฐานว่า TikTok throttle</li><li>ข้อความที่หาย (ถ้ามี) ถูกระบุเป็นรายการชัดเจน เพื่อส่ง DEV วิเคราะห์ชนิด message</li><li>ไม่มีข้อความใน DB ที่ไม่เคยปรากฏบนหน้าจอ (ไม่มี phantom)</li></ul><div class="hint" style="margin-top:6px">ประเภท: Measure — คนทำ + เก็บตัวเลข · ที่มา: live-readiness-test-cases.html (QA · 2026-09-09) · แผนคู่: live-readiness-test-plan.html · วัดกับ develop @ b82bb4f</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
   <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
@@ -449,7 +450,7 @@ td.status-win{white-space:nowrap}
 
 <tr class="trow" data-feat="lrD2" data-level="ui" data-prio="P0" data-kind="data" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-LR-D2-POS-03</td>
-  <td class="ctitle">TAKRA Insight เริ่ม monitor ร้านที่มีคอมเมนต์ค้าง (history replay) ต้องไม่บันทึกซ้ำ 2 เท่า <span class="kd kd-data">Data</span></td>
+  <td class="ctitle">TAKRA Insight เริ่ม monitor ร้านที่มีคอมเมนต์ค้าง (history replay) ต้องไม่บันทึกคอมเมนต์เก่าที่เกิดก่อนเริ่ม — เก็บเฉพาะที่เกิดหลังเริ่ม <span class="kd kd-data">Data</span></td>
   <td class="lvl"><span class="lv lvl-ui">UI</span></td>
   <td><span class="prio p0">P0</span></td>
   <td class="status" data-uid="tc-14506"><span class="stb pending">รอเทส</span></td>
@@ -457,13 +458,13 @@ td.status-win{white-space:nowrap}
   <td class="jira-cell" data-uid="tc-14506"></td>
 </tr>
 <tr class="detail"><td colspan="8"><div class="card">
-  <div class="h-title">TAKRA Insight เริ่ม monitor ร้านที่มีคอมเมนต์ค้าง (history replay) ต้องไม่บันทึกซ้ำ 2 เท่า</div>
+  <div class="h-title">TAKRA Insight เริ่ม monitor ร้านที่มีคอมเมนต์ค้าง (history replay) ต้องไม่บันทึกคอมเมนต์เก่าที่เกิดก่อนเริ่ม — เก็บเฉพาะที่เกิดหลังเริ่ม</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Data</b> <span class="hint">(ค่าคงอยู่ · ข้อมูลเดิมไม่หาย · ซิงก์ข้ามเครื่อง)</span> · D2 · คอมเมนต์ครบ สด ไม่ซ้ำ</div>
-  <div class="sec"><h4>Precondition</h4><ul><li>ร้านที่ไลฟ์มาแล้วสักพักและมีคอมเมนต์เก่าปรากฏตอนเข้าห้อง (history)</li><li>เกี่ยวข้อง TI-381</li></ul></div>
-  <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Insight (App) แล้ว Login ด้วยบัญชีที่มีสิทธิ์ใช้งาน (entitled)</li><li>ไปที่ หน้าหลัก → กด วิเคราะห์ไลฟ์ใหม่ → วาง URL ของร้านที่กำลังไลฟ์อยู่ (ร้านในลิสต์ที่กำหนด · ตรวจด้วย probe ก่อนว่าไลฟ์จริง)</li><li>Login TikTok ในเบราว์เซอร์ในตัวและ ติดตามช่อง ตามที่ระบบบังคับ แล้วกด เปิดดูไลฟ์</li><li>ทันทีที่เข้าห้อง สังเกตว่ามีคอมเมนต์เก่าไหลเข้ามาเป็นชุด (replay) หรือไม่ บันทึกจำนวนที่เห็น</li><li>ปล่อย 3 นาที แล้วกด หยุดติดตาม</li><li>ใน traka.db นับแถวของ session แยกเป็น history (ingest_time ≤ start+30s) และ live</li><li>ตรวจ dupGroups ในส่วน history: ข้อความเดียวกัน ผู้ใช้เดียวกัน เวลาเดียวกัน มีกี่แถว</li></ol></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>ร้านที่ไลฟ์มาแล้วสักพักและมีคอมเมนต์เก่าปรากฏตอนเข้าห้อง (history)</li><li>เกี่ยวข้อง TI-381 · TI-441</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Insight (App) แล้ว Login ด้วยบัญชีที่มีสิทธิ์ใช้งาน (entitled)</li><li>ไปที่ หน้าหลัก → กด วิเคราะห์ไลฟ์ใหม่ → วาง URL ของร้านที่กำลังไลฟ์อยู่ (ร้านในลิสต์ที่กำหนด · ตรวจด้วย probe ก่อนว่าไลฟ์จริง)</li><li>Login TikTok ในเบราว์เซอร์ในตัวและ ติดตามช่อง ตามที่ระบบบังคับ แล้วกด เปิดดูไลฟ์</li><li>ทันทีที่เข้าห้อง สังเกตในหน้า TikTok ทางซ้ายว่ามีคอมเมนต์เก่าไหลเข้ามาเป็นชุด (replay) หรือไม่ บันทึกจำนวนที่เห็น และจดเวลาที่เริ่ม</li><li>ปล่อย 3 นาที แล้วกด หยุดติดตาม</li><li>ใน traka.db นับแถวคอมเมนต์ของ session ที่เวลาเกิดก่อนเวลาเริ่ม และเปิด takra-main.log หาบรรทัด refused N replayed-history ของ session นี้ (พิมพ์ตอนหยุดติดตาม)</li><li>ตรวจ dupGroups ในส่วน history: ข้อความเดียวกัน ผู้ใช้เดียวกัน เวลาเดียวกัน มีกี่แถว</li></ol></div>
   <div class="grid">
-    <div class="sec"><h4>Expected Result</h4><ul><li>จำนวน history ใน DB = จำนวนที่เห็นตอนเข้าห้อง (ไม่ใช่ 2 เท่า)</li><li>dupGroups = 0 ทั้งส่วน history และ live</li><li>ตัวเลข คอมเมนต์รวม ในรายงานหลังไลฟ์ตรงกับ DB</li></ul><div class="hint" style="margin-top:6px">ประเภท: Manual — คนทำบนช่องจริง · ที่มา: live-readiness-test-cases.html (QA · 2026-09-09) · แผนคู่: live-readiness-test-plan.html · วัดกับ develop @ b82bb4f</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Expected Result</h4><ul><li>คอมเมนต์เก่าที่เห็นตอนเข้าห้อง (เกิดก่อนเริ่ม) ไม่ถูกบันทึก: แถวคอมเมนต์ที่เกิดก่อนเวลาเริ่มใน DB = 0 และไม่ขึ้นในแผงคอมเมนต์ของ TAKRA Insight</li><li>log มีบรรทัด refused N replayed-history ของ session นี้ โดย N ใกล้กับจำนวนที่เห็นตอนเข้าห้อง (ถ้าไม่มีคอมเมนต์เก่าตอนเข้าห้องเลย บรรทัดนี้จะไม่ขึ้น = ยังสรุปไม่ได้ ไม่ใช่ผ่าน)</li><li>dupGroups = 0 ทั้งส่วน history และ live</li><li>ตัวเลข คอมเมนต์รวม ในรายงานหลังไลฟ์ตรงกับ DB</li></ul><div class="hint" style="margin-top:6px">ประเภท: Manual — คนทำบนช่องจริง · ที่มา: live-readiness-test-cases.html (QA · 2026-09-09) · แผนคู่: live-readiness-test-plan.html · วัดกับ develop @ b82bb4f · 🔄 2026-10-15 แก้ Expected ตาม TI-381 T4 (เจ้าของงานเคาะ 2026-09-01: session เก็บเฉพาะสิ่งที่เกิดหลังเริ่ม · commit 26477cea) และ TI-441 (เลิกดึงคอมเมนต์ย้อนหลังเอง · e816f60c) — เดิมคาดว่า history ใน DB = จำนวนที่เห็นตอนเข้าห้อง ซึ่งไม่ตรงพฤติกรรมแล้ว · เคสกลางใน repo: TC-0.5-CAP-TI381-E2E-NEG-01</div></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
   <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
@@ -504,7 +505,7 @@ td.status-win{white-space:nowrap}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิด terminal ที่ apps/desktop/desktop</li><li>รัน node --test src/renderer/src/stores/sessionsLiveStore.d11-dedupe.test.js</li><li>อ่านผล pass/fail</li><li>(เสริม live) ให้บัญชีที่ 2 พิมพ์ +1 3 ครั้งติดกันเร็วที่สุด แล้วนับบนแผงคอมเมนต์</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>unit test ผ่านทั้งหมด (คีย์ de-dupe ใช้ msgId ไม่ใช่ข้อความ+วินาที)</li><li>บน live: +1 ทั้ง 3 ข้อความปรากฏบน UI และมี 3 แถวใน DB</li></ul><div class="hint" style="margin-top:6px">ประเภท: Automated — ใช้ script ที่มีอยู่ · ที่มา: live-readiness-test-cases.html (QA · 2026-09-09) · แผนคู่: live-readiness-test-plan.html · วัดกับ develop @ b82bb4f</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
   <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
@@ -545,7 +546,7 @@ td.status-win{white-space:nowrap}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Insight (App) แล้ว Login ด้วยบัญชีที่มีสิทธิ์ใช้งาน (entitled)</li><li>ไปที่ หน้าหลัก → กด วิเคราะห์ไลฟ์ใหม่ → วาง URL ของร้านที่กำลังไลฟ์อยู่ (ร้านในลิสต์ที่กำหนด · ตรวจด้วย probe ก่อนว่าไลฟ์จริง)</li><li>Login TikTok ในเบราว์เซอร์ในตัวและ ติดตามช่อง ตามที่ระบบบังคับ แล้วกด เปิดดูไลฟ์</li><li>รอจนวิดีโอเล่นและมีคอมเมนต์ไหลเข้ามาบนแผงด้านขวา</li><li>ปล่อยแผงคอมเมนต์อยู่ที่ตำแหน่งล่างสุด สังเกต 2 นาทีว่าเลื่อนตามข้อความใหม่หรือไม่</li><li>เลื่อนแผงขึ้นไปอ่านข้อความเก่า แล้วสังเกตว่าระบบหยุด auto-scroll ให้หรือไม่ และมีตัวบอกว่ามีข้อความใหม่หรือไม่</li><li>กดกลับลงล่างสุด สังเกตว่ากลับมา auto-scroll</li><li>สังเกตความลื่นของวิดีโอและ CPU ของแอป (Activity Monitor) ตลอด 5 นาที</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>อยู่ล่างสุด: แผงเลื่อนตามข้อความใหม่ตลอด ไม่กระตุก ไม่ค้าง</li><li>เลื่อนขึ้นอ่าน: ระบบไม่ดึงกลับลงล่างเอง และมีตัวบอกจำนวนข้อความใหม่ (หรือเทียบเท่า)</li><li>วิดีโอไม่กระตุกจากโหลดคอมเมนต์ · CPU ของแอปไม่พุ่งค้าง</li><li>ไม่มีข้อความหายจาก UI เมื่อเทียบกับ DB หลังหยุด</li></ul><div class="hint" style="margin-top:6px">ประเภท: Manual — คนทำบนช่องจริง · ที่มา: live-readiness-test-cases.html (QA · 2026-09-09) · แผนคู่: live-readiness-test-plan.html · วัดกับ develop @ b82bb4f</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
   <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
@@ -590,7 +591,7 @@ td.status-win{white-space:nowrap}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Insight (App) แล้ว Login ด้วยบัญชีที่มีสิทธิ์ใช้งาน (entitled)</li><li>ไปที่ หน้าหลัก → กด วิเคราะห์ไลฟ์ใหม่ → วาง URL ของร้านที่กำลังไลฟ์อยู่ (ร้านในลิสต์ที่กำหนด · ตรวจด้วย probe ก่อนว่าไลฟ์จริง)</li><li>Login TikTok ในเบราว์เซอร์ในตัวและ ติดตามช่อง ตามที่ระบบบังคับ แล้วกด เปิดดูไลฟ์</li><li>รอจนวิดีโอเล่นและมีคอมเมนต์ไหลเข้ามาบนแผงด้านขวา</li><li>ให้บัญชีที่ 2 ส่ง gift ราคาถูกสุด 1 ชิ้น บันทึกเวลาที่กดส่ง</li><li>สังเกตแผง/ตัวนับ gift ในแอปภายใน 5 วินาที</li><li>หลังหยุด อ่าน traka.db หา event ชนิด gift ของ session พร้อม ingest_time และมูลค่าเหรียญ</li><li>เปิดรายงานหลังไลฟ์ดูว่านับ gift รวมถูก</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>gift ปรากฏใน UI ภายใน ≤ 5 วินาที พร้อมชื่อผู้ส่ง</li><li>DB มี event gift 1 แถว ชนิดถูกต้อง มูลค่าเหรียญตรง</li><li>รายงานหลังไลฟ์นับ gift = 1 (ไม่ซ้ำ ไม่หาย)</li></ul><div class="hint" style="margin-top:6px">ประเภท: Manual — คนทำบนช่องจริง · ที่มา: live-readiness-test-cases.html (QA · 2026-09-09) · แผนคู่: live-readiness-test-plan.html · วัดกับ develop @ b82bb4f</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
   <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
@@ -631,7 +632,7 @@ td.status-win{white-space:nowrap}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Insight (App) แล้ว Login ด้วยบัญชีที่มีสิทธิ์ใช้งาน (entitled)</li><li>ไปที่ หน้าหลัก → กด วิเคราะห์ไลฟ์ใหม่ → วาง URL ของร้านที่กำลังไลฟ์อยู่ (ร้านในลิสต์ที่กำหนด · ตรวจด้วย probe ก่อนว่าไลฟ์จริง)</li><li>Login TikTok ในเบราว์เซอร์ในตัวและ ติดตามช่อง ตามที่ระบบบังคับ แล้วกด เปิดดูไลฟ์</li><li>รอจนวิดีโอเล่นและมีคอมเมนต์ไหลเข้ามาบนแผงด้านขวา</li><li>ให้บัญชีที่ 2 กด like รัว 10 ครั้ง บันทึกเวลา</li><li>ให้บัญชีที่ 2 กด ติดตาม ร้าน บันทึกเวลา</li><li>ให้บัญชีที่ 2 กด แชร์ ไลฟ์ (ไปยังแอปใดก็ได้) บันทึกเวลา</li><li>สังเกตตัวนับในแอปหลังแต่ละ action และหลังหยุดตรวจ DB แยกตามชนิด event</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>like ถูกนับเพิ่ม (TikTok รวม batch ได้ จำนวนอาจไม่ตรง 10 แต่ต้อง &gt; 0 และเวลาใกล้เคียง)</li><li>follow ปรากฏเป็น event 1 รายการพร้อมชื่อบัญชีที่ 2</li><li>share ปรากฏเป็น event (ถ้า TikTok ส่งสัญญาณ) หรือถูกบันทึกว่า ยังไม่รองรับ ในรายงาน ไม่เงียบหาย</li><li>ทุก event มี ingest_time ภายใน 5 วินาทีจากเวลาที่กด</li></ul><div class="hint" style="margin-top:6px">ประเภท: Manual — คนทำบนช่องจริง · ที่มา: live-readiness-test-cases.html (QA · 2026-09-09) · แผนคู่: live-readiness-test-plan.html · วัดกับ develop @ b82bb4f</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
   <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
@@ -672,7 +673,7 @@ td.status-win{white-space:nowrap}
   <div class="sec"><h4>Test Steps</h4><ol><li>รัน node --test src/main/lib/webcast-unhandled-type-wiring.test.js src/main/lib/engagement-normalizer.test.js ที่ apps/desktop/desktop</li><li>อ่านผล</li><li>(live) เข้าร้านที่มีสินค้า pin → รอให้ร้าน pin/เปลี่ยนสินค้า → ตรวจ traka.db ว่ามี event ชนิด shopping</li><li>ตรวจ log ของแอปว่า Webcast type ที่ไม่รู้จักถูก log/นับ ไม่ถูกทิ้งเงียบ</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>unit ผ่านทั้งหมด</li><li>บน live: event shopping ถูกบันทึกเมื่อร้าน pin สินค้า</li><li>Webcast type ใหม่ที่ไม่รู้จักปรากฏใน log พร้อมชื่อ type (นับได้) ไม่หายเงียบ</li></ul><div class="hint" style="margin-top:6px">ประเภท: Automated — ใช้ script ที่มีอยู่ · ที่มา: live-readiness-test-cases.html (QA · 2026-09-09) · แผนคู่: live-readiness-test-plan.html · วัดกับ develop @ b82bb4f</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
   <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
@@ -717,7 +718,7 @@ td.status-win{white-space:nowrap}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Insight (App) แล้ว Login ด้วยบัญชีที่มีสิทธิ์ใช้งาน (entitled)</li><li>ไปที่ หน้าหลัก → กด วิเคราะห์ไลฟ์ใหม่ → วาง URL ของร้านที่กำลังไลฟ์อยู่ (ร้านในลิสต์ที่กำหนด · ตรวจด้วย probe ก่อนว่าไลฟ์จริง)</li><li>Login TikTok ในเบราว์เซอร์ในตัวและ ติดตามช่อง ตามที่ระบบบังคับ แล้วกด เปิดดูไลฟ์</li><li>รอจนวิดีโอเล่นและมีคอมเมนต์ไหลเข้ามาบนแผงด้านขวา</li><li>เปิด http://127.0.0.1:8765/health บันทึกค่า capacity ทุก 1 นาที เป็นเวลา 10 นาที</li><li>หลังหยุด นับ face_frames ของ session ใน traka.db หาร 600 วินาที = fps เฉลี่ย</li><li>อ่าน latency ต่อเฟรม (ถ้า engine รายงาน) หรือวัดจาก timestamp ระหว่างเฟรม</li><li>บันทึกรุ่นเครื่อง (CPU/GPU/RAM) คู่กับผล</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>face fps ≥ เกณฑ์ที่เคาะ (PRD บอก 30 fps · วัดจริงเคยได้ 7.6 fps · ต้องเคาะ envelope ก่อน)</li><li>inference latency p95 &lt; 200 ms ต่อเฟรม (NFR1.4)</li><li>header หน้าไลฟ์แสดง AI · {device} เป็นชื่อ device จริง ไม่ใช่ AI · null</li><li>fps ไม่ตกลงเรื่อย ๆ ตามเวลา (เทียบนาทีที่ 1 กับนาทีที่ 10)</li></ul><div class="hint" style="margin-top:6px">ประเภท: Measure — คนทำ + เก็บตัวเลข · ที่มา: live-readiness-test-cases.html (QA · 2026-09-09) · แผนคู่: live-readiness-test-plan.html · วัดกับ develop @ b82bb4f</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
   <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
@@ -758,7 +759,7 @@ td.status-win{white-space:nowrap}
   <div class="sec"><h4>Test Steps</h4><ol><li>รัน LHM_DATA_DIR=$(mktemp -d) .venv/bin/python tests/test_ti439_host_lock_pipeline.py (ไฟล์เทสย้ายมาอยู่ apps/desktop/tests/ แล้ว)</li><li>รัน LHM_DATA_DIR=$(mktemp -d) .venv/bin/python tests/test_ti440_face_capture.py</li><li>รัน .venv/bin/python tests/test_host_lock.py และ tests/test_face_track.py</li><li>อ่านผลแต่ละไฟล์</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ทุกไฟล์ขึ้น ALL PASS</li><li>เฟรมที่ไม่มีหน้า host ที่ล็อกไว้ให้อารมณ์ = ไม่มี (ไม่ใช่ neutral ปลอม)</li><li>track ของ host ไม่สลับไปคนที่ bbox ใหญ่กว่า</li></ul><div class="hint" style="margin-top:6px">ประเภท: Automated — ใช้ script ที่มีอยู่ · ที่มา: live-readiness-test-cases.html (QA · 2026-09-09) · แผนคู่: live-readiness-test-plan.html · วัดกับ develop @ b82bb4f</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
   <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
@@ -799,7 +800,7 @@ td.status-win{white-space:nowrap}
   <div class="sec"><h4>Test Steps</h4><ol><li>เตรียม runner (script ฝั่งเทส) ที่ป้อนภาพเข้า detect/classify ของ server.py ผ่าน .venv</li><li>รัน runner กับทั้งชุด บันทึก label ที่ได้และ bbox ต่อภาพ</li><li>คำนวณ precision/recall ต่อ label และ IoU ของ bbox กับ ground-truth</li><li>ตรวจว่า negative ได้ 0 bbox และ face-tiny ถูกตัดทิ้ง</li><li>map raw label → Ekman-7 ผ่าน emotionTaxonomy แล้วตรวจว่าไม่มี raw label รั่ว</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>precision/recall ต่อ label ≥ เกณฑ์ที่เคาะ (รอบแรกรายงานตัวเลขจริง)</li><li>IoU ≥ 0.5 ทุกภาพที่มีหน้าเดียว</li><li>negative: 0 bbox ทุกภาพ · face-tiny: 0 bbox</li><li>label บน HUD เป็น Ekman-7 เท่านั้น</li></ul><div class="hint" style="margin-top:6px">ประเภท: Measure — คนทำ + เก็บตัวเลข · ที่มา: live-readiness-test-cases.html (QA · 2026-09-09) · แผนคู่: live-readiness-test-plan.html · วัดกับ develop @ b82bb4f</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
   <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
@@ -840,7 +841,7 @@ td.status-win{white-space:nowrap}
   <div class="sec"><h4>Test Steps</h4><ol><li>ป้อนคลิปที่ 1 ผ่าน frame source ของ engine (โหมด replay/fixture) จนจบ → export ผลอารมณ์ต่อเฟรมเป็นไฟล์ A</li><li>รันคลิปเดิมซ้ำ → export เป็นไฟล์ B</li><li>diff A กับ B (label · confidence · bbox)</li><li>ทำซ้ำกับคลิปที่ 2 และ 3</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>A = B ทุกเฟรม (หรือต่างกันเฉพาะ confidence ทศนิยมตำแหน่งท้าย ตามที่เคาะ)</li><li>จำนวนเฟรมที่ประมวลผลเท่ากันทั้ง 2 รอบ</li><li>ถ้าไม่เท่า → เปิด finding เพราะวัดความแม่นต่อไม่ได้</li></ul><div class="hint" style="margin-top:6px">ประเภท: Measure — คนทำ + เก็บตัวเลข · ที่มา: live-readiness-test-cases.html (QA · 2026-09-09) · แผนคู่: live-readiness-test-plan.html · วัดกับ develop @ b82bb4f</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
   <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
@@ -881,7 +882,7 @@ td.status-win{white-space:nowrap}
   <div class="sec"><h4>Test Steps</h4><ol><li>เริ่มไลฟ์จากบัญชี QA โดยแชร์จอ/กล้องตามที่ผู้ใช้จริงทำ แล้วเปิด TAKRA Insight monitor ไลฟ์ตัวเอง</li><li>ให้ HUD (คะแนน Live Health · อารมณ์ · alert) ปรากฏบนจอ host ชัดเจน</li><li>บัญชีที่ 2 ดูไลฟ์บนมือถือ 5 นาที บันทึกหน้าจอ</li><li>ลองย้าย HUD ไปจอที่ 2 (multi-monitor) แล้วดูซ้ำ</li><li>ตรวจวิดีโอที่บันทึกจากมือถือทีละช่วง</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ผู้ชมไม่เห็น HUD ตัวเลข หรือ alert ใด ๆ ในสตรีม (FR25)</li><li>ย้ายจอแล้วยังไม่เห็น</li><li>ถ้าเห็นแม้แต่บางส่วน → Bug P0</li></ul><div class="hint" style="margin-top:6px">ประเภท: Manual — คนทำบนช่องจริง · ที่มา: live-readiness-test-cases.html (QA · 2026-09-09) · แผนคู่: live-readiness-test-plan.html · วัดกับ develop @ b82bb4f</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
   <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
@@ -926,7 +927,7 @@ td.status-win{white-space:nowrap}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Insight (App) แล้ว Login ด้วยบัญชีที่มีสิทธิ์ใช้งาน (entitled)</li><li>ไปที่ หน้าหลัก → กด วิเคราะห์ไลฟ์ใหม่ → วาง URL ของร้านที่กำลังไลฟ์อยู่ (ร้านในลิสต์ที่กำหนด · ตรวจด้วย probe ก่อนว่าไลฟ์จริง)</li><li>Login TikTok ในเบราว์เซอร์ในตัวและ ติดตามช่อง ตามที่ระบบบังคับ แล้วกด เปิดดูไลฟ์</li><li>รอจนวิดีโอเล่นและมีคอมเมนต์ไหลเข้ามาบนแผงด้านขวา</li><li>ให้บัญชีที่ 2 พิมพ์ แพงไป / ลดได้ไหม / แพงจัง ติดกัน 3 ข้อความภายใน 30 วินาที บันทึกเวลาข้อความสุดท้าย</li><li>สังเกตว่า alert ราคาปรากฏบน HUD เมื่อไร บันทึกเวลา</li><li>ตรวจ DB/log ว่า alert ถูกบันทึกพร้อม timestamp</li><li>ทำซ้ำ 3 รอบห่างกันรอบละ 3 นาที</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>alert ปรากฏภายใน p95 &lt; 5 วินาที จากข้อความที่ครบเกณฑ์ (NFR1.1)</li><li>alert บอกเหตุผลอ่านเข้าใจ (เช่น มีคอมเมนต์เรื่องราคา 3 ข้อความ)</li><li>ไม่ขึ้น alert ซ้ำสำหรับ cluster เดียวกัน</li></ul><div class="hint" style="margin-top:6px">ประเภท: Measure — คนทำ + เก็บตัวเลข · ที่มา: live-readiness-test-cases.html (QA · 2026-09-09) · แผนคู่: live-readiness-test-plan.html · วัดกับ develop @ b82bb4f</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
   <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
@@ -967,7 +968,7 @@ td.status-win{white-space:nowrap}
   <div class="sec"><h4>Test Steps</h4><ol><li>เมื่อ alert ที่ 1 ขึ้น กด เข้าใจแล้ว (ack — ในคิวแจ้งเตือนขึ้นสถานะ รับทราบ) สังเกตว่า alert หายและไม่กลับมา</li><li>เมื่อ alert ที่ 2 ขึ้น กด เลื่อน (snooze) สังเกตว่าหายไปและกลับมาหลังครบเวลา snooze</li><li>เมื่อ alert ที่ 3 ขึ้น กด ปิดชนิดนี้ (suppress) แล้วกระตุ้น cluster เดิมอีกครั้ง</li><li>หลังหยุด อ่านตาราง alert disposition ใน traka.db</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ack: หายทันที ไม่กลับมา · บันทึก disposition = ack</li><li>snooze: กลับมาหลังครบเวลาที่กำหนด · บันทึก snooze พร้อมเวลา</li><li>suppress: alert ชนิดเดิมไม่ขึ้นอีกใน session นี้ · บันทึก suppress</li><li>ทุก action ใช้คลิกเดียว (FR26)</li></ul><div class="hint" style="margin-top:6px">ประเภท: Manual — คนทำบนช่องจริง · ที่มา: live-readiness-test-cases.html (QA · 2026-09-09) · แผนคู่: live-readiness-test-plan.html · วัดกับ develop @ b82bb4f</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
   <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
@@ -1008,7 +1009,7 @@ td.status-win{white-space:nowrap}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Insight (App) แล้ว Login ด้วยบัญชีที่มีสิทธิ์ใช้งาน (entitled)</li><li>ไปที่ หน้าหลัก → กด วิเคราะห์ไลฟ์ใหม่ → วาง URL ของร้านที่กำลังไลฟ์อยู่ (ร้านในลิสต์ที่กำหนด · ตรวจด้วย probe ก่อนว่าไลฟ์จริง)</li><li>Login TikTok ในเบราว์เซอร์ในตัวและ ติดตามช่อง ตามที่ระบบบังคับ แล้วกด เปิดดูไลฟ์</li><li>รอจนวิดีโอเล่นและมีคอมเมนต์ไหลเข้ามาบนแผงด้านขวา</li><li>ปล่อย monitor 10 นาทีโดยไม่ให้บัญชีที่ 2 พิมพ์อะไร</li><li>นับ alert ที่ขึ้นทั้งหมด พร้อมข้อความที่กระตุ้น</li><li>สำหรับแต่ละ alert ตัดสินว่าสมเหตุสมผลหรือไม่ (มีคอมเมนต์ที่ตรงชนิดจริง)</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>alert ที่ไม่มีคอมเมนต์รองรับ = 0</li><li>alert ที่ขึ้นทุกตัวชี้ไปที่คอมเมนต์จริงที่เข้าเกณฑ์</li><li>ถ้ามี false alarm → บันทึกข้อความและส่ง DEV ปรับ threshold</li></ul><div class="hint" style="margin-top:6px">ประเภท: Manual — คนทำบนช่องจริง · ที่มา: live-readiness-test-cases.html (QA · 2026-09-09) · แผนคู่: live-readiness-test-plan.html · วัดกับ develop @ b82bb4f</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
   <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
@@ -1053,7 +1054,7 @@ td.status-win{white-space:nowrap}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Insight (App) แล้ว Login ด้วยบัญชีที่มีสิทธิ์ใช้งาน (entitled)</li><li>ไปที่ หน้าหลัก → กด วิเคราะห์ไลฟ์ใหม่ → วาง URL ของร้านที่กำลังไลฟ์อยู่ (ร้านในลิสต์ที่กำหนด · ตรวจด้วย probe ก่อนว่าไลฟ์จริง)</li><li>Login TikTok ในเบราว์เซอร์ในตัวและ ติดตามช่อง ตามที่ระบบบังคับ แล้วกด เปิดดูไลฟ์</li><li>รอจนวิดีโอเล่นและมีคอมเมนต์ไหลเข้ามาบนแผงด้านขวา</li><li>monitor ไป 3 นาที บันทึกจำนวนคอมเมนต์ใน DB (N1)</li><li>ปิด Wi-Fi ของเครื่อง บันทึกเวลา แล้วสังเกตหน้าจอภายใน 30 วินาที</li><li>รอ 60 วินาที แล้วเปิด Wi-Fi บันทึกเวลา</li><li>สังเกตว่าวิดีโอและคอมเมนต์กลับมาไหลเมื่อไร</li><li>monitor ต่ออีก 3 นาที กด หยุดติดตาม แล้วอ่าน DB: N2 และตรวจว่าแถวก่อนเน็ตหลุด (N1) ยังอยู่ครบ</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ภายใน 30 วินาทีหลังเน็ตหลุด มีแบนเนอร์บอกว่า ขาดการเชื่อมต่อ (ไม่เงียบ)</li><li>หลังเน็ตกลับ วิดีโอ+คอมเมนต์ไหลต่อเองภายใน 30 วินาที โดยไม่ต้องกดอะไร</li><li>N1 แถวเดิมยังอยู่ครบ · session เดิมไม่ถูกปิดหรือสร้างใหม่ซ้อน</li><li>finalize สำเร็จ</li></ul><div class="hint" style="margin-top:6px">ประเภท: Manual — คนทำบนช่องจริง · ที่มา: live-readiness-test-cases.html (QA · 2026-09-09) · แผนคู่: live-readiness-test-plan.html · วัดกับ develop @ b82bb4f</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
   <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
@@ -1094,7 +1095,7 @@ td.status-win{white-space:nowrap}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Insight (App) แล้ว Login ด้วยบัญชีที่มีสิทธิ์ใช้งาน (entitled)</li><li>ไปที่ หน้าหลัก → กด วิเคราะห์ไลฟ์ใหม่ → วาง URL ของร้านที่กำลังไลฟ์อยู่ (ร้านในลิสต์ที่กำหนด · ตรวจด้วย probe ก่อนว่าไลฟ์จริง)</li><li>Login TikTok ในเบราว์เซอร์ในตัวและ ติดตามช่อง ตามที่ระบบบังคับ แล้วกด เปิดดูไลฟ์</li><li>รอจนวิดีโอเล่นและมีคอมเมนต์ไหลเข้ามาบนแผงด้านขวา</li><li>monitor ไป 3 นาที</li><li>เปิด DevTools ของ webview (หรือเมนูล้าง cookie ที่แอปมี) แล้วลบ cookie sessionid ของ tiktok.com บันทึกเวลา</li><li>สังเกตว่าวิดีโอยังเล่นอยู่ และคอมเมนต์หยุดไหลหรือไม่</li><li>จับเวลาจนกว่าจะมีแบนเนอร์/ข้อความแจ้งเรื่องคอมเมนต์</li><li>ทำตามที่แบนเนอร์แนะนำ (Login ใหม่) แล้วสังเกตว่าคอมเมนต์กลับมา</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>แบนเนอร์ ยังไม่ได้รับคอมเมนต์จาก TikTok — ลองตรวจว่ายังล็อกอิน TikTok อยู่ในหน้าไลฟ์ … ขึ้นภายใน ≤ 30 วินาที หลังคอมเมนต์หยุด (ในหน้าหลายไลฟ์ เซสชันนั้นติดป้าย ไม่ได้รับคอมเมนต์)</li><li>แบนเนอร์บอกวิธีแก้ พร้อมปุ่ม เข้าสู่ระบบ TikTok ไม่ใช่แค่บอกว่าผิดพลาด · ห้องเงียบที่ท่อคอมเมนต์ยังต่ออยู่ ต้องไม่ขึ้นแบนเนอร์นี้ (TI-383 แก้แล้ว 22 ก.ย.)</li><li>หลัง Login ใหม่ คอมเมนต์ไหลต่อใน session เดิม</li><li>รายงานหลังไลฟ์ระบุช่วงที่ขาดคอมเมนต์ (หรืออย่างน้อยไม่แสดงว่าปกติ)</li></ul><div class="hint" style="margin-top:6px">ประเภท: Manual — คนทำบนช่องจริง · ที่มา: live-readiness-test-cases.html (QA · 2026-09-09) · แผนคู่: live-readiness-test-plan.html · วัดกับ develop @ b82bb4f</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
   <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
@@ -1135,7 +1136,7 @@ td.status-win{white-space:nowrap}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Insight (App) แล้ว Login ด้วยบัญชีที่มีสิทธิ์ใช้งาน (entitled)</li><li>ไปที่ หน้าหลัก → กด วิเคราะห์ไลฟ์ใหม่ → วาง URL ของร้านที่กำลังไลฟ์อยู่ (ร้านในลิสต์ที่กำหนด · ตรวจด้วย probe ก่อนว่าไลฟ์จริง)</li><li>Login TikTok ในเบราว์เซอร์ในตัวและ ติดตามช่อง ตามที่ระบบบังคับ แล้วกด เปิดดูไลฟ์</li><li>รอจนวิดีโอเล่นและมีคอมเมนต์ไหลเข้ามาบนแผงด้านขวา</li><li>monitor ไป 2 นาที</li><li>ในเบราว์เซอร์ในตัว กดไปหน้า For You หรือหน้าแรก TikTok (ออกจากห้องไลฟ์) บันทึกเวลา</li><li>สังเกตสถานะ session บนแอป (REC · ตัวนับ · แบนเนอร์) ภายใน 30 วินาที</li><li>ไปที่หน้า เซสชัน ดูว่า session นี้ปิดแล้วหรือยังค้าง</li><li>ตรวจ ended_at ใน traka.db และ log heartbeat</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ระบบตรวจพบว่าออกจากห้อง ขึ้นแบนเนอร์ ออกจากหน้าไลฟ์แล้ว ระบบจึงยังไม่ได้เก็บคอมเมนต์ในช่วงนี้ — กลับไปหน้าไลฟ์เพื่อเก็บต่อ ถ้าไม่กลับภายใน 2 นาที ระบบจะหยุดและบันทึกเซสชันให้เอง (พร้อมปุ่ม กลับไปหน้าไลฟ์) และถ้าไม่กลับ ระบบหยุด session เองภายใน ~2 นาที</li><li>ended_at ถูกเขียน · ไม่มี heartbeat ค้างใน log</li><li>ผู้ใช้กลับเข้าห้องเดิมได้และเริ่ม session ใหม่ได้ปกติ</li><li>ไม่มี session ค้างสถานะกำลังบันทึกในหน้า เซสชัน</li></ul><div class="hint" style="margin-top:6px">ประเภท: Manual — คนทำบนช่องจริง · ที่มา: live-readiness-test-cases.html (QA · 2026-09-09) · แผนคู่: live-readiness-test-plan.html · วัดกับ develop @ b82bb4f</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
   <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
@@ -1176,7 +1177,7 @@ td.status-win{white-space:nowrap}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Insight (App) แล้ว Login ด้วยบัญชีที่มีสิทธิ์ใช้งาน (entitled)</li><li>ไปที่ หน้าหลัก → กด วิเคราะห์ไลฟ์ใหม่ → วาง URL ของร้านที่กำลังไลฟ์อยู่ (ร้านในลิสต์ที่กำหนด · ตรวจด้วย probe ก่อนว่าไลฟ์จริง)</li><li>Login TikTok ในเบราว์เซอร์ในตัวและ ติดตามช่อง ตามที่ระบบบังคับ แล้วกด เปิดดูไลฟ์</li><li>รอจนวิดีโอเล่นและมีคอมเมนต์ไหลเข้ามาบนแผงด้านขวา</li><li>หา PID ของ engine: lsof -nP -iTCP:8765 -sTCP:LISTEN</li><li>monitor ไป 2 นาที แล้วรัน kill -9 &lt;PID&gt; บันทึกเวลา</li><li>สังเกตภายใน 10 วินาที: วิดีโอ คอมเมนต์ แบนเนอร์สถานะ engine ค่า AI · บน header</li><li>รอ 60 วินาที สังเกตว่า engine ถูก spawn ใหม่และแบนเนอร์หายหรือไม่ (ตรวจ /health)</li><li>หลังหยุด ตรวจว่า face frames หลัง engine กลับมาถูกบันทึกต่อ และ engagement ระหว่างที่ engine ตายไม่หาย</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>วิดีโอและคอมเมนต์บน UI ไหลต่อ (NFR2.3 desktop ต้องทำงานเมื่อ backend ไม่พร้อม)</li><li>แบนเนอร์ ระบบวิเคราะห์บนเครื่องหยุดทำงานกะทันหัน กำลังเริ่มให้ใหม่ ขึ้นภายใน 10 วินาที · header ไม่แสดง AI · null (ขึ้น AI offline แทน)</li><li>engine กลับมาเองภายใน 60 วินาที ไม่ต้องรีสตาร์ตแอป และแบนเนอร์หายเองเมื่อ engine ตัวใหม่ขึ้น (TI-519 แก้แล้ว 24 ก.ย.)</li><li>engagement ที่เกิดระหว่าง engine ตายถูก buffer และเขียนลง DB หลังกลับมา (0 แถวหาย)</li></ul><div class="hint" style="margin-top:6px">ประเภท: Manual — คนทำบนช่องจริง · ที่มา: live-readiness-test-cases.html (QA · 2026-09-09) · แผนคู่: live-readiness-test-plan.html · วัดกับ develop @ b82bb4f</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
   <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
@@ -1217,7 +1218,7 @@ td.status-win{white-space:nowrap}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Insight (App) แล้ว Login ด้วยบัญชีที่มีสิทธิ์ใช้งาน (entitled)</li><li>ไปที่ หน้าหลัก → กด วิเคราะห์ไลฟ์ใหม่ → วาง URL ของร้านที่กำลังไลฟ์อยู่ (ร้านในลิสต์ที่กำหนด · ตรวจด้วย probe ก่อนว่าไลฟ์จริง)</li><li>Login TikTok ในเบราว์เซอร์ในตัวและ ติดตามช่อง ตามที่ระบบบังคับ แล้วกด เปิดดูไลฟ์</li><li>รอจนวิดีโอเล่นและมีคอมเมนต์ไหลเข้ามาบนแผงด้านขวา</li><li>monitor จนกว่าร้านจะกดจบไลฟ์ บันทึกเวลาที่ TikTok แสดงว่าไลฟ์จบ</li><li>สังเกตแอปภายใน 60 วินาที: ข้อความ สถานะ REC ตัวนับ</li><li>ตรวจหน้า เซสชัน และ ended_at</li><li>เปิดรายงานหลังไลฟ์</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>แอปแสดงว่า ไลฟ์จบแล้ว ภายใน 60 วินาที และหยุด session เอง</li><li>ended_at ถูกเขียน · รายงานเปิดได้ ตัวเลขครบ</li><li>ไม่มี spinner ค้างหรือ session สถานะกำลังบันทึกค้าง</li></ul><div class="hint" style="margin-top:6px">ประเภท: Manual — คนทำบนช่องจริง · ที่มา: live-readiness-test-cases.html (QA · 2026-09-09) · แผนคู่: live-readiness-test-plan.html · วัดกับ develop @ b82bb4f</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
   <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
@@ -1258,7 +1259,7 @@ td.status-win{white-space:nowrap}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Insight (App) แล้ว Login ด้วยบัญชีที่มีสิทธิ์ใช้งาน (entitled)</li><li>ไปที่ หน้าหลัก → กด วิเคราะห์ไลฟ์ใหม่ → วาง URL ของร้านที่กำลังไลฟ์อยู่ (ร้านในลิสต์ที่กำหนด · ตรวจด้วย probe ก่อนว่าไลฟ์จริง)</li><li>Login TikTok ในเบราว์เซอร์ในตัวและ ติดตามช่อง ตามที่ระบบบังคับ แล้วกด เปิดดูไลฟ์</li><li>รอจนวิดีโอเล่นและมีคอมเมนต์ไหลเข้ามาบนแผงด้านขวา</li><li>monitor ไป 2 นาที แล้วกด ⌘Q บันทึกเวลา</li><li>จับเวลาจนหน้าต่างปิดและ process หายจาก Activity Monitor (รวม engine)</li><li>รัน lsof -nP -iTCP:8765 ตรวจว่าไม่มี process ค้าง</li><li>เปิดแอปใหม่ ไปที่หน้า เซสชัน ดู session ล่าสุด</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>แอปปิดสนิทภายใน ≤ 10 วินาที (เคยพบ 90 วินาทีใน r013)</li><li>ไม่มี engine หรือ ffmpeg ค้างหลังปิด</li><li>session ล่าสุดมี ended_at และเปิดรายงานได้ ไม่ค้างสถานะกำลังบันทึก</li></ul><div class="hint" style="margin-top:6px">ประเภท: Manual — คนทำบนช่องจริง · ที่มา: live-readiness-test-cases.html (QA · 2026-09-09) · แผนคู่: live-readiness-test-plan.html · วัดกับ develop @ b82bb4f</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
   <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
@@ -1303,7 +1304,7 @@ td.status-win{white-space:nowrap}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Insight (App) แล้ว Login ด้วยบัญชีที่มีสิทธิ์ใช้งาน (entitled)</li><li>ไปที่ หน้าหลัก → กด วิเคราะห์ไลฟ์ใหม่ → วาง URL ของร้านที่กำลังไลฟ์อยู่ (ร้านในลิสต์ที่กำหนด · ตรวจด้วย probe ก่อนว่าไลฟ์จริง)</li><li>Login TikTok ในเบราว์เซอร์ในตัวและ ติดตามช่อง ตามที่ระบบบังคับ แล้วกด เปิดดูไลฟ์</li><li>รอจนวิดีโอเล่นและมีคอมเมนต์ไหลเข้ามาบนแผงด้านขวา</li><li>เริ่ม sampler พร้อมเวลาเริ่ม monitor</li><li>ปล่อย 120 นาที ไม่แตะเครื่อง (ยกเว้นดูว่ายังไหล)</li><li>ทุก 30 นาที บันทึก screenshot ของแอปและจำนวนคอมเมนต์</li><li>กด หยุดติดตาม แล้วเก็บ CSV ของ sampler และ FINAL จาก spec</li><li>วาดกราฟ RAM / CPU / GPU / fps ตามเวลา</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>RSS ของ engine + แอป &lt; 2 GB peak ตลอด 120 นาที (NFR1.7)</li><li>RAM ที่นาที 120 ไม่เกิน RAM ที่นาที 30 บวก 10 % (ไม่มี leak)</li><li>fps และ comment latency ที่ชั่วโมงที่ 2 ไม่แย่กว่าชั่วโมงแรกอย่างมีนัย</li><li>ไม่มี crash แบนเนอร์ค้าง หรือ session ขาดโดยไม่มีสาเหตุภายนอก</li></ul><div class="hint" style="margin-top:6px">ประเภท: Measure — คนทำ + เก็บตัวเลข · ที่มา: live-readiness-test-cases.html (QA · 2026-09-09) · แผนคู่: live-readiness-test-plan.html · วัดกับ develop @ b82bb4f</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
   <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
@@ -1344,7 +1345,7 @@ td.status-win{white-space:nowrap}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดร้าน A ตามขั้นตอนเริ่ม monitor</li><li>เปิดร้าน B ใน session ที่ 2 (ตามที่ UI รองรับ)</li><li>ปล่อย 30 นาที สังเกตว่าทั้งสองห้องมีวิดีโอและคอมเมนต์ไหล</li><li>ให้บัญชีที่ 2 พิมพ์ sentinel ที่ร้าน A เท่านั้น 3 ข้อความ</li><li>กด หยุดติดตาม ทั้งสองเซสชัน แล้วตรวจ DB ของแต่ละ session · จากนั้นกด ⌘Q จับเวลา</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>sentinel ของร้าน A อยู่เฉพาะ session A (0 แถวใน B)</li><li>ทั้ง 2 session มี face frames และ engagement ต่อเนื่อง ไม่มีห้องไหน frame = 0</li><li>RAM รวม &lt; 2 GB ต่อ session (NFR1.7)</li><li>⌘Q ปิดสนิทภายใน ≤ 10 วินาที</li></ul><div class="hint" style="margin-top:6px">ประเภท: Measure — คนทำ + เก็บตัวเลข · ที่มา: live-readiness-test-cases.html (QA · 2026-09-09) · แผนคู่: live-readiness-test-plan.html · วัดกับ develop @ b82bb4f</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
   <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
@@ -1385,7 +1386,7 @@ td.status-win{white-space:nowrap}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Insight (App) แล้ว Login ด้วยบัญชีที่มีสิทธิ์ใช้งาน (entitled)</li><li>ไปที่ หน้าหลัก → กด วิเคราะห์ไลฟ์ใหม่ → วาง URL ของร้านที่กำลังไลฟ์อยู่ (ร้านในลิสต์ที่กำหนด · ตรวจด้วย probe ก่อนว่าไลฟ์จริง)</li><li>Login TikTok ในเบราว์เซอร์ในตัวและ ติดตามช่อง ตามที่ระบบบังคับ แล้วกด เปิดดูไลฟ์</li><li>รอจนวิดีโอเล่นและมีคอมเมนต์ไหลเข้ามาบนแผงด้านขวา</li><li>รัน mem_floor_probe.py ตามค่า default (--stop-available-mb 1500) เพื่อค่อย ๆ จอง RAM</li><li>สังเกต /health capacity และค่า governor บนแอปทุก 1 นาที</li><li>บันทึกจุดที่ fps เริ่มลด และจุดที่ probe หยุด</li><li>หลัง probe คืน RAM สังเกตว่า fps กลับมา</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>governor ลด fps/โหลดเองก่อนถึง floor · แอปไม่ค้าง ไม่ crash</li><li>probe หยุดที่เงื่อนไขแรก (knee หรือ floor) ไม่จองจนเครื่องแฮงก์</li><li>หลังคืน RAM ระบบกลับสู่ค่าปกติเองภายใน 2 นาที</li></ul><div class="hint" style="margin-top:6px">ประเภท: Measure — คนทำ + เก็บตัวเลข · ที่มา: live-readiness-test-cases.html (QA · 2026-09-09) · แผนคู่: live-readiness-test-plan.html · วัดกับ develop @ b82bb4f</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
   <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
@@ -1426,7 +1427,7 @@ td.status-win{white-space:nowrap}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิด TAKRA Insight (App) แล้ว Login ด้วยบัญชีที่มีสิทธิ์ใช้งาน (entitled)</li><li>ไปที่ หน้าหลัก → กด วิเคราะห์ไลฟ์ใหม่ → วาง URL ของร้านที่กำลังไลฟ์อยู่ (ร้านในลิสต์ที่กำหนด · ตรวจด้วย probe ก่อนว่าไลฟ์จริง)</li><li>Login TikTok ในเบราว์เซอร์ในตัวและ ติดตามช่อง ตามที่ระบบบังคับ แล้วกด เปิดดูไลฟ์</li><li>รอจนวิดีโอเล่นและมีคอมเมนต์ไหลเข้ามาบนแผงด้านขวา</li><li>เปิด OBS ให้ encode อยู่ (preview หรือ record) และเปิด Chrome 20 แท็บที่มีวิดีโอเล่น</li><li>ให้บัญชีที่ 2 ส่ง sentinel 5 ข้อความห่างกัน 1 นาที</li><li>อ่าน latency จาก ingest_time เทียบเวลาส่ง</li><li>บันทึก CPU/GPU รวมของเครื่องระหว่างทดสอบ</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>sentinel 5/5 · latency p95 &lt; 2 วินาที แม้เครื่องยุ่ง</li><li>วิดีโอในแอปยังเล่น ไม่ค้าง</li><li>ถ้า governor ลด fps ให้ระบุในรายงาน (ยอมรับได้ · คอมเมนต์ต้องไม่ช้า)</li></ul><div class="hint" style="margin-top:6px">ประเภท: Measure — คนทำ + เก็บตัวเลข · ที่มา: live-readiness-test-cases.html (QA · 2026-09-09) · แผนคู่: live-readiness-test-plan.html · วัดกับ develop @ b82bb4f</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
   <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
@@ -1471,7 +1472,7 @@ td.status-win{white-space:nowrap}
   <div class="sec"><h4>Test Steps</h4><ol><li>ขณะ monitor กด หยุดติดตาม (ยืนยัน หยุดติดตามและบันทึกเซสชันนี้?) บันทึกเวลา</li><li>จับเวลาจนแอปพาไปหน้ารายงาน/แสดงว่าสรุปเสร็จ</li><li>ตรวจ ended_at ของ session ใน traka.db</li><li>เปิดหน้า เซสชัน → เลือก session นี้ → ดูว่ารายงานโหลดครบทุกส่วน (สรุป · อารมณ์ · คอมเมนต์ · KPI)</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>finalize สำเร็จภายใน ≤ 60 วินาที · ended_at ถูกเขียน</li><li>รายงานเปิดได้ครบทุกส่วน ไม่มีส่วนไหนแสดง null/undefined/—ที่ควรมีค่า</li><li>ทำซ้ำ 3 session สำเร็จ 3/3</li></ul><div class="hint" style="margin-top:6px">ประเภท: Measure — คนทำ + เก็บตัวเลข · ที่มา: live-readiness-test-cases.html (QA · 2026-09-09) · แผนคู่: live-readiness-test-plan.html · วัดกับ develop @ b82bb4f</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
   <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
@@ -1512,7 +1513,7 @@ td.status-win{white-space:nowrap}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดรายงานของ session นั้น จดค่า คอมเมนต์รวม · like · ผู้ชมสูงสุด · gift</li><li>อ่านค่าเดียวกันจาก traka.db (นับแถวตามชนิด event)</li><li>เทียบกับ N_seen และตัวเลขที่ TikTok แสดงตอนไลฟ์ (screenshot)</li><li>ทำตาราง 3 คอลัมน์: รายงาน · DB · หน้าจอ</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>รายงาน = DB ทุกค่า (ต่างได้เฉพาะที่มีนิยามชัด เช่น history ไม่นับ)</li><li>รายงาน ≈ หน้าจอ ภายใน ±1 % สำหรับคอมเมนต์ · like ต่างได้ตาม batch ของ TikTok แต่ต้องไม่เกินจริง 2 เท่า (อาการ TI-381)</li><li>ค่าที่ต่างถูกอธิบายได้ ไม่ใช่ปล่อยผ่าน</li></ul><div class="hint" style="margin-top:6px">ประเภท: Manual — คนทำบนช่องจริง · ที่มา: live-readiness-test-cases.html (QA · 2026-09-09) · แผนคู่: live-readiness-test-plan.html · วัดกับ develop @ b82bb4f</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
   <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
@@ -1553,7 +1554,7 @@ td.status-win{white-space:nowrap}
   <div class="sec"><h4>Test Steps</h4><ol><li>รัน LHM_DATA_DIR=$(mktemp -d) .venv/bin/python tests/test_ti313_finalize_no_player.py (ไฟล์เทสย้ายมาอยู่ apps/desktop/tests/ แล้ว)</li><li>รัน LHM_DATA_DIR=$(mktemp -d) .venv/bin/python tests/test_sessions_list.py</li><li>อ่านผล</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ทั้งสองไฟล์ ALL PASS</li><li>session ที่ไม่มี player ยังได้ ended_at และปรากฏในรายการ session</li></ul><div class="hint" style="margin-top:6px">ประเภท: Automated — ใช้ script ที่มีอยู่ · ที่มา: live-readiness-test-cases.html (QA · 2026-09-09) · แผนคู่: live-readiness-test-plan.html · วัดกับ develop @ b82bb4f</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
   <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
@@ -1599,7 +1600,7 @@ td.status-win{white-space:nowrap}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT ที่เป็น "เจ้าของ" ของพื้นที่ทำงานทดสอบ (บัญชีที่อยู่ 2 พื้นที่ทำงาน: เป็นเจ้าของที่ A และเป็นโฮสต์ที่ B)</li><li>กดเมนู "แดชบอร์ดแบรนด์" ที่แถบเมนูซ้าย แล้วรอให้ตัวเลขโหลดเสร็จ ในพื้นที่ทำงาน A แล้วจดตัวเลขการ์ด "ไลฟ์"</li><li>กดรูปโปรไฟล์ แล้วสลับไปพื้นที่ทำงาน B ในหัวข้อ "พื้นที่ทำงาน"</li><li>ดูแถบเมนูซ้าย แล้วสลับกลับไปพื้นที่ทำงาน A และเปิด "แดชบอร์ดแบรนด์" อีกครั้ง</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ในพื้นที่ทำงาน B ไม่มีเมนู "แดชบอร์ดแบรนด์" (เป็นโฮสต์)</li><li>กลับมาพื้นที่ทำงาน A แล้วตัวเลขเท่ากับที่จดไว้ ไม่มีไลฟ์หรือโฮสต์ของพื้นที่ทำงาน B ปนมา</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 5 · Story 5.0b (never raw rows of another tenant) · Story 9.1 · 9.3 (role per workspace) · ผลรอบก่อน: FAIL — 🍎 Mac=FAIL · 🪟 Win=PASS (รายงาน Dashboard · 2026/09)</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
   <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
@@ -1636,12 +1637,13 @@ td.status-win{white-space:nowrap}
 <tr class="detail"><td colspan="8"><div class="card">
   <div class="h-title">การ์ด "ผู้ชมรวม" เป็นผลรวมผู้ชมพร้อมกันสูงสุดของแต่ละไลฟ์ และคำอธิบายบอกชัด</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Data</b> <span class="hint">(ค่าคงอยู่ · ข้อมูลเดิมไม่หาย · ซิงก์ข้ามเครื่อง)</span> · จุดที่เคย FAIL รอบก่อน — Dashboard · Reports</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #d97706;background:rgba(217,119,6,.07)">📌 <b>หมายเหตุ:</b> TI-524 แก้แล้ว (25 ก.ย.): ตัวเลขย่อแบบตัดเศษไม่ปัดขึ้น (25,730 → "25.7k") และชี้เมาส์เห็นค่าเต็มทุกจุดที่ย่อ รวมบรรทัดรองของการ์ดและ "ผู้ชมสูงสุด" ในไลฟ์ล่าสุด</div></div>
   <div class="sec"><h4>Precondition</h4><ul><li>พื้นที่ทำงานทดสอบมีไลฟ์ที่อัปโหลดขึ้นคลาวด์แล้วใน 7 วันล่าสุด อย่างน้อย 6 ไลฟ์ จากโฮสต์ 2 คนขึ้นไป</li></ul></div>
   <div class="sec"><h4>Test Data</h4><ul><li>บัญชีที่ใช้ (UAT): qa.owner@realfactory.co.th · บทบาท "เจ้าของ"</li><li>บัญชีประกอบ: qa.hostb@realfactory.co.th — โฮสต์ที่ยังไม่ตั้ง key (เตรียมไว้เป็นข้อมูลเปรียบเทียบ ไม่ต้องล็อกอิน)</li></ul></div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT ที่เป็น "เจ้าของ" ของพื้นที่ทำงานทดสอบ</li><li>กดเมนู "แดชบอร์ดแบรนด์" ที่แถบเมนูซ้าย แล้วรอให้ตัวเลขโหลดเสร็จ</li><li>ชี้เมาส์ที่ไอคอนข้อมูลข้างชื่อการ์ด "ผู้ชมรวม"</li><li>เทียบตัวเลขกับ "ผู้ชมสูงสุด" ของแต่ละไลฟ์ในการ์ด "ไลฟ์ล่าสุด" และตารางไลฟ์ทดสอบ</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>คำอธิบายขึ้นว่า "รวมจำนวนคนดูพร้อมกันสูงสุดของแต่ละไลฟ์ในช่วงนี้ — ไม่ใช่จำนวนคนดูที่ไม่ซ้ำกัน"</li><li>ตัวเลขการ์ดเท่ากับผลรวมผู้ชมสูงสุดของทุกไลฟ์ในช่วงนี้ · บรรทัดใต้ตัวเลข "สูงสุดต่อไลฟ์ … · เฉลี่ย …" ตรงกับข้อมูลทดสอบ</li><li>ตัวเลขตั้งแต่ 1,000 ขึ้นไปแสดงแบบย่อ (เช่น "12.3k") และชี้เมาส์ที่ตัวเลขจะเห็นค่าเต็ม</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 5 · Story 5.1 · FR86 (Total Viewers) · ผลรอบก่อน: FAIL — 🍎 Mac=PASS · 🪟 Win=FAIL (รายงาน Dashboard · 2026/09)</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
   <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
@@ -1678,12 +1680,13 @@ td.status-win{white-space:nowrap}
 <tr class="detail"><td colspan="8"><div class="card">
   <div class="h-title">ตัวเลขในประโยค AI ตรงกับการ์ดตัวชี้วัดด้านล่าง</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Data</b> <span class="hint">(ค่าคงอยู่ · ข้อมูลเดิมไม่หาย · ซิงก์ข้ามเครื่อง)</span> · จุดที่เคย FAIL รอบก่อน — Dashboard · Reports</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #d97706;background:rgba(217,119,6,.07)">📌 <b>หมายเหตุ:</b> TI-523 แก้แล้ว (26 ก.ย.): แถบมีบรรทัด "เขียนเมื่อ &lt;เวลา&gt;" · ถ้าตัวเลขช่วงนี้เปลี่ยนหลังเขียน แถบขึ้น "ข้อมูลของช่วงนี้เปลี่ยนไปหลังจากเขียนสรุปนี้" พร้อมปุ่ม "สรุปใหม่" · ถ้าประโยคใหม่กว่าการ์ด ขึ้น "สรุปนี้ใช้ตัวเลขที่ใหม่กว่าการ์ด" พร้อมปุ่ม "รีเฟรชการ์ด" — ขึ้นป้ายเหล่านี้ไม่นับเป็น FAIL ตัวเลขไม่ตรงเงียบๆ เท่านั้นที่ FAIL</div></div>
   <div class="sec"><h4>Precondition</h4><ul><li>พื้นที่ทำงานทดสอบมีไลฟ์ที่อัปโหลดขึ้นคลาวด์แล้วใน 7 วันล่าสุด อย่างน้อย 6 ไลฟ์ จากโฮสต์ 2 คนขึ้นไป</li><li>บัญชีนี้ตั้งค่าผู้ให้บริการ AI ครบแล้ว (บันทึก key · เลือกโมเดล · ยอมรับข้อตกลงการส่งข้อมูลเวอร์ชันล่าสุด)</li></ul></div>
   <div class="sec"><h4>Test Data</h4><ul><li>บัญชีที่ใช้ (UAT): qa.owner@realfactory.co.th · บทบาท "เจ้าของ"</li><li>บัญชีประกอบ: qa.hostb@realfactory.co.th — โฮสต์ที่ยังไม่ตั้ง key (เตรียมไว้เป็นข้อมูลเปรียบเทียบ ไม่ต้องล็อกอิน)</li></ul></div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT ที่เป็น "เจ้าของ" ของพื้นที่ทำงานทดสอบ</li><li>กดเมนู "แดชบอร์ดแบรนด์" ที่แถบเมนูซ้าย แล้วรอให้ตัวเลขโหลดเสร็จ</li><li>กด "สรุปด้วย AI" แล้วรอจนได้ประโยค</li><li>เทียบทุกตัวเลขในประโยคกับการ์ด "ไลฟ์" "ผู้ชมรวม" "คอมเมนต์" "Engagement" และลูกศรเทียบช่วงก่อน</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ทุกตัวเลขที่ประโยคพูดถึงมีอยู่จริงบนการ์ดของช่วงเดียวกัน ไม่มีตัวเลขที่ไม่ปรากฏในหน้า</li><li>ประโยคไม่พูดถึงยอดขาย GMV หรือ Conversion</li><li>ประโยคไม่ระบุชื่อโฮสต์ ชื่อช่อง หรือชื่อไลฟ์</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 5 · Story 5.2 · FR87 (summarizing the most important signal for the period) · ผลรอบก่อน: FAIL — 🍎 Mac=FAIL · 🪟 Win=PASS (รายงาน Dashboard · 2026/09)</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
   <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
@@ -1725,7 +1728,7 @@ td.status-win{white-space:nowrap}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT ที่เป็น "เจ้าของ" ของพื้นที่ทำงานทดสอบ</li><li>กดเมนู "แดชบอร์ดแบรนด์" ที่แถบเมนูซ้าย แล้วรอให้ตัวเลขโหลดเสร็จ</li><li>ดูการ์ดย่อยของโฮสต์ที่ไลฟ์ไม่ได้เปิดการอ่านอารมณ์จากสีหน้า แล้วชี้เมาส์ที่ไอคอนข้อมูล</li><li>สลับไปพื้นที่ทำงานที่ไลฟ์ทั้งหมดไม่มีใบหน้า แล้วเปิด "แดชบอร์ดแบรนด์" อีกครั้ง</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>โฮสต์ที่ไม่มีข้อมูลขึ้น "ยังไม่มีข้อมูลอารมณ์" และคำอธิบาย "เกิดได้ 2 กรณี: โฮสต์คนนี้ยังไม่ได้เปิดการอ่านอารมณ์จากสีหน้า หรือไลฟ์ในช่วงนี้ไม่มีใบหน้าที่อ่านได้นานพอ" — ไม่ขึ้นพลังงาน/ยิ้มเป็น 0</li><li>พื้นที่ทำงานที่ไม่มีใครมีข้อมูล ขึ้น "ยังไม่มีข้อมูลอารมณ์ของโฮสต์คนไหนในช่วงนี้ — โฮสต์ที่ยังไม่เปิดการอ่านอารมณ์จากสีหน้าจะไม่มีตัวเลขส่วนนี้"</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 5 · Story 5.3 · FR88 · ผลรอบก่อน: FAIL — 🍎 Mac=FAIL · 🪟 Win=PASS (รายงาน Dashboard · 2026/09)</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
   <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
@@ -1767,7 +1770,7 @@ td.status-win{white-space:nowrap}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT ที่เป็น "เจ้าของ" ของพื้นที่ทำงานทดสอบ</li><li>กดเมนู "แดชบอร์ดแบรนด์" ที่แถบเมนูซ้าย แล้วรอให้ตัวเลขโหลดเสร็จ</li><li>จด "พลังงาน" "ยิ้ม n/นาที" และอารมณ์เด่นของโฮสต์ที่มีไลฟ์เดียวในช่วงนี้</li><li>เลื่อนลงไปที่การ์ด "ไลฟ์ล่าสุด" แล้วกดแถวไลฟ์ของโฮสต์คนนั้น</li><li>เทียบกับส่วน "โฮสต์ &amp; การพูด" ในหน้าไลฟ์</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>"พลังงาน" และ "อัตราการยิ้ม" ในหน้าไลฟ์เดี่ยวตรงกับค่าบนการ์ดของโฮสต์ (ปัดเศษเท่ากัน)</li><li>อารมณ์ที่สัดส่วนสูงสุดใน "สัดส่วนอารมณ์ทั้งไลฟ์" ตรงกับอารมณ์เด่นบนการ์ด</li><li>"N ไลฟ์ · H ชม." บนการ์ดเป็น 1 ไลฟ์ และชั่วโมงตรงกับความยาวไลฟ์</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 5 · Story 5.3 · FR88 · Story 5.5 · FR94 · ผลรอบก่อน: FAIL — 🍎 Mac=FAIL · 🪟 Win=BLOCKED (รายงาน Dashboard · 2026/09)</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
   <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
@@ -1804,12 +1807,13 @@ td.status-win{white-space:nowrap}
 <tr class="detail"><td colspan="8"><div class="card">
   <div class="h-title">แสดง 5 ไลฟ์ล่าสุดเรียงใหม่ไปเก่า พร้อมข้อมูลแต่ละแถวครบ</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · จุดที่เคย FAIL รอบก่อน — Dashboard · Reports</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #d97706;background:rgba(217,119,6,.07)">📌 <b>หมายเหตุ:</b> สเปกเรียก "Recent Lives Table" แต่ของจริงเป็นรายการแถวในการ์ด (Story 5.4 D1 · owner Q1 = รายการตามต้นแบบ) — ไม่ต้องมีหัวคอลัมน์</div></div>
   <div class="sec"><h4>Precondition</h4><ul><li>พื้นที่ทำงานทดสอบมีไลฟ์ที่อัปโหลดขึ้นคลาวด์แล้วใน 7 วันล่าสุด อย่างน้อย 6 ไลฟ์ จากโฮสต์ 2 คนขึ้นไป</li></ul></div>
   <div class="sec"><h4>Test Data</h4><ul><li>บัญชีที่ใช้ (UAT): qa.owner@realfactory.co.th · บทบาท "เจ้าของ"</li><li>บัญชีประกอบ: qa.hostb@realfactory.co.th — โฮสต์ที่ยังไม่ตั้ง key (เตรียมไว้เป็นข้อมูลเปรียบเทียบ ไม่ต้องล็อกอิน)</li><li>ตารางไลฟ์ทดสอบ (ชื่อ · โฮสต์ · วันเวลาเริ่ม · ความยาว · ผู้ชมสูงสุด)</li></ul></div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT ที่เป็น "เจ้าของ" ของพื้นที่ทำงานทดสอบ</li><li>กดเมนู "แดชบอร์ดแบรนด์" ที่แถบเมนูซ้าย แล้วรอให้ตัวเลขโหลดเสร็จ</li><li>เลื่อนลงไปที่การ์ด "ไลฟ์ล่าสุด"</li><li>อ่านแต่ละแถวเทียบกับตารางไลฟ์ทดสอบ</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>หัวการ์ด "ไลฟ์ล่าสุด" มี 5 แถว เรียงจากไลฟ์ที่เริ่มล่าสุดลงไป</li><li>แต่ละแถวมี: ไอคอนแพลตฟอร์ม · ชื่อไลฟ์ · ชื่อช่องของโฮสต์ · วันเวลาเริ่ม (เวลาไทย) · ความยาว · "ผู้ชมสูงสุด n" · คะแนน Engagement ทางขวา และลูกศรไปต่อ</li><li>ข้อมูลทุกแถวตรงกับตารางไลฟ์ทดสอบ และมีไลฟ์ของโฮสต์หลายคนปนกันตามเวลา</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 5 · Story 5.4 · FR91 (Recent Lives showing 5 latest lives) · ผลรอบก่อน: FAIL — 🍎 Mac=FAIL · 🪟 Win=PASS (รายงาน Dashboard · 2026/09)</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
   <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
@@ -1851,7 +1855,7 @@ td.status-win{white-space:nowrap}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT ที่เป็น "เจ้าของ" ของพื้นที่ทำงานทดสอบ</li><li>กดเมนู "แดชบอร์ดแบรนด์" ที่แถบเมนูซ้าย แล้วรอให้ตัวเลขโหลดเสร็จ</li><li>เลื่อนลงไปที่การ์ด "ไลฟ์ล่าสุด" แล้วกดแถวของไลฟ์ที่โฮสต์คนอื่นบันทึก (ไม่ใช่ไลฟ์ที่บันทึกบนเครื่องนี้)</li><li>ดูหัวหน้า ตัวชี้วัด และแถบ "สารบัญ" แล้วกด "กลับไปหน้าแดชบอร์ด" ท้ายหน้า</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>หัวหน้ามีชื่อไลฟ์ · ชื่อช่อง · แพลตฟอร์ม · วันที่ · ความยาว · ป้าย "เสร็จสิ้น" ตรงกับแถวที่กด</li><li>มีข้อความ "มุมมองจากคลาวด์ — บทพูด สรุป AI คำแนะนำ AI คำเด่นในคอมเมนต์ และผู้ให้ของขวัญ มีเฉพาะบนเครื่องที่บันทึกไลฟ์นี้"</li><li>ตัวชี้วัดหลัก: "คนดูสูงสุด" · "คนดูเฉลี่ย" · "คอมเมนต์" · "ของขวัญ" · "ผู้ติดตามใหม่" และแถวรอง "ไลก์" (พร้อมบรรทัด "ยอดสะสมของห้อง …") "ผู้เข้าร่วม" "แชร์" "ระยะเวลา" — ไม่มีช่อง "เวลาดูรวมของผู้ชมทุกคน" (คน-นาที) แล้ว (เจ้าของตัดออก 21 ก.ย. · #558)</li><li>แถบ "สารบัญ" มีปุ่ม "ภาพรวม" "ไทม์ไลน์" "โฮสต์" "Insights" (และ "คอมเมนต์" ถ้ามีข้อมูลความรู้สึก) · กด "กลับไปหน้าแดชบอร์ด" แล้วกลับมาที่ "แดชบอร์ดแบรนด์"</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 5 · Story 5.4 (row clickable → Single Live Detail) · Story 5.5 · FR91 · FR94 (Live Header · peak viewers · watch time) · ผลรอบก่อน: FAIL — 🍎 Mac=FAIL · 🪟 Win=PASS (รายงาน Dashboard · 2026/09)</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
   <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
@@ -1893,7 +1897,7 @@ td.status-win{white-space:nowrap}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT ที่เป็น "เจ้าของ" ของพื้นที่ทำงานทดสอบ บนเครื่องที่บันทึกไลฟ์ของบัญชีนี้ไว้</li><li>กดเมนู "แดชบอร์ดแบรนด์" ที่แถบเมนูซ้าย แล้วรอให้ตัวเลขโหลดเสร็จ</li><li>เลื่อนลงไปที่การ์ด "ไลฟ์ล่าสุด" แล้วกดแถวของไลฟ์ที่บันทึกบนเครื่องนี้</li><li>สังเกตหน้าที่เปิดขึ้น</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>เปิดหน้าไลฟ์แบบเต็มของเครื่อง (เหมือนเปิดจากเมนู "เซสชัน") มีบทพูดและส่วนอื่นที่มีเฉพาะเครื่องที่บันทึก</li><li>ไม่มีข้อความ "มุมมองจากคลาวด์ — …"</li><li>ตัวเลขหลักตรงกับแถวที่กด</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 5 · Story 5.5 · FR94 (Brand Manager and Seller-Owner can open Single Live Detail) · ผลรอบก่อน: FAIL — 🍎 Mac=FAIL · 🪟 Win=FAIL (รายงาน Dashboard · 2026/09)</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
   <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
@@ -1931,12 +1935,13 @@ td.status-win{white-space:nowrap}
 <tr class="detail"><td colspan="8"><div class="card">
   <div class="h-title">ไม่มีเน็ตตอนสร้างรายงาน: ป้าย "ติดต่อผู้ให้บริการ AI ไม่ได้" และลองใหม่ได้เมื่อเน็ตกลับ</div>
   <div class="h-prio">Priority: <b>P1</b> · UI · ประเภท: <b>Exception/Error</b> <span class="hint">(ผู้ให้บริการล่ม · เน็ตหลุด · key ใช้ไม่ได้)</span> · จุดที่เคย FAIL รอบก่อน — Dashboard · Reports</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #d97706;background:rgba(217,119,6,.07)">📌 <b>หมายเหตุ:</b> จังหวะปิดเน็ตต้องหลังแอปเริ่มเตรียมแล้ว — ถ้าปิดก่อนเปิดแอป แอปจะรอเงียบๆ (ไม่มีป้าย) แทน</div></div>
   <div class="sec"><h4>Precondition</h4><ul><li>บัญชีนี้ตั้งค่าผู้ให้บริการ AI ครบแล้ว (บันทึก key · เลือกโมเดล · ยอมรับข้อตกลงการส่งข้อมูล)</li><li>เปิดสวิตช์ "รายงานประจำวัน" ในหน้า "ผู้ให้บริการ AI" ไว้แล้ว</li><li>เมื่อวานมีไลฟ์ที่บันทึกจบแล้วอย่างน้อย 1 ไลฟ์ในเวิร์กสเปซที่เลือกอยู่ และยังไม่มีรายงานของวันนั้น</li></ul></div>
   <div class="sec"><h4>Test Data</h4><ul><li>บัญชีที่ใช้ (UAT): qa.owner@realfactory.co.th · บทบาท "เจ้าของ"</li></ul></div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>ทันทีที่ป้ายขึ้น "กำลังเตรียมรายงานประจำวันของ …" ให้ปิด Wi-Fi หรือถอดสายแลน แล้วรอจนป้ายเปลี่ยน</li><li>ต่ออินเทอร์เน็ตกลับ แล้วกด "ลองใหม่" ในป้าย</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ป้ายเปลี่ยนเป็นหัวข้อ "รายงานประจำวัน &lt;วันที่&gt;" + "ติดต่อผู้ให้บริการ AI ไม่ได้" (หรือ "ผู้ให้บริการ AI ตอบช้าเกินไป") พร้อมปุ่ม "ลองใหม่" — ไม่มีปุ่มลองใหม่ซ้ำ 2 ปุ่ม</li><li>แอปไม่ค้าง</li><li>หลังต่อเน็ตแล้วกด "ลองใหม่" ได้ป้าย "… พร้อมแล้ว"</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 7 · Story 7.1 AC3 (transient) · AC9 · Story 4.3 FR132 · ผลรอบก่อน: FAIL — 🍎 Mac=FAIL · 🪟 Win=FAIL (รายงาน Reports · 2026/09)</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
   <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
@@ -1978,7 +1983,7 @@ td.status-win{white-space:nowrap}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT แล้วเริ่มติดตาม/บันทึกไลฟ์ 1 ไลฟ์ทันที</li><li>ดูป้ายรายงานด้านบนของ "หน้าหลัก" ระหว่างบันทึก</li><li>หยุดบันทึกไลฟ์นั้นให้จบ แล้วกลับไปดู "หน้าหลัก"</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ระหว่างบันทึกไลฟ์ไม่มีป้าย "กำลังเตรียมรายงานประจำวัน…"</li><li>หลังไลฟ์จบ แอปเริ่มเตรียมรายงานของเมื่อวานเอง (ป้าย "กำลังเตรียม…" แล้ว "… พร้อมแล้ว") โดยไม่ต้องปิดเปิดแอป</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 7 · Story 7.1 AC1 (T3) · AC2 row 6 · FR100 ("never runs while a capture is active") · ผลรอบก่อน: FAIL — 🍎 Mac=FAIL · 🪟 Win=BLOCKED (รายงาน Reports · 2026/09)</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
   <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
@@ -2019,11 +2024,12 @@ td.status-win{white-space:nowrap}
 <tr class="detail"><td colspan="8"><div class="card">
   <div class="h-title">เปิดหน้า "ผู้ให้บริการ AI" จากเมนูโปรไฟล์ได้ และเห็นหัวข้อครบ</div>
   <div class="h-prio">Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · BYOK smoke — AI Provider (Epic 4) เฉพาะ P0</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #d97706;background:rgba(217,119,6,.07)">📌 <b>หมายเหตุ:</b> บิลด์หลัง 28 ก.ย. (TI-483/TI-485/TI-532): หน้านี้ถูกจัดใหม่เป็นการ์ด "การเชื่อมต่อ" 4 ขั้น — ถ้าเทสกับบิลด์เก่ากว่านั้นจะยังเห็นหัวข้อแยกเป็นส่วนๆ แบบเดิม</div></div>
   <div class="sec"><h4>Test Data</h4><ul><li>บัญชีที่ใช้ (UAT): qa.owner@realfactory.co.th · บทบาท "เจ้าของ"</li></ul></div>
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>กดรูปโปรไฟล์ ("โปรไฟล์และบัญชี") แล้วเลือกเมนู "ผู้ให้บริการ AI"</li><li>สังเกตหัวหน้าและหัวข้อในหน้า</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>หน้าแสดงหัวเรื่อง "ผู้ให้บริการ AI" และคำอธิบาย "เชื่อมต่อ key ของ OpenAI หรือ OpenRouter ของคุณเอง ฟีเจอร์ AI จะใช้บัญชีผู้ให้บริการของคุณ"</li><li>มีการ์ด "การเชื่อมต่อ" ใบเดียว เรียงเป็น 4 ขั้น: ขั้นที่ 1 "เลือกผู้ให้บริการ แล้วกรอก API key ของคุณ" · ขั้นที่ 2 "เลือกโมเดล" · ขั้นที่ 3 "ข้อตกลงการส่งข้อมูลให้ AI" · ขั้นที่ 4 "ทดสอบการเชื่อมต่อ" และมีส่วน "รายงานประจำวัน" แยกอยู่ใต้การ์ด</li><li>มุมขวาบนของการ์ดมีป้ายสถานะ (บัญชีที่ยังไม่ตั้งค่า ขึ้น "ขั้นที่ 1 จาก 4") · ขั้นที่ยังทำไม่ได้แสดงเป็นบรรทัดจางพร้อมเหตุผล เช่น "เลือกโมเดล · บันทึก key ก่อน"</li><li>ปุ่มเลือกผู้ให้บริการ ("OpenAI" / "OpenRouter") อยู่ในฟอร์มขั้นที่ 1 เท่านั้น</li><li>ไม่มีคำว่าเครดิต ยอดคงเหลือ หรือโควตาของ TAKRA ในหน้านี้</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 4 · Story 4.1 · FR130 (BYOK แทนเครดิต AI ตั้งแต่ 2026-09-14) · TI-532 การ์ดเดียว 4 ขั้น (merge 28 ก.ย. #620)</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
   <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
@@ -2065,7 +2071,7 @@ td.status-win{white-space:nowrap}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>กดรูปโปรไฟล์ ("โปรไฟล์และบัญชี") แล้วเลือกเมนู "ผู้ให้บริการ AI"</li><li>ที่ขั้นที่ 1 ของการ์ด "การเชื่อมต่อ" เลือก "OpenAI" วาง key ลงช่อง "วาง API key ของ OpenAI" แล้วกด "บันทึก key"</li><li>สังเกตขั้นที่ 1 หลังบันทึก</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ระหว่างบันทึกปุ่มเปลี่ยนเป็น "กำลังบันทึก…"</li><li>หลังบันทึกขั้นที่ 1 ยุบเหลือบรรทัด "API key · OpenAI · &lt;หัว key&gt;…&lt;4 ตัวท้าย&gt;" (เช่น "sk-…1234") — เห็นหัว key รูปแบบสาธารณะกับ 4 ตัวท้ายเท่านั้น (TI-485) พร้อมบรรทัด "เทียบตัวท้ายกับรายการ key ในหน้าจัดการ key ของ OpenAI"</li><li>มีปุ่ม "เปลี่ยน key / สลับค่าย" และ "ลบ key" · ท้ายการ์ดมีข้อความ "key ของคุณถูกเข้ารหัสไว้บนเครื่องนี้ เก็บแยกตามข้อมูลของบัญชีนี้ และไม่ถูกส่งไปที่ TAKRA"</li><li>ขั้นที่ 2 เปิดเป็น "เลือกโมเดลที่จะใช้" ให้เลือกได้ (ก่อนบันทึก key ขั้นนี้ล็อกอยู่ว่า "บันทึก key ก่อน")</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 4 · Story 4.1 · FR130 · TI-485 แสดงหัว key + 4 ตัวท้าย (merge 28 ก.ย. #620)</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
   <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
@@ -2106,7 +2112,7 @@ td.status-win{white-space:nowrap}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>กดรูปโปรไฟล์ ("โปรไฟล์และบัญชี") แล้วเลือกเมนู "ผู้ให้บริการ AI"</li><li>วาง key ลงช่อง API key แล้วดูช่องก่อนกดบันทึก จากนั้นกด "บันทึก key"</li><li>ปิดแอปแล้วเปิดใหม่ เข้าสู่ระบบบัญชีเดิม แล้วกดรูปโปรไฟล์ ("โปรไฟล์และบัญชี") แล้วเลือกเมนู "ผู้ให้บริการ AI"</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ตอนวาง key ช่องแสดงเป็นจุดปิดบัง ไม่เห็นตัวอักษรของ key</li><li>หลังบันทึกช่องถูกล้างว่าง และหน้าแสดงเฉพาะบรรทัด "API key · OpenAI · &lt;หัว key&gt;…&lt;4 ตัวท้าย&gt;" — หัว key เป็นรูปแบบสาธารณะจากรายการค่าคงที่ (เช่น sk- / sk-or-v1-) ไม่เปิดเผยตัวอักษรลับเพิ่ม (TI-485)</li><li>หลังเปิดแอปใหม่ key ยังอยู่ และยังแสดงแบบปิดบังเหมือนเดิม ไม่มีปุ่มหรือจุดใดให้ดู key เต็ม</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 4 · Story 4.1 · FR130 (UI แสดงแบบปิดบังเท่านั้น)</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
   <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
@@ -2147,7 +2153,7 @@ td.status-win{white-space:nowrap}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT (บัญชีที่บันทึก key ไว้แล้ว)</li><li>กดรูปโปรไฟล์ ("โปรไฟล์และบัญชี") แล้วเลือกเมนู "ผู้ให้บริการ AI"</li><li>กด "ลบ key" แล้วกด "ยกเลิก" ในหน้าต่างยืนยัน</li><li>กด "ลบ key" อีกครั้ง แล้วกด "ลบ key" ในหน้าต่างยืนยัน</li><li>สังเกตหน้าตั้งค่าหลังลบ</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>หน้าต่างยืนยันขึ้นหัวข้อ "ลบ key นี้ไหม?" และข้อความ "key จะถูกลบออกจากเครื่องนี้ทันที ฟีเจอร์ AI จะใช้งานไม่ได้จนกว่าจะเพิ่ม key ใหม่"</li><li>กด "ยกเลิก" แล้ว key ยังอยู่เหมือนเดิม</li><li>กดยืนยัน "ลบ key" แล้วขั้นที่ 1 กลับเป็นฟอร์ม "เลือกผู้ให้บริการ แล้วกรอก API key ของคุณ" พร้อมข้อความ "ลบ key ออกจากเครื่องนี้แล้ว ฟีเจอร์ AI จะใช้งานไม่ได้จนกว่าจะเพิ่ม key ใหม่ · รายงานที่สร้างไว้แล้วยังอยู่" · ขั้น "เลือกโมเดล" กลับไปล็อกด้วยเหตุผล "บันทึก key ก่อน"</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 4 · Story 4.1 · FR130 (remove ลบทันที)</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
   <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
@@ -2189,7 +2195,7 @@ td.status-win{white-space:nowrap}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT (บัญชีที่บันทึก key OpenAI แล้วแต่ยังไม่ยอมรับข้อตกลง)</li><li>กดรูปโปรไฟล์ ("โปรไฟล์และบัญชี") แล้วเลือกเมนู "ผู้ให้บริการ AI"</li><li>อ่านส่วน "ข้อตกลงการส่งข้อมูลให้ AI" แล้วดูปุ่ม "ยอมรับ" ก่อนติ๊ก</li><li>ติ๊กช่อง "ฉันอ่านแล้ว และยอมรับว่าคำขอ AI จะถูกส่งไปที่ OpenAI" แล้วกด "ยอมรับ"</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ข้อตกลงบอกชัดว่าส่งข้อมูลจากเครื่องนี้ไปที่ OpenAI โดยตรง TAKRA ไม่ได้รับ key หรือข้อมูล และ OpenAI ประมวลผลนอกประเทศไทย</li><li>มีหัวข้อ "ข้อมูลที่แต่ละฟีเจอร์ AI ส่ง" พร้อมรายการข้อมูล</li><li>ก่อนติ๊ก ปุ่ม "ยอมรับ" กดไม่ได้</li><li>หลังยอมรับ ขั้นข้อตกลงยุบเหลือบรรทัด "ข้อตกลงการส่งข้อมูลให้ AI · ยอมรับแล้วสำหรับ OpenAI" ช่องติ๊กหายไป และมีปุ่ม "อ่านอีกครั้ง" (กดแล้วเห็นบรรทัด "ยอมรับฉบับที่ &lt;เลขฉบับ&gt; เมื่อ &lt;วันเวลา&gt; · …")</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 4 · Story 4.1 · FR133 · โครงยุบขั้นตาม TI-532 (28 ก.ย.)</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
   <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
@@ -2230,7 +2236,7 @@ td.status-win{white-space:nowrap}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT (บัญชีที่บันทึก key และเลือกโมเดลแล้ว แต่ยังไม่ยอมรับข้อตกลง)</li><li>ไปที่เมนู "เซสชัน" แล้วเปิดไลฟ์ที่บันทึกจบแล้วและมีบทพูด 1 รายการ เลื่อนลงไปที่ส่วน "บทพูดของไลฟ์"</li><li>กด "สรุปด้วย AI"</li><li>กดปุ่ม "อ่านข้อตกลง" ในกล่องที่ขึ้นมา</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ไม่มีสรุปถูกสร้าง ขึ้นกล่อง "ยังไม่ได้ยอมรับข้อตกลงการส่งข้อมูล AI" พร้อมข้อความให้อ่านก่อนกดยอมรับ</li><li>กด "อ่านข้อตกลง" แล้วไปที่หน้า "ผู้ให้บริการ AI" และเลื่อนมาที่ส่วนข้อตกลงเลย</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 4 · Story 4.1 (AC disclosure) · Story 4.3 · FR133 · FR132</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
   <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
@@ -2273,7 +2279,7 @@ td.status-win{white-space:nowrap}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>กดรูปโปรไฟล์ ("โปรไฟล์และบัญชี") แล้วเลือกเมนู "ผู้ให้บริการ AI"</li><li>ดูข้อความเหนือปุ่ม "ทดสอบการเชื่อมต่อ" แล้วกดปุ่ม</li><li>สังเกตผลใต้ปุ่ม</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>เหนือปุ่มมีคำเตือน "การทดสอบจะส่งคำขอสั้นมาก 1 ครั้งไปที่ OpenAI มีค่าใช้จ่ายกับบัญชีผู้ให้บริการของคุณเล็กน้อยมาก"</li><li>ระหว่างทดสอบปุ่มเป็น "กำลังทดสอบ…" และกดปุ่มอื่นในหน้าไม่ได้</li><li>ผลขึ้นกล่องสีเขียวหัว "ผ่าน" ข้อความ "เชื่อมต่อสำเร็จ key และโมเดลใช้งานได้" · ขั้นที่ 4 ยุบเป็น "ทดสอบผ่านแล้ว · &lt;วันเวลา&gt;" และป้ายสถานะการ์ดเป็น "พร้อมใช้งาน · ทดสอบผ่านแล้ว"</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 4 · Story 4.1 · Story 4.2 · FR130 · FR131 · TI-532 จำผลทดสอบล่าสุด (28 ก.ย.)</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
   <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
@@ -2314,7 +2320,7 @@ td.status-win{white-space:nowrap}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>กดรูปโปรไฟล์ ("โปรไฟล์และบัญชี") แล้วเลือกเมนู "ผู้ให้บริการ AI"</li><li>กด "เปลี่ยน key / สลับค่าย" วาง key ที่ถูกยกเลิกแล้วแต่รูปแบบถูกต้อง แล้วกด "บันทึก key"</li><li>เลือกโมเดล ยอมรับข้อตกลง (ถ้าต้อง) แล้วกด "ทดสอบการเชื่อมต่อ"</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ผลขึ้นกล่องสีแดงหัว "ไม่ผ่าน" ข้อความ "key ถูกปฏิเสธ ตรวจสอบ key และสิทธิ์ของ key ในบัญชีผู้ให้บริการ" พร้อมปุ่ม "แก้ไข key" ที่พากลับไปขั้น key (TI-532)</li><li>ไม่มีข้อความภาษาอังกฤษจากผู้ให้บริการ รหัส 401 หรือข้อความแบบ JSON โผล่ในหน้า</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 4 · Story 4.1 (ผลเป็น 1 ใน 4 แบบ ไม่ใช่ error ดิบ) · Story 4.2 · FR131</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
   <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
@@ -2356,7 +2362,7 @@ td.status-win{white-space:nowrap}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT (บัญชี A ที่ตั้งค่าครบแล้ว)</li><li>กดรูปโปรไฟล์แล้วเลือก "ออกจากระบบ"</li><li>เข้าสู่ระบบด้วยบัญชี B บนเครื่องเดิม แล้วกดรูปโปรไฟล์ ("โปรไฟล์และบัญชี") แล้วเลือกเมนู "ผู้ให้บริการ AI"</li><li>ไปที่ไลฟ์ของบัญชี B แล้วกด "สรุปด้วย AI"</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>บัญชี B เห็นหน้าแบบยังไม่มี key (การ์ด "การเชื่อมต่อ" เริ่มที่ขั้นที่ 1 "เลือกผู้ให้บริการ แล้วกรอก API key ของคุณ") ไม่เห็นหัว key หรือ 4 ตัวท้ายของบัญชี A</li><li>กด "สรุปด้วย AI" แล้วขึ้น "ยังไม่ได้เชื่อมต่อผู้ให้บริการ AI" ไม่ได้ใช้ key ของบัญชี A</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 4 · Story 4.1 · FR130 (อีกบัญชีบนเครื่องเดียวกันอ่าน key ไม่ได้)</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
   <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
@@ -2398,7 +2404,7 @@ td.status-win{white-space:nowrap}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT (บัญชีที่ยังไม่มี key)</li><li>ไปที่เมนู "เซสชัน" แล้วเปิดไลฟ์ที่บันทึกจบแล้วและมีบทพูด 1 รายการ เลื่อนลงไปที่ส่วน "บทพูดของไลฟ์"</li><li>กด "สรุปด้วย AI"</li><li>กดปุ่ม "ตั้งค่า key"</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ขึ้นกล่อง "ยังไม่ได้เชื่อมต่อผู้ให้บริการ AI" · "ฟีเจอร์ AI ใช้ key ของ OpenAI หรือ OpenRouter ของคุณเอง เพิ่ม key เพื่อใช้ฟีเจอร์นี้"</li><li>กด "ตั้งค่า key" แล้วไปที่หน้า "ผู้ให้บริการ AI" และเคอร์เซอร์อยู่ในช่องวาง key</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 4 · Story 4.3 · FR132 (no_key → set up key)</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
   <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
@@ -2441,7 +2447,7 @@ td.status-win{white-space:nowrap}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>ไปที่เมนู "เซสชัน" แล้วเปิดไลฟ์ที่บันทึกจบแล้วและมีบทพูด 1 รายการ เลื่อนลงไปที่ส่วน "บทพูดของไลฟ์"</li><li>กด "สรุปด้วย AI" แล้วรอจนเสร็จ</li><li>สังเกตส่วน "สรุปบทพูดโดย AI"</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ระหว่างรอปุ่มเป็น "กำลังสรุป…" และมีปุ่ม "ยกเลิก"</li><li>ได้สรุปเป็นหัวข้อสั้นๆ ภาษาไทยใต้ "สรุปบทพูดโดย AI"</li><li>มีข้อความ "เก็บไว้ในเครื่องนี้เท่านั้น ไม่ได้อัปโหลด · สร้างโดยส่งบทพูดไปยังผู้ให้บริการ AI ที่คุณเลือก"</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic 4 · Story 4.2 · FR131 (ทุกงาน AI ผ่าน client ของแอป ด้วย key ลูกค้า) · Story 2.7b</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
   <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
@@ -2487,7 +2493,7 @@ td.status-win{white-space:nowrap}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) บนเครื่องที่เคยเข้าสู่ระบบด้วยบัญชี UAT และเตรียมระบบเสร็จแล้ว</li><li>สังเกตหน้าจอตั้งแต่แอปเปิดจนเข้า "หน้าหลัก"</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ขึ้นหน้าเดียว "กำลังเปิด TAKRA Insight…" ต่อเนื่องจนเข้า "หน้าหลัก" ไม่มีหน้าขาวกับวงกลมหมุนก่อน</li><li>ไม่มีการ์ด "ตั้งค่าครั้งแรก" ไม่มีคำว่า AI model และไม่มีขนาดไฟล์ (MB) หรือชื่อโมเดล</li><li>ถ้าเปิดช้ากว่าปกติ ขึ้น "ระบบใช้เวลาเปิดนานกว่าปกติ กดลองใหม่เพื่อรอต่อ" พร้อมปุ่ม "ลองใหม่" ไม่ใช่ข้อความ error ดิบ</li></ul><div class="hint" style="margin-top:6px">ที่มา: TI-547 + TI-501 · owner เคาะแบบ A 2026-09-29 (ยังรอให้พร้อมก่อนเข้าแอป เปลี่ยนเฉพาะสิ่งที่หน้าจอพูด) · ตรวจโค้ด origin/uat 7c26b9fe (5 ต.ค.)</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
   <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
@@ -2529,7 +2535,7 @@ td.status-win{white-space:nowrap}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT บนเครื่องที่เพิ่งติดตั้งแอปใหม่</li><li>ที่หน้า "ก่อนเริ่มใช้งาน ขอความยินยอมจากคุณ" กด "ยินยอมและเริ่มใช้งาน"</li><li>เมื่อขึ้นหน้า "กำลังเตรียมพร้อมใช้งาน" และแถบ % เริ่มวิ่ง ให้ปิด Wi-Fi/ถอดสายแลน แล้วรอจนหน้าจอเปลี่ยน</li><li>เปิดอินเทอร์เน็ตกลับ แล้วกด "ลองใหม่" และสังเกตจนเข้าแอป</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ระหว่างเตรียมระบบ เห็น "กำลังเตรียมพร้อมใช้งาน" · "ครั้งแรกใช้เวลาสักครู่ ขึ้นกับความเร็วอินเทอร์เน็ต" · "แนะนำให้เชื่อมต่อ Wi-Fi" และแถบ % โดยไม่มีขนาดไฟล์หรือชื่อโมเดล</li><li>เน็ตหลุดแล้วขึ้น "เตรียมระบบไม่สำเร็จ" + "ตรวจสอบการเชื่อมต่ออินเทอร์เน็ต แล้วกดลองใหม่" ไม่ค้างที่แถบ % และไม่มีข้อความ error ดิบจากระบบ</li><li>กด "ลองใหม่" หลังเน็ตกลับแล้วเตรียมต่อจนเข้า "หน้าหลัก" ได้</li></ul><div class="hint" style="margin-top:6px">ที่มา: TI-501 + TI-547 · owner เคาะ 2026-09-29 · ตรวจโค้ด origin/uat 7c26b9fe (5 ต.ค.)</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
   <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
@@ -2571,7 +2577,7 @@ td.status-win{white-space:nowrap}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) บนเครื่องที่ยังไม่เคยใช้บัญชีนี้ แล้วเข้าสู่ระบบด้วยบัญชี UAT (บัญชีเดียวกับที่เคยให้ความยินยอมไว้)</li><li>สังเกตหน้าที่ขึ้นหลังเข้าสู่ระบบ</li><li>กดรูปโปรไฟล์ ("โปรไฟล์และบัญชี") ที่ท้ายแถบเมนูซ้าย แล้วเลือก "ความเป็นส่วนตัว" (หน้า "ความยินยอมของคุณ") แล้วสังเกตสถานะของ "การอ่านอารมณ์จากสีหน้า"</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ไม่ขึ้นหน้า "ก่อนเริ่มใช้งาน ขอความยินยอมจากคุณ" ซ้ำ ระบบใช้คำตอบเดิมของทีมนี้แล้วไปต่อได้เลย</li><li>หน้า "ความยินยอมของคุณ" แสดงสถานะตรงกับที่เคยตอบไว้ (เช่น "ให้ความยินยอมเมื่อ …") ไม่กลายเป็น "ยังไม่ได้ให้ความยินยอม" หรือถูกปฏิเสธทับ</li></ul><div class="hint" style="margin-top:6px">ที่มา: TI-581 (หน้าขอความยินยอมรับคำตอบที่มีอยู่บน cloud แทนการถามซ้ำ) · owner เคาะ O5 · ตรวจโค้ด origin/uat 7c26b9fe (5 ต.ค.)</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
   <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
@@ -2612,7 +2618,7 @@ td.status-win{white-space:nowrap}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) บนเครื่องที่ยังไม่เคยใช้บัญชีนี้ แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>ทันทีที่เข้าสู่ระบบสำเร็จ ให้ปิด Wi-Fi/ถอดสายแลน แล้วสังเกตหน้าความยินยอม</li><li>เปิดอินเทอร์เน็ตกลับ แล้วกด "ลองใหม่"</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ขึ้นการ์ด "ตรวจสอบความยินยอมกับระบบไม่ได้ กรุณาตรวจสอบอินเทอร์เน็ตแล้วลองใหม่" พร้อมปุ่ม "ลองใหม่" ไม่มีสวิตช์ให้เลือก และไม่เข้า "หน้าหลัก"</li><li>กด "ลองใหม่" หลังเน็ตกลับแล้วไปต่อตามคำตอบที่มีอยู่ (ข้ามหน้า ถ้าเคยตอบไว้) หรือถามตามปกติ (ถ้ายังไม่เคยตอบ)</li></ul><div class="hint" style="margin-top:6px">ที่มา: TI-581 (อ่าน cloud ไม่ได้ = การ์ดลองใหม่ ไม่ส่ง "ปฏิเสธ" ทับสิทธิ์เดิม) · ตรวจโค้ด origin/uat 7c26b9fe (5 ต.ค.)</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
   <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
@@ -2654,7 +2660,7 @@ td.status-win{white-space:nowrap}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT (บัญชีที่อยู่ 2 ทีม)</li><li>สังเกตป้ายและบรรทัดที่สองบนปุ่มโปรไฟล์ที่ท้ายแถบเมนูซ้าย</li><li>กดรูปโปรไฟล์ ("โปรไฟล์และบัญชี") ที่ท้ายแถบเมนูซ้าย แล้วชี้เมาส์หรือกดที่แถวชื่อพื้นที่ทำงาน</li><li>สังเกตเมนูย่อยที่เปิดขึ้น</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ป้ายบนปุ่มโปรไฟล์เป็นชื่อแพ็กเกจของทีมที่เลือก (Pro / Agency / Enterprise) แทนคำว่า "ใช้งานอยู่" · ทีมทดลองใช้ขึ้น "ทดลองใช้" · หมดอายุขึ้น "หมดอายุ"</li><li>บรรทัดที่สองเป็นชื่อพื้นที่ทำงานปัจจุบัน และในเมนูไม่มีป้ายบทบาท</li><li>เมนูย่อยเปิดทางขวาของเมนู หัวข้อ "สลับพื้นที่ทำงาน" ขึ้น "กำลังโหลดรายชื่อพื้นที่ทำงาน…" แล้วแสดงรายชื่อทีมในกล่องที่เลื่อนได้ เมนูหลักไม่ยืดขึ้นด้านบน</li><li>ถ้าโหลดไม่ได้ ขึ้น "โหลดรายชื่อพื้นที่ทำงานไม่สำเร็จ" พร้อม "ลองอีกครั้ง"</li></ul><div class="hint" style="margin-top:6px">ที่มา: TI-521 (ป้ายแพ็กเกจ) · TI-491 (เมนูย่อยรายชื่อทีม) · TI-563 (ไม่มีบทบาทในเมนู) · ตรวจโค้ด origin/uat 7c26b9fe (5 ต.ค.)</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
   <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
@@ -2695,7 +2701,7 @@ td.status-win{white-space:nowrap}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT (บัญชีที่อยู่ 2 ทีม)</li><li>ไปที่เมนู "เซสชัน" กด "วิเคราะห์ไลฟ์ใหม่" วางลิงก์ไลฟ์ TikTok ที่กำลังออกอากาศ กด "เปิดดูไลฟ์" แล้วตั้งชื่อเซสชันและกด "เริ่มบันทึก"</li><li>ระหว่างบันทึก กดรูปโปรไฟล์ ("โปรไฟล์และบัญชี") ที่ท้ายแถบเมนูซ้าย เปิดเมนูย่อย "สลับพื้นที่ทำงาน" แล้วกดเลือกอีกทีม</li><li>สังเกต popup แล้วกด "รับทราบ" และดูไลฟ์ที่บันทึกอยู่</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>แถวทีมในเมนูย่อยยังกดได้ และบอกเหตุผลไว้ก่อน "กำลังบันทึกไลฟ์อยู่ หยุดติดตามไลฟ์ทั้งหมดก่อน แล้วค่อยสลับพื้นที่ทำงาน"</li><li>กดแล้วเมนูปิด ขึ้น popup "ยังสลับพื้นที่ทำงานไม่ได้" ที่ระบุชื่อทั้งทีมปัจจุบันและทีมที่จะไป พร้อม "ไลฟ์ที่บันทึกอยู่ไม่ได้รับผลกระทบ" และมีปุ่มเดียว "รับทราบ"</li><li>หลังกด "รับทราบ" พื้นที่ทำงานยังเป็นทีมเดิม ไลฟ์ยังบันทึกต่อ คอมเมนต์ยังไหล</li></ul><div class="hint" style="margin-top:6px">ที่มา: TI-492 (สลับทีมขณะบันทึกไลฟ์ขึ้น popup รับทราบ) · ตรวจโค้ด origin/uat 7c26b9fe (5 ต.ค.)</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
   <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
@@ -2737,7 +2743,7 @@ td.status-win{white-space:nowrap}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT (บัญชีที่อยู่ 2 ทีม)</li><li>เลือกทีม A จากเมนูย่อย "สลับพื้นที่ทำงาน" แล้วเปิดเมนู "หน้าหลัก" · "เซสชัน" · "แชนเนลที่ติดตาม" จดรายการไลฟ์และช่องที่เห็น</li><li>สลับไปทีม B แล้วเปิดทั้งสามหน้าอีกครั้ง</li><li>เลื่อนลงไปท้ายหน้า "เซสชัน" แล้วสังเกตกลุ่มไลฟ์ที่ไม่ระบุทีม</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>แต่ละทีมเห็นเฉพาะไลฟ์ที่บันทึกในทีมนั้นและช่องที่ติดตามในทีมนั้น ไม่มีรายการของอีกทีมปน</li><li>สลับทีมแล้วรายการเปลี่ยนตามทีมทันที ไม่ค้างรายการของทีมเก่า</li><li>ไลฟ์เก่าที่ไม่มีข้อมูลว่าอัดในทีมไหน อยู่ในกลุ่ม "ไลฟ์ที่ไม่ระบุทีม (n)" ท้ายหน้า "เซสชัน" พร้อมคำอธิบาย "… จึงแสดงในทุกทีม และไม่นับในหน้าภาพรวม"</li></ul><div class="hint" style="margin-top:6px">ที่มา: TI-577 · คำตัดสินเจ้าของงาน 2026-10-01 (กลับคำตัดสิน 15 ก.ย. ของ Story m2-9.1) · ตรวจโค้ด origin/uat 7c26b9fe (5 ต.ค.)</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
   <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
@@ -2779,7 +2785,7 @@ td.status-win{white-space:nowrap}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>ไปที่เมนู "หลายไลฟ์พร้อมกัน" วางลิงก์ไลฟ์ที่กำลังออกอากาศแล้วกด "เปิดดูไลฟ์" 1 ไลฟ์ สังเกตขนาดกล่อง</li><li>เพิ่มไลฟ์ที่กำลังออกอากาศจนครบ 3 ไลฟ์ (หรือเท่าที่แพ็กเกจให้) แล้วสังเกตขนาดกล่องอีกครั้ง</li><li>ย่อหน้าต่างแอปให้แคบลงเรื่อยๆ แล้วสังเกตการจัดเรียง</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>กล่องจอไลฟ์ทุกกล่องขนาดเท่ากัน และ 1 ไลฟ์กับ 3 ไลฟ์ได้กล่องขนาดเดียวกัน ขนาดขึ้นกับความกว้างหน้าต่างอย่างเดียว</li><li>เรียงชิดซ้ายแถวละไม่เกิน 5 กล่อง (ถ้ามี 6 ไลฟ์ = 5+1)</li><li>หน้าต่างแคบแล้วกล่องไม่เล็กลงต่ำกว่าขั้นต่ำ จำนวนคอลัมน์ลดลงแทน และไม่มีแถบเลื่อนแนวนอน</li></ul><div class="hint" style="margin-top:6px">ที่มา: TI-586 · sprint-change-proposal-2026-09-30 (แทนคำตัดสิน TI-509 §2.1 "แถวเท่ากัน") · ตรวจโค้ด origin/uat 7c26b9fe (5 ต.ค.)</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
   <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
@@ -2820,7 +2826,7 @@ td.status-win{white-space:nowrap}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>ไปที่เมนู "หลายไลฟ์พร้อมกัน" เปิดไลฟ์ของบัญชี TikTok ที่ 2 แล้วเริ่มเก็บ ปล่อยไว้อย่างน้อย 2 นาที</li><li>ให้บัญชี TikTok ที่ 2 ปิดไลฟ์ แล้วสังเกตหน้า "หลายไลฟ์พร้อมกัน"</li><li>กด "ดูรายงาน" บนการ์ด แล้วกลับมากด × ("ปิดประกาศ")</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ขึ้นการ์ด "หยุดเก็บ 1 ไลฟ์" + "แอปหยุดเก็บให้เอง · กด × เมื่อรับทราบ" แทนการ์ด "จบแล้ว" แบบเดิม</li><li>แถวของไลฟ์บอกเหตุผล "ไลฟ์จบแล้ว บันทึกเรียบร้อย" · ระหว่างบันทึกรายงานปุ่มขึ้น "กำลังบันทึกรายงาน…" แล้วเปลี่ยนเป็น "ดูรายงาน" (ไลฟ์ที่สั้นเกินไปขึ้น "สั้นเกินไป จึงไม่มีรายงาน")</li><li>กด "ดูรายงาน" แล้วเปิดรายงานของไลฟ์นั้นได้ · กด × แล้วการ์ดหายไป</li></ul><div class="hint" style="margin-top:6px">ที่มา: TI-586 (การ์ดแจ้งไลฟ์ที่แอปหยุดเอง) · ตรวจโค้ด origin/uat 7c26b9fe (5 ต.ค.)</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
   <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
@@ -2861,7 +2867,7 @@ td.status-win{white-space:nowrap}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>ไปที่เมนู "เซสชัน" กด "วิเคราะห์ไลฟ์ใหม่" วางลิงก์ไลฟ์ TikTok ที่กำลังออกอากาศ กด "เปิดดูไลฟ์" แล้วตั้งชื่อเซสชันและกด "เริ่มบันทึก"</li><li>ในหน้าเว็บ TikTok ของแอป กดชื่อร้านเพื่อไปหน้าโปรไฟล์ (@ชื่อร้าน) หรือหน้าวิดีโอของร้าน แล้วเริ่มจับเวลา</li><li>รอประมาณ 1 นาทีโดยไม่กลับหน้าไลฟ์ แล้วสังเกตแบนเนอร์</li><li>รอต่อจนครบ 3 นาที แล้วสังเกตหน้าบันทึกและหน้า "หลายไลฟ์พร้อมกัน"</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ประมาณ 1 นาที ขึ้นแบนเนอร์ "ออกจากหน้าไลฟ์แล้ว ระบบจึงยังไม่ได้เก็บคอมเมนต์ในช่วงนี้ — กลับไปหน้าไลฟ์เพื่อเก็บต่อ ถ้าไม่กลับภายใน 2 นาที ระบบจะหยุดและบันทึกเซสชันให้เอง" และกล่องไลฟ์มีป้าย "ออกจากหน้าไลฟ์แล้ว"</li><li>ครบประมาณ 3 นาที ระบบหยุดเก็บและบันทึกเซสชัน ขึ้น "ออกจากหน้าไลฟ์เกิน 3 นาที ระบบจึงหยุดเก็บและบันทึกไว้แล้ว — ถ้าไลฟ์นี้ยังออกอากาศอยู่ เปิดใหม่ได้จากหน้าหลายไลฟ์"</li><li>หน้า "หลายไลฟ์พร้อมกัน" มีการ์ดเหตุผล "ออกจากหน้าไลฟ์เกิน 3 นาที จึงหยุดเก็บ ไลฟ์นี้อาจยังออกอากาศอยู่" พร้อมปุ่ม "เปิดอีกครั้ง"</li><li>ถ้ากลับหน้าไลฟ์ก่อนครบ 3 นาที ระบบเก็บต่อและไม่หยุด</li></ul><div class="hint" style="margin-top:6px">ที่มา: TI-583 (หน้าโปรไฟล์/วิดีโอของร้านนับเป็นออกจากหน้าไลฟ์) · TI-586 (เหตุผล noChannel) · ตรวจโค้ด origin/uat 7c26b9fe (5 ต.ค.)</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
   <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
@@ -2902,7 +2908,7 @@ td.status-win{white-space:nowrap}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>ไปที่เมนู "เซสชัน" กด "วิเคราะห์ไลฟ์ใหม่" วางลิงก์ไลฟ์ TikTok ที่กำลังออกอากาศ กด "เปิดดูไลฟ์" แล้วตั้งชื่อเซสชันและกด "เริ่มบันทึก" (ไลฟ์ที่ออกอากาศต่อเนื่องอย่างน้อย 5 นาที)</li><li>กดไปเมนู "หน้าหลัก" ทิ้งไว้ 1 นาที</li><li>สังเกตป้าย "กำลังบันทึก n ไลฟ์" ที่เมนู แล้วเปิดเมนู "หลายไลฟ์พร้อมกัน"</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ป้าย "กำลังบันทึก 1 ไลฟ์" ยังอยู่ และไลฟ์ยังถูกเก็บต่อในหน้า "หลายไลฟ์พร้อมกัน"</li><li>ไม่ถูกตัดสินว่า "ไลฟ์จบแล้ว" หลังออกจากหน้าบันทึก และไม่มีการ์ด "หยุดเก็บ" ของไลฟ์นี้</li></ul><div class="hint" style="margin-top:6px">ที่มา: TI-568 (ไลฟ์ที่ยังออกอากาศไม่ถูกหยุดเพราะไม่มีใครดู · owner ruling D1) · ตรวจโค้ด origin/uat 7c26b9fe (5 ต.ค.)</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
   <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
@@ -2943,7 +2949,7 @@ td.status-win{white-space:nowrap}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>ไปที่เมนู "เซสชัน" กด "วิเคราะห์ไลฟ์ใหม่" วางลิงก์ไลฟ์ TikTok ที่กำลังออกอากาศ กด "เปิดดูไลฟ์" แล้วรอจนวิดีโอเล่น</li><li>ตั้งชื่อเซสชันแล้วกด "เริ่มบันทึก" พร้อมสังเกตวิดีโอในจอ</li><li>ดูต่อ 1 นาที แล้วสังเกตวิดีโอและแผงคอมเมนต์</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>วิดีโอเล่นต่อเนื่องตอนกด "เริ่มบันทึก" ไม่กระพริบ ไม่โหลดหน้า TikTok ใหม่ และไม่เป็นหน้าว่าง</li><li>เซสชันไม่ถูกตัดสินว่า "ไลฟ์จบแล้ว" ในช่วงแรก และคอมเมนต์เริ่มขึ้นในแผงคอมเมนต์</li></ul><div class="hint" style="margin-top:6px">ที่มา: TI-591 (QA r01 · Windows: กดบันทึกแล้ว TikTok ตอบหน้าว่างและไลฟ์ที่ยังออกอากาศถูกตัดจบใน 15 วิ) · ตรวจโค้ด origin/uat 7c26b9fe (5 ต.ค.)</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
   <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
@@ -2985,7 +2991,7 @@ td.status-win{white-space:nowrap}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT (เปิดแอปตาม Precondition)</li><li>ไปที่เมนู "เซสชัน" กด "วิเคราะห์ไลฟ์ใหม่" วางลิงก์ไลฟ์ TikTok ที่กำลังออกอากาศ กด "เปิดดูไลฟ์" แล้วตั้งชื่อเซสชันและกด "เริ่มบันทึก"</li><li>รอ 15–30 วินาที แล้วสังเกตหน้าบันทึกและกล่องไลฟ์ในเมนู "หลายไลฟ์พร้อมกัน"</li><li>กลับหน้าบันทึกแล้วกด "โหลดหน้าไลฟ์ใหม่" และสังเกตจนได้ภาพ</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ขึ้นแบนเนอร์ "TikTok ยังไม่ส่งหน้าไลฟ์มาให้ จึงยังเก็บคอมเมนต์และภาพไม่ได้ — ระบบจะลองโหลดใหม่ให้เองเป็นระยะ · ไลฟ์ของคุณยังออกอากาศตามปกติ" พร้อมปุ่ม "โหลดหน้าไลฟ์ใหม่"</li><li>กล่องไลฟ์ในหน้า "หลายไลฟ์พร้อมกัน" มีป้าย "ยังไม่ได้ภาพ"</li><li>เซสชันไม่ถูกหยุดหรือตัดสินว่า "ไลฟ์จบแล้ว" ระหว่างที่ยังไม่ได้ภาพ</li><li>เมื่อได้ภาพแล้ว แบนเนอร์และป้ายหายเอง และคอมเมนต์เริ่มไหล</li></ul><div class="hint" style="margin-top:6px">ที่มา: TI-591 (owner rulings R1/R2 · โหลดใหม่เองที่ 30 วิ, 60 วิ แล้วทุก 120 วิ) · ตรวจโค้ด origin/uat 7c26b9fe (5 ต.ค.)</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
   <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
@@ -3026,7 +3032,7 @@ td.status-win{white-space:nowrap}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>ไปที่เมนู "เซสชัน" กด "วิเคราะห์ไลฟ์ใหม่" วางลิงก์ไลฟ์ของบัญชี TikTok ที่ 2 แล้วกด "เปิดดูไลฟ์"</li><li>ให้บัญชี TikTok ที่ 2 ปิดไลฟ์ รอจนหน้าเว็บขึ้นว่าไลฟ์จบ แล้วตั้งชื่อเซสชันและกด "เริ่มบันทึก"</li><li>สังเกตข้อความ แล้วเปิดเมนู "เซสชัน"</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ไม่เริ่มบันทึก ขึ้น "ยังไม่ได้เปิดหน้าไลฟ์ของช่องที่ต้องการ หรือไลฟ์จบแล้ว — เปิดหน้าไลฟ์ของช่องนั้นโดยตรง (ไม่ใช่หน้ารวมไลฟ์) แล้วลองใหม่ · ถ้าเพิ่งเปลี่ยนห้องภายในหน้าเว็บ ให้กดรีเฟรชก่อน"</li><li>หน้า "เซสชัน" ไม่มีเซสชันว่างของไลฟ์นี้เกิดขึ้น</li></ul><div class="hint" style="margin-top:6px">ที่มา: TI-570 (ไม่เริ่มบันทึกบนห้องที่รู้ว่าจบแล้ว · owner ruling D3) · ตรวจโค้ด origin/uat 7c26b9fe (5 ต.ค.)</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
   <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
@@ -3067,7 +3073,7 @@ td.status-win{white-space:nowrap}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>เปิดโปรแกรมที่ใช้เครื่องหนัก (เช่นเล่นวิดีโอ 4K หลายหน้าต่าง) จนแถบทรัพยากรด้านบนหน้า "หลายไลฟ์พร้อมกัน" ขึ้นเตือน</li><li>ไปที่เมนู "หลายไลฟ์พร้อมกัน" วางลิงก์ไลฟ์ใหม่แล้วกด "เปิดดูไลฟ์"</li><li>สังเกตข้อความใต้ช่องลิงก์และตัวนับ "x / y เซสชัน"</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ข้อความใต้ช่องลิงก์ใช้ประโยคเดียวกับแถบทรัพยากร เช่น "ทรัพยากรเครื่องไม่พอสำหรับเปิดไลฟ์เพิ่ม — ลองปิดแอปอื่น หรือรอสักครู่แล้วลองใหม่" หรือ "การ์ดจอทำงานหนักเกินกว่าจะเปิดไลฟ์เพิ่ม — นับรวมแอปอื่นด้วย ลองปิดแอปที่เล่นวิดีโออยู่แล้วลองใหม่"</li><li>ไม่ขึ้น "เก็บไลฟ์พร้อมกันได้สูงสุด … ไลฟ์แล้ว …" ถ้ายังไม่ถึงเพดานแพ็กเกจ</li><li>ตัวหารของตัวนับ "x / y เซสชัน" เป็นเพดานแพ็กเกจ ไม่ลดลงตามสภาพเครื่อง</li></ul><div class="hint" style="margin-top:6px">ที่มา: TI-586 (ข้อความเพิ่มไลฟ์ไม่ได้บอกเหตุผลจริง · ตัวนับใช้เพดานแพ็กเกจ) · ตรวจโค้ด origin/uat 7c26b9fe (5 ต.ค.)</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
   <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
@@ -3110,7 +3116,7 @@ td.status-win{white-space:nowrap}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>ไปที่เมนู "เซสชัน" แล้วเปิดไลฟ์ที่บันทึกจบแล้วซึ่งมี "AI Summary · สรุปไลฟ์นี้" อยู่แล้ว</li><li>กด "สรุปใหม่" แล้วกด "ไม่ต้อง"</li><li>กด "สรุปใหม่" อีกครั้งแล้วกด "แทนที่เลย" และสังเกตการ์ด</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ขึ้น popup "สรุปไลฟ์นี้ใหม่?" + "สรุปใหม่จะแทนที่สรุปเดิม และล้างคะแนนที่คุณให้ไว้ · จะเรียกผู้ให้บริการ AI อีกหนึ่งครั้งด้วย key ของคุณ" พร้อมปุ่ม "แทนที่เลย" / "ไม่ต้อง"</li><li>กด "ไม่ต้อง" แล้วสรุปเดิมอยู่ครบ ไม่มี "กำลังสรุป…"</li><li>กด "แทนที่เลย" แล้วขึ้น "กำลังสรุป…" ได้สรุปใหม่แทนของเดิม และคะแนน 👍/👎 ที่เคยให้ถูกล้าง</li></ul><div class="hint" style="margin-top:6px">ที่มา: TI-534 + TI-536 · owner ruling 2026-09-29 (popup แทนที่แบบเดียวกันทุกการ์ด AI) · ตรวจโค้ด origin/uat 7c26b9fe (5 ต.ค.)</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
   <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
@@ -3152,7 +3158,7 @@ td.status-win{white-space:nowrap}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>ไปที่เมนู "เซสชัน" เปิดไลฟ์ที่มีข้อความ AI ครบ แล้วกด "เขียนใหม่" ที่ "AI Narrative · เล่าเรื่องไลฟ์นี้" · "แนะนำใหม่" ที่ "AI Coach · สิ่งที่ควรทำไลฟ์หน้า" · "สรุปใหม่" ที่ "สรุปบทพูดโดย AI" โดยกด "ไม่ต้อง" ทุกครั้ง</li><li>ไปที่ "แดชบอร์ดแบรนด์" กด "สรุปใหม่" ที่ AI HIGHLIGHT และ "เขียนใหม่" ที่ AI NARRATIVE โดยกด "ไม่ต้อง" ทุกครั้ง</li><li>ไปที่ "AI Insights" กด "เขียนใหม่" ที่ชุดการ์ด แล้วกด "ไม่ต้อง" และสังเกตหัว popup ของทุกการ์ด</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>หัว popup ตรงกับการ์ด: AI Narrative "เขียนย่อหน้านี้ใหม่?" · AI Coach "ขอคำแนะนำใหม่?" · สรุปบทพูด "สรุปบทพูดใหม่?" · AI HIGHLIGHT "สรุปประโยคนี้ใหม่?" · AI NARRATIVE (แดชบอร์ดแบรนด์) "เขียนย่อหน้านี้ใหม่?" · AI Insights "เขียนการ์ดชุดนี้ใหม่?"</li><li>ทุก popup มีปุ่ม "แทนที่เลย" / "ไม่ต้อง" และบอกว่า "จะเรียกผู้ให้บริการ AI อีกหนึ่งครั้งด้วย key ของคุณ"</li><li>กด "ไม่ต้อง" แล้วข้อความเดิมของทุกการ์ดอยู่ครบ</li></ul><div class="hint" style="margin-top:6px">ที่มา: TI-534 + TI-536 · owner ruling 2026-09-29 · ตรวจโค้ด origin/uat 7c26b9fe (5 ต.ค.)</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
   <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
@@ -3194,7 +3200,7 @@ td.status-win{white-space:nowrap}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>ไปที่เมนู "เซสชัน" แล้วเปิดไลฟ์ที่มี "AI Summary · สรุปไลฟ์นี้" อยู่แล้ว</li><li>ปิด Wi-Fi/ถอดสายแลน กด "สรุปใหม่" แล้วกด "แทนที่เลย" รอจนการ์ดขึ้นสถานะผิดพลาดพร้อมปุ่ม "ลองใหม่"</li><li>เปิดอินเทอร์เน็ตกลับ แล้วกด "ลองใหม่" และสังเกต</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ระหว่างที่สร้างไม่สำเร็จ สรุปเดิมยังแสดงอยู่</li><li>กด "ลองใหม่" แล้วขึ้น popup "สรุปไลฟ์นี้ใหม่?" ก่อน ไม่สร้างใหม่ทันที · กด "แทนที่เลย" แล้วจึงสร้างสรุปใหม่</li><li>การ์ดที่ยังไม่มีข้อความ กด "ลองใหม่" แล้วสร้างทันทีเหมือนเดิม (ไม่มี popup)</li></ul><div class="hint" style="margin-top:6px">ที่มา: TI-585 · owner ruling 2026-10-02 (กลับคำตัดสิน 29 ก.ย. — รวมสรุปบทพูด) · ตรวจโค้ด origin/uat 7c26b9fe (5 ต.ค.)</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
   <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
@@ -3236,7 +3242,7 @@ td.status-win{white-space:nowrap}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>กดรูปโปรไฟล์ ("โปรไฟล์และบัญชี") ที่ท้ายแถบเมนูซ้าย แล้วเลือก "ผู้ให้บริการ AI" เลือก OpenRouter บันทึก key และเลือกโมเดล "Gemini 3.8 Flash"</li><li>ไปที่เมนู "เซสชัน" เปิดไลฟ์ที่บันทึกจบแล้ว กด "ขอคำแนะนำจาก AI" (ถ้ามีคำแนะนำอยู่แล้ว กด "แนะนำใหม่" → "แทนที่เลย")</li><li>ไปที่ "แดชบอร์ดแบรนด์" กด "สรุปด้วย AI" ที่ AI HIGHLIGHT แล้วสังเกตผลทั้งสองการ์ด</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>AI Coach ได้คำแนะนำครบ ไม่ถูกตัดกลางบรรทัด</li><li>AI HIGHLIGHT ได้สรุปเป็นประโยคเดียว</li><li>ไม่ขึ้น "คำตอบของ AI รอบนี้ใช้ไม่ได้" (ก่อนแก้ขึ้นทุกครั้งกับโมเดลนี้) · ถ้าคำตอบไม่ผ่านการตรวจของแอปจริง ต้องขึ้นสถานะนี้พร้อม "ลองใหม่" ไม่ใช่ error ดิบ</li></ul><div class="hint" style="margin-top:6px">ที่มา: TI-592 (QA M-01 · reasoning low เฉพาะ Gemini) · TI-572 (สถานะ answer_unusable · owner ruling T3 2026-09-29) · ตรวจโค้ด origin/uat 7c26b9fe (5 ต.ค.)</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
   <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
@@ -3277,7 +3283,7 @@ td.status-win{white-space:nowrap}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>ไปที่เมนู "แดชบอร์ดแบรนด์"</li><li>สังเกตลำดับการ์ดจากบนลงล่าง และข้อความใต้ย่อหน้าของ AI NARRATIVE</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>การ์ด AI NARRATIVE (ปุ่ม "เขียนสรุปช่วงนี้ด้วย AI") อยู่ถัดจากการ์ด AI HIGHLIGHT (ปุ่ม "สรุปด้วย AI") ทันที และอยู่ก่อนการ์ดตัวเลข</li><li>ข้อความใต้ย่อหน้าเขียนว่า "เขียนจากตัวเลขรวมของ workspace ณ เวลาที่เขียน การ์ดตัวเลขด้านล่างอาจอัปเดตหลังจากนั้น · …"</li></ul><div class="hint" style="margin-top:6px">ที่มา: PR #655 (ย้ายการ์ด "เขียนสรุปช่วงนี้ด้วย AI" ขึ้นไปไว้ใต้ "สรุปด้วย AI") · ตรวจโค้ด origin/uat 7c26b9fe (5 ต.ค.)</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
   <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
@@ -3320,7 +3326,7 @@ td.status-win{white-space:nowrap}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>กดรูปโปรไฟล์ ("โปรไฟล์และบัญชี") ที่ท้ายแถบเมนูซ้าย แล้วเลือก "ความเป็นส่วนตัว" (หน้า "ความยินยอมของคุณ")</li><li>ที่ "การอ่านอารมณ์จากสีหน้า" กด "ให้ความยินยอม" อ่านข้อความในกล่องแล้วกดยืนยัน ทำแบบเดียวกันกับ "ฟังเสียงพูดระหว่างไลฟ์"</li><li>กด "ถอน" ที่ "การอ่านอารมณ์จากสีหน้า" แล้วกด "ถอนความยินยอม" และสังเกตข้อความที่ขึ้น</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>กล่อง "ให้ความยินยอม: …?" ของกล้องแสดงผลของการให้ "เปิดการอ่านอารมณ์แบบเรียลไทม์ · ตัวเลขอารมณ์ถูกเก็บไว้ในเครื่องนี้เพื่อดูย้อนหลัง …" และของเสียงแสดง "ฟังเสียงพูดในไลฟ์แล้วถอดเป็นข้อความในเครื่อง …"</li><li>ไม่มีประโยคของการถอน (เช่น "เซสชันถัดไปจะเป็นโหมดคอมเมนต์อย่างเดียว") ในกล่องให้ความยินยอม</li><li>ไม่มีข้อความ "ลบได้ทุกเมื่อ · ภายใน 7 วัน" หรือ "ไม่มีเงื่อนไข" ทั้งในกล่องนี้และกล่อง "ยังลังเลอยู่ไหม?"</li><li>หลังถอนขึ้น "ถอนความยินยอมแล้ว · ข้อมูลบน cloud จะถูกลบภายใน 7 วัน"</li></ul><div class="hint" style="margin-top:6px">ที่มา: TI-582 + TI-554 · spec-ti-582-554-grant-dialog-consent-copy · ตรวจโค้ด origin/uat 7c26b9fe (5 ต.ค.)</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
   <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
@@ -3361,7 +3367,7 @@ td.status-win{white-space:nowrap}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>ไปที่เมนู "เซสชัน" กด "วิเคราะห์ไลฟ์ใหม่" วางลิงก์ไลฟ์ TikTok ที่กำลังออกอากาศ กด "เปิดดูไลฟ์" แล้วตั้งชื่อเซสชันและกด "เริ่มบันทึก"</li><li>ระหว่างบันทึก กดรูปโปรไฟล์ ("โปรไฟล์และบัญชี") ที่ท้ายแถบเมนูซ้าย แล้วเลือก "ความเป็นส่วนตัว" (หน้า "ความยินยอมของคุณ") แล้วกด "ถอน" ที่ "การอ่านอารมณ์จากสีหน้า" และกด "ถอนความยินยอม"</li><li>กลับไปหน้าบันทึก ให้บัญชี TikTok ที่ 2 พิมพ์คอมเมนต์ 3–5 ข้อความ แล้วสังเกตแผงคอมเมนต์</li><li>หยุดบันทึก แล้วเปิดรายงานของไลฟ์นี้จากเมนู "เซสชัน"</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>คอมเมนต์ที่พิมพ์หลังถอนขึ้นในแผงคอมเมนต์พร้อมข้อความครบ ไม่เป็นแถวว่าง</li><li>รายงานหลังไลฟ์นับคอมเมนต์ช่วงหลังถอนครบ โดยไม่ต้องปิด-เปิดแอปใหม่</li></ul><div class="hint" style="margin-top:6px">ที่มา: TI-578 · owner ruling 2026-09-30 (ก่อนแก้: คอมเมนต์หลังถอนหายข้อความ 12/12) · ตรวจโค้ด origin/uat 7c26b9fe (5 ต.ค.)</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
   <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
@@ -3404,7 +3410,7 @@ td.status-win{white-space:nowrap}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT (ยังไม่ได้เปิดติดตามไลฟ์ใด)</li><li>กดรูปโปรไฟล์ ("โปรไฟล์และบัญชี") ที่ท้ายแถบเมนูซ้าย แล้วกด "ตรวจหาอัปเดต" และอ่านการ์ดที่ขึ้น</li><li>กด "ดาวน์โหลด" แล้วสังเกตการ์ดระหว่างดาวน์โหลด จากนั้นกด "หยุดดาวน์โหลด"</li><li>กด "ดาวน์โหลด" อีกครั้งแล้วรอจนเสร็จ และสังเกตการ์ด</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>การ์ด "มีเวอร์ชันใหม่ …" บอก "ขนาดประมาณ … · การดาวน์โหลดใช้อินเทอร์เน็ตมาก …" และยังไม่ดาวน์โหลดจนกว่าจะกด "ดาวน์โหลด"</li><li>ระหว่างดาวน์โหลดขึ้น "กำลังดาวน์โหลดเวอร์ชัน …" พร้อมแถบความคืบหน้า "… จาก …" เวลาที่เหลือ ("อีกประมาณ n นาที" / "อีกไม่ถึง 1 นาที") และปุ่ม "หยุดดาวน์โหลด"</li><li>กด "หยุดดาวน์โหลด" แล้วขึ้น "กำลังหยุดดาวน์โหลด…" และการ์ดกลับมาให้กด "ดาวน์โหลด" ใหม่</li><li>ดาวน์โหลดเสร็จแล้วการ์ดถามให้ติดตั้ง แอปไม่รีสตาร์ทเอง</li></ul><div class="hint" style="margin-top:6px">ที่มา: TI-567 · owner rulings 1–7 (Jira TI-567 comment 48787) · เหมือนกันทั้ง Mac และ Windows · ตรวจโค้ด origin/uat 7c26b9fe (5 ต.ค.)</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
   <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
@@ -3446,7 +3452,7 @@ td.status-win{white-space:nowrap}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>ไปที่เมนู "เซสชัน" กด "วิเคราะห์ไลฟ์ใหม่" วางลิงก์ไลฟ์ TikTok ที่กำลังออกอากาศ กด "เปิดดูไลฟ์" แล้วตั้งชื่อเซสชันและกด "เริ่มบันทึก" แล้วกดรูปโปรไฟล์ ("โปรไฟล์และบัญชี") ที่ท้ายแถบเมนูซ้าย กด "ตรวจหาอัปเดต" และอ่านการ์ด</li><li>หยุดบันทึกไลฟ์ สังเกตการ์ด แล้วกด "ดาวน์โหลด"</li><li>ระหว่างดาวน์โหลด เริ่มบันทึกไลฟ์ใหม่ แล้วสังเกตการ์ดและวิดีโอไลฟ์</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>ระหว่างติดตามไลฟ์ การ์ดบอก "กำลังติดตามไลฟ์ … อยู่ — จะดาวน์โหลดได้หลังหยุดติดตาม …" ไม่มีปุ่ม "ดาวน์โหลด" มีแค่ "เตือนเมื่อไลฟ์จบ"</li><li>หยุดติดตามแล้วการ์ดเปลี่ยนเป็น "ตอนนี้ไม่มีไลฟ์ที่ติดตามอยู่แล้ว — ดาวน์โหลดได้เลย …"</li><li>เริ่มไลฟ์กลางการดาวน์โหลดแล้ว ภายในราว 1 วินาทีขึ้น "หยุดดาวน์โหลดแล้ว" + "… หลังหยุดติดตามต้องกดดาวน์โหลดใหม่ และจะเริ่มตั้งแต่ต้น" และไลฟ์ไม่กระตุก</li></ul><div class="hint" style="margin-top:6px">ที่มา: TI-567 · owner rulings 1–7 · ตรวจโค้ด origin/uat 7c26b9fe (5 ต.ค.)</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
   <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
@@ -3489,7 +3495,7 @@ td.status-win{white-space:nowrap}
   <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชี UAT</li><li>ไปที่เมนู "เซสชัน" แล้วเปิดไลฟ์ตาม Precondition</li><li>เลื่อนดูส่วน "คำที่พบบ่อย" · "คำเด่นในคอมเมนต์" · "คอมเมนต์ที่ควรระวัง"</li><li>ชี้เมาส์ที่ชิปคำที่ถูกตัดท้าย แล้วสังเกต</li></ol></div>
   <div class="grid">
     <div class="sec"><h4>Expected Result</h4><ul><li>หน้าไม่มีแถบเลื่อนแนวนอน ชิปคำไม่กว้างเกินการ์ด</li><li>คำยาวถูกตัดท้ายด้วย … และยังเห็นจำนวนครั้ง (n) เสมอ · ชี้เมาส์แล้วเห็นคำเต็ม</li><li>คำที่ยาวเกิน 20 ตัวอักษรไม่ขึ้นเป็นชิปใน "คำที่พบบ่อย"</li><li>ข้อความใน "คอมเมนต์ที่ควรระวัง" ตัดขึ้นบรรทัดใหม่ภายในการ์ด</li></ul><div class="hint" style="margin-top:6px">ที่มา: TI-484 (กฎเดียวกับคำเด่นในคอมเมนต์ TI-352 R1) · ตรวจโค้ด origin/uat 7c26b9fe (5 ต.ค.)</div></div>
-    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
   </div>
   <div class="sec"><h4>Status</h4>
   <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
@@ -3549,13 +3555,15 @@ Object.keys(store).forEach(function(uid) {
   var opt = document.querySelector('.opt[data-uid="' + uid + '"][data-st="' + st + '"]');
   if (opt) opt.classList.add('sel');
   // also restore actual result text
-  if (store[uid].actual) {
+  if (store[uid].actual || store[uid].actualw) {
     var boxes = document.querySelectorAll('tr.detail');
     boxes.forEach(function(d) {
       var badge = d.querySelector('.opt[data-uid="' + uid + '"]');
       if (!badge) return;
-      var box = d.querySelector('.actualbox');
-      if (box) { box.value = store[uid].actual; box.classList.add('filled'); }
+      d.querySelectorAll('.actualbox').forEach(function(box) {
+        var field = box.dataset.os === 'win' ? 'actualw' : 'actual';
+        if (store[uid][field]) { box.value = store[uid][field]; box.classList.add('filled'); }
+      });
     });
   }
 });
@@ -3622,12 +3630,13 @@ document.querySelectorAll('.actualbox').forEach(function(box) {
     var opts = box.closest('tr.detail').querySelectorAll('.opt');
     if (!opts.length) return;
     var uid = opts[0].dataset.uid;
+    var field = box.dataset.os === 'win' ? 'actualw' : 'actual';
     var txt = box.value.trim();
-    var prev = (store[uid] && store[uid].actual) || '';
+    var prev = (store[uid] && store[uid][field]) || '';
     if (txt === prev) return;   // nothing typed → don't dirty the file
     store[uid] = store[uid] || {};
-    if (txt) { store[uid].actual = txt; }
-    else { delete store[uid].actual; if (!Object.keys(store[uid]).length) delete store[uid]; }
+    if (txt) { store[uid][field] = txt; }
+    else { delete store[uid][field]; if (!Object.keys(store[uid]).length) delete store[uid]; }
     save();
     markDirty();
   });
@@ -3777,7 +3786,18 @@ async function publishToGH(auto) {
       if (r.status === 401) { localStorage.removeItem('gh_pat'); }
       throw new Error('ดึงไฟล์ไม่ได้ (HTTP ' + r.status + ') — ตรวจ token หรือ branch');
     }
-    return r.json();
+    var j = await r.json();
+    if (!j.content && j.sha) {
+      var rr = await fetch(
+        API + '?ref=' + GH_BRANCH + '&t=' + Date.now(),
+        { cache: 'no-store', headers: { Authorization: 'token ' + token, Accept: 'application/vnd.github.raw' } }
+      );
+      if (!rr.ok) throw new Error('ดึงไฟล์ไม่ได้ (HTTP ' + rr.status + ') — ลองบันทึกใหม่อีกครั้ง');
+      var raw = await rr.text();
+      if (!/<script id="store-data"/.test(raw)) throw new Error('ไฟล์บน GitHub อ่านไม่ครบ — ยังไม่บันทึก ลองใหม่อีกครั้ง');
+      j.content = btoa(unescape(encodeURIComponent(raw)));
+    }
+    return j;
   }
 
   // Merge statuses that exist on the remote copy but NOT locally, so a

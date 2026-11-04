@@ -243,6 +243,8 @@ td.status-win{white-space:nowrap}
 .optw.sel.hold{background:var(--hold);color:#fff}
 .optw.sel.block{background:var(--block);color:#fff}
 .optw.sel.skip{background:var(--skip);color:#fff}
+.actual-os-lbl{font-size:10px;font-weight:800;color:#475569;margin:9px 0 3px}
+.actual-os-lbl.first{margin-top:2px}
 """
 OS_JS = """
 <script>
@@ -343,6 +345,14 @@ def add_os_cols(out):
                 '  </div>')
     out = re.sub(r'  <div class="sec"><h4>Status</h4><div class="statusrow">\n((?:    <span class="opt [^\n]*\n)+)  </div></div>',
                  two_rows, out)
+    # แยกช่อง Actual Result เป็น 🍎 Mac (store[uid].actual) / 🪟 Windows (store[uid].actualw)
+    out = out.replace(
+        '<div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>',
+        '<div class="sec"><h4>Actual Result</h4>'
+        '<div class="actual-os-lbl first">🍎 Mac</div>'
+        '<textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea>'
+        '<div class="actual-os-lbl">🪟 Windows</div>'
+        '<textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>')
     out = out.replace('</style>', OS_CSS + '</style>', 1)
     i = out.rfind('</body>')
     return out[:i] + OS_JS + out[i:] if i != -1 else out + OS_JS
@@ -389,6 +399,47 @@ def build():
     for needle in ("var GH_PATH   = '" + OUT_REL, META['download'], "kind: new Set()", "filters.kind.has", "filters.ui.has",
                    "Accept: 'application/vnd.github.raw'"):
         assert needle in js, f'patch failed: {needle}'
+
+    # ── แยก Actual Result เป็น Mac (store[uid].actual) / Windows (store[uid].actualw) ──
+    # textarea แต่ละใบมี data-os ("mac"/"win"); รายงานช่องเดียว (ไม่มี data-os) = Mac/actual เหมือนเดิม
+    js = js.replace(
+        "  if (store[uid].actual) {\n"
+        "    var boxes = document.querySelectorAll('tr.detail');\n"
+        "    boxes.forEach(function(d) {\n"
+        "      var badge = d.querySelector('.opt[data-uid=\"' + uid + '\"]');\n"
+        "      if (!badge) return;\n"
+        "      var box = d.querySelector('.actualbox');\n"
+        "      if (box) { box.value = store[uid].actual; box.classList.add('filled'); }\n"
+        "    });\n"
+        "  }\n",
+        "  if (store[uid].actual || store[uid].actualw) {\n"
+        "    var boxes = document.querySelectorAll('tr.detail');\n"
+        "    boxes.forEach(function(d) {\n"
+        "      var badge = d.querySelector('.opt[data-uid=\"' + uid + '\"]');\n"
+        "      if (!badge) return;\n"
+        "      d.querySelectorAll('.actualbox').forEach(function(box) {\n"
+        "        var field = box.dataset.os === 'win' ? 'actualw' : 'actual';\n"
+        "        if (store[uid][field]) { box.value = store[uid][field]; box.classList.add('filled'); }\n"
+        "      });\n"
+        "    });\n"
+        "  }\n")
+    js = js.replace(
+        "    var uid = opts[0].dataset.uid;\n"
+        "    var txt = box.value.trim();\n"
+        "    var prev = (store[uid] && store[uid].actual) || '';\n"
+        "    if (txt === prev) return;   // nothing typed → don't dirty the file\n"
+        "    store[uid] = store[uid] || {};\n"
+        "    if (txt) { store[uid].actual = txt; }\n"
+        "    else { delete store[uid].actual; if (!Object.keys(store[uid]).length) delete store[uid]; }\n",
+        "    var uid = opts[0].dataset.uid;\n"
+        "    var field = box.dataset.os === 'win' ? 'actualw' : 'actual';\n"
+        "    var txt = box.value.trim();\n"
+        "    var prev = (store[uid] && store[uid][field]) || '';\n"
+        "    if (txt === prev) return;   // nothing typed → don't dirty the file\n"
+        "    store[uid] = store[uid] || {};\n"
+        "    if (txt) { store[uid][field] = txt; }\n"
+        "    else { delete store[uid][field]; if (!Object.keys(store[uid]).length) delete store[uid]; }\n")
+    assert js.count("box.dataset.os === 'win' ? 'actualw' : 'actual'") == 2, 'actual-os JS patch failed'
 
     # เก็บ store-data เดิมถ้ามีไฟล์อยู่แล้ว
     store = '{}'
