@@ -71,6 +71,8 @@ repo นี้เก็บรายงาน manual test case (UI) ของท�
 >
 > **takra-ai UI ใหม่ แบ่งตามเมนู** (30 ต.ค. 2026) — redesign TAKRA-1500/1586 · โค้ด origin/uat @ d20046bc → อัปเดต 2 พ.ย. ตาม develop @ 60d0d782 (= uat 353b32fa · +12 เคส) · 17 เมนูตามแถบซ้ายใหม่ + เมนู "🎯 คุณภาพไลฟ์" (45 เคสไลฟ์จริงตัดสินจากจอผู้ชม · QAV/QAC/QAR · เกณฑ์ตัวเลขเดียวกับกลุ่ม Q ของ aidesktop เดิม) · 452 เคส P0+P1 (ไม่มี P2) → 2 พ.ย. บ่าย เปลี่ยนให้ทดสอบในโปรแกรม Takra Live ทุกเคส ตัดเคสที่ต้องพิมพ์ URL/ใช้ DevTools บนเบราว์เซอร์ 25 เคส เหลือ 427 · ห้องคุมไลฟ์ระหว่างออกอากาศเปิดจากแอปบนเครื่อง B · ไฟล์ใหม่ (regaimenu เดิมคงไว้พร้อมผล) · เคสเก็บเป็น JSON ต่อกลุ่มที่ `tools/build/takra-ai-bymenu-sources/<CODE>.json` (เมนูเดียวกันแบ่งหลายไฟล์ได้ ตัวรวมต่อชุดให้) · uid ตรึงใน `uid_map.json` (21001–) id ใหม่ได้ uid ต่อท้ายเอง (`tools/build/ai_bymenu_ui_cases.py` → `python3 tools/build/build_hub_report.py aimenu`) — แก้เคสที่ JSON แล้ว build ใหม่ อย่าแก้ HTML ตรงๆ
 >
+> **takra-rerun แบนเนอร์โปรโมชันจาก Hub** (4 พ.ย. 2026) — TAK-836 · แถบบนหน้า "บัญชีไลฟ์" + หน้า "โปรโมชั่น / อะไรใหม่" · โค้ด develop @ 819183d0 · 17 เคส · os_cols · เคสที่ `tools/build/takra-rerun-banner-sources/cases.json` · uid 22501– (`tools/build/rerun_banner_cases.py` → `python3 tools/build/build_hub_report.py rerunbanner`) · ฝั่ง live อยู่ในชุด aimenu เมนูแดชบอร์ด TC-DASH-H (14 เคส)
+>
 > **takra-rerun คุณภาพ/ประสิทธิภาพการไลฟ์รีรัน** (9 ก.ย. 2026) — 14 เคส 3 รอบ อยู่ที่ `tools/build/rerun_quality_cases.py` → `python3 tools/build/build_hub_report.py rerunquality`
 >
 > **takra-insight Live Readiness** (9 ก.ย. 2026) — เคสคุณภาพข้าม epic 33 เคส 8 มิติ อยู่ที่ `tools/build/insight_live_readiness_cases.py` → `python3 tools/build/build_hub_report.py lrready`
