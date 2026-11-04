@@ -2,7 +2,7 @@
 """TAKRA Rerun — แบนเนอร์โปรโมชันจาก TAKRA Hub (TAK-836) · UI Manual Test Cases
 
 สั่ง 2026-11-04: ทำ test case เรื่องแบนเนอร์ของ live (takra-ai) และ rerun — ไฟล์นี้เป็นฝั่ง rerun
-(ฝั่ง live อยู่ในรายงาน "UI ใหม่ แบ่งตามเมนู" เมนู "แดชบอร์ด" ชุด TC-DASH-H.*)
+(ฝั่ง live เป็นชีตแยก: ai_banner_cases.py)
 - โค้ด: takra-rerun origin/develop @ 819183d0 (4 พ.ย. 2569) · ฟีเจอร์อยู่ใน uat แล้ว · web/src/features/promo/*
 - คำบนจอ = ภาษาไทยที่ฝังใน web/src/** (ไม่มี i18n)
 - ข้อมูลเคสอยู่ที่ tools/build/takra-rerun-banner-sources/cases.json · uid ตรึงด้วย uid_map.json (22501–)
