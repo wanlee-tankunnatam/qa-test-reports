@@ -156,17 +156,17 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <h1>📬 TAKRA Radar — หน้าจอที่ใช้ระบบคิว (หลังแก้ TKRD-520) · UI Manual Test Cases</h1>
   <div class="sub">เทส UI ด้วยมือ · เว็บ Trendora UAT · full loop ถึงระบบ aff (Realfactory UAT) · TKRD-520 (PR #395 · merge 0eb34b48) · full loop + หาบั๊ก UI (สถานะ · กดซ้ำ · มือถือ · ออฟไลน์ · aff ล่ม) · P0 + P1 · ตรวจผลทั้งฝั่ง Trendora และฝั่ง aff</div>
   <div class="meta">
-    <span class="pill">9 เคส + E2E 10 = 19</span>
-    <span class="pill">5 กลุ่ม (A–E)</span>
+    <span class="pill">10 เคส + E2E 17 = 27</span>
+    <span class="pill">6 กลุ่ม (A–F)</span>
     <span class="pill">UI + E2E · manual</span>
-    <span class="pill">P0 3 · P1 16 · P2 0</span>
-    <span class="pill">ประเภท: Happy 4 · Negative 7 · Boundary 1 · Validation 2 · Exception 4 · Permission 0 · Data 1</span>
+    <span class="pill">P0 4 · P1 23 · P2 0</span>
+    <span class="pill">ประเภท: Happy 6 · Negative 11 · Boundary 2 · Validation 3 · Exception 4 · Permission 0 · Data 1</span>
   </div>
 </header>
 
 <div class="wrap">
 
-  <div class="note-box">🖥️ <b>Test target:</b> เว็บ Trendora (takra-radar) UAT <b>https://uat-radar.takra.ai</b> (ล็อกอิน Cloudflare Access ก่อน) ต่อกับระบบ aff <b>Realfactory UAT</b><br>📬 <b>ทำไมต้องเทส:</b> <a href="https://kitdi.atlassian.net/browse/TKRD-520" target="_blank">TKRD-520</a> แก้เทสต์ของระบบคิว (pg-boss) — ชีตนี้ตรวจจากหน้าจอว่างานที่วิ่งผ่านคิวยังไปถึงปลายทางครบวง: ส่งยอดขาย/คืนเงินถึงระบบ aff · ขอข้อมูลใหม่ของสินค้าเฝ้าดู<br>🗺️ <b>เมนูที่กระทบ (งานที่ส่งผ่านระบบคิว):</b><br>&nbsp;• <b>Trendora ฝั่งลูกค้า:</b> "แพ็กเกจ" (ส่งสลิป → แจ้งเตือนแอดมิน · ตรวจสลิปอัตโนมัติ) · "ตั้งค่า" › การ์ด "ชวนเพื่อน" (เข้าร่วมค่าคอม → สร้างสมาชิกบนระบบ aff · ปุ่ม "ดูค่าคอม / ถอนเงิน") · "สินค้าที่บันทึกไว้" ("ขอข้อมูลใหม่")<br>&nbsp;• <b>Trendora โซนผู้ดูแลระบบ:</b> "แจ้งชำระเงิน" (อนุมัติ/ยกเลิกการอนุมัติ → ส่งยอดขาย/คืนเงินไประบบ aff · ใบเสร็จ) · "คำขอใบเสร็จ" · "ตรวจสลิปอัตโนมัติ" · "ค่าคอมชวนเพื่อน" ("ทดสอบการเชื่อมต่อ" · การ์ด "ค่าคอมต้องดูแล")<br>&nbsp;• <b>ระบบ aff (Realfactory UAT):</b> Project Admin โปรเจกต์ takra-radar หน้า "Orders" · "Audit Log" · สมาชิกผู้ชวน · พอร์ทัลค่าคอมของผู้ชวน — ชีตนี้เทสเส้นทางส่งยอดขาย/คืนเงิน + ขอข้อมูลใหม่ (happy path) ส่วนเมนูอื่นเทสในชีต TKRD-404 / MVP1<br>👥 <b>บัญชี:</b> เตรียมเหมือนชีต TKRD-404 (ผู้ชวน A พร้อมใช้งาน · ผู้ซื้อ B สมัครผ่านลิงก์ A · แอดมิน qa01) · ห้ามใช้บัญชี/สลิปที่คนอื่นกำลังทดสอบ (เช่น qa.radar.20261027.* / tkrd426-* ของ Gong)<br>📎 <b>ที่มา:</b> คำบนจอลอกจาก <code>packages/shared/src/messages/th-*.ts</code> + <code>apps/web/src</code> (ใช้ชุดเดียวกับชีต TKRD-404 / MVP1) · Expected ยึด Epic TKRD-404 + Story 5.9</div>
+  <div class="note-box">🖥️ <b>Test target:</b> เว็บ Trendora (takra-radar) UAT <b>https://uat-radar.takra.ai</b> (ล็อกอิน Cloudflare Access ก่อน) ต่อกับระบบ aff <b>Realfactory UAT</b><br>📬 <b>ทำไมต้องเทส:</b> <a href="https://kitdi.atlassian.net/browse/TKRD-520" target="_blank">TKRD-520</a> แก้เทสต์ของระบบคิว (pg-boss) — ชีตนี้ตรวจจากหน้าจอว่างานที่วิ่งผ่านคิวยังไปถึงปลายทางครบวง: ส่งยอดขาย/คืนเงินถึงระบบ aff · อัปไลน์/ดาวน์ไลน์ตอนสมัครสมาชิก · ขอข้อมูลใหม่ของสินค้าเฝ้าดู<br>🗺️ <b>เมนูที่กระทบ (งานที่ส่งผ่านระบบคิว):</b><br>&nbsp;• <b>Trendora ฝั่งลูกค้า:</b> "แพ็กเกจ" (ส่งสลิป → แจ้งเตือนแอดมิน · ตรวจสลิปอัตโนมัติ) · "ตั้งค่า" › การ์ด "ชวนเพื่อน" (สมัครสมาชิก/เข้าร่วมค่าคอม → สร้างสมาชิกบนระบบ aff พร้อมอัปไลน์ · ปุ่ม "ดูค่าคอม / ถอนเงิน") · "สินค้าที่บันทึกไว้" ("ขอข้อมูลใหม่")<br>&nbsp;• <b>Trendora โซนผู้ดูแลระบบ:</b> "แจ้งชำระเงิน" (อนุมัติ/ยกเลิกการอนุมัติ → ส่งยอดขาย/คืนเงินไประบบ aff · ใบเสร็จ) · "คำขอใบเสร็จ" · "ตรวจสลิปอัตโนมัติ" · "ค่าคอมชวนเพื่อน" ("ทดสอบการเชื่อมต่อ" · การ์ด "ค่าคอมต้องดูแล")<br>&nbsp;• <b>ระบบ aff (Realfactory UAT):</b> Project Admin โปรเจกต์ takra-radar หน้า "Orders" · "Audit Log" · สมาชิก + ผู้แนะนำ (อัปไลน์) · ดาวน์ไลน์ในพอร์ทัล · พอร์ทัลค่าคอมของผู้ชวน — ชีตนี้เทสเส้นทางส่งยอดขาย/คืนเงิน + ขอข้อมูลใหม่ (happy path) ส่วนเมนูอื่นเทสในชีต TKRD-404 / MVP1<br>👥 <b>บัญชี:</b> เตรียมเหมือนชีต TKRD-404 (ผู้ชวน A พร้อมใช้งาน · ผู้ซื้อ B สมัครผ่านลิงก์ A · แอดมิน qa01) · ห้ามใช้บัญชี/สลิปที่คนอื่นกำลังทดสอบ (เช่น qa.radar.20261027.* / tkrd426-* ของ Gong)<br>📎 <b>ที่มา:</b> คำบนจอลอกจาก <code>packages/shared/src/messages/th-*.ts</code> + <code>apps/web/src</code> (ใช้ชุดเดียวกับชีต TKRD-404 / MVP1) · Expected ยึด Epic TKRD-404 + Story 5.9</div>
 
   <div class="runsum">
     <h3>📊 สรุปผล Manual Test</h3>
@@ -176,10 +176,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
       <span class="cnt hold">HOLD <b id="sum-hold">0</b></span>
       <span class="cnt block">BLOCKED <b id="sum-block">0</b></span>
       <span class="cnt skip">SKIP <b id="sum-skip">0</b></span>
-      <span class="cnt pending">รอเทส <b id="sum-pending">19</b></span>
+      <span class="cnt pending">รอเทส <b id="sum-pending">27</b></span>
     </div>
     <div class="progress"><div id="sumbar" class="progressbar" style="width:0%"></div></div>
-    <div class="hint" id="sumpct" style="margin-top:5px">0% ทดสอบแล้ว (0/19)</div>
+    <div class="hint" id="sumpct" style="margin-top:5px">0% ทดสอบแล้ว (0/27)</div>
   </div>
 
   <div class="toolbar">
@@ -199,11 +199,11 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
   <div class="filters">
     <div class="row"><label>กลุ่ม</label>
-      <button class="fchip" data-f="feat" data-v="m-queue">📬 งานที่วิ่งผ่านคิว (19)</button>
+      <button class="fchip" data-f="feat" data-v="m-queue">📬 งานที่วิ่งผ่านคิว (27)</button>
       <button class="clearbtn" data-clear="feat">✕</button>
     </div>
     <div class="row"><label>ประเภท</label>
-      <button class="fchip" data-f="kind" data-v="happy" title="flow ปกติ">Happy Path (4)</button><button class="fchip" data-f="kind" data-v="negative" title="ข้อมูลผิด / action ผิด">Negative (7)</button><button class="fchip" data-f="kind" data-v="boundary" title="min · max · ก่อนขอบ · ตรงขอบ · เกินขอบ">Boundary (1)</button><button class="fchip" data-f="kind" data-v="validation" title="format · required · character · length">Validation (2)</button><button class="fchip" data-f="kind" data-v="exception" title="เน็ตหลุด · ระบบภายนอกผิดปกติ · timeout">Exception (4)</button><button class="fchip" data-f="kind" data-v="permission" title="role ไหนทำได้ / ทำไม่ได้">Permission (0)</button><button class="fchip" data-f="kind" data-v="data" title="empty · duplicate · ไม่ปนข้ามทีม/แพลตฟอร์ม">Data (1)</button>
+      <button class="fchip" data-f="kind" data-v="happy" title="flow ปกติ">Happy Path (6)</button><button class="fchip" data-f="kind" data-v="negative" title="ข้อมูลผิด / action ผิด">Negative (11)</button><button class="fchip" data-f="kind" data-v="boundary" title="min · max · ก่อนขอบ · ตรงขอบ · เกินขอบ">Boundary (2)</button><button class="fchip" data-f="kind" data-v="validation" title="format · required · character · length">Validation (3)</button><button class="fchip" data-f="kind" data-v="exception" title="เน็ตหลุด · ระบบภายนอกผิดปกติ · timeout">Exception (4)</button><button class="fchip" data-f="kind" data-v="permission" title="role ไหนทำได้ / ทำไม่ได้">Permission (0)</button><button class="fchip" data-f="kind" data-v="data" title="empty · duplicate · ไม่ปนข้ามทีม/แพลตฟอร์ม">Data (1)</button>
       <button class="clearbtn" data-clear="kind">✕</button>
     </div>
     <div class="row"><label>Priority</label>
@@ -229,7 +229,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <tbody>
 
 <!-- m-queue -->
-<tr class="epicrow" data-epic="m-queue"><td colspan="7">📬 หน้าจอที่ใช้ระบบคิวหลังแก้ TKRD-520 — full loop ถึงระบบ aff + หาบั๊ก UI ของเมนูที่กระทบ <span class="rp">(19 เคส)</span> <a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-520" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-520 ใน Jira">🧩 Epic TKRD-520</a></td></tr>
+<tr class="epicrow" data-epic="m-queue"><td colspan="7">📬 หน้าจอที่ใช้ระบบคิวหลังแก้ TKRD-520 — full loop ถึงระบบ aff + หาบั๊ก UI ของเมนูที่กระทบ <span class="rp">(27 เคส)</span> <a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-520" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-520 ใน Jira">🧩 Epic TKRD-520</a></td></tr>
 <tr class="featrow" data-featkey="q-aff"><td colspan="7">📁 ส่งยอดค่าคอมไประบบ aff (Realfactory) — ส่งถูก / ไม่ควรส่งต้องไม่ไปถึง aff <span class="rp"> <span class="lv lvl-e2e">🔄 6</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="q-aff"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
 <tr class="trow" data-feat="m-queue" data-level="e2e" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-Q-A.1</td>
@@ -839,12 +839,269 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 </div></td></tr>
 
+<tr class="featrow" data-featkey="q-upline"><td colspan="7">📁 อัปไลน์ / ดาวน์ไลน์ตอนสมัครสมาชิก — เปิดบัญชีรับค่าคอมบนระบบ aff <span class="rp"><span class="lv lvl-ui">🌐 1</span> <span class="lv lvl-e2e">🔄 7</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="q-upline"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow" data-feat="m-queue" data-level="e2e" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-Q-F.1</td>
+  <td class="ctitle">สมัครผ่านลิงก์ชวนของ A + ติ๊กเข้าร่วม → B เปิดบัญชีรับค่าคอมบนระบบ aff โดยมี A เป็นอัปไลน์ และ B อยู่ในดาวน์ไลน์ของ A <span class="kd kd-happy">Happy Path</span></td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-22728"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-22728"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">สมัครผ่านลิงก์ชวนของ A + ติ๊กเข้าร่วม → B เปิดบัญชีรับค่าคอมบนระบบ aff โดยมี A เป็นอัปไลน์ และ B อยู่ในดาวน์ไลน์ของ A</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-520" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-520 ใน Jira">🧩 Epic TKRD-520</a> · Priority: <b>P0</b> · E2E · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · หน้าจอที่ใช้ระบบคิวหลังแก้ TKRD-520 — full loop ถึงระบบ aff + หาบั๊ก UI ของเมนูที่กระทบ</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #d97706;background:rgba(217,119,6,.07)">📌 <b>หมายเหตุ:</b> ชื่อหน้า/ช่องฝั่ง Realfactory (รายชื่อสมาชิก · ผู้แนะนำ/อัปไลน์ · ดาวน์ไลน์/ทีมในพอร์ทัล) ไม่มีโค้ดในเครื่อง ยังไม่ได้เทียบกับจอจริง จดตามที่เห็นจริง · สมาชิกบน Realfactory ลบไม่ได้ ใช้บัญชีสดใหม่ทุกรอบและจดไว้</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>UAT (uat-radar.takra.ai) deploy รุ่นที่มี commit 0eb34b48 (PR #395 · TKRD-520) แล้ว</li><li>ผู้ชวน A ที่บัญชีรับค่าคอม "พร้อมใช้งาน" (มีรหัส TR- / TKR-) และคัดลอกลิงก์ชวนเพื่อนของ A จากการ์ด "ชวนเพื่อน" ไว้แล้ว</li><li>อีเมลทดสอบใหม่ที่รับเมลได้จริง (เช่น Gmail แบบ +upline-NN) และเบอร์มือถือทดสอบ</li><li>บัญชีแอดมินบน Realfactory UAT ของโปรเจกต์ takra-radar ที่ดูรายชื่อสมาชิกและผู้แนะนำ (อัปไลน์) ได้</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ Trendora (takra-radar) รุ่น UAT ที่ https://uat-radar.takra.ai (ผ่าน Cloudflare Access แล้ว) เปิดลิงก์ชวนเพื่อนของ A ในหน้าต่างไม่ระบุตัวตน (incognito) ดูช่อง "รหัสชวนเพื่อนที่ติดมากับลิงก์" แล้ว กรอก username อีเมลทดสอบใหม่ เบอร์มือถือ และรหัสผ่าน ติ๊กช่อง "ฉันต้องการเข้าร่วมรับค่าคอมชวนเพื่อน ยอมรับข้อตกลงตามรายละเอียด และยินยอมให้ส่งข้อมูลของฉันให้ Realfactory เพื่อเปิดบัญชีรับค่าคอม" แล้วกด "สมัครสมาชิก"</li><li>ไปที่เมนู "ตั้งค่า" เลื่อนไปหัวข้อ "แนะนำเพื่อน" รีโหลดหน้า ในหน้าต่าง "ยืนยันอีเมลเพื่อเปิดบัญชีรับค่าคอม" กด "ส่งรหัสยืนยัน" เปิดอีเมล กรอก "รหัสยืนยัน 6 หลัก" แล้วกด "ยืนยันอีเมล" รอราว 2 นาทีแล้วรีโหลด</li><li>เปิด Realfactory UAT แล้วเข้าสู่ระบบด้วยบัญชีแอดมิน เข้าโปรเจกต์ takra-radar ค้นสมาชิก B ด้วย username (full_name) แล้วเปิดดูรายละเอียดและผู้แนะนำ (อัปไลน์)</li><li>เปิดเว็บ Trendora (takra-radar) รุ่น UAT ที่ https://uat-radar.takra.ai (ผ่าน Cloudflare Access แล้ว) เข้าสู่ระบบด้วยบัญชีผู้ชวน A ไปที่ "ตั้งค่า" › การ์ด "ชวนเพื่อน" กด "ดูค่าคอม / ถอนเงิน" แล้วในพอร์ทัลระบบ aff เปิดรายชื่อดาวน์ไลน์/ทีมของ A</li><li>สังเกตสถานะการ์ดของ B ข้อมูลสมาชิก B บน Realfactory และรายชื่อดาวน์ไลน์ของ A</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>หน้าสมัคร: ช่อง "รหัสชวนเพื่อนที่ติดมากับลิงก์" แสดงรหัสของ A อยู่แล้วและแก้ไม่ได้</li><li>การ์ดของ B: "รอยืนยันอีเมล" → หลังยืนยันขึ้น "ยืนยันอีเมลแล้ว" + "กำลังเปิดบัญชี" → ภายในราว 2 นาทีเป็น "พร้อมใช้งาน" พร้อมปุ่ม "ดูค่าคอม / ถอนเงิน"</li><li>Realfactory: มีสมาชิก B 1 รายการ full_name = username ของ B · รหัสขึ้นต้น TR- / TKR- · status active · ผู้แนะนำ (อัปไลน์) = รหัสของ A</li><li>พอร์ทัลของ A: B อยู่ในรายชื่อดาวน์ไลน์/ทีมของ A 1 รายการ (ไม่ซ้ำ)</li><li>อีเมล "บัญชีของคุณได้รับการอนุมัติแล้ว — เข้าใช้งาน Affiliate Portal" ถึงอีเมลของ B</li></ul><div class="hint" style="margin-top:6px">ที่มา: TKRD-520 (คิว partner.member) · Epic TKRD-404 Story PC.12 (TKRD-417 sponsor) · PC.17 (TKRD-422) · th-auth.ts · th-partner.ts · th-partner-ui.ts</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-22728" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-22728" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-22728" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-22728" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-22728" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-22728"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-22728" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-22728">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="m-queue" data-level="e2e" data-prio="P1" data-kind="happy" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-Q-F.2</td>
+  <td class="ctitle">สมัครโดยพิมพ์ "รหัสแนะนำจากเพื่อน" ของ A เอง (ไม่ผ่านลิงก์) → อัปไลน์ของ B บนระบบ aff เป็น A เหมือนสมัครผ่านลิงก์ <span class="kd kd-happy">Happy Path</span></td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-22729"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-22729"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">สมัครโดยพิมพ์ "รหัสแนะนำจากเพื่อน" ของ A เอง (ไม่ผ่านลิงก์) → อัปไลน์ของ B บนระบบ aff เป็น A เหมือนสมัครผ่านลิงก์</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-520" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-520 ใน Jira">🧩 Epic TKRD-520</a> · Priority: <b>P1</b> · E2E · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · หน้าจอที่ใช้ระบบคิวหลังแก้ TKRD-520 — full loop ถึงระบบ aff + หาบั๊ก UI ของเมนูที่กระทบ</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #d97706;background:rgba(217,119,6,.07)">📌 <b>หมายเหตุ:</b> ชื่อหน้า/ช่องฝั่ง Realfactory (รายชื่อสมาชิก · ผู้แนะนำ/อัปไลน์ · ดาวน์ไลน์/ทีมในพอร์ทัล) ไม่มีโค้ดในเครื่อง ยังไม่ได้เทียบกับจอจริง จดตามที่เห็นจริง · สมาชิกบน Realfactory ลบไม่ได้ ใช้บัญชีสดใหม่ทุกรอบและจดไว้</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>UAT (uat-radar.takra.ai) deploy รุ่นที่มี commit 0eb34b48 (PR #395 · TKRD-520) แล้ว</li><li>ผู้ชวน A ที่ "พร้อมใช้งาน" และรู้รหัสชวนเพื่อนของ A</li><li>อีเมลทดสอบใหม่ที่รับเมลได้จริง (เช่น Gmail แบบ +upline-NN) และเบอร์มือถือทดสอบ</li><li>บัญชีแอดมินบน Realfactory UAT ของโปรเจกต์ takra-radar ที่ดูรายชื่อสมาชิกและผู้แนะนำ (อัปไลน์) ได้</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ Trendora (takra-radar) รุ่น UAT ที่ https://uat-radar.takra.ai (ผ่าน Cloudflare Access แล้ว) ไปที่หน้าสมัครสมาชิก (ไม่ผ่านลิงก์ชวน) กด "มีรหัสแนะนำ?" พิมพ์รหัสของ A ในช่อง "รหัสแนะนำจากเพื่อน" กรอก username อีเมลทดสอบใหม่ เบอร์มือถือ และรหัสผ่าน ติ๊กช่อง "ฉันต้องการเข้าร่วมรับค่าคอมชวนเพื่อน ยอมรับข้อตกลงตามรายละเอียด และยินยอมให้ส่งข้อมูลของฉันให้ Realfactory เพื่อเปิดบัญชีรับค่าคอม" แล้วกด "สมัครสมาชิก"</li><li>ไปที่เมนู "ตั้งค่า" เลื่อนไปหัวข้อ "แนะนำเพื่อน" รีโหลดหน้า ในหน้าต่าง "ยืนยันอีเมลเพื่อเปิดบัญชีรับค่าคอม" กด "ส่งรหัสยืนยัน" เปิดอีเมล กรอก "รหัสยืนยัน 6 หลัก" แล้วกด "ยืนยันอีเมล" รอราว 2 นาทีแล้วรีโหลด</li><li>เปิด Realfactory UAT แล้วเข้าสู่ระบบด้วยบัญชีแอดมิน เข้าโปรเจกต์ takra-radar ค้นสมาชิก B ด้วย username (full_name) แล้วเปิดดูรายละเอียดและผู้แนะนำ (อัปไลน์)</li><li>เปิดเว็บ Trendora (takra-radar) รุ่น UAT ที่ https://uat-radar.takra.ai (ผ่าน Cloudflare Access แล้ว) เข้าสู่ระบบด้วยบัญชีผู้ชวน A ไปที่ "ตั้งค่า" › การ์ด "ชวนเพื่อน" กด "ดูค่าคอม / ถอนเงิน" แล้วในพอร์ทัลระบบ aff เปิดรายชื่อดาวน์ไลน์/ทีมของ A</li><li>สังเกตอัปไลน์ของ B และดาวน์ไลน์ของ A</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>การ์ดของ B เป็น "พร้อมใช้งาน"</li><li>Realfactory: ผู้แนะนำ (อัปไลน์) ของ B = รหัสของ A</li><li>พอร์ทัลของ A มี B ในดาวน์ไลน์</li></ul><div class="hint" style="margin-top:6px">ที่มา: TKRD-520 (คิว partner.member) · Epic TKRD-404 Story PC.12 (TKRD-417 sponsor) · PC.17 (TKRD-422) · th-auth.ts · th-partner.ts · th-partner-ui.ts</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-22729" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-22729" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-22729" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-22729" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-22729" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-22729"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-22729" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-22729">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="m-queue" data-level="e2e" data-prio="P1" data-kind="negative" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-Q-F.3</td>
+  <td class="ctitle">Negative: สมัครเองโดยไม่มีผู้ชวน → B เปิดบัญชีบนระบบ aff เป็นต้นสาย (ไม่มีอัปไลน์) และไม่ไปอยู่ใต้ใคร <span class="kd kd-neg">Negative</span></td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-22730"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-22730"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">Negative: สมัครเองโดยไม่มีผู้ชวน → B เปิดบัญชีบนระบบ aff เป็นต้นสาย (ไม่มีอัปไลน์) และไม่ไปอยู่ใต้ใคร</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-520" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-520 ใน Jira">🧩 Epic TKRD-520</a> · Priority: <b>P1</b> · E2E · ประเภท: <b>Negative</b> <span class="hint">(ข้อมูลผิด / action ผิด)</span> · หน้าจอที่ใช้ระบบคิวหลังแก้ TKRD-520 — full loop ถึงระบบ aff + หาบั๊ก UI ของเมนูที่กระทบ</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #d97706;background:rgba(217,119,6,.07)">📌 <b>หมายเหตุ:</b> ชื่อหน้า/ช่องฝั่ง Realfactory (รายชื่อสมาชิก · ผู้แนะนำ/อัปไลน์ · ดาวน์ไลน์/ทีมในพอร์ทัล) ไม่มีโค้ดในเครื่อง ยังไม่ได้เทียบกับจอจริง จดตามที่เห็นจริง · สมาชิกบน Realfactory ลบไม่ได้ ใช้บัญชีสดใหม่ทุกรอบและจดไว้</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>UAT (uat-radar.takra.ai) deploy รุ่นที่มี commit 0eb34b48 (PR #395 · TKRD-520) แล้ว</li><li>อีเมลทดสอบใหม่ที่รับเมลได้จริง (เช่น Gmail แบบ +upline-NN) และเบอร์มือถือทดสอบ</li><li>บัญชีแอดมินบน Realfactory UAT ของโปรเจกต์ takra-radar ที่ดูรายชื่อสมาชิกและผู้แนะนำ (อัปไลน์) ได้</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ Trendora (takra-radar) รุ่น UAT ที่ https://uat-radar.takra.ai (ผ่าน Cloudflare Access แล้ว) ไปที่หน้าสมัครสมาชิก (ไม่ผ่านลิงก์ชวน ไม่กด "มีรหัสแนะนำ?") กรอก username อีเมลทดสอบใหม่ เบอร์มือถือ และรหัสผ่าน ติ๊กช่อง "ฉันต้องการเข้าร่วมรับค่าคอมชวนเพื่อน ยอมรับข้อตกลงตามรายละเอียด และยินยอมให้ส่งข้อมูลของฉันให้ Realfactory เพื่อเปิดบัญชีรับค่าคอม" แล้วกด "สมัครสมาชิก"</li><li>ไปที่เมนู "ตั้งค่า" เลื่อนไปหัวข้อ "แนะนำเพื่อน" รีโหลดหน้า ในหน้าต่าง "ยืนยันอีเมลเพื่อเปิดบัญชีรับค่าคอม" กด "ส่งรหัสยืนยัน" เปิดอีเมล กรอก "รหัสยืนยัน 6 หลัก" แล้วกด "ยืนยันอีเมล" รอราว 2 นาทีแล้วรีโหลด</li><li>เปิด Realfactory UAT แล้วเข้าสู่ระบบด้วยบัญชีแอดมิน เข้าโปรเจกต์ takra-radar ค้นสมาชิก B ด้วย username (full_name) แล้วเปิดดูรายละเอียดและผู้แนะนำ (อัปไลน์)</li><li>สังเกตสถานะการ์ดของ B และช่องผู้แนะนำ (อัปไลน์) บน Realfactory</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>การ์ดของ B เป็น "พร้อมใช้งาน"</li><li>Realfactory: มีสมาชิก B 1 รายการ status active และช่องผู้แนะนำ (อัปไลน์) ว่าง — เป็นต้นสาย</li></ul><div class="hint" style="margin-top:6px">ที่มา: TKRD-520 (คิว partner.member) · Epic TKRD-404 Story PC.12 (TKRD-417 sponsor) · PC.17 (TKRD-422) · th-auth.ts · th-partner.ts · th-partner-ui.ts</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-22730" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-22730" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-22730" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-22730" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-22730" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-22730"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-22730" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-22730">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="m-queue" data-level="e2e" data-prio="P1" data-kind="negative" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-Q-F.4</td>
+  <td class="ctitle">Negative: ผู้ชวน E ยังไม่เข้าร่วมค่าคอม → B ที่สมัครผ่านลิงก์ของ E เปิดบัญชีเป็นต้นสายทันที ไม่ค้างรอ E <span class="kd kd-neg">Negative</span></td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-22731"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-22731"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">Negative: ผู้ชวน E ยังไม่เข้าร่วมค่าคอม → B ที่สมัครผ่านลิงก์ของ E เปิดบัญชีเป็นต้นสายทันที ไม่ค้างรอ E</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-520" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-520 ใน Jira">🧩 Epic TKRD-520</a> · Priority: <b>P1</b> · E2E · ประเภท: <b>Negative</b> <span class="hint">(ข้อมูลผิด / action ผิด)</span> · หน้าจอที่ใช้ระบบคิวหลังแก้ TKRD-520 — full loop ถึงระบบ aff + หาบั๊ก UI ของเมนูที่กระทบ</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #d97706;background:rgba(217,119,6,.07)">📌 <b>หมายเหตุ:</b> ชื่อหน้า/ช่องฝั่ง Realfactory (รายชื่อสมาชิก · ผู้แนะนำ/อัปไลน์ · ดาวน์ไลน์/ทีมในพอร์ทัล) ไม่มีโค้ดในเครื่อง ยังไม่ได้เทียบกับจอจริง จดตามที่เห็นจริง · สมาชิกบน Realfactory ลบไม่ได้ ใช้บัญชีสดใหม่ทุกรอบและจดไว้ · ถ้า E เข้าร่วมภายหลัง B จะถูกย้ายไปอยู่ใต้ E หรือไม่ สเปกไม่ได้ระบุ ให้จดตามที่เห็น</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>UAT (uat-radar.takra.ai) deploy รุ่นที่มี commit 0eb34b48 (PR #395 · TKRD-520) แล้ว</li><li>ผู้ชวน E ที่การ์ดเป็น "ยังไม่ได้เข้าร่วม" และคัดลอกลิงก์ชวนของ E ไว้แล้ว</li><li>อีเมลทดสอบใหม่ที่รับเมลได้จริง (เช่น Gmail แบบ +upline-NN) และเบอร์มือถือทดสอบ</li><li>บัญชีแอดมินบน Realfactory UAT ของโปรเจกต์ takra-radar ที่ดูรายชื่อสมาชิกและผู้แนะนำ (อัปไลน์) ได้</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ Trendora (takra-radar) รุ่น UAT ที่ https://uat-radar.takra.ai (ผ่าน Cloudflare Access แล้ว) เปิดลิงก์ชวนเพื่อนของ E ในหน้าต่างไม่ระบุตัวตน กรอก username อีเมลทดสอบใหม่ เบอร์มือถือ และรหัสผ่าน ติ๊กช่อง "ฉันต้องการเข้าร่วมรับค่าคอมชวนเพื่อน ยอมรับข้อตกลงตามรายละเอียด และยินยอมให้ส่งข้อมูลของฉันให้ Realfactory เพื่อเปิดบัญชีรับค่าคอม" แล้วกด "สมัครสมาชิก"</li><li>ไปที่เมนู "ตั้งค่า" เลื่อนไปหัวข้อ "แนะนำเพื่อน" รีโหลดหน้า ในหน้าต่าง "ยืนยันอีเมลเพื่อเปิดบัญชีรับค่าคอม" กด "ส่งรหัสยืนยัน" เปิดอีเมล กรอก "รหัสยืนยัน 6 หลัก" แล้วกด "ยืนยันอีเมล" รอราว 2 นาทีแล้วรีโหลด</li><li>เปิด Realfactory UAT แล้วเข้าสู่ระบบด้วยบัญชีแอดมิน เข้าโปรเจกต์ takra-radar ค้นสมาชิก B ด้วย username (full_name) แล้วเปิดดูรายละเอียดและผู้แนะนำ (อัปไลน์)</li><li>สังเกตเวลาที่การ์ดของ B เป็น "พร้อมใช้งาน" และช่องผู้แนะนำ (อัปไลน์) บน Realfactory</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>การ์ดของ B เป็น "พร้อมใช้งาน" ภายในราว 2 นาทีเหมือนปกติ ไม่ค้างที่ "กำลังเปิดบัญชี"</li><li>Realfactory: สมาชิก B ไม่มีผู้แนะนำ (อัปไลน์) — เป็นต้นสาย ไม่ใช่ E</li></ul><div class="hint" style="margin-top:6px">ที่มา: TKRD-520 (คิว partner.member) · Epic TKRD-404 Story PC.12 (TKRD-417 sponsor) · PC.17 (TKRD-422) · th-auth.ts · th-partner.ts · th-partner-ui.ts</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-22731" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-22731" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-22731" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-22731" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-22731" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-22731"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-22731" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-22731">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="m-queue" data-level="e2e" data-prio="P1" data-kind="boundary" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-Q-F.5</td>
+  <td class="ctitle">ขอบเขตเวลา: ผู้ชวน A กำลังเปิดบัญชีตอนที่ B สมัคร → B รอได้ไม่เกิน 30 นาที ถ้า A พร้อมทันเวลา อัปไลน์ของ B = A <span class="kd kd-bnd">Boundary</span></td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-22732"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-22732"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ขอบเขตเวลา: ผู้ชวน A กำลังเปิดบัญชีตอนที่ B สมัคร → B รอได้ไม่เกิน 30 นาที ถ้า A พร้อมทันเวลา อัปไลน์ของ B = A</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-520" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-520 ใน Jira">🧩 Epic TKRD-520</a> · Priority: <b>P1</b> · E2E · ประเภท: <b>Boundary</b> <span class="hint">(min · max · ก่อนขอบ · ตรงขอบ · เกินขอบ)</span> · หน้าจอที่ใช้ระบบคิวหลังแก้ TKRD-520 — full loop ถึงระบบ aff + หาบั๊ก UI ของเมนูที่กระทบ</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #d97706;background:rgba(217,119,6,.07)">📌 <b>หมายเหตุ:</b> ชื่อหน้า/ช่องฝั่ง Realfactory (รายชื่อสมาชิก · ผู้แนะนำ/อัปไลน์ · ดาวน์ไลน์/ทีมในพอร์ทัล) ไม่มีโค้ดในเครื่อง ยังไม่ได้เทียบกับจอจริง จดตามที่เห็นจริง · สมาชิกบน Realfactory ลบไม่ได้ ใช้บัญชีสดใหม่ทุกรอบและจดไว้ · จัดลำดับให้ A ยังกำลังเปิดบัญชีตอน B ยืนยันอีเมลทำได้ยาก (A มักพร้อมใน ~1 นาที) ถ้าทำไม่ได้ให้ลง SKIP พร้อมเหตุผล</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>UAT (uat-radar.takra.ai) deploy รุ่นที่มี commit 0eb34b48 (PR #395 · TKRD-520) แล้ว</li><li>ผู้ชวน A บัญชีสดที่เพิ่งยืนยันอีเมล การ์ดยังเป็น "กำลังเปิดบัญชี" และคัดลอกลิงก์ชวนของ A ไว้แล้ว</li><li>อีเมลทดสอบใหม่ที่รับเมลได้จริง (เช่น Gmail แบบ +upline-NN) และเบอร์มือถือทดสอบ</li><li>บัญชีแอดมินบน Realfactory UAT ของโปรเจกต์ takra-radar ที่ดูรายชื่อสมาชิกและผู้แนะนำ (อัปไลน์) ได้</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ Trendora (takra-radar) รุ่น UAT ที่ https://uat-radar.takra.ai (ผ่าน Cloudflare Access แล้ว) ระหว่างที่การ์ดของ A ยังเป็น "กำลังเปิดบัญชี" เปิดลิงก์ชวนของ A ในหน้าต่างไม่ระบุตัวตน กรอก username อีเมลทดสอบใหม่ เบอร์มือถือ และรหัสผ่าน ติ๊กช่อง "ฉันต้องการเข้าร่วมรับค่าคอมชวนเพื่อน ยอมรับข้อตกลงตามรายละเอียด และยินยอมให้ส่งข้อมูลของฉันให้ Realfactory เพื่อเปิดบัญชีรับค่าคอม" แล้วกด "สมัครสมาชิก"</li><li>ไปที่เมนู "ตั้งค่า" เลื่อนไปหัวข้อ "แนะนำเพื่อน" รีโหลดหน้า ในหน้าต่าง "ยืนยันอีเมลเพื่อเปิดบัญชีรับค่าคอม" กด "ส่งรหัสยืนยัน" เปิดอีเมล กรอก "รหัสยืนยัน 6 หลัก" แล้วกด "ยืนยันอีเมล" แล้วจดเวลา</li><li>รีโหลดการ์ดของ A และ B ทุก 2 นาทีจนทั้งคู่เป็น "พร้อมใช้งาน" (หรือครบ 30 นาที)</li><li>เปิด Realfactory UAT แล้วเข้าสู่ระบบด้วยบัญชีแอดมิน เข้าโปรเจกต์ takra-radar ค้นสมาชิก B ด้วย username (full_name) แล้วเปิดดูรายละเอียดและผู้แนะนำ (อัปไลน์)</li><li>สังเกตลำดับเวลาที่ A และ B พร้อมใช้งาน และอัปไลน์ของ B</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ระหว่างรอ การ์ดของ B เป็น "กำลังเปิดบัญชี" (ไม่ขึ้น error)</li><li>ถ้า A เป็น "พร้อมใช้งาน" ภายใน 30 นาที: B เป็น "พร้อมใช้งาน" หลัง A และอัปไลน์ของ B = รหัสของ A</li><li>ถ้าเกิน 30 นาทีแล้ว A ยังไม่พร้อม: B เปิดบัญชีเป็นต้นสาย (ไม่มีอัปไลน์)</li></ul><div class="hint" style="margin-top:6px">ที่มา: TKRD-520 (คิว partner.member) · Epic TKRD-404 Story PC.12 (TKRD-417 sponsor) · PC.17 (TKRD-422) · th-auth.ts · th-partner.ts · th-partner-ui.ts</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-22732" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-22732" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-22732" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-22732" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-22732" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-22732"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-22732" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-22732">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="m-queue" data-level="e2e" data-prio="P1" data-kind="negative" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-Q-F.6</td>
+  <td class="ctitle">Negative: ผู้ชวน A ถูกระงับบนระบบ aff → B ที่สมัครผ่านลิงก์ของ A ยังได้ A เป็นอัปไลน์ <span class="kd kd-neg">Negative</span></td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-22733"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-22733"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">Negative: ผู้ชวน A ถูกระงับบนระบบ aff → B ที่สมัครผ่านลิงก์ของ A ยังได้ A เป็นอัปไลน์</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-520" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-520 ใน Jira">🧩 Epic TKRD-520</a> · Priority: <b>P1</b> · E2E · ประเภท: <b>Negative</b> <span class="hint">(ข้อมูลผิด / action ผิด)</span> · หน้าจอที่ใช้ระบบคิวหลังแก้ TKRD-520 — full loop ถึงระบบ aff + หาบั๊ก UI ของเมนูที่กระทบ</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #d97706;background:rgba(217,119,6,.07)">📌 <b>หมายเหตุ:</b> ชื่อหน้า/ช่องฝั่ง Realfactory (รายชื่อสมาชิก · ผู้แนะนำ/อัปไลน์ · ดาวน์ไลน์/ทีมในพอร์ทัล) ไม่มีโค้ดในเครื่อง ยังไม่ได้เทียบกับจอจริง จดตามที่เห็นจริง · สมาชิกบน Realfactory ลบไม่ได้ ใช้บัญชีสดใหม่ทุกรอบและจดไว้</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>UAT (uat-radar.takra.ai) deploy รุ่นที่มี commit 0eb34b48 (PR #395 · TKRD-520) แล้ว</li><li>ผู้ชวน A (บัญชีทดสอบ ไม่ใช่ A หลัก) ที่ผู้ดูแล Realfactory UAT ระงับแล้ว การ์ดเป็น "ถูกระงับ" และคัดลอกลิงก์ชวนของ A ไว้แล้ว</li><li>อีเมลทดสอบใหม่ที่รับเมลได้จริง (เช่น Gmail แบบ +upline-NN) และเบอร์มือถือทดสอบ</li><li>บัญชีแอดมินบน Realfactory UAT ของโปรเจกต์ takra-radar ที่ดูรายชื่อสมาชิกและผู้แนะนำ (อัปไลน์) ได้</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ Trendora (takra-radar) รุ่น UAT ที่ https://uat-radar.takra.ai (ผ่าน Cloudflare Access แล้ว) เปิดลิงก์ชวนเพื่อนของ A ในหน้าต่างไม่ระบุตัวตน กรอก username อีเมลทดสอบใหม่ เบอร์มือถือ และรหัสผ่าน ติ๊กช่อง "ฉันต้องการเข้าร่วมรับค่าคอมชวนเพื่อน ยอมรับข้อตกลงตามรายละเอียด และยินยอมให้ส่งข้อมูลของฉันให้ Realfactory เพื่อเปิดบัญชีรับค่าคอม" แล้วกด "สมัครสมาชิก"</li><li>ไปที่เมนู "ตั้งค่า" เลื่อนไปหัวข้อ "แนะนำเพื่อน" รีโหลดหน้า ในหน้าต่าง "ยืนยันอีเมลเพื่อเปิดบัญชีรับค่าคอม" กด "ส่งรหัสยืนยัน" เปิดอีเมล กรอก "รหัสยืนยัน 6 หลัก" แล้วกด "ยืนยันอีเมล" รอราว 2 นาทีแล้วรีโหลด</li><li>เปิด Realfactory UAT แล้วเข้าสู่ระบบด้วยบัญชีแอดมิน เข้าโปรเจกต์ takra-radar ค้นสมาชิก B ด้วย username (full_name) แล้วเปิดดูรายละเอียดและผู้แนะนำ (อัปไลน์)</li><li>สังเกตอัปไลน์ของ B</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>การ์ดของ B เป็น "พร้อมใช้งาน"</li><li>Realfactory: ผู้แนะนำ (อัปไลน์) ของ B = รหัสของ A แม้ A ถูกระงับ</li></ul><div class="hint" style="margin-top:6px">ที่มา: TKRD-520 (คิว partner.member) · Epic TKRD-404 Story PC.12 (TKRD-417 sponsor) · PC.17 (TKRD-422) · th-auth.ts · th-partner.ts · th-partner-ui.ts · เคสกลาง radar TC-PC.12-I04 (b)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-22733" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-22733" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-22733" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-22733" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-22733" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-22733"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-22733" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-22733">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="m-queue" data-level="e2e" data-prio="P1" data-kind="negative" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-Q-F.7</td>
+  <td class="ctitle">Negative: สมัครผ่านลิงก์ของ A แต่ไม่ติ๊กเข้าร่วม → ยังไม่มีสมาชิกบนระบบ aff · เข้าร่วมภายหลังจากการ์ดแล้วได้ A เป็นอัปไลน์ <span class="kd kd-neg">Negative</span></td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-22734"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-22734"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">Negative: สมัครผ่านลิงก์ของ A แต่ไม่ติ๊กเข้าร่วม → ยังไม่มีสมาชิกบนระบบ aff · เข้าร่วมภายหลังจากการ์ดแล้วได้ A เป็นอัปไลน์</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-520" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-520 ใน Jira">🧩 Epic TKRD-520</a> · Priority: <b>P1</b> · E2E · ประเภท: <b>Negative</b> <span class="hint">(ข้อมูลผิด / action ผิด)</span> · หน้าจอที่ใช้ระบบคิวหลังแก้ TKRD-520 — full loop ถึงระบบ aff + หาบั๊ก UI ของเมนูที่กระทบ</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #d97706;background:rgba(217,119,6,.07)">📌 <b>หมายเหตุ:</b> ชื่อหน้า/ช่องฝั่ง Realfactory (รายชื่อสมาชิก · ผู้แนะนำ/อัปไลน์ · ดาวน์ไลน์/ทีมในพอร์ทัล) ไม่มีโค้ดในเครื่อง ยังไม่ได้เทียบกับจอจริง จดตามที่เห็นจริง · สมาชิกบน Realfactory ลบไม่ได้ ใช้บัญชีสดใหม่ทุกรอบและจดไว้</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>UAT (uat-radar.takra.ai) deploy รุ่นที่มี commit 0eb34b48 (PR #395 · TKRD-520) แล้ว</li><li>ผู้ชวน A ที่บัญชีรับค่าคอม "พร้อมใช้งาน" (มีรหัส TR- / TKR-) และคัดลอกลิงก์ชวนเพื่อนของ A จากการ์ด "ชวนเพื่อน" ไว้แล้ว</li><li>อีเมลทดสอบใหม่ที่รับเมลได้จริง (เช่น Gmail แบบ +upline-NN) และเบอร์มือถือทดสอบ</li><li>บัญชีแอดมินบน Realfactory UAT ของโปรเจกต์ takra-radar ที่ดูรายชื่อสมาชิกและผู้แนะนำ (อัปไลน์) ได้</li><li>ช่องเข้าร่วมบนหน้าสมัครเป็นแบบไม่บังคับ (ใต้ช่องขึ้น "ไม่บังคับ สมัครได้โดยไม่ต้องติ๊ก…") — ถ้าเป็นแบบบังคับ ให้ดู TC-Q-F.8 แทน</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ Trendora (takra-radar) รุ่น UAT ที่ https://uat-radar.takra.ai (ผ่าน Cloudflare Access แล้ว) เปิดลิงก์ชวนเพื่อนของ A ในหน้าต่างไม่ระบุตัวตน กรอกข้อมูลสมัคร ไม่ติ๊กช่องเข้าร่วม แล้วกด "สมัครสมาชิก"</li><li>ไปที่เมนู "ตั้งค่า" เลื่อนไปหัวข้อ "แนะนำเพื่อน" ดูการ์ด "ชวนเพื่อน" แล้ว เปิด Realfactory UAT แล้วเข้าสู่ระบบด้วยบัญชีแอดมิน เข้าโปรเจกต์ takra-radar ค้นสมาชิก B ด้วย username (full_name) แล้วเปิดดูรายละเอียดและผู้แนะนำ (อัปไลน์)</li><li>กลับมาที่การ์ดของ B กด "อ่านข้อตกลงและเข้าร่วม" → ยอมรับ แล้วยืนยันอีเมลด้วยรหัส รอราว 2 นาทีแล้วรีโหลด</li><li>เปิด Realfactory UAT แล้วเข้าสู่ระบบด้วยบัญชีแอดมิน เข้าโปรเจกต์ takra-radar ค้นสมาชิก B ด้วย username (full_name) แล้วเปิดดูรายละเอียดและผู้แนะนำ (อัปไลน์) อีกครั้ง</li><li>สังเกตสถานะการ์ดและอัปไลน์ของ B ทั้งสองช่วง</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ก่อนเข้าร่วม: การ์ดของ B เป็น "ยังไม่ได้เข้าร่วม" · Realfactory ค้น B ไม่เจอ</li><li>หลังเข้าร่วม: การ์ดเป็น "พร้อมใช้งาน" · Realfactory มีสมาชิก B และผู้แนะนำ (อัปไลน์) = รหัสของ A</li></ul><div class="hint" style="margin-top:6px">ที่มา: TKRD-520 (คิว partner.member) · Epic TKRD-404 Story PC.12 (TKRD-417 sponsor) · PC.17 (TKRD-422) · th-auth.ts · th-partner.ts · th-partner-ui.ts</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-22734" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-22734" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-22734" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-22734" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-22734" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-22734"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-22734" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-22734">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="m-queue" data-level="ui" data-prio="P1" data-kind="validation" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-Q-F.8</td>
+  <td class="ctitle">หน้าสมัคร (หาบั๊ก UI): ช่องเข้าร่วมแบบบังคับไม่ติ๊ก → "กรุณาติ๊กยอมรับข้อตกลงค่าคอมชวนเพื่อนก่อนสมัคร" · รหัสชวนไม่หายเมื่อสมัครไม่ผ่าน · มือถือ 360 px <span class="kd kd-val">Validation</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-22735"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-22735"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">หน้าสมัคร (หาบั๊ก UI): ช่องเข้าร่วมแบบบังคับไม่ติ๊ก → "กรุณาติ๊กยอมรับข้อตกลงค่าคอมชวนเพื่อนก่อนสมัคร" · รหัสชวนไม่หายเมื่อสมัครไม่ผ่าน · มือถือ 360 px</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-520" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-520 ใน Jira">🧩 Epic TKRD-520</a> · Priority: <b>P1</b> · UI · ประเภท: <b>Validation</b> <span class="hint">(format · required · character · length)</span> · หน้าจอที่ใช้ระบบคิวหลังแก้ TKRD-520 — full loop ถึงระบบ aff + หาบั๊ก UI ของเมนูที่กระทบ</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #d97706;background:rgba(217,119,6,.07)">📌 <b>หมายเหตุ:</b> ไม่ได้กดสมัครจนผ่าน จึงไม่สร้างสมาชิกบน Realfactory</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>UAT (uat-radar.takra.ai) deploy รุ่นที่มี commit 0eb34b48 (PR #395 · TKRD-520) แล้ว</li><li>ลิงก์ชวนเพื่อนของ A</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ Trendora (takra-radar) รุ่น UAT ที่ https://uat-radar.takra.ai (ผ่าน Cloudflare Access แล้ว) เปิดลิงก์ชวนเพื่อนของ A ในหน้าต่างไม่ระบุตัวตนบนมือถือ (หรือย่อหน้าต่างให้กว้างราว 360 px)</li><li>กรอกข้อมูลสมัครครบแต่ไม่ติ๊กช่องเข้าร่วม แล้วกด "สมัครสมาชิก"</li><li>กรอกเบอร์มือถือผิดรูปแบบ (เช่น 9 หลัก) แล้วกด "สมัครสมาชิก" อีกครั้ง</li><li>สังเกตข้อความใต้ช่อง ช่อง "รหัสชวนเพื่อนที่ติดมากับลิงก์" และการแสดงผลบนจอแคบ</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ถ้าช่องเข้าร่วมเป็นแบบบังคับ: สมัครไม่ผ่าน และใต้ช่องขึ้น "กรุณาติ๊กยอมรับข้อตกลงค่าคอมชวนเพื่อนก่อนสมัคร" (ถ้าไม่บังคับ: สมัครได้ — ดู TC-Q-F.7)</li><li>เบอร์ผิดขึ้น "กรอกเบอร์มือถือ 10 หลัก เช่น 0812345678"</li><li>หลังสมัครไม่ผ่าน ช่อง "รหัสชวนเพื่อนที่ติดมากับลิงก์" ยังเป็นรหัสของ A ข้อมูลที่กรอกไว้ไม่หาย</li><li>ที่ 360 px ข้อความข้อตกลงยาวตัดบรรทัดในกรอบ ช่องติ๊กกดได้ ปุ่ม "สมัครสมาชิก" ไม่ล้น ไม่มีแถบเลื่อนแนวนอน</li></ul><div class="hint" style="margin-top:6px">ที่มา: TKRD-520 (คิว partner.member) · Epic TKRD-404 Story PC.12 (TKRD-417 sponsor) · PC.17 (TKRD-422) · th-auth.ts · th-partner.ts · th-partner-ui.ts</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-22735" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-22735" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-22735" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-22735" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-22735" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-22735"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-22735" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-22735">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
 </tbody>
   </table>
   </div>
 
 </div>
-<footer>TAKRA Radar — หน้าจอที่ใช้ระบบคิว (หลังแก้ TKRD-520) · UI Manual Test Cases · 9 UI + 10 E2E = 19 TCs · UI only (manual) · Trendora (takra-radar) UAT · TKRD-520</footer>
+<footer>TAKRA Radar — หน้าจอที่ใช้ระบบคิว (หลังแก้ TKRD-520) · UI Manual Test Cases · 10 UI + 17 E2E = 27 TCs · UI only (manual) · Trendora (takra-radar) UAT · TKRD-520</footer>
 
 <script>
 // ── Load store from embedded JSON ──
