@@ -158,7 +158,8 @@ td.status-win{white-space:nowrap}
 <a id="hub-back-btn" href="https://wanlee-tankunnatam.github.io/qa-test-reports/?project=insight" title="กลับไปหน้ารวมรายงาน (Hub)" style="position:fixed;top:12px;right:14px;z-index:99999;display:inline-flex;align-items:center;gap:7px;padding:10px 18px;border-radius:999px;background:#ffffff;color:#1e3a8a;font-size:14px;font-weight:800;text-decoration:none;box-shadow:0 4px 16px rgba(0,0,0,.35);border:2px solid #1e3a8a;font-family:'Segoe UI','Sarabun',system-ui,sans-serif">🏠 รายงานทั้งหมด</a>
 
 
-<script id="store-data" type="application/json">{
+<script id="store-data" type="application/json">
+{
   "tc-29": {
     "st": "block"
   },
@@ -393,7 +394,8 @@ td.status-win{white-space:nowrap}
     "stw": "pass",
     "actualw": "🪟 Windows: [24 ก.ย. 2569 · build dev จาก develop + ค่า UAT · engine :8766 · ไลฟ์เป็นข้อมูลจำลองที่เตรียมในเครื่อง] G.7: ใช้ qa.hosta สร้างรายงานที่ใช้คำพูด (input_terms=capture,audio) → เจ้าของเห็นการ์ดของโฮสต์นั้น → hosta ถอนความยินยอมเสียง → เจ้าของไม่เห็นรายงานนั้นแล้ว หัวข้อโฮสต์ยังอยู่และขึ้น \"ยังไม่มีรายงาน\" การ์ดของเจ้าของเองยังอยู่ · คืนความยินยอมเสียงให้ hosta แล้ว"
   }
-}</script>
+}
+</script>
 
 <header class="top">
   <h1>📰 [MVP2] TAKRA Insight — Epic 7 Daily Report Card → รายงานประจำวัน · UI Manual Test Cases</h1>
@@ -2782,20 +2784,36 @@ document.querySelectorAll('.feat-owner').forEach(function(sel){var e=sel.dataset
     }
     osRecount();
   };
-  /* % ทดสอบแล้ว: เคสนับว่าเสร็จเมื่อครบทั้ง Mac และ Windows */
+  /* สรุปผล: PASS/FAIL/… นับรวมผลของทั้ง 2 ระบบ (1 เคส = 2 ผล) พร้อมแยก 🍎/🪟 ·
+     % ทดสอบแล้ว: เคสนับว่าเสร็จเมื่อครบทั้ง Mac และ Windows */
   function osRecount(){
     var done = 0, testable = 0, skip = 0;
+    var cm = { pass:0, fail:0, hold:0, block:0, skip:0, pending:0 }, cw = { pass:0, fail:0, hold:0, block:0, skip:0, pending:0 };
     document.querySelectorAll('tr.trow').forEach(function(row){
       var mac = stOf(row, 'td.status'), win = stOf(row, 'td.status-win');
+      cm[cm.hasOwnProperty(mac) ? mac : 'pending']++;
+      cw[cw.hasOwnProperty(win) ? win : 'pending']++;
       if (mac === 'skip' || win === 'skip') { skip++; return; }
       testable++;
       if (DONE[mac] && DONE[win]) done++;
+    });
+    ['pass','fail','hold','block','skip','pending'].forEach(function(k){
+      var e = document.getElementById('sum-' + k);
+      if (e) {
+        e.textContent = cm[k] + cw[k];
+        var sm = document.getElementById('sum-os-' + k);
+        if (!sm) { sm = document.createElement('small'); sm.id = 'sum-os-' + k; sm.style.cssText = 'font-weight:600;opacity:.75;margin-left:4px'; e.parentNode.appendChild(sm); }
+        sm.textContent = '🍎' + cm[k] + ' · 🪟' + cw[k];
+      }
+      var h = document.getElementById('hdr-' + k); if (h) h.textContent = cm[k] + cw[k];
     });
     var pct = testable ? Math.round(done / testable * 100) : 0;
     var bar = document.getElementById('sumbar'); if (bar) bar.style.width = pct + '%';
     var pctEl = document.getElementById('sumpct');
     if (pctEl) pctEl.textContent = pct + '% ทดสอบแล้ว ครบ 2 ระบบ (' + done + '/' + testable + ')' + (skip ? ' · ข้าม ' + skip : '');
   }
+  var _rc = recount;
+  recount = function(){ _rc.apply(this, arguments); osRecount(); };
   var _aas = applyAllStatuses;
   applyAllStatuses = function(){ _aas.apply(this, arguments); paintAllWin(); applyFilters(); };
   paintAllWin();

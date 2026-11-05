@@ -158,7 +158,8 @@ td.status-win{white-space:nowrap}
 <a id="hub-back-btn" href="https://wanlee-tankunnatam.github.io/qa-test-reports/?project=insight" title="กลับไปหน้ารวมรายงาน (Hub)" style="position:fixed;top:12px;right:14px;z-index:99999;display:inline-flex;align-items:center;gap:7px;padding:10px 18px;border-radius:999px;background:#ffffff;color:#1e3a8a;font-size:14px;font-weight:800;text-decoration:none;box-shadow:0 4px 16px rgba(0,0,0,.35);border:2px solid #1e3a8a;font-family:'Segoe UI','Sarabun',system-ui,sans-serif">🏠 รายงานทั้งหมด</a>
 
 
-<script id="store-data" type="application/json">{
+<script id="store-data" type="application/json">
+{
   "tc-29": {
     "st": "block"
   },
@@ -298,7 +299,8 @@ td.status-win{white-space:nowrap}
     "st": "pass",
     "actualw": "🪟 Windows (30 ก.ย. · build origin/uat 07412750 · qa.hosta · ทีม A): ⚠️ จำลองข้อมูล — ไม่มี workspace ใน UAT ที่ช่วงก่อนหน้าว่าง (ทีม A: 7 วันก่อนมี 26 ไลฟ์ · ทีมอื่นไม่มีไลฟ์เลย) และบันทึกไลฟ์ใหม่ไม่ได้ (TikTok \"Try another browser\") จึงให้ response จริงของ /dashboard/overview ผ่านแล้วแก้เฉพาะ totals.previous เป็นรูปที่ backend ส่งเมื่อช่วงไม่มีไลฟ์ (lives 0, viewers/audience/hostEngagementMean = null, previous.complete ยัง true) · ผล: ภาพรวม workspace ขึ้น \"ยังเทียบกับช่วงก่อนหน้าไม่ได้ — ช่วงก่อนหน้าไม่มีไลฟ์ หรือข้อมูลของช่วงใดช่วงหนึ่งยังไม่ครบ\" ไม่ขึ้น \"ยังไม่มียอดรวมไหนเพิ่มขึ้นถึงเกณฑ์\" ทั้ง 7 วันและ 30 วัน · แบบ previous.complete=false (ข้อมูลไม่ครบ) ก็ขึ้นข้อความเดียวกัน · ตัวควบคุม (response จริง) ไม่ขึ้นข้อความนี้ · ควรยืนยันซ้ำกับ workspace จริงเมื่อมี"
   }
-}</script>
+}
+</script>
 
 <header class="top">
   <h1>✨ [MVP2] TAKRA Insight — Epic 6 AI Insights (หน้า /ai-insights) · UI Manual Test Cases</h1>
@@ -2172,20 +2174,36 @@ document.querySelectorAll('.feat-owner').forEach(function(sel){var e=sel.dataset
     }
     osRecount();
   };
-  /* % ทดสอบแล้ว: เคสนับว่าเสร็จเมื่อครบทั้ง Mac และ Windows */
+  /* สรุปผล: PASS/FAIL/… นับรวมผลของทั้ง 2 ระบบ (1 เคส = 2 ผล) พร้อมแยก 🍎/🪟 ·
+     % ทดสอบแล้ว: เคสนับว่าเสร็จเมื่อครบทั้ง Mac และ Windows */
   function osRecount(){
     var done = 0, testable = 0, skip = 0;
+    var cm = { pass:0, fail:0, hold:0, block:0, skip:0, pending:0 }, cw = { pass:0, fail:0, hold:0, block:0, skip:0, pending:0 };
     document.querySelectorAll('tr.trow').forEach(function(row){
       var mac = stOf(row, 'td.status'), win = stOf(row, 'td.status-win');
+      cm[cm.hasOwnProperty(mac) ? mac : 'pending']++;
+      cw[cw.hasOwnProperty(win) ? win : 'pending']++;
       if (mac === 'skip' || win === 'skip') { skip++; return; }
       testable++;
       if (DONE[mac] && DONE[win]) done++;
+    });
+    ['pass','fail','hold','block','skip','pending'].forEach(function(k){
+      var e = document.getElementById('sum-' + k);
+      if (e) {
+        e.textContent = cm[k] + cw[k];
+        var sm = document.getElementById('sum-os-' + k);
+        if (!sm) { sm = document.createElement('small'); sm.id = 'sum-os-' + k; sm.style.cssText = 'font-weight:600;opacity:.75;margin-left:4px'; e.parentNode.appendChild(sm); }
+        sm.textContent = '🍎' + cm[k] + ' · 🪟' + cw[k];
+      }
+      var h = document.getElementById('hdr-' + k); if (h) h.textContent = cm[k] + cw[k];
     });
     var pct = testable ? Math.round(done / testable * 100) : 0;
     var bar = document.getElementById('sumbar'); if (bar) bar.style.width = pct + '%';
     var pctEl = document.getElementById('sumpct');
     if (pctEl) pctEl.textContent = pct + '% ทดสอบแล้ว ครบ 2 ระบบ (' + done + '/' + testable + ')' + (skip ? ' · ข้าม ' + skip : '');
   }
+  var _rc = recount;
+  recount = function(){ _rc.apply(this, arguments); osRecount(); };
   var _aas = applyAllStatuses;
   applyAllStatuses = function(){ _aas.apply(this, arguments); paintAllWin(); applyFilters(); };
   paintAllWin();
