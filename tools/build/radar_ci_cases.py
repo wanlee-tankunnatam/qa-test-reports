@@ -17,22 +17,26 @@ SRC = Path(__file__).resolve().parent / 'takra-radar-ci-sources'
 
 META = dict(
     out_rel='projects/takra-radar/2026/11/reports/takra-radar-ci-api-test-stability-test-cases-table.html',
-    title='TAKRA Radar — หน้าจอที่ใช้ระบบคิว (หลังแก้ TKRD-520) · UI Manual Test Cases',
+    title='TAKRA Radar — ค่าคอมชวนเพื่อน + ขอข้อมูลใหม่ (หลังแก้ TKRD-520) · UI Manual Test Cases',
     emoji='📬', uid_start=22701,
     download='takra-radar-queue-ui-test-cases.html',
     back='https://wanlee-tankunnatam.github.io/qa-test-reports/?project=radar',
-    sub=('เทส UI ด้วยมือ · เว็บ Trendora UAT · full loop ถึงระบบ aff (Realfactory UAT) · TKRD-520 (PR #395 · merge 0eb34b48) · '
-         'full loop + หาบั๊ก UI (สถานะ · กดซ้ำ · มือถือ · ออฟไลน์ · aff ล่ม) · P0 + P1 · ตรวจผลทั้งฝั่ง Trendora และฝั่ง aff'),
+    sub=('เทส UI ด้วยมือ · เว็บ Trendora UAT ต่อกับระบบ aff (Realfactory UAT) · '
+         '<a href="https://kitdi.atlassian.net/browse/TKRD-520" target="_blank">TKRD-520</a> · P0 + P1'),
     groups_label='',
-    note=('🖥️ <b>Test target:</b> เว็บ Trendora (takra-radar) UAT <b>https://uat-radar.takra.ai</b> (ล็อกอิน Cloudflare Access ก่อน) ต่อกับระบบ aff <b>Realfactory UAT</b><br>'
-          '📬 <b>ทำไมต้องเทส:</b> <a href="https://kitdi.atlassian.net/browse/TKRD-520" target="_blank">TKRD-520</a> แก้เทสต์ของระบบคิว (pg-boss) '
-          '— ชีตนี้ตรวจจากหน้าจอว่างานที่วิ่งผ่านคิวยังไปถึงปลายทางครบวง: ส่งยอดขาย/คืนเงินถึงระบบ aff · อัปไลน์/ดาวน์ไลน์ตอนสมัครสมาชิก · ขอข้อมูลใหม่ของสินค้าเฝ้าดู<br>'
-          '🗺️ <b>เมนูที่กระทบ (งานที่ส่งผ่านระบบคิว):</b><br>'
-          '&nbsp;• <b>Trendora ฝั่งลูกค้า:</b> "แพ็กเกจ" (ส่งสลิป → แจ้งเตือนแอดมิน · ตรวจสลิปอัตโนมัติ) · "ตั้งค่า" › การ์ด "ชวนเพื่อน" (สมัครสมาชิก/เข้าร่วมค่าคอม → สร้างสมาชิกบนระบบ aff พร้อมอัปไลน์ · ปุ่ม "ดูค่าคอม / ถอนเงิน") · "สินค้าที่บันทึกไว้" ("ขอข้อมูลใหม่")<br>'
-          '&nbsp;• <b>Trendora โซนผู้ดูแลระบบ:</b> "แจ้งชำระเงิน" (อนุมัติ/ยกเลิกการอนุมัติ → ส่งยอดขาย/คืนเงินไประบบ aff · ใบเสร็จ) · "คำขอใบเสร็จ" · "ตรวจสลิปอัตโนมัติ" · "ค่าคอมชวนเพื่อน" ("ทดสอบการเชื่อมต่อ" · การ์ด "ค่าคอมต้องดูแล")<br>'
-          '&nbsp;• <b>ระบบ aff (Realfactory UAT):</b> Project Admin โปรเจกต์ takra-radar หน้า "Orders" · "Audit Log" · สมาชิก + ผู้แนะนำ (อัปไลน์) · ดาวน์ไลน์ในพอร์ทัล · พอร์ทัลค่าคอมของผู้ชวน — ชีตนี้เทสเส้นทางส่งยอดขาย/คืนเงิน + ขอข้อมูลใหม่ (happy path) ส่วนเมนูอื่นเทสในชีต TKRD-404 / MVP1<br>'
-          '👥 <b>บัญชี:</b> เตรียมเหมือนชีต TKRD-404 (ผู้ชวน A พร้อมใช้งาน · ผู้ซื้อ B สมัครผ่านลิงก์ A · แอดมิน qa01) · ห้ามใช้บัญชี/สลิปที่คนอื่นกำลังทดสอบ (เช่น qa.radar.20261027.* / tkrd426-* ของ Gong)<br>'
-          '📎 <b>ที่มา:</b> คำบนจอลอกจาก <code>packages/shared/src/messages/th-*.ts</code> + <code>apps/web/src</code> (ใช้ชุดเดียวกับชีต TKRD-404 / MVP1) · Expected ยึด Epic TKRD-404 + Story 5.9'),
+    note=('🖥️ <b>เว็บที่เทส:</b> Trendora UAT <b>https://uat-radar.takra.ai</b> (ล็อกอิน Cloudflare Access ก่อน) · '
+          'ระบบ aff = <b>Realfactory UAT</b> โปรเจกต์ takra-radar (บัญชีแอดมิน)<br>'
+          '👥 <b>ตัวละครในเคส:</b> <b>A</b> = ผู้ชวน (บัญชีรับค่าคอม "พร้อมใช้งาน") · <b>B</b> = เพื่อนที่ A ชวน · '
+          '<b>E</b> = ผู้ชวนที่ยังไม่เข้าร่วมค่าคอม · <b>แอดมิน</b> = แอดมิน Trendora (เช่น qa01)<br>'
+          '📋 <b>ก่อนเริ่ม:</b> UAT ต้องมีงานแก้ TKRD-520 แล้ว (PR #395) · ห้ามใช้บัญชีที่คนอื่นกำลังเทส '
+          '(qa.radar.20261027.* / tkrd426-* ของ Gong) · ห้ามแก้ค่าการเชื่อมต่อ และห้ามเลือก "PROD (ใช้งานจริง)" · '
+          'สมาชิกและ order บนระบบ aff ลบไม่ได้ ใช้บัญชีใหม่และจดไว้ทุกครั้ง<br>'
+          '⚠️ <b>ชื่อหน้าฝั่งระบบ aff</b> (Orders · Audit Log · สมาชิก · อัปไลน์/ดาวน์ไลน์) ยังไม่ได้เทียบกับจอจริง '
+          'ถ้าไม่ตรง ให้จดชื่อที่เห็นจริงในช่อง Actual<br>'
+          '🗺️ <b>เมนูที่กระทบ:</b> ลูกค้า — "แพ็กเกจ" · "ตั้งค่า" › "ชวนเพื่อน" · "สินค้าที่บันทึกไว้" · หน้าสมัครสมาชิก | '
+          'แอดมิน — "แจ้งชำระเงิน" · "แพคเกจที่ขาย" · "ค่าคอมชวนเพื่อน" | ระบบ aff — Orders · Audit Log · สมาชิก/อัปไลน์ · พอร์ทัลของผู้ชวน<br>'
+          '📎 <b>ที่มา:</b> คำบนจอลอกจากโค้ด Trendora (<code>packages/shared/src/messages/th-*.ts</code> + <code>apps/web/src</code>) · '
+          'Expected ยึด Epic TKRD-404 + Story 5.9'),
     footer='UI only (manual) · Trendora (takra-radar) UAT · TKRD-520',
 )
 
