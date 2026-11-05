@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
-"""TAKRA Radar (Trendora) — ความเสถียรของเทสต์ api ใน CI · Manual Test Cases (ไม่มีหน้าจอ)
+"""TAKRA Radar (Trendora) — หน้าจอที่ใช้ระบบคิว หลังแก้ TKRD-520 · UI Manual Test Cases
+
+5 พ.ย. ผู้ใช้สั่ง: ออกแบบเฉพาะ UI เท่านั้น + full loop ต้องไปถึงระบบ aff — ตัดเคสตรวจ CI/โค้ดเดิม (TC-CI-A–C) ออก
 
 สั่ง 2026-11-05: นำ TKRD-520 มาออกแบบเคสทดสอบแมนนวล — ใบนี้เป็นงานแก้เทสต์ flaky (Postgres ตัด connection 57P01
 ตอนปิด container ใน apps/api/src/queue/queue.service.integration.spec.ts) ไม่มีหน้าจอ เคสจึงเป็นการตรวจ GitHub/CI/รันเทสต์ด้วยมือ
@@ -15,24 +17,23 @@ SRC = Path(__file__).resolve().parent / 'takra-radar-ci-sources'
 
 META = dict(
     out_rel='projects/takra-radar/2026/11/reports/takra-radar-ci-api-test-stability-test-cases-table.html',
-    title='TAKRA Radar — ความเสถียรของเทสต์ api ใน CI · Manual Test Cases',
-    emoji='🧪', uid_start=22701,
-    download='takra-radar-ci-api-test-stability-test-cases.html',
+    title='TAKRA Radar — หน้าจอที่ใช้ระบบคิว (หลังแก้ TKRD-520) · UI Manual Test Cases',
+    emoji='📬', uid_start=22701,
+    download='takra-radar-queue-ui-test-cases.html',
     back='https://wanlee-tankunnatam.github.io/qa-test-reports/?project=radar',
-    sub=('ตรวจด้วยมือ · ไม่มีหน้าจอ — ตรวจผ่าน GitHub (PR · Actions) + รันเทสต์บนเครื่อง QA · '
-         'TKRD-520 · PR #395 (merge 0eb34b48 · 31 ต.ค. 2569) · เฉพาะ P0 + P1'),
+    sub=('เทส UI ด้วยมือ · เว็บ Trendora UAT · full loop ถึงระบบ aff (Realfactory UAT) · TKRD-520 (PR #395 · merge 0eb34b48) · '
+         'happy path · เฉพาะ P0 · ตรวจผลทั้งฝั่ง Trendora และฝั่ง aff'),
     groups_label='',
-    noui_badge='🧪 CI / โค้ด', noui_ready=True,
-    noui_note=('🧪 <b>ไม่มีหน้าจอ</b> — เคสนี้ตรวจผ่าน GitHub และ Terminal บนเครื่อง QA · ห้ามแก้ไฟล์ของ dev แม้ชั่วคราว'),
-    note=('🧪 <b>Test target:</b> repo <b>Real-Factory/takra-radar</b> — GitHub PR #395 · GitHub Actions workflow \"CI\" ของ branch develop · '
-          'รันเทสต์ในโฟลเดอร์ทดสอบแยกของ QA (checkout origin/develop · เปิด Docker ไว้) ไม่ใช้โฟลเดอร์ทำงานของ dev · '
-          '🔄 <b>Full loop (กลุ่ม D):</b> เว็บ Trendora UAT https://uat-radar.takra.ai → คิว → ระบบ aff (Realfactory UAT) · บัญชีเตรียมเหมือนชีต TKRD-404<br>'
-          '🐞 <b>อาการเดิม:</b> job \"typecheck / lint / test / build\" แดงที่ @trendora/api ทั้งที่เทสต์ผ่านครบ เพราะ Uncaught Exception '
-          '<code>terminating connection due to administrator command</code> (Postgres 57P01) จาก <code>queue.service.integration.spec.ts</code> '
-          '(<a href="https://kitdi.atlassian.net/browse/TKRD-520" target="_blank">TKRD-520</a> · '
-          '<a href="https://github.com/Real-Factory/takra-radar/pull/395" target="_blank">PR #395</a>)<br>'
-          '📎 <b>ที่มา:</b> \"ต้องได้\" ในใบ TKRD-520 + คอมเมนต์ dev 30 ต.ค. · ห้ามแก้ไฟล์ของ dev แม้ชั่วคราว'),
-    footer='Manual (ไม่มีหน้าจอ) · takra-radar CI · TKRD-520',
+    note=('🖥️ <b>Test target:</b> เว็บ Trendora (takra-radar) UAT <b>https://uat-radar.takra.ai</b> (ล็อกอิน Cloudflare Access ก่อน) ต่อกับระบบ aff <b>Realfactory UAT</b><br>'
+          '📬 <b>ทำไมต้องเทส:</b> <a href="https://kitdi.atlassian.net/browse/TKRD-520" target="_blank">TKRD-520</a> แก้เทสต์ของระบบคิว (pg-boss) '
+          '— ชีตนี้ตรวจจากหน้าจอว่างานที่วิ่งผ่านคิวยังไปถึงปลายทางครบวง: ส่งยอดขาย/คืนเงินถึงระบบ aff · ขอข้อมูลใหม่ของสินค้าเฝ้าดู<br>'
+          '🗺️ <b>เมนูที่กระทบ (งานที่ส่งผ่านระบบคิว):</b><br>'
+          '&nbsp;• <b>Trendora ฝั่งลูกค้า:</b> "แพ็กเกจ" (ส่งสลิป → แจ้งเตือนแอดมิน · ตรวจสลิปอัตโนมัติ) · "ตั้งค่า" › การ์ด "ชวนเพื่อน" (เข้าร่วมค่าคอม → สร้างสมาชิกบนระบบ aff · ปุ่ม "ดูค่าคอม / ถอนเงิน") · "สินค้าที่บันทึกไว้" ("ขอข้อมูลใหม่")<br>'
+          '&nbsp;• <b>Trendora โซนผู้ดูแลระบบ:</b> "แจ้งชำระเงิน" (อนุมัติ/ยกเลิกการอนุมัติ → ส่งยอดขาย/คืนเงินไประบบ aff · ใบเสร็จ) · "คำขอใบเสร็จ" · "ตรวจสลิปอัตโนมัติ" · "ค่าคอมชวนเพื่อน" ("ทดสอบการเชื่อมต่อ" · การ์ด "ค่าคอมต้องดูแล")<br>'
+          '&nbsp;• <b>ระบบ aff (Realfactory UAT):</b> Project Admin โปรเจกต์ takra-radar หน้า "Orders" · "Audit Log" · สมาชิกผู้ชวน · พอร์ทัลค่าคอมของผู้ชวน — ชีตนี้เทสเส้นทางส่งยอดขาย/คืนเงิน + ขอข้อมูลใหม่ (happy path) ส่วนเมนูอื่นเทสในชีต TKRD-404 / MVP1<br>'
+          '👥 <b>บัญชี:</b> เตรียมเหมือนชีต TKRD-404 (ผู้ชวน A พร้อมใช้งาน · ผู้ซื้อ B สมัครผ่านลิงก์ A · แอดมิน qa01) · ห้ามใช้บัญชี/สลิปที่คนอื่นกำลังทดสอบ (เช่น qa.radar.20261027.* / tkrd426-* ของ Gong)<br>'
+          '📎 <b>ที่มา:</b> คำบนจอลอกจาก <code>packages/shared/src/messages/th-*.ts</code> + <code>apps/web/src</code> (ใช้ชุดเดียวกับชีต TKRD-404 / MVP1) · Expected ยึด Epic TKRD-404 + Story 5.9'),
+    footer='UI only (manual) · Trendora (takra-radar) UAT · TKRD-520',
 )
 
 KINDS = {
@@ -47,7 +48,7 @@ KINDS = {
 
 
 def _case(c):
-    return dict(id=c['id'], title=c['title'], prio=c['prio'], kind=c['kind'], level=c.get('level') or 'ui', ui=bool(c.get('ui', False)),
+    return dict(id=c['id'], title=c['title'], prio=c['prio'], kind=c['kind'], level=c.get('level') or 'ui', ui=True,
                 pre=list(c.get('pre') or []), steps=list(c['steps']), data=list(c.get('data') or []),
                 expected=list(c['expected']), src=c['src'], note=c.get('note') or None)
 

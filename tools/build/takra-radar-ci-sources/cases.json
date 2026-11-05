@@ -1,234 +1,106 @@
 {
  "menus": [
   {
-   "key": "m-ci-api",
-   "chip": "🧪 เทสต์ api ปิด Postgres",
-   "title": "เทสต์ api ไม่แดงเพราะ Postgres ตัด connection ตอนปิดเทสต์ (queue.service.integration.spec.ts · 57P01)",
+   "key": "m-queue",
+   "chip": "📬 งานที่วิ่งผ่านคิว",
+   "title": "หน้าจอที่ใช้ระบบคิวหลังแก้ TKRD-520 — ส่งยอดค่าคอมไประบบ aff · ขอข้อมูลใหม่",
    "jira": "TKRD-520",
    "feats": [
     {
-     "featkey": "ci-fix",
-     "title": "ยืนยันการแก้ — แก้แค่ไฟล์เทสต์ · pool มีตัวรับ error · CI เขียว",
+     "featkey": "q-aff",
+     "title": "Full loop ส่งยอดค่าคอมไปถึงระบบ aff (Realfactory)",
      "cases": [
       {
-       "id": "TC-CI-A.1",
-       "title": "PR #395 แก้แค่ไฟล์เทสต์ ไม่แตะโค้ด production และเข้า develop + uat แล้ว",
-       "prio": "P0",
-       "kind": "happy",
-       "level": "ui",
-       "pre": [
-        "บัญชี GitHub ที่เข้า repo Real-Factory/takra-radar ได้"
-       ],
-       "steps": [
-        "เปิดเบราว์เซอร์ไปที่ https://github.com/Real-Factory/takra-radar/pull/395 แล้วเข้าสู่ระบบ GitHub",
-        "ดูป้ายสถานะของ PR แล้วกดแท็บ \"Files changed\" ไล่ดูรายชื่อไฟล์ทั้งหมด",
-        "เปิด https://github.com/Real-Factory/takra-radar/commit/0eb34b48086440fba0a702fba3acaab2adabc2f4 แล้วดูรายชื่อ branch ที่มี commit นี้ (ใต้ข้อความ commit)",
-        "สังเกตรายชื่อไฟล์และ branch ที่มี commit นี้"
-       ],
-       "data": [
-        "merge commit 0eb34b48 · 31 ต.ค. 2569"
-       ],
-       "expected": [
-        "PR ขึ้นป้าย \"Merged\" เข้า develop",
-        "แก้แค่ 3 ไฟล์: CLAUDE.md · apps/api/src/held-client-invariants.spec.ts · apps/api/src/queue/queue.service.integration.spec.ts — ไม่มีไฟล์โค้ดจริง (ไฟล์ใต้ apps/ ที่ไม่ใช่ *.spec.ts)",
-        "commit 0eb34b48 อยู่ใน develop และ uat"
-       ],
-       "src": "ที่มา: TKRD-520 \"ต้องได้: ไม่เปลี่ยนโค้ด production\" · PR #395",
-       "note": null
-      },
-      {
-       "id": "TC-CI-A.2",
-       "title": "ทุก pool ที่ queue.service.integration.spec.ts สร้างเองมีตัวรับ error",
-       "prio": "P0",
-       "kind": "happy",
-       "level": "ui",
-       "pre": [
-        "บัญชี GitHub ที่เข้า repo Real-Factory/takra-radar ได้"
-       ],
-       "steps": [
-        "เปิดเบราว์เซอร์ไปที่ https://github.com/Real-Factory/takra-radar/blob/develop/apps/api/src/queue/queue.service.integration.spec.ts แล้วเข้าสู่ระบบ GitHub",
-        "กด Ctrl+F (Mac: Cmd+F) ค้นคำ new Pool แล้วดูบรรทัดถัดไปของทุกจุดที่เจอ",
-        "ค้นคำ poolOf( แล้วดูว่าเคสทดสอบทุกเคสที่ต้องใช้ pool เรียกผ่านฟังก์ชันนี้",
-        "สังเกตว่ามี pool ตัวไหนที่ไม่มี pool.on('error', …) หรือไม่"
-       ],
-       "data": [],
-       "expected": [
-        "เจอ new Pool จุดเดียวในฟังก์ชัน poolOf และบรรทัดถัดไปเป็น pool.on('error', () => undefined)",
-        "เคส \"sends to every queue on a held client…\" ใช้ poolOf(1) และเคส \"control: without the cache pass…\" ใช้ poolOf(2) — ไม่มีเคสไหนเรียก new Pool เองตรงๆ"
-       ],
-       "src": "ที่มา: TKRD-520 วิธีแก้ข้อ 1 · คอมเมนต์ dev 30 ต.ค. (ข้อ 1 ทำแล้ว · poolOf)",
-       "note": "ข้อ 2 ในใบ (รอ pg-boss หยุด) dev ไม่ได้ทำ เพราะ pg-boss 12.27 ไม่มี option wait และ stop() รอจนจบอยู่แล้ว — ไม่ใช่ข้อบกพร่อง"
-      },
-      {
-       "id": "TC-CI-A.3",
-       "title": "CI ของ develop หลัง merge เขียวทุกรอบ และ log ไม่มี 57P01 / Uncaught Exception",
-       "prio": "P0",
-       "kind": "happy",
-       "level": "ui",
-       "pre": [
-        "บัญชี GitHub ที่เข้า repo Real-Factory/takra-radar ได้"
-       ],
-       "steps": [
-        "เปิดเบราว์เซอร์ไปที่ https://github.com/Real-Factory/takra-radar/actions/workflows/ci.yml?query=branch%3Adevelop แล้วเข้าสู่ระบบ GitHub",
-        "ไล่ดูผลทุกรอบตั้งแต่รอบ merge 31 ต.ค. (Merge pull request #395) จนถึงรอบล่าสุด",
-        "สุ่มเปิด 3 รอบ (รอบ merge · รอบกลาง · รอบล่าสุด) กด job \"typecheck / lint / test / build\" กาง step \"Unit tests\" แล้วใช้ช่องค้นหา log ค้นคำ 57P01 · Uncaught Exception · terminating connection",
-        "สังเกตผลของแต่ละรอบและผลการค้นหาใน log"
-       ],
-       "data": [
-        "ณ 4 พ.ย. 2569: 29 รอบติดตั้งแต่ run 41169542485 (merge 0eb34b48) ถึง run 41816698008 (7f065905)"
-       ],
-       "expected": [
-        "ทุกรอบตั้งแต่ merge ขึ้นเครื่องหมายเขียว (success)",
-        "ส่วนของ @trendora/api ขึ้น \"Tests … passed\" และไม่มีหัวข้อ \"Unhandled Errors\"",
-        "ค้น 57P01 · Uncaught Exception · terminating connection แล้วไม่เจอ"
-       ],
-       "src": "ที่มา: TKRD-520 \"ต้องได้: ไม่มี uncaught 57P01 ตอนปิด container\" · อาการเดิม run 41034371961",
-       "note": "เจอแดงแบบเดิมแม้รอบเดียว → FAIL แล้วแนบลิงก์ run ใน Actual Result"
-      }
-     ]
-    },
-    {
-     "featkey": "ci-repeat",
-     "title": "รันซ้ำเพื่อดูว่าไม่แดงแบบสุ่มอีก",
-     "cases": [
-      {
-       "id": "TC-CI-B.1",
-       "title": "สั่งรัน CI ของ develop ซ้ำ 5 รอบ — เขียวครบ 5 รอบ",
-       "prio": "P0",
-       "kind": "exception",
-       "level": "ui",
-       "pre": [
-        "บัญชี GitHub ที่มีสิทธิ์กด \"Re-run jobs\" ใน repo Real-Factory/takra-radar",
-        "ไม่มีคนอื่นกำลังรันซ้ำ run เดียวกันอยู่"
-       ],
-       "steps": [
-        "เปิดเบราว์เซอร์ไปที่ https://github.com/Real-Factory/takra-radar/actions/workflows/ci.yml?query=branch%3Adevelop แล้วเข้าสู่ระบบ GitHub และเปิด run ล่าสุดที่เขียว",
-        "กดที่ job \"typecheck / lint / test / build\" แล้วกดปุ่มรันซ้ำของ job นั้น (ไอคอนลูกศรวนมุมขวาบน → \"Re-run job\") รอจนจบ",
-        "ทำซ้ำจนครบ 5 รอบ แต่ละรอบเปิด step \"Unit tests\" ค้นคำ 57P01 และ Uncaught Exception",
-        "สังเกตผลของทั้ง 5 รอบ"
-       ],
-       "data": [
-        "5 รอบ (attempt 2–6 ของ run เดียวกัน)"
-       ],
-       "expected": [
-        "ทั้ง 5 รอบ job \"typecheck / lint / test / build\" เขียว",
-        "ไม่มีรอบไหนเจอ 57P01 / Uncaught Exception / หัวข้อ \"Unhandled Errors\" ใน log"
-       ],
-       "src": "ที่มา: TKRD-520 (อาการแดงแบบสุ่ม · \"ยังไม่รู้ว่าเกิดบ่อยแค่ไหน\") · คอมเมนต์ dev 30 ต.ค. \"CI เขียวรอบเดียวยังไม่ใช่หลักฐานพอ\"",
-       "note": "บันทึกเลข run + attempt ทั้ง 5 รอบใน Actual Result"
-      },
-      {
-       "id": "TC-CI-B.2",
-       "title": "รันไฟล์เทสต์ queue บนเครื่อง QA ซ้ำ 10 รอบ — ผ่านทุกรอบ ไม่มี Unhandled Errors",
-       "prio": "P1",
-       "kind": "exception",
-       "level": "ui",
-       "pre": [
-        "เครื่อง QA เปิด Docker Desktop ไว้ (เทสต์นี้เปิด Postgres ใน container เองด้วยพอร์ตสุ่ม ไม่ชนแอปที่รันอยู่)",
-        "โฟลเดอร์ทดสอบแยกของ QA ที่ checkout origin/develop (ไม่ใช้โฟลเดอร์ทำงานของ dev) และติดตั้ง pnpm แล้ว"
-       ],
-       "steps": [
-        "เปิด Terminal ไปที่โฟลเดอร์ทดสอบของ QA แล้วรัน git fetch และ git checkout origin/develop จากนั้นรัน pnpm install --frozen-lockfile และ pnpm --filter \"./packages/*\" build",
-        "รัน for i in $(seq 10); do pnpm --filter @trendora/api exec vitest run src/queue/queue.service.integration.spec.ts || echo \"รอบ $i แดง\"; done",
-        "สังเกตผลสรุปของแต่ละรอบ"
-       ],
-       "data": [
-        "10 รอบ"
-       ],
-       "expected": [
-        "ทุกรอบขึ้น \"Test Files 1 passed\" และ \"Tests … passed\"",
-        "ไม่มีรอบไหนขึ้น \"รอบ … แดง\" หรือหัวข้อ \"Unhandled Errors\" / 57P01"
-       ],
-       "src": "ที่มา: TKRD-520 · apps/api/package.json (vitest · testcontainers)",
-       "note": "ห้ามแก้ไฟล์ใดๆ ในโฟลเดอร์นี้ (กติกา QA ห้ามแตะโค้ด dev แม้ชั่วคราว)"
-      },
-      {
-       "id": "TC-CI-B.3",
-       "title": "pnpm verify บน develop เขียวทั้งชุด",
-       "prio": "P1",
-       "kind": "happy",
-       "level": "ui",
-       "pre": [
-        "เครื่อง QA เปิด Docker Desktop ไว้",
-        "โฟลเดอร์ทดสอบแยกของ QA ที่ checkout origin/develop และติดตั้ง pnpm แล้ว"
-       ],
-       "steps": [
-        "เปิด Terminal ไปที่โฟลเดอร์ทดสอบของ QA แล้วรัน git fetch และ git checkout origin/develop จากนั้นรัน pnpm install --frozen-lockfile",
-        "รัน pnpm verify แล้วรอจนจบ (typecheck → lint → test → build → browser test ของ web)",
-        "สังเกตผลสรุปของ @trendora/api และ exit code ท้ายสุด (echo $?)"
-       ],
-       "data": [],
-       "expected": [
-        "ทุกขั้นผ่าน · ส่วน @trendora/api ขึ้น \"Tests … passed\" ไม่มี \"Unhandled Errors\"",
-        "echo $? ได้ 0"
-       ],
-       "src": "ที่มา: TKRD-520 \"ต้องได้: pnpm verify เขียว\" · package.json script verify",
-       "note": null
-      }
-     ]
-    },
-    {
-     "featkey": "ci-fence",
-     "title": "ตัวกันไม่ให้ปัญหาเดิมกลับมา (fence)",
-     "cases": [
-      {
-       "id": "TC-CI-C.1",
-       "title": "fence ใน held-client-invariants.spec.ts ตรวจทุก pool ที่ spec สร้างเอง และผ่านบน develop",
-       "prio": "P1",
-       "kind": "negative",
-       "level": "ui",
-       "pre": [
-        "เครื่อง QA เปิด Docker Desktop ไว้",
-        "โฟลเดอร์ทดสอบแยกของ QA ที่ checkout origin/develop และรัน pnpm install --frozen-lockfile แล้ว"
-       ],
-       "steps": [
-        "เปิดเบราว์เซอร์ไปที่ https://github.com/Real-Factory/takra-radar/blob/develop/apps/api/src/held-client-invariants.spec.ts แล้วอ่านกลุ่ม \"the reading of pools is red on what it guards (positive controls)\" และ \"every pool a spec builds itself has an error listener\"",
-        "เปิด Terminal ไปที่โฟลเดอร์ทดสอบของ QA แล้วรัน pnpm --filter @trendora/api exec vitest run src/held-client-invariants.spec.ts",
-        "สังเกตรายชื่อเคสที่ผ่านและผลสรุป"
-       ],
-       "data": [],
-       "expected": [
-        "กลุ่ม positive controls มี 3 เคส: จับ pool ที่ไม่มีตัวรับ error และ pool ที่ไม่มีชื่อได้ · ไม่ยืมตัวรับของเคสถัดไป · ยอมรับตัวรับ error ทุกรูปแบบการเขียน",
-        "รันแล้วทุกเคสผ่าน รวมเคส \"leaves no pool for a stopping container to bring the run down\""
-       ],
-       "src": "ที่มา: TKRD-520 วิธีแก้ข้อ 3 · คอมเมนต์ dev 30 ต.ค. (fence ทำเฉพาะส่วน listener)",
-       "note": "ส่วน \"ต้องปิด pool ก่อนปิด container\" ของข้อ 3 dev ไม่ได้ทำ เพราะ pool.end() รับประกันการปิด socket ไม่ได้ · QA ไม่ลองถอดตัวรับ error เพื่อดู fence แดงเอง (ห้ามแก้ไฟล์ของ dev แม้ชั่วคราว) — ใช้ positive controls ในไฟล์ + หลักฐานในคอมเมนต์ dev แทน"
-      }
-     ]
-    },
-    {
-     "featkey": "ci-fullloop",
-     "title": "Full loop บน UAT — ยอดขายวิ่งผ่านคิวไปถึงระบบ aff (Realfactory)",
-     "cases": [
-      {
-       "id": "TC-CI-D.1",
-       "title": "Full loop: เพื่อนที่ถูกชวนซื้อแพ็กเกจ → แอดมินอนุมัติสลิป → ยอดผ่านคิวไปถึงระบบ aff และผู้ชวนเห็นในพอร์ทัล",
+       "id": "TC-Q-A.1",
+       "title": "Full loop: เพื่อนที่ถูกชวนซื้อแพ็กเกจ → แอดมินอนุมัติสลิป → ยอดขายไปถึงระบบ aff ถูกต้อง (Orders · Audit Log · พอร์ทัลผู้ชวน)",
        "prio": "P0",
        "kind": "happy",
        "level": "e2e",
        "pre": [
         "UAT (uat-radar.takra.ai) deploy รุ่นที่มี commit 0eb34b48 แล้ว (branch uat มี commit นี้แล้ว)",
         "บัญชีผู้ชวน A ที่บัญชีรับค่าคอม \"พร้อมใช้งาน\" · บัญชีผู้ซื้อ B ที่สมัครผ่านลิงก์ชวนของ A · บัญชีแอดมิน (เช่น qa01)",
+        "บัญชี Project Admin บน Realfactory UAT ของโปรเจกต์ takra-radar (ดูหน้า Orders / Audit Log ได้)",
         "ไม่ใช้บัญชี/สลิปที่คนอื่นกำลังทดสอบอยู่ (เช่น บัญชี qa.radar.20261027.* / tkrd426-* ของ Gong)",
         "ไฟล์สลิปทดสอบ"
        ],
        "steps": [
         "เปิดเว็บ Trendora (takra-radar) รุ่น UAT ที่ https://uat-radar.takra.ai (ผ่าน Cloudflare Access แล้ว) แล้วเข้าสู่ระบบด้วยบัญชีผู้ซื้อ B ไปที่เมนู \"แพ็กเกจ\" เลือกแพ็กเกจ ชำระเงินผ่านธนาคารแล้วกด \"แนบสลิป\" ส่งสลิปทดสอบ",
-        "เปิดเว็บ Trendora (takra-radar) รุ่น UAT ที่ https://uat-radar.takra.ai (ผ่าน Cloudflare Access แล้ว) แล้วเข้าสู่ระบบด้วยบัญชีแอดมิน ไปที่เมนู \"แจ้งชำระเงิน\" เปิดสลิปของ B ด้วยปุ่ม \"ตรวจสลิป\" แล้วกด \"อนุมัติ · เปิดสิทธิ์ … วัน\" รอราว 1–2 นาทีแล้วเปิดสลิปเดิมใหม่ ดูส่วน \"ค่าคอมชวนเพื่อน\"",
+        "เปิดเว็บ Trendora (takra-radar) รุ่น UAT ที่ https://uat-radar.takra.ai (ผ่าน Cloudflare Access แล้ว) แล้วเข้าสู่ระบบด้วยบัญชีแอดมิน ไปที่เมนู \"แจ้งชำระเงิน\" เปิดสลิปของ B ด้วยปุ่ม \"ตรวจสลิป\" แล้วกด \"อนุมัติ · เปิดสิทธิ์ … วัน\" รอราว 1–2 นาทีแล้วเปิดสลิปเดิมใหม่ ดูส่วน \"ค่าคอมชวนเพื่อน\" และจดรหัสของสลิป",
+        "เปิด Realfactory UAT แล้วเข้าสู่ระบบด้วยบัญชี Project Admin เข้าโปรเจกต์ takra-radar ไปที่หน้า \"Orders\" ค้นด้วยรหัสสลิปที่จดไว้ (external_order_id) แล้วเปิด order นั้น จากนั้นไปหน้า \"Audit Log\" ค้นรหัสเดียวกัน",
         "เปิดเว็บ Trendora (takra-radar) รุ่น UAT ที่ https://uat-radar.takra.ai (ผ่าน Cloudflare Access แล้ว) แล้วเข้าสู่ระบบด้วยบัญชี A ไปที่เมนู \"ตั้งค่า\" เลื่อนไปหัวข้อ \"แนะนำเพื่อน\" ในการ์ด \"ชวนเพื่อน\" กด \"ดูค่าคอม / ถอนเงิน\" เพื่อเปิดพอร์ทัลของระบบ aff (Realfactory UAT)",
-        "สังเกตรายการยอดขายล่าสุดของ B ในพอร์ทัล"
+        "สังเกตข้อมูล order ใน Realfactory และรายการยอดขายของ B ในพอร์ทัลของ A"
        ],
        "data": [
         "แพ็กเกจราคาต่ำสุดที่ผูก \"รหัสสินค้าในระบบค่าคอม\" แล้ว"
        ],
        "expected": [
         "หน้าต่างสลิปฝั่งแอดมิน: \"ผู้ชวน\" = A พร้อมป้าย \"ใช้งานอยู่\" · รายการ \"ยอดขาย\" เป็น \"ส่งแล้ว พร้อมรหัสผู้ชวน\" + \"ส่งถึงเมื่อ <วันเวลา>\" (ไม่ค้างที่ \"อยู่ในคิวส่ง\")",
+        "Realfactory หน้า \"Orders\": มี order 1 รายการ external_order_id = รหัสสลิป · external_user_id = id ของ B · ref = รหัสบัญชีรับค่าคอมของ A (ขึ้นต้น TR- / TKR-) · gross_amount = net_amount = ราคาในสลิป (บาท ทศนิยม 2 ตำแหน่ง ไม่บวก VAT) · plan_label = \"<ชื่อแพ็กเกจ> · <n> วัน\" · ไม่มีชื่อหรืออีเมลของ B",
+        "Realfactory หน้า \"Audit Log\": มีรายการ commission.calculated ของ order นี้ 1 รายการ",
         "พอร์ทัลระบบ aff ของ A มียอดขายของ B 1 รายการ ฐานค่าคอม = ราคาแพ็กเกจในสลิป",
         "B เปิดสิทธิ์แพ็กเกจได้ตามปกติ"
        ],
-       "src": "ที่มา: TKRD-520 (คิวที่ queue.service.integration.spec.ts ตรวจ = การส่งเข้าคิวหลัง warm() · TKRD-413) · Epic TKRD-404 Story PC.8–PC.9 · ใช้เส้นทางเดียวกับเคส PC-E.1 ในชีต TKRD-404",
-       "note": "เคสนี้ยืนยันว่าหลังแก้เทสต์ ระบบคิวบน UAT ยังส่งยอดถึงระบบ aff ครบวง · ค้างที่ \"อยู่ในคิวส่ง\" เกิน 15 นาที → FAIL แนบภาพหน้าต่างสลิป",
-       "ui": true
+       "src": "ที่มา: TKRD-520 · Epic TKRD-404 Story PC.8–PC.9 (TKRD-413/414) · PC.19 (TKRD-424) · เส้นทางเดียวกับ PC-E.1 ในชีต TKRD-404 · เคสกลาง radar TC-PC.9-F01 (docs/test-artifacts/case/partner-delivery/fullloop-e2e.md)",
+       "note": "ชื่อหน้า/ช่องฝั่ง Realfactory (Orders · Audit Log · external_order_id · ref …) อ้างจากเคสกลางของ radar — ไม่มีโค้ด Realfactory ในเครื่อง ยังไม่ได้เทียบกับจอจริง จดตามที่เห็นจริง · ค้างที่ \"อยู่ในคิวส่ง\" เกิน 15 นาที → FAIL แนบภาพ · ล้างหลังเทส: แอดมิน \"ยกเลิกการอนุมัติ\" สลิปของ B (ทำใน TC-Q-A.2) · order บน Realfactory ลบไม่ได้ จดรหัสไว้"
+      },
+      {
+       "id": "TC-Q-A.2",
+       "title": "Full loop: แอดมินยกเลิกการอนุมัติสลิปที่ส่งยอดแล้ว → การคืนเงินไปถึงระบบ aff ถูกต้อง และยอดในพอร์ทัลผู้ชวนถูกหักคืน",
+       "prio": "P0",
+       "kind": "happy",
+       "level": "e2e",
+       "pre": [
+        "UAT (uat-radar.takra.ai) deploy รุ่นที่มี commit 0eb34b48 (PR #395 · TKRD-520) แล้ว",
+        "สลิปของผู้ซื้อ B ที่ \"ส่งแล้ว พร้อมรหัสผู้ชวน\" จาก TC-Q-A.1",
+        "บัญชี Project Admin บน Realfactory UAT ของโปรเจกต์ takra-radar (ดูหน้า Orders / Audit Log ได้)",
+        "บัญชีแอดมิน (เช่น qa01) · บัญชีผู้ชวน A"
+       ],
+       "steps": [
+        "เปิดเว็บ Trendora (takra-radar) รุ่น UAT ที่ https://uat-radar.takra.ai (ผ่าน Cloudflare Access แล้ว) แล้วเข้าสู่ระบบด้วยบัญชีแอดมิน ไปที่เมนู \"แจ้งชำระเงิน\" เปิดสลิปของ B ที่ \"ส่งแล้ว พร้อมรหัสผู้ชวน\" (จาก TC-Q-A.1)",
+        "กด \"ยกเลิกการอนุมัติ\" ใส่ \"เหตุผลที่ยกเลิก\" แล้วยืนยัน รอราว 2–5 นาทีแล้วเปิดสลิปเดิมดูส่วน \"ค่าคอมชวนเพื่อน\"",
+        "เปิด Realfactory UAT แล้วเข้าสู่ระบบด้วยบัญชี Project Admin เข้าโปรเจกต์ takra-radar ไปที่หน้า \"Orders\" ค้นด้วยรหัสสลิปที่จดไว้ (external_order_id) แล้วเปิด order เดิมดูประวัติ (History) จากนั้นไปหน้า \"Audit Log\" ค้นรหัสเดียวกัน",
+        "เปิดเว็บ Trendora (takra-radar) รุ่น UAT ที่ https://uat-radar.takra.ai (ผ่าน Cloudflare Access แล้ว) แล้วเข้าสู่ระบบด้วยบัญชี A ไปที่เมนู \"ตั้งค่า\" เลื่อนไปหัวข้อ \"แนะนำเพื่อน\" ในการ์ด \"ชวนเพื่อน\" กด \"ดูค่าคอม / ถอนเงิน\" เพื่อเปิดพอร์ทัลของระบบ aff (Realfactory UAT)",
+        "สังเกตประวัติของ order ใน Realfactory และยอดของ B ในพอร์ทัลของ A"
+       ],
+       "data": [],
+       "expected": [
+        "ขึ้น \"ยกเลิกการอนุมัติและเรียกคืนสิทธิ์เรียบร้อยแล้ว\"",
+        "แถว \"คืนเงิน\" เป็น \"ส่งแล้ว\" + \"ส่งถึงเมื่อ <เวลา>\" ภายใน 5 นาที และเวลานี้ช้ากว่า \"ส่งถึงเมื่อ\" ของยอดขายอย่างน้อย 120 วินาที (ระหว่างรออาจเห็น \"รอส่งยอดขายให้ถึงก่อน\" / \"อยู่ในคิวส่ง\")",
+        "Realfactory: order เดิม (ไม่ใช่ order ใหม่) มีรายการ payment.refunded เหตุผล other · Audit Log มีรายการคืนเงินของ order นี้",
+        "พอร์ทัลระบบ aff ของ A แสดงยอดนั้นถูกคืน/หักค่าคอม"
+       ],
+       "src": "ที่มา: TKRD-520 · Epic TKRD-404 Story PC.9 (TKRD-414) กลับรายการ · PC.19 (TKRD-424) · เส้นทางเดียวกับ PC-E.7 ในชีต TKRD-404 · เคสกลาง radar TC-PC.9-F05",
+       "note": "ชื่อหน้า/ช่องฝั่ง Realfactory อ้างจากเคสกลางของ radar ยังไม่ได้เทียบกับจอจริง · ค้างที่ \"อยู่ในคิวส่ง\" เกิน 15 นาที → FAIL แนบภาพ"
+      }
+     ]
+    },
+    {
+     "featkey": "q-watch",
+     "title": "ขอข้อมูลใหม่ของสินค้าเฝ้าดู",
+     "cases": [
+      {
+       "id": "TC-Q-B.1",
+       "title": "กด \"ขอข้อมูลใหม่\" ที่สินค้าเฝ้าดู → ขึ้น \"กำลังรอข้อมูล\" ในแถว แล้วข้อมูลอัปเดตเมื่อเสร็จ",
+       "prio": "P0",
+       "kind": "happy",
+       "level": "e2e",
+       "pre": [
+        "UAT (uat-radar.takra.ai) deploy รุ่นที่มี commit 0eb34b48 (PR #395 · TKRD-520) แล้ว",
+        "บัญชีลูกค้า UAT ที่มีสินค้าเฝ้าดูอย่างน้อย 1 ตัว และแถวนั้นไม่อยู่ในช่วงรอขอซ้ำ (~30 นาที)"
+       ],
+       "steps": [
+        "เปิดเว็บ Trendora (takra-radar) รุ่น UAT ที่ https://uat-radar.takra.ai (ผ่าน Cloudflare Access แล้ว) แล้วเข้าสู่ระบบด้วยบัญชีลูกค้า UAT ไปที่เมนู \"สินค้าที่บันทึกไว้\"",
+        "จดเวลาอัปเดตของการ์ดสินค้าตัวหนึ่ง แล้วกดเมนู \"ตัวเลือก\" (…) ของการ์ดนั้นและเลือก \"ขอข้อมูลใหม่\"",
+        "ระหว่างรอ ลองกดใช้การ์ดอื่นไปด้วย แล้วรอจนสถานะรอหายไป",
+        "สังเกตสถานะและเวลาอัปเดตของการ์ด"
+       ],
+       "data": [],
+       "expected": [
+        "ระหว่างรอ การ์ดขึ้น \"กำลังรอข้อมูล\" ข้างเวลาอัปเดต ไม่มีหน้าต่างบังจอ และการ์ดอื่นใช้งานได้ปกติ",
+        "เสร็จแล้ว \"กำลังรอข้อมูล\" หายไป และเวลาอัปเดต/ตัวเลขของการ์ดนั้นเปลี่ยนเป็นค่าใหม่ ไม่ขึ้น \"ดึงข้อมูลไม่ได้\""
+       ],
+       "src": "ที่มา: TKRD-520 (คิว watchlist-refresh ใน queue.service) · Epic 5 Story 5.9 · FR-97 · UX-DR18 · เส้นทางเดียวกับ RD-E.22 ในชีต MVP1 · WatchlistTable.tsx",
+       "note": "ค้าง \"กำลังรอข้อมูล\" เกิน 10 นาที หรือขึ้น \"ดึงข้อมูลไม่ได้\" → FAIL แนบภาพการ์ด"
       }
      ]
     }
