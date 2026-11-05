@@ -1,0 +1,202 @@
+{
+ "menus": [
+  {
+   "key": "m-ci-api",
+   "chip": "🧪 เทสต์ api ปิด Postgres",
+   "title": "เทสต์ api ไม่แดงเพราะ Postgres ตัด connection ตอนปิดเทสต์ (queue.service.integration.spec.ts · 57P01)",
+   "jira": "TKRD-520",
+   "feats": [
+    {
+     "featkey": "ci-fix",
+     "title": "ยืนยันการแก้ — แก้แค่ไฟล์เทสต์ · pool มีตัวรับ error · CI เขียว",
+     "cases": [
+      {
+       "id": "TC-CI-A.1",
+       "title": "PR #395 แก้แค่ไฟล์เทสต์ ไม่แตะโค้ด production และเข้า develop + uat แล้ว",
+       "prio": "P0",
+       "kind": "happy",
+       "level": "ui",
+       "pre": [
+        "บัญชี GitHub ที่เข้า repo Real-Factory/takra-radar ได้"
+       ],
+       "steps": [
+        "เปิดเบราว์เซอร์ไปที่ https://github.com/Real-Factory/takra-radar/pull/395 แล้วเข้าสู่ระบบ GitHub",
+        "ดูป้ายสถานะของ PR แล้วกดแท็บ \"Files changed\" ไล่ดูรายชื่อไฟล์ทั้งหมด",
+        "เปิด https://github.com/Real-Factory/takra-radar/commit/0eb34b48086440fba0a702fba3acaab2adabc2f4 แล้วดูรายชื่อ branch ที่มี commit นี้ (ใต้ข้อความ commit)",
+        "สังเกตรายชื่อไฟล์และ branch ที่มี commit นี้"
+       ],
+       "data": [
+        "merge commit 0eb34b48 · 31 ต.ค. 2569"
+       ],
+       "expected": [
+        "PR ขึ้นป้าย \"Merged\" เข้า develop",
+        "แก้แค่ 3 ไฟล์: CLAUDE.md · apps/api/src/held-client-invariants.spec.ts · apps/api/src/queue/queue.service.integration.spec.ts — ไม่มีไฟล์โค้ดจริง (ไฟล์ใต้ apps/ ที่ไม่ใช่ *.spec.ts)",
+        "commit 0eb34b48 อยู่ใน develop และ uat"
+       ],
+       "src": "ที่มา: TKRD-520 \"ต้องได้: ไม่เปลี่ยนโค้ด production\" · PR #395",
+       "note": null
+      },
+      {
+       "id": "TC-CI-A.2",
+       "title": "ทุก pool ที่ queue.service.integration.spec.ts สร้างเองมีตัวรับ error",
+       "prio": "P0",
+       "kind": "happy",
+       "level": "ui",
+       "pre": [
+        "บัญชี GitHub ที่เข้า repo Real-Factory/takra-radar ได้"
+       ],
+       "steps": [
+        "เปิดเบราว์เซอร์ไปที่ https://github.com/Real-Factory/takra-radar/blob/develop/apps/api/src/queue/queue.service.integration.spec.ts แล้วเข้าสู่ระบบ GitHub",
+        "กด Ctrl+F (Mac: Cmd+F) ค้นคำ new Pool แล้วดูบรรทัดถัดไปของทุกจุดที่เจอ",
+        "ค้นคำ poolOf( แล้วดูว่าเคสทดสอบทุกเคสที่ต้องใช้ pool เรียกผ่านฟังก์ชันนี้",
+        "สังเกตว่ามี pool ตัวไหนที่ไม่มี pool.on('error', …) หรือไม่"
+       ],
+       "data": [],
+       "expected": [
+        "เจอ new Pool จุดเดียวในฟังก์ชัน poolOf และบรรทัดถัดไปเป็น pool.on('error', () => undefined)",
+        "เคส \"sends to every queue on a held client…\" ใช้ poolOf(1) และเคส \"control: without the cache pass…\" ใช้ poolOf(2) — ไม่มีเคสไหนเรียก new Pool เองตรงๆ"
+       ],
+       "src": "ที่มา: TKRD-520 วิธีแก้ข้อ 1 · คอมเมนต์ dev 30 ต.ค. (ข้อ 1 ทำแล้ว · poolOf)",
+       "note": "ข้อ 2 ในใบ (รอ pg-boss หยุด) dev ไม่ได้ทำ เพราะ pg-boss 12.27 ไม่มี option wait และ stop() รอจนจบอยู่แล้ว — ไม่ใช่ข้อบกพร่อง"
+      },
+      {
+       "id": "TC-CI-A.3",
+       "title": "CI ของ develop หลัง merge เขียวทุกรอบ และ log ไม่มี 57P01 / Uncaught Exception",
+       "prio": "P0",
+       "kind": "happy",
+       "level": "ui",
+       "pre": [
+        "บัญชี GitHub ที่เข้า repo Real-Factory/takra-radar ได้"
+       ],
+       "steps": [
+        "เปิดเบราว์เซอร์ไปที่ https://github.com/Real-Factory/takra-radar/actions/workflows/ci.yml?query=branch%3Adevelop แล้วเข้าสู่ระบบ GitHub",
+        "ไล่ดูผลทุกรอบตั้งแต่รอบ merge 31 ต.ค. (Merge pull request #395) จนถึงรอบล่าสุด",
+        "สุ่มเปิด 3 รอบ (รอบ merge · รอบกลาง · รอบล่าสุด) กด job \"typecheck / lint / test / build\" กาง step \"Unit tests\" แล้วใช้ช่องค้นหา log ค้นคำ 57P01 · Uncaught Exception · terminating connection",
+        "สังเกตผลของแต่ละรอบและผลการค้นหาใน log"
+       ],
+       "data": [
+        "ณ 4 พ.ย. 2569: 29 รอบติดตั้งแต่ run 41169542485 (merge 0eb34b48) ถึง run 41816698008 (7f065905)"
+       ],
+       "expected": [
+        "ทุกรอบตั้งแต่ merge ขึ้นเครื่องหมายเขียว (success)",
+        "ส่วนของ @trendora/api ขึ้น \"Tests … passed\" และไม่มีหัวข้อ \"Unhandled Errors\"",
+        "ค้น 57P01 · Uncaught Exception · terminating connection แล้วไม่เจอ"
+       ],
+       "src": "ที่มา: TKRD-520 \"ต้องได้: ไม่มี uncaught 57P01 ตอนปิด container\" · อาการเดิม run 41034371961",
+       "note": "เจอแดงแบบเดิมแม้รอบเดียว → FAIL แล้วแนบลิงก์ run ใน Actual Result"
+      }
+     ]
+    },
+    {
+     "featkey": "ci-repeat",
+     "title": "รันซ้ำเพื่อดูว่าไม่แดงแบบสุ่มอีก",
+     "cases": [
+      {
+       "id": "TC-CI-B.1",
+       "title": "สั่งรัน CI ของ develop ซ้ำ 5 รอบ — เขียวครบ 5 รอบ",
+       "prio": "P0",
+       "kind": "exception",
+       "level": "ui",
+       "pre": [
+        "บัญชี GitHub ที่มีสิทธิ์กด \"Re-run jobs\" ใน repo Real-Factory/takra-radar",
+        "ไม่มีคนอื่นกำลังรันซ้ำ run เดียวกันอยู่"
+       ],
+       "steps": [
+        "เปิดเบราว์เซอร์ไปที่ https://github.com/Real-Factory/takra-radar/actions/workflows/ci.yml?query=branch%3Adevelop แล้วเข้าสู่ระบบ GitHub และเปิด run ล่าสุดที่เขียว",
+        "กดที่ job \"typecheck / lint / test / build\" แล้วกดปุ่มรันซ้ำของ job นั้น (ไอคอนลูกศรวนมุมขวาบน → \"Re-run job\") รอจนจบ",
+        "ทำซ้ำจนครบ 5 รอบ แต่ละรอบเปิด step \"Unit tests\" ค้นคำ 57P01 และ Uncaught Exception",
+        "สังเกตผลของทั้ง 5 รอบ"
+       ],
+       "data": [
+        "5 รอบ (attempt 2–6 ของ run เดียวกัน)"
+       ],
+       "expected": [
+        "ทั้ง 5 รอบ job \"typecheck / lint / test / build\" เขียว",
+        "ไม่มีรอบไหนเจอ 57P01 / Uncaught Exception / หัวข้อ \"Unhandled Errors\" ใน log"
+       ],
+       "src": "ที่มา: TKRD-520 (อาการแดงแบบสุ่ม · \"ยังไม่รู้ว่าเกิดบ่อยแค่ไหน\") · คอมเมนต์ dev 30 ต.ค. \"CI เขียวรอบเดียวยังไม่ใช่หลักฐานพอ\"",
+       "note": "บันทึกเลข run + attempt ทั้ง 5 รอบใน Actual Result"
+      },
+      {
+       "id": "TC-CI-B.2",
+       "title": "รันไฟล์เทสต์ queue บนเครื่อง QA ซ้ำ 10 รอบ — ผ่านทุกรอบ ไม่มี Unhandled Errors",
+       "prio": "P1",
+       "kind": "exception",
+       "level": "ui",
+       "pre": [
+        "เครื่อง QA เปิด Docker Desktop ไว้ (เทสต์นี้เปิด Postgres ใน container เองด้วยพอร์ตสุ่ม ไม่ชนแอปที่รันอยู่)",
+        "โฟลเดอร์ทดสอบแยกของ QA ที่ checkout origin/develop (ไม่ใช้โฟลเดอร์ทำงานของ dev) และติดตั้ง pnpm แล้ว"
+       ],
+       "steps": [
+        "เปิด Terminal ไปที่โฟลเดอร์ทดสอบของ QA แล้วรัน git fetch และ git checkout origin/develop จากนั้นรัน pnpm install --frozen-lockfile และ pnpm --filter \"./packages/*\" build",
+        "รัน for i in $(seq 10); do pnpm --filter @trendora/api exec vitest run src/queue/queue.service.integration.spec.ts || echo \"รอบ $i แดง\"; done",
+        "สังเกตผลสรุปของแต่ละรอบ"
+       ],
+       "data": [
+        "10 รอบ"
+       ],
+       "expected": [
+        "ทุกรอบขึ้น \"Test Files 1 passed\" และ \"Tests … passed\"",
+        "ไม่มีรอบไหนขึ้น \"รอบ … แดง\" หรือหัวข้อ \"Unhandled Errors\" / 57P01"
+       ],
+       "src": "ที่มา: TKRD-520 · apps/api/package.json (vitest · testcontainers)",
+       "note": "ห้ามแก้ไฟล์ใดๆ ในโฟลเดอร์นี้ (กติกา QA ห้ามแตะโค้ด dev แม้ชั่วคราว)"
+      },
+      {
+       "id": "TC-CI-B.3",
+       "title": "pnpm verify บน develop เขียวทั้งชุด",
+       "prio": "P1",
+       "kind": "happy",
+       "level": "ui",
+       "pre": [
+        "เครื่อง QA เปิด Docker Desktop ไว้",
+        "โฟลเดอร์ทดสอบแยกของ QA ที่ checkout origin/develop และติดตั้ง pnpm แล้ว"
+       ],
+       "steps": [
+        "เปิด Terminal ไปที่โฟลเดอร์ทดสอบของ QA แล้วรัน git fetch และ git checkout origin/develop จากนั้นรัน pnpm install --frozen-lockfile",
+        "รัน pnpm verify แล้วรอจนจบ (typecheck → lint → test → build → browser test ของ web)",
+        "สังเกตผลสรุปของ @trendora/api และ exit code ท้ายสุด (echo $?)"
+       ],
+       "data": [],
+       "expected": [
+        "ทุกขั้นผ่าน · ส่วน @trendora/api ขึ้น \"Tests … passed\" ไม่มี \"Unhandled Errors\"",
+        "echo $? ได้ 0"
+       ],
+       "src": "ที่มา: TKRD-520 \"ต้องได้: pnpm verify เขียว\" · package.json script verify",
+       "note": null
+      }
+     ]
+    },
+    {
+     "featkey": "ci-fence",
+     "title": "ตัวกันไม่ให้ปัญหาเดิมกลับมา (fence)",
+     "cases": [
+      {
+       "id": "TC-CI-C.1",
+       "title": "fence ใน held-client-invariants.spec.ts ตรวจทุก pool ที่ spec สร้างเอง และผ่านบน develop",
+       "prio": "P1",
+       "kind": "negative",
+       "level": "ui",
+       "pre": [
+        "เครื่อง QA เปิด Docker Desktop ไว้",
+        "โฟลเดอร์ทดสอบแยกของ QA ที่ checkout origin/develop และรัน pnpm install --frozen-lockfile แล้ว"
+       ],
+       "steps": [
+        "เปิดเบราว์เซอร์ไปที่ https://github.com/Real-Factory/takra-radar/blob/develop/apps/api/src/held-client-invariants.spec.ts แล้วอ่านกลุ่ม \"the reading of pools is red on what it guards (positive controls)\" และ \"every pool a spec builds itself has an error listener\"",
+        "เปิด Terminal ไปที่โฟลเดอร์ทดสอบของ QA แล้วรัน pnpm --filter @trendora/api exec vitest run src/held-client-invariants.spec.ts",
+        "สังเกตรายชื่อเคสที่ผ่านและผลสรุป"
+       ],
+       "data": [],
+       "expected": [
+        "กลุ่ม positive controls มี 3 เคส: จับ pool ที่ไม่มีตัวรับ error และ pool ที่ไม่มีชื่อได้ · ไม่ยืมตัวรับของเคสถัดไป · ยอมรับตัวรับ error ทุกรูปแบบการเขียน",
+        "รันแล้วทุกเคสผ่าน รวมเคส \"leaves no pool for a stopping container to bring the run down\""
+       ],
+       "src": "ที่มา: TKRD-520 วิธีแก้ข้อ 3 · คอมเมนต์ dev 30 ต.ค. (fence ทำเฉพาะส่วน listener)",
+       "note": "ส่วน \"ต้องปิด pool ก่อนปิด container\" ของข้อ 3 dev ไม่ได้ทำ เพราะ pool.end() รับประกันการปิด socket ไม่ได้ · QA ไม่ลองถอดตัวรับ error เพื่อดู fence แดงเอง (ห้ามแก้ไฟล์ของ dev แม้ชั่วคราว) — ใช้ positive controls ในไฟล์ + หลักฐานในคอมเมนต์ dev แทน"
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}
