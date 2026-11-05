@@ -154,13 +154,13 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 <header class="top">
   <h1>📬 TAKRA Radar — หน้าจอที่ใช้ระบบคิว (หลังแก้ TKRD-520) · UI Manual Test Cases</h1>
-  <div class="sub">เทส UI ด้วยมือ · เว็บ Trendora UAT · full loop ถึงระบบ aff (Realfactory UAT) · TKRD-520 (PR #395 · merge 0eb34b48) · happy path · เฉพาะ P0 · ตรวจผลทั้งฝั่ง Trendora และฝั่ง aff</div>
+  <div class="sub">เทส UI ด้วยมือ · เว็บ Trendora UAT · full loop ถึงระบบ aff (Realfactory UAT) · TKRD-520 (PR #395 · merge 0eb34b48) · happy + negative · P0 + P1 · ตรวจผลทั้งฝั่ง Trendora และฝั่ง aff</div>
   <div class="meta">
-    <span class="pill">0 เคส + E2E 3 = 3</span>
+    <span class="pill">1 เคส + E2E 7 = 8</span>
     <span class="pill">2 กลุ่ม (A–B)</span>
     <span class="pill">UI + E2E · manual</span>
-    <span class="pill">P0 3 · P1 0 · P2 0</span>
-    <span class="pill">ประเภท: Happy 3 · Negative 0 · Boundary 0 · Validation 0 · Exception 0 · Permission 0 · Data 0</span>
+    <span class="pill">P0 3 · P1 5 · P2 0</span>
+    <span class="pill">ประเภท: Happy 3 · Negative 5 · Boundary 0 · Validation 0 · Exception 0 · Permission 0 · Data 0</span>
   </div>
 </header>
 
@@ -176,10 +176,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
       <span class="cnt hold">HOLD <b id="sum-hold">0</b></span>
       <span class="cnt block">BLOCKED <b id="sum-block">0</b></span>
       <span class="cnt skip">SKIP <b id="sum-skip">0</b></span>
-      <span class="cnt pending">รอเทส <b id="sum-pending">3</b></span>
+      <span class="cnt pending">รอเทส <b id="sum-pending">8</b></span>
     </div>
     <div class="progress"><div id="sumbar" class="progressbar" style="width:0%"></div></div>
-    <div class="hint" id="sumpct" style="margin-top:5px">0% ทดสอบแล้ว (0/3)</div>
+    <div class="hint" id="sumpct" style="margin-top:5px">0% ทดสอบแล้ว (0/8)</div>
   </div>
 
   <div class="toolbar">
@@ -199,11 +199,11 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
   <div class="filters">
     <div class="row"><label>กลุ่ม</label>
-      <button class="fchip" data-f="feat" data-v="m-queue">📬 งานที่วิ่งผ่านคิว (3)</button>
+      <button class="fchip" data-f="feat" data-v="m-queue">📬 งานที่วิ่งผ่านคิว (8)</button>
       <button class="clearbtn" data-clear="feat">✕</button>
     </div>
     <div class="row"><label>ประเภท</label>
-      <button class="fchip" data-f="kind" data-v="happy" title="flow ปกติ">Happy Path (3)</button><button class="fchip" data-f="kind" data-v="negative" title="ข้อมูลผิด / action ผิด">Negative (0)</button><button class="fchip" data-f="kind" data-v="boundary" title="min · max · ก่อนขอบ · ตรงขอบ · เกินขอบ">Boundary (0)</button><button class="fchip" data-f="kind" data-v="validation" title="format · required · character · length">Validation (0)</button><button class="fchip" data-f="kind" data-v="exception" title="เน็ตหลุด · ระบบภายนอกผิดปกติ · timeout">Exception (0)</button><button class="fchip" data-f="kind" data-v="permission" title="role ไหนทำได้ / ทำไม่ได้">Permission (0)</button><button class="fchip" data-f="kind" data-v="data" title="empty · duplicate · ไม่ปนข้ามทีม/แพลตฟอร์ม">Data (0)</button>
+      <button class="fchip" data-f="kind" data-v="happy" title="flow ปกติ">Happy Path (3)</button><button class="fchip" data-f="kind" data-v="negative" title="ข้อมูลผิด / action ผิด">Negative (5)</button><button class="fchip" data-f="kind" data-v="boundary" title="min · max · ก่อนขอบ · ตรงขอบ · เกินขอบ">Boundary (0)</button><button class="fchip" data-f="kind" data-v="validation" title="format · required · character · length">Validation (0)</button><button class="fchip" data-f="kind" data-v="exception" title="เน็ตหลุด · ระบบภายนอกผิดปกติ · timeout">Exception (0)</button><button class="fchip" data-f="kind" data-v="permission" title="role ไหนทำได้ / ทำไม่ได้">Permission (0)</button><button class="fchip" data-f="kind" data-v="data" title="empty · duplicate · ไม่ปนข้ามทีม/แพลตฟอร์ม">Data (0)</button>
       <button class="clearbtn" data-clear="kind">✕</button>
     </div>
     <div class="row"><label>Priority</label>
@@ -229,8 +229,8 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <tbody>
 
 <!-- m-queue -->
-<tr class="epicrow" data-epic="m-queue"><td colspan="7">📬 หน้าจอที่ใช้ระบบคิวหลังแก้ TKRD-520 — ส่งยอดค่าคอมไประบบ aff · ขอข้อมูลใหม่ <span class="rp">(3 เคส)</span> <a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-520" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-520 ใน Jira">🧩 Epic TKRD-520</a></td></tr>
-<tr class="featrow" data-featkey="q-aff"><td colspan="7">📁 Full loop ส่งยอดค่าคอมไปถึงระบบ aff (Realfactory) <span class="rp"> <span class="lv lvl-e2e">🔄 2</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="q-aff"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="epicrow" data-epic="m-queue"><td colspan="7">📬 หน้าจอที่ใช้ระบบคิวหลังแก้ TKRD-520 — ส่งยอดค่าคอมไประบบ aff · ขอข้อมูลใหม่ <span class="rp">(8 เคส)</span> <a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-520" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-520 ใน Jira">🧩 Epic TKRD-520</a></td></tr>
+<tr class="featrow" data-featkey="q-aff"><td colspan="7">📁 ส่งยอดค่าคอมไประบบ aff (Realfactory) — ส่งถูก / ไม่ควรส่งต้องไม่ไปถึง aff <span class="rp"> <span class="lv lvl-e2e">🔄 6</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="q-aff"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
 <tr class="trow" data-feat="m-queue" data-level="e2e" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-Q-A.1</td>
   <td class="ctitle">Full loop: เพื่อนที่ถูกชวนซื้อแพ็กเกจ → แอดมินอนุมัติสลิป → ยอดขายไปถึงระบบ aff ถูกต้อง (Orders · Audit Log · พอร์ทัลผู้ชวน) <span class="kd kd-happy">Happy Path</span></td>
@@ -296,7 +296,135 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 </div></td></tr>
 
-<tr class="featrow" data-featkey="q-watch"><td colspan="7">📁 ขอข้อมูลใหม่ของสินค้าเฝ้าดู <span class="rp"> <span class="lv lvl-e2e">🔄 1</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="q-watch"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow" data-feat="m-queue" data-level="e2e" data-prio="P1" data-kind="negative" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-Q-A.3</td>
+  <td class="ctitle">Negative: ผู้ซื้อที่ไม่มีผู้ชวน → สลิปขึ้น "ไม่มีผู้ชวน" และไม่มียอดไปถึงระบบ aff <span class="kd kd-neg">Negative</span></td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-22712"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-22712"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">Negative: ผู้ซื้อที่ไม่มีผู้ชวน → สลิปขึ้น "ไม่มีผู้ชวน" และไม่มียอดไปถึงระบบ aff</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-520" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-520 ใน Jira">🧩 Epic TKRD-520</a> · Priority: <b>P1</b> · E2E · ประเภท: <b>Negative</b> <span class="hint">(ข้อมูลผิด / action ผิด)</span> · หน้าจอที่ใช้ระบบคิวหลังแก้ TKRD-520 — ส่งยอดค่าคอมไประบบ aff · ขอข้อมูลใหม่</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #d97706;background:rgba(217,119,6,.07)">📌 <b>หมายเหตุ:</b> ชื่อหน้า/ช่องฝั่ง Realfactory อ้างจากเคสกลางของ radar ยังไม่ได้เทียบกับจอจริง · ล้างหลังเทส: แอดมิน "ยกเลิกการอนุมัติ" สลิปนี้</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>UAT (uat-radar.takra.ai) deploy รุ่นที่มี commit 0eb34b48 (PR #395 · TKRD-520) แล้ว</li><li>บัญชีลูกค้าที่สมัครเองโดยไม่ผ่านลิงก์ชวนและไม่ได้ใช้โค้ดชวน · บัญชีแอดมิน (เช่น qa01)</li><li>บัญชี Project Admin บน Realfactory UAT ของโปรเจกต์ takra-radar (ดูหน้า Orders / Audit Log ได้)</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ Trendora (takra-radar) รุ่น UAT ที่ https://uat-radar.takra.ai (ผ่าน Cloudflare Access แล้ว) แล้วเข้าสู่ระบบด้วยบัญชีลูกค้าที่ไม่มีผู้ชวน ไปที่เมนู "แพ็กเกจ" เลือกแพ็กเกจ ชำระเงินผ่านธนาคารแล้วกด "แนบสลิป" ส่งสลิปทดสอบ</li><li>เปิดเว็บ Trendora (takra-radar) รุ่น UAT ที่ https://uat-radar.takra.ai (ผ่าน Cloudflare Access แล้ว) แล้วเข้าสู่ระบบด้วยบัญชีแอดมิน ไปที่เมนู "แจ้งชำระเงิน" เปิดสลิปนั้นด้วยปุ่ม "ตรวจสลิป" แล้วกด "อนุมัติ · เปิดสิทธิ์ … วัน" รอราว 1–2 นาทีแล้วเปิดสลิปเดิมใหม่ ดูส่วน "ค่าคอมชวนเพื่อน" และจดรหัสของสลิป</li><li>เปิด Realfactory UAT แล้วเข้าสู่ระบบด้วยบัญชี Project Admin เข้าโปรเจกต์ takra-radar ไปที่หน้า "Orders" ค้นด้วยรหัสสลิปที่จดไว้ (external_order_id)</li><li>สังเกตส่วน "ค่าคอมชวนเพื่อน" ของสลิปและผลค้นหาใน Realfactory</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ส่วน "ค่าคอมชวนเพื่อน" ขึ้น "ไม่มีผู้ชวน" · ไม่มีปุ่ม "ส่งยอดขาย" / "ส่งยอดขายซ้ำ"</li><li>Realfactory หน้า "Orders" ค้นรหัสสลิปนี้แล้วไม่เจอ order</li><li>ผู้ซื้อเปิดสิทธิ์แพ็กเกจได้ตามปกติ และไม่เห็นข้อมูลการส่งค่าคอม</li></ul><div class="hint" style="margin-top:6px">ที่มา: TKRD-520 · Epic TKRD-404 Story PC.9 (TKRD-414) · PC.19 (TKRD-424) · th-admin-partner-delivery.ts · เส้นทางเดียวกับ PC-E.8 ในชีต TKRD-404</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-22712" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-22712" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-22712" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-22712" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-22712" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-22712"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-22712" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-22712">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="m-queue" data-level="e2e" data-prio="P1" data-kind="negative" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-Q-A.4</td>
+  <td class="ctitle">Negative: ผู้ชวนยังไม่เข้าร่วมค่าคอม → ยอด "พักไว้รอผู้ชวน" และยังไม่มี order ในระบบ aff <span class="kd kd-neg">Negative</span></td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-22713"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-22713"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">Negative: ผู้ชวนยังไม่เข้าร่วมค่าคอม → ยอด "พักไว้รอผู้ชวน" และยังไม่มี order ในระบบ aff</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-520" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-520 ใน Jira">🧩 Epic TKRD-520</a> · Priority: <b>P1</b> · E2E · ประเภท: <b>Negative</b> <span class="hint">(ข้อมูลผิด / action ผิด)</span> · หน้าจอที่ใช้ระบบคิวหลังแก้ TKRD-520 — ส่งยอดค่าคอมไประบบ aff · ขอข้อมูลใหม่</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #d97706;background:rgba(217,119,6,.07)">📌 <b>หมายเหตุ:</b> ชื่อหน้า/ช่องฝั่ง Realfactory อ้างจากเคสกลางของ radar ยังไม่ได้เทียบกับจอจริง · ใช้สลิปนี้ต่อใน TC-Q-A.6 ได้</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>UAT (uat-radar.takra.ai) deploy รุ่นที่มี commit 0eb34b48 (PR #395 · TKRD-520) แล้ว</li><li>ผู้ชวน E ที่ "ยังไม่ได้เข้าร่วม" ค่าคอมชวนเพื่อน · ผู้ซื้อที่สมัครผ่านลิงก์ชวนของ E · บัญชีแอดมิน</li><li>ค่า "ระยะรอผู้ชวน (วัน)" ในหน้า "ค่าคอมชวนเพื่อน" ของแอดมินมากกว่า 0</li><li>บัญชี Project Admin บน Realfactory UAT ของโปรเจกต์ takra-radar (ดูหน้า Orders / Audit Log ได้)</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ Trendora (takra-radar) รุ่น UAT ที่ https://uat-radar.takra.ai (ผ่าน Cloudflare Access แล้ว) แล้วเข้าสู่ระบบด้วยบัญชีผู้ซื้อที่สมัครผ่านลิงก์ของ E ไปที่เมนู "แพ็กเกจ" เลือกแพ็กเกจ ชำระเงินผ่านธนาคารแล้วกด "แนบสลิป" ส่งสลิปทดสอบ</li><li>เปิดเว็บ Trendora (takra-radar) รุ่น UAT ที่ https://uat-radar.takra.ai (ผ่าน Cloudflare Access แล้ว) แล้วเข้าสู่ระบบด้วยบัญชีแอดมิน ไปที่เมนู "แจ้งชำระเงิน" เปิดสลิปนั้นด้วยปุ่ม "ตรวจสลิป" แล้วกด "อนุมัติ · เปิดสิทธิ์ … วัน" รอราว 1–2 นาทีแล้วเปิดสลิปเดิมใหม่ ดูส่วน "ค่าคอมชวนเพื่อน" และจดรหัสของสลิป</li><li>เปิด Realfactory UAT แล้วเข้าสู่ระบบด้วยบัญชี Project Admin เข้าโปรเจกต์ takra-radar ไปที่หน้า "Orders" ค้นด้วยรหัสสลิปที่จดไว้ (external_order_id)</li><li>สังเกตส่วน "ค่าคอมชวนเพื่อน" ของสลิปและผลค้นหาใน Realfactory</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>รายการ "ยอดขาย" เป็น "พักไว้รอผู้ชวน" + เหตุ "ผู้ชวนยังไม่ได้ยินยอมเข้าร่วม" + กำหนดวันที่จะส่งโดยไม่มีผู้ชวน</li><li>Realfactory หน้า "Orders" ค้นรหัสสลิปนี้แล้วยังไม่เจอ order (ยังไม่ส่งระหว่างพัก)</li></ul><div class="hint" style="margin-top:6px">ที่มา: TKRD-520 · Epic TKRD-404 Story PC.9 · PC.14 (TKRD-419) · การตัดสินใจเจ้าของ: ยอดรอผู้ชวนได้สูงสุด 30 วัน · เคสกลาง radar TC-PC.9-F02 · เส้นทางเดียวกับ PC-E.3</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-22713" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-22713" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-22713" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-22713" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-22713" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-22713"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-22713" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-22713">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="m-queue" data-level="e2e" data-prio="P1" data-kind="negative" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-Q-A.5</td>
+  <td class="ctitle">Negative: แพคเกจที่ยังไม่ผูกรหัสสินค้า → ยอด "ยังไม่ส่ง — แพ็กเกจยังไม่ผูกรหัสสินค้า" · การ์ด "ค่าคอมต้องดูแล" เพิ่ม และไม่มี order ในระบบ aff <span class="kd kd-neg">Negative</span></td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-22714"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-22714"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">Negative: แพคเกจที่ยังไม่ผูกรหัสสินค้า → ยอด "ยังไม่ส่ง — แพ็กเกจยังไม่ผูกรหัสสินค้า" · การ์ด "ค่าคอมต้องดูแล" เพิ่ม และไม่มี order ในระบบ aff</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-520" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-520 ใน Jira">🧩 Epic TKRD-520</a> · Priority: <b>P1</b> · E2E · ประเภท: <b>Negative</b> <span class="hint">(ข้อมูลผิด / action ผิด)</span> · หน้าจอที่ใช้ระบบคิวหลังแก้ TKRD-520 — ส่งยอดค่าคอมไประบบ aff · ขอข้อมูลใหม่</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #d97706;background:rgba(217,119,6,.07)">📌 <b>หมายเหตุ:</b> ชื่อหน้า/ช่องฝั่ง Realfactory อ้างจากเคสกลางของ radar ยังไม่ได้เทียบกับจอจริง · ใส่รหัสคืนแล้วระบบจะส่งยอดนี้เองในรอบถัดไป (≤ 15 นาที) — ถ้าต้องการให้เคสสะอาด ยกเลิกการอนุมัติสลิปก่อนใส่รหัสคืน</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>UAT (uat-radar.takra.ai) deploy รุ่นที่มี commit 0eb34b48 (PR #395 · TKRD-520) แล้ว</li><li>ผู้ชวน A ที่ "พร้อมใช้งาน" · ผู้ซื้อที่สมัครผ่านลิงก์ของ A · บัญชีแอดมิน</li><li>แพคเกจทดสอบที่แก้ได้ (ไม่ใช่แพคเกจที่ลูกค้าจริงใช้) · แจ้งทีมก่อนแก้</li><li>บัญชี Project Admin บน Realfactory UAT ของโปรเจกต์ takra-radar (ดูหน้า Orders / Audit Log ได้)</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ Trendora (takra-radar) รุ่น UAT ที่ https://uat-radar.takra.ai (ผ่าน Cloudflare Access แล้ว) แล้วเข้าสู่ระบบด้วยบัญชีแอดมิน ไปที่เมนู "แพคเกจที่ขาย" เปิดแพคเกจทดสอบ จดรหัสเดิม ล้างช่อง "รหัสสินค้าในระบบค่าคอม" แล้วบันทึก</li><li>เปิดเว็บ Trendora (takra-radar) รุ่น UAT ที่ https://uat-radar.takra.ai (ผ่าน Cloudflare Access แล้ว) แล้วเข้าสู่ระบบด้วยบัญชีผู้ซื้อที่สมัครผ่านลิงก์ของ A ไปที่เมนู "แพ็กเกจ" เลือกแพคเกจทดสอบนั้น ชำระเงินผ่านธนาคารแล้วกด "แนบสลิป" ส่งสลิปทดสอบ</li><li>เปิดเว็บ Trendora (takra-radar) รุ่น UAT ที่ https://uat-radar.takra.ai (ผ่าน Cloudflare Access แล้ว) แล้วเข้าสู่ระบบด้วยบัญชีแอดมิน ไปที่เมนู "แจ้งชำระเงิน" เปิดสลิปนั้นด้วยปุ่ม "ตรวจสลิป" แล้วกด "อนุมัติ · เปิดสิทธิ์ … วัน" รอราว 1–2 นาทีแล้วเปิดสลิปเดิมใหม่ ดูส่วน "ค่าคอมชวนเพื่อน" และจดรหัสของสลิป และดูตัวเลขการ์ด "ค่าคอมต้องดูแล"</li><li>เปิด Realfactory UAT แล้วเข้าสู่ระบบด้วยบัญชี Project Admin เข้าโปรเจกต์ takra-radar ไปที่หน้า "Orders" ค้นด้วยรหัสสลิปที่จดไว้ (external_order_id)</li><li>กลับไปที่ "แพคเกจที่ขาย" ใส่รหัสสินค้าเดิมคืนแล้วบันทึก</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ส่วน "ค่าคอมชวนเพื่อน" ขึ้น "ยังไม่ส่ง — แพ็กเกจยังไม่ผูกรหัสสินค้า" · การ์ด "ค่าคอมต้องดูแล" เพิ่ม 1</li><li>Realfactory หน้า "Orders" ค้นรหัสสลิปนี้แล้วไม่เจอ order</li><li>ใส่รหัสคืนแล้ว แพคเกจบันทึกได้และเห็นรหัสเดิมหลังรีโหลด</li></ul><div class="hint" style="margin-top:6px">ที่มา: TKRD-520 · Epic TKRD-404 Story PC.7 (TKRD-412) · PC.14 (TKRD-419) · PC.19 · th-admin-partner-delivery.ts · เส้นทางเดียวกับ PC-H.4 ในชีต TKRD-404</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-22714" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-22714" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-22714" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-22714" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-22714" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-22714"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-22714" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-22714">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="m-queue" data-level="e2e" data-prio="P1" data-kind="negative" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-Q-A.6</td>
+  <td class="ctitle">Negative: ยกเลิกการอนุมัติสลิปที่ยังพักไว้ (ยังไม่ได้ส่ง) → ทั้งยอดขายและคืนเงินเป็น "ไม่ส่ง" และไม่มี order / คืนเงินในระบบ aff <span class="kd kd-neg">Negative</span></td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-22715"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-22715"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">Negative: ยกเลิกการอนุมัติสลิปที่ยังพักไว้ (ยังไม่ได้ส่ง) → ทั้งยอดขายและคืนเงินเป็น "ไม่ส่ง" และไม่มี order / คืนเงินในระบบ aff</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-520" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-520 ใน Jira">🧩 Epic TKRD-520</a> · Priority: <b>P1</b> · E2E · ประเภท: <b>Negative</b> <span class="hint">(ข้อมูลผิด / action ผิด)</span> · หน้าจอที่ใช้ระบบคิวหลังแก้ TKRD-520 — ส่งยอดค่าคอมไประบบ aff · ขอข้อมูลใหม่</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #d97706;background:rgba(217,119,6,.07)">📌 <b>หมายเหตุ:</b> ชื่อหน้า/ช่องฝั่ง Realfactory อ้างจากเคสกลางของ radar ยังไม่ได้เทียบกับจอจริง</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>UAT (uat-radar.takra.ai) deploy รุ่นที่มี commit 0eb34b48 (PR #395 · TKRD-520) แล้ว</li><li>สลิปที่ยอดขายเป็น "พักไว้รอผู้ชวน" (จาก TC-Q-A.4) · บัญชีแอดมิน</li><li>บัญชี Project Admin บน Realfactory UAT ของโปรเจกต์ takra-radar (ดูหน้า Orders / Audit Log ได้)</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ Trendora (takra-radar) รุ่น UAT ที่ https://uat-radar.takra.ai (ผ่าน Cloudflare Access แล้ว) แล้วเข้าสู่ระบบด้วยบัญชีแอดมิน ไปที่เมนู "แจ้งชำระเงิน" เปิดสลิปที่ "พักไว้รอผู้ชวน" (จาก TC-Q-A.4) แล้วจดรหัสของสลิป</li><li>กด "ยกเลิกการอนุมัติ" ใส่ "เหตุผลที่ยกเลิก" แล้วยืนยัน รอราว 2 นาทีแล้วเปิดสลิปเดิมดูส่วน "ค่าคอมชวนเพื่อน"</li><li>เปิด Realfactory UAT แล้วเข้าสู่ระบบด้วยบัญชี Project Admin เข้าโปรเจกต์ takra-radar ไปที่หน้า "Orders" ค้นด้วยรหัสสลิปที่จดไว้ (external_order_id)</li><li>สังเกตส่วน "ค่าคอมชวนเพื่อน" ของสลิปและผลค้นหาใน Realfactory</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ขึ้น "ยกเลิกการอนุมัติและเรียกคืนสิทธิ์เรียบร้อยแล้ว"</li><li>"ยอดขาย" เป็น "ไม่ส่ง — ยกเลิกการอนุมัติก่อนได้ส่ง" · "คืนเงิน" เป็น "ไม่ส่ง — ยอดขายไม่ได้ส่ง จึงไม่ต้องส่งคืนเงิน"</li><li>Realfactory หน้า "Orders" ค้นรหัสสลิปนี้แล้วไม่เจอทั้ง order และรายการคืนเงิน</li></ul><div class="hint" style="margin-top:6px">ที่มา: TKRD-520 · Epic TKRD-404 Story PC.9 (TKRD-414) กลับรายการ · th-admin-partner-delivery.ts · เคสกลาง radar TC-PC.9-F05 ขั้น 3</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-22715" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-22715" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-22715" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-22715" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-22715" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-22715"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-22715" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-22715">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="featrow" data-featkey="q-watch"><td colspan="7">📁 ขอข้อมูลใหม่ของสินค้าเฝ้าดู <span class="rp"><span class="lv lvl-ui">🌐 1</span> <span class="lv lvl-e2e">🔄 1</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="q-watch"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
 <tr class="trow" data-feat="m-queue" data-level="e2e" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-Q-B.1</td>
   <td class="ctitle">กด "ขอข้อมูลใหม่" ที่สินค้าเฝ้าดู → ขึ้น "กำลังรอข้อมูล" ในแถว แล้วข้อมูลอัปเดตเมื่อเสร็จ <span class="kd kd-happy">Happy Path</span></td>
@@ -329,12 +457,43 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 </div></td></tr>
 
+<tr class="trow" data-feat="m-queue" data-level="ui" data-prio="P1" data-kind="negative" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-Q-B.2</td>
+  <td class="ctitle">Negative: กด "ขอข้อมูลใหม่" ซ้ำแถวเดิมทันที → ถูกปฏิเสธพร้อมเวลาที่ขอได้ ไม่ส่งงานซ้ำ <span class="kd kd-neg">Negative</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-22716"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-22716"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">Negative: กด "ขอข้อมูลใหม่" ซ้ำแถวเดิมทันที → ถูกปฏิเสธพร้อมเวลาที่ขอได้ ไม่ส่งงานซ้ำ</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-520" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-520 ใน Jira">🧩 Epic TKRD-520</a> · Priority: <b>P1</b> · UI · ประเภท: <b>Negative</b> <span class="hint">(ข้อมูลผิด / action ผิด)</span> · หน้าจอที่ใช้ระบบคิวหลังแก้ TKRD-520 — ส่งยอดค่าคอมไประบบ aff · ขอข้อมูลใหม่</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>UAT (uat-radar.takra.ai) deploy รุ่นที่มี commit 0eb34b48 (PR #395 · TKRD-520) แล้ว</li><li>บัญชีลูกค้า UAT ที่มีสินค้าบันทึกไว้อย่างน้อย 2 ตัว และยังขอข้อมูลใหม่ไม่ครบ 20 ครั้งในวันนี้</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ Trendora (takra-radar) รุ่น UAT ที่ https://uat-radar.takra.ai (ผ่าน Cloudflare Access แล้ว) แล้วเข้าสู่ระบบด้วยบัญชีลูกค้า UAT ไปที่เมนู "สินค้าที่บันทึกไว้"</li><li>กดเมนู "ตัวเลือก" (…) ของการ์ดสินค้าตัวแรกแล้วเลือก "ขอข้อมูลใหม่" รอจนเสร็จ แล้วเลือก "ขอข้อมูลใหม่" ที่การ์ดเดิมซ้ำทันที</li><li>เลือก "ขอข้อมูลใหม่" ที่การ์ดตัวที่สอง</li><li>สังเกตข้อความและสถานะของทั้งสองการ์ด</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>การ์ดแรกขึ้น "เพิ่งขอข้อมูลใหม่ไป · ขอได้อีกครั้ง &lt;เวลา&gt;" (หรือ "เพิ่งขอข้อมูลใหม่ไป · รอสักครู่แล้วลองใหม่") เป็นข้อความเงียบ ไม่ใช่ error แดง และไม่ขึ้น "กำลังรอข้อมูล" รอบใหม่</li><li>การ์ดที่สองยังขอได้ตามปกติ (ขึ้น "กำลังรอข้อมูล" แล้วอัปเดต)</li></ul><div class="hint" style="margin-top:6px">ที่มา: TKRD-520 · Epic 5 Story 5.9 (cooldown รายแถว) · th-watchlist.ts · เส้นทางเดียวกับ RD-E.23 ในชีต MVP1</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-22716" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-22716" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-22716" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-22716" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-22716" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-22716"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-22716" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-22716">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
 </tbody>
   </table>
   </div>
 
 </div>
-<footer>TAKRA Radar — หน้าจอที่ใช้ระบบคิว (หลังแก้ TKRD-520) · UI Manual Test Cases · 0 UI + 3 E2E = 3 TCs · UI only (manual) · Trendora (takra-radar) UAT · TKRD-520</footer>
+<footer>TAKRA Radar — หน้าจอที่ใช้ระบบคิว (หลังแก้ TKRD-520) · UI Manual Test Cases · 1 UI + 7 E2E = 8 TCs · UI only (manual) · Trendora (takra-radar) UAT · TKRD-520</footer>
 
 <script>
 // ── Load store from embedded JSON ──

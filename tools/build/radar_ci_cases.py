@@ -22,7 +22,7 @@ META = dict(
     download='takra-radar-queue-ui-test-cases.html',
     back='https://wanlee-tankunnatam.github.io/qa-test-reports/?project=radar',
     sub=('เทส UI ด้วยมือ · เว็บ Trendora UAT · full loop ถึงระบบ aff (Realfactory UAT) · TKRD-520 (PR #395 · merge 0eb34b48) · '
-         'happy path · เฉพาะ P0 · ตรวจผลทั้งฝั่ง Trendora และฝั่ง aff'),
+         'happy + negative · P0 + P1 · ตรวจผลทั้งฝั่ง Trendora และฝั่ง aff'),
     groups_label='',
     note=('🖥️ <b>Test target:</b> เว็บ Trendora (takra-radar) UAT <b>https://uat-radar.takra.ai</b> (ล็อกอิน Cloudflare Access ก่อน) ต่อกับระบบ aff <b>Realfactory UAT</b><br>'
           '📬 <b>ทำไมต้องเทส:</b> <a href="https://kitdi.atlassian.net/browse/TKRD-520" target="_blank">TKRD-520</a> แก้เทสต์ของระบบคิว (pg-boss) '
