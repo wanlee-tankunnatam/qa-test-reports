@@ -529,6 +529,10 @@ def build():
     </div>
 ''')
     noui_pill = f'<span class="pill">{NOUI_BADGE} {noui_n} · พร้อมเทส {total - noui_n}</span>' if noui_n else ''
+    # META['noui_ready'] = True: เคส ui=False เทสได้เลย (ไม่ใช่ "ยังไม่มีหน้าจอ") → ไม่โชว์ "พร้อมเทส N" / ตัวกรองสถานะ UI
+    if META.get('noui_ready'):
+        ui_row = ''
+        noui_pill = f'<span class="pill">{NOUI_BADGE} {noui_n}</span>' if noui_n else ''
     header = f'''
 <header class="top">
   <h1>{META['emoji']} {TITLE}</h1>

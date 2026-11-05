@@ -22,7 +22,7 @@ META = dict(
     sub=('ตรวจด้วยมือ · ไม่มีหน้าจอ — ตรวจผ่าน GitHub (PR · Actions) + รันเทสต์บนเครื่อง QA · '
          'TKRD-520 · PR #395 (merge 0eb34b48 · 31 ต.ค. 2569) · เฉพาะ P0 + P1'),
     groups_label='',
-    noui_badge='🧪 CI / โค้ด',
+    noui_badge='🧪 CI / โค้ด', noui_ready=True,
     noui_note=('🧪 <b>ไม่มีหน้าจอ</b> — เคสนี้ตรวจผ่าน GitHub และ Terminal บนเครื่อง QA · ห้ามแก้ไฟล์ของ dev แม้ชั่วคราว'),
     note=('🧪 <b>Test target:</b> repo <b>Real-Factory/takra-radar</b> — GitHub PR #395 · GitHub Actions workflow \"CI\" ของ branch develop · '
           'รันเทสต์ในโฟลเดอร์ทดสอบแยกของ QA (checkout origin/develop · เปิด Docker ไว้) ไม่ใช้โฟลเดอร์ทำงานของ dev<br>'
