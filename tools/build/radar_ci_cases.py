@@ -25,7 +25,8 @@ META = dict(
     noui_badge='🧪 CI / โค้ด', noui_ready=True,
     noui_note=('🧪 <b>ไม่มีหน้าจอ</b> — เคสนี้ตรวจผ่าน GitHub และ Terminal บนเครื่อง QA · ห้ามแก้ไฟล์ของ dev แม้ชั่วคราว'),
     note=('🧪 <b>Test target:</b> repo <b>Real-Factory/takra-radar</b> — GitHub PR #395 · GitHub Actions workflow \"CI\" ของ branch develop · '
-          'รันเทสต์ในโฟลเดอร์ทดสอบแยกของ QA (checkout origin/develop · เปิด Docker ไว้) ไม่ใช้โฟลเดอร์ทำงานของ dev<br>'
+          'รันเทสต์ในโฟลเดอร์ทดสอบแยกของ QA (checkout origin/develop · เปิด Docker ไว้) ไม่ใช้โฟลเดอร์ทำงานของ dev · '
+          '🔄 <b>Full loop (กลุ่ม D):</b> เว็บ Trendora UAT https://uat-radar.takra.ai → คิว → ระบบ aff (Realfactory UAT) · บัญชีเตรียมเหมือนชีต TKRD-404<br>'
           '🐞 <b>อาการเดิม:</b> job \"typecheck / lint / test / build\" แดงที่ @trendora/api ทั้งที่เทสต์ผ่านครบ เพราะ Uncaught Exception '
           '<code>terminating connection due to administrator command</code> (Postgres 57P01) จาก <code>queue.service.integration.spec.ts</code> '
           '(<a href="https://kitdi.atlassian.net/browse/TKRD-520" target="_blank">TKRD-520</a> · '
@@ -46,7 +47,7 @@ KINDS = {
 
 
 def _case(c):
-    return dict(id=c['id'], title=c['title'], prio=c['prio'], kind=c['kind'], level=c.get('level') or 'ui', ui=False,
+    return dict(id=c['id'], title=c['title'], prio=c['prio'], kind=c['kind'], level=c.get('level') or 'ui', ui=bool(c.get('ui', False)),
                 pre=list(c.get('pre') or []), steps=list(c['steps']), data=list(c.get('data') or []),
                 expected=list(c['expected']), src=c['src'], note=c.get('note') or None)
 

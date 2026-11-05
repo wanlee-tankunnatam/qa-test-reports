@@ -156,17 +156,17 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
   <h1>🧪 TAKRA Radar — ความเสถียรของเทสต์ api ใน CI · Manual Test Cases</h1>
   <div class="sub">ตรวจด้วยมือ · ไม่มีหน้าจอ — ตรวจผ่าน GitHub (PR · Actions) + รันเทสต์บนเครื่อง QA · TKRD-520 · PR #395 (merge 0eb34b48 · 31 ต.ค. 2569) · เฉพาะ P0 + P1</div>
   <div class="meta">
-    <span class="pill">7 เคส + E2E 0 = 7</span>
-    <span class="pill">3 กลุ่ม (A–C)</span>
+    <span class="pill">7 เคส + E2E 1 = 8</span>
+    <span class="pill">4 กลุ่ม (A–D)</span>
     <span class="pill">UI + E2E · manual</span><span class="pill">🧪 CI / โค้ด 7</span>
-    <span class="pill">P0 4 · P1 3 · P2 0</span>
-    <span class="pill">ประเภท: Happy 4 · Negative 1 · Boundary 0 · Validation 0 · Exception 2 · Permission 0 · Data 0</span>
+    <span class="pill">P0 5 · P1 3 · P2 0</span>
+    <span class="pill">ประเภท: Happy 5 · Negative 1 · Boundary 0 · Validation 0 · Exception 2 · Permission 0 · Data 0</span>
   </div>
 </header>
 
 <div class="wrap">
 
-  <div class="note-box">🧪 <b>Test target:</b> repo <b>Real-Factory/takra-radar</b> — GitHub PR #395 · GitHub Actions workflow "CI" ของ branch develop · รันเทสต์ในโฟลเดอร์ทดสอบแยกของ QA (checkout origin/develop · เปิด Docker ไว้) ไม่ใช้โฟลเดอร์ทำงานของ dev<br>🐞 <b>อาการเดิม:</b> job "typecheck / lint / test / build" แดงที่ @trendora/api ทั้งที่เทสต์ผ่านครบ เพราะ Uncaught Exception <code>terminating connection due to administrator command</code> (Postgres 57P01) จาก <code>queue.service.integration.spec.ts</code> (<a href="https://kitdi.atlassian.net/browse/TKRD-520" target="_blank">TKRD-520</a> · <a href="https://github.com/Real-Factory/takra-radar/pull/395" target="_blank">PR #395</a>)<br>📎 <b>ที่มา:</b> "ต้องได้" ในใบ TKRD-520 + คอมเมนต์ dev 30 ต.ค. · ห้ามแก้ไฟล์ของ dev แม้ชั่วคราว</div>
+  <div class="note-box">🧪 <b>Test target:</b> repo <b>Real-Factory/takra-radar</b> — GitHub PR #395 · GitHub Actions workflow "CI" ของ branch develop · รันเทสต์ในโฟลเดอร์ทดสอบแยกของ QA (checkout origin/develop · เปิด Docker ไว้) ไม่ใช้โฟลเดอร์ทำงานของ dev · 🔄 <b>Full loop (กลุ่ม D):</b> เว็บ Trendora UAT https://uat-radar.takra.ai → คิว → ระบบ aff (Realfactory UAT) · บัญชีเตรียมเหมือนชีต TKRD-404<br>🐞 <b>อาการเดิม:</b> job "typecheck / lint / test / build" แดงที่ @trendora/api ทั้งที่เทสต์ผ่านครบ เพราะ Uncaught Exception <code>terminating connection due to administrator command</code> (Postgres 57P01) จาก <code>queue.service.integration.spec.ts</code> (<a href="https://kitdi.atlassian.net/browse/TKRD-520" target="_blank">TKRD-520</a> · <a href="https://github.com/Real-Factory/takra-radar/pull/395" target="_blank">PR #395</a>)<br>📎 <b>ที่มา:</b> "ต้องได้" ในใบ TKRD-520 + คอมเมนต์ dev 30 ต.ค. · ห้ามแก้ไฟล์ของ dev แม้ชั่วคราว</div>
 
   <div class="runsum">
     <h3>📊 สรุปผล Manual Test</h3>
@@ -176,10 +176,10 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
       <span class="cnt hold">HOLD <b id="sum-hold">0</b></span>
       <span class="cnt block">BLOCKED <b id="sum-block">0</b></span>
       <span class="cnt skip">SKIP <b id="sum-skip">0</b></span>
-      <span class="cnt pending">รอเทส <b id="sum-pending">7</b></span>
+      <span class="cnt pending">รอเทส <b id="sum-pending">8</b></span>
     </div>
     <div class="progress"><div id="sumbar" class="progressbar" style="width:0%"></div></div>
-    <div class="hint" id="sumpct" style="margin-top:5px">0% ทดสอบแล้ว (0/7)</div>
+    <div class="hint" id="sumpct" style="margin-top:5px">0% ทดสอบแล้ว (0/8)</div>
   </div>
 
   <div class="toolbar">
@@ -199,11 +199,11 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
   <div class="filters">
     <div class="row"><label>กลุ่ม</label>
-      <button class="fchip" data-f="feat" data-v="m-ci-api">🧪 เทสต์ api ปิด Postgres (7)</button>
+      <button class="fchip" data-f="feat" data-v="m-ci-api">🧪 เทสต์ api ปิด Postgres (8)</button>
       <button class="clearbtn" data-clear="feat">✕</button>
     </div>
     <div class="row"><label>ประเภท</label>
-      <button class="fchip" data-f="kind" data-v="happy" title="flow ปกติ">Happy Path (4)</button><button class="fchip" data-f="kind" data-v="negative" title="ข้อมูลผิด / action ผิด">Negative (1)</button><button class="fchip" data-f="kind" data-v="boundary" title="min · max · ก่อนขอบ · ตรงขอบ · เกินขอบ">Boundary (0)</button><button class="fchip" data-f="kind" data-v="validation" title="format · required · character · length">Validation (0)</button><button class="fchip" data-f="kind" data-v="exception" title="เน็ตหลุด · ระบบภายนอกผิดปกติ · timeout">Exception (2)</button><button class="fchip" data-f="kind" data-v="permission" title="role ไหนทำได้ / ทำไม่ได้">Permission (0)</button><button class="fchip" data-f="kind" data-v="data" title="empty · duplicate · ไม่ปนข้ามทีม/แพลตฟอร์ม">Data (0)</button>
+      <button class="fchip" data-f="kind" data-v="happy" title="flow ปกติ">Happy Path (5)</button><button class="fchip" data-f="kind" data-v="negative" title="ข้อมูลผิด / action ผิด">Negative (1)</button><button class="fchip" data-f="kind" data-v="boundary" title="min · max · ก่อนขอบ · ตรงขอบ · เกินขอบ">Boundary (0)</button><button class="fchip" data-f="kind" data-v="validation" title="format · required · character · length">Validation (0)</button><button class="fchip" data-f="kind" data-v="exception" title="เน็ตหลุด · ระบบภายนอกผิดปกติ · timeout">Exception (2)</button><button class="fchip" data-f="kind" data-v="permission" title="role ไหนทำได้ / ทำไม่ได้">Permission (0)</button><button class="fchip" data-f="kind" data-v="data" title="empty · duplicate · ไม่ปนข้ามทีม/แพลตฟอร์ม">Data (0)</button>
       <button class="clearbtn" data-clear="kind">✕</button>
     </div>
     <div class="row"><label>Priority</label>
@@ -229,7 +229,7 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
     <tbody>
 
 <!-- m-ci-api -->
-<tr class="epicrow" data-epic="m-ci-api"><td colspan="7">🧪 เทสต์ api ไม่แดงเพราะ Postgres ตัด connection ตอนปิดเทสต์ (queue.service.integration.spec.ts · 57P01) <span class="rp">(7 เคส)</span> <a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-520" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-520 ใน Jira">🧩 Epic TKRD-520</a></td></tr>
+<tr class="epicrow" data-epic="m-ci-api"><td colspan="7">🧪 เทสต์ api ไม่แดงเพราะ Postgres ตัด connection ตอนปิดเทสต์ (queue.service.integration.spec.ts · 57P01) <span class="rp">(8 เคส)</span> <a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-520" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-520 ใน Jira">🧩 Epic TKRD-520</a></td></tr>
 <tr class="featrow" data-featkey="ci-fix"><td colspan="7">📁 ยืนยันการแก้ — แก้แค่ไฟล์เทสต์ · pool มีตัวรับ error · CI เขียว <span class="rp"><span class="lv lvl-ui">🌐 3</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="ci-fix"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
 <tr class="trow" data-feat="m-ci-api" data-level="ui" data-prio="P0" data-kind="happy" data-ui="no" onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">TC-CI-A.1</td>
@@ -466,12 +466,46 @@ tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
 
 </div></td></tr>
 
+<tr class="featrow" data-featkey="ci-fullloop"><td colspan="7">📁 Full loop บน UAT — ยอดขายวิ่งผ่านคิวไปถึงระบบ aff (Realfactory) <span class="rp"> <span class="lv lvl-e2e">🔄 1</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="ci-fullloop"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow" data-feat="m-ci-api" data-level="e2e" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-CI-D.1</td>
+  <td class="ctitle">Full loop: เพื่อนที่ถูกชวนซื้อแพ็กเกจ → แอดมินอนุมัติสลิป → ยอดผ่านคิวไปถึงระบบ aff และผู้ชวนเห็นในพอร์ทัล <span class="kd kd-happy">Happy Path</span></td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-22708"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-22708"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">Full loop: เพื่อนที่ถูกชวนซื้อแพ็กเกจ → แอดมินอนุมัติสลิป → ยอดผ่านคิวไปถึงระบบ aff และผู้ชวนเห็นในพอร์ทัล</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-520" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-520 ใน Jira">🧩 Epic TKRD-520</a> · Priority: <b>P0</b> · E2E · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · เทสต์ api ไม่แดงเพราะ Postgres ตัด connection ตอนปิดเทสต์ (queue.service.integration.spec.ts · 57P01)</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #d97706;background:rgba(217,119,6,.07)">📌 <b>หมายเหตุ:</b> เคสนี้ยืนยันว่าหลังแก้เทสต์ ระบบคิวบน UAT ยังส่งยอดถึงระบบ aff ครบวง · ค้างที่ "อยู่ในคิวส่ง" เกิน 15 นาที → FAIL แนบภาพหน้าต่างสลิป</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>UAT (uat-radar.takra.ai) deploy รุ่นที่มี commit 0eb34b48 แล้ว (branch uat มี commit นี้แล้ว)</li><li>บัญชีผู้ชวน A ที่บัญชีรับค่าคอม "พร้อมใช้งาน" · บัญชีผู้ซื้อ B ที่สมัครผ่านลิงก์ชวนของ A · บัญชีแอดมิน (เช่น qa01)</li><li>ไม่ใช้บัญชี/สลิปที่คนอื่นกำลังทดสอบอยู่ (เช่น บัญชี qa.radar.20261027.* / tkrd426-* ของ Gong)</li><li>ไฟล์สลิปทดสอบ</li></ul></div>
+  <div class="sec"><h4>Test Data</h4><ul><li>แพ็กเกจราคาต่ำสุดที่ผูก "รหัสสินค้าในระบบค่าคอม" แล้ว</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ Trendora (takra-radar) รุ่น UAT ที่ https://uat-radar.takra.ai (ผ่าน Cloudflare Access แล้ว) แล้วเข้าสู่ระบบด้วยบัญชีผู้ซื้อ B ไปที่เมนู "แพ็กเกจ" เลือกแพ็กเกจ ชำระเงินผ่านธนาคารแล้วกด "แนบสลิป" ส่งสลิปทดสอบ</li><li>เปิดเว็บ Trendora (takra-radar) รุ่น UAT ที่ https://uat-radar.takra.ai (ผ่าน Cloudflare Access แล้ว) แล้วเข้าสู่ระบบด้วยบัญชีแอดมิน ไปที่เมนู "แจ้งชำระเงิน" เปิดสลิปของ B ด้วยปุ่ม "ตรวจสลิป" แล้วกด "อนุมัติ · เปิดสิทธิ์ … วัน" รอราว 1–2 นาทีแล้วเปิดสลิปเดิมใหม่ ดูส่วน "ค่าคอมชวนเพื่อน"</li><li>เปิดเว็บ Trendora (takra-radar) รุ่น UAT ที่ https://uat-radar.takra.ai (ผ่าน Cloudflare Access แล้ว) แล้วเข้าสู่ระบบด้วยบัญชี A ไปที่เมนู "ตั้งค่า" เลื่อนไปหัวข้อ "แนะนำเพื่อน" ในการ์ด "ชวนเพื่อน" กด "ดูค่าคอม / ถอนเงิน" เพื่อเปิดพอร์ทัลของระบบ aff (Realfactory UAT)</li><li>สังเกตรายการยอดขายล่าสุดของ B ในพอร์ทัล</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>หน้าต่างสลิปฝั่งแอดมิน: "ผู้ชวน" = A พร้อมป้าย "ใช้งานอยู่" · รายการ "ยอดขาย" เป็น "ส่งแล้ว พร้อมรหัสผู้ชวน" + "ส่งถึงเมื่อ &lt;วันเวลา&gt;" (ไม่ค้างที่ "อยู่ในคิวส่ง")</li><li>พอร์ทัลระบบ aff ของ A มียอดขายของ B 1 รายการ ฐานค่าคอม = ราคาแพ็กเกจในสลิป</li><li>B เปิดสิทธิ์แพ็กเกจได้ตามปกติ</li></ul><div class="hint" style="margin-top:6px">ที่มา: TKRD-520 (คิวที่ queue.service.integration.spec.ts ตรวจ = การส่งเข้าคิวหลัง warm() · TKRD-413) · Epic TKRD-404 Story PC.8–PC.9 · ใช้เส้นทางเดียวกับเคส PC-E.1 ในชีต TKRD-404</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-22708" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-22708" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-22708" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-22708" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-22708" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-22708"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-22708" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-22708">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
 </tbody>
   </table>
   </div>
 
 </div>
-<footer>TAKRA Radar — ความเสถียรของเทสต์ api ใน CI · Manual Test Cases · 7 UI + 0 E2E = 7 TCs · Manual (ไม่มีหน้าจอ) · takra-radar CI · TKRD-520</footer>
+<footer>TAKRA Radar — ความเสถียรของเทสต์ api ใน CI · Manual Test Cases · 7 UI + 1 E2E = 8 TCs · Manual (ไม่มีหน้าจอ) · takra-radar CI · TKRD-520</footer>
 
 <script>
 // ── Load store from embedded JSON ──
