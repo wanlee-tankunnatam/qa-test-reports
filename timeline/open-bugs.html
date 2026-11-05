@@ -124,7 +124,7 @@ footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--line);color:v
 <body>
 <div class="wrap">
   <h1>บั๊กค้างรอบส่งงาน</h1>
-  <p class="sub">บั๊กที่ยังไม่ปิดจากทุกโปรเจกต์ใน Jira แยกตามรอบส่ง แล้วแยกตามผู้รับผิดชอบ · ในแต่ละคนเรียงตามขั้นที่ลูกค้าเจอใน user journey · ข้อมูล ณ 4 พ.ย. 2026 13:21 น. (อัปเดตอัตโนมัติ 09:00 / 13:00 หรือกดปุ่มดึงข้อมูลจาก Jira)</p>
+  <p class="sub">บั๊กที่ยังไม่ปิดจากทุกโปรเจกต์ใน Jira แยกตามรอบส่ง แล้วแยกตามผู้รับผิดชอบ · ในแต่ละคนเรียงตามขั้นที่ลูกค้าเจอใน user journey · ข้อมูล ณ 5 พ.ย. 2026 13:00 น. (อัปเดตอัตโนมัติ 09:00 / 13:00 หรือกดปุ่มดึงข้อมูลจาก Jira)</p>
   <div class="sync"><button type="button" class="f" id="sync">ดึงข้อมูลจาก Jira</button><span id="syncat"></span><span id="syncmsg" role="status"></span></div>
   <div class="proj" id="fj" role="group" aria-label="โปรเจกต์"></div>
   <div class="tot" id="tot"></div>
@@ -281,10 +281,10 @@ const ROWS = [
 ["23-OCT", "James", "TI-321", "Low", "Windows: the &quot;restart&quot; button opens a full installer wizard — and going silent races our own quit sequence", "To Do"],
 ["30-OCT", "James", "TI-400", "Medium", "[P0][M1][backend] POST /v1/compliance/ml-models/rollback ไม่มี role gate + workspaceId จาก body ⇒ rollback model ของ tenant อื่นได้ (cross-tenant)", "READY TO TEST"],
 ["30-OCT", "James", "TI-401", "Medium", "[P0][M1][backend] ตารางทั้ง schema compliance ไม่มี RLS + rls-introspect ตรวจเฉพาะ public ⇒ rls:check ตาบอด · tenant isolation ของ audit/tos/rollback/breach พึ่ง WHERE มือล้วน", "READY TO TEST"],
-["30-OCT", "James", "TI-403", "Medium", "[P1][M1][backend] DEK lifecycle หลัง erasure: ingest ไม่เคยอ่าน erasure_tombstone (subject ไม่มี DEK ตอน erase → mint ใหม่ = resurrection) + re-consent หลัง shred = lockout ถาวร", "IN REVIEW"],
-["30-OCT", "James", "TI-405", "Medium", "[P1][M1][backend] consent upsert idempotency กลืน 2 กรณี: submit audit loop หลัง commit + retry ⇒ decision unaudited ถาวร · re-consent ต่าง policyVersion ถูกทิ้งเงียบ (setWhere เช็คแค่ status)", "IN REVIEW"],
-["30-OCT", "James", "TI-406", "Medium", "[P1][M1][backend] compliance sink fail-open ทั้งชุด: WORM mirror = Noop ทุก env (ไม่มี prod boot guard) · breach trigger a/b/c ไม่ wire + NoopAlertSink · reconciler ทั้งหมด = Story 1.8 ที่ยังไม่มี", "IN REVIEW"],
-["30-OCT", "James", "TI-407", "Medium", "[P1][M1][backend] comment.captured ingest ไม่มี consent gate + ไม่ bind subjectRef ⇒ PII ของ commenter บุคคลที่สามถูก provision DEK + เก็บ · registry บอก erasure \"deferred\" = ลบไม่ได้", "IN REVIEW"],
+["30-OCT", "James", "TI-403", "Medium", "[P1][M1][backend] DEK lifecycle หลัง erasure: ingest ไม่เคยอ่าน erasure_tombstone (subject ไม่มี DEK ตอน erase → mint ใหม่ = resurrection) + re-consent หลัง shred = lockout ถาวร", "READY TO TEST"],
+["30-OCT", "James", "TI-405", "Medium", "[P1][M1][backend] consent upsert idempotency กลืน 2 กรณี: submit audit loop หลัง commit + retry ⇒ decision unaudited ถาวร · re-consent ต่าง policyVersion ถูกทิ้งเงียบ (setWhere เช็คแค่ status)", "READY TO TEST"],
+["30-OCT", "James", "TI-406", "Medium", "[P1][M1][backend] compliance sink fail-open ทั้งชุด: WORM mirror = Noop ทุก env (ไม่มี prod boot guard) · breach trigger a/b/c ไม่ wire + NoopAlertSink · reconciler ทั้งหมด = Story 1.8 ที่ยังไม่มี", "READY TO TEST"],
+["30-OCT", "James", "TI-407", "Medium", "[P1][M1][backend] comment.captured ingest ไม่มี consent gate + ไม่ bind subjectRef ⇒ PII ของ commenter บุคคลที่สามถูก provision DEK + เก็บ · registry บอก erasure \"deferred\" = ลบไม่ได้", "READY TO TEST"],
 ["16-OCT", "James", "TI-435", "Medium", "TAKRA Insight - Hub Overlay ไม่สามารถคลิกและลากย้ายตำแหน่งได้ ทำให้บดบังข้อมูลสำคัญบนหน้าจอ", "To Do"],
 ["9-OCT", "James", "TI-436", "High", "TAKRA Insight - แท็บ บทพูด หลังจบ Record ไลฟ์ ไม่แสดงสถานะผู้พูดหรือเสียงที่ระบบตรวจจับได้", "To Do"],
 ["9-OCT", "James", "TI-437", "High", "TAKRA Insight - แท็บ บทพูด ตรวจจับเสียงของ Host คนเดียวเป็นหลาย Speaker", "To Do"],
@@ -439,7 +439,7 @@ const ROWS = [
 ["15-OCT", "Berm", "TKRD-375", "Medium", "[Trendora] ปรับ UI Admin › ผู้ใช้ทั้งหมด", "To Do"],
 ["15-OCT", "Berm", "TKRD-376", "Medium", "[Trendora] ปรับ UI Admin › ประเภทแพคเกจ", "To Do"],
 ["15-OCT", "Berm", "TKRD-377", "Medium", "[Trendora] ปรับ UI Admin › แพคเกจที่ขาย", "To Do"],
-["15-OCT", "Berm", "TKRD-378", "Medium", "[Trendora] ปรับ UI Admin › ข้อมูลการรับเงิน", "To Do"],
+["15-OCT", "Berm", "TKRD-378", "Medium", "[Trendora] ปรับ UI Admin › ข้อมูลการรับเงิน", "In Progress"],
 ["15-OCT", "Berm", "TKRD-379", "Medium", "[Trendora] ปรับ UI Admin › สิทธิ์ลูกค้า", "To Do"],
 ["15-OCT", "Berm", "TKRD-380", "Medium", "[Trendora] ปรับ UI Admin › สรุปรายรับ", "To Do"],
 ["15-OCT", "Berm", "TKRD-381", "Medium", "[Trendora] ปรับ UI Admin › รางวัลชวนเพื่อน", "To Do"],
@@ -533,7 +533,7 @@ const ROWS = [
 ["ยังไม่มีรอบ", "No", "TAKRA-1532", "Medium", "Desktop: จบไลฟ์แล้วกดเมนูจากหน้าเริ่มไลฟ์ยังเด้งหน้าต่างซ้อน", "READY TO TEST"],
 ["23-OCT", "James", "TI-695", "Medium", "[TAKRA Insight] ช่องวางลิงก์ไลฟ์ — คลิกขวาไม่ได้ (เมนู Paste/context menu ไม่ขึ้น) ต้องใช้ Ctrl+V แทน", "To Do"],
 ["23-OCT", "James", "TI-696", "Low", "[Defect][BE] สลับบัญชีกลางไลฟ์: stream-pulse (feed-release) ของไลฟ์บัญชีเก่ายิง engine ตอน restart ได้ 401 (teardown/finalize สำเร็จ ข้อมูลไม่หาย)", "READY TO TEST"],
-["23-OCT", "James", "TI-698", "Medium", "[Defect][BE] engine เปิด TLS ไป IP ของ Google LLC (~2 นาที) ช่วง loading models หลัง login และ consent — ไม่ผ่าน env proxy, นอกเหนือ egress ที่ประกาศ (CDN เท่านั้น)", "IN REVIEW"],
+["23-OCT", "James", "TI-698", "Medium", "[Defect][BE] engine เปิด TLS ไป IP ของ Google LLC (~2 นาที) ช่วง loading models หลัง login และ consent — ไม่ผ่าน env proxy, นอกเหนือ egress ที่ประกาศ (CDN เท่านั้น)", "READY TO TEST"],
 ["ยังไม่มีรอบ", "Boat", "TAKRA-1550", "High", "[Defect][FE][BE][Electron] ทดสอบฉากข้ามประโยคที่เรนเดอร์ไม่สำเร็จและไม่มี ducking เพลงพื้นหลัง · เพิ่มการปรับระดับ ducking ต่อไลฟ์ (ค่าเริ่มต้น 30%)", "READY TO TEST"],
 ["ยังไม่มีรอบ", "Boat", "TAKRA-1559", "High", "[Defect][FE][Electron] ทดสอบฉาก/เช็คเครื่องล้มด้วย error อ่านไม่ออก เมื่ออวาตาร์ไม่ได้อยู่ในเครื่องนี้ + ทดสอบฉากไม่บอกเวลาที่ต้องรอ", "READY TO TEST"],
 ["ยังไม่มีรอบ", "Boat", "TAKRA-1560", "High", "[Defect][FE][Electron] เครื่องที่ยังเป็นตัวเรนเดอร์ FlashHead ทดสอบฉาก/เริ่มไลฟ์ไม่ได้ และไม่บอกให้ติดตั้งตัวเรนเดอร์ใหม่ · ทดสอบฉากตอนตัวเรนเดอร์กำลังเปิดขึ้น error อ่านไม่ออก", "READY TO TEST"],
@@ -566,8 +566,6 @@ const ROWS = [
 ["ยังไม่มีรอบ", "ไม่มีคนรับ", "TAKRA-1612", "Medium", "🔴 [Electron] เตรียมเสียงล่วงหน้าวนซ้ำไม่หยุด — เผาเครดิต MiniMax หมดใน 2 วัน (ไม่หยุดแม้ปลายทางบอกว่าเครดิตหมด)", "To Do"],
 ["ยังไม่มีรอบ", "No", "TAKRA-1614", "Medium", "คลังฉากถามสถานะซ้ำทุก 5 วินาทีไม่เลิก แม้ server ตอบแล้วว่าฉากนี้ไม่มีคลังให้เตรียมในเครื่อง (404)", "To Do"],
 ["ยังไม่มีรอบ", "No", "TAKRA-1616", "Medium", "[Defect][BE] เรื่องชวนคุย: กด \"ใช้เรื่องนี้\" แล้วได้ 0 บท — ตัวกรองชื่อสินค้าทิ้งทุกบทแบบเงียบ ๆ เมื่อชื่อสินค้ามีคำเรียกประเภท", "READY TO TEST"],
-["30-OCT", "James", "TI-708", "High", "[Defect][FE][Electron] ปิดแอปตอน engine ค้าง แอปปิดเองไม่ได้ — ขั้นปิดงานวนซ้ำทุก 10 วิ และคำสั่ง finalize ไม่หมดเวลาเองใน 4 วิ", "IN REVIEW"],
-["30-OCT", "James", "TI-709", "High", "[Defect][FE][Electron] เริ่มบันทึกไลฟ์ที่ยังออกอากาศแล้ววิดีโอไม่ขึ้น (video-never-started) — reload หน้าเองแล้วยังกู้ไม่ได้ทุกครั้ง", "IN REVIEW"],
 ["30-OCT", "ไม่มีคนรับ", "TKRD-485", "Medium", "ย้อนสลิปพร้อมกับปล่อย referral ที่ถูกพักของคนเดียวกัน → deadlock ตอบ 500 แทน 409 (GAP-8-27)", "READY TO TEST"],
 ["30-OCT", "Gong", "TKRD-486", "High", "[หน้าค้นหา] สลับบัญชีในแท็บเดียวกัน — บัญชีที่เข้าทีหลังเห็นคำค้นของบัญชีก่อนหน้า เพราะข้อมูลการค้นหาใน sessionStorage ไม่ถูกล้างตอนออกจากระบบ", "READY TO TEST"],
 ["30-OCT", "Gong", "TKRD-490", "Medium", "[หลังบ้าน › แจ้งชำระเงิน] ค้นหาคิวสลิปด้วยชื่อผู้ใช้แล้วชื่อผู้ใช้ไปอยู่ใน URL (GET /admin/slips?q=) และถูกบันทึกลง request log ของ api", "To Do"],
@@ -587,12 +585,11 @@ const ROWS = [
 ["ยังไม่มีรอบ", "No", "TAKRA-1638", "Medium", "[FE][test] live-studio-preflight-error.spec \"ลองเสียงแล้วผ่าน → ไม่เตือน\" ตกบน CI — คำเตือน \"ล้ำเขตปลอดภัย\" โผล่ (ผ่านในเครื่อง)", "To Do"],
 ["ยังไม่มีรอบ", "Boat", "TAKRA-1639", "Medium", "[Defect][FS] หน้า Takra AI Live หลุด design 12 จุด — ฉาก · อวาตาร์ · focus ช่องกรอก · ตารางคลัง · เสียง · สรุปไลฟ์ · ตั้งค่า", "READY TO TEST"],
 ["ยังไม่มีรอบ", "James", "TI-710", "Low", "[Bug][BE] แถว subject_dek ที่เสีย (wrapped_dek ว่างแต่ยังไม่ถูกทำลาย) ทำให้ ingest ตอบ retryable ไม่จบ → upload ของ session ค้าง", "To Do"],
-["ยังไม่มีรอบ", "James", "TI-711", "Medium", "[Bug][BE] ยอมรับนโยบายเวอร์ชันใหม่ทับ decided_at ของการให้ความยินยอม → การลบที่ค้างแล้วรันซ้ำทีหลัง ลบคอมเมนต์ที่เก็บถูกต้องและทำลายกุญแจของ host", "IN REVIEW"],
 ["ยังไม่มีรอบ", "Gong", "TKRD-502", "Medium", "[แจ้งเตือนสลิป Telegram] สลิปไฟล์ .webp ขึ้นในแชตเป็นสติกเกอร์ ไม่มี caption — แอดมินไม่รู้ว่าเป็นสลิปรหัสไหนของลูกค้าคนไหน", "READY TO TEST"],
 ["ยังไม่มีรอบ", "Gong", "TKRD-503", "Low", "[ลิงก์ที่สร้างไว้] เลือกช่วงวันที่กลับด้าน (\"สร้างตั้งแต่วันที่\" หลัง \"ถึงวันที่\") แล้วกด \"ค้นหา\" — หน้าขึ้น \"โหลดลิงก์ไม่สำเร็จ\" แทนรายการ", "To Do"],
 ["ยังไม่มีรอบ", "Gong", "TKRD-504", "Low", "[แพ็กเกจของฉัน] หลังแอดมิน \"ยกเลิกการอนุมัติ\" สลิปที่อนุมัติแล้ว ลูกค้าไม่มีปุ่ม \"ต่ออายุ\" อีก เพราะสิทธิ์ถูกคืนเป็น standard โดยไม่ผูกแพ็กเกจ (ยืนยันจากโค้ด)", "To Do"],
 ["ยังไม่มีรอบ", "No", "TAKRA-1650", "High", "[BE] BYOK: TTS ไม่เคยใช้คีย์ MiniMax ของร้าน — Nest ฉีดตัวเก็บคีย์เป็น undefined ⇒ ทุกร้านพูดด้วยบัญชีเรา (ต่อจาก TAKRA-1576)", "READY TO TEST"],
-["ยังไม่มีรอบ", "Book", "TF-191", "Medium", "[Defect][App] หน่วยความจำ GPU ของแอปสูง 900–1,400 MB ต่อมือถือ 1 เครื่อง (หมุนเวียน ~20 MB/วิ) — เสี่ยงกับ 20 เครื่องบนเครื่อง RAM 8 GB", "To Do"],
+["ยังไม่มีรอบ", "Book", "TF-191", "Medium", "[Defect][App] หน่วยความจำ GPU ของแอปสูง 900–1,400 MB ต่อมือถือ 1 เครื่อง (หมุนเวียน ~20 MB/วิ) — เสี่ยงกับ 20 เครื่องบนเครื่อง RAM 8 GB", "In Progress"],
 ["ยังไม่มีรอบ", "Boat", "TAKRA-1654", "Medium", "TAKRA Live - ทุกลิงก์ที่พาไป Takra Hub เปิดอยู่ในแอป ไม่ได้เปิดด้วยเบราว์เซอร์ของเครื่อง (พบ 11 จุด บน Windows) · และ \"แพลตฟอร์มที่ใช้ Live\" แสดง Shopee เป็นใช้งานอยู่ ทั้งที่ยังไม่เปิดใช้", "READY TO TEST"],
 ["ยังไม่มีรอบ", "No", "TAKRA-1655", "Medium", "TAKRA Live - แอปบนเครื่องไม่มีกลไกอัปเดตโปรแกรมเลย: ขอทำแบบ Takra Rerun ทั้งชุด (ดาวน์โหลดเบื้องหลัง · การ์ดมุมขวาล่าง · ผู้ใช้เลือกเวลารีสตาร์ท · ห้ามตัดกลางไลฟ์)", "To Do"],
 ["ยังไม่มีรอบ", "Boat", "TAKRA-1656", "Medium", "TAKRA Live - เพิ่มบัญชี TikTok: กด \"ยอมรับและล็อกอิน TikTok\" แล้วหน้าต่างที่เปิดมาเป็นหน้าโฆษณา TikTok Shop LIVE ต้องกดต่อหลายขั้นกว่าจะถึงหน้าล็อกอินจริง", "READY TO TEST"],
@@ -648,17 +645,32 @@ const ROWS = [
 ["ยังไม่มีรอบ", "James", "TI-721", "Low", "[Mac][Defect][FE] รายการคลิปแสดงรหัส session (เช่น 20261103_154539) เป็นชื่อคลิป เมื่อคลิปไม่มีชื่อ", "To Do"],
 ["ยังไม่มีรอบ", "James", "TI-722", "Low", "[Mac][Defect][FE] หน้าบทพูดของคลิปเขียนว่า \"ระบบได้ยินอย่างน้อย N เสียงในไลฟ์นี้\" ทั้งที่เป็นคลิป", "To Do"],
 ["ยังไม่มีรอบ", "James", "TI-723", "Low", "[Windows][Defect][FE][Electron] ช่องลิงก์ไลฟ์รับลิงก์ Shopee แบบ http:// แล้วเปิดหน้าก่อนเริ่ม แทนที่จะปฏิเสธตามเคส TC-SHP-A.6", "To Do"],
-["ยังไม่มีรอบ", "James", "TI-724", "High", "[Defect][FE][Windows] ตัวกรอง \"แพลตฟอร์ม\" = TikTok ไม่รวมไลฟ์เก่าที่ไม่มีข้อมูลแพลตฟอร์ม และแถวนั้นขึ้นไอคอน \"?\" แทนโลโก้ TikTok", "IN REVIEW"],
-["ยังไม่มีรอบ", "James", "TI-725", "High", "[Defect][FE][Windows] ตาราง \"ไลฟ์ของวันนี้\" ในหน้ารายงานประจำวันไม่มีโลโก้แพลตฟอร์มหน้าชื่อไลฟ์", "IN REVIEW"],
+["ยังไม่มีรอบ", "James", "TI-724", "High", "[Defect][FE][Windows] ตัวกรอง \"แพลตฟอร์ม\" = TikTok ไม่รวมไลฟ์เก่าที่ไม่มีข้อมูลแพลตฟอร์ม และแถวนั้นขึ้นไอคอน \"?\" แทนโลโก้ TikTok", "READY TO TEST"],
+["ยังไม่มีรอบ", "James", "TI-725", "High", "[Defect][FE][Windows] ตาราง \"ไลฟ์ของวันนี้\" ในหน้ารายงานประจำวันไม่มีโลโก้แพลตฟอร์มหน้าชื่อไลฟ์", "READY TO TEST"],
 ["ยังไม่มีรอบ", "James", "TI-726", "Low", "[Mac][Defect][FE] ป้ายเสียงไลฟ์หายขึ้น \"เงียบสนิทมา 20 วิ · ยังไม่กลับมา\" ตรงเลขเกณฑ์พอดีตอนเริ่มแจ้ง", "To Do"],
 ["ยังไม่มีรอบ", "James", "TI-727", "Low", "[Mac][Defect][FE] แถบ \"ต้องดู\" แสดงเสียงไลฟ์หายเป็นโทนส้ม ไม่ใช่สีแดงแบบป้ายบนการ์ด", "To Do"],
-["ยังไม่มีรอบ", "James", "TI-728", "High", "[Defect][BE] วิเคราะห์คลิป TikTok ยาว (~70 วิ) ล้มเหลว fail_reason=interrupted — engine restart แทรกกลาง analysing (คลิปสั้นผ่าน) [Windows 11]", "To Do"],
-["ยังไม่มีรอบ", "James", "TI-729", "High", "[Defect][FE][Windows] หน้าแดชบอร์ด (Brand Dashboard) ไม่มีตัวกรองแพลตฟอร์ม — ปุ่ม ทุกแพลตฟอร์ม/TikTok/Shopee ไม่มีในบิลด์", "IN REVIEW"],
-["ยังไม่มีรอบ", "James", "TI-730", "High", "[Defect][FE][Windows] หัวรายงานไลฟ์จากคลาวด์สะกด \"Tiktok\" และไม่มีโลโก้แพลตฟอร์ม", "IN REVIEW"],
+["ยังไม่มีรอบ", "James", "TI-728", "High", "[Defect][BE] วิเคราะห์คลิปล้มเหลว fail_reason=interrupted — watchdog \"engine stopped answering\" ฆ่า engine กลาง analysing แล้ว _clip_boot() ล้างงานทิ้งโดยไม่ retry (ไม่เกี่ยวกับความยาวคลิป · เกิดทั้ง TikTok และ Facebook reel) [Windows 11]", "To Do"],
+["ยังไม่มีรอบ", "James", "TI-729", "High", "[Defect][FE][Windows] หน้าแดชบอร์ด (Brand Dashboard) ไม่มีตัวกรองแพลตฟอร์ม — ปุ่ม ทุกแพลตฟอร์ม/TikTok/Shopee ไม่มีในบิลด์", "READY TO TEST"],
+["ยังไม่มีรอบ", "James", "TI-730", "High", "[Defect][FE][Windows] หัวรายงานไลฟ์จากคลาวด์สะกด \"Tiktok\" และไม่มีโลโก้แพลตฟอร์ม", "READY TO TEST"],
 ["ยังไม่มีรอบ", "Tan", "TKH-313", "Medium", "[Defect][FE][BE] การ์ดบริการ: ปุ่มต่ออายุซื้อผิดแพ็กเกจ · สถานะสลิปถูกปฏิเสธ/ยกเลิกไม่ตรงความจริง", "To Do"],
 ["ยังไม่มีรอบ", "Mae", "TAK-938", "Medium", "[CI] เทส TestEvictDropsTheOldestClip (camopreview) ล้มเป็นบางครั้ง — นับคลิปก่อน evict เสร็จ", "IN REVIEW"],
-["ยังไม่มีรอบ", "James", "TI-731", "High", "[Defect][FE][Windows] หน้า \"แชนเนลที่ติดตาม\" ติดตามร้าน Shopee ไม่ได้ — ไม่มีตัวกรอง Shopee / ปุ่ม \"ติดตามร้านนี้\" / กล่อง \"ลิงก์ไลฟ์ Shopee\" ในบิลด์ UAT 0.1.113", "To Do"],
-["ยังไม่มีรอบ", "James", "TI-732", "Medium", "[Defect][FE][Electron][Windows] ลิงก์ไลฟ์ Shopee ที่จบแล้ว — การ์ด \"ไลฟ์นี้จบแล้ว\" ถูก \"ดูได้ในแอป Shopee เท่านั้น / พาไปหน้าเข้าสู่ระบบ\" ทับภายใน ~2 วินาที (TC-SHP-C.1 · UAT 0.1.113 ยังไม่มีฟิกซ์ TI-718)", "To Do"],
+["ยังไม่มีรอบ", "James", "TI-731", "High", "[Defect][FE][Windows] หน้า \"แชนเนลที่ติดตาม\" ติดตามร้าน Shopee ไม่ได้ — ไม่มีตัวกรอง Shopee / ปุ่ม \"ติดตามร้านนี้\" / กล่อง \"ลิงก์ไลฟ์ Shopee\" ในบิลด์ UAT 0.1.113", "READY TO TEST"],
+["ยังไม่มีรอบ", "James", "TI-732", "Medium", "[Defect][FE][Electron][Windows] ลิงก์ไลฟ์ Shopee ที่จบแล้ว — การ์ด \"ไลฟ์นี้จบแล้ว\" ถูก \"ดูได้ในแอป Shopee เท่านั้น / พาไปหน้าเข้าสู่ระบบ\" ทับภายใน ~2 วินาที (TC-SHP-C.1 · UAT 0.1.113 ยังไม่มีฟิกซ์ TI-718)", "READY TO TEST"],
+["ยังไม่มีรอบ", "Mae", "TAK-944", "Medium", "[FE][Stub e2e][Flaky] logout.spec.ts TC-1.3-NEG.2 (logout หลายแท็บ) ล้มเป็นบางครั้งใน CI — แท็บ B รอปุ่ม \"ตรวจ session\" จนหมดเวลา", "To Do"],
+["ยังไม่มีรอบ", "Hope", "TAK-953", "Medium", "[BE] ไลฟ์ล้มแล้วปิดห้อง TikTok ไม่สำเร็จ — บอกผู้ขายให้กด «เริ่มไลฟ์» ได้เลย ไม่ต้องไปกดจบใน TikTok", "To Do"],
+["ยังไม่มีรอบ", "No", "TAKRA-1703", "Medium", "[Windows][Defect][FE][BE] คลัง › สคริปต์ › เขียนสคริปต์: บทพูดยาวเกิน 30 วินาที ขึ้นกล่องเหลือง \"ยาวเกิน 30 วินาที — ตัดให้สั้นลงก่อนบันทึก\" แต่ยังกดบันทึกได้", "To Do"],
+["ยังไม่มีรอบ", "No", "TAKRA-1704", "Low", "[Windows][Defect][FE] คลัง › สินค้า › เพิ่ม/แก้ไขสินค้า: หน้าต่าง \"ตัวอย่างรูปสินค้า\" ไม่มีปุ่ม \"ลบรูป\" (ลบได้แค่ × บนภาพย่อ)", "To Do"],
+["ยังไม่มีรอบ", "No", "TAKRA-1705", "Medium", "[Desktop] สร้างอวาตาร์ไม่สำเร็จ \"หน้าไม่หันกล้อง\" เพราะค่าตาเปิดถูกวัดเพี้ยนตามรูปทรงคลิป", "READY TO TEST"],
+["ยังไม่มีรอบ", "No", "TAKRA-1706", "Medium", "[FS] คลังฉากเต็ม 20 ฉาก — รู้ตอนกดบันทึกขั้นสุดท้าย หลังทำครบ 6 ขั้น · ออกจากหน้าแล้วงานหาย", "READY TO TEST"],
+["ยังไม่มีรอบ", "No", "TAKRA-1707", "Medium", "[Electron] เสียงในเครื่อง (VoxCPM2) ค้างกลางบรรทัด ⇒ เรนเดอร์ล่วงหน้าค้างทั้งชุดเงียบ ๆ (ไม่มี timeout · ถือคิว GPU ไว้)", "READY TO TEST"],
+["ยังไม่มีรอบ", "No", "TAKRA-1709", "Medium", "[FS] ไลฟ์พร้อมกันคนละบัญชี TikTok ไม่ได้ — ด่านซ้อนเวลาเช็คทั้งร้าน ควรเช็คต่อบัญชี", "READY TO TEST"],
+["ยังไม่มีรอบ", "No", "TAKRA-1710", "Medium", "[BE] เสียง MiniMax เว้นช่วงเงียบรอบตัวเลขและก่อนคำลงท้าย — แปลงตัวเลขเป็นคำไทย + ตัดช่องว่างหน้า ครับ/ค่ะ/ๆ ก่อนส่ง TTS", "READY TO TEST"],
+["ยังไม่มีรอบ", "No", "TAKRA-1712", "Medium", "[BE] API หน่วยความจำโตระหว่างไลฟ์ LOCAL ~150–200 MiB/ชม. ไม่คืน ⇒ heap OOM ล่ม ไลฟ์ที่กำลังออกอากาศจบ", "To Do"],
+["ยังไม่มีรอบ", "James", "TI-733", "Medium", "[Defect][FE][Electron][Windows] teardown รายงานสำเร็จ (pending=0) แต่ engine ไม่ตาย — บูตถัดไปต้อง reclaim พอร์ตด้วย watchdog recovery และมี orphan lhm-server ค้างข้ามชั่วโมงบนพอร์ตที่สอง", "IN REVIEW"],
+["ยังไม่มีรอบ", "Ice", "TI-734", "High", "[Defect][QA] e2e telegram-web.js: ตัวอ่านกลุ่มอ่านอีโมจิไม่ได้ (textContent) + sentAt = NaN ⇒ ตัดสินทุกข้อความว่าผิดรูปแบบ และกรองข้อความทิ้งทั้งหมด", "To Do"],
+["ยังไม่มีรอบ", "James", "TI-735", "Medium", "[Defect][BE][Windows] หยุดสตรีมที่ stall แล้ว reader ไม่จบทันที — stream_pulse.abort() ใช้ sock.shutdown(SHUT_RDWR) ซึ่งไม่ปลุก recv ที่ค้างบน Winsock ⇒ ค้างจนหมด read timeout (prod 10 วิ) · test_stream_pulse.py FAIL ซ้ำ 3/3", "To Do"],
+["ยังไม่มีรอบ", "Ice", "TI-736", "Medium", "[Defect][QA] หน้ารายงาน manual test: ผลเทส Windows หายจากหน้าจอได้ด้วยคลิกเดียว — restore loop return ก่อนถึงจุด paint actualw เมื่อ st ถูกลบ ขณะที่ชิป Windows ยังขึ้นปกติ", "To Do"],
+["ยังไม่มีรอบ", "No", "TKH-316", "Medium", "TAKRA Hub - หน้าบริการ: ขึ้นแถบ \"ยืนยันอีเมลก่อนดาวน์โหลด\" แต่ยังกด \"ดาวน์โหลด (Mac)\" ได้ทั้งที่ยังไม่ได้ยืนยันอีเมล", "To Do"],
 ];
 // Projects: the Jira key prefix decides the project, so rows from another project
 // show up here as soon as they are added to ROWS. Add a line to PROJECTS to give it a name.
@@ -737,7 +749,7 @@ ROWS.forEach(r=>{const s=JOURNEY[r[2]]; r[7]=s?s:(r[2].startsWith("TAKRA-")?99:0
 const scCls=v=>v===SCOPE_LABEL.ui?"c-ui":v===SCOPE_LABEL.sys?"c-sys":"c-tool";
 
 // เวลาที่ดึงจาก Jira ล่าสุดรายโปรเจกต์ — ตัวซิงก์ (update_open_bugs.py) เขียนบรรทัดนี้เอง ต้องอยู่บรรทัดเดียว
-const SYNCED = {"TAKRA": "4 พ.ย. 2026 13:21", "TI": "4 พ.ย. 2026 13:21", "TAK": "4 พ.ย. 2026 13:21", "TKRD": "4 พ.ย. 2026 13:21", "TF": "4 พ.ย. 2026 13:21", "TKH": "4 พ.ย. 2026 13:21"};
+const SYNCED = {"TAKRA": "5 พ.ย. 2026 13:00", "TI": "5 พ.ย. 2026 13:00", "TAK": "5 พ.ย. 2026 13:00", "TKRD": "5 พ.ย. 2026 13:00", "TF": "5 พ.ย. 2026 13:00", "TKH": "5 พ.ย. 2026 13:00"};
 const PROJECTS={
   TAKRA:{name:"Takra AI", jira:"https://kitdi.atlassian.net"},
   TI:{name:"Takra Insight", jira:"https://kitdi.atlassian.net"},
