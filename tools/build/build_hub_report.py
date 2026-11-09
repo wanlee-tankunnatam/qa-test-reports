@@ -18,6 +18,7 @@ harness (CSS + JS ปุ่ม ☁️ เซฟ/ตัวกรอง/Jira/owner
       rerunquality = rerun_quality_cases.py (TAKRA Rerun · คุณภาพ/ประสิทธิภาพการไลฟ์รีรัน)
       rerunbanner = rerun_banner_cases.py (TAKRA Rerun · แบนเนอร์โปรโมชันจาก Hub · TAK-836)
       radarci = radar_ci_cases.py (TAKRA Radar · ความเสถียรเทสต์ api ใน CI · TKRD-520 · ไม่มีหน้าจอ)
+      radarext = radar_ext_cases.py (TAKRA Radar · ส่วนขยาย Chrome ค่าคอมสด · TKRD-563)
       aibanner = ai_banner_cases.py (TAKRA AI · แบนเนอร์โปรโมชันจาก Hub บนแดชบอร์ด · TAKRA-1492)
       aiquality = ai_quality_cases.py (TAKRA AI · คุณภาพไลฟ์รีรัน ท่อส่ง+เนื้อหา)
       ai1223 … ai1230 = ai_tickets_1223_cases.py (TAKRA AI · 1 ไฟล์ต่อ 1 ใบงาน TAKRA-1223–1230)
@@ -47,7 +48,7 @@ MODULES = {'mvp1': 'hub_cases', 'mvp2': 'hub_mvp2_cases', 'mvp2rbac': 'hub_mvp2_
            'lrready': 'insight_live_readiness_cases',
            'insightm3': 'insight_m3_features_cases',
            'rerunquality': 'rerun_quality_cases',
-           'rerunbanner': 'rerun_banner_cases', 'aibanner': 'ai_banner_cases', 'radarci': 'radar_ci_cases',
+           'rerunbanner': 'rerun_banner_cases', 'aibanner': 'ai_banner_cases', 'radarci': 'radar_ci_cases', 'radarext': 'radar_ext_cases',
            'aiquality': 'ai_quality_cases',
            'lipsync': 'lipsync_cases',
            'radar': 'radar_cases', 'radar404': 'radar_tkrd404_cases', 'radar403': 'radar_tkrd403_cases',

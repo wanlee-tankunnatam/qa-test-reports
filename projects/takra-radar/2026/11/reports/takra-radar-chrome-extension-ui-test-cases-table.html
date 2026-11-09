@@ -1,0 +1,1917 @@
+<!DOCTYPE html>
+<html lang="th"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TAKRA Radar — ส่วนขยาย Chrome ค่าคอมสด (TKRD-563) · UI Manual Test Cases</title>
+<style>
+:root{
+  --bg:#f5f6f8;--card:#fff;--card2:#f0f2f5;--line:#dce0e7;
+  --txt:#1f2430;--muted:#6b7280;--accent:#2563eb;
+  --p0:#dc2626;--p1:#ea7a18;--p2:#2563eb;--p3:#94a3b8;
+  --pass:#16a34a;--fail:#dc2626;--hold:#d97706;--skip:#9ca3af;--block:#7c3aed;
+  --lv-ui:#db2777;--lv-e2e:#ea580c;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--txt);font-family:"Segoe UI","Sarabun",system-ui,sans-serif;line-height:1.5;font-size:13px}
+a{color:var(--accent)}
+header.top{padding:20px 28px 14px;border-bottom:1px solid var(--line);background:linear-gradient(135deg,#1e3a8a,#2563eb);color:#fff}
+header.top h1{margin:0 0 4px;font-size:20px}
+header.top .sub{font-size:12.5px;opacity:.88}
+header.top .meta{margin-top:10px;display:flex;flex-wrap:wrap;gap:8px}
+.pill{display:inline-block;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:600;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.35);color:#fff}
+.wrap{padding:16px 22px 80px;max-width:1280px;margin:0 auto}
+.counts{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 12px}
+.cnt{font-size:12px;font-weight:700;padding:5px 12px;border-radius:8px;border:1px solid var(--line);background:#fff}
+.cnt b{font-size:14px}
+.cnt.pass{color:var(--pass);border-color:#bbf7d0}.cnt.fail{color:var(--fail);border-color:#fecaca}
+.cnt.hold{color:var(--hold);border-color:#fde68a}.cnt.block{color:var(--block);border-color:#e9d5ff}
+.cnt.pending{color:var(--muted)}.cnt.skip{color:var(--skip)}
+.runsum{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin:0 0 14px}
+.runsum h3{margin:0 0 8px;font-size:13px}
+.sumchips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px}
+.progress{height:10px;background:var(--card2);border-radius:6px;overflow:hidden;border:1px solid var(--line)}
+.progressbar{height:100%;background:var(--pass);width:0;transition:width .3s}
+.hint{color:var(--muted);font-size:12px}
+.toolbar{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;margin:0 0 12px}
+.btn{font-size:12px;font-weight:600;padding:5px 12px;border-radius:7px;border:1px solid var(--line);background:#fff;color:var(--txt);cursor:pointer}
+.btn:hover{border-color:var(--accent);color:var(--accent)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.btn.primary:hover{opacity:.88}
+.filters{background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:0 0 14px}
+.filters .row{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:3px 0}
+.filters label{font-size:11px;font-weight:700;color:var(--muted);min-width:60px}
+.fchip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:3px 11px;font-size:11.5px;cursor:pointer;color:var(--txt)}
+.fchip:hover{border-color:var(--accent);color:var(--accent)}
+.fchip.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.clearbtn{font-size:11px;padding:3px 10px;border:1px solid var(--line);border-radius:6px;background:#fff;color:var(--muted);cursor:pointer;margin-left:4px}
+.clearbtn:hover{color:var(--fail);border-color:var(--fail)}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:#fff}
+table.tc{border-collapse:collapse;width:100%;min-width:900px;background:#fff}
+table.tc th,table.tc td{padding:8px 10px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+table.tc thead th{position:sticky;top:0;background:var(--card2);color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.4px;z-index:3;border-bottom:2px solid var(--line)}
+tr.epicrow td{background:#1e3a8a;color:#fff;font-weight:700;font-size:13px;padding:9px 12px}
+tr.epicrow .rp{font-weight:400;font-size:11px;opacity:.75;margin-left:6px}
+tr.featrow td{background:#eaf1fb;color:#1d4ed8;font-weight:700;font-size:12px}
+tr.featrow .rp{font-weight:500;font-size:11px;color:#3b6fc4;margin-left:8px}
+tr.trow{cursor:pointer}tr.trow:hover{background:#f7f9fc}tr.trow.open{background:#eef4fe}
+.tog{display:inline-block;width:14px;color:var(--muted);transition:transform .15s;font-size:11px}
+tr.trow.open .tog{transform:rotate(90deg);color:var(--accent)}
+.cid{font-family:monospace;font-size:10px;color:var(--muted);white-space:nowrap}
+td.jira{white-space:nowrap}td.jira a{font-family:monospace;font-size:10.5px;font-weight:700;color:var(--accent);text-decoration:none}td.jira a:hover{text-decoration:underline}
+.ctitle{font-weight:600;font-size:12.5px;max-width:400px}
+td.lvl{white-space:nowrap}
+.lv{font-size:10px;font-weight:700;padding:2px 7px;border-radius:5px;border:1px solid;background:#fff;display:inline-block;vertical-align:middle}
+.lv.lvl-ui{color:var(--lv-ui);border-color:var(--lv-ui)}
+.lv.lvl-e2e{color:var(--lv-e2e);border-color:var(--lv-e2e)}
+.ac{font-size:10px;color:var(--muted);font-family:monospace;margin-left:4px}
+.prio{font-weight:800;font-size:10px;padding:3px 7px;border-radius:5px;color:#fff;display:inline-block;white-space:nowrap}
+.p0{background:var(--p0)}.p1{background:var(--p1)}.p2{background:var(--p2)}
+td.status{white-space:nowrap}
+.stb{font-weight:700;font-size:10px;padding:3px 8px;border-radius:5px;display:inline-block}
+.stb.pending{background:#fff;border:1px solid var(--line);color:var(--muted)}
+.stb.pass{background:var(--pass);color:#fff}.stb.fail{background:var(--fail);color:#fff}
+.stb.hold{background:var(--hold);color:#fff}.stb.block{background:var(--block);color:#fff}
+.stb.skip{background:var(--skip);color:#fff}
+tr.detail{display:none}tr.detail.show{display:table-row}
+tr.detail>td{background:#fafbfc;padding:0;border-bottom:2px solid var(--line)}
+.card{padding:16px 20px}
+.card .h-title{font-size:14px;font-weight:700;margin:0 0 3px}
+.card .h-prio{font-size:12px;color:var(--muted);margin:0 0 12px}
+.card .sec{margin:0 0 12px}.card .sec:last-child{margin-bottom:0}
+.card .sec h4{margin:0 0 5px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.3px;color:#374151}
+.card .sec ol,.card .sec ul{margin:0;padding-left:18px}
+.card .sec li{margin:2px 0;font-size:12.5px}
+.card .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:760px){.card .grid{grid-template-columns:1fr}}
+.actualbox{display:block;width:100%;box-sizing:border-box;background:#fff;border:1px dashed var(--line);border-radius:7px;padding:7px 11px;color:var(--txt);font:inherit;font-size:12px;line-height:1.55;min-height:78px;resize:vertical}
+.actualbox::placeholder{color:var(--muted);font-style:italic}
+.actualbox:focus{outline:none;border-style:solid;border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,99,235,.13)}
+.actualbox.filled{border-style:solid;border-color:var(--accent)}
+.statusrow{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.opt{font-size:11px;font-weight:700;padding:4px 11px;border-radius:6px;border:1px solid var(--line);background:#fff;color:var(--muted);cursor:pointer}
+.opt:hover{opacity:.8}
+.opt.pass{border-color:var(--pass)}.opt.fail{border-color:var(--fail)}
+.opt.hold{border-color:var(--hold)}.opt.block{border-color:var(--block)}.opt.skip{border-color:var(--skip)}
+.opt.sel.pass{background:var(--pass);color:#fff}
+.opt.sel.fail{background:var(--fail);color:#fff}
+.opt.sel.hold{background:var(--hold);color:#fff}
+.opt.sel.block{background:var(--block);color:#fff}
+.opt.sel.skip{background:var(--skip);color:#fff}
+tr.trow.hide,tr.detail.hide{display:none!important}
+tr.epicrow.hide,tr.featrow.hide{display:none!important}
+.note-box{background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:8px 12px;font-size:12px;color:#92400e;margin:0 0 12px}
+footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
+@media print{.tablewrap{overflow:visible}table.tc{min-width:0}tr.detail{display:table-row!important}.toolbar,.filters,.runsum{display:none}}
+/* Jira per-case links */
+.jira-sec .jira-list{display:flex;flex-direction:column;gap:4px;margin-bottom:6px}
+.jira-item{display:flex;align-items:center;gap:8px;font-size:12px}
+.jira-item a{color:var(--accent);text-decoration:none;font-family:monospace;font-weight:700}
+.jira-item a:hover{text-decoration:underline}
+.jira-del{cursor:pointer;color:var(--fail);font-weight:700;font-size:11px;user-select:none}
+.jira-add{display:flex;gap:6px}
+.jira-input{flex:1;min-width:0;padding:5px 8px;border:1px solid var(--line);border-radius:6px;font-size:12px;font-family:inherit;background:#fff;color:var(--txt)}
+.jira-btn{white-space:nowrap}
+.edge-badge{display:inline-block;margin-left:6px;padding:0 6px;border-radius:4px;font-size:9.5px;font-weight:700;color:#92400e;background:#fef3c7;border:1px solid #fde68a;vertical-align:middle}
+.jira-cell{white-space:normal}
+.jira-chip{display:inline-block;margin:1px 3px 1px 0;padding:1px 6px;border:1px solid var(--line);border-radius:5px;font-family:monospace;font-size:10.5px;font-weight:700;color:var(--accent);text-decoration:none;background:var(--card2)}
+.jira-chip:hover{text-decoration:underline}
+/* Epic assignee + section color */
+.epic-owner-wrap{margin-left:12px;font-weight:400;font-size:11px}
+.feat-owner{font-size:11px;padding:2px 6px;border:1px solid var(--line);border-radius:5px;background:#fff;color:var(--txt);cursor:pointer}
+tr.featrow.owner-ice td{background:#60a5fa;border-left:4px solid #1d4ed8}
+tr.featrow.owner-moss td{background:#a78bfa;border-left:4px solid #6d28d9}
+tr.sec-ice>td:first-child{box-shadow:inset 5px 0 0 #2563eb}
+tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
+.feat-owner.owner-ice{border-color:#2563eb;color:#2563eb;font-weight:700}
+.feat-owner.owner-moss{border-color:#7c3aed;color:#7c3aed;font-weight:700}
+
+/* ประเภทเคส (kind) */
+.kd{display:inline-block;margin-left:6px;padding:0 6px;border-radius:4px;font-size:9.5px;font-weight:700;vertical-align:middle;border:1px solid;white-space:nowrap}
+.kd-happy{color:#15803d;background:#f0fdf4;border-color:#bbf7d0}
+.kd-neg{color:#b91c1c;background:#fef2f2;border-color:#fecaca}
+.kd-bnd{color:#b45309;background:#fffbeb;border-color:#fde68a}
+.kd-val{color:#6d28d9;background:#f5f3ff;border-color:#ddd6fe}
+.kd-exc{color:#be123c;background:#fff1f2;border-color:#fecdd3}
+.kd-perm{color:#0f766e;background:#f0fdfa;border-color:#99f6e4}
+.kd-data{color:#1d4ed8;background:#eff6ff;border-color:#bfdbfe}
+.kd-reg{color:#475569;background:#f8fafc;border-color:#cbd5e1}
+.chk{margin-top:4px;padding:6px 8px;border-left:3px solid #16a34a;background:rgba(22,163,74,.07)}
+.noui{display:inline-block;margin-left:6px;padding:0 6px;border-radius:4px;font-size:9.5px;font-weight:700;vertical-align:middle;color:#991b1b;background:#fee2e2;border:1px solid #fca5a5;white-space:nowrap}
+
+/* ป้าย epic (Jira) */
+.epic-tag{display:inline-block;margin-left:6px;padding:0 6px;border-radius:4px;font-size:9.5px;font-weight:700;vertical-align:middle;white-space:nowrap;color:#1e3a8a;background:#eef2ff;border:1px solid #c7d2fe;text-decoration:none}
+.epic-tag:hover{background:#e0e7ff;text-decoration:underline}
+.epicrow .epic-tag{font-size:11px;margin-left:8px}
+</style>
+</head>
+<body>
+<a id="hub-back-btn" href="https://wanlee-tankunnatam.github.io/qa-test-reports/?project=radar" title="กลับไปหน้ารวมรายงาน (Hub)" style="position:fixed;top:12px;right:14px;z-index:99999;display:inline-flex;align-items:center;gap:7px;padding:10px 18px;border-radius:999px;background:#ffffff;color:#1e3a8a;font-size:14px;font-weight:800;text-decoration:none;box-shadow:0 4px 16px rgba(0,0,0,.35);border:2px solid #1e3a8a;font-family:'Segoe UI','Sarabun',system-ui,sans-serif">🏠 รายงานทั้งหมด</a>
+
+
+<script id="store-data" type="application/json">
+{}
+</script>
+
+<header class="top">
+  <h1>🧩 TAKRA Radar — ส่วนขยาย Chrome ค่าคอมสด (TKRD-563) · UI Manual Test Cases</h1>
+  <div class="sub">เทส UI ด้วยมือ · Chrome บนคอมพิวเตอร์ + ส่วนขยาย Takra Radar 0.4.36 · เว็บ Takra Radar UAT · <a href="https://kitdi.atlassian.net/browse/TKRD-563" target="_blank">TKRD-563</a> · P0 + P1 + P2</div>
+  <div class="meta">
+    <span class="pill">33 เคส + E2E 3 = 36</span>
+    <span class="pill">6 กลุ่ม (A–F)</span>
+    <span class="pill">UI + E2E · manual</span>
+    <span class="pill">P0 14 · P1 18 · P2 4</span>
+    <span class="pill">ประเภท: Happy 19 · Negative 4 · Boundary 3 · Validation 1 · Exception 2 · Permission 3 · Data 4</span>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="note-box">🖥️ <b>ที่เทส:</b> Google Chrome บนคอมพิวเตอร์ (Windows หรือ Mac · เวอร์ชัน 111 ขึ้นไป · ใช้ Chrome profile สำหรับทดสอบ) · เว็บ Takra Radar UAT <b>https://uat-radar.takra.ai</b> (ล็อกอิน Cloudflare Access ก่อน) · ส่วนขยาย <b>0.4.36</b> (UAT @ e93cb4ed · 9 พ.ย.) ติดตั้งตามเคส TC-EX-A.2<br>👥 <b>ตัวละครในเคส:</b> <b>A</b> = qa.active (มีแพ็กเกจที่ใช้งานอยู่) · <b>B</b> = qa.active2 · <b>N</b> = qa.never (ยังไม่เปิดสิทธิ์) · <b>LP</b> = qa02 (แพ็กเกจหมดอายุ) · <b>บัญชี affiliate</b> = บัญชี Shopee affiliate ทดสอบของทีม เข้าสู่ระบบไว้ที่ affiliate.shopee.co.th ใน profile เดียวกัน (<b>ห้ามใช้บัญชีลูกค้า</b> — เสี่ยงโดน Shopee จำกัด)<br>📦 <b>สินค้าทดสอบ</b> (เตรียมก่อนรอบ จดใน Actual): <b>P-OK</b> = สินค้าที่ยังขาย มีค่าคอม และอยู่ในหน้า "ค้นหา" ของ Takra · <b>P-NEW</b> = สินค้าที่ไม่อยู่ในข้อมูลของ Takra (เช่น ลงขายวันนี้) · <b>P-VSKU</b> = ลิงก์ที่มี vItemId / vShopId · <b>P-LIVE</b> = สินค้าที่หน้า "เช็คจอ" ของ Takra เห็นว่าติดจออยู่<br>⚠️ <b>ข้อห้าม:</b> อย่าเปิดสินค้าติดกันถี่ ๆ (เว้นระยะระหว่างเคส) — ส่วนขยาย 0.4.31 โดน "Shopee จำกัดการใช้งานชั่วคราว" ตั้งแต่รอบแรก · ห้ามเปิดถี่เพื่อให้โดนจำกัด (เคส C.4 รันเมื่อเกิดเองเท่านั้น) · ค่าคอม/ราคาที่ส่วนขยายบน UAT เห็นถูกส่งเข้าข้อมูลชุดเดียวกับเว็บจริง — ใช้สินค้าจริงได้ แต่ห้ามแก้ข้อมูลที่ส่วนขยายส่ง<br>🐞 <b>คาดว่า FAIL 2 เคส</b> (เจอตอนเขียนเคส): B.2 ข้อความ "ค่าคอมจะขึ้นที่มุมขวาล่างของหน้า" ไม่ตรงที่ panel ขึ้นจริง · B.4 เข้าสู่ระบบแล้วไม่กลับมาหน้าเชื่อมต่อ<br>🗺️ <b>เมนูที่กระทบ:</b> เว็บ — "ส่วนขยาย Chrome" (ป้าย NEW) · "ตั้งค่า" › "ความปลอดภัยและอุปกรณ์" · "แพ็กเกจ" · "ค้นหา" (หน้าต่างจอและวิดีโอ) | ส่วนขยาย — popup · panel บนหน้าสินค้า Shopee · หน้า "เช็คหลายสินค้า" | Shopee — หน้าสินค้า · affiliate.shopee.co.th<br>📎 <b>ที่มา:</b> คำบนจอลอกจากโค้ด takra-radar (<code>apps/extension/*</code> + <code>packages/shared/src/messages/th-extension.ts</code>) · Expected ยึด <code>docs/extension-plan.md</code> + Epic TKRD-563 · เคสกลาง <code>docs/test-artifacts/case/chrome-extension/</code> — ชีตนี้มีเฉพาะเคสที่เทสบนจอได้ 36 จาก 55 (api 14 เคส และการตรวจข้อมูลเข้าระบบ/warehouse 5 เคส ต้องใช้ DevTools หรือฐานข้อมูล อยู่ในเคสกลาง)</div>
+
+  <div class="runsum">
+    <h3>📊 สรุปผล Manual Test</h3>
+    <div class="sumchips">
+      <span class="cnt pass">PASS <b id="sum-pass">0</b></span>
+      <span class="cnt fail">FAIL <b id="sum-fail">0</b></span>
+      <span class="cnt hold">HOLD <b id="sum-hold">0</b></span>
+      <span class="cnt block">BLOCKED <b id="sum-block">0</b></span>
+      <span class="cnt skip">SKIP <b id="sum-skip">0</b></span>
+      <span class="cnt pending">รอเทส <b id="sum-pending">36</b></span>
+    </div>
+    <div class="progress"><div id="sumbar" class="progressbar" style="width:0%"></div></div>
+    <div class="hint" id="sumpct" style="margin-top:5px">0% ทดสอบแล้ว (0/36)</div>
+  </div>
+
+  <div class="toolbar">
+    <button class="btn" onclick="toggleAll(true)">▸ กางทั้งหมด</button>
+    <button class="btn" onclick="toggleAll(false)">▾ ยุบทั้งหมด</button>
+    <span class="hint">💡 คลิกแถว → ดู Steps / Expected (UI only)</span>
+    <span style="margin-left:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+      <span id="save-status" class="hint" style="white-space: nowrap; color: var(--muted);">✓ ตรงกับ GitHub</span>
+      <label class="hint" style="display:flex;gap:4px;align-items:center;white-space:nowrap;cursor:pointer" title="บันทึกขึ้น GitHub อัตโนมัติหลังหยุดแก้ ~5 วินาที"><input type="checkbox" id="chk-autosave" checked=""> auto-save</label>
+      <button class="btn" id="btn-token" title="ใส่/เปลี่ยน GitHub token (ถ้าเซฟไม่ขึ้น/token เสีย กดอันนี้)">🔑 Token</button>
+      <button class="btn" id="btn-refresh" title="ดึงผลล่าสุดจาก GitHub มา merge (ไม่ต้อง reload)">🔄 ดึงล่าสุด</button>
+      <button class="btn primary" id="btn-publish" style="">☁️ บันทึกขึ้น GitHub</button>
+      <button class="btn" id="btn-save-file" title="ดาวน์โหลด HTML ไว้ใช้ offline">💾 ดาวน์โหลด</button>
+      <button class="btn" style="color:var(--fail)" id="btn-reset">🗑 ล้างผล</button>
+    </span>
+  </div>
+
+  <div class="filters">
+    <div class="row"><label>กลุ่ม</label>
+      <button class="fchip" data-f="feat" data-v="m-ext">🧩 ส่วนขยาย Chrome ค่าคอมสด (36)</button>
+      <button class="clearbtn" data-clear="feat">✕</button>
+    </div>
+    <div class="row"><label>ประเภท</label>
+      <button class="fchip" data-f="kind" data-v="happy" title="flow ปกติ">Happy Path (19)</button><button class="fchip" data-f="kind" data-v="negative" title="ข้อมูลผิด / action ผิด">Negative (4)</button><button class="fchip" data-f="kind" data-v="boundary" title="min · max · ก่อนขอบ · ตรงขอบ · เกินขอบ">Boundary (3)</button><button class="fchip" data-f="kind" data-v="validation" title="format · required · character · length">Validation (1)</button><button class="fchip" data-f="kind" data-v="exception" title="เน็ตหลุด · ระบบภายนอกผิดปกติ · timeout · หยุดกลางทาง">Exception (2)</button><button class="fchip" data-f="kind" data-v="permission" title="role ไหนทำได้ / ทำไม่ได้">Permission (3)</button><button class="fchip" data-f="kind" data-v="data" title="empty · duplicate · ไม่ปนข้ามบัญชี">Data (4)</button>
+      <button class="clearbtn" data-clear="kind">✕</button>
+    </div>
+    <div class="row"><label>Priority</label>
+      <button class="fchip" data-f="prio" data-v="P0">P0</button>
+      <button class="fchip" data-f="prio" data-v="P1">P1</button>
+      <button class="fchip" data-f="prio" data-v="P2">P2</button>
+      <button class="clearbtn" data-clear="prio">✕</button>
+    </div>
+    <div class="row"><label>สถานะ</label>
+      <button class="fchip" data-f="status" data-v="pass">✅ PASS</button>
+      <button class="fchip" data-f="status" data-v="fail">❌ FAIL</button>
+      <button class="fchip" data-f="status" data-v="hold">⏸ HOLD</button>
+      <button class="fchip" data-f="status" data-v="block">🚫 BLOCKED</button>
+      <button class="fchip" data-f="status" data-v="skip">⏭ SKIP</button>
+      <button class="fchip" data-f="status" data-v="pending">⏳ รอเทส</button>
+      <button class="clearbtn" data-clear="status">✕</button>
+    </div>
+  </div>
+
+  <div class="tablewrap">
+  <table class="tc" id="main-table">
+    <thead><tr><th style="width:22px"></th><th style="width:130px">TC ID</th><th>Test Case</th><th style="width:74px">Level</th><th style="width:55px">Pri</th><th style="width:80px">Status</th><th style="width:120px">Jira</th></tr></thead>
+    <tbody>
+
+<!-- m-ext -->
+<tr class="epicrow" data-epic="m-ext"><td colspan="7">🧩 ส่วนขยาย Chrome ค่าคอมสดจากเบราว์เซอร์ลูกค้า (PoC) — ติดตั้ง · เชื่อมต่อ · panel บนหน้าสินค้า Shopee · เช็คหลายสินค้า <span class="rp">(36 เคส)</span> <a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-563" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-563 ใน Jira">🧩 Epic TKRD-563</a></td></tr>
+<tr class="featrow" data-featkey="ex-install"><td colspan="7">📁 A · ติดตั้งส่วนขยาย <span class="rp"><span class="lv lvl-ui">🌐 4</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="ex-install"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow" data-feat="m-ext" data-level="ui" data-prio="P1" data-kind="happy" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-EX-A.1</td>
+  <td class="ctitle">เมนู "ส่วนขยาย Chrome" มีป้าย NEW → หน้าติดตั้งมีครบ 7 ขั้น <span class="kd kd-happy">Happy Path</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-22801"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-22801"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">เมนู "ส่วนขยาย Chrome" มีป้าย NEW → หน้าติดตั้งมีครบ 7 ขั้น</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-563" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-563 ใน Jira">🧩 Epic TKRD-563</a> · Priority: <b>P1</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · ส่วนขยาย Chrome ค่าคอมสดจากเบราว์เซอร์ลูกค้า (PoC) — ติดตั้ง · เชื่อมต่อ</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>จอกว้าง 1280px ขึ้นไป</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ Takra Radar (UAT) แล้วเข้าสู่ระบบด้วยบัญชี A ดูแถบเมนูซ้าย หาเมนู "ส่วนขยาย Chrome" แล้วกด</li><li>อ่านส่วน "ติดตั้งส่วนขยาย" ทั้งหมด แล้วกดปุ่ม "คัดลอก" ข้าง chrome://extensions</li><li>เปิดแท็บใหม่ วางในช่องที่อยู่ แล้วสังเกตข้อความที่วาง</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>เมนู "ส่วนขยาย Chrome" มีป้าย "NEW" · กดแล้วไปหน้า "เชื่อมต่อส่วนขยาย Chrome"</li><li>หัว "ติดตั้งส่วนขยาย" · คำโปรยขึ้นต้น "ช่วงทดสอบ ส่วนขยายยังไม่อยู่ใน Chrome Web Store…" · ปุ่ม "ดาวน์โหลดส่วนขยาย (.zip)"</li><li>ขั้นตอน 7 ข้อตามลำดับ: "ดาวน์โหลดและแตกไฟล์" · "เปิดหน้าส่วนขยายของ Chrome" · "เปิดโหมดนักพัฒนาซอฟต์แวร์" · "โหลดส่วนขยาย" · "ปักหมุดไว้บนแถบเครื่องมือ" · "เชื่อมต่อบัญชี" · "เริ่มใช้งาน"</li><li>กด "คัดลอก" แล้วปุ่มเปลี่ยนเป็น "คัดลอกแล้ว" · ที่วางได้คือ chrome://extensions</li><li>มีส่วน "อัปเดตเป็นเวอร์ชันใหม่" และหมายเหตุ "Chrome อาจเตือนเรื่องส่วนขยายในโหมดนักพัฒนาซอฟต์แวร์…"</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic TKRD-563 · เคสกลาง TC-EX.2-U01</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-22801" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-22801" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-22801" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-22801" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-22801" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-22801"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-22801" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-22801">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="m-ext" data-level="ui" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-EX-A.2</td>
+  <td class="ctitle">ติดตั้งตาม 7 ขั้นบน Windows และ Mac → การ์ด "Takra Radar" 0.4.36 ไม่มี error <span class="kd kd-happy">Happy Path</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-22802"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-22802"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ติดตั้งตาม 7 ขั้นบน Windows และ Mac → การ์ด "Takra Radar" 0.4.36 ไม่มี error</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-563" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-563 ใน Jira">🧩 Epic TKRD-563</a> · Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · ส่วนขยาย Chrome ค่าคอมสดจากเบราว์เซอร์ลูกค้า (PoC) — ติดตั้ง · เชื่อมต่อ</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #d97706;background:rgba(217,119,6,.07)">📌 <b>หมายเหตุ:</b> คงส่วนขยายที่ติดตั้งไว้ใช้ทั้งรอบ</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>ลบส่วนขยาย Takra Radar เดิมออกจาก chrome://extensions และลบโฟลเดอร์ takra-radar-extension เดิม (ถ้ามี)</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ Takra Radar (UAT) แล้วเข้าสู่ระบบด้วยบัญชี A ไปที่เมนู "ส่วนขยาย Chrome" กด "ดาวน์โหลดส่วนขยาย (.zip)" แล้วแตกไฟล์</li><li>ทำตามขั้น 2–5 บนหน้านั้นตามตัวอักษร (เปิด chrome://extensions · เปิด Developer mode · กด Load unpacked เลือกโฟลเดอร์ · ปักหมุดไอคอน)</li><li>ที่ chrome://extensions กด "Details" ของการ์ด Takra Radar แล้วดู Site access และ Permissions</li><li>ทำขั้น 6–7 (กลับมาหน้าเชื่อมต่อ กดรีเฟรช แล้วกด "เชื่อมต่อ") แล้วเปิดหน้าสินค้า P-OK บน Shopee</li><li>ทำซ้ำทั้งเคสอีกเครื่อง (Windows หนึ่งรอบ · Mac หนึ่งรอบ)</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>แตก zip ได้โฟลเดอร์ชื่อ takra-radar-extension · โหลดแล้วการ์ด "Takra Radar" เวอร์ชัน "0.4.36" ขึ้น ไม่มีปุ่ม "Errors"</li><li>ID ของส่วนขยายเป็นค่าเดียวกันทั้ง Windows และ Mac (kkdlamfcfmcgaigjnechcicpoliopbfk)</li><li>Site access มีแค่ affiliate.shopee.co.th · shopee.co.th · uat-radar.takra.ai (ไม่มี radar.takra.ai ไม่มี localhost) · Permissions ไม่มีการอ่าน cookie</li><li>ไอคอน Takra Radar อยู่บนแถบเครื่องมือ · เชื่อมต่อได้ และ panel ขึ้นบนหน้าสินค้า P-OK</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic TKRD-563 · เคสกลาง TC-EX.2-U02</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-22802" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-22802" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-22802" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-22802" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-22802" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-22802"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-22802" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-22802">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="m-ext" data-level="ui" data-prio="P1" data-kind="happy" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-EX-A.3</td>
+  <td class="ctitle">อัปเดตตามขั้น "อัปเดตเป็นเวอร์ชันใหม่" → ยังเชื่อมต่ออยู่ ไม่ต้องเชื่อมใหม่ <span class="kd kd-happy">Happy Path</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-22803"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-22803"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">อัปเดตตามขั้น "อัปเดตเป็นเวอร์ชันใหม่" → ยังเชื่อมต่ออยู่ ไม่ต้องเชื่อมใหม่</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-563" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-563 ใน Jira">🧩 Epic TKRD-563</a> · Priority: <b>P1</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · ส่วนขยาย Chrome ค่าคอมสดจากเบราว์เซอร์ลูกค้า (PoC) — ติดตั้ง · เชื่อมต่อ</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>ส่วนขยายเชื่อมต่อด้วยบัญชี A แล้ว (popup ขึ้น "เชื่อมต่อบัญชี Takra แล้ว")</li><li>เปิดหน้าสินค้า P-OK ค้างไว้ 1 แท็บ</li></ul></div>
+  <div class="sec"><h4>Test Data</h4><ul><li>zip ล่าสุดของ UAT (เวอร์ชันเดิมก็ได้ — เคสนี้พิสูจน์ว่าการเชื่อมต่อไม่หาย)</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ Takra Radar (UAT) แล้วเข้าสู่ระบบด้วยบัญชี A ไปที่เมนู "ส่วนขยาย Chrome" กด "ดาวน์โหลดส่วนขยาย (.zip)" · ลบโฟลเดอร์ takra-radar-extension เดิม แล้วแตกไฟล์ใหม่ไว้ที่เดิมชื่อเดิม</li><li>ที่ chrome://extensions กดปุ่มรีโหลด (ลูกศรวงกลม) ที่การ์ด Takra Radar</li><li>กดไอคอน Takra Radar บนแถบเครื่องมือของ Chrome เพื่อเปิด popup แล้วกลับไปแท็บหน้าสินค้า P-OK ที่เปิดค้างไว้ก่อนรีโหลด กด F5</li><li>สังเกต popup และ panel</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>การ์ดแสดงเวอร์ชันของ zip ใหม่</li><li>popup ยังขึ้น "เชื่อมต่อบัญชี Takra แล้ว" โดยไม่ต้องกดเชื่อมต่อ</li><li>แท็บหน้าสินค้าที่เปิดค้างไว้ไม่ค้างหรือพัง · หลังกด F5 panel ขึ้นตามปกติ</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic TKRD-563 · เคสกลาง TC-EX.2-U03</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-22803" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-22803" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-22803" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-22803" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-22803" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-22803"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-22803" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-22803">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="m-ext" data-level="ui" data-prio="P1" data-kind="permission" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-EX-A.4</td>
+  <td class="ctitle">ยังไม่เข้าสู่ระบบเว็บ → โหลดไฟล์ส่วนขยายไม่ได้ <span class="kd kd-perm">Permission</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-22804"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-22804"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ยังไม่เข้าสู่ระบบเว็บ → โหลดไฟล์ส่วนขยายไม่ได้</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-563" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-563 ใน Jira">🧩 Epic TKRD-563</a> · Priority: <b>P1</b> · UI · ประเภท: <b>Permission</b> <span class="hint">(role ไหนทำได้ / ทำไม่ได้)</span> · ส่วนขยาย Chrome ค่าคอมสดจากเบราว์เซอร์ลูกค้า (PoC) — ติดตั้ง · เชื่อมต่อ</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #d97706;background:rgba(217,119,6,.07)">📌 <b>หมายเหตุ:</b> โหลดได้เฉพาะคนที่เข้าสู่ระบบแล้ว (ส่วนขยาย 0.4.23)</div></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ Takra Radar (UAT) โดยยังไม่เข้าสู่ระบบ (ถ้าเข้าอยู่ให้ออกจากระบบก่อน)</li><li>พิมพ์ในช่องที่อยู่ https://uat-radar.takra.ai/api/v1/extension/download แล้วกด Enter</li><li>พิมพ์ในช่องที่อยู่ https://uat-radar.takra.ai/extension/takra-radar-extension-uat.zip แล้วกด Enter</li><li>สังเกตว่าได้ไฟล์หรือไม่</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ลิงก์แรก: ไม่ได้ไฟล์ zip · หน้าแสดงข้อความปฏิเสธเพราะยังไม่เข้าสู่ระบบ (401)</li><li>ลิงก์ที่สอง: ไม่ได้ไฟล์ และไม่ใช่หน้าเว็บ Takra Radar (ได้ 404)</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic TKRD-563 · เคสกลาง TC-EX.2-U04</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-22804" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-22804" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-22804" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-22804" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-22804" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-22804"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-22804" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-22804">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="featrow" data-featkey="ex-connect"><td colspan="7">📁 B · เชื่อมต่อบัญชี Takra <span class="rp"><span class="lv lvl-ui">🌐 7</span> <span class="lv lvl-e2e">🔄 1</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="ex-connect"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow" data-feat="m-ext" data-level="ui" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-EX-B.1</td>
+  <td class="ctitle">หน้าเชื่อมต่อบอกว่าส่งอะไรให้ Takra ก่อนปุ่ม "เชื่อมต่อ" · ไม่มีชื่อผู้ให้บริการเช็คจอ <span class="kd kd-happy">Happy Path</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-22805"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-22805"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">หน้าเชื่อมต่อบอกว่าส่งอะไรให้ Takra ก่อนปุ่ม "เชื่อมต่อ" · ไม่มีชื่อผู้ให้บริการเช็คจอ</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-563" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-563 ใน Jira">🧩 Epic TKRD-563</a> · Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · ส่วนขยาย Chrome ค่าคอมสดจากเบราว์เซอร์ลูกค้า (PoC) — ติดตั้ง · เชื่อมต่อ</div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ Takra Radar (UAT) แล้วเข้าสู่ระบบด้วยบัญชี A ไปที่เมนู "ส่วนขยาย Chrome"</li><li>อ่านทุกข้อความบนหน้าก่อนกดอะไร</li><li>กด Ctrl+F (Mac: ⌘F) ค้นคำ cloud-box · cloudbox · มือถือ · โทรศัพท์ · คิว · phone ทีละคำ</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>หัวข้อ "เชื่อมต่อส่วนขยาย Chrome" · คำโปรย "เชื่อมบัญชี Takra Radar ของคุณกับส่วนขยายบน Chrome เพื่อดูค่าคอมสดบนหน้าสินค้า Shopee"</li><li>ข้อความ "เมื่อเชื่อมต่อแล้ว ค่าคอมของสินค้าที่คุณเปิดดู และรายงานค่าคอมของคุณ จะถูกส่งให้ Takra Radar…" ขึ้นก่อนปุ่ม "เชื่อมต่อ"</li><li>ค้นทั้ง 6 คำ ไม่เจอเลยสักคำ</li><li>เนื้อหาเต็มความกว้างของพื้นที่หลัก</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic TKRD-563 · เคสกลาง TC-EX.1-U01</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-22805" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-22805" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-22805" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-22805" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-22805" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-22805"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-22805" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-22805">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="m-ext" data-level="ui" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-EX-B.2</td>
+  <td class="ctitle">กด "เชื่อมต่อ" → "เชื่อมต่อแล้ว" · popup เป็นของ A · panel ขึ้นใต้รูปสินค้า <span class="kd kd-happy">Happy Path</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-22806"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-22806"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">กด "เชื่อมต่อ" → "เชื่อมต่อแล้ว" · popup เป็นของ A · panel ขึ้นใต้รูปสินค้า</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-563" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-563 ใน Jira">🧩 Epic TKRD-563</a> · Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · ส่วนขยาย Chrome ค่าคอมสดจากเบราว์เซอร์ลูกค้า (PoC) — ติดตั้ง · เชื่อมต่อ</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #d97706;background:rgba(217,119,6,.07)">📌 <b>หมายเหตุ:</b> คาดว่า FAIL ที่ Expected ข้อสุดท้าย: หน้าเว็บบอก "ค่าคอมจะขึ้นที่มุมขวาล่างของหน้า" แต่ panel ขึ้นใต้รูปสินค้า (ถ้าหาที่วางไม่เจอจะลอยมุมซ้ายล่าง) — บันทึกเป็นบั๊กข้อความ · คงการเชื่อมต่อไว้ใช้ต่อ</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>ติดตั้งส่วนขยายแล้ว (TC-EX-A.2) · popup ขึ้น "ยังไม่ได้เชื่อมต่อบัญชี Takra" (ถ้าเชื่อมไว้ กด "ยกเลิกการเชื่อมต่อ" ใน popup ก่อน)</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ Takra Radar (UAT) แล้วเข้าสู่ระบบด้วยบัญชี A ไปที่เมนู "ส่วนขยาย Chrome" กดรีเฟรช แล้วกด "เชื่อมต่อ" สังเกตปุ่มระหว่างรอ</li><li>กดไอคอน Takra Radar บนแถบเครื่องมือของ Chrome เพื่อเปิด popup</li><li>เปิดหน้าสินค้า P-OK บน Shopee ใน Chrome เดียวกัน แล้วสังเกตว่า panel ของส่วนขยายอยู่ตรงไหนของหน้า</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ระหว่างรอ ปุ่มเป็น "กำลังเชื่อมต่อ…" และกดซ้ำไม่ได้</li><li>ปุ่มถูกแทนด้วย "เชื่อมต่อแล้ว" + "กลับไปที่หน้าสินค้า Shopee ได้เลย…" + ปุ่ม "เชื่อมต่อใหม่" + "กดเชื่อมต่ออีกครั้งได้ทุกเมื่อ ส่วนขยายที่เชื่อมไว้ก่อนหน้าจะใช้ไม่ได้ทันที"</li><li>popup ขึ้น "เชื่อมต่อบัญชี Takra แล้ว"</li><li>panel อยู่ใต้รูปสินค้า เหนือส่วนข้อมูลร้าน (ตรงกับขั้น "เริ่มใช้งาน" ที่บอกว่า "…จะขึ้นใต้รูปสินค้า")</li><li>ข้อความหลังเชื่อมต่อบอกตำแหน่งตรงกับที่ panel ขึ้นจริง</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic TKRD-563 · เคสกลาง TC-EX.1-U02</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-22806" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-22806" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-22806" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-22806" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-22806" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-22806"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-22806" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-22806">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="m-ext" data-level="ui" data-prio="P1" data-kind="negative" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-EX-B.3</td>
+  <td class="ctitle">กดเชื่อมต่อบน Chrome ที่ปิดส่วนขยายไว้ → "ไม่พบส่วนขยายบน Chrome นี้…" <span class="kd kd-neg">Negative</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-22807"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-22807"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">กดเชื่อมต่อบน Chrome ที่ปิดส่วนขยายไว้ → "ไม่พบส่วนขยายบน Chrome นี้…"</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-563" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-563 ใน Jira">🧩 Epic TKRD-563</a> · Priority: <b>P1</b> · UI · ประเภท: <b>Negative</b> <span class="hint">(ข้อมูลผิด / action ผิด)</span> · ส่วนขยาย Chrome ค่าคอมสดจากเบราว์เซอร์ลูกค้า (PoC) — ติดตั้ง · เชื่อมต่อ</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #d97706;background:rgba(217,119,6,.07)">📌 <b>หมายเหตุ:</b> หลังเทส: เปิดสวิตช์ส่วนขยายคืน แล้วกด "เชื่อมต่อ" ใหม่</div></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>ที่ chrome://extensions ปิดสวิตช์ของการ์ด Takra Radar</li><li>เปิดเว็บ Takra Radar (UAT) แล้วเข้าสู่ระบบด้วยบัญชี A ไปที่เมนู "ส่วนขยาย Chrome" แล้วกด "เชื่อมต่อ"</li><li>สังเกตข้อความใต้ปุ่ม</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ขึ้น "ไม่พบส่วนขยายบน Chrome นี้ — ติดตั้งส่วนขยายก่อน แล้วกดเชื่อมต่ออีกครั้ง"</li><li>ไม่ขึ้น "เชื่อมต่อแล้ว"</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic TKRD-563 · เคสกลาง TC-EX.1-U03</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-22807" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-22807" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-22807" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-22807" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-22807" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-22807"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-22807" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-22807">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="m-ext" data-level="ui" data-prio="P1" data-kind="negative" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-EX-B.4</td>
+  <td class="ctitle">ยังไม่เข้าสู่ระบบเว็บ กด "เชื่อมต่อบัญชี Takra" ใน popup → เข้าสู่ระบบแล้วกลับมาหน้าเชื่อมต่อ <span class="kd kd-neg">Negative</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-22808"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-22808"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ยังไม่เข้าสู่ระบบเว็บ กด "เชื่อมต่อบัญชี Takra" ใน popup → เข้าสู่ระบบแล้วกลับมาหน้าเชื่อมต่อ</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-563" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-563 ใน Jira">🧩 Epic TKRD-563</a> · Priority: <b>P1</b> · UI · ประเภท: <b>Negative</b> <span class="hint">(ข้อมูลผิด / action ผิด)</span> · ส่วนขยาย Chrome ค่าคอมสดจากเบราว์เซอร์ลูกค้า (PoC) — ติดตั้ง · เชื่อมต่อ</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #d97706;background:rgba(217,119,6,.07)">📌 <b>หมายเหตุ:</b> คาดว่า FAIL ที่ Expected ข้อ 2: ตอนนี้ระบบจำหน้าที่ต้องกลับเฉพาะลิงก์สลิป หลังเข้าสู่ระบบจะไปหน้าหลักแทน — ถาม dev ว่าตั้งใจหรือไม่</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>popup ขึ้น "ยังไม่ได้เชื่อมต่อบัญชี Takra"</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ Takra Radar (UAT) แล้วออกจากระบบ</li><li>กดไอคอน Takra Radar บนแถบเครื่องมือของ Chrome เพื่อเปิด popup แล้วกด "เชื่อมต่อบัญชี Takra"</li><li>ในแท็บที่เปิดขึ้น เข้าสู่ระบบด้วยบัญชี A</li><li>สังเกตว่าหลังเข้าสู่ระบบอยู่หน้าไหน</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>กดปุ่มใน popup แล้วเปิดแท็บใหม่ไปหน้าเชื่อมต่อ แล้วถูกพาไปหน้าเข้าสู่ระบบ</li><li>เข้าสู่ระบบเสร็จ กลับมาที่หน้า "เชื่อมต่อส่วนขยาย Chrome"</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic TKRD-563 · เคสกลาง TC-EX.1-U04</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-22808" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-22808" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-22808" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-22808" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-22808" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-22808"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-22808" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-22808">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="m-ext" data-level="ui" data-prio="P1" data-kind="negative" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-EX-B.5</td>
+  <td class="ctitle">popup ตอนยังไม่เชื่อมต่อ → มีแค่สถานะ + ปุ่มเชื่อมต่อ · หน้าสินค้าไม่เปิดแท็บ affiliate <span class="kd kd-neg">Negative</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-22809"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-22809"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">popup ตอนยังไม่เชื่อมต่อ → มีแค่สถานะ + ปุ่มเชื่อมต่อ · หน้าสินค้าไม่เปิดแท็บ affiliate</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-563" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-563 ใน Jira">🧩 Epic TKRD-563</a> · Priority: <b>P1</b> · UI · ประเภท: <b>Negative</b> <span class="hint">(ข้อมูลผิด / action ผิด)</span> · ส่วนขยาย Chrome ค่าคอมสดจากเบราว์เซอร์ลูกค้า (PoC) — ติดตั้ง · เชื่อมต่อ</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #d97706;background:rgba(217,119,6,.07)">📌 <b>หมายเหตุ:</b> หลังเทส: เข้าสู่ระบบเว็บด้วยบัญชี A แล้วกด "เชื่อมต่อ" ที่เมนู "ส่วนขยาย Chrome" ให้ส่วนขยายกลับเป็นของ A</div></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>กดไอคอน Takra Radar บนแถบเครื่องมือของ Chrome เพื่อเปิด popup แล้วกด "ยกเลิกการเชื่อมต่อ" (ถ้าเชื่อมอยู่) แล้วเปิด popup อีกครั้ง</li><li>เปิดหน้าสินค้า P-OK บน Shopee ใน Chrome เดียวกัน แล้วดูแถบแท็บของ Chrome 30 วินาที</li><li>สังเกต popup และ panel</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>popup: "ยังไม่ได้เชื่อมต่อบัญชี Takra" + ปุ่ม "เชื่อมต่อบัญชี Takra" · ไม่มี "โควตาวันนี้" · ไม่มีส่วน "บนหน้าสินค้า" · ไม่มีปุ่ม "เช็คหลายสินค้า" และ "ยกเลิกการเชื่อมต่อ"</li><li>panel: "ยังไม่ได้เชื่อมต่อบัญชี Takra" + ปุ่ม "เชื่อมต่อบัญชี Takra"</li><li>ไม่มีแท็บ affiliate.shopee.co.th เปิดขึ้นมา</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic TKRD-563 · เคสกลาง TC-EX.1-U05</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-22809" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-22809" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-22809" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-22809" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-22809" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-22809"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-22809" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-22809">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="m-ext" data-level="ui" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-EX-B.6</td>
+  <td class="ctitle">popup ตอนเชื่อมต่อแล้ว → เวอร์ชัน · โควตาเช็คจอสด · ค่าตั้งต้น 3 ตัวเลือก · ปุ่มเช็คหลายสินค้า <span class="kd kd-happy">Happy Path</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-22810"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-22810"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">popup ตอนเชื่อมต่อแล้ว → เวอร์ชัน · โควตาเช็คจอสด · ค่าตั้งต้น 3 ตัวเลือก · ปุ่มเช็คหลายสินค้า</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-563" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-563 ใน Jira">🧩 Epic TKRD-563</a> · Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · ส่วนขยาย Chrome ค่าคอมสดจากเบราว์เซอร์ลูกค้า (PoC) — ติดตั้ง · เชื่อมต่อ</div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ Takra Radar (UAT) แล้วเข้าสู่ระบบด้วยบัญชี A ไปที่เมนู "แพ็กเกจ" จดเพดาน "เช็คจอสด" ต่อวันของแพ็กเกจ</li><li>ที่ chrome://extensions ลบส่วนขยายแล้วติดตั้งใหม่จาก zip (ล้างค่าที่เคยเลือก) แล้วกด "เชื่อมต่อ" ที่เมนู "ส่วนขยาย Chrome"</li><li>กดไอคอน Takra Radar บนแถบเครื่องมือของ Chrome เพื่อเปิด popup แล้วอ่านทุกส่วน</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>หัว popup: โลโก้ + "Takra Radar" + "0.4.36" · สถานะ "เชื่อมต่อบัญชี Takra แล้ว"</li><li>"โควตาวันนี้" มีหลอดเดียว "เช็คจอสด (แพ็กเกจ)" เพดานเท่ากับที่จดจากหน้าแพ็กเกจ · ใต้หลอด "เริ่มนับใหม่ทุกเที่ยงคืน"</li><li>"บนหน้าสินค้า": ค่าคอม = "สด" · เช็คจอ = "เมื่อกดปุ่ม" · ข้อมูล Takra = "อัตโนมัติ"</li><li>คำอธิบายใต้ตัวเลือก: "สด: ถาม Shopee ด้วยบัญชี affiliate ของคุณ อาจถูกจำกัดชั่วคราว · Takra Radar: ข้อมูลย้อนหลัง ไม่ใช้บัญชี affiliate" · "สินค้าละ 1 ครั้งของเช็คจอสด · เช็คซ้ำใน 10 นาทีไม่นับ" · "ข้อมูลสินค้า · จอ · วิดีโอ · กราฟราคา"</li><li>มีปุ่ม "เช็คหลายสินค้า" และลิงก์ "ยกเลิกการเชื่อมต่อ" · popup ไม่มีแถบเลื่อน</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic TKRD-563 · เคสกลาง TC-EX.1-U06</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-22810" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-22810" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-22810" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-22810" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-22810" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-22810"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-22810" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-22810">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="m-ext" data-level="ui" data-prio="P1" data-kind="data" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-EX-B.7</td>
+  <td class="ctitle">เชื่อมต่อใหม่ด้วยบัญชี B บน Chrome เดียวกัน → popup เป็นของ B ไม่ใช่ของ A <span class="kd kd-data">Data</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-22811"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-22811"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">เชื่อมต่อใหม่ด้วยบัญชี B บน Chrome เดียวกัน → popup เป็นของ B ไม่ใช่ของ A</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-563" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-563 ใน Jira">🧩 Epic TKRD-563</a> · Priority: <b>P1</b> · UI · ประเภท: <b>Data</b> <span class="hint">(empty · duplicate · ไม่ปนข้ามบัญชี)</span> · ส่วนขยาย Chrome ค่าคอมสดจากเบราว์เซอร์ลูกค้า (PoC) — ติดตั้ง · เชื่อมต่อ</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #d97706;background:rgba(217,119,6,.07)">📌 <b>หมายเหตุ:</b> หลังเทส: ออกจากระบบ B · เข้าสู่ระบบเว็บด้วยบัญชี A แล้วกด "เชื่อมต่อ" ที่เมนู "ส่วนขยาย Chrome" ให้ส่วนขยายกลับเป็นของ A</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>ส่วนขยายเชื่อมต่อด้วยบัญชี A แล้ว (popup ขึ้น "เชื่อมต่อบัญชี Takra แล้ว")</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>กดไอคอน Takra Radar บนแถบเครื่องมือของ Chrome เพื่อเปิด popup จดตัวเลขหลอด "เช็คจอสด (แพ็กเกจ)" ของ A</li><li>เปิดเว็บ Takra Radar (UAT) แล้วเข้าสู่ระบบด้วยบัญชี B ไปที่เมนู "ส่วนขยาย Chrome" (ออกจากระบบ A ก่อน) แล้วกด "เชื่อมต่อ"</li><li>กดไอคอน Takra Radar บนแถบเครื่องมือของ Chrome เพื่อเปิด popup แล้วเทียบหลอดกับที่จดไว้</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ขั้น 2 ขึ้น "เชื่อมต่อแล้ว"</li><li>popup ขึ้น "เชื่อมต่อบัญชี Takra แล้ว" และหลอดเช็คจอสดเป็นตัวเลขกับเพดานของ B (ไม่ใช่ของ A)</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic TKRD-563 · เคสกลาง TC-EX.1-U07</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-22811" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-22811" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-22811" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-22811" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-22811" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-22811"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-22811" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-22811">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="m-ext" data-level="e2e" data-prio="P0" data-kind="permission" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-EX-B.8</td>
+  <td class="ctitle">กด "ออกจากระบบเครื่องอื่น" → ส่วนขยายหลุดการเชื่อมต่อ · ออกจากระบบธรรมดายังเชื่อมอยู่ <span class="kd kd-perm">Permission</span></td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-22812"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-22812"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">กด "ออกจากระบบเครื่องอื่น" → ส่วนขยายหลุดการเชื่อมต่อ · ออกจากระบบธรรมดายังเชื่อมอยู่</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-563" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-563 ใน Jira">🧩 Epic TKRD-563</a> · Priority: <b>P0</b> · E2E · ประเภท: <b>Permission</b> <span class="hint">(role ไหนทำได้ / ทำไม่ได้)</span> · ส่วนขยาย Chrome ค่าคอมสดจากเบราว์เซอร์ลูกค้า (PoC) — ติดตั้ง · เชื่อมต่อ</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #d97706;background:rgba(217,119,6,.07)">📌 <b>หมายเหตุ:</b> หลังเทส: กด "เชื่อมต่อ" ที่เมนู "ส่วนขยาย Chrome" ใหม่ · การเชื่อมต่อหลุดเพราะออกจากระบบเครื่องอื่นเท่านั้น ไม่หลุดเพราะออกจากระบบธรรมดา</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>ส่วนขยายเชื่อมต่อด้วยบัญชี A แล้ว (popup ขึ้น "เชื่อมต่อบัญชี Takra แล้ว")</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ Takra Radar (UAT) แล้วเข้าสู่ระบบด้วยบัญชี A แล้วออกจากระบบ จากนั้นเข้าสู่ระบบด้วยบัญชี A ใหม่</li><li>กดไอคอน Takra Radar บนแถบเครื่องมือของ Chrome เพื่อเปิด popup แล้วเปิดหน้าสินค้า P-OK บน Shopee ใน Chrome เดียวกัน สังเกต popup และ panel</li><li>กลับไปเว็บ Takra Radar ไปที่เมนู "ตั้งค่า" การ์ด "ความปลอดภัยและอุปกรณ์" กด "ออกจากระบบเครื่องอื่น"</li><li>กดไอคอน Takra Radar บนแถบเครื่องมือของ Chrome เพื่อเปิด popup แล้วโหลดหน้าสินค้า P-OK ใหม่ · ดูแถบแท็บ 30 วินาที</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>หลังออกแล้วเข้าสู่ระบบใหม่: popup ยัง "เชื่อมต่อบัญชี Takra แล้ว" · panel ขึ้นค่าคอมตามปกติ</li><li>หลัง "ออกจากระบบเครื่องอื่น": popup "ยังไม่ได้เชื่อมต่อบัญชี Takra" + ปุ่ม "เชื่อมต่อบัญชี Takra"</li><li>panel "ยังไม่ได้เชื่อมต่อบัญชี Takra" · ไม่มีแท็บ affiliate เปิด</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic TKRD-563 · เคสกลาง TC-EX.1-F01</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-22812" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-22812" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-22812" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-22812" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-22812" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-22812"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-22812" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-22812">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="featrow" data-featkey="ex-commission"><td colspan="7">📁 C · ค่าคอมบนหน้าสินค้า <span class="rp"><span class="lv lvl-ui">🌐 7</span> <span class="lv lvl-e2e">🔄 1</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="ex-commission"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow" data-feat="m-ext" data-level="ui" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-EX-C.1</td>
+  <td class="ctitle">ค่าคอมสดแยกช่องทาง ตรงกับหน้า affiliate ของ Shopee ทั้ง 5 สินค้า <span class="kd kd-happy">Happy Path</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-22813"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-22813"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ค่าคอมสดแยกช่องทาง ตรงกับหน้า affiliate ของ Shopee ทั้ง 5 สินค้า</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-563" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-563 ใน Jira">🧩 Epic TKRD-563</a> · Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · ส่วนขยาย Chrome ค่าคอมสดจากเบราว์เซอร์ลูกค้า (PoC) — ติดตั้ง · เชื่อมต่อ</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>ส่วนขยายเชื่อมต่อด้วยบัญชี A แล้ว (popup ขึ้น "เชื่อมต่อบัญชี Takra แล้ว")</li><li>popup ตั้ง ค่าคอม = "สด" (ค่าตั้งต้น)</li><li>บัญชี affiliate เข้าสู่ระบบอยู่</li></ul></div>
+  <div class="sec"><h4>Test Data</h4><ul><li>P-OK + สินค้ามีค่าคอมอีก 4 ตัว (จดลิงก์)</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดหน้าสินค้า P-OK บน Shopee ใน Chrome เดียวกัน รอ panel ขึ้น (ไม่เกิน 20 วินาที) แล้วดูแถบแท็บระหว่างรอ</li><li>เปิดแท็บใหม่ https://affiliate.shopee.co.th/offer/product_offer/&lt;itemId ของ P-OK&gt; แล้วเทียบตัวเลขกับ panel</li><li>ทำซ้ำกับสินค้ามีค่าคอมอีก 4 ตัว (เว้น 1 นาทีระหว่างตัว)</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ระหว่างรอ panel ขึ้น "กำลังดึงค่าคอม…"</li><li>ตารางหัวคอลัมน์ "ประเภทช่องทาง" · "ค่าคอมร้านค้า" · "ค่าคอมช้อปปี้" · "รวมโดยประมาณ" · แถว "โซเชียลมีเดีย (สายแปะลิ้งค์)" · "ช้อปปี้ไลฟ์" · "ช้อปปี้วีดีโอ" (เฉพาะช่องทางที่ Shopee มีให้)</li><li>ทุกช่อง % และ ฿ (ทศนิยม 2 ตำแหน่ง) เท่ากับหน้า affiliate ของสินค้าเดียวกัน ทั้ง 5 ตัว</li><li>บรรทัด "ข้อมูล ณ HH:MM" เป็นเวลาไทยตอนดึง</li><li>ระหว่างดึงมีแท็บ affiliate เปิดแบบไม่แย่งหน้าจอแล้วปิดเอง · เปิดพร้อมกันไม่เกิน 3 แท็บ</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic TKRD-563 · เคสกลาง TC-EX.3-U01</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-22813" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-22813" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-22813" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-22813" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-22813" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-22813"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-22813" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-22813">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="m-ext" data-level="ui" data-prio="P2" data-kind="boundary" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-EX-C.2</td>
+  <td class="ctitle">เปิดสินค้าเดิมซ้ำใน 10 นาที → ใช้ค่าเดิม ไม่เปิดแท็บ affiliate · เกิน 10 นาทีดึงใหม่ <span class="kd kd-bnd">Boundary</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p2">P2</span></td>
+  <td class="status" data-uid="tc-22814"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-22814"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">เปิดสินค้าเดิมซ้ำใน 10 นาที → ใช้ค่าเดิม ไม่เปิดแท็บ affiliate · เกิน 10 นาทีดึงใหม่</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-563" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-563 ใน Jira">🧩 Epic TKRD-563</a> · Priority: <b>P2</b> · UI · ประเภท: <b>Boundary</b> <span class="hint">(min · max · ก่อนขอบ · ตรงขอบ · เกินขอบ)</span> · ส่วนขยาย Chrome ค่าคอมสดจากเบราว์เซอร์ลูกค้า (PoC) — ติดตั้ง · เชื่อมต่อ</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>ส่วนขยายเชื่อมต่อด้วยบัญชี A แล้ว (popup ขึ้น "เชื่อมต่อบัญชี Takra แล้ว")</li><li>popup ตั้ง ค่าคอม = "สด" (ค่าตั้งต้น)</li><li>บัญชี affiliate เข้าสู่ระบบอยู่</li><li>P-OK ไม่ได้เปิดในช่วง 10 นาทีที่ผ่านมา</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดหน้าสินค้า P-OK บน Shopee ใน Chrome เดียวกัน รอค่าคอมขึ้น แล้วจดเวลา "ข้อมูล ณ"</li><li>ปิดแท็บ P-OK แล้วเปิดใหม่ทันที · ดูแถบแท็บ</li><li>รอให้ครบ 11 นาทีนับจากขั้น 1 แล้วเปิด P-OK อีกครั้ง · ดูแถบแท็บ</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ขั้น 2: ตารางค่าคอมขึ้น · "ข้อมูล ณ" เป็นเวลาเดิมจากขั้น 1 · ไม่มีแท็บ affiliate เปิด</li><li>ขั้น 3: มีแท็บ affiliate เปิดแล้วปิด · "ข้อมูล ณ" เป็นเวลาใหม่</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic TKRD-563 · เคสกลาง TC-EX.3-U02</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-22814" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-22814" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-22814" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-22814" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-22814" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-22814"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-22814" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-22814">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="m-ext" data-level="ui" data-prio="P0" data-kind="negative" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-EX-C.3</td>
+  <td class="ctitle">ไม่ได้เข้าสู่ระบบ affiliate → การ์ดเตือน + ค่าคอมของ Takra · เข้าแล้วกด "ลองใหม่" ค่าสดขึ้นแทน <span class="kd kd-neg">Negative</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-22815"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-22815"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ไม่ได้เข้าสู่ระบบ affiliate → การ์ดเตือน + ค่าคอมของ Takra · เข้าแล้วกด "ลองใหม่" ค่าสดขึ้นแทน</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-563" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-563 ใน Jira">🧩 Epic TKRD-563</a> · Priority: <b>P0</b> · UI · ประเภท: <b>Negative</b> <span class="hint">(ข้อมูลผิด / action ผิด)</span> · ส่วนขยาย Chrome ค่าคอมสดจากเบราว์เซอร์ลูกค้า (PoC) — ติดตั้ง · เชื่อมต่อ</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #d97706;background:rgba(217,119,6,.07)">📌 <b>หมายเหตุ:</b> จบแล้วคงการเข้าสู่ระบบ affiliate ไว้</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>ส่วนขยายเชื่อมต่อด้วยบัญชี A แล้ว (popup ขึ้น "เชื่อมต่อบัญชี Takra แล้ว")</li><li>popup ตั้ง ค่าคอม = "สด" (ค่าตั้งต้น)</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิด affiliate.shopee.co.th แล้วออกจากระบบ</li><li>เปิดหน้าสินค้า P-OK บน Shopee ใน Chrome เดียวกัน แล้วอ่าน panel</li><li>ภายใน 10 นาที เปิดหน้าสินค้ามีค่าคอมอีกตัว · ดูแถบแท็บ</li><li>เปิดแท็บใหม่ เข้าสู่ระบบ affiliate.shopee.co.th แล้วกลับมาแท็บ P-OK กด "ลองใหม่"</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>การ์ดสีเหลืองหัว "ยังไม่ได้เข้าสู่ระบบ Shopee affiliate" · "เข้าสู่ระบบ Shopee affiliate แล้วกด ลองใหม่ เพื่อดูค่าคอมสดจากบัญชีของคุณ" · ปุ่ม "ลองใหม่" แล้วตามด้วย "เปิด Shopee affiliate"</li><li>ใต้การ์ดมีตารางค่าคอมของ Takra หัว "ระหว่างนี้ · ค่าคอมจาก Takra Radar" + "ข้อมูล Takra ณ … · ไม่ใช่ค่าคอมสดจากบัญชีของคุณ" หน้าตาเดียวกับตารางค่าคอมสด</li><li>สินค้าตัวที่สอง: การ์ดเดียวกันขึ้นทันที ไม่มีแท็บ affiliate เปิด</li><li>กด "ลองใหม่" แล้วตารางค่าคอมสด + "ข้อมูล ณ HH:MM" ขึ้นแทนการ์ด โดยไม่ต้องโหลดหน้า</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic TKRD-563 · เคสกลาง TC-EX.3-U03</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-22815" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-22815" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-22815" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-22815" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-22815" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-22815"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-22815" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-22815">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="m-ext" data-level="ui" data-prio="P1" data-kind="exception" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-EX-C.4</td>
+  <td class="ctitle">Shopee จำกัดการใช้งาน / ดึงไม่สำเร็จ → การ์ดตามสาเหตุ · "ลองใหม่" · พัก 1 ชั่วโมง <span class="kd kd-exc">Exception</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-22816"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-22816"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">Shopee จำกัดการใช้งาน / ดึงไม่สำเร็จ → การ์ดตามสาเหตุ · "ลองใหม่" · พัก 1 ชั่วโมง</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-563" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-563 ใน Jira">🧩 Epic TKRD-563</a> · Priority: <b>P1</b> · UI · ประเภท: <b>Exception</b> <span class="hint">(เน็ตหลุด · ระบบภายนอกผิดปกติ · timeout · หยุดกลางทาง)</span> · ส่วนขยาย Chrome ค่าคอมสดจากเบราว์เซอร์ลูกค้า (PoC) — ติดตั้ง · เชื่อมต่อ</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #d97706;background:rgba(217,119,6,.07)">📌 <b>หมายเหตุ:</b> รันเมื่อเกิดเองเท่านั้น ห้ามเปิดสินค้าถี่เพื่อให้โดน · ทั้งรอบไม่เกิด = BLOCKED · จดเวลาและจำนวนสินค้าก่อนโดนลง Actual</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>ส่วนขยายเชื่อมต่อด้วยบัญชี A แล้ว (popup ขึ้น "เชื่อมต่อบัญชี Takra แล้ว")</li><li>popup ตั้ง ค่าคอม = "สด" (ค่าตั้งต้น)</li><li>บัญชี affiliate เข้าสู่ระบบอยู่</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>ระหว่างรันเคสอื่นของรอบ ถ้า panel ขึ้นการ์ด "Shopee จำกัดการใช้งานชั่วคราว" หรือ "ดึงค่าคอมสดไม่สำเร็จ" ให้จดหัวการ์ดและแคปจอ</li><li>ดูแถบแท็บว่าหน้า Shopee ถูกเปิดไว้หน้าสุดกี่แท็บ</li><li>ก่อนกด "ลองใหม่" เปิดหน้าสินค้าอื่นอีกตัว แล้วสังเกต panel</li><li>ทำตามที่หน้า Shopee ขอ (มี captcha ให้ยืนยันเอง) แล้วกลับมากด "ลองใหม่" บน panel</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>หัวการ์ดตรงสาเหตุ: โดนจำกัด → ไอคอนโล่ + "Shopee จำกัดการใช้งานชั่วคราว" + "เปิดหน้า Shopee affiliate ให้แล้ว ถ้ามี captcha ให้ยืนยันให้เสร็จ แล้วกด ลองใหม่" · หมดเวลา → "ดึงค่าคอมสดไม่สำเร็จ" + "ตรวจว่าเข้าสู่ระบบ Shopee affiliate อยู่…" · ผิดพลาดอื่น → "ดึงค่าคอมสดไม่สำเร็จ" + "ลองใหม่อีกครั้ง หรือเปิดหน้า Shopee affiliate ดูว่ายังใช้งานได้"</li><li>ทุกการ์ดมีปุ่ม "ลองใหม่" และ "เปิด Shopee affiliate" + ตารางค่าคอมของ Takra หัว "ระหว่างนี้ · ค่าคอมจาก Takra Radar" + "ข้อมูล Takra ณ … · ไม่ใช่ค่าคอมสดจากบัญชีของคุณ"</li><li>โดนจำกัด: หน้า Shopee อยู่หน้าสุด 1 แท็บ · แท็บซ่อนอื่นถูกปิด</li><li>สินค้าตัวถัดไป (ก่อนครบ 1 ชั่วโมง) ขึ้นการ์ดโดนจำกัดทันที ไม่เปิดแท็บซ่อน</li><li>กด "ลองใหม่" แล้วผ่าน → ตารางค่าคอมสดขึ้นแทนการ์ด · ยังโดนอยู่ → การ์ดเดิมกลับมาและเปิดหน้า Shopee ให้อีกครั้ง</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic TKRD-563 · เคสกลาง TC-EX.3-U04</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-22816" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-22816" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-22816" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-22816" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-22816" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-22816"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-22816" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-22816">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="m-ext" data-level="ui" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-EX-C.5</td>
+  <td class="ctitle">เลือกค่าคอม "Takra Radar" ใน popup → panel แสดงค่าคอมย้อนหลังของ Takra · ไม่ถาม Shopee <span class="kd kd-happy">Happy Path</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-22817"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-22817"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">เลือกค่าคอม "Takra Radar" ใน popup → panel แสดงค่าคอมย้อนหลังของ Takra · ไม่ถาม Shopee</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-563" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-563 ใน Jira">🧩 Epic TKRD-563</a> · Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · ส่วนขยาย Chrome ค่าคอมสดจากเบราว์เซอร์ลูกค้า (PoC) — ติดตั้ง · เชื่อมต่อ</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #d97706;background:rgba(217,119,6,.07)">📌 <b>หมายเหตุ:</b> หลังเทส: popup เลือก ค่าคอม = "สด" คืน</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>ส่วนขยายเชื่อมต่อด้วยบัญชี A แล้ว (popup ขึ้น "เชื่อมต่อบัญชี Takra แล้ว")</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>กดไอคอน Takra Radar บนแถบเครื่องมือของ Chrome เพื่อเปิด popup เลือก ค่าคอม = "Takra Radar"</li><li>เปิดหน้าสินค้า P-OK บน Shopee ใน Chrome เดียวกัน แล้วดูแถบแท็บ 30 วินาที</li><li>เปิดเว็บ Takra Radar (UAT) แล้วเข้าสู่ระบบด้วยบัญชี A ไปที่เมนู "ค้นหา" ค้นสินค้า P-OK แล้วเทียบค่าคอมกับ panel</li><li>เปิดหน้าสินค้า P-NEW บน Shopee ใน Chrome เดียวกัน แล้วอ่าน panel</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>P-OK: หัว "ค่าคอมจาก Takra Radar (ข้อมูลย้อนหลัง)" เป็นตารางหน้าตาเดียวกับค่าคอมสด + วันที่ของข้อมูล + "เปลี่ยนเป็นค่าคอมสดจาก Shopee affiliate ได้ที่ไอคอน Takra Radar มุมขวาบนของ Chrome"</li><li>ไม่มีแท็บ affiliate.shopee.co.th เปิดเลย · ไม่มีการ์ดสีเหลือง · ไม่มีปุ่ม "ลองใหม่"</li><li>ค่าในตารางเท่ากับค่าคอมของสินค้าเดียวกันในหน้า "ค้นหา"</li><li>P-NEW: "Takra Radar ยังไม่มีข้อมูลค่าคอมของสินค้านี้"</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic TKRD-563 · เคสกลาง TC-EX.3-U05</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-22817" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-22817" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-22817" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-22817" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-22817" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-22817"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-22817" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-22817">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="m-ext" data-level="ui" data-prio="P1" data-kind="data" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-EX-C.6</td>
+  <td class="ctitle">ลิงก์สินค้าที่ขายผ่านร้านอื่น (มี vItemId / vShopId) → panel ขึ้นด้วยข้อมูลของสินค้าจริง <span class="kd kd-data">Data</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-22818"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-22818"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ลิงก์สินค้าที่ขายผ่านร้านอื่น (มี vItemId / vShopId) → panel ขึ้นด้วยข้อมูลของสินค้าจริง</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-563" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-563 ใน Jira">🧩 Epic TKRD-563</a> · Priority: <b>P1</b> · UI · ประเภท: <b>Data</b> <span class="hint">(empty · duplicate · ไม่ปนข้ามบัญชี)</span> · ส่วนขยาย Chrome ค่าคอมสดจากเบราว์เซอร์ลูกค้า (PoC) — ติดตั้ง · เชื่อมต่อ</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>ส่วนขยายเชื่อมต่อด้วยบัญชี A แล้ว (popup ขึ้น "เชื่อมต่อบัญชี Takra แล้ว")</li><li>popup ตั้ง ค่าคอม = "สด" (ค่าตั้งต้น)</li><li>บัญชี affiliate เข้าสู่ระบบอยู่</li></ul></div>
+  <div class="sec"><h4>Test Data</h4><ul><li>ตัวอย่างรูปแบบ: …-i.232316639.22582124470?…&amp;vItemId=44472650386&amp;vShopId=1449018616</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดลิงก์ P-VSKU ใน Chrome เดียวกัน แล้วรอ panel</li><li>เปิดหน้า https://shopee.co.th/product/&lt;shop&gt;/&lt;item&gt; ของสินค้าจริง (ตัวเลข i.&lt;shop&gt;.&lt;item&gt; ในลิงก์ P-VSKU)</li><li>เทียบ panel ของทั้งสองหน้า</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>หน้า P-VSKU มี panel ขึ้น</li><li>ตารางค่าคอมและ "ข้อมูลสินค้า" ของ P-VSKU เท่ากับของสินค้าจริง</li><li>ชื่อร้านมาจากร้านที่ขายแทน · ไม่แสดงยอดผู้ติดตามร้าน</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic TKRD-563 · เคสกลาง TC-EX.3-U06</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-22818" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-22818" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-22818" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-22818" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-22818" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-22818"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-22818" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-22818">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="m-ext" data-level="ui" data-prio="P2" data-kind="data" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-EX-C.7</td>
+  <td class="ctitle">สินค้าที่ค่าคอม 0% ทุกช่องทาง → ตารางยังอยู่ + บอกว่ายังไม่มีค่าคอม <span class="kd kd-data">Data</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p2">P2</span></td>
+  <td class="status" data-uid="tc-22819"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-22819"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">สินค้าที่ค่าคอม 0% ทุกช่องทาง → ตารางยังอยู่ + บอกว่ายังไม่มีค่าคอม</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-563" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-563 ใน Jira">🧩 Epic TKRD-563</a> · Priority: <b>P2</b> · UI · ประเภท: <b>Data</b> <span class="hint">(empty · duplicate · ไม่ปนข้ามบัญชี)</span> · ส่วนขยาย Chrome ค่าคอมสดจากเบราว์เซอร์ลูกค้า (PoC) — ติดตั้ง · เชื่อมต่อ</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #d97706;background:rgba(217,119,6,.07)">📌 <b>หมายเหตุ:</b> หาสินค้า 0% ไม่ได้ในรอบนั้น = BLOCKED</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>ส่วนขยายเชื่อมต่อด้วยบัญชี A แล้ว (popup ขึ้น "เชื่อมต่อบัญชี Takra แล้ว")</li><li>popup ตั้ง ค่าคอม = "สด" (ค่าตั้งต้น)</li><li>บัญชี affiliate เข้าสู่ระบบอยู่</li></ul></div>
+  <div class="sec"><h4>Test Data</h4><ul><li>ตัวอย่างที่เจ้าของเจอ 8 พ.ย.: สินค้าทอง itemid 58106911038</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดหน้าสินค้า สินค้าที่หน้า affiliate แสดง 0% ทุกช่องทาง บน Shopee ใน Chrome เดียวกัน แล้วอ่าน panel</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>บรรทัด "สินค้านี้ยังไม่มีค่าคอมในทุกช่องทาง" อยู่เหนือตาราง</li><li>ตารางยังแสดงทุกช่องทางเป็น 0% และ ฿0.00</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic TKRD-563 · เคสกลาง TC-EX.3-U07</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-22819" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-22819" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-22819" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-22819" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-22819" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-22819"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-22819" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-22819">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="m-ext" data-level="e2e" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-EX-C.8</td>
+  <td class="ctitle">เปิดสินค้า 5 ตัว → ค่าคอมสดตรงหน้า affiliate → จดว่าข้อมูลของ Takra เก่า/ผิดกี่ตัว <span class="kd kd-happy">Happy Path</span></td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-22820"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-22820"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">เปิดสินค้า 5 ตัว → ค่าคอมสดตรงหน้า affiliate → จดว่าข้อมูลของ Takra เก่า/ผิดกี่ตัว</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-563" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-563 ใน Jira">🧩 Epic TKRD-563</a> · Priority: <b>P0</b> · E2E · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · ส่วนขยาย Chrome ค่าคอมสดจากเบราว์เซอร์ลูกค้า (PoC) — ติดตั้ง · เชื่อมต่อ</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #d97706;background:rgba(217,119,6,.07)">📌 <b>หมายเหตุ:</b> ตัวเลขนี้ใช้ตอบโจทย์ "ค่าคอมใน Takra อัปเดตช้า" (Phase 3) · แถวในฐานข้อมูลให้ dev ตรวจตามเคสกลาง</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>ส่วนขยายเชื่อมต่อด้วยบัญชี A แล้ว (popup ขึ้น "เชื่อมต่อบัญชี Takra แล้ว")</li><li>popup ตั้ง ค่าคอม = "สด" (ค่าตั้งต้น)</li><li>บัญชี affiliate เข้าสู่ระบบอยู่</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ Takra Radar (UAT) แล้วเข้าสู่ระบบด้วยบัญชี A ไปที่เมนู "ค้นหา" เลือกสินค้า 5 ตัว จดลิงก์ ค่าคอม และวันที่ข้อมูลที่หน้าค้นหาแสดง</li><li>เปิดหน้าสินค้าทีละตัวใน Chrome เดียวกัน เว้น 1 นาที แล้วแคป panel</li><li>เปิด https://affiliate.shopee.co.th/offer/product_offer/&lt;itemId&gt; ของแต่ละตัว แคปเทียบ</li><li>สรุปลง Actual เป็นตาราง: สินค้า · ค่าคอมของ Takra · วันที่ข้อมูล · ค่าคอมสด · ต่างกันกี่ %</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ค่าคอมทุกช่องทางบน panel เท่ากับหน้า affiliate ทั้ง 5 ตัว</li><li>panel ทุกตัวมี "ข้อมูล ณ HH:MM" ตรงเวลาที่เปิด</li><li>Actual มีตารางครบ 5 แถว และจำนวนตัวที่ข้อมูลของ Takra เก่าหรือผิด</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic TKRD-563 · เคสกลาง TC-EX.3-F01</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-22820" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-22820" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-22820" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-22820" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-22820" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-22820"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-22820" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-22820">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="featrow" data-featkey="ex-takra"><td colspan="7">📁 D · ข้อมูล Takra และเช็คจอบนหน้าสินค้า <span class="rp"><span class="lv lvl-ui">🌐 7</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="ex-takra"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow" data-feat="m-ext" data-level="ui" data-prio="P1" data-kind="happy" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-EX-D.1</td>
+  <td class="ctitle">ข้อมูล Takra "อัตโนมัติ" → ข้อมูลสินค้า · จอ · วิดีโอ · ราคาย้อนหลัง · โควตาอยู่ท้ายสุด <span class="kd kd-happy">Happy Path</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-22821"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-22821"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ข้อมูล Takra "อัตโนมัติ" → ข้อมูลสินค้า · จอ · วิดีโอ · ราคาย้อนหลัง · โควตาอยู่ท้ายสุด</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-563" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-563 ใน Jira">🧩 Epic TKRD-563</a> · Priority: <b>P1</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · ส่วนขยาย Chrome ค่าคอมสดจากเบราว์เซอร์ลูกค้า (PoC) — ติดตั้ง · เชื่อมต่อ</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>ส่วนขยายเชื่อมต่อด้วยบัญชี A แล้ว (popup ขึ้น "เชื่อมต่อบัญชี Takra แล้ว")</li><li>popup ตั้ง ข้อมูล Takra = "อัตโนมัติ" · เช็คจอ = "เมื่อกดปุ่ม" (ค่าตั้งต้น)</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดหน้าสินค้า P-OK บน Shopee ใน Chrome เดียวกัน แล้วเลื่อนอ่าน panel ทั้งหมด</li><li>เปิดเว็บ Takra Radar (UAT) แล้วเข้าสู่ระบบด้วยบัญชี A ไปที่เมนู "ค้นหา" ค้นสินค้า P-OK เปิดรายละเอียดสินค้า แล้วเทียบกับ panel</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ระหว่างโหลด "กำลังโหลดข้อมูลจาก Takra Radar…"</li><li>"ข้อมูลสินค้า": ชื่อร้านเป็นหัวการ์ด และ Mall / ร้านแนะนำดีเยี่ยม / ร้านแนะนำ เป็นป้าย · บอกที่มา "ยอดขายและสต็อกจาก Shopee affiliate" · "ราคา คะแนน และร้านจากหน้านี้" · "ที่เหลือจากข้อมูลของ Takra Radar"</li><li>"จอที่ขึ้นอยู่" แสดงทุกจอ (ไม่พับ) หรือ "ยังไม่มีใครไลฟ์ขายสินค้านี้" · ใต้ส่วนจอมีปุ่ม "เช็คจอตอนนี้" + "กดเช็คจอตอนนี้ เพื่อดูว่าสินค้านี้ขึ้นอยู่ในไลฟ์ไหน อันดับเท่าไหร่" + "ตั้งให้เช็คจอเองทุกครั้งที่เปิดหน้าสินค้าได้ที่ไอคอน Takra Radar…"</li><li>"วิดีโอ (n)" พับเมื่อเกิน 8 รายการ หรือ "ยังไม่พบวิดีโอที่ขายสินค้านี้"</li><li>กราฟ "ราคาย้อนหลัง n วันที่มีข้อมูล" วันที่ไม่มีข้อมูลเป็นช่องว่าง ไม่ลากเส้นข้าม</li><li>"โควตาวันนี้" อยู่ท้ายสุดของ panel มีหลอด "เช็คจอสด (แพ็กเกจ)"</li><li>ราคา ร้าน และจำนวนจอตรงกับรายละเอียดสินค้าบนเว็บ</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic TKRD-563 · เคสกลาง TC-EX.4-U01</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-22821" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-22821" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-22821" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-22821" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-22821" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-22821"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-22821" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-22821">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="m-ext" data-level="ui" data-prio="P2" data-kind="happy" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-EX-D.2</td>
+  <td class="ctitle">ข้อมูล Takra "เมื่อกดปุ่ม" → ไม่โหลดจนกด "ดูข้อมูลจาก Takra Radar" <span class="kd kd-happy">Happy Path</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p2">P2</span></td>
+  <td class="status" data-uid="tc-22822"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-22822"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ข้อมูล Takra "เมื่อกดปุ่ม" → ไม่โหลดจนกด "ดูข้อมูลจาก Takra Radar"</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-563" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-563 ใน Jira">🧩 Epic TKRD-563</a> · Priority: <b>P2</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · ส่วนขยาย Chrome ค่าคอมสดจากเบราว์เซอร์ลูกค้า (PoC) — ติดตั้ง · เชื่อมต่อ</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #d97706;background:rgba(217,119,6,.07)">📌 <b>หมายเหตุ:</b> หลังเทส: popup เลือก ข้อมูล Takra = "อัตโนมัติ" คืน</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>ส่วนขยายเชื่อมต่อด้วยบัญชี A แล้ว (popup ขึ้น "เชื่อมต่อบัญชี Takra แล้ว")</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>กดไอคอน Takra Radar บนแถบเครื่องมือของ Chrome เพื่อเปิด popup เลือก ข้อมูล Takra = "เมื่อกดปุ่ม"</li><li>เปิดหน้าสินค้า P-OK บน Shopee ใน Chrome เดียวกัน แล้วอ่าน panel</li><li>กด "ดูข้อมูลจาก Takra Radar"</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ก่อนกด: มีปุ่ม "ดูข้อมูลจาก Takra Radar" · ไม่มีส่วนข้อมูลสินค้า จอ วิดีโอ ราคาย้อนหลัง</li><li>กดแล้ว: ส่วนต่าง ๆ ขึ้นเหมือนเคส TC-EX-D.1</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic TKRD-563 · เคสกลาง TC-EX.4-U02</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-22822" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-22822" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-22822" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-22822" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-22822" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-22822"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-22822" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-22822">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="m-ext" data-level="ui" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-EX-D.3</td>
+  <td class="ctitle">กด "เช็คจอตอนนี้" → ผลสด · หักโควตา 1 · เช็คซ้ำใน 10 นาทีไม่หัก <span class="kd kd-happy">Happy Path</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-22823"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-22823"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">กด "เช็คจอตอนนี้" → ผลสด · หักโควตา 1 · เช็คซ้ำใน 10 นาทีไม่หัก</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-563" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-563 ใน Jira">🧩 Epic TKRD-563</a> · Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · ส่วนขยาย Chrome ค่าคอมสดจากเบราว์เซอร์ลูกค้า (PoC) — ติดตั้ง · เชื่อมต่อ</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #d97706;background:rgba(217,119,6,.07)">📌 <b>หมายเหตุ:</b> ใช้โควตาเช็คจอสด 1 ครั้ง (คืนไม่ได้ · เริ่มนับใหม่เที่ยงคืน) · ผลนี้ใช้ต่อใน D.4</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>ส่วนขยายเชื่อมต่อด้วยบัญชี A แล้ว (popup ขึ้น "เชื่อมต่อบัญชี Takra แล้ว")</li><li>popup ตั้ง ข้อมูล Takra = "อัตโนมัติ" · เช็คจอ = "เมื่อกดปุ่ม" (ค่าตั้งต้น)</li><li>P-LIVE ไม่ได้เช็คจอใน 10 นาทีที่ผ่านมา</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>กดไอคอน Takra Radar บนแถบเครื่องมือของ Chrome เพื่อเปิด popup จดตัวเลขหลอด "เช็คจอสด (แพ็กเกจ)"</li><li>เปิดหน้าสินค้า P-LIVE บน Shopee ใน Chrome เดียวกัน กด "เช็คจอตอนนี้" แล้วรอผล (ไม่เกิน 2 นาที)</li><li>กดไอคอน Takra Radar บนแถบเครื่องมือของ Chrome เพื่อเปิด popup ดูหลอดอีกครั้ง</li><li>ภายใน 10 นาที กด "เช็คอีกครั้ง" บน panel แล้วเปิด popup ดูหลอด</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ระหว่างเช็ค: "กำลังดูว่าสินค้านี้ขึ้นอยู่ในไลฟ์ไหน อันดับเท่าไหร่" + เวลาโดยประมาณ ("อีกราว … วิ" หรือ "อีกราว … นาที") · ไม่บอกลำดับคิว</li><li>ผล: หัว "จอที่ขึ้นอยู่ (n)" · แต่ละแถว "อันดับ n" + ป้ายคะแนนร้าน · Mall/ร้านแนะนำ · SCORE · CTR · CVR (หรือ "ยังไม่มีใครไลฟ์ขายสินค้านี้") · บรรทัด "เช็คสดเมื่อ HH:MM" · ปุ่ม "เช็คอีกครั้ง"</li><li>หลอดเช็คจอสดเพิ่ม 1 จากที่จด</li><li>เช็คซ้ำได้ผลอีกครั้ง หลอดไม่เพิ่ม</li><li>หลังเช็คแล้วไม่มีคำแนะนำ "ตั้งให้เช็คจอเองทุกครั้ง…"</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic TKRD-563 · เคสกลาง TC-EX.4-U03</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-22823" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-22823" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-22823" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-22823" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-22823" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-22823"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-22823" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-22823">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="m-ext" data-level="ui" data-prio="P1" data-kind="happy" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-EX-D.4</td>
+  <td class="ctitle">เล่นไลฟ์ใน panel → LIVE · เต็มจอ · หยุดเล่น · "ดูไลฟ์บน Shopee ↗" · ไลฟ์จบบอกให้ไปดูบน Shopee <span class="kd kd-happy">Happy Path</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-22824"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-22824"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">เล่นไลฟ์ใน panel → LIVE · เต็มจอ · หยุดเล่น · "ดูไลฟ์บน Shopee ↗" · ไลฟ์จบบอกให้ไปดูบน Shopee</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-563" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-563 ใน Jira">🧩 Epic TKRD-563</a> · Priority: <b>P1</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · ส่วนขยาย Chrome ค่าคอมสดจากเบราว์เซอร์ลูกค้า (PoC) — ติดตั้ง · เชื่อมต่อ</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>ส่วนขยายเชื่อมต่อด้วยบัญชี A แล้ว (popup ขึ้น "เชื่อมต่อบัญชี Takra แล้ว")</li><li>P-LIVE มีผลเช็คจออย่างน้อย 1 จอ (เคส TC-EX-D.3)</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดหน้าสินค้า P-LIVE บน Shopee ใน Chrome เดียวกัน กด "เช็คจอตอนนี้" (ถ้ายังไม่มีผล) แล้วกด ▶ บนจอแรก</li><li>กดปุ่มเต็มจอ แล้วกด Esc · กดหยุดเล่น</li><li>กด "ดูไลฟ์บน Shopee ↗"</li><li>รอจนไลฟ์นั้นจบ (หรือใช้จอที่ข้อมูลเก่าแล้ว) แล้วกด ▶ อีกครั้ง</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ไม่เล่นเองก่อนกด · กดแล้วเล่นในหน้า ปิดเสียง · แถบล่างของจอมี LIVE · เต็มจอ · หยุดเล่น (ไม่มีแถบควบคุมของ Chrome)</li><li>เข้า/ออกเต็มจอได้ · กดหยุดแล้วจอหยุด</li><li>เปิดแท็บใหม่ไปหน้าไลฟ์บน live.shopee.co.th</li><li>ไลฟ์จบหรือลิงก์หมดอายุ: "เล่นในหน้านี้ไม่ได้ หรือไลฟ์จบแล้ว · กดดูไลฟ์บน Shopee แทน"</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic TKRD-563 · เคสกลาง TC-EX.4-U04</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-22824" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-22824" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-22824" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-22824" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-22824" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-22824"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-22824" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-22824">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="m-ext" data-level="ui" data-prio="P1" data-kind="happy" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-EX-D.5</td>
+  <td class="ctitle">เช็คจอ "อัตโนมัติ" → เปิดหน้าแล้วเริ่มเช็คเอง · หักโควตาสินค้าละ 1 <span class="kd kd-happy">Happy Path</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-22825"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-22825"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">เช็คจอ "อัตโนมัติ" → เปิดหน้าแล้วเริ่มเช็คเอง · หักโควตาสินค้าละ 1</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-563" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-563 ใน Jira">🧩 Epic TKRD-563</a> · Priority: <b>P1</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · ส่วนขยาย Chrome ค่าคอมสดจากเบราว์เซอร์ลูกค้า (PoC) — ติดตั้ง · เชื่อมต่อ</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #d97706;background:rgba(217,119,6,.07)">📌 <b>หมายเหตุ:</b> หลังเทส: popup เลือก เช็คจอ = "เมื่อกดปุ่ม" คืน · ใช้โควตาเช็คจอสด 1 ครั้ง (คืนไม่ได้)</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>ส่วนขยายเชื่อมต่อด้วยบัญชี A แล้ว (popup ขึ้น "เชื่อมต่อบัญชี Takra แล้ว")</li><li>P-LIVE ไม่ได้เช็คจอใน 10 นาทีที่ผ่านมา</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>กดไอคอน Takra Radar บนแถบเครื่องมือของ Chrome เพื่อเปิด popup เลือก เช็คจอ = "อัตโนมัติ" แล้วจดหลอด "เช็คจอสด (แพ็กเกจ)"</li><li>เปิดหน้าสินค้า P-LIVE บน Shopee ใน Chrome เดียวกัน โดยไม่กดอะไร</li><li>กดไอคอน Takra Radar บนแถบเครื่องมือของ Chrome เพื่อเปิด popup ดูหลอดอีกครั้ง</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>เปิดหน้าแล้วขึ้น "กำลังดูว่าสินค้านี้ขึ้นอยู่ในไลฟ์ไหน อันดับเท่าไหร่" เอง</li><li>ไม่มีคำแนะนำ "ตั้งให้เช็คจอเองทุกครั้ง…"</li><li>หลอดเช็คจอสดเพิ่ม 1</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic TKRD-563 · เคสกลาง TC-EX.4-U05</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-22825" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-22825" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-22825" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-22825" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-22825" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-22825"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-22825" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-22825">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="m-ext" data-level="ui" data-prio="P0" data-kind="permission" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-EX-D.6</td>
+  <td class="ctitle">บัญชีไม่มีแพ็กเกจ (N) และแพ็กเกจหมดอายุ (LP) → ข้อมูล Takra และเช็คจอถูกปฏิเสธ · ค่าคอมสดยังใช้ได้ <span class="kd kd-perm">Permission</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-22826"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-22826"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">บัญชีไม่มีแพ็กเกจ (N) และแพ็กเกจหมดอายุ (LP) → ข้อมูล Takra และเช็คจอถูกปฏิเสธ · ค่าคอมสดยังใช้ได้</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-563" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-563 ใน Jira">🧩 Epic TKRD-563</a> · Priority: <b>P0</b> · UI · ประเภท: <b>Permission</b> <span class="hint">(role ไหนทำได้ / ทำไม่ได้)</span> · ส่วนขยาย Chrome ค่าคอมสดจากเบราว์เซอร์ลูกค้า (PoC) — ติดตั้ง · เชื่อมต่อ</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #d97706;background:rgba(217,119,6,.07)">📌 <b>หมายเหตุ:</b> หลังเทส: เข้าสู่ระบบเว็บด้วยบัญชี A แล้วกด "เชื่อมต่อ" ที่เมนู "ส่วนขยาย Chrome" ให้ส่วนขยายกลับเป็นของ A</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>popup ตั้ง ค่าคอม = "สด" (ค่าตั้งต้น)</li><li>บัญชี affiliate เข้าสู่ระบบอยู่</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ Takra Radar (UAT) แล้วเข้าสู่ระบบด้วยบัญชี N ไปที่เมนู "ส่วนขยาย Chrome" แล้วกด "เชื่อมต่อ"</li><li>เปิดหน้าสินค้า P-OK บน Shopee ใน Chrome เดียวกัน อ่าน panel แล้วกด "เช็คจอตอนนี้"</li><li>ทำขั้น 1–2 ซ้ำด้วยบัญชี LP</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ส่วนข้อมูล Takra: "ดูข้อมูลจาก Takra Radar ได้เฉพาะบัญชีที่มีแพ็กเกจที่ใช้งานอยู่"</li><li>เช็คจอ: "บัญชีนี้ยังเช็คจอไม่ได้ ต้องมีแพ็กเกจที่ใช้งานอยู่"</li><li>ตารางค่าคอมสดยังขึ้นตามปกติ</li><li>ผลเหมือนกันทั้ง N และ LP</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic TKRD-563 · เคสกลาง TC-EX.4-U06</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-22826" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-22826" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-22826" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-22826" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-22826" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-22826"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-22826" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-22826">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="m-ext" data-level="ui" data-prio="P2" data-kind="data" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-EX-D.7</td>
+  <td class="ctitle">สินค้าที่ไม่อยู่ในข้อมูลของ Takra → บอกว่ายังไม่มี · ค่าคอมสดยังขึ้น <span class="kd kd-data">Data</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p2">P2</span></td>
+  <td class="status" data-uid="tc-22827"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-22827"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">สินค้าที่ไม่อยู่ในข้อมูลของ Takra → บอกว่ายังไม่มี · ค่าคอมสดยังขึ้น</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-563" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-563 ใน Jira">🧩 Epic TKRD-563</a> · Priority: <b>P2</b> · UI · ประเภท: <b>Data</b> <span class="hint">(empty · duplicate · ไม่ปนข้ามบัญชี)</span> · ส่วนขยาย Chrome ค่าคอมสดจากเบราว์เซอร์ลูกค้า (PoC) — ติดตั้ง · เชื่อมต่อ</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>ส่วนขยายเชื่อมต่อด้วยบัญชี A แล้ว (popup ขึ้น "เชื่อมต่อบัญชี Takra แล้ว")</li><li>popup ตั้ง ค่าคอม = "สด" (ค่าตั้งต้น)</li><li>บัญชี affiliate เข้าสู่ระบบอยู่</li><li>popup ตั้ง ข้อมูล Takra = "อัตโนมัติ" · เช็คจอ = "เมื่อกดปุ่ม" (ค่าตั้งต้น)</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดหน้าสินค้า P-NEW บน Shopee ใน Chrome เดียวกัน แล้วอ่าน panel</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ส่วนข้อมูล Takra: "สินค้านี้ยังไม่อยู่ในข้อมูลของ Takra Radar"</li><li>ตารางค่าคอมสดขึ้น · ข้อมูลจากหน้า Shopee (ราคา คะแนน ร้าน) ยังแสดง</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic TKRD-563 · เคสกลาง TC-EX.4-U07</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-22827" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-22827" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-22827" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-22827" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-22827" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-22827"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-22827" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-22827">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="featrow" data-featkey="ex-batch"><td colspan="7">📁 E · เช็คหลายสินค้า <span class="rp"><span class="lv lvl-ui">🌐 7</span> <span class="lv lvl-e2e">🔄 1</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="ex-batch"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow" data-feat="m-ext" data-level="ui" data-prio="P1" data-kind="happy" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-EX-E.1</td>
+  <td class="ctitle">เปิดหน้า "เช็คหลายสินค้า" จาก popup → ช่องวางลิงก์ · คำเตือนบัญชี affiliate · ตัวเลือก <span class="kd kd-happy">Happy Path</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-22828"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-22828"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">เปิดหน้า "เช็คหลายสินค้า" จาก popup → ช่องวางลิงก์ · คำเตือนบัญชี affiliate · ตัวเลือก</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-563" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-563 ใน Jira">🧩 Epic TKRD-563</a> · Priority: <b>P1</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · ส่วนขยาย Chrome ค่าคอมสดจากเบราว์เซอร์ลูกค้า (PoC) — ติดตั้ง · เชื่อมต่อ</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>ส่วนขยายเชื่อมต่อด้วยบัญชี A แล้ว (popup ขึ้น "เชื่อมต่อบัญชี Takra แล้ว")</li><li>popup ตั้ง ค่าคอม = "สด" (ค่าตั้งต้น)</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>กดไอคอน Takra Radar บนแถบเครื่องมือของ Chrome เพื่อเปิด popup แล้วกด "เช็คหลายสินค้า"</li><li>อ่านทุกส่วนของหน้าที่เปิดขึ้นก่อนวางลิงก์</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>เปิดแท็บใหม่ชื่อ "เช็คหลายสินค้า · Takra Radar"</li><li>ช่องวางลิงก์ขึ้นต้น "วางลิงก์สินค้า Shopee บรรทัดละ 1 ลิงก์ (ไม่เกิน 30 ลิงก์)"</li><li>คำเตือน "ใช้บัญชี Shopee affiliate ของคุณถามพร้อมกันได้ 3 สินค้า เปิดห่างกัน 1.5 วินาที ไม่เกิน 30 ลิงก์ต่อรอบ · ถามจำนวนมากอาจทำให้ Shopee จำกัดการใช้งานบัญชีของคุณชั่วคราว…"</li><li>ช่องติ๊ก "ดึงข้อมูลสินค้า · จอ · วิดีโอ จาก Takra Radar" (ติ๊กไว้) · "เช็คจอสด" (ไม่ติ๊ก) · ปุ่ม "เริ่มเช็ค" · "ดาวน์โหลด CSV" (กดไม่ได้)</li><li>ผลว่าง "วางลิงก์แล้วกด เริ่มเช็ค · ผลจะขึ้นที่นี่ทีละสินค้า"</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic TKRD-563 · เคสกลาง TC-EX.5-U01</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-22828" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-22828" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-22828" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-22828" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-22828" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-22828"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-22828" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-22828">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="m-ext" data-level="ui" data-prio="P0" data-kind="boundary" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-EX-E.2</td>
+  <td class="ctitle">วาง 30 ลิงก์เริ่มได้ · 31 ลิงก์ปุ่มกดไม่ได้ + "เก็บ 30 ลิงก์แรก" · บรรทัดที่ไม่ใช่ลิงก์ถูกข้าม <span class="kd kd-bnd">Boundary</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-22829"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-22829"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">วาง 30 ลิงก์เริ่มได้ · 31 ลิงก์ปุ่มกดไม่ได้ + "เก็บ 30 ลิงก์แรก" · บรรทัดที่ไม่ใช่ลิงก์ถูกข้าม</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-563" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-563 ใน Jira">🧩 Epic TKRD-563</a> · Priority: <b>P0</b> · UI · ประเภท: <b>Boundary</b> <span class="hint">(min · max · ก่อนขอบ · ตรงขอบ · เกินขอบ)</span> · ส่วนขยาย Chrome ค่าคอมสดจากเบราว์เซอร์ลูกค้า (PoC) — ติดตั้ง · เชื่อมต่อ</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #d97706;background:rgba(217,119,6,.07)">📌 <b>หมายเหตุ:</b> ไม่ต้องกด "เริ่มเช็ค" · จบแล้วล้างช่องกรอกและปิดแท็บ</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>ส่วนขยายเชื่อมต่อด้วยบัญชี A แล้ว (popup ขึ้น "เชื่อมต่อบัญชี Takra แล้ว")</li></ul></div>
+  <div class="sec"><h4>Test Data</h4><ul><li>31 ลิงก์ของสินค้าคนละตัว (รูปแบบ shopee.co.th/product/&lt;shop&gt;/&lt;item&gt; และ shopee.co.th/&lt;ชื่อ&gt;-i.&lt;shop&gt;.&lt;item&gt; ปนกัน) · บรรทัด hello</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>กดไอคอน Takra Radar บนแถบเครื่องมือของ Chrome เพื่อเปิด popup แล้วกด "เช็คหลายสินค้า" แล้ววางลิงก์สินค้า 30 บรรทัด</li><li>เพิ่มลิงก์บรรทัดที่ 31</li><li>กด "เก็บ 30 ลิงก์แรก"</li><li>เพิ่มบรรทัด hello หนึ่งบรรทัด แล้ววางลิงก์ยาวกว่าช่องอีก 1 บรรทัด · สังเกตตัวนับและช่องกรอก</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>30 ลิงก์: "30 / 30 ลิงก์" · "เริ่มเช็ค" กดได้</li><li>31 ลิงก์: "31 / 30 ลิงก์" สีเหลือง · "เกิน 1 ลิงก์ — เช็คได้ครั้งละไม่เกิน 30 ลิงก์" · "เริ่มเช็ค" กดไม่ได้ · มีปุ่ม "เก็บ 30 ลิงก์แรก"</li><li>กด "เก็บ 30 ลิงก์แรก": เหลือ 30 บรรทัดแรกตามลำดับเดิม · "เริ่มเช็ค" กดได้</li><li>บรรทัด hello: "1 บรรทัดไม่ใช่ลิงก์สินค้า Shopee จะถูกข้าม" · ตัวนับยังเป็น 30</li><li>ช่องกรอกสูงราว 12 บรรทัดแล้วเลื่อนในช่อง · ลิงก์ยาวเลื่อนแนวนอน ไม่ตัดบรรทัด</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic TKRD-563 · เคสกลาง TC-EX.5-U02</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-22829" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-22829" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-22829" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-22829" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-22829" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-22829"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-22829" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-22829">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="m-ext" data-level="ui" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-EX-E.3</td>
+  <td class="ctitle">เช็ค 5 ลิงก์แบบค่าคอมสด → เปิดพร้อมกันไม่เกิน 3 แท็บ ห่างกัน 1.5 วินาที · "เช็คครบแล้ว" <span class="kd kd-happy">Happy Path</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-22830"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-22830"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">เช็ค 5 ลิงก์แบบค่าคอมสด → เปิดพร้อมกันไม่เกิน 3 แท็บ ห่างกัน 1.5 วินาที · "เช็คครบแล้ว"</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-563" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-563 ใน Jira">🧩 Epic TKRD-563</a> · Priority: <b>P0</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · ส่วนขยาย Chrome ค่าคอมสดจากเบราว์เซอร์ลูกค้า (PoC) — ติดตั้ง · เชื่อมต่อ</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #d97706;background:rgba(217,119,6,.07)">📌 <b>หมายเหตุ:</b> เก็บหน้าผลไว้ใช้ต่อใน E.5</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>ส่วนขยายเชื่อมต่อด้วยบัญชี A แล้ว (popup ขึ้น "เชื่อมต่อบัญชี Takra แล้ว")</li><li>popup ตั้ง ค่าคอม = "สด" (ค่าตั้งต้น)</li><li>บัญชี affiliate เข้าสู่ระบบอยู่</li></ul></div>
+  <div class="sec"><h4>Test Data</h4><ul><li>5 ลิงก์สินค้ามีค่าคอม (รวม P-OK)</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>กดไอคอน Takra Radar บนแถบเครื่องมือของ Chrome เพื่อเปิด popup แล้วกด "เช็คหลายสินค้า" วาง 5 ลิงก์ (รวม P-OK) แล้วกด "เริ่มเช็ค"</li><li>ระหว่างรอ ดูแถบแท็บของ Chrome และจดเวลาที่แต่ละแท็บ affiliate เปิด</li><li>รอจนจบรอบ แล้วเทียบค่าคอมของ P-OK กับ panel ของ P-OK</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>แท็บ affiliate เปิดค้างพร้อมกันไม่เกิน 3 · แต่ละแท็บเปิดห่างจากแท็บก่อนไม่น้อยกว่า 1.5 วินาที · ทุกแท็บปิดเองเมื่อเสร็จ</li><li>ระหว่างรอขึ้น "ค่าคอม n / 5" · ช่องติ๊ก ช่องกรอก และ "เริ่มเช็ค" กดไม่ได้ · มีปุ่ม "ยกเลิก"</li><li>จบด้วย "เช็คครบแล้ว" · สรุป 4 ช่อง "เช็คแล้ว" · "ค่าคอมเฉลี่ย" · "ติดจออยู่" · "วิดีโอที่ขายสินค้า" · "ดาวน์โหลด CSV" กดได้</li><li>ค่าคอมของ P-OK ในตารางเท่ากับบน panel ของ P-OK</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic TKRD-563 · เคสกลาง TC-EX.5-U03</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-22830" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-22830" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-22830" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-22830" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-22830" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-22830"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-22830" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-22830">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="m-ext" data-level="ui" data-prio="P1" data-kind="exception" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-EX-E.4</td>
+  <td class="ctitle">กด "ยกเลิก" กลางรอบ → ไม่เปิดแท็บเพิ่ม · "ยกเลิกแล้ว" · โหลด CSV ได้ <span class="kd kd-exc">Exception</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-22831"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-22831"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">กด "ยกเลิก" กลางรอบ → ไม่เปิดแท็บเพิ่ม · "ยกเลิกแล้ว" · โหลด CSV ได้</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-563" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-563 ใน Jira">🧩 Epic TKRD-563</a> · Priority: <b>P1</b> · UI · ประเภท: <b>Exception</b> <span class="hint">(เน็ตหลุด · ระบบภายนอกผิดปกติ · timeout · หยุดกลางทาง)</span> · ส่วนขยาย Chrome ค่าคอมสดจากเบราว์เซอร์ลูกค้า (PoC) — ติดตั้ง · เชื่อมต่อ</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>ส่วนขยายเชื่อมต่อด้วยบัญชี A แล้ว (popup ขึ้น "เชื่อมต่อบัญชี Takra แล้ว")</li><li>popup ตั้ง ค่าคอม = "สด" (ค่าตั้งต้น)</li><li>บัญชี affiliate เข้าสู่ระบบอยู่</li></ul></div>
+  <div class="sec"><h4>Test Data</h4><ul><li>10 ลิงก์สินค้า</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>กดไอคอน Takra Radar บนแถบเครื่องมือของ Chrome เพื่อเปิด popup แล้วกด "เช็คหลายสินค้า" วาง 10 ลิงก์ แล้วกด "เริ่มเช็ค"</li><li>เมื่อขึ้น "ค่าคอม 2 / 10" กด "ยกเลิก"</li><li>ดูแถบแท็บ แล้วสังเกตตารางผล</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>หลังกด ไม่มีแท็บ affiliate ใหม่เปิด · แท็บที่เปิดอยู่ปิดเองเมื่อได้คำตอบ</li><li>สถานะรอบ "ยกเลิกแล้ว" · แถวที่ไม่ได้ส่ง "ไม่ได้เช็ค — รอบหยุดก่อน"</li><li>"ดาวน์โหลด CSV" กดได้ และมีค่าเฉพาะแถวที่ได้คำตอบ</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic TKRD-563 · เคสกลาง TC-EX.5-U04</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-22831" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-22831" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-22831" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-22831" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-22831" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-22831"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-22831" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-22831">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="m-ext" data-level="ui" data-prio="P0" data-kind="validation" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-EX-E.5</td>
+  <td class="ctitle">ดาวน์โหลด CSV → Excel อ่านไทยได้ · เวลา "เช็คค่าคอมเสร็จ" · ช่องที่ขึ้นต้น = + - @ ไม่กลายเป็นสูตร <span class="kd kd-val">Validation</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-22832"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-22832"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ดาวน์โหลด CSV → Excel อ่านไทยได้ · เวลา "เช็คค่าคอมเสร็จ" · ช่องที่ขึ้นต้น = + - @ ไม่กลายเป็นสูตร</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-563" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-563 ใน Jira">🧩 Epic TKRD-563</a> · Priority: <b>P0</b> · UI · ประเภท: <b>Validation</b> <span class="hint">(format · required · character · length)</span> · ส่วนขยาย Chrome ค่าคอมสดจากเบราว์เซอร์ลูกค้า (PoC) — ติดตั้ง · เชื่อมต่อ</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #d97706;background:rgba(217,119,6,.07)">📌 <b>หมายเหตุ:</b> หลังเทส: ลบไฟล์ CSV ที่ดาวน์โหลด</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>ส่วนขยายเชื่อมต่อด้วยบัญชี A แล้ว (popup ขึ้น "เชื่อมต่อบัญชี Takra แล้ว")</li><li>popup ตั้ง ค่าคอม = "สด" (ค่าตั้งต้น)</li><li>บัญชี affiliate เข้าสู่ระบบอยู่</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>กดไอคอน Takra Radar บนแถบเครื่องมือของ Chrome เพื่อเปิด popup แล้วกด "เช็คหลายสินค้า" วาง 5 ลิงก์ โดยมีสินค้าที่ชื่อขึ้นต้นด้วย - หรือ + อย่างน้อย 1 ตัว แล้วกด "เริ่มเช็ค" รอจนจบ</li><li>กด "ดาวน์โหลด CSV" แล้วเปิดด้วย Excel และ Google Sheets</li><li>ลองใช้ SUM กับคอลัมน์บาท แล้วดูแถวที่ชื่อขึ้นต้นด้วย - หรือ +</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ภาษาไทยไม่เพี้ยน · มีคอลัมน์ "ชื่อสินค้า" · "ราคา (บาท)" · "ค่าคอม %" · "ค่าคอมต่อชิ้น (บาท)" · "ค่าคอม โซเชียลมีเดีย (บาท)" · "ค่าคอม ช้อปปี้ไลฟ์ (บาท)" · "ค่าคอม ช้อปปี้วีดีโอ (บาท)" · "สถานะค่าคอม" · "เช็คค่าคอมเสร็จ" · "ลิงก์หน้า Affiliate"</li><li>"เช็คค่าคอมเสร็จ" เป็นเวลาไทย HH:MM:SS ของแต่ละแถว</li><li>คอลัมน์บาทเป็นตัวเลขทศนิยม 2 ตำแหน่ง ไม่มี ฿ ไม่มีจุลภาค · SUM ได้</li><li>ชื่อที่ขึ้นต้นด้วย = + - @ แสดงเป็นข้อความ (มี ' นำหน้า) ไม่คำนวณ · ช่องตัวเลขไม่มี ' นำหน้า</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic TKRD-563 · เคสกลาง TC-EX.5-U05</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-22832" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-22832" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-22832" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-22832" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-22832" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-22832"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-22832" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-22832">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="m-ext" data-level="ui" data-prio="P1" data-kind="happy" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-EX-E.6</td>
+  <td class="ctitle">ติ๊ก "เช็คจอสด" → ได้ผลจอสด หักโควตาสินค้าละ 1 · ไม่ติ๊กบอกอายุข้อมูลจอ <span class="kd kd-happy">Happy Path</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-22833"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-22833"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ติ๊ก "เช็คจอสด" → ได้ผลจอสด หักโควตาสินค้าละ 1 · ไม่ติ๊กบอกอายุข้อมูลจอ</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-563" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-563 ใน Jira">🧩 Epic TKRD-563</a> · Priority: <b>P1</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · ส่วนขยาย Chrome ค่าคอมสดจากเบราว์เซอร์ลูกค้า (PoC) — ติดตั้ง · เชื่อมต่อ</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #d97706;background:rgba(217,119,6,.07)">📌 <b>หมายเหตุ:</b> ใช้โควตาเช็คจอสด 3 ครั้ง (คืนไม่ได้)</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>ส่วนขยายเชื่อมต่อด้วยบัญชี A แล้ว (popup ขึ้น "เชื่อมต่อบัญชี Takra แล้ว")</li><li>popup ตั้ง ค่าคอม = "สด" (ค่าตั้งต้น)</li><li>บัญชี affiliate เข้าสู่ระบบอยู่</li><li>3 สินค้าที่ไม่ได้เช็คจอใน 10 นาทีที่ผ่านมา</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>กดไอคอน Takra Radar บนแถบเครื่องมือของ Chrome เพื่อเปิด popup จดหลอด "เช็คจอสด (แพ็กเกจ)" แล้วกด "เช็คหลายสินค้า"</li><li>วาง 3 ลิงก์ (รวม P-LIVE) ติ๊ก "เช็คจอสด" แล้วกด "เริ่มเช็ค" รอจนจบ · เปิด popup ดูหลอด</li><li>รอบใหม่ใช้ 3 ลิงก์เดิม ไม่ติ๊ก "เช็คจอสด" · เปิด popup ดูหลอด</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>รอบติ๊ก: ขึ้น "เช็คจอ n / 3" · คำอธิบาย "สินค้าละ 1 ครั้งของเช็คจอสด · ไม่ติ๊ก = ใช้ข้อมูลจอที่ Takra มี ซึ่งอาจเก่าหลายวัน (บอกอายุไว้)" · คอลัมน์จอเป็นผลสด · หลอดเพิ่ม 3</li><li>รอบไม่ติ๊ก: คอลัมน์จอบอกอายุ "ข้อมูล Takra n วันก่อน" · หลอดไม่เพิ่ม</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic TKRD-563 · เคสกลาง TC-EX.5-U06</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-22833" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-22833" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-22833" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-22833" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-22833" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-22833"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-22833" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-22833">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="m-ext" data-level="ui" data-prio="P1" data-kind="happy" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-EX-E.7</td>
+  <td class="ctitle">ค่าคอมแบบ "Takra Radar" ในหน้าเช็คหลายสินค้า → คำเตือนเปลี่ยน · ไม่เปิดแท็บ affiliate <span class="kd kd-happy">Happy Path</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-22834"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-22834"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ค่าคอมแบบ "Takra Radar" ในหน้าเช็คหลายสินค้า → คำเตือนเปลี่ยน · ไม่เปิดแท็บ affiliate</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-563" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-563 ใน Jira">🧩 Epic TKRD-563</a> · Priority: <b>P1</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · ส่วนขยาย Chrome ค่าคอมสดจากเบราว์เซอร์ลูกค้า (PoC) — ติดตั้ง · เชื่อมต่อ</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #d97706;background:rgba(217,119,6,.07)">📌 <b>หมายเหตุ:</b> หลังเทส: popup เลือก ค่าคอม = "สด" คืน · ลบไฟล์ CSV</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>ส่วนขยายเชื่อมต่อด้วยบัญชี A แล้ว (popup ขึ้น "เชื่อมต่อบัญชี Takra แล้ว")</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>กดไอคอน Takra Radar บนแถบเครื่องมือของ Chrome เพื่อเปิด popup เลือก ค่าคอม = "Takra Radar" แล้วกด "เช็คหลายสินค้า"</li><li>วาง 3 ลิงก์ (รวม P-OK) แล้วกด "เริ่มเช็ค" · ดูแถบแท็บ</li><li>กด "ดาวน์โหลด CSV" แล้วเปิดดูคอลัมน์ "สถานะค่าคอม"</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>คำเตือน "ค่าคอมจากข้อมูลของ Takra Radar (ย้อนหลัง) ไม่ใช้บัญชี Shopee affiliate · ไม่เกิน 30 ลิงก์ต่อรอบ · เปลี่ยนเป็นค่าคอมสดได้ที่ไอคอน Takra Radar มุมขวาบนของ Chrome"</li><li>ช่องติ๊ก "ดึงข้อมูลสินค้า · จอ · วิดีโอ จาก Takra Radar" ถูกติ๊กและกดไม่ได้</li><li>ไม่มีแท็บ affiliate.shopee.co.th เปิด</li><li>"สถานะค่าคอม" เป็น "ข้อมูล Takra Radar ณ …" · ค่าคอมของ P-OK เท่ากับเคส TC-EX-C.5</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic TKRD-563 · เคสกลาง TC-EX.5-U07</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-22834" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-22834" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-22834" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-22834" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-22834" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-22834"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-22834" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-22834">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="m-ext" data-level="e2e" data-prio="P1" data-kind="boundary" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-EX-E.8</td>
+  <td class="ctitle">รอบ 30 ลิงก์ที่ 3 แท็บ / 1.5 วินาที → จดเวลา · จำนวนที่สำเร็จ · โดนจำกัดที่ตัวที่เท่าไหร่ <span class="kd kd-bnd">Boundary</span></td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-22835"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-22835"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">รอบ 30 ลิงก์ที่ 3 แท็บ / 1.5 วินาที → จดเวลา · จำนวนที่สำเร็จ · โดนจำกัดที่ตัวที่เท่าไหร่</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-563" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-563 ใน Jira">🧩 Epic TKRD-563</a> · Priority: <b>P1</b> · E2E · ประเภท: <b>Boundary</b> <span class="hint">(min · max · ก่อนขอบ · ตรงขอบ · เกินขอบ)</span> · ส่วนขยาย Chrome ค่าคอมสดจากเบราว์เซอร์ลูกค้า (PoC) — ติดตั้ง · เชื่อมต่อ</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #d97706;background:rgba(217,119,6,.07)">📌 <b>หมายเหตุ:</b> ตัวเลขนี้ใช้ตัดสินว่าจะแจกลูกค้าจริงได้หรือยัง (แผนข้อ 7.6) · ถ้าโดนจำกัด รอ 1 ชั่วโมงหรือยืนยันตัวตนบน Shopee ก่อนรันเคสอื่น · ลบไฟล์ CSV</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>ส่วนขยายเชื่อมต่อด้วยบัญชี A แล้ว (popup ขึ้น "เชื่อมต่อบัญชี Takra แล้ว")</li><li>popup ตั้ง ค่าคอม = "สด" (ค่าตั้งต้น)</li><li>บัญชี affiliate เข้าสู่ระบบอยู่ และไม่โดนจำกัดในชั่วโมงที่ผ่านมา</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>กดไอคอน Takra Radar บนแถบเครื่องมือของ Chrome เพื่อเปิด popup แล้วกด "เช็คหลายสินค้า" วาง 30 ลิงก์ (สินค้าคนละตัว ไม่ได้เปิดใน 10 นาทีที่ผ่านมา) ไม่ติ๊ก "เช็คจอสด"</li><li>กด "เริ่มเช็ค" แล้วจับเวลาจนรอบจบ</li><li>กด "ดาวน์โหลด CSV" แล้วสรุปลง Actual</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>รอบจบด้วย "เช็คครบแล้ว" หรือ "หยุดกลางทาง"</li><li>"หยุดกลางทาง" เกิดจาก Shopee จำกัดเท่านั้น และมีการ์ดหรือหน้า Shopee เปิดไว้หน้าสุด 1 แท็บ</li><li>Actual มี: เวลาทั้งรอบ · จำนวนแถวที่ได้ค่าคอม · ลำดับของตัวแรกที่โดนจำกัด · คอลัมน์ "เช็คค่าคอมเสร็จ" ของทุกแถว</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic TKRD-563 · เคสกลาง TC-EX.5-F01</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-22835" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-22835" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-22835" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-22835" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-22835" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-22835"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-22835" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-22835">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="featrow" data-featkey="ex-webplayer"><td colspan="7">📁 F · ดูไลฟ์บนเว็บ Takra Radar <span class="rp"><span class="lv lvl-ui">🌐 1</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="ex-webplayer"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow" data-feat="m-ext" data-level="ui" data-prio="P1" data-kind="happy" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-EX-F.1</td>
+  <td class="ctitle">หน้าต่างจอบนเว็บ → เล่นไลฟ์ด้วยแถบ LIVE · เต็มจอ · หยุดเล่น ไม่มีแถบควบคุมของเบราว์เซอร์ <span class="kd kd-happy">Happy Path</span></td>
+  <td class="lvl"><span class="lv lvl-ui">UI</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-22836"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-22836"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">หน้าต่างจอบนเว็บ → เล่นไลฟ์ด้วยแถบ LIVE · เต็มจอ · หยุดเล่น ไม่มีแถบควบคุมของเบราว์เซอร์</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TKRD-563" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TKRD-563 ใน Jira">🧩 Epic TKRD-563</a> · Priority: <b>P1</b> · UI · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · ส่วนขยาย Chrome ค่าคอมสดจากเบราว์เซอร์ลูกค้า (PoC) — ติดตั้ง · เชื่อมต่อ</div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดเว็บ Takra Radar (UAT) แล้วเข้าสู่ระบบด้วยบัญชี A ไปที่เมนู "ค้นหา" ค้นสินค้า P-LIVE เปิดรายละเอียดสินค้า แล้วกด "ดูรายการจอและวิดีโอ" (ถ้าปุ่มขึ้นเป็น "ดูรายการจอ" ให้กดปุ่มนั้น)</li><li>ในหน้าต่างจอที่เปิดขึ้น กด "▶ ดูไลฟ์" บนจอที่มีสตรีม</li><li>คลิกขวาบนวิดีโอ · กด "เต็มจอ" แล้วกด Esc · กด "หยุดเล่น"</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>วิดีโอเล่นในหน้า ปิดเสียง · แถบของ Takra มี "LIVE" · ปุ่ม "เต็มจอ" · ปุ่ม "หยุดเล่น" · ไม่มีปุ่มเสียง</li><li>ไม่มีแถบควบคุมของ Chrome (ปุ่ม play / เลื่อน / เสียงของเบราว์เซอร์)</li><li>เข้า/ออกเต็มจอได้ · กดหยุดแล้วจอหยุด</li></ul><div class="hint" style="margin-top:6px">ที่มา: Epic TKRD-563 · เคสกลาง TC-EX.7-U01</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-22836" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-22836" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-22836" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-22836" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-22836" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-22836"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-22836" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-22836">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+</tbody>
+  </table>
+  </div>
+
+</div>
+<footer>TAKRA Radar — ส่วนขยาย Chrome ค่าคอมสด (TKRD-563) · UI Manual Test Cases · 33 UI + 3 E2E = 36 TCs · UI only (manual) · Takra Radar (takra-radar) UAT · ส่วนขยาย Chrome 0.4.36 · TKRD-563</footer>
+
+<script>
+// ── Load store from embedded JSON ──
+var storeEl = document.getElementById('store-data');
+var store = {};
+try { store = JSON.parse(storeEl.textContent || '{}'); } catch(_) {}
+
+var SMAP = {
+  pass:  ['pass',  'PASS'],
+  fail:  ['fail',  'FAIL'],
+  hold:  ['hold',  'HOLD'],
+  block: ['block', 'BLOCKED'],
+  skip:  ['skip',  'SKIP'],
+};
+
+// Restore saved statuses
+Object.keys(store).forEach(function(uid) {
+  var st = store[uid] && store[uid].st;
+  if (!st || !SMAP[st]) return;
+  // badge
+  var rowStatus = document.querySelector('tr.trow td.status[data-uid="' + uid + '"]');
+  if (rowStatus) {
+    var stb = rowStatus.querySelector('.stb');
+    if (stb) { stb.className = 'stb ' + SMAP[st][0]; stb.textContent = SMAP[st][1]; }
+  }
+  // opt button
+  var opt = document.querySelector('.opt[data-uid="' + uid + '"][data-st="' + st + '"]');
+  if (opt) opt.classList.add('sel');
+  // also restore actual result text
+  if (store[uid].actual || store[uid].actualw) {
+    var boxes = document.querySelectorAll('tr.detail');
+    boxes.forEach(function(d) {
+      var badge = d.querySelector('.opt[data-uid="' + uid + '"]');
+      if (!badge) return;
+      d.querySelectorAll('.actualbox').forEach(function(box) {
+        var field = box.dataset.os === 'win' ? 'actualw' : 'actual';
+        if (store[uid][field]) { box.value = store[uid][field]; box.classList.add('filled'); }
+      });
+    });
+  }
+});
+
+// ── Toggle row expand ──
+function tg(row) {
+  var detail = row.nextElementSibling;
+  var isOpen = row.classList.contains('open');
+  row.classList.toggle('open', !isOpen);
+  if (detail && detail.classList.contains('detail')) {
+    detail.classList.toggle('show', !isOpen);
+  }
+}
+function toggleAll(open) {
+  document.querySelectorAll('tr.trow').forEach(function(r) {
+    if (r.classList.contains('hide')) return;
+    r.classList.toggle('open', open);
+    var d = r.nextElementSibling;
+    if (d && d.classList.contains('detail')) d.classList.toggle('show', open);
+  });
+}
+
+// ── Save store back into the embedded script tag ──
+function save() {
+  storeEl.textContent = '\n' + JSON.stringify(store, null, 2).replace(/</g, '\\u003c') + '\n';
+}
+
+// ── Status opt buttons ──
+document.querySelectorAll('.opt').forEach(function(o) {
+  o.addEventListener('click', function(e) {
+    e.stopPropagation();
+    var uid = o.dataset.uid, st = o.dataset.st;
+    var allOpts = document.querySelectorAll('.opt[data-uid="' + uid + '"]');
+    var alreadySel = o.classList.contains('sel');
+    allOpts.forEach(function(x) { x.classList.remove('sel'); });
+    store[uid] = store[uid] || {};
+    if (alreadySel) {
+      delete store[uid].st;
+    } else {
+      o.classList.add('sel');
+      store[uid].st = st;
+    }
+    var rowStatus = document.querySelector('tr.trow td.status[data-uid="' + uid + '"]');
+    if (rowStatus) {
+      var stb = rowStatus.querySelector('.stb');
+      if (stb) {
+        if (!alreadySel && SMAP[st]) { stb.className = 'stb ' + SMAP[st][0]; stb.textContent = SMAP[st][1]; }
+        else { stb.className = 'stb pending'; stb.textContent = 'รอเทส'; }
+      }
+    }
+    save();
+    applyFilters();   // re-filter (recounts too) so an active สถานะ filter updates live
+    markDirty();
+  });
+});
+
+// ── Actual result editable on blur ──
+document.querySelectorAll('.actualbox').forEach(function(box) {
+  // a <textarea> — clicking/typing must not bubble up to the row toggle
+  box.addEventListener('click', function(ev) { ev.stopPropagation(); });
+  box.addEventListener('input', function() { box.classList.toggle('filled', box.value.trim() !== ''); });
+  box.addEventListener('blur', function() {
+    // find uid from nearest .opt
+    var opts = box.closest('tr.detail').querySelectorAll('.opt');
+    if (!opts.length) return;
+    var uid = opts[0].dataset.uid;
+    var field = box.dataset.os === 'win' ? 'actualw' : 'actual';
+    var txt = box.value.trim();
+    var prev = (store[uid] && store[uid][field]) || '';
+    if (txt === prev) return;   // nothing typed → don't dirty the file
+    store[uid] = store[uid] || {};
+    if (txt) { store[uid][field] = txt; }
+    else { delete store[uid][field]; if (!Object.keys(store[uid]).length) delete store[uid]; }
+    save();
+    markDirty();
+  });
+});
+
+// ── Filters ──
+var filters = { feat: new Set(), level: new Set(), prio: new Set(), status: new Set(), kind: new Set(), ui: new Set() };
+document.querySelectorAll('.fchip').forEach(function(c) {
+  c.addEventListener('click', function() {
+    var f = c.dataset.f, v = c.dataset.v;
+    if (filters[f].has(v)) { filters[f].delete(v); c.classList.remove('active'); }
+    else { filters[f].add(v); c.classList.add('active'); }
+    applyFilters();
+  });
+});
+document.querySelectorAll('.clearbtn').forEach(function(b) {
+  b.addEventListener('click', function() {
+    var key = b.dataset.clear;
+    filters[key].clear();
+    document.querySelectorAll('.fchip[data-f="' + key + '"]').forEach(function(c) { c.classList.remove('active'); });
+    applyFilters();
+  });
+});
+function applyFilters() {
+  document.querySelectorAll('tr.trow').forEach(function(row) {
+    var ok = true;
+    if (filters.feat.size  && !filters.feat.has(row.dataset.feat))   ok = false;
+    if (filters.level.size && !filters.level.has(row.dataset.level)) ok = false;
+    if (filters.prio.size  && !filters.prio.has(row.dataset.prio))   ok = false;
+    if (filters.kind.size  && !filters.kind.has(row.dataset.kind))   ok = false;
+    if (filters.ui.size    && !filters.ui.has(row.dataset.ui))       ok = false;
+    if (filters.status.size) {
+      var stb = row.querySelector('td.status .stb');
+      var scls = stb ? stb.className.replace('stb', '').trim().split(' ')[0] : 'pending';
+      if (!filters.status.has(scls)) ok = false;
+    }
+    row.classList.toggle('hide', !ok);
+    var d = row.nextElementSibling;
+    if (d && d.classList.contains('detail')) d.classList.toggle('hide', !ok);
+  });
+  document.querySelectorAll('tr.featrow').forEach(function(fr) {
+    var n = fr.nextElementSibling, any = false;
+    while (n && !n.classList.contains('featrow') && !n.classList.contains('epicrow')) {
+      if (n.classList.contains('trow') && !n.classList.contains('hide')) { any = true; break; }
+      n = n.nextElementSibling;
+    }
+    fr.classList.toggle('hide', !any);
+  });
+  document.querySelectorAll('tr.epicrow').forEach(function(er) {
+    var n = er.nextElementSibling, any = false;
+    while (n && !n.classList.contains('epicrow')) {
+      if (n.classList.contains('trow') && !n.classList.contains('hide')) { any = true; break; }
+      n = n.nextElementSibling;
+    }
+    er.classList.toggle('hide', !any);
+  });
+  recount();
+}
+
+function recount() {
+  var c = { pass:0, fail:0, hold:0, block:0, skip:0, pending:0 };
+  document.querySelectorAll('tr.trow').forEach(function(row) {
+    var stb = row.querySelector('td.status .stb');
+    if (!stb) return;
+    var cls = stb.className.replace('stb','').trim().split(' ')[0];
+    if (c.hasOwnProperty(cls)) c[cls]++; else c.pending++;
+  });
+  var total    = c.pass + c.fail + c.hold + c.block + c.skip + c.pending;
+  var done     = c.pass + c.fail + c.hold + c.block;
+  var testable = total - c.skip;               // SKIP = ตั้งใจข้าม ไม่นับเป็นเป้าที่ต้องทดสอบ
+  var pct      = testable ? Math.round(done / testable * 100) : 0;
+  ['pass','fail','hold','block','skip'].forEach(function(k) {
+    var e = document.getElementById('sum-'+k); if (e) e.textContent = c[k];
+    var h = document.getElementById('hdr-'+k); if (h) h.textContent = c[k];
+  });
+  var ep = document.getElementById('sum-pending'); if (ep) ep.textContent = c.pending;
+  var hp = document.getElementById('hdr-pending'); if (hp) hp.textContent = c.pending;
+  var bar = document.getElementById('sumbar'); if (bar) bar.style.width = pct + '%';
+  var pctEl = document.getElementById('sumpct');
+  if (pctEl) pctEl.textContent = pct + '% ทดสอบแล้ว (' + done + '/' + testable + ')' + (c.skip ? ' · ข้าม ' + c.skip : '');
+}
+
+// ── GitHub publish config ──
+var GH_OWNER  = 'wanlee-tankunnatam';
+var GH_REPO   = 'qa-test-reports';
+var GH_PATH   = 'projects/takra-radar/2026/11/reports/takra-radar-chrome-extension-ui-test-cases-table.html';
+var GH_BRANCH = 'master';
+var GH_API    = 'https://api.github.com/repos/' + GH_OWNER + '/' + GH_REPO + '/contents/' + GH_PATH;
+
+// ── Save state (dirty tracking + auto-publish) ──
+var dirty = false;
+var autoTimer = null;
+var publishing = false;
+
+function ghToken() {
+  var t = localStorage.getItem('gh_pat');
+  if (!t) {
+    t = prompt(
+      'ใส่ GitHub Personal Access Token (ใส่ครั้งเดียว จำไว้ในเบราว์เซอร์นี้)\n\n' +
+      'สร้าง token:\n' +
+      'github.com → Settings → Developer settings →\n' +
+      'Personal access tokens → Tokens (classic) → Generate new token (classic)\n' +
+      '→ ติ๊ก scope: repo  (หรือ public_repo เพราะ repo นี้ public)\n\n' +
+      'หรือ Fine-grained token: เลือก repo "qa-test-reports" →\n' +
+      'Permissions → Contents = Read and write'
+    );
+    if (t) localStorage.setItem('gh_pat', t.trim());
+  }
+  return t ? t.trim() : null;
+}
+function clearToken() { localStorage.removeItem('gh_pat'); }
+
+async function publishToGH(auto) {
+  if (publishing) return;
+  var btn = document.getElementById('btn-publish');
+  var token = auto ? localStorage.getItem('gh_pat') : ghToken();
+  if (!token) return;          // auto-save stays quiet until a token exists
+  publishing = true;
+  if (autoTimer) { clearTimeout(autoTimer); autoTimer = null; }
+
+  btn.disabled = true;
+  btn.textContent = '⏳ กำลังบันทึก…';
+  save();
+
+  var API = 'https://api.github.com/repos/' + GH_OWNER + '/' + GH_REPO + '/contents/' + GH_PATH;
+
+  // Serialize the page with the button forced to its idle/enabled state, so the
+  // committed file is never frozen mid-save (otherwise reopening it shows a
+  // permanently-disabled "⏳ กำลังบันทึก…" button).
+  function buildEncoded() {
+    var dis = btn.disabled, txt = btn.textContent;
+    btn.disabled = false;
+    btn.textContent = '☁️ บันทึกขึ้น GitHub';
+    var html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+    btn.disabled = dis;
+    btn.textContent = txt;
+    return btoa(unescape(encodeURIComponent(html)));
+  }
+
+  // Fetch current remote file (sha + content), bypassing any cache.
+  async function fetchRemote() {
+    var r = await fetch(
+      API + '?ref=' + GH_BRANCH + '&t=' + Date.now(),
+      { cache: 'no-store', headers: { Authorization: 'token ' + token, Accept: 'application/vnd.github+json' } }
+    );
+    if (!r.ok) {
+      if (r.status === 401) { localStorage.removeItem('gh_pat'); }
+      throw new Error('ดึงไฟล์ไม่ได้ (HTTP ' + r.status + ') — ตรวจ token หรือ branch');
+    }
+    var j = await r.json();
+    if (!j.content && j.sha) {
+      var rr = await fetch(
+        API + '?ref=' + GH_BRANCH + '&t=' + Date.now(),
+        { cache: 'no-store', headers: { Authorization: 'token ' + token, Accept: 'application/vnd.github.raw' } }
+      );
+      if (!rr.ok) throw new Error('ดึงไฟล์ไม่ได้ (HTTP ' + rr.status + ') — ลองบันทึกใหม่อีกครั้ง');
+      var raw = await rr.text();
+      if (!/<script id="store-data"/.test(raw)) throw new Error('ไฟล์บน GitHub อ่านไม่ครบ — ยังไม่บันทึก ลองใหม่อีกครั้ง');
+      j.content = btoa(unescape(encodeURIComponent(raw)));
+    }
+    return j;
+  }
+
+  // Merge statuses that exist on the remote copy but NOT locally, so a
+  // teammate's concurrent edit is not silently overwritten (local always wins
+  // for keys we changed; we only add keys we don't have).
+  function mergeRemote(remote) {
+    try {
+      var remoteHtml = decodeURIComponent(escape(atob((remote.content || '').replace(/\s/g, ''))));
+      var m = remoteHtml.match(/<script id="store-data"[^>]*>([\s\S]*?)<\/script>/);
+      if (!m) return;
+      var rs = JSON.parse((m[1] || '{}').trim() || '{}');
+      var added = 0;
+      Object.keys(rs).forEach(function(uid) {
+        if (uid in store) return;
+        store[uid] = rs[uid];
+        added++;
+        var st = rs[uid] && rs[uid].st;
+        if (st && SMAP[st]) {
+          var cell = document.querySelector('tr.trow td.status[data-uid="' + uid + '"] .stb');
+          if (cell) { cell.className = 'stb ' + SMAP[st][0]; cell.textContent = SMAP[st][1]; }
+          var opt = document.querySelector('.opt[data-uid="' + uid + '"][data-st="' + st + '"]');
+          if (opt) opt.classList.add('sel');
+        }
+      });
+      if (added) { save(); recount(); }
+    } catch (_) {}
+  }
+
+  // Commit content = the LATEST remote file with ONLY its store-data block
+  // swapped for our (merged) results. This makes auto-save a results-only
+  // overlay: a stale tab can never overwrite the repo's structure/layout —
+  // it always publishes on top of whatever structure is currently on GitHub.
+  function buildFromRemote(remote) {
+    try {
+      var remoteHtml = decodeURIComponent(escape(atob((remote.content || '').replace(/\s/g, ''))));
+      if (!/<script id="store-data"[^>]*>[\s\S]*?<\/script>/.test(remoteHtml)) return buildEncoded();
+      var json = '\n' + JSON.stringify(store, null, 2).replace(/</g, '\\u003c') + '\n';
+      var replaced = remoteHtml.replace(
+        /(<script id="store-data"[^>]*>)[\s\S]*?(<\/script>)/,
+        function(_m, o, c) { return o + json + c; }
+      );
+      return btoa(unescape(encodeURIComponent(replaced)));
+    } catch (_) {
+      return buildEncoded();   // fallback: serialize local DOM
+    }
+  }
+
+  async function commit(remote) {
+    var ts = new Date().toISOString().slice(0, 16).replace('T', ' ');
+    return fetch(API, {
+      method: 'PUT',
+      headers: { Authorization: 'token ' + token, Accept: 'application/vnd.github+json', 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        message: 'chore(qa): update test results ' + ts,
+        content: buildFromRemote(remote),
+        sha: remote.sha,
+        branch: GH_BRANCH
+      })
+    });
+  }
+
+  try {
+    var r2, lastErr;
+    // Up to 4 attempts. Re-fetch the SHA and merge remote statuses each time;
+    // a stale SHA returns 409/422 ("does not match …") which we retry.
+    for (var attempt = 0; attempt < 4; attempt++) {
+      var remote = await fetchRemote();
+      mergeRemote(remote);
+      r2 = await commit(remote);
+      if (r2.ok) break;
+      if (r2.status === 409 || r2.status === 422) {
+        lastErr = 'SHA ชนกัน (HTTP ' + r2.status + ')';
+        await new Promise(function(res) { setTimeout(res, 400 * (attempt + 1)); });
+        continue;
+      }
+      // Bad/expired token or insufficient scope — drop it so the next attempt re-prompts.
+      if (r2.status === 401 || r2.status === 403) {
+        clearToken();
+        var pe = await r2.json().catch(function() { return {}; });
+        throw new Error(
+          (pe.message || 'HTTP ' + r2.status) +
+          '\n\n→ Token สิทธิ์ไม่พอ/หมดอายุ ลบให้แล้ว ครั้งหน้าจะถามใหม่\n' +
+          '   ใช้ classic token scope "repo" (หรือ public_repo) หรือ fine-grained ที่ให้ Contents = Read and write กับ repo นี้'
+        );
+      }
+      var e = await r2.json();
+      throw new Error(e.message || 'HTTP ' + r2.status);
+    }
+    if (!r2.ok) {
+      throw new Error((lastErr || 'conflict') + ' — มีการแก้ไฟล์พร้อมกัน ลองกดบันทึกอีกครั้ง หรือ refresh หน้าก่อนบันทึก');
+    }
+
+    dirty = false;
+    publishing = false;
+    btn.textContent = '✅ บันทึกแล้ว!';
+    btn.style.background = 'var(--pass)';
+    setTimeout(function() {
+      btn.style.background = '';
+      btn.disabled = false;
+      updateIndicator();
+    }, 3000);
+  } catch (err) {
+    publishing = false;
+    if (!auto) alert('❌ บันทึกไม่สำเร็จ: ' + err.message);
+    btn.disabled = false;
+    updateIndicator();
+  }
+}
+
+document.getElementById('btn-publish').addEventListener('click', function() { publishToGH(false); });
+
+// ── Dirty tracking / unsaved indicator ──
+function autoOn() {
+  var c = document.getElementById('chk-autosave');
+  return c ? c.checked : false;
+}
+function updateIndicator() {
+  var s = document.getElementById('save-status');
+  var b = document.getElementById('btn-publish');
+  if (dirty) {
+    if (s) { s.textContent = '● ยังไม่ได้บันทึก'; s.style.color = 'var(--hold)'; }
+    if (b && !b.disabled && b.textContent.indexOf('✅') < 0) b.textContent = '☁️ บันทึกขึ้น GitHub *';
+  } else {
+    if (s) { s.textContent = '✓ ตรงกับ GitHub'; s.style.color = 'var(--muted)'; }
+    if (b && !b.disabled && b.textContent.indexOf('✅') < 0) b.textContent = '☁️ บันทึกขึ้น GitHub';
+  }
+}
+function markDirty() {
+  dirty = true;
+  updateIndicator();
+  // Auto-publish after the user stops editing — only once a token exists,
+  // so we never interrupt with a token prompt mid-edit.
+  if (autoOn() && localStorage.getItem('gh_pat')) {
+    if (autoTimer) clearTimeout(autoTimer);
+    autoTimer = setTimeout(function() { autoTimer = null; publishToGH(true); }, 5000);
+  }
+}
+window.addEventListener('beforeunload', function(e) {
+  if (dirty) { e.preventDefault(); e.returnValue = 'มีงานที่ยังไม่ได้บันทึกขึ้น GitHub'; return e.returnValue; }
+});
+
+// ── Re-render every badge from the store (used after pulling remote) ──
+function applyAllStatuses() {
+  document.querySelectorAll('.opt.sel').forEach(function(o) { o.classList.remove('sel'); });
+  document.querySelectorAll('tr.trow td.status .stb').forEach(function(s) {
+    s.className = 'stb pending'; s.textContent = 'รอเทส';
+  });
+  Object.keys(store).forEach(function(uid) {
+    var st = store[uid] && store[uid].st;
+    if (st && SMAP[st]) {
+      var cell = document.querySelector('tr.trow td.status[data-uid="' + uid + '"] .stb');
+      if (cell) { cell.className = 'stb ' + SMAP[st][0]; cell.textContent = SMAP[st][1]; }
+      var opt = document.querySelector('.opt[data-uid="' + uid + '"][data-st="' + st + '"]');
+      if (opt) opt.classList.add('sel');
+    }
+    if (store[uid] && store[uid].actual) {
+      document.querySelectorAll('tr.detail').forEach(function(d) {
+        if (!d.querySelector('.opt[data-uid="' + uid + '"]')) return;
+        var box = d.querySelector('.actualbox');
+        if (box) { box.value = store[uid].actual; box.classList.toggle('filled', !!store[uid].actual); }
+      });
+    }
+  });
+}
+
+// ── Pull latest results from GitHub (remote wins on overlap; keeps local-only) ──
+async function pullLatest() {
+  var rbtn = document.getElementById('btn-refresh');
+  if (dirty && !confirm('มีงานที่ยังไม่ได้บันทึก — การดึงล่าสุดจะใช้สถานะจาก GitHub ทับเฉพาะรายการที่ซ้ำกัน ต้องการต่อ?')) return;
+  if (rbtn) { rbtn.disabled = true; rbtn.textContent = '⏳ กำลังดึง…'; }
+  try {
+    var token = localStorage.getItem('gh_pat');
+    var html;
+    if (token) {
+      var r = await fetch(GH_API + '?ref=' + GH_BRANCH + '&t=' + Date.now(),
+        { cache: 'no-store', headers: { Authorization: 'token ' + token, Accept: 'application/vnd.github+json' } });
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      html = decodeURIComponent(escape(atob(((await r.json()).content || '').replace(/\s/g, ''))));
+    } else {
+      var rr = await fetch('https://raw.githubusercontent.com/' + GH_OWNER + '/' + GH_REPO + '/' + GH_BRANCH + '/' + GH_PATH + '?t=' + Date.now(),
+        { cache: 'no-store' });
+      if (!rr.ok) throw new Error('HTTP ' + rr.status);
+      html = await rr.text();
+    }
+    var m = html.match(/<script id="store-data"[^>]*>([\s\S]*?)<\/script>/);
+    var rs = m ? JSON.parse((m[1] || '{}').trim() || '{}') : {};
+    Object.keys(rs).forEach(function(uid) { store[uid] = rs[uid]; });
+    save();
+    applyAllStatuses();
+    recount();
+    dirty = false;
+    updateIndicator();
+    if (rbtn) { rbtn.textContent = '✅ ดึงแล้ว'; setTimeout(function() { rbtn.textContent = '🔄 ดึงล่าสุด'; rbtn.disabled = false; }, 2000); }
+  } catch (err) {
+    alert('❌ ดึงล่าสุดไม่สำเร็จ: ' + err.message);
+    if (rbtn) { rbtn.textContent = '🔄 ดึงล่าสุด'; rbtn.disabled = false; }
+  }
+}
+document.getElementById('btn-refresh').addEventListener('click', pullLatest);
+
+// ── Set / change GitHub token (one click to escape a bad/expired token) ──
+document.getElementById('btn-token').addEventListener('click', function() {
+  clearToken();
+  var t = ghToken();   // prompts for a fresh token
+  if (t) {
+    alert('บันทึก token แล้ว ✅\nลองกดเปลี่ยนสถานะ TC สัก 1 อัน — ปุ่มควรเด้ง "✅ บันทึกแล้ว!" ใน ~5 วิ');
+    updateIndicator();
+  }
+});
+
+// ── Download file (offline backup) ──
+document.getElementById('btn-save-file').addEventListener('click', function() {
+  save();
+  var html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+  var blob = new Blob([html], { type: 'text/html; charset=utf-8' });
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'takra-radar-chrome-extension-ui-test-cases.html';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(a.href);
+});
+
+document.getElementById('btn-reset').addEventListener('click', function() {
+  if (!confirm('ล้างผลทดสอบทั้งหมด?')) return;
+  store = {};
+  save();
+  dirty = false;
+  location.reload();
+});
+
+// Set TC-AD.1 default to BLOCKED
+(function() {
+  if (!store['tc-29'] || !store['tc-29'].st) {
+    store['tc-29'] = { st: 'block' };
+    save();
+  }
+})();
+
+// Footer date
+var gd = document.getElementById('gen-date');
+if (gd) gd.textContent = document.lastModified || '';
+
+recount();
+updateIndicator();
+
+// Jira / Bug links (per test case · multiple)
+function jiraLabel(u){var m=String(u).match(/([A-Za-z]+-\d+)/);return m?m[1].toUpperCase():u;}
+function normJira(u){u=(u||'').trim();if(!u)return'';if(!/^https?:\/\//i.test(u)){var m=u.match(/^[A-Za-z]+-\d+$/);if(m)return'https://kitdi.atlassian.net/browse/'+u.toUpperCase();}return u;}
+function renderJira(uid){var box=document.querySelector('.jira-list[data-uid="'+uid+'"]');if(!box)return;var arr=(store[uid]&&store[uid].jira)||[];box.innerHTML='';arr.forEach(function(url,i){var row=document.createElement('div');row.className='jira-item';var a=document.createElement('a');a.href=url;a.target='_blank';a.rel='noopener';a.textContent=jiraLabel(url);var del=document.createElement('span');del.className='jira-del';del.textContent='✕';del.title='ลบลิงก์';del.addEventListener('click',function(){store[uid].jira.splice(i,1);if(!store[uid].jira.length)delete store[uid].jira;save();markDirty();renderJira(uid);});row.appendChild(a);row.appendChild(del);box.appendChild(row);});var cell=document.querySelector('td.jira-cell[data-uid="'+uid+'"]');if(cell){cell.innerHTML='';arr.forEach(function(url){var a2=document.createElement('a');a2.href=url;a2.target='_blank';a2.rel='noopener';a2.className='jira-chip';a2.textContent=jiraLabel(url);a2.addEventListener('click',function(e){e.stopPropagation();});cell.appendChild(a2);});}}
+function addJira(uid,val){var url=normJira(val);if(!url)return;store[uid]=store[uid]||{};store[uid].jira=store[uid].jira||[];store[uid].jira.push(url);save();markDirty();renderJira(uid);}
+document.querySelectorAll('.jira-btn').forEach(function(b){b.addEventListener('click',function(e){e.stopPropagation();var u=b.dataset.uid;var inp=document.querySelector('.jira-input[data-uid="'+u+'"]');addJira(u,inp.value);inp.value='';});});
+document.querySelectorAll('.jira-input').forEach(function(inp){inp.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();addJira(inp.dataset.uid,inp.value);inp.value='';}});inp.addEventListener('click',function(e){e.stopPropagation();});});
+document.querySelectorAll('.jira-list').forEach(function(box){renderJira(box.dataset.uid);});
+function applyFeatColor(e,owner){var cls=owner==='Wanlee T (Ice)'?'owner-ice':(owner==='Kachain B (Moss)'?'owner-moss':'');var er=document.querySelector('tr.featrow[data-featkey="'+e+'"]');if(!er)return;er.classList.remove('owner-ice','owner-moss');if(cls)er.classList.add(cls);var s=er.querySelector('.feat-owner');if(s){s.classList.remove('owner-ice','owner-moss');if(cls)s.classList.add(cls);}var n=er.nextElementSibling;while(n&&!n.classList.contains('featrow')&&!n.classList.contains('epicrow')){n.classList.remove('sec-ice','sec-moss');if(cls)n.classList.add(cls==='owner-ice'?'sec-ice':'sec-moss');n=n.nextElementSibling;}}
+document.querySelectorAll('.feat-owner').forEach(function(sel){var e=sel.dataset.featkey,k='feat-'+e;var cur=(store[k]&&store[k].owner)||'';sel.value=cur;applyFeatColor(e,cur);sel.addEventListener('click',function(ev){ev.stopPropagation();});sel.addEventListener('change',function(){var v=sel.value;if(v){store[k]=store[k]||{};store[k].owner=v;}else if(store[k]){delete store[k].owner;if(!Object.keys(store[k]).length)delete store[k];}save();markDirty();applyFeatColor(e,v);});});
+</script>
+
+
+</body></html>
