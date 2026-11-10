@@ -15,15 +15,25 @@ from pathlib import Path
 
 SRC = Path(__file__).resolve().parent / 'takra-insight-ui-nov-sources'
 
+# 10 พ.ย. (รอบ 2) ผู้ใช้สั่ง "เอาที่เป็นจอร์นี่" → ชีตเป็น user journey 15 เคส (J-*.json)
+# เคสย่อยรอบแรก (PAST/TAG/CLIP/SET/ALRT.json) คงไว้เฉพาะเคสที่มีผลใน store แล้ว (เช็กทุกครั้งที่ build)
+_JOURNEYS = [
+    ('m-jrn-clip', '🎬 วิเคราะห์คลิป', 'Journey วิเคราะห์คลิป TikTok / Facebook — วางลิงก์ถึงรายงาน · ลิงก์มีปัญหา · อัปโหลดเอง', 'TI-713',
+     'jrn-clip', 'A · วิเคราะห์คลิปตั้งแต่วางลิงก์จนหาเจอในวิเคราะห์ย้อนหลัง', ['J-A', 'J-A2']),
+    ('m-jrn-past', '📚 ย้อนดู + แท็ก', 'Journey ย้อนดูไลฟ์/คลิป และจัดระเบียบด้วยแท็ก', 'TI-700',
+     'jrn-past', 'B · จบไลฟ์แล้วย้อนดู · หาของเก่า · ติดแท็ก · สลับพื้นที่ทำงาน', ['J-B1', 'J-B2']),
+    ('m-jrn-alert', '🚨 ไลฟ์มีปัญหา + ตั้งค่า', 'Journey แจ้งเตือน Telegram · ไลฟ์มีปัญหาบนจอ · เสียงที่อัดไว้ · หน้าตั้งค่า', 'TI-714',
+     'jrn-alert', 'C · ตั้งแจ้งเตือน · ไลฟ์มีปัญหาระหว่างเฝ้า · เคลียร์เสียงที่อัดไว้', ['J-C1', 'J-C2', 'J-C3']),
+]
 _FILES = ['PAST', 'TAG', 'CLIP', 'SET', 'ALRT']
 
 META = dict(
     out_rel='projects/takra-insight/2026/11/reports/takra-insight-ui-redesign-nov-ui-test-cases-table.html',
-    title='TAKRA Insight — UI ใหม่ (วิเคราะห์ย้อนหลัง · แท็ก · คลิป · ตั้งค่า · แจ้งเตือนไลฟ์) · UI Manual Test Cases',
+    title='TAKRA Insight — UI ใหม่ แบบ User Journey (คลิป · ย้อนดู + แท็ก · ไลฟ์มีปัญหา + ตั้งค่า) · Manual Test Cases',
     emoji='🎨', uid_start=23101, os_cols=True,
     download='takra-insight-ui-redesign-nov-ui-test-cases.html',
     back='https://wanlee-tankunnatam.github.io/qa-test-reports/?project=insight',
-    sub=('เทส UI ด้วยมือ · แอปเดสก์ท็อป TAKRA Insight · UI ใหม่หลัง re-design 5 พ.ย. · โค้ด <b>uat @ 0d937314</b> (5 พ.ย. 2569) · '
+    sub=('เทสด้วยมือแบบ user journey (เดินครบเส้นทางข้ามหลายหน้า) · แอปเดสก์ท็อป TAKRA Insight · UI ใหม่หลัง re-design 5 พ.ย. · โค้ด <b>uat @ 0d937314</b> (5 พ.ย. 2569) · '
          'เฉพาะ P0 + P1 · Target: แอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT)'),
     groups_label='',   # เติมตอนโหลด
     note=('🖥️ <b>Test target:</b> แอปเดสก์ท็อป <b>TAKRA Insight</b> บิลด์ UAT ที่มีโค้ด uat @ 0d937314 ขึ้นไป · '
@@ -35,7 +45,8 @@ META = dict(
           '<a href="https://kitdi.atlassian.net/browse/TI-740" target="_blank">TI-740</a> · '
           '<a href="https://kitdi.atlassian.net/browse/TI-741" target="_blank">TI-741</a> เสียงที่อัดไว้<br>'
           '👤 <b>บัญชี:</b> "บัญชีเจ้าของ / โฮสต์ / ผู้จัดการแบรนด์ / MULTI" ในขั้นตอน = บัญชีทดสอบ UAT ตามบรรทัด "บัญชีที่ใช้" ในช่อง Test Data<br>'
-          '🔁 <b>แทนเคสเดิม:</b> เคสที่ "ที่มา" บอกว่า แทน TC-… คือโฟลว์เดียวกับชีต "ฟีเจอร์ใหม่ พ.ย." ที่หน้าจอเปลี่ยนแล้ว — ชีตเดิมคงผลไว้ ไม่แก้<br>'
+          '🧭 <b>Journey:</b> 1 เคส = ผู้ใช้ทำงานจริง 1 เป้าหมาย เดินตามขั้นตอนครบเส้นทาง · Expected 1 ข้อ = 1 จุดตรวจระหว่างทาง (เรียงตามขั้น) — จุดไหนไม่ผ่านให้ลง FAIL และบอกจุดนั้นใน Actual<br>'
+          '🔁 <b>ครอบเคสเดิม:</b> "ที่มา" บอกว่า journey ครอบเคสย่อยตัวไหน · ชีต "ฟีเจอร์ใหม่ พ.ย." คงผลไว้ ไม่แก้ · เคสย่อยรอบแรกที่บันทึกผลแล้วอยู่กลุ่ม Z ท้ายชีต<br>'
           '🔴 <b>ไลฟ์จริง = ทดสอบด้วยมือ:</b> ห้ามใช้ห้องไลฟ์เดียวกับรอบทดสอบอื่นพร้อมกัน · '
           'เคสที่ต้องให้ไลฟ์มีปัญหา (หลุด ภาพค้าง เสียงหาย) ใช้บัญชีทดสอบของ QA เปิดไลฟ์เอง<br>'
           '📨 <b>Telegram:</b> ใช้กลุ่มทดสอบของ QA + บอททดสอบเท่านั้น ห้ามใช้กลุ่มลูกค้า/กลุ่มทีมจริง<br>'
@@ -61,16 +72,49 @@ def _case(c):
                 expected=list(c['expected']), src=c['src'], note=c.get('note') or None)
 
 
-_menus = []
-for _fn in _FILES:
-    _p = SRC / f'{_fn}.json'
-    if _p.exists():
-        _menus += json.loads(_p.read_text(encoding='utf-8'))['menus']
+def _idkey(i):
+    g, n = i.rsplit('-', 1)[1].split('.')
+    return (g, int(n))
 
-EPICS = [dict(key=m['key'], chip=m['chip'], emoji=m['chip'].split(' ', 1)[0], title=m['title'], jira=m.get('jira'),
-              feats=[dict(featkey=f['featkey'], title=f['title'], cases=[_case(c) for c in f['cases']]) for f in m['feats']])
-         for m in _menus]
-META['groups_label'] = f'{len(EPICS)} หมวด · ' + ' · '.join(m['chip'] for m in _menus)
+
+def _load_list(name):
+    p = SRC / f'{name}.json'
+    return json.loads(p.read_text(encoding='utf-8')) if p.exists() else []
+
+
+EPICS = []
+for key, chip, title, jira, fk, ftitle, files in _JOURNEYS:
+    cs = sorted((c for fn in files for c in _load_list(fn)), key=lambda c: _idkey(c['id']))
+    if cs:
+        EPICS.append(dict(key=key, chip=chip, emoji=chip.split(' ', 1)[0], title=title, jira=jira,
+                          feats=[dict(featkey=fk, title=ftitle, cases=[_case(c) for c in cs])]))
+
+# เคสย่อยรอบแรกที่มีผลบันทึกแล้ว → คงไว้ท้ายชีต (ผลต้องตรงกับเนื้อเคสตอนที่เทส)
+import re as _re  # noqa: E402
+_out = Path(__file__).resolve().parents[2] / META['out_rel']
+_store = {}
+if _out.exists():
+    _m = _re.search(r'<script id="store-data"[^>]*>([\s\S]*?)</script>', _out.read_text(encoding='utf-8'))
+    _store = json.loads(_m.group(1)) if _m and _m.group(1).strip() else {}
+_old_map = json.loads((SRC / 'uid_map.json').read_text(encoding='utf-8'))
+
+
+def _has_result(cid):
+    v = _store.get(f'tc-{_old_map.get(cid)}') or {}
+    return any(v.get(k) for k in ('st', 'stw', 'actual', 'actualw', 'jira', 'bug'))
+
+
+_kept = []
+for _fn in _FILES:
+    for m in json.loads((SRC / f'{_fn}.json').read_text(encoding='utf-8'))['menus']:
+        for f in m['feats']:
+            _kept += [c for c in f['cases'] if _has_result(c['id'])]
+if _kept:
+    EPICS.append(dict(key='m-old', chip='🗂️ เคสย่อยเดิม', emoji='🗂️',
+                      title='เคสย่อยรอบแรกที่บันทึกผลไว้แล้ว — คงไว้ให้ผลตรงกับเนื้อเคส (ไม่ต้องเทสซ้ำ)', jira='TI-700',
+                      feats=[dict(featkey='old-kept', title='Z · เคสย่อยเดิมที่มีผลแล้ว', cases=[_case(c) for c in _kept])]))
+_menus = [dict(chip=e['chip']) for e in EPICS]
+META['groups_label'] = f'{len(EPICS)} กลุ่ม · ' + ' · '.join(m['chip'] for m in _menus)
 
 _ALL = [c for e in EPICS for f in e['feats'] for c in f['cases']]
 _ids = [c['id'] for c in _ALL]
