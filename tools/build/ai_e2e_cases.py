@@ -3,6 +3,7 @@
 
 สั่ง 2026-11-10: "projects/takra-ai e2e ของเรามีอะไรบ้าง ทำเป็นไฟล์ test case ใหม่ให้หน่อย"
 - ต้นทาง: takra-ai origin/develop @ 80b89d94 · apps/web/tests/e2e/*.spec.ts (19 ไฟล์ · ไม่นับ uat-screens.capture.spec.ts ที่ใช้จับภาพหน้าจอ)
+- 10 พ.ย. ผู้ใช้สั่ง "ชีตนี้เหลือแค่ full loop" → เก็บเฉพาะเคส level e2e (ตัดเคสหน้าเดียว 15 เคส)
 - 1 test() ในสคริปต์ = 1 เคส · 1 ไฟล์สคริปต์ = 1 กลุ่ม · บรรทัดที่มาบอกไฟล์สคริปต์ › TC
 - คำบนจอลอกจาก i18n th (apps/web/src/i18n/locales/th) · ทางเข้าเมนูตามชีต "UI ใหม่ แบ่งตามเมนู"
 - ข้อมูลเคสอยู่ที่ tools/build/takra-ai-e2e-sources/<CODE>.json (ACC · SCR · SCH · LIVE · STU) · uid ตรึงด้วย uid_map.json (22801–)
@@ -16,16 +17,16 @@ _FILES = ['ACC', 'SCR', 'SCH', 'LIVE', 'STU']
 
 META = dict(
     out_rel='projects/takra-ai/2026/11/reports/takra-ai-e2e-ui-test-cases-table.html',
-    title='TAKRA AI — E2E ของเรา (สคริปต์ e2e → เคสเทสด้วยมือ) · UI Manual Test Cases',
+    title='TAKRA AI — E2E ของเรา · Full loop (สคริปต์ e2e → เคสเทสด้วยมือ) · UI Manual Test Cases',
     emoji='🔁', uid_start=22801, script_col=True,
     download='takra-ai-e2e-ui-test-cases.html',
     back='https://wanlee-tankunnatam.github.io/qa-test-reports/?project=ai',
     sub=('เทสด้วยมือในแอป Takra Live (UAT) · ครอบทุกเทสต์ในสคริปต์ e2e ของเรา '
-         '(<code>apps/web/tests/e2e</code> · develop @ 80b89d94) · P0 + P1'),
+         '(<code>apps/web/tests/e2e</code> · develop @ 80b89d94) · เฉพาะ full loop · P0 + P1'),
     groups_label='',
     note=('🖥️ <b>เทสที่:</b> แอปเดสก์ท็อป <b>Takra Live</b> (UAT) · เข้าสู่ระบบผ่านหน้า TAKRA Hub · ทดสอบในโปรแกรมเท่านั้น ไม่พิมพ์ URL ไม่ใช้ DevTools<br>'
           '👥 <b>บัญชี:</b> <b>เจ้าของ workspace</b> = บัญชี UAT ของ QA ที่มีแพ็กเกจ TAKRA AI ใช้งานได้ · <b>สมาชิก (Member)</b> = บัญชีที่ถูกเชิญเข้า workspace เดียวกัน (เฉพาะเคสเรื่องสิทธิ์)<br>'
-          '🔁 <b>ชีตนี้คืออะไร:</b> ทุกเคสมาจาก 1 เทสต์ในสคริปต์ e2e (Playwright) ของเรา — ช่อง "ที่มา" บอกไฟล์สคริปต์ › TC · '
+          '🔁 <b>ชีตนี้คืออะไร:</b> เฉพาะเคส full loop (เดินข้ามหลายหน้าจนจบ flow) — ทุกเคสมาจาก 1 เทสต์ในสคริปต์ e2e (Playwright) ของเรา · ช่อง "ที่มา" บอกไฟล์สคริปต์ › TC · '
           'คอลัมน์ Script ใช้จดผลการรันสคริปต์ ส่วน Status ใช้จดผลเทสด้วยมือ<br>'
           '🔴 <b>ไลฟ์จริง:</b> เคสที่ออกอากาศจริงทดสอบด้วยมือเท่านั้น · ห้ามใช้ห้อง/บัญชี TikTok เดียวกับรอบทดสอบอื่นพร้อมกัน<br>'
           '📎 <b>ที่มา:</b> คำบนจอจาก i18n th + โค้ด apps/web/src · Expected ยึดสคริปต์ + เคสกลาง <code>_bmad-output/test-artifacts/case/*/fullloop-e2e.md</code> + epics.md / epics-mvp2.md'),
