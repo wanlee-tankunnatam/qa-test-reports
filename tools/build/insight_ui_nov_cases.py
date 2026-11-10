@@ -91,11 +91,16 @@ for key, chip, title, jira, fk, ftitle, files in _JOURNEYS:
 
 # เคสย่อยรอบแรกที่มีผลบันทึกแล้ว → คงไว้ท้ายชีต (ผลต้องตรงกับเนื้อเคสตอนที่เทส)
 import re as _re  # noqa: E402
-_out = Path(__file__).resolve().parents[2] / META['out_rel']
+_ROOT = Path(__file__).resolve().parents[2]
+_REP = 'projects/takra-insight/2026/11/reports/'
+_COMBINED = _REP + 'takra-insight-ui-redesign-nov-ui-test-cases-table.html'   # ไฟล์รวมเดิม (ก่อนแยก 10 พ.ย.)
 _store = {}
-if _out.exists():
-    _m = _re.search(r'<script id="store-data"[^>]*>([\s\S]*?)</script>', _out.read_text(encoding='utf-8'))
-    _store = json.loads(_m.group(1)) if _m and _m.group(1).strip() else {}
+for _rel in (_COMBINED, _REP + 'takra-insight-ui-journey-past-tags-nov-ui-test-cases-table.html'):
+    _f = _ROOT / _rel
+    if _f.exists():
+        _m = _re.search(r'<script id="store-data"[^>]*>([\s\S]*?)</script>', _f.read_text(encoding='utf-8'))
+        if _m and _m.group(1).strip():
+            _store.update(json.loads(_m.group(1)))
 _old_map = json.loads((SRC / 'uid_map.json').read_text(encoding='utf-8'))
 
 
@@ -140,3 +145,45 @@ if _new:
 # ── บัญชีทดสอบ (UAT) — ดู insight_accounts.py ──
 from insight_accounts import apply_accounts  # noqa: E402
 apply_accounts(EPICS)
+
+
+# ── แยกชีตตามกลุ่ม (ผู้ใช้สั่ง 10 พ.ย.: "แยกชีตตามกลุ่ม") ─────────────────────────────
+# build: python3 tools/build/build_hub_report.py insightuiclip | insightuipast | insightuialert
+_ALL_EPICS = list(EPICS)
+_BASE_META = dict(META)
+_SHEETS = {
+    'clip': dict(keys=['m-jrn-clip'], slug='clip', name='A · วิเคราะห์คลิป',
+                 title='TAKRA Insight — Journey A · วิเคราะห์คลิป TikTok / Facebook · Manual Test Cases', emoji='🎬'),
+    'past': dict(keys=['m-jrn-past', 'm-old'], slug='past-tags', name='B · ย้อนดู + แท็ก',
+                 title='TAKRA Insight — Journey B · ย้อนดูไลฟ์/คลิป + แท็ก · Manual Test Cases', emoji='📚',
+                 seed=_COMBINED),
+    'alert': dict(keys=['m-jrn-alert'], slug='alerts-settings', name='C · ไลฟ์มีปัญหา + ตั้งค่า',
+                  title='TAKRA Insight — Journey C · แจ้งเตือน Telegram · ไลฟ์มีปัญหา · ตั้งค่า · Manual Test Cases', emoji='🚨'),
+}
+
+
+def _note(key):
+    n = _BASE_META['note']
+    if key == 'clip':   # ไม่มี journey ไลฟ์จริง / Telegram ในชีตคลิป
+        n = _re.sub(r"🔴 <b>ไลฟ์จริง.*?<br>", '', n, flags=_re.S)
+        n = _re.sub(r"📨 <b>Telegram:</b>.*?<br>", '', n, flags=_re.S)
+    if key != 'past':
+        n = n.replace(' · เคสย่อยรอบแรกที่บันทึกผลแล้วอยู่กลุ่ม Z ท้ายชีต', '')
+    others = ' · '.join(f'<a href="takra-insight-ui-journey-{v["slug"]}-nov-ui-test-cases-table.html">{v["name"]}</a>'
+                        for k, v in _SHEETS.items() if k != key)
+    return n + f'<br>🗂️ <b>ชีตอื่นในชุดเดียวกัน:</b> {others}'
+
+
+def select(key):
+    """ให้ build_hub_report.py เลือกชีตกลุ่มเดียว → EPICS/META ของไฟล์นั้น"""
+    global EPICS, META
+    sh = _SHEETS[key]
+    EPICS = [e for e in _ALL_EPICS if e['key'] in sh['keys']]
+    META = dict(_BASE_META,
+                out_rel=f'{_REP}takra-insight-ui-journey-{sh["slug"]}-nov-ui-test-cases-table.html',
+                download=f'takra-insight-ui-journey-{sh["slug"]}-nov-ui-test-cases.html',
+                title=sh['title'], emoji=sh['emoji'], note=_note(key),
+                groups_label=f'{len(EPICS)} กลุ่ม · ' + ' · '.join(e['chip'] for e in EPICS),
+                footer=f'UI only (manual) · TAKRA Insight desktop · UI ใหม่ re-design พ.ย. 2569 · Journey {sh["name"]}')
+    if sh.get('seed'):
+        META['seed_store_from'] = sh['seed']

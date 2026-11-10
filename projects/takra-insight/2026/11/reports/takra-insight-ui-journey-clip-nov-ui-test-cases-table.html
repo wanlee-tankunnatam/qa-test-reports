@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="th"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TAKRA Insight — Journey A · วิเคราะห์คลิป TikTok / Facebook · Manual Test Cases</title>
+<style>
+:root{
+  --bg:#f5f6f8;--card:#fff;--card2:#f0f2f5;--line:#dce0e7;
+  --txt:#1f2430;--muted:#6b7280;--accent:#2563eb;
+  --p0:#dc2626;--p1:#ea7a18;--p2:#2563eb;--p3:#94a3b8;
+  --pass:#16a34a;--fail:#dc2626;--hold:#d97706;--skip:#9ca3af;--block:#7c3aed;
+  --lv-ui:#db2777;--lv-e2e:#ea580c;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--txt);font-family:"Segoe UI","Sarabun",system-ui,sans-serif;line-height:1.5;font-size:13px}
+a{color:var(--accent)}
+header.top{padding:20px 28px 14px;border-bottom:1px solid var(--line);background:linear-gradient(135deg,#1e3a8a,#2563eb);color:#fff}
+header.top h1{margin:0 0 4px;font-size:20px}
+header.top .sub{font-size:12.5px;opacity:.88}
+header.top .meta{margin-top:10px;display:flex;flex-wrap:wrap;gap:8px}
+.pill{display:inline-block;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:600;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.35);color:#fff}
+.wrap{padding:16px 22px 80px;max-width:1280px;margin:0 auto}
+.counts{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 12px}
+.cnt{font-size:12px;font-weight:700;padding:5px 12px;border-radius:8px;border:1px solid var(--line);background:#fff}
+.cnt b{font-size:14px}
+.cnt.pass{color:var(--pass);border-color:#bbf7d0}.cnt.fail{color:var(--fail);border-color:#fecaca}
+.cnt.hold{color:var(--hold);border-color:#fde68a}.cnt.block{color:var(--block);border-color:#e9d5ff}
+.cnt.pending{color:var(--muted)}.cnt.skip{color:var(--skip)}
+.runsum{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin:0 0 14px}
+.runsum h3{margin:0 0 8px;font-size:13px}
+.sumchips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px}
+.progress{height:10px;background:var(--card2);border-radius:6px;overflow:hidden;border:1px solid var(--line)}
+.progressbar{height:100%;background:var(--pass);width:0;transition:width .3s}
+.hint{color:var(--muted);font-size:12px}
+.toolbar{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;margin:0 0 12px}
+.btn{font-size:12px;font-weight:600;padding:5px 12px;border-radius:7px;border:1px solid var(--line);background:#fff;color:var(--txt);cursor:pointer}
+.btn:hover{border-color:var(--accent);color:var(--accent)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.btn.primary:hover{opacity:.88}
+.filters{background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:0 0 14px}
+.filters .row{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:3px 0}
+.filters label{font-size:11px;font-weight:700;color:var(--muted);min-width:60px}
+.fchip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:3px 11px;font-size:11.5px;cursor:pointer;color:var(--txt)}
+.fchip:hover{border-color:var(--accent);color:var(--accent)}
+.fchip.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.clearbtn{font-size:11px;padding:3px 10px;border:1px solid var(--line);border-radius:6px;background:#fff;color:var(--muted);cursor:pointer;margin-left:4px}
+.clearbtn:hover{color:var(--fail);border-color:var(--fail)}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:#fff}
+table.tc{border-collapse:collapse;width:100%;min-width:900px;background:#fff}
+table.tc th,table.tc td{padding:8px 10px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+table.tc thead th{position:sticky;top:0;background:var(--card2);color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.4px;z-index:3;border-bottom:2px solid var(--line)}
+tr.epicrow td{background:#1e3a8a;color:#fff;font-weight:700;font-size:13px;padding:9px 12px}
+tr.epicrow .rp{font-weight:400;font-size:11px;opacity:.75;margin-left:6px}
+tr.featrow td{background:#eaf1fb;color:#1d4ed8;font-weight:700;font-size:12px}
+tr.featrow .rp{font-weight:500;font-size:11px;color:#3b6fc4;margin-left:8px}
+tr.trow{cursor:pointer}tr.trow:hover{background:#f7f9fc}tr.trow.open{background:#eef4fe}
+.tog{display:inline-block;width:14px;color:var(--muted);transition:transform .15s;font-size:11px}
+tr.trow.open .tog{transform:rotate(90deg);color:var(--accent)}
+.cid{font-family:monospace;font-size:10px;color:var(--muted);white-space:nowrap}
+td.jira{white-space:nowrap}td.jira a{font-family:monospace;font-size:10.5px;font-weight:700;color:var(--accent);text-decoration:none}td.jira a:hover{text-decoration:underline}
+.ctitle{font-weight:600;font-size:12.5px;max-width:400px}
+td.lvl{white-space:nowrap}
+.lv{font-size:10px;font-weight:700;padding:2px 7px;border-radius:5px;border:1px solid;background:#fff;display:inline-block;vertical-align:middle}
+.lv.lvl-ui{color:var(--lv-ui);border-color:var(--lv-ui)}
+.lv.lvl-e2e{color:var(--lv-e2e);border-color:var(--lv-e2e)}
+.ac{font-size:10px;color:var(--muted);font-family:monospace;margin-left:4px}
+.prio{font-weight:800;font-size:10px;padding:3px 7px;border-radius:5px;color:#fff;display:inline-block;white-space:nowrap}
+.p0{background:var(--p0)}.p1{background:var(--p1)}.p2{background:var(--p2)}
+td.status{white-space:nowrap}
+.stb{font-weight:700;font-size:10px;padding:3px 8px;border-radius:5px;display:inline-block}
+.stb.pending{background:#fff;border:1px solid var(--line);color:var(--muted)}
+.stb.pass{background:var(--pass);color:#fff}.stb.fail{background:var(--fail);color:#fff}
+.stb.hold{background:var(--hold);color:#fff}.stb.block{background:var(--block);color:#fff}
+.stb.skip{background:var(--skip);color:#fff}
+tr.detail{display:none}tr.detail.show{display:table-row}
+tr.detail>td{background:#fafbfc;padding:0;border-bottom:2px solid var(--line)}
+.card{padding:16px 20px}
+.card .h-title{font-size:14px;font-weight:700;margin:0 0 3px}
+.card .h-prio{font-size:12px;color:var(--muted);margin:0 0 12px}
+.card .sec{margin:0 0 12px}.card .sec:last-child{margin-bottom:0}
+.card .sec h4{margin:0 0 5px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.3px;color:#374151}
+.card .sec ol,.card .sec ul{margin:0;padding-left:18px}
+.card .sec li{margin:2px 0;font-size:12.5px}
+.card .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:760px){.card .grid{grid-template-columns:1fr}}
+.actualbox{display:block;width:100%;box-sizing:border-box;background:#fff;border:1px dashed var(--line);border-radius:7px;padding:7px 11px;color:var(--txt);font:inherit;font-size:12px;line-height:1.55;min-height:78px;resize:vertical}
+.actualbox::placeholder{color:var(--muted);font-style:italic}
+.actualbox:focus{outline:none;border-style:solid;border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,99,235,.13)}
+.actualbox.filled{border-style:solid;border-color:var(--accent)}
+.statusrow{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.opt{font-size:11px;font-weight:700;padding:4px 11px;border-radius:6px;border:1px solid var(--line);background:#fff;color:var(--muted);cursor:pointer}
+.opt:hover{opacity:.8}
+.opt.pass{border-color:var(--pass)}.opt.fail{border-color:var(--fail)}
+.opt.hold{border-color:var(--hold)}.opt.block{border-color:var(--block)}.opt.skip{border-color:var(--skip)}
+.opt.sel.pass{background:var(--pass);color:#fff}
+.opt.sel.fail{background:var(--fail);color:#fff}
+.opt.sel.hold{background:var(--hold);color:#fff}
+.opt.sel.block{background:var(--block);color:#fff}
+.opt.sel.skip{background:var(--skip);color:#fff}
+tr.trow.hide,tr.detail.hide{display:none!important}
+tr.epicrow.hide,tr.featrow.hide{display:none!important}
+.note-box{background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:8px 12px;font-size:12px;color:#92400e;margin:0 0 12px}
+footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
+@media print{.tablewrap{overflow:visible}table.tc{min-width:0}tr.detail{display:table-row!important}.toolbar,.filters,.runsum{display:none}}
+/* Jira per-case links */
+.jira-sec .jira-list{display:flex;flex-direction:column;gap:4px;margin-bottom:6px}
+.jira-item{display:flex;align-items:center;gap:8px;font-size:12px}
+.jira-item a{color:var(--accent);text-decoration:none;font-family:monospace;font-weight:700}
+.jira-item a:hover{text-decoration:underline}
+.jira-del{cursor:pointer;color:var(--fail);font-weight:700;font-size:11px;user-select:none}
+.jira-add{display:flex;gap:6px}
+.jira-input{flex:1;min-width:0;padding:5px 8px;border:1px solid var(--line);border-radius:6px;font-size:12px;font-family:inherit;background:#fff;color:var(--txt)}
+.jira-btn{white-space:nowrap}
+.edge-badge{display:inline-block;margin-left:6px;padding:0 6px;border-radius:4px;font-size:9.5px;font-weight:700;color:#92400e;background:#fef3c7;border:1px solid #fde68a;vertical-align:middle}
+.jira-cell{white-space:normal}
+.jira-chip{display:inline-block;margin:1px 3px 1px 0;padding:1px 6px;border:1px solid var(--line);border-radius:5px;font-family:monospace;font-size:10.5px;font-weight:700;color:var(--accent);text-decoration:none;background:var(--card2)}
+.jira-chip:hover{text-decoration:underline}
+/* Epic assignee + section color */
+.epic-owner-wrap{margin-left:12px;font-weight:400;font-size:11px}
+.feat-owner{font-size:11px;padding:2px 6px;border:1px solid var(--line);border-radius:5px;background:#fff;color:var(--txt);cursor:pointer}
+tr.featrow.owner-ice td{background:#60a5fa;border-left:4px solid #1d4ed8}
+tr.featrow.owner-moss td{background:#a78bfa;border-left:4px solid #6d28d9}
+tr.sec-ice>td:first-child{box-shadow:inset 5px 0 0 #2563eb}
+tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
+.feat-owner.owner-ice{border-color:#2563eb;color:#2563eb;font-weight:700}
+.feat-owner.owner-moss{border-color:#7c3aed;color:#7c3aed;font-weight:700}
+
+/* ประเภทเคส (kind) */
+.kd{display:inline-block;margin-left:6px;padding:0 6px;border-radius:4px;font-size:9.5px;font-weight:700;vertical-align:middle;border:1px solid;white-space:nowrap}
+.kd-happy{color:#15803d;background:#f0fdf4;border-color:#bbf7d0}
+.kd-neg{color:#b91c1c;background:#fef2f2;border-color:#fecaca}
+.kd-bnd{color:#b45309;background:#fffbeb;border-color:#fde68a}
+.kd-val{color:#6d28d9;background:#f5f3ff;border-color:#ddd6fe}
+.kd-exc{color:#be123c;background:#fff1f2;border-color:#fecdd3}
+.kd-perm{color:#0f766e;background:#f0fdfa;border-color:#99f6e4}
+.kd-data{color:#1d4ed8;background:#eff6ff;border-color:#bfdbfe}
+.kd-reg{color:#475569;background:#f8fafc;border-color:#cbd5e1}
+.chk{margin-top:4px;padding:6px 8px;border-left:3px solid #16a34a;background:rgba(22,163,74,.07)}
+.noui{display:inline-block;margin-left:6px;padding:0 6px;border-radius:4px;font-size:9.5px;font-weight:700;vertical-align:middle;color:#991b1b;background:#fee2e2;border:1px solid #fca5a5;white-space:nowrap}
+
+/* ป้าย epic (Jira) */
+.epic-tag{display:inline-block;margin-left:6px;padding:0 6px;border-radius:4px;font-size:9.5px;font-weight:700;vertical-align:middle;white-space:nowrap;color:#1e3a8a;background:#eef2ff;border:1px solid #c7d2fe;text-decoration:none}
+.epic-tag:hover{background:#e0e7ff;text-decoration:underline}
+.epicrow .epic-tag{font-size:11px;margin-left:8px}
+
+td.status-win{white-space:nowrap}
+.osline{display:flex;align-items:center;gap:8px;margin-top:5px;flex-wrap:wrap}
+.oslbl{font-size:11px;font-weight:800;color:var(--muted);min-width:84px}
+.optw{font-size:11px;font-weight:700;padding:4px 11px;border-radius:6px;border:1px solid var(--line);background:#fff;color:var(--muted);cursor:pointer}
+.optw:hover{opacity:.8}
+.optw.pass{border-color:var(--pass)}.optw.fail{border-color:var(--fail)}
+.optw.hold{border-color:var(--hold)}.optw.block{border-color:var(--block)}.optw.skip{border-color:var(--skip)}
+.optw.sel.pass{background:var(--pass);color:#fff}
+.optw.sel.fail{background:var(--fail);color:#fff}
+.optw.sel.hold{background:var(--hold);color:#fff}
+.optw.sel.block{background:var(--block);color:#fff}
+.optw.sel.skip{background:var(--skip);color:#fff}
+.actual-os-lbl{font-size:10px;font-weight:800;color:#475569;margin:9px 0 3px}
+.actual-os-lbl.first{margin-top:2px}
+</style>
+</head>
+<body>
+<a id="hub-back-btn" href="https://wanlee-tankunnatam.github.io/qa-test-reports/?project=insight" title="กลับไปหน้ารวมรายงาน (Hub)" style="position:fixed;top:12px;right:14px;z-index:99999;display:inline-flex;align-items:center;gap:7px;padding:10px 18px;border-radius:999px;background:#ffffff;color:#1e3a8a;font-size:14px;font-weight:800;text-decoration:none;box-shadow:0 4px 16px rgba(0,0,0,.35);border:2px solid #1e3a8a;font-family:'Segoe UI','Sarabun',system-ui,sans-serif">🏠 รายงานทั้งหมด</a>
+
+
+<script id="store-data" type="application/json">
+{}
+</script>
+
+<header class="top">
+  <h1>🎬 TAKRA Insight — Journey A · วิเคราะห์คลิป TikTok / Facebook · Manual Test Cases</h1>
+  <div class="sub">เทสด้วยมือแบบ user journey (เดินครบเส้นทางข้ามหลายหน้า) · แอปเดสก์ท็อป TAKRA Insight · UI ใหม่หลัง re-design 5 พ.ย. · โค้ด <b>uat @ 0d937314</b> (5 พ.ย. 2569) · เฉพาะ P0 + P1 · Target: แอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT)</div>
+  <div class="meta">
+    <span class="pill">0 เคส + E2E 5 = 5</span>
+    <span class="pill">1 กลุ่ม · 🎬 วิเคราะห์คลิป</span>
+    <span class="pill">UI + E2E · manual</span>
+    <span class="pill">P0 2 · P1 3 · P2 0</span>
+    <span class="pill">ประเภท: Happy 3 · Negative 0 · Boundary 0 · Validation 0 · Exception 2 · Permission 0 · Data 0</span>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="note-box">🖥️ <b>Test target:</b> แอปเดสก์ท็อป <b>TAKRA Insight</b> บิลด์ UAT ที่มีโค้ด uat @ 0d937314 ขึ้นไป · ทดสอบทั้ง 🍎 Mac และ 🪟 Windows (บันทึกผลแยกคอลัมน์)<br>🎨 <b>UI ใหม่:</b> re-design <a href="https://kitdi.atlassian.net/browse/TI-700" target="_blank">TI-700</a> วิเคราะห์ย้อนหลัง · <a href="https://kitdi.atlassian.net/browse/TI-713" target="_blank">TI-713</a> คลิป · <a href="https://kitdi.atlassian.net/browse/TI-714" target="_blank">TI-714</a> ตั้งค่า/Telegram/ป้ายสถานะไลฟ์ · <a href="https://kitdi.atlassian.net/browse/TI-717" target="_blank">TI-717</a> แท็ก · <a href="https://kitdi.atlassian.net/browse/TI-740" target="_blank">TI-740</a> · <a href="https://kitdi.atlassian.net/browse/TI-741" target="_blank">TI-741</a> เสียงที่อัดไว้<br>👤 <b>บัญชี:</b> "บัญชีเจ้าของ / โฮสต์ / ผู้จัดการแบรนด์ / MULTI" ในขั้นตอน = บัญชีทดสอบ UAT ตามบรรทัด "บัญชีที่ใช้" ในช่อง Test Data<br>🧭 <b>Journey:</b> 1 เคส = ผู้ใช้ทำงานจริง 1 เป้าหมาย เดินตามขั้นตอนครบเส้นทาง · Expected 1 ข้อ = 1 จุดตรวจระหว่างทาง (เรียงตามขั้น) — จุดไหนไม่ผ่านให้ลง FAIL และบอกจุดนั้นใน Actual<br>🔁 <b>ครอบเคสเดิม:</b> "ที่มา" บอกว่า journey ครอบเคสย่อยตัวไหน · ชีต "ฟีเจอร์ใหม่ พ.ย." คงผลไว้ ไม่แก้<br>📎 <b>ที่มา:</b> คำบนจอลอกจาก <code>apps/desktop/desktop/src/renderer/src/i18n/th.js</code> (uat) · Expected ยึด <code>prd.md</code> · <code>prd-m3.md</code> · AC ในใบ Jira<br>🗂️ <b>ชีตอื่นในชุดเดียวกัน:</b> <a href="takra-insight-ui-journey-past-tags-nov-ui-test-cases-table.html">B · ย้อนดู + แท็ก</a> · <a href="takra-insight-ui-journey-alerts-settings-nov-ui-test-cases-table.html">C · ไลฟ์มีปัญหา + ตั้งค่า</a></div>
+
+  <div class="runsum">
+    <h3>📊 สรุปผล Manual Test</h3>
+    <div class="sumchips">
+      <span class="cnt pass">PASS <b id="sum-pass">0</b></span>
+      <span class="cnt fail">FAIL <b id="sum-fail">0</b></span>
+      <span class="cnt hold">HOLD <b id="sum-hold">0</b></span>
+      <span class="cnt block">BLOCKED <b id="sum-block">0</b></span>
+      <span class="cnt skip">SKIP <b id="sum-skip">0</b></span>
+      <span class="cnt pending">รอเทส <b id="sum-pending">5</b></span>
+    </div>
+    <div class="progress"><div id="sumbar" class="progressbar" style="width:0%"></div></div>
+    <div class="hint" id="sumpct" style="margin-top:5px">0% ทดสอบแล้ว (0/5)</div>
+  </div>
+
+  <div class="toolbar">
+    <button class="btn" onclick="toggleAll(true)">▸ กางทั้งหมด</button>
+    <button class="btn" onclick="toggleAll(false)">▾ ยุบทั้งหมด</button>
+    <span class="hint">💡 คลิกแถว → ดู Steps / Expected (UI only)</span>
+    <span style="margin-left:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+      <span id="save-status" class="hint" style="white-space: nowrap; color: var(--muted);">✓ ตรงกับ GitHub</span>
+      <label class="hint" style="display:flex;gap:4px;align-items:center;white-space:nowrap;cursor:pointer" title="บันทึกขึ้น GitHub อัตโนมัติหลังหยุดแก้ ~5 วินาที"><input type="checkbox" id="chk-autosave" checked=""> auto-save</label>
+      <button class="btn" id="btn-token" title="ใส่/เปลี่ยน GitHub token (ถ้าเซฟไม่ขึ้น/token เสีย กดอันนี้)">🔑 Token</button>
+      <button class="btn" id="btn-refresh" title="ดึงผลล่าสุดจาก GitHub มา merge (ไม่ต้อง reload)">🔄 ดึงล่าสุด</button>
+      <button class="btn primary" id="btn-publish" style="">☁️ บันทึกขึ้น GitHub</button>
+      <button class="btn" id="btn-save-file" title="ดาวน์โหลด HTML ไว้ใช้ offline">💾 ดาวน์โหลด</button>
+      <button class="btn" style="color:var(--fail)" id="btn-reset">🗑 ล้างผล</button>
+    </span>
+  </div>
+
+  <div class="filters">
+    <div class="row"><label>กลุ่ม</label>
+      <button class="fchip" data-f="feat" data-v="m-jrn-clip">🎬 วิเคราะห์คลิป (5)</button>
+      <button class="clearbtn" data-clear="feat">✕</button>
+    </div>
+    <div class="row"><label>ประเภท</label>
+      <button class="fchip" data-f="kind" data-v="happy" title="flow ปกติ">Happy Path (3)</button><button class="fchip" data-f="kind" data-v="negative" title="ข้อมูลผิด / action ผิด">Negative (0)</button><button class="fchip" data-f="kind" data-v="boundary" title="min · max · ก่อนขอบ · ตรงขอบ · เกินขอบ">Boundary (0)</button><button class="fchip" data-f="kind" data-v="validation" title="format · required · character · length">Validation (0)</button><button class="fchip" data-f="kind" data-v="exception" title="เน็ตหลุด · ระบบภายนอกผิดปกติ · timeout">Exception (2)</button><button class="fchip" data-f="kind" data-v="permission" title="role ไหนทำได้ / ทำไม่ได้">Permission (0)</button><button class="fchip" data-f="kind" data-v="data" title="empty · duplicate · ไม่ปนข้ามทีม/แพลตฟอร์ม">Data (0)</button>
+      <button class="clearbtn" data-clear="kind">✕</button>
+    </div>
+    <div class="row"><label>Priority</label>
+      <button class="fchip" data-f="prio" data-v="P0">P0</button>
+      <button class="fchip" data-f="prio" data-v="P1">P1</button>
+      <button class="fchip" data-f="prio" data-v="P2">P2</button>
+      <button class="clearbtn" data-clear="prio">✕</button>
+    </div>
+    <div class="row"><label>สถานะ</label>
+      <button class="fchip" data-f="status" data-v="pass">✅ PASS</button>
+      <button class="fchip" data-f="status" data-v="fail">❌ FAIL</button>
+      <button class="fchip" data-f="status" data-v="hold">⏸ HOLD</button>
+      <button class="fchip" data-f="status" data-v="block">🚫 BLOCKED</button>
+      <button class="fchip" data-f="status" data-v="skip">⏭ SKIP</button>
+      <button class="fchip" data-f="status" data-v="pending">⏳ รอเทส</button>
+      <button class="clearbtn" data-clear="status">✕</button>
+    </div>
+  </div>
+
+  <div class="tablewrap">
+  <table class="tc" id="main-table">
+    <thead><tr><th style="width:22px"></th><th style="width:130px">TC ID</th><th>Test Case</th><th style="width:74px">Level</th><th style="width:55px">Pri</th><th style="width:74px">🍎 Mac</th><th style="width:88px">🪟 Windows</th><th style="width:120px">Jira</th></tr></thead>
+    <tbody>
+
+<!-- m-jrn-clip -->
+<tr class="epicrow" data-epic="m-jrn-clip"><td colspan="8">🎬 Journey วิเคราะห์คลิป TikTok / Facebook — วางลิงก์ถึงรายงาน · ลิงก์มีปัญหา · อัปโหลดเอง <span class="rp">(5 เคส)</span> <a class="epic-tag" href="https://kitdi.atlassian.net/browse/TI-713" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TI-713 ใน Jira">🧩 Epic TI-713</a></td></tr>
+<tr class="featrow" data-featkey="jrn-clip"><td colspan="8">📁 A · วิเคราะห์คลิปตั้งแต่วางลิงก์จนหาเจอในวิเคราะห์ย้อนหลัง <span class="rp"> <span class="lv lvl-e2e">🔄 5</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="jrn-clip"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow" data-feat="m-jrn-clip" data-level="e2e" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-JRN-A.1</td>
+  <td class="ctitle">วิเคราะห์คลิป TikTok ตั้งแต่วางลิงก์จนหาเจอในวิเคราะห์ย้อนหลัง → รายงานครบ ชื่อและป้ายตรงกันทุกหน้า <span class="kd kd-happy">Happy Path</span></td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-23223"><span class="stb pending">รอเทส</span></td>
+  <td class="status-win" data-uid="tc-23223"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-23223"></td>
+</tr>
+<tr class="detail"><td colspan="8"><div class="card">
+  <div class="h-title">วิเคราะห์คลิป TikTok ตั้งแต่วางลิงก์จนหาเจอในวิเคราะห์ย้อนหลัง → รายงานครบ ชื่อและป้ายตรงกันทุกหน้า</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TI-713" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TI-713 ใน Jira">🧩 Epic TI-713</a> · Priority: <b>P0</b> · E2E · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · Journey วิเคราะห์คลิป TikTok / Facebook — วางลิงก์ถึงรายงาน · ลิงก์มีปัญหา</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #d97706;background:rgba(217,119,6,.07)">📌 <b>หมายเหตุ:</b> FAIL ถ้ามีขั้นค้าง "กำลังทำ" หลังรายงานเปิด หรือชื่อคลิปไม่ตรงกันระหว่างรายงาน คลิปล่าสุด และวิเคราะห์ย้อนหลัง · ตัวเลขเวลาขึ้นกับความยาวคลิปจริง (≈ ความยาว + 5 ถึง + 30 วินาที)</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>แอปล็อกอิน TikTok ไว้แล้ว</li><li>ให้ความยินยอมอ่านสีหน้าและฟังเสียงแล้ว</li><li>ไม่มีไลฟ์กำลังบันทึกอยู่ในแอป</li></ul></div>
+  <div class="sec"><h4>Test Data</h4><ul><li>บัญชีที่ใช้ (UAT): qa.owner@realfactory.co.th · บทบาท "เจ้าของ"</li><li>ลิงก์คลิป TikTok สาธารณะของบัญชีทดสอบ QA ยาวประมาณ 30 วินาที เห็นหน้าคนพูด และมีคนพูด 2 เสียงขึ้นไป</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป TAKRA Insight (UAT) แล้วเข้าสู่ระบบด้วยบัญชีเจ้าของ ไปที่เมนู "คลิป" แล้วกดปุ่ม "?" ท้ายช่อง "วางลิงก์คลิป" อ่านรูปแบบลิงก์ในแผงที่เปิด แล้วปิดแผง</li><li>วางลิงก์คลิป TikTok แล้วกด "เปิดคลิป" สังเกตข้อมูลคลิป ปุ่ม และบรรทัดเวลาใต้ปุ่มในหน้าตรวจคลิป</li><li>กด "เริ่มวิเคราะห์" แล้วดูหน้า "วิเคราะห์คลิป" จนเสร็จ สังเกตบรรทัดเวลาและสถานะของ 3 ขั้นตอน</li><li>เมื่อรายงานเปิดเอง สังเกตหัวรายงานและ "สถิติของคลิป" ในส่วน "ภาพรวม"</li><li>กดแท็บ "บทพูด" แล้วอ่านหัวการ์ดและบรรทัดข้อมูลเหนือช่องค้นหา</li><li>ไปที่เมนู "คลิป" สังเกตแถวบนสุดของ "คลิปที่วิเคราะห์ล่าสุด" แล้วกด "ดูทั้งหมด"</li><li>ในหน้า "วิเคราะห์ย้อนหลัง" แท็บ "คลิป" กดแถวคลิปนี้ แล้วกด "วิเคราะห์ย้อนหลัง" ที่แถบเส้นทางด้านบน สังเกตแท็บที่ถูกเลือก</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>แผงลิงก์: หัวแผง "ลิงก์คลิปที่ใช้ได้" มีรูปแบบลิงก์ TikTok (tiktok.com/@…/video/… · vt.tiktok.com/…) และ Facebook ปิดแผงแล้วใช้ช่องต่อได้</li><li>ตรวจคลิป: เห็นปก "โดย @ชื่อช่อง" ความยาว ยอดวิว/ไลก์/คอมเมนต์ มีแค่ปุ่ม "เริ่มวิเคราะห์" (ไม่มีปุ่มอัปโหลด) และ "ใช้เวลาประมาณ 35–60 วินาที" ก่อนกดเริ่ม</li><li>ความคืบหน้า: 3 ขั้น "ดึงวิดีโอ" → "ถอดเสียง" → "อ่านคอมเมนต์" เปลี่ยนสถานะเป็นคำ "รอ" / "กำลังทำ" / "เสร็จ" และเวลานับถอยหลัง "เหลืออีกประมาณ …" ไม่ติดลบ แล้วเปิดรายงานเอง</li><li>รายงาน: หัวรายงานมีคำว่า "TikTok" ข้างไอคอน @ชื่อช่อง ป้าย "วิเคราะห์เสร็จ" และ "สถิติของคลิป" 5 ช่อง "ยอดดู" "ไลก์" "คอมเมนต์" "แชร์" "บันทึก" กำกับ "ณ เวลาวิเคราะห์ …"</li><li>บทพูด: หัวการ์ด "บทพูดของคลิป" และบรรทัดข้อมูลพูดว่า "คลิปนี้" (เช่น "ระบบได้ยินอย่างน้อย 2 เสียงในคลิปนี้ …") ไม่มีคำว่า "ไลฟ์นี้"</li><li>คลิปล่าสุด: แถวบนสุดเป็นคลิปนี้ ชื่อเดียวกับหัวรายงาน มีป้าย "คลิป TikTok" และวันที่</li><li>วิเคราะห์ย้อนหลัง: "ดูทั้งหมด" เปิดหน้า "วิเคราะห์ย้อนหลัง" ที่แท็บ "คลิป" แถวคลิปนี้มีป้าย "คลิป TikTok" ชื่อเดียวกับรายงาน</li><li>แถบเส้นทาง: ในรายงานเป็น "วิเคราะห์ย้อนหลัง" › ชื่อคลิป กดแล้วกลับมาหน้า "วิเคราะห์ย้อนหลัง" ที่แท็บ "คลิป"</li></ul><div class="hint" style="margin-top:6px">ที่มา: TI-713 · TI-740 · TI-722 · TI-700 · FR149 · ครอบเคสย่อย TC-CLIP-A.1, A.2, A.3, D.1, D.2, F.1, F.5 · TC-PAST-D.1, E.2</div></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4>
+  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
+    <span class="opt pass" data-uid="tc-23223" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-23223" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-23223" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-23223" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-23223" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">
+    <span class="optw pass" data-uid="tc-23223" data-stw="pass">PASS</span>
+    <span class="optw fail" data-uid="tc-23223" data-stw="fail">FAIL</span>
+    <span class="optw hold" data-uid="tc-23223" data-stw="hold">HOLD</span>
+    <span class="optw block" data-uid="tc-23223" data-stw="block">BLOCKED</span>
+    <span class="optw skip" data-uid="tc-23223" data-stw="skip">SKIP</span>
+  </div></div>
+  </div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-23223"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-23223" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-23223">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="m-jrn-clip" data-level="e2e" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-JRN-A.2</td>
+  <td class="ctitle">วิเคราะห์ Reel Facebook ที่ไม่มีแคปชันแล้วตั้งชื่อเอง → รายงานบอกช่องที่ไม่มีข้อมูล ชื่อตรงกันทุกหน้า <span class="kd kd-happy">Happy Path</span></td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-23224"><span class="stb pending">รอเทส</span></td>
+  <td class="status-win" data-uid="tc-23224"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-23224"></td>
+</tr>
+<tr class="detail"><td colspan="8"><div class="card">
+  <div class="h-title">วิเคราะห์ Reel Facebook ที่ไม่มีแคปชันแล้วตั้งชื่อเอง → รายงานบอกช่องที่ไม่มีข้อมูล ชื่อตรงกันทุกหน้า</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TI-713" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TI-713 ใน Jira">🧩 Epic TI-713</a> · Priority: <b>P0</b> · E2E · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · Journey วิเคราะห์คลิป TikTok / Facebook — วางลิงก์ถึงรายงาน · ลิงก์มีปัญหา</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #d97706;background:rgba(217,119,6,.07)">📌 <b>หมายเหตุ:</b> FAIL ถ้าจุดใดแสดงรหัสตัวเลขแบบ 20261103_154539 หรือ "คลิปไม่มีชื่อ" เป็นชื่อคลิป · ถ้าคลิปนี้ได้ตัวเลขครบทุกช่อง ให้ตรวจข้อ "สถิติ" กับ Reel อื่นที่หน้าตรวจคลิปแสดงยอดเป็น "—"</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>ให้ความยินยอมอ่านสีหน้าและฟังเสียงแล้ว</li><li>ไม่มีไลฟ์กำลังบันทึกอยู่ในแอป</li></ul></div>
+  <div class="sec"><h4>Test Data</h4><ul><li>บัญชีที่ใช้ (UAT): qa.owner@realfactory.co.th · บทบาท "เจ้าของ"</li><li>ลิงก์คลิปไม่มีแคปชันที่ใช้ใน TI-721: https://www.facebook.com/reel/1644740710434152</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป TAKRA Insight (UAT) แล้วเข้าสู่ระบบด้วยบัญชีเจ้าของ ไปที่เมนู "คลิป"</li><li>วางลิงก์ Reel Facebook ที่ไม่มีแคปชัน แล้วกด "เปิดคลิป" สังเกตชื่อเพจ ยอด และปุ่มในหน้าตรวจคลิป</li><li>กด "เริ่มวิเคราะห์" แล้วรอจนรายงานเปิด ระหว่างรอสังเกตแถบเส้นทางด้านบน</li><li>สังเกตหัวรายงาน แถบเส้นทาง และ "สถิติของคลิป" ในส่วน "ภาพรวม"</li><li>ไปที่เมนู "วิเคราะห์ย้อนหลัง" แท็บ "คลิป" ดูชื่อแถวของคลิปนี้ แล้วกดแถวนั้น</li><li>กดปุ่มดินสอข้างชื่อที่หัวรายงาน พิมพ์ชื่อใหม่แล้วกด Enter สังเกตแจ้งเตือน หัวรายงาน และแถบเส้นทาง</li><li>ไปที่เมนู "คลิป" และเมนู "วิเคราะห์ย้อนหลัง" แท็บ "คลิป" สังเกตชื่อของคลิปนี้</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ตรวจคลิป: หัวรองและ "โดย …" เป็นชื่อเพจ (ไม่มี @) ยอดใช้คำ "รีแอคชัน" ไม่มีกล่องให้ล็อกอิน TikTok และไม่มีปุ่มอัปโหลด</li><li>ระหว่างวิเคราะห์: แถบเส้นทางเป็นชื่อเพจหรือ "วิเคราะห์คลิป" ไม่เป็นรหัสตัวเลข</li><li>รายงาน: หัวรายงานมีคำว่า "Facebook" ข้างไอคอน ชื่อคลิปเป็น "คลิปของ &lt;ชื่อเพจ&gt; · &lt;วันที่&gt;" และแถบเส้นทาง "วิเคราะห์ย้อนหลัง" › ใช้ชื่อเดียวกัน</li><li>สถิติ: มี 4 ช่อง "ยอดดู" "รีแอคชัน" "คอมเมนต์" "แชร์" ไม่มี "บันทึก" · ช่องที่ Facebook ไม่ให้ตัวเลขแสดง "—" พร้อม "ไม่มีข้อมูล — Facebook ไม่แจ้งตัวเลขนี้" ไม่เว้นว่างและไม่เป็น 0</li><li>รายการ: แถวในแท็บ "คลิป" ชื่อ "คลิปของ &lt;ชื่อเพจ&gt; · &lt;วันที่&gt;" ตรงกับรายงาน มีป้าย "คลิป Facebook"</li><li>เปลี่ยนชื่อ: ขึ้นแจ้งเตือน "เปลี่ยนชื่อคลิปแล้ว" (ไม่มีคำว่า session) หัวรายงานและแถบเส้นทางเป็นชื่อใหม่</li><li>หลังเปลี่ยนชื่อ: "คลิปที่วิเคราะห์ล่าสุด" ในเมนู "คลิป" และแถวในแท็บ "คลิป" แสดงชื่อใหม่</li></ul><div class="hint" style="margin-top:6px">ที่มา: TI-713 · TI-721 · TI-722 · FR154 · ครอบเคสย่อย TC-CLIP-D.5, F.4 · TC-PAST-D.2, E.6</div></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4>
+  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
+    <span class="opt pass" data-uid="tc-23224" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-23224" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-23224" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-23224" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-23224" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">
+    <span class="optw pass" data-uid="tc-23224" data-stw="pass">PASS</span>
+    <span class="optw fail" data-uid="tc-23224" data-stw="fail">FAIL</span>
+    <span class="optw hold" data-uid="tc-23224" data-stw="hold">HOLD</span>
+    <span class="optw block" data-uid="tc-23224" data-stw="block">BLOCKED</span>
+    <span class="optw skip" data-uid="tc-23224" data-stw="skip">SKIP</span>
+  </div></div>
+  </div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-23224"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-23224" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-23224">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="m-jrn-clip" data-level="e2e" data-prio="P1" data-kind="exception" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-JRN-A.3</td>
+  <td class="ctitle">วางลิงก์ผิดหลายแบบแล้วแก้ตามที่แอปบอก → สุดท้ายวิเคราะห์คลิปได้ <span class="kd kd-exc">Exception</span></td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-23225"><span class="stb pending">รอเทส</span></td>
+  <td class="status-win" data-uid="tc-23225"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-23225"></td>
+</tr>
+<tr class="detail"><td colspan="8"><div class="card">
+  <div class="h-title">วางลิงก์ผิดหลายแบบแล้วแก้ตามที่แอปบอก → สุดท้ายวิเคราะห์คลิปได้</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TI-713" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TI-713 ใน Jira">🧩 Epic TI-713</a> · Priority: <b>P1</b> · E2E · ประเภท: <b>Exception</b> <span class="hint">(เน็ตหลุด · ระบบภายนอกผิดปกติ · timeout)</span> · Journey วิเคราะห์คลิป TikTok / Facebook — วางลิงก์ถึงรายงาน · ลิงก์มีปัญหา</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #d97706;background:rgba(217,119,6,.07)">📌 <b>หมายเหตุ:</b> FAIL ถ้าข้อความเตือนไม่บอกวิธีแก้ หรือลิงก์ไลฟ์ทำให้เริ่มติดตามไลฟ์เอง · เคสนี้ไม่ต้องเปิดไลฟ์จริง</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>แอปล็อกอิน TikTok ไว้แล้ว</li><li>ไม่มีไลฟ์กำลังบันทึกอยู่ในแอป</li><li>บัญชี TikTok ทดสอบของ QA มีคลิปที่ตั้งเป็นส่วนตัวหรือลบแล้ว (เก็บลิงก์ไว้)</li></ul></div>
+  <div class="sec"><h4>Test Data</h4><ul><li>บัญชีที่ใช้ (UAT): qa.owner@realfactory.co.th · บทบาท "เจ้าของ"</li><li>ลิงก์โพสต์รูป TikTok (/@ชื่อช่อง/photo/เลข)</li><li>ลิงก์ YouTube ใดก็ได้</li><li>ลิงก์คลิป TikTok ส่วนตัว/ถูกลบของบัญชีทดสอบ QA</li><li>ลิงก์ไลฟ์ TikTok ของบัญชีทดสอบ QA (https://www.tiktok.com/@ชื่อช่อง/live)</li><li>ลิงก์คลิป TikTok สาธารณะของบัญชีทดสอบ QA</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป TAKRA Insight (UAT) แล้วเข้าสู่ระบบด้วยบัญชีเจ้าของ ไปที่เมนู "คลิป"</li><li>วางลิงก์โพสต์รูป TikTok แล้วกด "เปิดคลิป" อ่านข้อความใต้ช่อง แล้ววางลิงก์ YouTube กด "เปิดคลิป" อ่านข้อความอีกครั้ง</li><li>วางลิงก์คลิป TikTok ที่เป็นส่วนตัวหรือถูกลบ กด "เปิดคลิป" อ่านกล่องเตือนในหน้าตรวจคลิป แล้วกด "กลับไปหน้าคลิป"</li><li>วางลิงก์ไลฟ์ TikTok แล้วกด "เปิดคลิป" อ่านหน้าต่างที่ขึ้นกลางจอ แล้วกด "ไปบันทึกไลฟ์นี้" สังเกตหน้าที่เปิด (ไม่ต้องเริ่มติดตาม)</li><li>กลับไปเมนู "คลิป" วางลิงก์คลิป TikTok สาธารณะที่ถูกต้อง กด "เปิดคลิป" แล้วกด "เริ่มวิเคราะห์"</li><li>รอจนรายงานเปิด แล้วสังเกตหัวรายงาน</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ลิงก์ไม่ใช่คลิป: ใต้ช่องขึ้น "ลิงก์นี้ไม่ใช่ลิงก์คลิป — คัดลอกลิงก์จากปุ่มแชร์ของคลิปแล้ววางใหม่" · YouTube ขึ้น "ตอนนี้วิเคราะห์ได้เฉพาะคลิป TikTok และ Facebook — วางลิงก์คลิปจากสองแพลตฟอร์มนี้" และอยู่หน้าเดิม</li><li>คลิปส่วนตัว/ถูกลบ: กล่องเตือน "เปิดคลิปนี้ไม่ได้ — คลิปอาจเป็นส่วนตัวหรือถูกลบไปแล้ว · ลองเปิดลิงก์ในแอป TikTok …" ไม่มีปุ่ม "เริ่มวิเคราะห์" และ "กลับไปหน้าคลิป" พากลับหน้า "คลิป"</li><li>ลิงก์ไลฟ์: หน้าต่าง "ลิงก์นี้เป็นลิงก์ไลฟ์" พร้อม "ช่องนี้ใช้วิเคราะห์คลิป — ต้องการไปบันทึกไลฟ์นี้แทนไหม?" และ "ไปบันทึกไลฟ์นี้" เปิดหน้า "ไลฟ์" ที่มีลิงก์อยู่ในช่องโดยยังไม่เริ่มติดตาม</li><li>ลิงก์ถูก: เปิดหน้าตรวจคลิปได้ ไม่มีข้อความเตือนค้างจากรอบก่อน กดเริ่มวิเคราะห์ได้</li><li>ปลายทาง: รายงานเปิด ป้าย "วิเคราะห์เสร็จ"</li></ul><div class="hint" style="margin-top:6px">ที่มา: TI-713 · FR149 · FR154 · ครอบเคสย่อย TC-CLIP-B.1, B.2, C.3</div></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4>
+  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
+    <span class="opt pass" data-uid="tc-23225" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-23225" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-23225" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-23225" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-23225" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">
+    <span class="optw pass" data-uid="tc-23225" data-stw="pass">PASS</span>
+    <span class="optw fail" data-uid="tc-23225" data-stw="fail">FAIL</span>
+    <span class="optw hold" data-uid="tc-23225" data-stw="hold">HOLD</span>
+    <span class="optw block" data-uid="tc-23225" data-stw="block">BLOCKED</span>
+    <span class="optw skip" data-uid="tc-23225" data-stw="skip">SKIP</span>
+  </div></div>
+  </div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-23225"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-23225" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-23225">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="m-jrn-clip" data-level="e2e" data-prio="P1" data-kind="happy" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-JRN-A.4</td>
+  <td class="ctitle">วางลิงก์คลิปผิดช่องไลฟ์ที่หน้าหลัก แล้วไปวิเคราะห์ต่อที่หน้าคลิป → ได้รายงานคลิปโดยไม่ต้องวางลิงก์ใหม่ <span class="kd kd-happy">Happy Path</span></td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-23226"><span class="stb pending">รอเทส</span></td>
+  <td class="status-win" data-uid="tc-23226"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-23226"></td>
+</tr>
+<tr class="detail"><td colspan="8"><div class="card">
+  <div class="h-title">วางลิงก์คลิปผิดช่องไลฟ์ที่หน้าหลัก แล้วไปวิเคราะห์ต่อที่หน้าคลิป → ได้รายงานคลิปโดยไม่ต้องวางลิงก์ใหม่</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TI-713" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TI-713 ใน Jira">🧩 Epic TI-713</a> · Priority: <b>P1</b> · E2E · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · Journey วิเคราะห์คลิป TikTok / Facebook — วางลิงก์ถึงรายงาน · ลิงก์มีปัญหา</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #d97706;background:rgba(217,119,6,.07)">📌 <b>หมายเหตุ:</b> FAIL ถ้าวางลิงก์คลิปในช่องไลฟ์แล้วแอปเริ่มติดตามไลฟ์ หรือหลังกด "วิเคราะห์คลิปนี้" ต้องวางลิงก์ใหม่เอง</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>แอปล็อกอิน TikTok ไว้แล้ว และให้ความยินยอมอ่านสีหน้าและฟังเสียงแล้ว</li><li>ไม่มีไลฟ์กำลังบันทึกอยู่ในแอป</li></ul></div>
+  <div class="sec"><h4>Test Data</h4><ul><li>บัญชีที่ใช้ (UAT): qa.owner@realfactory.co.th · บทบาท "เจ้าของ"</li><li>ลิงก์คลิป TikTok สาธารณะของบัญชีทดสอบ QA ยาวประมาณ 1 นาที เห็นหน้าคนพูด (https://www.tiktok.com/@ชื่อช่อง/video/เลขคลิป)</li><li>ลิงก์ Reel Facebook ของเพจสาธารณะ (https://www.facebook.com/reel/เลขคลิป)</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป TAKRA Insight (UAT) แล้วเข้าสู่ระบบด้วยบัญชีเจ้าของ ไปที่เมนู "หน้าหลัก"</li><li>วางลิงก์คลิป TikTok ลงช่องวางลิงก์ไลฟ์ แล้วกด "เปิดดูไลฟ์" อ่านหน้าต่างที่ขึ้นกลางจอ แล้วกด "ยกเลิก" สังเกตช่องวางลิงก์</li><li>ไปที่เมนู "ไลฟ์" วางลิงก์ Reel Facebook ลงช่องวางลิงก์ไลฟ์แล้วกด Enter อ่านหน้าต่าง แล้วกด Esc จากนั้นกด Enter อีกครั้งแล้วคลิกพื้นที่มืดนอกหน้าต่าง</li><li>กลับเมนู "หน้าหลัก" วางลิงก์คลิป TikTok อีกครั้ง กด Enter แล้วกด "วิเคราะห์คลิปนี้" สังเกตหน้าที่เปิดและช่อง "วางลิงก์คลิป"</li><li>กด "เปิดคลิป" สังเกตการ์ดข้อมูลคลิป ปุ่ม และบรรทัดเวลาใต้ปุ่ม แล้วกด "เริ่มวิเคราะห์"</li><li>ดูหน้า "วิเคราะห์คลิป" จนเสร็จ สังเกตบรรทัด "ตอนนี้: …" บรรทัดเวลา และสถานะของ 3 ขั้นตอน</li><li>เมื่อรายงานเปิดขึ้นเอง สังเกตหัวรายงาน แล้วไปที่เมนู "คลิป" ดูแถวคลิปนี้ในส่วน "คลิปที่วิเคราะห์ล่าสุด"</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>หน้าต่างถามที่หน้าหลัก: ไม่เริ่มติดตามไลฟ์ ขึ้นหน้าต่างกลางจอ "ลิงก์นี้เป็นลิงก์คลิป" พร้อม "ช่องนี้ใช้บันทึกไลฟ์ — ต้องการวิเคราะห์คลิปนี้แทนไหม?" แสดงลิงก์ที่วาง และปุ่ม "ยกเลิก" / "วิเคราะห์คลิปนี้" · "ยกเลิก" ปิดหน้าต่าง อยู่หน้าเดิม ลิงก์ยังอยู่ในช่อง</li><li>เมนู "ไลฟ์" กับลิงก์ Facebook: ขึ้นหน้าต่าง "ลิงก์นี้เป็นลิงก์คลิป" แบบเดียวกันพร้อมลิงก์ Facebook · กด Esc และคลิกนอกหน้าต่าง ปิดหน้าต่างโดยอยู่หน้าเดิม</li><li>พาไปหน้าคลิป: "วิเคราะห์คลิปนี้" เปิดหน้า "คลิป" โดยช่อง "วางลิงก์คลิป" มีลิงก์ TikTok ใส่ไว้แล้ว และยังไม่เปิดคลิปเองจนกว่าจะกด "เปิดคลิป"</li><li>ตรวจคลิป: การ์ดแสดงภาพปก "โดย @ชื่อช่อง" "ยาว N วินาที" และยอดวิว/ไลก์/คอมเมนต์ · มีปุ่ม "เริ่มวิเคราะห์" ปุ่มเดียว ไม่มีปุ่มอัปโหลดไฟล์ · ใต้ปุ่มบอกเวลาเป็นช่วง "ใช้เวลาประมาณ …"</li><li>ระหว่างวิเคราะห์: 3 ขั้น "ดึงวิดีโอ" → "ถอดเสียง" → "อ่านคอมเมนต์" มีสถานะเป็นคำ "รอ" / "กำลังทำ" / "เสร็จ" · บรรทัดเวลานับถอยหลัง "เหลืออีกประมาณ …" ถ้าเลยเวลาขึ้น "ใกล้เสร็จแล้ว" ไม่ติดลบ</li><li>รายงาน: เปิดขึ้นเองเมื่อเสร็จ หัวรายงานมีไอคอน TikTok พร้อมคำว่า "TikTok" @ชื่อช่อง และป้าย "วิเคราะห์เสร็จ" · แถวคลิปนี้ขึ้นใน "คลิปที่วิเคราะห์ล่าสุด" ของเมนู "คลิป"</li></ul><div class="hint" style="margin-top:6px">ที่มา: TI-713 · TI-740 AC1 · AC2 · AC3 · AC4 · FR149 · FR154 · ครอบเคสย่อย TC-CLIP-C.1, C.2 (+ D.1, D.2 บางส่วน)</div></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4>
+  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
+    <span class="opt pass" data-uid="tc-23226" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-23226" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-23226" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-23226" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-23226" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">
+    <span class="optw pass" data-uid="tc-23226" data-stw="pass">PASS</span>
+    <span class="optw fail" data-uid="tc-23226" data-stw="fail">FAIL</span>
+    <span class="optw hold" data-uid="tc-23226" data-stw="hold">HOLD</span>
+    <span class="optw block" data-uid="tc-23226" data-stw="block">BLOCKED</span>
+    <span class="optw skip" data-uid="tc-23226" data-stw="skip">SKIP</span>
+  </div></div>
+  </div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-23226"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-23226" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-23226">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="m-jrn-clip" data-level="e2e" data-prio="P1" data-kind="exception" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-JRN-A.5</td>
+  <td class="ctitle">วิเคราะห์คลิปไม่สำเร็จ แล้วอัปโหลดไฟล์คลิปเองตามที่แอปเสนอ → เลือกไฟล์ผิดแก้ได้ และได้รายงานจากไฟล์ <span class="kd kd-exc">Exception</span></td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-23227"><span class="stb pending">รอเทส</span></td>
+  <td class="status-win" data-uid="tc-23227"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-23227"></td>
+</tr>
+<tr class="detail"><td colspan="8"><div class="card">
+  <div class="h-title">วิเคราะห์คลิปไม่สำเร็จ แล้วอัปโหลดไฟล์คลิปเองตามที่แอปเสนอ → เลือกไฟล์ผิดแก้ได้ และได้รายงานจากไฟล์</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TI-713" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TI-713 ใน Jira">🧩 Epic TI-713</a> · Priority: <b>P1</b> · E2E · ประเภท: <b>Exception</b> <span class="hint">(เน็ตหลุด · ระบบภายนอกผิดปกติ · timeout)</span> · Journey วิเคราะห์คลิป TikTok / Facebook — วางลิงก์ถึงรายงาน · ลิงก์มีปัญหา</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #d97706;background:rgba(217,119,6,.07)">📌 <b>หมายเหตุ:</b> ถ้ากด "เริ่มวิเคราะห์" ตอนไม่มีเน็ตแล้วขึ้นข้อความเตือนในหน้าตรวจคลิปแทน ให้เปิดเน็ต กดเริ่มใหม่แล้วตัดเน็ตทันทีระหว่าง "ตอนนี้: อ่านข้อมูลคลิป" · FAIL ถ้าหน้าค้างหมุนหลังตัดเน็ต หรือหน้าต่างเลือกไฟล์ไม่เปิดเองหลังกด "อัปโหลดไฟล์คลิปเอง"</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>แอปล็อกอิน TikTok ไว้แล้ว และให้ความยินยอมอ่านสีหน้าและฟังเสียงแล้ว</li><li>ไม่มีไลฟ์กำลังบันทึกอยู่ในแอป</li><li>มีไฟล์วิดีโอของคลิปที่จะทดสอบเก็บไว้ในเครื่อง (ดูข้อมูลทดสอบ)</li></ul></div>
+  <div class="sec"><h4>Test Data</h4><ul><li>บัญชีที่ใช้ (UAT): qa.owner@realfactory.co.th · บทบาท "เจ้าของ"</li><li>ลิงก์คลิป TikTok สาธารณะของบัญชีทดสอบ QA ยาวประมาณ 30 วินาที เห็นหน้าคนพูด</li><li>ไฟล์วิดีโอของคลิปเดียวกัน (mp4 · mov · m4v · webm ไม่เกิน 200 MB · ความยาวต่างจากคลิปไม่เกิน 2 วินาที)</li><li>ไฟล์วิดีโอยาว 60 วินาที ไม่เกิน 200 MB</li><li>ไฟล์ข้อความที่เปลี่ยนนามสกุลเป็น .mp4</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป TAKRA Insight (UAT) แล้วเข้าสู่ระบบด้วยบัญชีเจ้าของ ไปที่เมนู "คลิป"</li><li>วางลิงก์คลิป TikTok ที่ยาวประมาณ 30 วินาที กด "เปิดคลิป" รอการ์ดข้อมูลคลิปขึ้น แล้วสังเกตปุ่มบนหน้า</li><li>ปิด Wi-Fi/ถอดสายแลนของเครื่อง แล้วกด "เริ่มวิเคราะห์" รอจนหน้า "วิเคราะห์คลิป" หยุดทำงาน อ่านข้อความ สถานะ 3 ขั้น และปุ่มบนหน้า แล้วเปิดเน็ตกลับ</li><li>กด "อัปโหลดไฟล์คลิปเอง" สังเกตหน้าที่เปิดและหน้าต่างเลือกไฟล์ที่ขึ้นเอง แล้วเลือกไฟล์ข้อความที่เปลี่ยนนามสกุลเป็น .mp4</li><li>กด "อัปโหลดไฟล์คลิป" เลือกไฟล์วิดีโอยาว 60 วินาที อ่านกล่องที่ขึ้น แล้วกด "เลือกไฟล์ใหม่"</li><li>กด "อัปโหลดไฟล์คลิป" อีกครั้ง แล้วเลือกไฟล์วิดีโอของคลิปนี้ที่ความยาวตรงกัน</li><li>ดูหน้า "วิเคราะห์คลิป" จนรายงานเปิดขึ้นเอง แล้วสังเกตหัวรายงานและชิป "โฮสต์"</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ก่อนเริ่ม: หน้าตรวจคลิปมีแค่ปุ่ม "เริ่มวิเคราะห์" ไม่มีปุ่มอัปโหลดไฟล์</li><li>วิเคราะห์ไม่สำเร็จ: หน้าไม่ค้างหมุน ขึ้นเหตุผลภาษาไทย เช่น "เชื่อมต่อ TikTok ไม่ได้ ตรวจอินเทอร์เน็ตแล้วลองอีกครั้ง" ไม่มีขั้นไหนค้าง "กำลังทำ" (เป็น "หยุด" / "ไม่ได้ทำ") พร้อม "ลองวิเคราะห์อีกครั้ง หรือถ้ามีไฟล์คลิปนี้อยู่แล้ว อัปโหลดไฟล์เองได้" และปุ่ม "ลองวิเคราะห์อีกครั้ง" "อัปโหลดไฟล์คลิปเอง" "กลับหน้าหลัก"</li><li>อัปโหลดไฟล์คลิปเอง: กลับหน้าตรวจคลิปเดิม หน้าต่างเลือกไฟล์ของเครื่องเปิดเองทันที หน้ามีปุ่ม "เริ่มวิเคราะห์" "อัปโหลดไฟล์คลิป" และ "ถ้ามีไฟล์คลิปนี้อยู่แล้ว ใช้ไฟล์ได้เลย (mp4 · mov · m4v · webm ไม่เกิน 200 MB)"</li><li>ไฟล์ที่ไม่ใช่วิดีโอ: ขึ้น "ไฟล์นี้ไม่ใช่วิดีโอ หรือเปิดอ่านไม่ได้" ไม่เริ่มวิเคราะห์ และปุ่ม "อัปโหลดไฟล์คลิป" ยังอยู่ให้เลือกใหม่</li><li>ความยาวไม่ตรง: ขึ้นกล่องถาม "ความยาวไฟล์ไม่ตรงกับคลิปนี้ (ไฟล์ 60 วินาที · คลิป 30 วินาที) ใช้ไฟล์นี้ต่อไหม" ปุ่ม "เลือกไฟล์ใหม่" / "ใช้ไฟล์นี้" · "เลือกไฟล์ใหม่" ปิดกล่องโดยยังไม่เริ่มวิเคราะห์</li><li>ไฟล์ที่ถูก: ไม่ถามเรื่องความยาว เริ่มวิเคราะห์ทันทีและเปิดหน้า "วิเคราะห์คลิป"</li><li>รายงาน: เปิดขึ้นเองพร้อมป้าย "วิเคราะห์เสร็จ" · มีผลอ่านสีหน้าของโฮสต์จากไฟล์ที่อัปโหลด และไม่ขึ้น "หาวิดีโอของคลิปนี้ไม่ได้ — …"</li></ul><div class="hint" style="margin-top:6px">ที่มา: TI-713 (วิเคราะห์ไม่สำเร็จ) · TI-740 AC4 · AC5 · AC6 · FR149 · ครอบเคสย่อย TC-CLIP-E.1, E.2</div></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4>
+  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
+    <span class="opt pass" data-uid="tc-23227" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-23227" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-23227" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-23227" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-23227" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">
+    <span class="optw pass" data-uid="tc-23227" data-stw="pass">PASS</span>
+    <span class="optw fail" data-uid="tc-23227" data-stw="fail">FAIL</span>
+    <span class="optw hold" data-uid="tc-23227" data-stw="hold">HOLD</span>
+    <span class="optw block" data-uid="tc-23227" data-stw="block">BLOCKED</span>
+    <span class="optw skip" data-uid="tc-23227" data-stw="skip">SKIP</span>
+  </div></div>
+  </div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-23227"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-23227" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-23227">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+</tbody>
+  </table>
+  </div>
+
+</div>
+<footer>TAKRA Insight — Journey A · วิเคราะห์คลิป TikTok / Facebook · Manual Test Cases · 0 UI + 5 E2E = 5 TCs · UI only (manual) · TAKRA Insight desktop · UI ใหม่ re-design พ.ย. 2569 · Journey A · วิเคราะห์คลิป</footer>
+
+<script>
+// ── Load store from embedded JSON ──
+var storeEl = document.getElementById('store-data');
+var store = {};
+try { store = JSON.parse(storeEl.textContent || '{}'); } catch(_) {}
+
+var SMAP = {
+  pass:  ['pass',  'PASS'],
+  fail:  ['fail',  'FAIL'],
+  hold:  ['hold',  'HOLD'],
+  block: ['block', 'BLOCKED'],
+  skip:  ['skip',  'SKIP'],
+};
+
+// Restore saved statuses
+Object.keys(store).forEach(function(uid) {
+  var st = store[uid] && store[uid].st;
+  if (!st || !SMAP[st]) return;
+  // badge
+  var rowStatus = document.querySelector('tr.trow td.status[data-uid="' + uid + '"]');
+  if (rowStatus) {
+    var stb = rowStatus.querySelector('.stb');
+    if (stb) { stb.className = 'stb ' + SMAP[st][0]; stb.textContent = SMAP[st][1]; }
+  }
+  // opt button
+  var opt = document.querySelector('.opt[data-uid="' + uid + '"][data-st="' + st + '"]');
+  if (opt) opt.classList.add('sel');
+  // also restore actual result text
+  if (store[uid].actual || store[uid].actualw) {
+    var boxes = document.querySelectorAll('tr.detail');
+    boxes.forEach(function(d) {
+      var badge = d.querySelector('.opt[data-uid="' + uid + '"]');
+      if (!badge) return;
+      d.querySelectorAll('.actualbox').forEach(function(box) {
+        var field = box.dataset.os === 'win' ? 'actualw' : 'actual';
+        if (store[uid][field]) { box.value = store[uid][field]; box.classList.add('filled'); }
+      });
+    });
+  }
+});
+
+// ── Toggle row expand ──
+function tg(row) {
+  var detail = row.nextElementSibling;
+  var isOpen = row.classList.contains('open');
+  row.classList.toggle('open', !isOpen);
+  if (detail && detail.classList.contains('detail')) {
+    detail.classList.toggle('show', !isOpen);
+  }
+}
+function toggleAll(open) {
+  document.querySelectorAll('tr.trow').forEach(function(r) {
+    if (r.classList.contains('hide')) return;
+    r.classList.toggle('open', open);
+    var d = r.nextElementSibling;
+    if (d && d.classList.contains('detail')) d.classList.toggle('show', open);
+  });
+}
+
+// ── Save store back into the embedded script tag ──
+function save() {
+  storeEl.textContent = '\n' + JSON.stringify(store, null, 2).replace(/</g, '\\u003c') + '\n';
+}
+
+// ── Status opt buttons ──
+document.querySelectorAll('.opt').forEach(function(o) {
+  o.addEventListener('click', function(e) {
+    e.stopPropagation();
+    var uid = o.dataset.uid, st = o.dataset.st;
+    var allOpts = document.querySelectorAll('.opt[data-uid="' + uid + '"]');
+    var alreadySel = o.classList.contains('sel');
+    allOpts.forEach(function(x) { x.classList.remove('sel'); });
+    store[uid] = store[uid] || {};
+    if (alreadySel) {
+      delete store[uid].st;
+    } else {
+      o.classList.add('sel');
+      store[uid].st = st;
+    }
+    var rowStatus = document.querySelector('tr.trow td.status[data-uid="' + uid + '"]');
+    if (rowStatus) {
+      var stb = rowStatus.querySelector('.stb');
+      if (stb) {
+        if (!alreadySel && SMAP[st]) { stb.className = 'stb ' + SMAP[st][0]; stb.textContent = SMAP[st][1]; }
+        else { stb.className = 'stb pending'; stb.textContent = 'รอเทส'; }
+      }
+    }
+    save();
+    applyFilters();   // re-filter (recounts too) so an active สถานะ filter updates live
+    markDirty();
+  });
+});
+
+// ── Actual result editable on blur ──
+document.querySelectorAll('.actualbox').forEach(function(box) {
+  // a <textarea> — clicking/typing must not bubble up to the row toggle
+  box.addEventListener('click', function(ev) { ev.stopPropagation(); });
+  box.addEventListener('input', function() { box.classList.toggle('filled', box.value.trim() !== ''); });
+  box.addEventListener('blur', function() {
+    // find uid from nearest .opt
+    var opts = box.closest('tr.detail').querySelectorAll('.opt');
+    if (!opts.length) return;
+    var uid = opts[0].dataset.uid;
+    var field = box.dataset.os === 'win' ? 'actualw' : 'actual';
+    var txt = box.value.trim();
+    var prev = (store[uid] && store[uid][field]) || '';
+    if (txt === prev) return;   // nothing typed → don't dirty the file
+    store[uid] = store[uid] || {};
+    if (txt) { store[uid][field] = txt; }
+    else { delete store[uid][field]; if (!Object.keys(store[uid]).length) delete store[uid]; }
+    save();
+    markDirty();
+  });
+});
+
+// ── Filters ──
+var filters = { feat: new Set(), level: new Set(), prio: new Set(), status: new Set(), kind: new Set(), ui: new Set() };
+document.querySelectorAll('.fchip').forEach(function(c) {
+  c.addEventListener('click', function() {
+    var f = c.dataset.f, v = c.dataset.v;
+    if (filters[f].has(v)) { filters[f].delete(v); c.classList.remove('active'); }
+    else { filters[f].add(v); c.classList.add('active'); }
+    applyFilters();
+  });
+});
+document.querySelectorAll('.clearbtn').forEach(function(b) {
+  b.addEventListener('click', function() {
+    var key = b.dataset.clear;
+    filters[key].clear();
+    document.querySelectorAll('.fchip[data-f="' + key + '"]').forEach(function(c) { c.classList.remove('active'); });
+    applyFilters();
+  });
+});
+function applyFilters() {
+  document.querySelectorAll('tr.trow').forEach(function(row) {
+    var ok = true;
+    if (filters.feat.size  && !filters.feat.has(row.dataset.feat))   ok = false;
+    if (filters.level.size && !filters.level.has(row.dataset.level)) ok = false;
+    if (filters.prio.size  && !filters.prio.has(row.dataset.prio))   ok = false;
+    if (filters.kind.size  && !filters.kind.has(row.dataset.kind))   ok = false;
+    if (filters.ui.size    && !filters.ui.has(row.dataset.ui))       ok = false;
+    if (filters.status.size) {
+      var stb = row.querySelector('td.status .stb');
+      var scls = stb ? stb.className.replace('stb', '').trim().split(' ')[0] : 'pending';
+      if (!filters.status.has(scls)) ok = false;
+    }
+    row.classList.toggle('hide', !ok);
+    var d = row.nextElementSibling;
+    if (d && d.classList.contains('detail')) d.classList.toggle('hide', !ok);
+  });
+  document.querySelectorAll('tr.featrow').forEach(function(fr) {
+    var n = fr.nextElementSibling, any = false;
+    while (n && !n.classList.contains('featrow') && !n.classList.contains('epicrow')) {
+      if (n.classList.contains('trow') && !n.classList.contains('hide')) { any = true; break; }
+      n = n.nextElementSibling;
+    }
+    fr.classList.toggle('hide', !any);
+  });
+  document.querySelectorAll('tr.epicrow').forEach(function(er) {
+    var n = er.nextElementSibling, any = false;
+    while (n && !n.classList.contains('epicrow')) {
+      if (n.classList.contains('trow') && !n.classList.contains('hide')) { any = true; break; }
+      n = n.nextElementSibling;
+    }
+    er.classList.toggle('hide', !any);
+  });
+  recount();
+}
+
+function recount() {
+  var c = { pass:0, fail:0, hold:0, block:0, skip:0, pending:0 };
+  document.querySelectorAll('tr.trow').forEach(function(row) {
+    var stb = row.querySelector('td.status .stb');
+    if (!stb) return;
+    var cls = stb.className.replace('stb','').trim().split(' ')[0];
+    if (c.hasOwnProperty(cls)) c[cls]++; else c.pending++;
+  });
+  var total    = c.pass + c.fail + c.hold + c.block + c.skip + c.pending;
+  var done     = c.pass + c.fail + c.hold + c.block;
+  var testable = total - c.skip;               // SKIP = ตั้งใจข้าม ไม่นับเป็นเป้าที่ต้องทดสอบ
+  var pct      = testable ? Math.round(done / testable * 100) : 0;
+  ['pass','fail','hold','block','skip'].forEach(function(k) {
+    var e = document.getElementById('sum-'+k); if (e) e.textContent = c[k];
+    var h = document.getElementById('hdr-'+k); if (h) h.textContent = c[k];
+  });
+  var ep = document.getElementById('sum-pending'); if (ep) ep.textContent = c.pending;
+  var hp = document.getElementById('hdr-pending'); if (hp) hp.textContent = c.pending;
+  var bar = document.getElementById('sumbar'); if (bar) bar.style.width = pct + '%';
+  var pctEl = document.getElementById('sumpct');
+  if (pctEl) pctEl.textContent = pct + '% ทดสอบแล้ว (' + done + '/' + testable + ')' + (c.skip ? ' · ข้าม ' + c.skip : '');
+}
+
+// ── GitHub publish config ──
+var GH_OWNER  = 'wanlee-tankunnatam';
+var GH_REPO   = 'qa-test-reports';
+var GH_PATH   = 'projects/takra-insight/2026/11/reports/takra-insight-ui-journey-clip-nov-ui-test-cases-table.html';
+var GH_BRANCH = 'master';
+var GH_API    = 'https://api.github.com/repos/' + GH_OWNER + '/' + GH_REPO + '/contents/' + GH_PATH;
+
+// ── Save state (dirty tracking + auto-publish) ──
+var dirty = false;
+var autoTimer = null;
+var publishing = false;
+
+function ghToken() {
+  var t = localStorage.getItem('gh_pat');
+  if (!t) {
+    t = prompt(
+      'ใส่ GitHub Personal Access Token (ใส่ครั้งเดียว จำไว้ในเบราว์เซอร์นี้)\n\n' +
+      'สร้าง token:\n' +
+      'github.com → Settings → Developer settings →\n' +
+      'Personal access tokens → Tokens (classic) → Generate new token (classic)\n' +
+      '→ ติ๊ก scope: repo  (หรือ public_repo เพราะ repo นี้ public)\n\n' +
+      'หรือ Fine-grained token: เลือก repo "qa-test-reports" →\n' +
+      'Permissions → Contents = Read and write'
+    );
+    if (t) localStorage.setItem('gh_pat', t.trim());
+  }
+  return t ? t.trim() : null;
+}
+function clearToken() { localStorage.removeItem('gh_pat'); }
+
+async function publishToGH(auto) {
+  if (publishing) return;
+  var btn = document.getElementById('btn-publish');
+  var token = auto ? localStorage.getItem('gh_pat') : ghToken();
+  if (!token) return;          // auto-save stays quiet until a token exists
+  publishing = true;
+  if (autoTimer) { clearTimeout(autoTimer); autoTimer = null; }
+
+  btn.disabled = true;
+  btn.textContent = '⏳ กำลังบันทึก…';
+  save();
+
+  var API = 'https://api.github.com/repos/' + GH_OWNER + '/' + GH_REPO + '/contents/' + GH_PATH;
+
+  // Serialize the page with the button forced to its idle/enabled state, so the
+  // committed file is never frozen mid-save (otherwise reopening it shows a
+  // permanently-disabled "⏳ กำลังบันทึก…" button).
+  function buildEncoded() {
+    var dis = btn.disabled, txt = btn.textContent;
+    btn.disabled = false;
+    btn.textContent = '☁️ บันทึกขึ้น GitHub';
+    var html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+    btn.disabled = dis;
+    btn.textContent = txt;
+    return btoa(unescape(encodeURIComponent(html)));
+  }
+
+  // Fetch current remote file (sha + content), bypassing any cache.
+  async function fetchRemote() {
+    var r = await fetch(
+      API + '?ref=' + GH_BRANCH + '&t=' + Date.now(),
+      { cache: 'no-store', headers: { Authorization: 'token ' + token, Accept: 'application/vnd.github+json' } }
+    );
+    if (!r.ok) {
+      if (r.status === 401) { localStorage.removeItem('gh_pat'); }
+      throw new Error('ดึงไฟล์ไม่ได้ (HTTP ' + r.status + ') — ตรวจ token หรือ branch');
+    }
+    var j = await r.json();
+    if (!j.content && j.sha) {
+      var rr = await fetch(
+        API + '?ref=' + GH_BRANCH + '&t=' + Date.now(),
+        { cache: 'no-store', headers: { Authorization: 'token ' + token, Accept: 'application/vnd.github.raw' } }
+      );
+      if (!rr.ok) throw new Error('ดึงไฟล์ไม่ได้ (HTTP ' + rr.status + ') — ลองบันทึกใหม่อีกครั้ง');
+      var raw = await rr.text();
+      if (!/<script id="store-data"/.test(raw)) throw new Error('ไฟล์บน GitHub อ่านไม่ครบ — ยังไม่บันทึก ลองใหม่อีกครั้ง');
+      j.content = btoa(unescape(encodeURIComponent(raw)));
+    }
+    return j;
+  }
+
+  // Merge statuses that exist on the remote copy but NOT locally, so a
+  // teammate's concurrent edit is not silently overwritten (local always wins
+  // for keys we changed; we only add keys we don't have).
+  function mergeRemote(remote) {
+    try {
+      var remoteHtml = decodeURIComponent(escape(atob((remote.content || '').replace(/\s/g, ''))));
+      var m = remoteHtml.match(/<script id="store-data"[^>]*>([\s\S]*?)<\/script>/);
+      if (!m) return;
+      var rs = JSON.parse((m[1] || '{}').trim() || '{}');
+      var added = 0;
+      Object.keys(rs).forEach(function(uid) {
+        if (uid in store) return;
+        store[uid] = rs[uid];
+        added++;
+        var st = rs[uid] && rs[uid].st;
+        if (st && SMAP[st]) {
+          var cell = document.querySelector('tr.trow td.status[data-uid="' + uid + '"] .stb');
+          if (cell) { cell.className = 'stb ' + SMAP[st][0]; cell.textContent = SMAP[st][1]; }
+          var opt = document.querySelector('.opt[data-uid="' + uid + '"][data-st="' + st + '"]');
+          if (opt) opt.classList.add('sel');
+        }
+      });
+      if (added) { save(); recount(); }
+    } catch (_) {}
+  }
+
+  // Commit content = the LATEST remote file with ONLY its store-data block
+  // swapped for our (merged) results. This makes auto-save a results-only
+  // overlay: a stale tab can never overwrite the repo's structure/layout —
+  // it always publishes on top of whatever structure is currently on GitHub.
+  function buildFromRemote(remote) {
+    try {
+      var remoteHtml = decodeURIComponent(escape(atob((remote.content || '').replace(/\s/g, ''))));
+      if (!/<script id="store-data"[^>]*>[\s\S]*?<\/script>/.test(remoteHtml)) return buildEncoded();
+      var json = '\n' + JSON.stringify(store, null, 2).replace(/</g, '\\u003c') + '\n';
+      var replaced = remoteHtml.replace(
+        /(<script id="store-data"[^>]*>)[\s\S]*?(<\/script>)/,
+        function(_m, o, c) { return o + json + c; }
+      );
+      return btoa(unescape(encodeURIComponent(replaced)));
+    } catch (_) {
+      return buildEncoded();   // fallback: serialize local DOM
+    }
+  }
+
+  async function commit(remote) {
+    var ts = new Date().toISOString().slice(0, 16).replace('T', ' ');
+    return fetch(API, {
+      method: 'PUT',
+      headers: { Authorization: 'token ' + token, Accept: 'application/vnd.github+json', 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        message: 'chore(qa): update test results ' + ts,
+        content: buildFromRemote(remote),
+        sha: remote.sha,
+        branch: GH_BRANCH
+      })
+    });
+  }
+
+  try {
+    var r2, lastErr;
+    // Up to 4 attempts. Re-fetch the SHA and merge remote statuses each time;
+    // a stale SHA returns 409/422 ("does not match …") which we retry.
+    for (var attempt = 0; attempt < 4; attempt++) {
+      var remote = await fetchRemote();
+      mergeRemote(remote);
+      r2 = await commit(remote);
+      if (r2.ok) break;
+      if (r2.status === 409 || r2.status === 422) {
+        lastErr = 'SHA ชนกัน (HTTP ' + r2.status + ')';
+        await new Promise(function(res) { setTimeout(res, 400 * (attempt + 1)); });
+        continue;
+      }
+      // Bad/expired token or insufficient scope — drop it so the next attempt re-prompts.
+      if (r2.status === 401 || r2.status === 403) {
+        clearToken();
+        var pe = await r2.json().catch(function() { return {}; });
+        throw new Error(
+          (pe.message || 'HTTP ' + r2.status) +
+          '\n\n→ Token สิทธิ์ไม่พอ/หมดอายุ ลบให้แล้ว ครั้งหน้าจะถามใหม่\n' +
+          '   ใช้ classic token scope "repo" (หรือ public_repo) หรือ fine-grained ที่ให้ Contents = Read and write กับ repo นี้'
+        );
+      }
+      var e = await r2.json();
+      throw new Error(e.message || 'HTTP ' + r2.status);
+    }
+    if (!r2.ok) {
+      throw new Error((lastErr || 'conflict') + ' — มีการแก้ไฟล์พร้อมกัน ลองกดบันทึกอีกครั้ง หรือ refresh หน้าก่อนบันทึก');
+    }
+
+    dirty = false;
+    publishing = false;
+    btn.textContent = '✅ บันทึกแล้ว!';
+    btn.style.background = 'var(--pass)';
+    setTimeout(function() {
+      btn.style.background = '';
+      btn.disabled = false;
+      updateIndicator();
+    }, 3000);
+  } catch (err) {
+    publishing = false;
+    if (!auto) alert('❌ บันทึกไม่สำเร็จ: ' + err.message);
+    btn.disabled = false;
+    updateIndicator();
+  }
+}
+
+document.getElementById('btn-publish').addEventListener('click', function() { publishToGH(false); });
+
+// ── Dirty tracking / unsaved indicator ──
+function autoOn() {
+  var c = document.getElementById('chk-autosave');
+  return c ? c.checked : false;
+}
+function updateIndicator() {
+  var s = document.getElementById('save-status');
+  var b = document.getElementById('btn-publish');
+  if (dirty) {
+    if (s) { s.textContent = '● ยังไม่ได้บันทึก'; s.style.color = 'var(--hold)'; }
+    if (b && !b.disabled && b.textContent.indexOf('✅') < 0) b.textContent = '☁️ บันทึกขึ้น GitHub *';
+  } else {
+    if (s) { s.textContent = '✓ ตรงกับ GitHub'; s.style.color = 'var(--muted)'; }
+    if (b && !b.disabled && b.textContent.indexOf('✅') < 0) b.textContent = '☁️ บันทึกขึ้น GitHub';
+  }
+}
+function markDirty() {
+  dirty = true;
+  updateIndicator();
+  // Auto-publish after the user stops editing — only once a token exists,
+  // so we never interrupt with a token prompt mid-edit.
+  if (autoOn() && localStorage.getItem('gh_pat')) {
+    if (autoTimer) clearTimeout(autoTimer);
+    autoTimer = setTimeout(function() { autoTimer = null; publishToGH(true); }, 5000);
+  }
+}
+window.addEventListener('beforeunload', function(e) {
+  if (dirty) { e.preventDefault(); e.returnValue = 'มีงานที่ยังไม่ได้บันทึกขึ้น GitHub'; return e.returnValue; }
+});
+
+// ── Re-render every badge from the store (used after pulling remote) ──
+function applyAllStatuses() {
+  document.querySelectorAll('.opt.sel').forEach(function(o) { o.classList.remove('sel'); });
+  document.querySelectorAll('tr.trow td.status .stb').forEach(function(s) {
+    s.className = 'stb pending'; s.textContent = 'รอเทส';
+  });
+  Object.keys(store).forEach(function(uid) {
+    var st = store[uid] && store[uid].st;
+    if (st && SMAP[st]) {
+      var cell = document.querySelector('tr.trow td.status[data-uid="' + uid + '"] .stb');
+      if (cell) { cell.className = 'stb ' + SMAP[st][0]; cell.textContent = SMAP[st][1]; }
+      var opt = document.querySelector('.opt[data-uid="' + uid + '"][data-st="' + st + '"]');
+      if (opt) opt.classList.add('sel');
+    }
+    if (store[uid] && store[uid].actual) {
+      document.querySelectorAll('tr.detail').forEach(function(d) {
+        if (!d.querySelector('.opt[data-uid="' + uid + '"]')) return;
+        var box = d.querySelector('.actualbox');
+        if (box) { box.value = store[uid].actual; box.classList.toggle('filled', !!store[uid].actual); }
+      });
+    }
+  });
+}
+
+// ── Pull latest results from GitHub (remote wins on overlap; keeps local-only) ──
+async function pullLatest() {
+  var rbtn = document.getElementById('btn-refresh');
+  if (dirty && !confirm('มีงานที่ยังไม่ได้บันทึก — การดึงล่าสุดจะใช้สถานะจาก GitHub ทับเฉพาะรายการที่ซ้ำกัน ต้องการต่อ?')) return;
+  if (rbtn) { rbtn.disabled = true; rbtn.textContent = '⏳ กำลังดึง…'; }
+  try {
+    var token = localStorage.getItem('gh_pat');
+    var html;
+    if (token) {
+      var r = await fetch(GH_API + '?ref=' + GH_BRANCH + '&t=' + Date.now(),
+        { cache: 'no-store', headers: { Authorization: 'token ' + token, Accept: 'application/vnd.github+json' } });
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      html = decodeURIComponent(escape(atob(((await r.json()).content || '').replace(/\s/g, ''))));
+    } else {
+      var rr = await fetch('https://raw.githubusercontent.com/' + GH_OWNER + '/' + GH_REPO + '/' + GH_BRANCH + '/' + GH_PATH + '?t=' + Date.now(),
+        { cache: 'no-store' });
+      if (!rr.ok) throw new Error('HTTP ' + rr.status);
+      html = await rr.text();
+    }
+    var m = html.match(/<script id="store-data"[^>]*>([\s\S]*?)<\/script>/);
+    var rs = m ? JSON.parse((m[1] || '{}').trim() || '{}') : {};
+    Object.keys(rs).forEach(function(uid) { store[uid] = rs[uid]; });
+    save();
+    applyAllStatuses();
+    recount();
+    dirty = false;
+    updateIndicator();
+    if (rbtn) { rbtn.textContent = '✅ ดึงแล้ว'; setTimeout(function() { rbtn.textContent = '🔄 ดึงล่าสุด'; rbtn.disabled = false; }, 2000); }
+  } catch (err) {
+    alert('❌ ดึงล่าสุดไม่สำเร็จ: ' + err.message);
+    if (rbtn) { rbtn.textContent = '🔄 ดึงล่าสุด'; rbtn.disabled = false; }
+  }
+}
+document.getElementById('btn-refresh').addEventListener('click', pullLatest);
+
+// ── Set / change GitHub token (one click to escape a bad/expired token) ──
+document.getElementById('btn-token').addEventListener('click', function() {
+  clearToken();
+  var t = ghToken();   // prompts for a fresh token
+  if (t) {
+    alert('บันทึก token แล้ว ✅\nลองกดเปลี่ยนสถานะ TC สัก 1 อัน — ปุ่มควรเด้ง "✅ บันทึกแล้ว!" ใน ~5 วิ');
+    updateIndicator();
+  }
+});
+
+// ── Download file (offline backup) ──
+document.getElementById('btn-save-file').addEventListener('click', function() {
+  save();
+  var html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+  var blob = new Blob([html], { type: 'text/html; charset=utf-8' });
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'takra-insight-ui-journey-clip-nov-ui-test-cases.html';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(a.href);
+});
+
+document.getElementById('btn-reset').addEventListener('click', function() {
+  if (!confirm('ล้างผลทดสอบทั้งหมด?')) return;
+  store = {};
+  save();
+  dirty = false;
+  location.reload();
+});
+
+// Set TC-AD.1 default to BLOCKED
+(function() {
+  if (!store['tc-29'] || !store['tc-29'].st) {
+    store['tc-29'] = { st: 'block' };
+    save();
+  }
+})();
+
+// Footer date
+var gd = document.getElementById('gen-date');
+if (gd) gd.textContent = document.lastModified || '';
+
+recount();
+updateIndicator();
+
+// Jira / Bug links (per test case · multiple)
+function jiraLabel(u){var m=String(u).match(/([A-Za-z]+-\d+)/);return m?m[1].toUpperCase():u;}
+function normJira(u){u=(u||'').trim();if(!u)return'';if(!/^https?:\/\//i.test(u)){var m=u.match(/^[A-Za-z]+-\d+$/);if(m)return'https://kitdi.atlassian.net/browse/'+u.toUpperCase();}return u;}
+function renderJira(uid){var box=document.querySelector('.jira-list[data-uid="'+uid+'"]');if(!box)return;var arr=(store[uid]&&store[uid].jira)||[];box.innerHTML='';arr.forEach(function(url,i){var row=document.createElement('div');row.className='jira-item';var a=document.createElement('a');a.href=url;a.target='_blank';a.rel='noopener';a.textContent=jiraLabel(url);var del=document.createElement('span');del.className='jira-del';del.textContent='✕';del.title='ลบลิงก์';del.addEventListener('click',function(){store[uid].jira.splice(i,1);if(!store[uid].jira.length)delete store[uid].jira;save();markDirty();renderJira(uid);});row.appendChild(a);row.appendChild(del);box.appendChild(row);});var cell=document.querySelector('td.jira-cell[data-uid="'+uid+'"]');if(cell){cell.innerHTML='';arr.forEach(function(url){var a2=document.createElement('a');a2.href=url;a2.target='_blank';a2.rel='noopener';a2.className='jira-chip';a2.textContent=jiraLabel(url);a2.addEventListener('click',function(e){e.stopPropagation();});cell.appendChild(a2);});}}
+function addJira(uid,val){var url=normJira(val);if(!url)return;store[uid]=store[uid]||{};store[uid].jira=store[uid].jira||[];store[uid].jira.push(url);save();markDirty();renderJira(uid);}
+document.querySelectorAll('.jira-btn').forEach(function(b){b.addEventListener('click',function(e){e.stopPropagation();var u=b.dataset.uid;var inp=document.querySelector('.jira-input[data-uid="'+u+'"]');addJira(u,inp.value);inp.value='';});});
+document.querySelectorAll('.jira-input').forEach(function(inp){inp.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();addJira(inp.dataset.uid,inp.value);inp.value='';}});inp.addEventListener('click',function(e){e.stopPropagation();});});
+document.querySelectorAll('.jira-list').forEach(function(box){renderJira(box.dataset.uid);});
+function applyFeatColor(e,owner){var cls=owner==='Wanlee T (Ice)'?'owner-ice':(owner==='Kachain B (Moss)'?'owner-moss':'');var er=document.querySelector('tr.featrow[data-featkey="'+e+'"]');if(!er)return;er.classList.remove('owner-ice','owner-moss');if(cls)er.classList.add(cls);var s=er.querySelector('.feat-owner');if(s){s.classList.remove('owner-ice','owner-moss');if(cls)s.classList.add(cls);}var n=er.nextElementSibling;while(n&&!n.classList.contains('featrow')&&!n.classList.contains('epicrow')){n.classList.remove('sec-ice','sec-moss');if(cls)n.classList.add(cls==='owner-ice'?'sec-ice':'sec-moss');n=n.nextElementSibling;}}
+document.querySelectorAll('.feat-owner').forEach(function(sel){var e=sel.dataset.featkey,k='feat-'+e;var cur=(store[k]&&store[k].owner)||'';sel.value=cur;applyFeatColor(e,cur);sel.addEventListener('click',function(ev){ev.stopPropagation();});sel.addEventListener('change',function(){var v=sel.value;if(v){store[k]=store[k]||{};store[k].owner=v;}else if(store[k]){delete store[k].owner;if(!Object.keys(store[k]).length)delete store[k];}save();markDirty();applyFeatColor(e,v);});});
+</script>
+
+
+
+<script>
+/* Status แยก Mac (store[uid].st) / Windows (store[uid].stw) */
+(function(){
+  var SW = { pass:['pass','PASS'], fail:['fail','FAIL'], hold:['hold','HOLD'], block:['block','BLOCKED'], skip:['skip','SKIP'] };
+  var DONE = { pass:1, fail:1, hold:1, block:1 };
+  function paintWin(uid){
+    var st = (store[uid] || {}).stw;
+    var cell = document.querySelector('td.status-win[data-uid="' + uid + '"] .stb');
+    if (cell) {
+      if (st && SW[st]) { cell.className = 'stb ' + SW[st][0]; cell.textContent = SW[st][1]; }
+      else { cell.className = 'stb pending'; cell.textContent = 'รอเทส'; }
+    }
+    document.querySelectorAll('.optw[data-uid="' + uid + '"]').forEach(function(x){ x.classList.toggle('sel', !!st && x.dataset.stw === st); });
+  }
+  function paintAllWin(){ document.querySelectorAll('td.status-win[data-uid]').forEach(function(c){ paintWin(c.dataset.uid); }); }
+  document.querySelectorAll('.optw').forEach(function(o){
+    o.addEventListener('click', function(e){
+      e.stopPropagation();
+      var uid = o.dataset.uid, st = o.dataset.stw;
+      store[uid] = store[uid] || {};
+      if (store[uid].stw === st) { delete store[uid].stw; } else { store[uid].stw = st; }
+      if (!Object.keys(store[uid]).length) delete store[uid];
+      save(); markDirty(); paintWin(uid); applyFilters();
+    });
+  });
+  function stOf(row, sel){ var b = row.querySelector(sel + ' .stb'); return b ? b.className.replace('stb','').trim().split(' ')[0] : 'pending'; }
+  /* ตัวกรองสถานะ: ระบบใดระบบหนึ่งตรงก็พอ */
+  var _af = applyFilters;
+  applyFilters = function(){
+    _af.apply(this, arguments);
+    if (filters.status.size) {
+      document.querySelectorAll('tr.trow').forEach(function(row){
+        if (!row.classList.contains('hide')) return;
+        var ok = true;
+        if (filters.feat.size  && !filters.feat.has(row.dataset.feat))   ok = false;
+        if (filters.level.size && !filters.level.has(row.dataset.level)) ok = false;
+        if (filters.prio.size  && !filters.prio.has(row.dataset.prio))   ok = false;
+        if (ok && !filters.status.has(stOf(row, 'td.status-win'))) ok = false;
+        if (!ok) return;
+        row.classList.remove('hide');
+        var d = row.nextElementSibling;
+        if (d && d.classList.contains('detail')) d.classList.remove('hide');
+      });
+      ['tr.featrow', 'tr.epicrow'].forEach(function(sel){
+        document.querySelectorAll(sel).forEach(function(hr){
+          var n = hr.nextElementSibling, any = false, stop = sel === 'tr.epicrow' ? ['epicrow'] : ['featrow','epicrow'];
+          while (n && !stop.some(function(c){ return n.classList.contains(c); })) {
+            if (n.classList.contains('trow') && !n.classList.contains('hide')) { any = true; break; }
+            n = n.nextElementSibling;
+          }
+          hr.classList.toggle('hide', !any);
+        });
+      });
+    }
+    osRecount();
+  };
+  /* สรุปผล: PASS/FAIL/… นับรวมผลของทั้ง 2 ระบบ (1 เคส = 2 ผล) พร้อมแยก 🍎/🪟 ·
+     % ทดสอบแล้ว: เคสนับว่าเสร็จเมื่อครบทั้ง Mac และ Windows */
+  function osRecount(){
+    var done = 0, testable = 0, skip = 0;
+    var cm = { pass:0, fail:0, hold:0, block:0, skip:0, pending:0 }, cw = { pass:0, fail:0, hold:0, block:0, skip:0, pending:0 };
+    document.querySelectorAll('tr.trow').forEach(function(row){
+      var mac = stOf(row, 'td.status'), win = stOf(row, 'td.status-win');
+      cm[cm.hasOwnProperty(mac) ? mac : 'pending']++;
+      cw[cw.hasOwnProperty(win) ? win : 'pending']++;
+      if (mac === 'skip' || win === 'skip') { skip++; return; }
+      testable++;
+      if (DONE[mac] && DONE[win]) done++;
+    });
+    ['pass','fail','hold','block','skip','pending'].forEach(function(k){
+      var e = document.getElementById('sum-' + k);
+      if (e) {
+        e.textContent = cm[k] + cw[k];
+        var sm = document.getElementById('sum-os-' + k);
+        if (!sm) { sm = document.createElement('small'); sm.id = 'sum-os-' + k; sm.style.cssText = 'font-weight:600;opacity:.75;margin-left:4px'; e.parentNode.appendChild(sm); }
+        sm.textContent = '🍎' + cm[k] + ' · 🪟' + cw[k];
+      }
+      var h = document.getElementById('hdr-' + k); if (h) h.textContent = cm[k] + cw[k];
+    });
+    var pct = testable ? Math.round(done / testable * 100) : 0;
+    var bar = document.getElementById('sumbar'); if (bar) bar.style.width = pct + '%';
+    var pctEl = document.getElementById('sumpct');
+    if (pctEl) pctEl.textContent = pct + '% ทดสอบแล้ว ครบ 2 ระบบ (' + done + '/' + testable + ')' + (skip ? ' · ข้าม ' + skip : '');
+  }
+  var _rc = recount;
+  recount = function(){ _rc.apply(this, arguments); osRecount(); };
+  var _aas = applyAllStatuses;
+  applyAllStatuses = function(){ _aas.apply(this, arguments); paintAllWin(); applyFilters(); };
+  paintAllWin();
+  applyFilters();
+})();
+</script>
+</body></html>

@@ -1,0 +1,1138 @@
+<!DOCTYPE html>
+<html lang="th"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TAKRA Insight — Journey C · แจ้งเตือน Telegram · ไลฟ์มีปัญหา · ตั้งค่า · Manual Test Cases</title>
+<style>
+:root{
+  --bg:#f5f6f8;--card:#fff;--card2:#f0f2f5;--line:#dce0e7;
+  --txt:#1f2430;--muted:#6b7280;--accent:#2563eb;
+  --p0:#dc2626;--p1:#ea7a18;--p2:#2563eb;--p3:#94a3b8;
+  --pass:#16a34a;--fail:#dc2626;--hold:#d97706;--skip:#9ca3af;--block:#7c3aed;
+  --lv-ui:#db2777;--lv-e2e:#ea580c;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--txt);font-family:"Segoe UI","Sarabun",system-ui,sans-serif;line-height:1.5;font-size:13px}
+a{color:var(--accent)}
+header.top{padding:20px 28px 14px;border-bottom:1px solid var(--line);background:linear-gradient(135deg,#1e3a8a,#2563eb);color:#fff}
+header.top h1{margin:0 0 4px;font-size:20px}
+header.top .sub{font-size:12.5px;opacity:.88}
+header.top .meta{margin-top:10px;display:flex;flex-wrap:wrap;gap:8px}
+.pill{display:inline-block;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:600;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.35);color:#fff}
+.wrap{padding:16px 22px 80px;max-width:1280px;margin:0 auto}
+.counts{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 12px}
+.cnt{font-size:12px;font-weight:700;padding:5px 12px;border-radius:8px;border:1px solid var(--line);background:#fff}
+.cnt b{font-size:14px}
+.cnt.pass{color:var(--pass);border-color:#bbf7d0}.cnt.fail{color:var(--fail);border-color:#fecaca}
+.cnt.hold{color:var(--hold);border-color:#fde68a}.cnt.block{color:var(--block);border-color:#e9d5ff}
+.cnt.pending{color:var(--muted)}.cnt.skip{color:var(--skip)}
+.runsum{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin:0 0 14px}
+.runsum h3{margin:0 0 8px;font-size:13px}
+.sumchips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px}
+.progress{height:10px;background:var(--card2);border-radius:6px;overflow:hidden;border:1px solid var(--line)}
+.progressbar{height:100%;background:var(--pass);width:0;transition:width .3s}
+.hint{color:var(--muted);font-size:12px}
+.toolbar{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;margin:0 0 12px}
+.btn{font-size:12px;font-weight:600;padding:5px 12px;border-radius:7px;border:1px solid var(--line);background:#fff;color:var(--txt);cursor:pointer}
+.btn:hover{border-color:var(--accent);color:var(--accent)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.btn.primary:hover{opacity:.88}
+.filters{background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:0 0 14px}
+.filters .row{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:3px 0}
+.filters label{font-size:11px;font-weight:700;color:var(--muted);min-width:60px}
+.fchip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:3px 11px;font-size:11.5px;cursor:pointer;color:var(--txt)}
+.fchip:hover{border-color:var(--accent);color:var(--accent)}
+.fchip.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.clearbtn{font-size:11px;padding:3px 10px;border:1px solid var(--line);border-radius:6px;background:#fff;color:var(--muted);cursor:pointer;margin-left:4px}
+.clearbtn:hover{color:var(--fail);border-color:var(--fail)}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:#fff}
+table.tc{border-collapse:collapse;width:100%;min-width:900px;background:#fff}
+table.tc th,table.tc td{padding:8px 10px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+table.tc thead th{position:sticky;top:0;background:var(--card2);color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.4px;z-index:3;border-bottom:2px solid var(--line)}
+tr.epicrow td{background:#1e3a8a;color:#fff;font-weight:700;font-size:13px;padding:9px 12px}
+tr.epicrow .rp{font-weight:400;font-size:11px;opacity:.75;margin-left:6px}
+tr.featrow td{background:#eaf1fb;color:#1d4ed8;font-weight:700;font-size:12px}
+tr.featrow .rp{font-weight:500;font-size:11px;color:#3b6fc4;margin-left:8px}
+tr.trow{cursor:pointer}tr.trow:hover{background:#f7f9fc}tr.trow.open{background:#eef4fe}
+.tog{display:inline-block;width:14px;color:var(--muted);transition:transform .15s;font-size:11px}
+tr.trow.open .tog{transform:rotate(90deg);color:var(--accent)}
+.cid{font-family:monospace;font-size:10px;color:var(--muted);white-space:nowrap}
+td.jira{white-space:nowrap}td.jira a{font-family:monospace;font-size:10.5px;font-weight:700;color:var(--accent);text-decoration:none}td.jira a:hover{text-decoration:underline}
+.ctitle{font-weight:600;font-size:12.5px;max-width:400px}
+td.lvl{white-space:nowrap}
+.lv{font-size:10px;font-weight:700;padding:2px 7px;border-radius:5px;border:1px solid;background:#fff;display:inline-block;vertical-align:middle}
+.lv.lvl-ui{color:var(--lv-ui);border-color:var(--lv-ui)}
+.lv.lvl-e2e{color:var(--lv-e2e);border-color:var(--lv-e2e)}
+.ac{font-size:10px;color:var(--muted);font-family:monospace;margin-left:4px}
+.prio{font-weight:800;font-size:10px;padding:3px 7px;border-radius:5px;color:#fff;display:inline-block;white-space:nowrap}
+.p0{background:var(--p0)}.p1{background:var(--p1)}.p2{background:var(--p2)}
+td.status{white-space:nowrap}
+.stb{font-weight:700;font-size:10px;padding:3px 8px;border-radius:5px;display:inline-block}
+.stb.pending{background:#fff;border:1px solid var(--line);color:var(--muted)}
+.stb.pass{background:var(--pass);color:#fff}.stb.fail{background:var(--fail);color:#fff}
+.stb.hold{background:var(--hold);color:#fff}.stb.block{background:var(--block);color:#fff}
+.stb.skip{background:var(--skip);color:#fff}
+tr.detail{display:none}tr.detail.show{display:table-row}
+tr.detail>td{background:#fafbfc;padding:0;border-bottom:2px solid var(--line)}
+.card{padding:16px 20px}
+.card .h-title{font-size:14px;font-weight:700;margin:0 0 3px}
+.card .h-prio{font-size:12px;color:var(--muted);margin:0 0 12px}
+.card .sec{margin:0 0 12px}.card .sec:last-child{margin-bottom:0}
+.card .sec h4{margin:0 0 5px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.3px;color:#374151}
+.card .sec ol,.card .sec ul{margin:0;padding-left:18px}
+.card .sec li{margin:2px 0;font-size:12.5px}
+.card .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:760px){.card .grid{grid-template-columns:1fr}}
+.actualbox{display:block;width:100%;box-sizing:border-box;background:#fff;border:1px dashed var(--line);border-radius:7px;padding:7px 11px;color:var(--txt);font:inherit;font-size:12px;line-height:1.55;min-height:78px;resize:vertical}
+.actualbox::placeholder{color:var(--muted);font-style:italic}
+.actualbox:focus{outline:none;border-style:solid;border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,99,235,.13)}
+.actualbox.filled{border-style:solid;border-color:var(--accent)}
+.statusrow{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.opt{font-size:11px;font-weight:700;padding:4px 11px;border-radius:6px;border:1px solid var(--line);background:#fff;color:var(--muted);cursor:pointer}
+.opt:hover{opacity:.8}
+.opt.pass{border-color:var(--pass)}.opt.fail{border-color:var(--fail)}
+.opt.hold{border-color:var(--hold)}.opt.block{border-color:var(--block)}.opt.skip{border-color:var(--skip)}
+.opt.sel.pass{background:var(--pass);color:#fff}
+.opt.sel.fail{background:var(--fail);color:#fff}
+.opt.sel.hold{background:var(--hold);color:#fff}
+.opt.sel.block{background:var(--block);color:#fff}
+.opt.sel.skip{background:var(--skip);color:#fff}
+tr.trow.hide,tr.detail.hide{display:none!important}
+tr.epicrow.hide,tr.featrow.hide{display:none!important}
+.note-box{background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:8px 12px;font-size:12px;color:#92400e;margin:0 0 12px}
+footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
+@media print{.tablewrap{overflow:visible}table.tc{min-width:0}tr.detail{display:table-row!important}.toolbar,.filters,.runsum{display:none}}
+/* Jira per-case links */
+.jira-sec .jira-list{display:flex;flex-direction:column;gap:4px;margin-bottom:6px}
+.jira-item{display:flex;align-items:center;gap:8px;font-size:12px}
+.jira-item a{color:var(--accent);text-decoration:none;font-family:monospace;font-weight:700}
+.jira-item a:hover{text-decoration:underline}
+.jira-del{cursor:pointer;color:var(--fail);font-weight:700;font-size:11px;user-select:none}
+.jira-add{display:flex;gap:6px}
+.jira-input{flex:1;min-width:0;padding:5px 8px;border:1px solid var(--line);border-radius:6px;font-size:12px;font-family:inherit;background:#fff;color:var(--txt)}
+.jira-btn{white-space:nowrap}
+.edge-badge{display:inline-block;margin-left:6px;padding:0 6px;border-radius:4px;font-size:9.5px;font-weight:700;color:#92400e;background:#fef3c7;border:1px solid #fde68a;vertical-align:middle}
+.jira-cell{white-space:normal}
+.jira-chip{display:inline-block;margin:1px 3px 1px 0;padding:1px 6px;border:1px solid var(--line);border-radius:5px;font-family:monospace;font-size:10.5px;font-weight:700;color:var(--accent);text-decoration:none;background:var(--card2)}
+.jira-chip:hover{text-decoration:underline}
+/* Epic assignee + section color */
+.epic-owner-wrap{margin-left:12px;font-weight:400;font-size:11px}
+.feat-owner{font-size:11px;padding:2px 6px;border:1px solid var(--line);border-radius:5px;background:#fff;color:var(--txt);cursor:pointer}
+tr.featrow.owner-ice td{background:#60a5fa;border-left:4px solid #1d4ed8}
+tr.featrow.owner-moss td{background:#a78bfa;border-left:4px solid #6d28d9}
+tr.sec-ice>td:first-child{box-shadow:inset 5px 0 0 #2563eb}
+tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
+.feat-owner.owner-ice{border-color:#2563eb;color:#2563eb;font-weight:700}
+.feat-owner.owner-moss{border-color:#7c3aed;color:#7c3aed;font-weight:700}
+
+/* ประเภทเคส (kind) */
+.kd{display:inline-block;margin-left:6px;padding:0 6px;border-radius:4px;font-size:9.5px;font-weight:700;vertical-align:middle;border:1px solid;white-space:nowrap}
+.kd-happy{color:#15803d;background:#f0fdf4;border-color:#bbf7d0}
+.kd-neg{color:#b91c1c;background:#fef2f2;border-color:#fecaca}
+.kd-bnd{color:#b45309;background:#fffbeb;border-color:#fde68a}
+.kd-val{color:#6d28d9;background:#f5f3ff;border-color:#ddd6fe}
+.kd-exc{color:#be123c;background:#fff1f2;border-color:#fecdd3}
+.kd-perm{color:#0f766e;background:#f0fdfa;border-color:#99f6e4}
+.kd-data{color:#1d4ed8;background:#eff6ff;border-color:#bfdbfe}
+.kd-reg{color:#475569;background:#f8fafc;border-color:#cbd5e1}
+.chk{margin-top:4px;padding:6px 8px;border-left:3px solid #16a34a;background:rgba(22,163,74,.07)}
+.noui{display:inline-block;margin-left:6px;padding:0 6px;border-radius:4px;font-size:9.5px;font-weight:700;vertical-align:middle;color:#991b1b;background:#fee2e2;border:1px solid #fca5a5;white-space:nowrap}
+
+/* ป้าย epic (Jira) */
+.epic-tag{display:inline-block;margin-left:6px;padding:0 6px;border-radius:4px;font-size:9.5px;font-weight:700;vertical-align:middle;white-space:nowrap;color:#1e3a8a;background:#eef2ff;border:1px solid #c7d2fe;text-decoration:none}
+.epic-tag:hover{background:#e0e7ff;text-decoration:underline}
+.epicrow .epic-tag{font-size:11px;margin-left:8px}
+
+td.status-win{white-space:nowrap}
+.osline{display:flex;align-items:center;gap:8px;margin-top:5px;flex-wrap:wrap}
+.oslbl{font-size:11px;font-weight:800;color:var(--muted);min-width:84px}
+.optw{font-size:11px;font-weight:700;padding:4px 11px;border-radius:6px;border:1px solid var(--line);background:#fff;color:var(--muted);cursor:pointer}
+.optw:hover{opacity:.8}
+.optw.pass{border-color:var(--pass)}.optw.fail{border-color:var(--fail)}
+.optw.hold{border-color:var(--hold)}.optw.block{border-color:var(--block)}.optw.skip{border-color:var(--skip)}
+.optw.sel.pass{background:var(--pass);color:#fff}
+.optw.sel.fail{background:var(--fail);color:#fff}
+.optw.sel.hold{background:var(--hold);color:#fff}
+.optw.sel.block{background:var(--block);color:#fff}
+.optw.sel.skip{background:var(--skip);color:#fff}
+.actual-os-lbl{font-size:10px;font-weight:800;color:#475569;margin:9px 0 3px}
+.actual-os-lbl.first{margin-top:2px}
+</style>
+</head>
+<body>
+<a id="hub-back-btn" href="https://wanlee-tankunnatam.github.io/qa-test-reports/?project=insight" title="กลับไปหน้ารวมรายงาน (Hub)" style="position:fixed;top:12px;right:14px;z-index:99999;display:inline-flex;align-items:center;gap:7px;padding:10px 18px;border-radius:999px;background:#ffffff;color:#1e3a8a;font-size:14px;font-weight:800;text-decoration:none;box-shadow:0 4px 16px rgba(0,0,0,.35);border:2px solid #1e3a8a;font-family:'Segoe UI','Sarabun',system-ui,sans-serif">🏠 รายงานทั้งหมด</a>
+
+
+<script id="store-data" type="application/json">
+{}
+</script>
+
+<header class="top">
+  <h1>🚨 TAKRA Insight — Journey C · แจ้งเตือน Telegram · ไลฟ์มีปัญหา · ตั้งค่า · Manual Test Cases</h1>
+  <div class="sub">เทสด้วยมือแบบ user journey (เดินครบเส้นทางข้ามหลายหน้า) · แอปเดสก์ท็อป TAKRA Insight · UI ใหม่หลัง re-design 5 พ.ย. · โค้ด <b>uat @ 0d937314</b> (5 พ.ย. 2569) · เฉพาะ P0 + P1 · Target: แอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT)</div>
+  <div class="meta">
+    <span class="pill">0 เคส + E2E 6 = 6</span>
+    <span class="pill">1 กลุ่ม · 🚨 ไลฟ์มีปัญหา + ตั้งค่า</span>
+    <span class="pill">UI + E2E · manual</span>
+    <span class="pill">P0 4 · P1 2 · P2 0</span>
+    <span class="pill">ประเภท: Happy 4 · Negative 0 · Boundary 0 · Validation 0 · Exception 2 · Permission 0 · Data 0</span>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="note-box">🖥️ <b>Test target:</b> แอปเดสก์ท็อป <b>TAKRA Insight</b> บิลด์ UAT ที่มีโค้ด uat @ 0d937314 ขึ้นไป · ทดสอบทั้ง 🍎 Mac และ 🪟 Windows (บันทึกผลแยกคอลัมน์)<br>🎨 <b>UI ใหม่:</b> re-design <a href="https://kitdi.atlassian.net/browse/TI-700" target="_blank">TI-700</a> วิเคราะห์ย้อนหลัง · <a href="https://kitdi.atlassian.net/browse/TI-713" target="_blank">TI-713</a> คลิป · <a href="https://kitdi.atlassian.net/browse/TI-714" target="_blank">TI-714</a> ตั้งค่า/Telegram/ป้ายสถานะไลฟ์ · <a href="https://kitdi.atlassian.net/browse/TI-717" target="_blank">TI-717</a> แท็ก · <a href="https://kitdi.atlassian.net/browse/TI-740" target="_blank">TI-740</a> · <a href="https://kitdi.atlassian.net/browse/TI-741" target="_blank">TI-741</a> เสียงที่อัดไว้<br>👤 <b>บัญชี:</b> "บัญชีเจ้าของ / โฮสต์ / ผู้จัดการแบรนด์ / MULTI" ในขั้นตอน = บัญชีทดสอบ UAT ตามบรรทัด "บัญชีที่ใช้" ในช่อง Test Data<br>🧭 <b>Journey:</b> 1 เคส = ผู้ใช้ทำงานจริง 1 เป้าหมาย เดินตามขั้นตอนครบเส้นทาง · Expected 1 ข้อ = 1 จุดตรวจระหว่างทาง (เรียงตามขั้น) — จุดไหนไม่ผ่านให้ลง FAIL และบอกจุดนั้นใน Actual<br>🔁 <b>ครอบเคสเดิม:</b> "ที่มา" บอกว่า journey ครอบเคสย่อยตัวไหน · ชีต "ฟีเจอร์ใหม่ พ.ย." คงผลไว้ ไม่แก้<br>🔴 <b>ไลฟ์จริง = ทดสอบด้วยมือ:</b> ห้ามใช้ห้องไลฟ์เดียวกับรอบทดสอบอื่นพร้อมกัน · เคสที่ต้องให้ไลฟ์มีปัญหา (หลุด ภาพค้าง เสียงหาย) ใช้บัญชีทดสอบของ QA เปิดไลฟ์เอง<br>📨 <b>Telegram:</b> ใช้กลุ่มทดสอบของ QA + บอททดสอบเท่านั้น ห้ามใช้กลุ่มลูกค้า/กลุ่มทีมจริง<br>📎 <b>ที่มา:</b> คำบนจอลอกจาก <code>apps/desktop/desktop/src/renderer/src/i18n/th.js</code> (uat) · Expected ยึด <code>prd.md</code> · <code>prd-m3.md</code> · AC ในใบ Jira<br>🗂️ <b>ชีตอื่นในชุดเดียวกัน:</b> <a href="takra-insight-ui-journey-clip-nov-ui-test-cases-table.html">A · วิเคราะห์คลิป</a> · <a href="takra-insight-ui-journey-past-tags-nov-ui-test-cases-table.html">B · ย้อนดู + แท็ก</a></div>
+
+  <div class="runsum">
+    <h3>📊 สรุปผล Manual Test</h3>
+    <div class="sumchips">
+      <span class="cnt pass">PASS <b id="sum-pass">0</b></span>
+      <span class="cnt fail">FAIL <b id="sum-fail">0</b></span>
+      <span class="cnt hold">HOLD <b id="sum-hold">0</b></span>
+      <span class="cnt block">BLOCKED <b id="sum-block">0</b></span>
+      <span class="cnt skip">SKIP <b id="sum-skip">0</b></span>
+      <span class="cnt pending">รอเทส <b id="sum-pending">6</b></span>
+    </div>
+    <div class="progress"><div id="sumbar" class="progressbar" style="width:0%"></div></div>
+    <div class="hint" id="sumpct" style="margin-top:5px">0% ทดสอบแล้ว (0/6)</div>
+  </div>
+
+  <div class="toolbar">
+    <button class="btn" onclick="toggleAll(true)">▸ กางทั้งหมด</button>
+    <button class="btn" onclick="toggleAll(false)">▾ ยุบทั้งหมด</button>
+    <span class="hint">💡 คลิกแถว → ดู Steps / Expected (UI only)</span>
+    <span style="margin-left:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+      <span id="save-status" class="hint" style="white-space: nowrap; color: var(--muted);">✓ ตรงกับ GitHub</span>
+      <label class="hint" style="display:flex;gap:4px;align-items:center;white-space:nowrap;cursor:pointer" title="บันทึกขึ้น GitHub อัตโนมัติหลังหยุดแก้ ~5 วินาที"><input type="checkbox" id="chk-autosave" checked=""> auto-save</label>
+      <button class="btn" id="btn-token" title="ใส่/เปลี่ยน GitHub token (ถ้าเซฟไม่ขึ้น/token เสีย กดอันนี้)">🔑 Token</button>
+      <button class="btn" id="btn-refresh" title="ดึงผลล่าสุดจาก GitHub มา merge (ไม่ต้อง reload)">🔄 ดึงล่าสุด</button>
+      <button class="btn primary" id="btn-publish" style="">☁️ บันทึกขึ้น GitHub</button>
+      <button class="btn" id="btn-save-file" title="ดาวน์โหลด HTML ไว้ใช้ offline">💾 ดาวน์โหลด</button>
+      <button class="btn" style="color:var(--fail)" id="btn-reset">🗑 ล้างผล</button>
+    </span>
+  </div>
+
+  <div class="filters">
+    <div class="row"><label>กลุ่ม</label>
+      <button class="fchip" data-f="feat" data-v="m-jrn-alert">🚨 ไลฟ์มีปัญหา + ตั้งค่า (6)</button>
+      <button class="clearbtn" data-clear="feat">✕</button>
+    </div>
+    <div class="row"><label>ประเภท</label>
+      <button class="fchip" data-f="kind" data-v="happy" title="flow ปกติ">Happy Path (4)</button><button class="fchip" data-f="kind" data-v="negative" title="ข้อมูลผิด / action ผิด">Negative (0)</button><button class="fchip" data-f="kind" data-v="boundary" title="min · max · ก่อนขอบ · ตรงขอบ · เกินขอบ">Boundary (0)</button><button class="fchip" data-f="kind" data-v="validation" title="format · required · character · length">Validation (0)</button><button class="fchip" data-f="kind" data-v="exception" title="เน็ตหลุด · ระบบภายนอกผิดปกติ · timeout">Exception (2)</button><button class="fchip" data-f="kind" data-v="permission" title="role ไหนทำได้ / ทำไม่ได้">Permission (0)</button><button class="fchip" data-f="kind" data-v="data" title="empty · duplicate · ไม่ปนข้ามทีม/แพลตฟอร์ม">Data (0)</button>
+      <button class="clearbtn" data-clear="kind">✕</button>
+    </div>
+    <div class="row"><label>Priority</label>
+      <button class="fchip" data-f="prio" data-v="P0">P0</button>
+      <button class="fchip" data-f="prio" data-v="P1">P1</button>
+      <button class="fchip" data-f="prio" data-v="P2">P2</button>
+      <button class="clearbtn" data-clear="prio">✕</button>
+    </div>
+    <div class="row"><label>สถานะ</label>
+      <button class="fchip" data-f="status" data-v="pass">✅ PASS</button>
+      <button class="fchip" data-f="status" data-v="fail">❌ FAIL</button>
+      <button class="fchip" data-f="status" data-v="hold">⏸ HOLD</button>
+      <button class="fchip" data-f="status" data-v="block">🚫 BLOCKED</button>
+      <button class="fchip" data-f="status" data-v="skip">⏭ SKIP</button>
+      <button class="fchip" data-f="status" data-v="pending">⏳ รอเทส</button>
+      <button class="clearbtn" data-clear="status">✕</button>
+    </div>
+  </div>
+
+  <div class="tablewrap">
+  <table class="tc" id="main-table">
+    <thead><tr><th style="width:22px"></th><th style="width:130px">TC ID</th><th>Test Case</th><th style="width:74px">Level</th><th style="width:55px">Pri</th><th style="width:74px">🍎 Mac</th><th style="width:88px">🪟 Windows</th><th style="width:120px">Jira</th></tr></thead>
+    <tbody>
+
+<!-- m-jrn-alert -->
+<tr class="epicrow" data-epic="m-jrn-alert"><td colspan="8">🚨 Journey แจ้งเตือน Telegram · ไลฟ์มีปัญหาบนจอ · เสียงที่อัดไว้ · หน้าตั้งค่า <span class="rp">(6 เคส)</span> <a class="epic-tag" href="https://kitdi.atlassian.net/browse/TI-714" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TI-714 ใน Jira">🧩 Epic TI-714</a></td></tr>
+<tr class="featrow" data-featkey="jrn-alert"><td colspan="8">📁 C · ตั้งแจ้งเตือน · ไลฟ์มีปัญหาระหว่างเฝ้า · เคลียร์เสียงที่อัดไว้ <span class="rp"> <span class="lv lvl-e2e">🔄 6</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="jrn-alert"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow" data-feat="m-jrn-alert" data-level="e2e" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-JRN-C.1</td>
+  <td class="ctitle">ตั้งแจ้งเตือน Telegram ครั้งแรกก่อนไลฟ์ ตั้งแต่วาง token จนเปิดการส่ง → กลุ่มได้ข้อความทดสอบ และหน้าบอกชัดว่าจะส่งเรื่องอะไรบ้าง <span class="kd kd-happy">Happy Path</span></td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-23232"><span class="stb pending">รอเทส</span></td>
+  <td class="status-win" data-uid="tc-23232"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-23232"></td>
+</tr>
+<tr class="detail"><td colspan="8"><div class="card">
+  <div class="h-title">ตั้งแจ้งเตือน Telegram ครั้งแรกก่อนไลฟ์ ตั้งแต่วาง token จนเปิดการส่ง → กลุ่มได้ข้อความทดสอบ และหน้าบอกชัดว่าจะส่งเรื่องอะไรบ้าง</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TI-714" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TI-714 ใน Jira">🧩 Epic TI-714</a> · Priority: <b>P0</b> · E2E · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · Journey แจ้งเตือน Telegram · ไลฟ์มีปัญหาบนจอ</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #d97706;background:rgba(217,119,6,.07)">📌 <b>หมายเหตุ:</b> FAIL ถ้ากลุ่มทดสอบไม่ได้ข้อความทดสอบ หรือหน้าโชว์ token เต็ม · สวิตช์แนบภาพเปิดได้หลังเปิดการส่งเท่านั้น จึงต้องเปิดการส่งก่อน · เคส TC-JRN-C.2 และเคสไลฟ์ที่ส่ง Telegram ใช้การตั้งค่านี้ต่อ</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>บัญชีเลือกพื้นที่ทำงานไว้แล้ว และพื้นที่ทำงานนี้บนเครื่องนี้ยังไม่เคยตั้งค่า Telegram</li><li>บอททดสอบของ QA ที่สร้างจาก @BotFather (มี token) และถูกเพิ่มเข้ากลุ่ม Telegram ทดสอบแล้ว</li></ul></div>
+  <div class="sec"><h4>Test Data</h4><ul><li>บัญชีที่ใช้ (UAT): qa.owner@realfactory.co.th · บทบาท "เจ้าของ"</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป TAKRA Insight (UAT) แล้วเข้าสู่ระบบด้วยบัญชีเจ้าของ กดปุ่มโปรไฟล์ที่มุมล่างของเมนูซ้าย เลือก "ตั้งค่า" แล้วกด "แจ้งเตือน Telegram" ที่แถบหมวดด้านซ้าย แล้วดูสถานะของหน้า</li><li>วาง token ของบอททดสอบในช่อง "วาง bot token" แล้วกด "บันทึก" รอแอปตรวจกับ Telegram และค้นหากลุ่มให้เอง</li><li>เลือกกลุ่มทดสอบจากรายการกลุ่มที่บอทอยู่ แล้วกด "บันทึก" ในขั้นที่ 2</li><li>กด "ส่งข้อความทดสอบ" ในขั้นที่ 3 แล้วเปิดกลุ่มทดสอบในแอป Telegram ดูข้อความที่เข้ามา</li><li>กลับมาที่หน้าเดิม กดสวิตช์ "ส่งแจ้งเตือนเข้ากลุ่ม" ให้เปิด แล้วอ่านคำเตือนของแถว "แนบภาพโฮสต์ตอนเกิดเรื่อง" ก่อนกดสวิตช์นั้นให้เปิด</li><li>กด "ดูตัวอย่างข้อความ" แล้วดูกรอบตัวอย่าง</li><li>อ่านรายการใต้หัวข้อ "เรื่องที่ส่ง" จนจบ</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ทางเข้า: เมนูโปรไฟล์มีแค่ "ตั้งค่า" (ไม่มี "แจ้งเตือน Telegram" แยกแล้ว) · หน้า "แจ้งเตือนเข้า Telegram" อยู่ในหน้าตั้งค่าที่มีแถบหมวดด้านซ้าย ป้ายการ์ด "เชื่อมบอทกับกลุ่ม" เป็น "ยังไม่ได้ตั้งค่า" และสวิตช์ส่งแจ้งเตือนกดไม่ได้ ("กดได้หลังส่งข้อความทดสอบผ่าน")</li><li>บันทึก token: ขั้นที่ 1 ขึ้นเครื่องหมายถูก แสดง "บอท @{ชื่อบอท} · token ••••{4 ตัวท้าย}" ไม่โชว์ token เต็ม และขั้นที่ 2 ขึ้นรายการ "กลุ่มที่บอทอยู่ (ค้นหาเมื่อ HH:MM)" ให้เลือกเอง</li><li>เลือกกลุ่ม: ขั้นที่ 2 แสดง "กลุ่ม {ชื่อกลุ่ม}" พร้อมปุ่ม "เปลี่ยนกลุ่ม" และป้ายการ์ดบอกว่ายังเหลือ 1 ขั้น</li><li>ส่งทดสอบ: กลุ่มทดสอบได้ข้อความ "🧪 ข้อความทดสอบจาก Takra Insight" · ขั้นที่ 3 แสดง "ส่งทดสอบถึงกลุ่มแล้ว · HH:MM" สีเขียว ป้ายการ์ดเป็น "พร้อมแล้ว · ยังปิดการส่ง" และสวิตช์ส่งแจ้งเตือนกดได้</li><li>เปิดการส่ง + แนบภาพ: ป้ายการ์ดเป็น "เปิดอยู่" · แถวแนบภาพมีกล่องเหลือง "ก่อนเปิด โปรดทราบ" (ภาพออกจากเครื่องไป Telegram · ทุกคนในกลุ่มเห็น · ลบไลฟ์ในแอปแล้วภาพไม่ถูกลบตาม) อยู่ใต้คำอธิบายของแถวนั้นเอง และสวิตช์แนบภาพกดได้หลังเปิดการส่งเท่านั้น</li><li>ตัวอย่างข้อความ: กรอบหน้าตาเหมือนหน้าแชทของกลุ่ม หัวกรอบเป็นชื่อกลุ่มทดสอบ + "ส่งโดย @{ชื่อบอท} · ตัวอย่าง" · ข้อความแดง "🔴 @your_shop · 📺 ภาพค้าง" มีช่อง "ภาพโฮสต์ตอนเกิดเรื่อง" และวิธีแก้ ①–③ · ตามด้วยข้อความเขียว "🟢 … ✅ ภาพกลับมาแล้ว (หายไป 1 นาที 35 วิ)"</li><li>เรื่องที่ส่ง: แบ่ง 3 กลุ่มมีจุดสีหน้าหัวกลุ่ม — "ไลฟ์มีปัญหา (5 เรื่อง)" · "โฮสต์และการขาย (4 เรื่อง)" · "กลับมาปกติ (1 เรื่อง)" เป็นรายการคอลัมน์เดียว ใช้ไอคอนไม่ใช่อีโมจิ มีป้าย "ใหม่" ที่ 5 เรื่องใหม่ และบอก "ไม่ส่ง: เรื่องราคา · คอมเมนต์พุ่ง — …"</li></ul><div class="hint" style="margin-top:6px">ที่มา: TI-714 · TI-598 · FR148 · FR153 · ครอบเคสย่อย TC-ALRT-A.1, A.2, A.3, B.1, B.2</div></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4>
+  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
+    <span class="opt pass" data-uid="tc-23232" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-23232" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-23232" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-23232" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-23232" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">
+    <span class="optw pass" data-uid="tc-23232" data-stw="pass">PASS</span>
+    <span class="optw fail" data-uid="tc-23232" data-stw="fail">FAIL</span>
+    <span class="optw hold" data-uid="tc-23232" data-stw="hold">HOLD</span>
+    <span class="optw block" data-uid="tc-23232" data-stw="block">BLOCKED</span>
+    <span class="optw skip" data-uid="tc-23232" data-stw="skip">SKIP</span>
+  </div></div>
+  </div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-23232"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-23232" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-23232">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="m-jrn-alert" data-level="e2e" data-prio="P1" data-kind="exception" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-JRN-C.2</td>
+  <td class="ctitle">Telegram ส่งไม่ผ่านเพราะบอทหลุดจากกลุ่ม แล้วแก้ตามที่แอปบอก → กลับมาส่งได้ การ์ดแจ้งปัญหากลับไปที่เดิม <span class="kd kd-exc">Exception</span></td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-23233"><span class="stb pending">รอเทส</span></td>
+  <td class="status-win" data-uid="tc-23233"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-23233"></td>
+</tr>
+<tr class="detail"><td colspan="8"><div class="card">
+  <div class="h-title">Telegram ส่งไม่ผ่านเพราะบอทหลุดจากกลุ่ม แล้วแก้ตามที่แอปบอก → กลับมาส่งได้ การ์ดแจ้งปัญหากลับไปที่เดิม</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TI-714" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TI-714 ใน Jira">🧩 Epic TI-714</a> · Priority: <b>P1</b> · E2E · ประเภท: <b>Exception</b> <span class="hint">(เน็ตหลุด · ระบบภายนอกผิดปกติ · timeout)</span> · Journey แจ้งเตือน Telegram · ไลฟ์มีปัญหาบนจอ</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #d97706;background:rgba(217,119,6,.07)">📌 <b>หมายเหตุ:</b> FAIL ถ้าต้องเลื่อนลงล่างสุดถึงจะเห็นว่าส่งไม่ผ่าน หรือกด "ส่งทดสอบอีกครั้ง" แล้วสถานะไม่กลับปกติ</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>บัญชีเลือกพื้นที่ทำงานไว้แล้ว</li><li>หน้า "แจ้งเตือน Telegram" ของพื้นที่ทำงานนี้เชื่อมบอททดสอบกับกลุ่มทดสอบครบ 3 ขั้น ส่งทดสอบผ่าน และเปิด "ส่งแจ้งเตือนเข้ากลุ่ม" แล้ว (ทำ TC-JRN-C.1 แล้ว)</li></ul></div>
+  <div class="sec"><h4>Test Data</h4><ul><li>บัญชีที่ใช้ (UAT): qa.owner@realfactory.co.th · บทบาท "เจ้าของ"</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป TAKRA Insight (UAT) แล้วเข้าสู่ระบบด้วยบัญชีเจ้าของ กดปุ่มโปรไฟล์ที่มุมล่างของเมนูซ้าย เลือก "ตั้งค่า" แล้วกด "แจ้งเตือน Telegram" ที่แถบหมวดด้านซ้าย แล้วดูว่าการ์ด "การส่งล่าสุด" อยู่ตรงไหนของหน้า</li><li>ในแอป Telegram นำบอททดสอบออกจากกลุ่มทดสอบ แล้วกลับมากด "ส่งอีกครั้ง" ในขั้นที่ 3</li><li>ดูป้ายการ์ด "เชื่อมบอทกับกลุ่ม" ตำแหน่งและข้อความของการ์ด "การส่งล่าสุด" และข้อความใต้สวิตช์ "ส่งแจ้งเตือนเข้ากลุ่ม"</li><li>ทำตามวิธีแก้ที่แอปบอก โดยเพิ่มบอททดสอบกลับเข้ากลุ่มทดสอบในแอป Telegram</li><li>กลับมากด "ส่งทดสอบอีกครั้ง" ในแถวแดงของการ์ด "การส่งล่าสุด" แล้วดูกลุ่มทดสอบและหน้าตั้งค่า</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ก่อนเกิดปัญหา: การ์ด "การส่งล่าสุด" อยู่ล่างสุดของหน้า (ใต้การ์ด "ส่งแจ้งเตือนเข้ากลุ่ม")</li><li>ตอนส่งไม่ผ่าน: ป้ายการ์ดเป็น "ส่งไม่ได้" สีแดง · การ์ด "การส่งล่าสุด" ย้ายขึ้นมาอยู่ใต้การ์ด "เชื่อมบอทกับกลุ่ม" ทันที เป็นแถวแดง "หยุดส่งตั้งแต่ HH:MM — บอทไม่ได้อยู่ในกลุ่มแล้ว หรือไม่มีสิทธิ์ส่งข้อความ" พร้อมวิธีแก้ "เพิ่มบอทกลับเข้ากลุ่มหรือเปิดสิทธิ์ส่งข้อความ แล้วส่งทดสอบอีกครั้ง" และปุ่ม "ส่งทดสอบอีกครั้ง"</li><li>ข้อความใต้สวิตช์: เป็นสีแดง "เปิดอยู่ แต่ส่งไม่ได้จนกว่าจะส่งทดสอบผ่านอีกครั้ง" · เรื่องเดียวกันไม่ขึ้นกล่องแดงซ้ำหลายที่</li><li>หลังแก้: กลุ่มทดสอบได้ "🧪 ข้อความทดสอบจาก Takra Insight" · ป้ายการ์ดกลับเป็น "เปิดอยู่" · แถวแดงหาย และการ์ด "การส่งล่าสุด" กลับไปอยู่ล่างสุดของหน้า · ข้อความใต้สวิตช์กลับเป็น "เปิดอยู่ — ส่งเมื่อไลฟ์มีเรื่องตามรายการด้านล่าง"</li></ul><div class="hint" style="margin-top:6px">ที่มา: TI-714 (สถานะส่งไม่ผ่าน) · FR148 · ครอบเคสย่อย TC-ALRT-C.1, C.2</div></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4>
+  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
+    <span class="opt pass" data-uid="tc-23233" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-23233" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-23233" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-23233" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-23233" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">
+    <span class="optw pass" data-uid="tc-23233" data-stw="pass">PASS</span>
+    <span class="optw fail" data-uid="tc-23233" data-stw="fail">FAIL</span>
+    <span class="optw hold" data-uid="tc-23233" data-stw="hold">HOLD</span>
+    <span class="optw block" data-uid="tc-23233" data-stw="block">BLOCKED</span>
+    <span class="optw skip" data-uid="tc-23233" data-stw="skip">SKIP</span>
+  </div></div>
+  </div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-23233"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-23233" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-23233">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="m-jrn-alert" data-level="e2e" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-JRN-C.3</td>
+  <td class="ctitle">เฝ้าหลายไลฟ์บนผนังแล้วไลฟ์หนึ่งภาพค้าง อีกไลฟ์เสียงหาย → รู้ทันทีจากการ์ด แถบ "ต้องดู" และ Telegram จนทุกอย่างกลับมาปกติ <span class="kd kd-happy">Happy Path</span></td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-23234"><span class="stb pending">รอเทส</span></td>
+  <td class="status-win" data-uid="tc-23234"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-23234"></td>
+</tr>
+<tr class="detail"><td colspan="8"><div class="card">
+  <div class="h-title">เฝ้าหลายไลฟ์บนผนังแล้วไลฟ์หนึ่งภาพค้าง อีกไลฟ์เสียงหาย → รู้ทันทีจากการ์ด แถบ "ต้องดู" และ Telegram จนทุกอย่างกลับมาปกติ</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TI-714" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TI-714 ใน Jira">🧩 Epic TI-714</a> · Priority: <b>P0</b> · E2E · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · Journey แจ้งเตือน Telegram · ไลฟ์มีปัญหาบนจอ</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #d97706;background:rgba(217,119,6,.07)">📌 <b>หมายเหตุ:</b> ใช้ไลฟ์จริง ทดสอบด้วยมือ — ใช้บัญชีทดสอบของ QA เปิดไลฟ์เอง · FAIL ถ้า "ภาพค้าง" ไม่ขึ้นหลัง 45 วินาที รายการเสียงหายในแถบ "ต้องดู" เป็นสีส้มหรือขึ้น "เงียบสนิทมา 20 วิ" หรือ Telegram ส่งซ้ำ · ถ้าช่อง A ไลฟ์หลุดก่อนครบ 90 วินาที ให้ลดเวลาตัดเน็ตแล้วทำใหม่</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>บัญชีเลือกพื้นที่ทำงานไว้แล้ว และพื้นที่ทำงานให้ความยินยอมอ่านอารมณ์จากสีหน้า และฟังเสียงพูดระหว่างไลฟ์ไว้แล้ว</li><li>บัญชี TikTok ทดสอบของ QA เปิดไลฟ์อยู่ 2 ช่อง (ช่อง A · ช่อง B) คนละเครื่อง มีภาพและเสียงพูดปกติ — QA คุมเน็ตของเครื่องช่อง A และไมค์ของเครื่องช่อง B ได้</li><li>หน้า "แจ้งเตือน Telegram" ของพื้นที่ทำงานนี้เชื่อมบอททดสอบกับกลุ่ม Telegram ทดสอบของ QA ครบ 3 ขั้น ส่งทดสอบผ่าน และเปิด "ส่งแจ้งเตือนเข้ากลุ่ม" อยู่ (ทำ TC-JRN-C.1 แล้ว)</li></ul></div>
+  <div class="sec"><h4>Test Data</h4><ul><li>บัญชีที่ใช้ (UAT): qa.owner@realfactory.co.th · บทบาท "เจ้าของ"</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป TAKRA Insight (UAT) แล้วเข้าสู่ระบบด้วยบัญชีเจ้าของ ไปที่เมนู "ไลฟ์" วางลิงก์ไลฟ์ช่อง A ในช่อง "เพิ่มไลฟ์ที่จะบันทึก" กด "เปิดดูไลฟ์" → "เริ่มติดตาม" → "เริ่มบันทึก" แล้วกด "ไลฟ์ทั้งหมด" ทำซ้ำกับช่อง B จนมีการ์ด 2 ใบในมุมมอง "ภาพไลฟ์" และภาพขึ้นทั้งคู่อย่างน้อย 1 นาที</li><li>ที่เครื่องออกอากาศช่อง A ตัดเน็ตราว 90 วินาทีโดยไม่กดจบไลฟ์ จับเวลา แล้วดูแถบใต้ภาพของการ์ด A แถบ "ต้องดู" และกลุ่ม Telegram ทดสอบ</li><li>ต่อเน็ตเครื่องช่อง A กลับ แล้วดูการ์ด A และแถบ "ต้องดู" ตั้งแต่ภาพขยับอีกครั้งจนครบราว 30 วินาที พร้อมดูกลุ่ม Telegram</li><li>ให้ผู้ช่วยกดปิดไมค์ที่เครื่องช่อง B (ภาพยังออกอากาศปกติ) แล้วเทียบแถบใต้ภาพของการ์ด B กับรายการเดียวกันในแถบ "ต้องดู" ช่วง 40 วินาทีแรก และเทียบความสูงของการ์ดทั้งสองใบ</li><li>ปล่อยให้ช่อง B เงียบต่อจนเกิน 1 นาที แล้วดูข้อความบนการ์ด B และในแถบ "ต้องดู" อีกครั้ง พร้อมนับข้อความ "เสียงไลฟ์หาย" ในกลุ่ม Telegram</li><li>เปิดไมค์ช่อง B กลับแล้วพูดต่อ ดูการ์ด B และกลุ่ม Telegram ต่ออีกราว 1 นาที</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ภาพค้างบนผนัง: หลังภาพหยุดราว 45 วินาที (ก่อนนั้นยังไม่ขึ้น) แถบใต้ภาพของการ์ด A เป็นสีแดงทั้งแถบ "ภาพค้าง · HH:MM" และแถบ "ต้องดู" มีรายการช่อง A กรอบไอคอนสีแดง "@{ช่อง A} · ภาพไม่ขยับเกิน 45 วิ" พร้อมปุ่ม "เปิดไลฟ์นี้" · เกิน 1 นาทีเปลี่ยนเป็น "ภาพไม่ขยับมา 1 นาที" ไม่นับวินาทีทีละตัว</li><li>Telegram ภาพค้าง: กลุ่มทดสอบได้ 1 ข้อความ "🔴 @{ช่อง A} · 📺 ภาพค้าง" มีบรรทัด "🕒 ไลฟ์ที่เริ่ม HH:MM · เกิดเมื่อ HH:MM น." และ "💡 วิธีแก้:" ① เช็คเน็ต ② ดูว่าแอปไลฟ์/กล้องยังทำงาน ③ ค้างเกิน 1 นาที → เปิดไลฟ์ใหม่</li><li>ภาพกลับมา: แถบใต้ภาพการ์ด A เป็นสีเขียวมีเครื่องหมายถูก "ภาพกลับมาแล้ว · HH:MM" และ "ภาพหายไป {N} วิ · กลับมาปกติแล้ว" (หรือ "ภาพหายไป 1 นาที · กลับมาปกติแล้ว") ราว 15 วินาทีแล้วการ์ดกลับเป็นปกติ · รายการ "ภาพค้าง" หายจากแถบ "ต้องดู" และไม่มีรายการสีเขียวเข้าไปแทน · กลุ่มได้ "🟢 @{ช่อง A} · ✅ ภาพกลับมาแล้ว (หายไป …)" ไม่มีวิธีแก้</li><li>เสียงหายช่วงแรก: การ์ด B และรายการในแถบ "ต้องดู" เป็นสีแดงทั้งคู่ (ไม่ใช่สีส้ม) "เสียงไลฟ์หาย · HH:MM" และ "เงียบสนิทเกิน 20 วิ · ยังไม่กลับมา" ข้อความคงที่ ไม่นับเลข 20, 21, 22… (ถ้าเป็น "ไม่มีสัญญาณเสียงเกิน 25 วิ · ยังไม่กลับมา" ให้จดไว้) · การ์ด A ไม่ได้รับผลกระทบ</li><li>การ์ดผนัง: แถบสถานะ 2 บรรทัดของการ์ด B อ่านครบ สระบน วรรณยุกต์ และสระล่างไม่ถูกตัดหรือชิดขอบ · การ์ด A และ B สูงเท่ากัน แถวการ์ดไม่ขยับขึ้นลงเมื่อแถบเปลี่ยน</li><li>เสียงหายเกิน 1 นาที: ทั้งการ์ดและแถบ "ต้องดู" เปลี่ยนเป็น "เงียบสนิทมา 1 นาที · ยังไม่กลับมา" ยังเป็นสีแดง · กลุ่มทดสอบได้ข้อความ "🔴 @{ช่อง B} · 🔇 เสียงไลฟ์หาย" แค่ 1 ข้อความตลอดช่วง ไม่ส่งซ้ำ</li><li>เสียงกลับมา: ไม่นานหลังพูดต่อ คำว่า "ยังไม่กลับมา" หายจากการ์ด B ป้าย "เสียงไลฟ์หาย" ค้างอีกช่วงหนึ่งแล้วหายเอง · กลุ่มไม่มีข้อความแจ้งว่าเสียงกลับมาแล้ว</li></ul><div class="hint" style="margin-top:6px">ที่มา: TI-714 · TI-726 · TI-727 · TI-699 · FR146 · FR152 · FR153 · ครอบเคสย่อย TC-ALRT-E.1, E.2, F.1, F.2, G.1</div></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4>
+  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
+    <span class="opt pass" data-uid="tc-23234" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-23234" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-23234" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-23234" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-23234" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">
+    <span class="optw pass" data-uid="tc-23234" data-stw="pass">PASS</span>
+    <span class="optw fail" data-uid="tc-23234" data-stw="fail">FAIL</span>
+    <span class="optw hold" data-uid="tc-23234" data-stw="hold">HOLD</span>
+    <span class="optw block" data-uid="tc-23234" data-stw="block">BLOCKED</span>
+    <span class="optw skip" data-uid="tc-23234" data-stw="skip">SKIP</span>
+  </div></div>
+  </div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-23234"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-23234" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-23234">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="m-jrn-alert" data-level="e2e" data-prio="P0" data-kind="exception" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-JRN-C.4</td>
+  <td class="ctitle">ไลฟ์หลุดระหว่างบันทึกแล้วเปิดไลฟ์ใหม่ตามที่แอปบอก → หน้าบันทึกและ Telegram บอก "ไลฟ์หลุด" ชัด รายงานยังอยู่ใน "วิเคราะห์ย้อนหลัง" <span class="kd kd-exc">Exception</span></td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-23235"><span class="stb pending">รอเทส</span></td>
+  <td class="status-win" data-uid="tc-23235"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-23235"></td>
+</tr>
+<tr class="detail"><td colspan="8"><div class="card">
+  <div class="h-title">ไลฟ์หลุดระหว่างบันทึกแล้วเปิดไลฟ์ใหม่ตามที่แอปบอก → หน้าบันทึกและ Telegram บอก "ไลฟ์หลุด" ชัด รายงานยังอยู่ใน "วิเคราะห์ย้อนหลัง"</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TI-714" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TI-714 ใน Jira">🧩 Epic TI-714</a> · Priority: <b>P0</b> · E2E · ประเภท: <b>Exception</b> <span class="hint">(เน็ตหลุด · ระบบภายนอกผิดปกติ · timeout)</span> · Journey แจ้งเตือน Telegram · ไลฟ์มีปัญหาบนจอ</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #d97706;background:rgba(217,119,6,.07)">📌 <b>หมายเหตุ:</b> ใช้ไลฟ์จริง ทดสอบด้วยมือ — ใช้บัญชีทดสอบของ QA เปิดไลฟ์เอง · FAIL ถ้าหน้าบันทึกขึ้น "ไลฟ์จบแล้ว" สีเทาตอนตัดเน็ต หรือไลฟ์ที่หลุดไม่มีรายงาน · ถ้าใน 5 นาทีแอปยังไม่หยุดบันทึก ให้จดเวลาไว้แล้วต่อเน็ตกลับ</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>บัญชีเลือกพื้นที่ทำงานไว้แล้ว</li><li>บัญชี TikTok ทดสอบของ QA เปิดไลฟ์อยู่บนอีกเครื่อง (มือถือหรือ TikTok Live Studio) มีภาพและเสียงพูดปกติ และ QA คุมเน็ตของเครื่องที่ออกอากาศได้</li><li>หน้า "แจ้งเตือน Telegram" ของพื้นที่ทำงานนี้เชื่อมบอททดสอบกับกลุ่ม Telegram ทดสอบของ QA ครบ 3 ขั้น ส่งทดสอบผ่าน และเปิด "ส่งแจ้งเตือนเข้ากลุ่ม" อยู่ (ทำ TC-JRN-C.1 แล้ว)</li></ul></div>
+  <div class="sec"><h4>Test Data</h4><ul><li>บัญชีที่ใช้ (UAT): qa.owner@realfactory.co.th · บทบาท "เจ้าของ"</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป TAKRA Insight (UAT) แล้วเข้าสู่ระบบด้วยบัญชีเจ้าของ ไปที่เมนู "วิเคราะห์ย้อนหลัง" แล้วจดตัวเลขบนแท็บ "ไลฟ์"</li><li>ไปที่เมนู "ไลฟ์" วางลิงก์ไลฟ์ของช่องทดสอบในช่อง "เพิ่มไลฟ์ที่จะบันทึก" กด "เปิดดูไลฟ์" → "เริ่มติดตาม" → "เริ่มบันทึก" แล้วอยู่ที่หน้าบันทึกไลฟ์ราว 3 นาทีจนภาพไลฟ์ขึ้น</li><li>ที่เครื่องออกอากาศ ตัดเน็ต (โหมดเครื่องบินหรือถอดสาย) โดยไม่กดจบไลฟ์ แล้วรอที่หน้าบันทึกจนแอปหยุดบันทึกไลฟ์นี้เอง ดูป้ายมุมขวาบน แถบใต้หัวหน้า และบนภาพวิดีโอ</li><li>เปิดกลุ่ม Telegram ทดสอบ ดูข้อความของไลฟ์นี้</li><li>กลับมากด "ดูรายงาน" ที่แถบใต้หัวหน้า แล้วดูหน้าที่เปิดและแถบเส้นทางด้านบน</li><li>ทำตามที่แอปบอก: ต่อเน็ตเครื่องออกอากาศกลับ เปิดไลฟ์ใหม่ แล้วเพิ่มและเริ่มบันทึกไลฟ์ใหม่ที่เมนู "ไลฟ์" แบบเดิมราว 2 นาที จากนั้นกดจบไลฟ์ที่เครื่องออกอากาศตามปกติ แล้วดูหน้าบันทึกและกลุ่ม Telegram</li><li>ไปที่เมนู "วิเคราะห์ย้อนหลัง" แท็บ "ไลฟ์" ดูตัวเลขบนแท็บและแถวบนสุด แล้วเปิดแถวของไลฟ์ที่หลุด</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ไลฟ์หลุดบนหน้าบันทึก: ป้ายมุมขวาบนเปลี่ยนจาก "REC" เป็น "ไลฟ์หลุด" สีแดงพร้อมจุดแดง · แถบแดงใต้หัวหน้า "ไลฟ์หลุด — ห้องไลฟ์เงียบและภาพหายไป ระบบจึงหยุดเก็บและบันทึกไว้แล้ว · เช็คเน็ต แล้วเปิดไลฟ์ใหม่" พร้อมปุ่ม "ดูรายงาน" · บนภาพขึ้น "ไลฟ์หลุด" และไม่มีคำว่า "ไลฟ์จบแล้ว" ที่ใดในหน้า</li><li>Telegram ไลฟ์หลุด: กลุ่มทดสอบได้ข้อความ "🔴 @{ช่อง} · 📡 ไลฟ์หลุด" มีบรรทัด "🕒 ไลฟ์ที่เริ่ม HH:MM · เกิดเมื่อ HH:MM น." และ "💡 วิธีแก้:" ① เช็คเน็ต ② เปิดไลฟ์ใหม่ทันที ③ แจ้งคนดูในช่องว่ากลับมาแล้ว</li><li>ดูรายงาน: เปิดรายงานของไลฟ์ที่หลุดได้ แถบเส้นทางเป็น "วิเคราะห์ย้อนหลัง" › &lt;ชื่อไลฟ์หรือรหัสไลฟ์&gt; มีข้อมูลช่วงที่บันทึกก่อนหลุด</li><li>ไลฟ์ใหม่ที่จบปกติ: หน้าบันทึกเป็น "ไลฟ์จบแล้ว" สีเทา แถบเทา "ไลฟ์จบแล้ว — บันทึกการติดตามเรียบร้อย…" ไม่มีสีแดงและไม่มีคำว่า "ไลฟ์หลุด" · กลุ่ม Telegram ไม่มีข้อความ "ไลฟ์หลุด" ของไลฟ์นี้</li><li>วิเคราะห์ย้อนหลัง: แท็บ "ไลฟ์" มีทั้งไลฟ์ที่หลุดและไลฟ์ใหม่อยู่บนสุดของกลุ่ม "วันนี้" (ไม่อยู่ในแท็บ "คลิป") ตัวเลขบนแท็บเพิ่มขึ้น 2 จากที่จดไว้ และเปิดรายงานของไลฟ์ที่หลุดได้อีกครั้ง</li></ul><div class="hint" style="margin-top:6px">ที่มา: TI-714 · TI-700 · FR149 · FR153 (ไลฟ์หลุดไม่นับโฮสต์จบเอง) · ครอบเคสย่อย TC-ALRT-D.1, D.2 · TC-PAST-F.2, F.3</div></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4>
+  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
+    <span class="opt pass" data-uid="tc-23235" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-23235" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-23235" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-23235" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-23235" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">
+    <span class="optw pass" data-uid="tc-23235" data-stw="pass">PASS</span>
+    <span class="optw fail" data-uid="tc-23235" data-stw="fail">FAIL</span>
+    <span class="optw hold" data-uid="tc-23235" data-stw="hold">HOLD</span>
+    <span class="optw block" data-uid="tc-23235" data-stw="block">BLOCKED</span>
+    <span class="optw skip" data-uid="tc-23235" data-stw="skip">SKIP</span>
+  </div></div>
+  </div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-23235"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-23235" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-23235">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="m-jrn-alert" data-level="e2e" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-JRN-C.5</td>
+  <td class="ctitle">ฟังเสียงไลฟ์ที่อัดไว้ ดาวน์โหลดเก็บ แล้วลบเพื่อคืนพื้นที่ → พื้นที่ลดลง รายงานไลฟ์ยังอยู่ครบ <span class="kd kd-happy">Happy Path</span></td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-23236"><span class="stb pending">รอเทส</span></td>
+  <td class="status-win" data-uid="tc-23236"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-23236"></td>
+</tr>
+<tr class="detail"><td colspan="8"><div class="card">
+  <div class="h-title">ฟังเสียงไลฟ์ที่อัดไว้ ดาวน์โหลดเก็บ แล้วลบเพื่อคืนพื้นที่ → พื้นที่ลดลง รายงานไลฟ์ยังอยู่ครบ</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TI-714" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TI-714 ใน Jira">🧩 Epic TI-714</a> · Priority: <b>P0</b> · E2E · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · Journey แจ้งเตือน Telegram · ไลฟ์มีปัญหาบนจอ</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #d97706;background:rgba(217,119,6,.07)">📌 <b>หมายเหตุ:</b> ใช้ไลฟ์จริง ทดสอบด้วยมือ — ใช้บัญชีทดสอบของ QA เปิดไลฟ์เอง · ลบเฉพาะเสียงของไลฟ์ทดสอบนี้ (กู้คืนไม่ได้) และลบไฟล์ WAV ใน Downloads หลังเทส</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>บัญชีเจ้าของให้ความยินยอม "ฟังเสียงพูดระหว่างไลฟ์" ไว้แล้ว</li><li>QA เปิดไลฟ์ทดสอบที่มีคนพูดอยู่</li></ul></div>
+  <div class="sec"><h4>Test Data</h4><ul><li>บัญชีที่ใช้ (UAT): qa.owner@realfactory.co.th · บทบาท "เจ้าของ"</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป TAKRA Insight (UAT) แล้วเข้าสู่ระบบด้วยบัญชีเจ้าของ ไปที่เมนู "หน้าหลัก" วางลิงก์ไลฟ์ทดสอบในช่อง "วางลิงก์ไลฟ์ TikTok…" เพื่อเปิดหน้าเริ่มไลฟ์ แล้วกด "เริ่มติดตาม"</li><li>ปล่อยให้บันทึกราว 3 นาทีขณะมีคนพูดในไลฟ์ แล้วกด "หยุดติดตาม"</li><li>กดปุ่มโปรไฟล์ที่มุมล่างของเมนูซ้าย เลือก "ตั้งค่า" แล้วกด "เสียงที่อัดไว้" ที่แถบหมวดด้านซ้าย จดพื้นที่ที่ใช้ในการ์ดด้านบนและดูแถวบนสุดของรายการ</li><li>กด "ฟัง" ที่แถวไลฟ์ที่เพิ่งบันทึก แล้วในหน้าไลฟ์ที่เปิดขึ้นกด "บทพูด" และเล่นตัวเล่น "เสียงที่อัดไว้"</li><li>กลับไปหมวด "เสียงที่อัดไว้" ในหน้าตั้งค่า กด "ดาวน์โหลด WAV" ที่แถวเดิม บันทึกลงโฟลเดอร์ Downloads แล้วเปิดไฟล์ด้วยโปรแกรมเล่นเสียงของเครื่อง</li><li>กด "ลบเฉพาะเสียง" ที่แถวเดิม อ่านกล่องที่ถามก่อนลบ แล้วกด "ลบเสียง" และสังเกตรายการกับการ์ดพื้นที่</li><li>ไปที่เมนู "วิเคราะห์ย้อนหลัง" เปิดไลฟ์เดียวกัน แล้วกด "บทพูด"</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>การ์ดพื้นที่: "พื้นที่ที่เสียงใช้ในเครื่องนี้" แสดง "{ที่ใช้} จาก 20 GB" พร้อม "อัดได้อีกประมาณ {N} ชั่วโมง" และบรรทัดท้าย "…ไลฟ์เดียวอัดได้ไม่เกิน 24 ชั่วโมง…"</li><li>ไลฟ์ใหม่ในรายการ: อยู่บนสุด (เรียง "ใหม่สุดก่อน") มีชื่อไลฟ์ ช่อง วันเวลา ความยาวราว 3 นาที และขนาดไฟล์</li><li>ฟัง: เปิดหน้ารายละเอียดของไลฟ์เดียวกัน ตัวเล่น "เสียงที่อัดไว้" เล่นแล้วได้ยินเสียงไลฟ์จริง</li><li>ดาวน์โหลด: หน้าต่างบันทึกตั้งชื่อไฟล์ "recording-{รหัสไลฟ์}.wav" แอปขึ้น "บันทึกไฟล์เสียงแล้ว" ไฟล์เปิดเล่นได้ ยาวเท่าที่แถวแสดง</li><li>ถามก่อนลบ: กล่อง "ลบเสียงของไลฟ์นี้?" บอกขนาดไฟล์ว่า "…จะถูกลบออกจากเครื่องนี้ และกู้คืนไม่ได้" และ "ไลฟ์ บทพูด และตัวเลขยังอยู่ครบ — ลบเฉพาะไฟล์เสียง"</li><li>หลังลบ: ขึ้น "ลบเสียงแล้ว 1 ไลฟ์" แถวนั้นหายทันที พื้นที่ที่ใช้ลดลงเท่าขนาดไฟล์ จำนวนไลฟ์ลด 1</li><li>รายงานไลฟ์: ไลฟ์ยังอยู่ใน "วิเคราะห์ย้อนหลัง" รายงานและบทพูดครบ ตรงตัวเล่นขึ้น "เสียงของไลฟ์นี้ถูกลบแล้ว · {วันเวลา}"</li></ul><div class="hint" style="margin-top:6px">ที่มา: TI-741 AC2–AC4 · AC6 · AC12 · TI-719 · FR126 · ครอบเคสย่อย TC-SET-D.1, D.2, E.1, E.2, E.4</div></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4>
+  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
+    <span class="opt pass" data-uid="tc-23236" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-23236" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-23236" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-23236" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-23236" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">
+    <span class="optw pass" data-uid="tc-23236" data-stw="pass">PASS</span>
+    <span class="optw fail" data-uid="tc-23236" data-stw="fail">FAIL</span>
+    <span class="optw hold" data-uid="tc-23236" data-stw="hold">HOLD</span>
+    <span class="optw block" data-uid="tc-23236" data-stw="block">BLOCKED</span>
+    <span class="optw skip" data-uid="tc-23236" data-stw="skip">SKIP</span>
+  </div></div>
+  </div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-23236"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-23236" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-23236">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="m-jrn-alert" data-level="e2e" data-prio="P1" data-kind="happy" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-JRN-C.6</td>
+  <td class="ctitle">เจ้าของและโฮสต์เปิดหน้าตั้งค่ารวมแล้วเดินครบทุกหมวด → ทุกหมวดเปิดได้ในโครงแอป เห็นหมวดตามที่ระบบกำหนด <span class="kd kd-happy">Happy Path</span></td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-23237"><span class="stb pending">รอเทส</span></td>
+  <td class="status-win" data-uid="tc-23237"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-23237"></td>
+</tr>
+<tr class="detail"><td colspan="8"><div class="card">
+  <div class="h-title">เจ้าของและโฮสต์เปิดหน้าตั้งค่ารวมแล้วเดินครบทุกหมวด → ทุกหมวดเปิดได้ในโครงแอป เห็นหมวดตามที่ระบบกำหนด</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TI-714" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TI-714 ใน Jira">🧩 Epic TI-714</a> · Priority: <b>P1</b> · E2E · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · Journey แจ้งเตือน Telegram · ไลฟ์มีปัญหาบนจอ</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #d97706;background:rgba(217,119,6,.07)">📌 <b>หมายเหตุ:</b> สเปกขัดกัน: FR148 บอกว่าเจ้าของพื้นที่ทำงานเป็นคนตั้งค่า Telegram แต่โค้ดแสดง "แจ้งเตือน Telegram" และ "สมาชิก" ให้ทุกบัญชีที่เลือกพื้นที่ทำงานแล้ว ตาม TI-598 Owner Q2 เคสนี้ยึดตามโค้ด ถ้า PO ต้องการให้เห็นเฉพาะเจ้าของให้แจ้ง DEV · บิลด์ UAT ไม่เห็น "ผู้ให้บริการ AI" หรือหน้าขยับซ้ายขวา = FAIL</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>บัญชีเจ้าของและบัญชีโฮสต์อยู่พื้นที่ทำงานเดียวกัน และเลือกพื้นที่ทำงานนั้นแล้ว</li><li>ขยายหน้าต่างแอปให้กว้างเต็มจอ</li></ul></div>
+  <div class="sec"><h4>Test Data</h4><ul><li>บัญชีที่ใช้ (UAT): qa.owner@realfactory.co.th · บทบาท "เจ้าของ"</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป TAKRA Insight (UAT) แล้วเข้าสู่ระบบด้วยบัญชีเจ้าของ กดปุ่มโปรไฟล์ที่มุมล่างของเมนูซ้าย ดูรายการในเมนู แล้วเลือก "ตั้งค่า"</li><li>สังเกตหัวหน้า breadcrumb ด้านบน เมนูหลักด้านซ้ายของแอป และรายการในแถบหมวดของหน้าตั้งค่า</li><li>กดหมวดในแถบซ้ายทีละหมวดจากบนลงล่างจนครบ แล้วสลับไปมาระหว่าง "ความเป็นส่วนตัว" กับ "สมาชิก" สองสามรอบ สังเกตหัวข้อเนื้อหาและว่าหน้าขยับซ้ายขวาหรือไม่</li><li>เปิดเมนูโปรไฟล์ ที่แถว "ธีม" กดรูปพระจันทร์ แล้วกด "ลิขสิทธิ์โอเพนซอร์ส" สังเกตการ์ดเครดิตโมเดล</li><li>สลับธีมกลับเป็นสว่าง เปิดเมนูโปรไฟล์ กด "ออกจากระบบ" แล้วเข้าสู่ระบบใหม่ด้วยบัญชีโฮสต์</li><li>กดปุ่มโปรไฟล์ที่มุมล่างของเมนูซ้าย เลือก "ตั้งค่า" สังเกตแถบหมวด แล้วกด "สมาชิก" และ "แจ้งเตือน Telegram"</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>เมนูโปรไฟล์: มี "ภาษา" "ธีม" "ตั้งค่า" "ตรวจหาอัปเดต" "ออกจากระบบ" — ไม่มีรายการแยก "ความเป็นส่วนตัว" "ผู้ให้บริการ AI" "แจ้งเตือน Telegram" "สมาชิก" "ลิขสิทธิ์โอเพนซอร์ส" แล้ว · กดแล้วเปิดหน้า "ตั้งค่า" ที่หมวด "ความเป็นส่วนตัว"</li><li>โครงหน้า: เมนูหลักด้านซ้ายยังอยู่ · breadcrumb เป็นไอคอนหน้าหลัก › "ตั้งค่า" · แถบหมวดเรียง "ความเป็นส่วนตัว" "เสียงที่อัดไว้" "ผู้ให้บริการ AI" "แจ้งเตือน Telegram" "สมาชิก" "ลิขสิทธิ์โอเพนซอร์ส"</li><li>ทุกหมวด: หมวดที่กดไฮไลต์ หัวข้อตรงหมวด ("ความยินยอมของคุณ" · "เสียงที่อัดไว้" · "ผู้ให้บริการ AI" · "แจ้งเตือนเข้า Telegram" · "สมาชิก" · "ประกาศลิขสิทธิ์โมเดลโอเพนซอร์ส") ไม่มีปุ่ม "‹ ตั้งค่า" แบบเดิม และ breadcrumb ยังเป็น "ตั้งค่า"</li><li>หน้าไม่กระโดด: สลับหมวดยาว/สั้นแล้วแถบหมวด หัวหน้า และกรอบเนื้อหาอยู่ตำแหน่งเดิม ไม่เลื่อนซ้ายขวา</li><li>ธีมมืด: การ์ดลิขสิทธิ์ใช้พื้นเข้มตามธีม ชื่อโมเดลและบรรทัด "โดย {ผู้พัฒนา} · {สัญญาอนุญาต}" อ่านออกชัด ไม่มีกล่องพื้นขาวโดด</li><li>บัญชีโฮสต์: แถบหมวดครบ 6 หมวดเหมือนบัญชีเจ้าของ · "สมาชิก" แสดงรายชื่อพร้อมป้าย "เจ้าของ" เฉพาะแถวเจ้าของ · "แจ้งเตือน Telegram" เปิดหน้า "แจ้งเตือนเข้า Telegram" พร้อม "ตั้งค่าของพื้นที่ทำงาน: {ชื่อพื้นที่ทำงาน}"</li></ul><div class="hint" style="margin-top:6px">ที่มา: TI-714 (ตั้งค่ารวมหน้าเดียว) · TI-700 · TI-598 Owner Q2 · FR4 · FR148 · ครอบเคสย่อย TC-SET-A.1–A.4, B.1, C.1–C.3, C.5, C.6</div></div>
+    <div class="sec"><h4>Actual Result</h4><div class="actual-os-lbl first">🍎 Mac</div><textarea class="actualbox" data-os="mac" rows="4" placeholder="— ผลบน Mac —"></textarea><div class="actual-os-lbl">🪟 Windows</div><textarea class="actualbox" data-os="win" rows="4" placeholder="— ผลบน Windows —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4>
+  <div class="osline"><span class="oslbl">🍎 Mac</span><div class="statusrow">
+    <span class="opt pass" data-uid="tc-23237" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-23237" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-23237" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-23237" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-23237" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="osline"><span class="oslbl">🪟 Windows</span><div class="statusrow">
+    <span class="optw pass" data-uid="tc-23237" data-stw="pass">PASS</span>
+    <span class="optw fail" data-uid="tc-23237" data-stw="fail">FAIL</span>
+    <span class="optw hold" data-uid="tc-23237" data-stw="hold">HOLD</span>
+    <span class="optw block" data-uid="tc-23237" data-stw="block">BLOCKED</span>
+    <span class="optw skip" data-uid="tc-23237" data-stw="skip">SKIP</span>
+  </div></div>
+  </div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-23237"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-23237" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-23237">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+</tbody>
+  </table>
+  </div>
+
+</div>
+<footer>TAKRA Insight — Journey C · แจ้งเตือน Telegram · ไลฟ์มีปัญหา · ตั้งค่า · Manual Test Cases · 0 UI + 6 E2E = 6 TCs · UI only (manual) · TAKRA Insight desktop · UI ใหม่ re-design พ.ย. 2569 · Journey C · ไลฟ์มีปัญหา + ตั้งค่า</footer>
+
+<script>
+// ── Load store from embedded JSON ──
+var storeEl = document.getElementById('store-data');
+var store = {};
+try { store = JSON.parse(storeEl.textContent || '{}'); } catch(_) {}
+
+var SMAP = {
+  pass:  ['pass',  'PASS'],
+  fail:  ['fail',  'FAIL'],
+  hold:  ['hold',  'HOLD'],
+  block: ['block', 'BLOCKED'],
+  skip:  ['skip',  'SKIP'],
+};
+
+// Restore saved statuses
+Object.keys(store).forEach(function(uid) {
+  var st = store[uid] && store[uid].st;
+  if (!st || !SMAP[st]) return;
+  // badge
+  var rowStatus = document.querySelector('tr.trow td.status[data-uid="' + uid + '"]');
+  if (rowStatus) {
+    var stb = rowStatus.querySelector('.stb');
+    if (stb) { stb.className = 'stb ' + SMAP[st][0]; stb.textContent = SMAP[st][1]; }
+  }
+  // opt button
+  var opt = document.querySelector('.opt[data-uid="' + uid + '"][data-st="' + st + '"]');
+  if (opt) opt.classList.add('sel');
+  // also restore actual result text
+  if (store[uid].actual || store[uid].actualw) {
+    var boxes = document.querySelectorAll('tr.detail');
+    boxes.forEach(function(d) {
+      var badge = d.querySelector('.opt[data-uid="' + uid + '"]');
+      if (!badge) return;
+      d.querySelectorAll('.actualbox').forEach(function(box) {
+        var field = box.dataset.os === 'win' ? 'actualw' : 'actual';
+        if (store[uid][field]) { box.value = store[uid][field]; box.classList.add('filled'); }
+      });
+    });
+  }
+});
+
+// ── Toggle row expand ──
+function tg(row) {
+  var detail = row.nextElementSibling;
+  var isOpen = row.classList.contains('open');
+  row.classList.toggle('open', !isOpen);
+  if (detail && detail.classList.contains('detail')) {
+    detail.classList.toggle('show', !isOpen);
+  }
+}
+function toggleAll(open) {
+  document.querySelectorAll('tr.trow').forEach(function(r) {
+    if (r.classList.contains('hide')) return;
+    r.classList.toggle('open', open);
+    var d = r.nextElementSibling;
+    if (d && d.classList.contains('detail')) d.classList.toggle('show', open);
+  });
+}
+
+// ── Save store back into the embedded script tag ──
+function save() {
+  storeEl.textContent = '\n' + JSON.stringify(store, null, 2).replace(/</g, '\\u003c') + '\n';
+}
+
+// ── Status opt buttons ──
+document.querySelectorAll('.opt').forEach(function(o) {
+  o.addEventListener('click', function(e) {
+    e.stopPropagation();
+    var uid = o.dataset.uid, st = o.dataset.st;
+    var allOpts = document.querySelectorAll('.opt[data-uid="' + uid + '"]');
+    var alreadySel = o.classList.contains('sel');
+    allOpts.forEach(function(x) { x.classList.remove('sel'); });
+    store[uid] = store[uid] || {};
+    if (alreadySel) {
+      delete store[uid].st;
+    } else {
+      o.classList.add('sel');
+      store[uid].st = st;
+    }
+    var rowStatus = document.querySelector('tr.trow td.status[data-uid="' + uid + '"]');
+    if (rowStatus) {
+      var stb = rowStatus.querySelector('.stb');
+      if (stb) {
+        if (!alreadySel && SMAP[st]) { stb.className = 'stb ' + SMAP[st][0]; stb.textContent = SMAP[st][1]; }
+        else { stb.className = 'stb pending'; stb.textContent = 'รอเทส'; }
+      }
+    }
+    save();
+    applyFilters();   // re-filter (recounts too) so an active สถานะ filter updates live
+    markDirty();
+  });
+});
+
+// ── Actual result editable on blur ──
+document.querySelectorAll('.actualbox').forEach(function(box) {
+  // a <textarea> — clicking/typing must not bubble up to the row toggle
+  box.addEventListener('click', function(ev) { ev.stopPropagation(); });
+  box.addEventListener('input', function() { box.classList.toggle('filled', box.value.trim() !== ''); });
+  box.addEventListener('blur', function() {
+    // find uid from nearest .opt
+    var opts = box.closest('tr.detail').querySelectorAll('.opt');
+    if (!opts.length) return;
+    var uid = opts[0].dataset.uid;
+    var field = box.dataset.os === 'win' ? 'actualw' : 'actual';
+    var txt = box.value.trim();
+    var prev = (store[uid] && store[uid][field]) || '';
+    if (txt === prev) return;   // nothing typed → don't dirty the file
+    store[uid] = store[uid] || {};
+    if (txt) { store[uid][field] = txt; }
+    else { delete store[uid][field]; if (!Object.keys(store[uid]).length) delete store[uid]; }
+    save();
+    markDirty();
+  });
+});
+
+// ── Filters ──
+var filters = { feat: new Set(), level: new Set(), prio: new Set(), status: new Set(), kind: new Set(), ui: new Set() };
+document.querySelectorAll('.fchip').forEach(function(c) {
+  c.addEventListener('click', function() {
+    var f = c.dataset.f, v = c.dataset.v;
+    if (filters[f].has(v)) { filters[f].delete(v); c.classList.remove('active'); }
+    else { filters[f].add(v); c.classList.add('active'); }
+    applyFilters();
+  });
+});
+document.querySelectorAll('.clearbtn').forEach(function(b) {
+  b.addEventListener('click', function() {
+    var key = b.dataset.clear;
+    filters[key].clear();
+    document.querySelectorAll('.fchip[data-f="' + key + '"]').forEach(function(c) { c.classList.remove('active'); });
+    applyFilters();
+  });
+});
+function applyFilters() {
+  document.querySelectorAll('tr.trow').forEach(function(row) {
+    var ok = true;
+    if (filters.feat.size  && !filters.feat.has(row.dataset.feat))   ok = false;
+    if (filters.level.size && !filters.level.has(row.dataset.level)) ok = false;
+    if (filters.prio.size  && !filters.prio.has(row.dataset.prio))   ok = false;
+    if (filters.kind.size  && !filters.kind.has(row.dataset.kind))   ok = false;
+    if (filters.ui.size    && !filters.ui.has(row.dataset.ui))       ok = false;
+    if (filters.status.size) {
+      var stb = row.querySelector('td.status .stb');
+      var scls = stb ? stb.className.replace('stb', '').trim().split(' ')[0] : 'pending';
+      if (!filters.status.has(scls)) ok = false;
+    }
+    row.classList.toggle('hide', !ok);
+    var d = row.nextElementSibling;
+    if (d && d.classList.contains('detail')) d.classList.toggle('hide', !ok);
+  });
+  document.querySelectorAll('tr.featrow').forEach(function(fr) {
+    var n = fr.nextElementSibling, any = false;
+    while (n && !n.classList.contains('featrow') && !n.classList.contains('epicrow')) {
+      if (n.classList.contains('trow') && !n.classList.contains('hide')) { any = true; break; }
+      n = n.nextElementSibling;
+    }
+    fr.classList.toggle('hide', !any);
+  });
+  document.querySelectorAll('tr.epicrow').forEach(function(er) {
+    var n = er.nextElementSibling, any = false;
+    while (n && !n.classList.contains('epicrow')) {
+      if (n.classList.contains('trow') && !n.classList.contains('hide')) { any = true; break; }
+      n = n.nextElementSibling;
+    }
+    er.classList.toggle('hide', !any);
+  });
+  recount();
+}
+
+function recount() {
+  var c = { pass:0, fail:0, hold:0, block:0, skip:0, pending:0 };
+  document.querySelectorAll('tr.trow').forEach(function(row) {
+    var stb = row.querySelector('td.status .stb');
+    if (!stb) return;
+    var cls = stb.className.replace('stb','').trim().split(' ')[0];
+    if (c.hasOwnProperty(cls)) c[cls]++; else c.pending++;
+  });
+  var total    = c.pass + c.fail + c.hold + c.block + c.skip + c.pending;
+  var done     = c.pass + c.fail + c.hold + c.block;
+  var testable = total - c.skip;               // SKIP = ตั้งใจข้าม ไม่นับเป็นเป้าที่ต้องทดสอบ
+  var pct      = testable ? Math.round(done / testable * 100) : 0;
+  ['pass','fail','hold','block','skip'].forEach(function(k) {
+    var e = document.getElementById('sum-'+k); if (e) e.textContent = c[k];
+    var h = document.getElementById('hdr-'+k); if (h) h.textContent = c[k];
+  });
+  var ep = document.getElementById('sum-pending'); if (ep) ep.textContent = c.pending;
+  var hp = document.getElementById('hdr-pending'); if (hp) hp.textContent = c.pending;
+  var bar = document.getElementById('sumbar'); if (bar) bar.style.width = pct + '%';
+  var pctEl = document.getElementById('sumpct');
+  if (pctEl) pctEl.textContent = pct + '% ทดสอบแล้ว (' + done + '/' + testable + ')' + (c.skip ? ' · ข้าม ' + c.skip : '');
+}
+
+// ── GitHub publish config ──
+var GH_OWNER  = 'wanlee-tankunnatam';
+var GH_REPO   = 'qa-test-reports';
+var GH_PATH   = 'projects/takra-insight/2026/11/reports/takra-insight-ui-journey-alerts-settings-nov-ui-test-cases-table.html';
+var GH_BRANCH = 'master';
+var GH_API    = 'https://api.github.com/repos/' + GH_OWNER + '/' + GH_REPO + '/contents/' + GH_PATH;
+
+// ── Save state (dirty tracking + auto-publish) ──
+var dirty = false;
+var autoTimer = null;
+var publishing = false;
+
+function ghToken() {
+  var t = localStorage.getItem('gh_pat');
+  if (!t) {
+    t = prompt(
+      'ใส่ GitHub Personal Access Token (ใส่ครั้งเดียว จำไว้ในเบราว์เซอร์นี้)\n\n' +
+      'สร้าง token:\n' +
+      'github.com → Settings → Developer settings →\n' +
+      'Personal access tokens → Tokens (classic) → Generate new token (classic)\n' +
+      '→ ติ๊ก scope: repo  (หรือ public_repo เพราะ repo นี้ public)\n\n' +
+      'หรือ Fine-grained token: เลือก repo "qa-test-reports" →\n' +
+      'Permissions → Contents = Read and write'
+    );
+    if (t) localStorage.setItem('gh_pat', t.trim());
+  }
+  return t ? t.trim() : null;
+}
+function clearToken() { localStorage.removeItem('gh_pat'); }
+
+async function publishToGH(auto) {
+  if (publishing) return;
+  var btn = document.getElementById('btn-publish');
+  var token = auto ? localStorage.getItem('gh_pat') : ghToken();
+  if (!token) return;          // auto-save stays quiet until a token exists
+  publishing = true;
+  if (autoTimer) { clearTimeout(autoTimer); autoTimer = null; }
+
+  btn.disabled = true;
+  btn.textContent = '⏳ กำลังบันทึก…';
+  save();
+
+  var API = 'https://api.github.com/repos/' + GH_OWNER + '/' + GH_REPO + '/contents/' + GH_PATH;
+
+  // Serialize the page with the button forced to its idle/enabled state, so the
+  // committed file is never frozen mid-save (otherwise reopening it shows a
+  // permanently-disabled "⏳ กำลังบันทึก…" button).
+  function buildEncoded() {
+    var dis = btn.disabled, txt = btn.textContent;
+    btn.disabled = false;
+    btn.textContent = '☁️ บันทึกขึ้น GitHub';
+    var html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+    btn.disabled = dis;
+    btn.textContent = txt;
+    return btoa(unescape(encodeURIComponent(html)));
+  }
+
+  // Fetch current remote file (sha + content), bypassing any cache.
+  async function fetchRemote() {
+    var r = await fetch(
+      API + '?ref=' + GH_BRANCH + '&t=' + Date.now(),
+      { cache: 'no-store', headers: { Authorization: 'token ' + token, Accept: 'application/vnd.github+json' } }
+    );
+    if (!r.ok) {
+      if (r.status === 401) { localStorage.removeItem('gh_pat'); }
+      throw new Error('ดึงไฟล์ไม่ได้ (HTTP ' + r.status + ') — ตรวจ token หรือ branch');
+    }
+    var j = await r.json();
+    if (!j.content && j.sha) {
+      var rr = await fetch(
+        API + '?ref=' + GH_BRANCH + '&t=' + Date.now(),
+        { cache: 'no-store', headers: { Authorization: 'token ' + token, Accept: 'application/vnd.github.raw' } }
+      );
+      if (!rr.ok) throw new Error('ดึงไฟล์ไม่ได้ (HTTP ' + rr.status + ') — ลองบันทึกใหม่อีกครั้ง');
+      var raw = await rr.text();
+      if (!/<script id="store-data"/.test(raw)) throw new Error('ไฟล์บน GitHub อ่านไม่ครบ — ยังไม่บันทึก ลองใหม่อีกครั้ง');
+      j.content = btoa(unescape(encodeURIComponent(raw)));
+    }
+    return j;
+  }
+
+  // Merge statuses that exist on the remote copy but NOT locally, so a
+  // teammate's concurrent edit is not silently overwritten (local always wins
+  // for keys we changed; we only add keys we don't have).
+  function mergeRemote(remote) {
+    try {
+      var remoteHtml = decodeURIComponent(escape(atob((remote.content || '').replace(/\s/g, ''))));
+      var m = remoteHtml.match(/<script id="store-data"[^>]*>([\s\S]*?)<\/script>/);
+      if (!m) return;
+      var rs = JSON.parse((m[1] || '{}').trim() || '{}');
+      var added = 0;
+      Object.keys(rs).forEach(function(uid) {
+        if (uid in store) return;
+        store[uid] = rs[uid];
+        added++;
+        var st = rs[uid] && rs[uid].st;
+        if (st && SMAP[st]) {
+          var cell = document.querySelector('tr.trow td.status[data-uid="' + uid + '"] .stb');
+          if (cell) { cell.className = 'stb ' + SMAP[st][0]; cell.textContent = SMAP[st][1]; }
+          var opt = document.querySelector('.opt[data-uid="' + uid + '"][data-st="' + st + '"]');
+          if (opt) opt.classList.add('sel');
+        }
+      });
+      if (added) { save(); recount(); }
+    } catch (_) {}
+  }
+
+  // Commit content = the LATEST remote file with ONLY its store-data block
+  // swapped for our (merged) results. This makes auto-save a results-only
+  // overlay: a stale tab can never overwrite the repo's structure/layout —
+  // it always publishes on top of whatever structure is currently on GitHub.
+  function buildFromRemote(remote) {
+    try {
+      var remoteHtml = decodeURIComponent(escape(atob((remote.content || '').replace(/\s/g, ''))));
+      if (!/<script id="store-data"[^>]*>[\s\S]*?<\/script>/.test(remoteHtml)) return buildEncoded();
+      var json = '\n' + JSON.stringify(store, null, 2).replace(/</g, '\\u003c') + '\n';
+      var replaced = remoteHtml.replace(
+        /(<script id="store-data"[^>]*>)[\s\S]*?(<\/script>)/,
+        function(_m, o, c) { return o + json + c; }
+      );
+      return btoa(unescape(encodeURIComponent(replaced)));
+    } catch (_) {
+      return buildEncoded();   // fallback: serialize local DOM
+    }
+  }
+
+  async function commit(remote) {
+    var ts = new Date().toISOString().slice(0, 16).replace('T', ' ');
+    return fetch(API, {
+      method: 'PUT',
+      headers: { Authorization: 'token ' + token, Accept: 'application/vnd.github+json', 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        message: 'chore(qa): update test results ' + ts,
+        content: buildFromRemote(remote),
+        sha: remote.sha,
+        branch: GH_BRANCH
+      })
+    });
+  }
+
+  try {
+    var r2, lastErr;
+    // Up to 4 attempts. Re-fetch the SHA and merge remote statuses each time;
+    // a stale SHA returns 409/422 ("does not match …") which we retry.
+    for (var attempt = 0; attempt < 4; attempt++) {
+      var remote = await fetchRemote();
+      mergeRemote(remote);
+      r2 = await commit(remote);
+      if (r2.ok) break;
+      if (r2.status === 409 || r2.status === 422) {
+        lastErr = 'SHA ชนกัน (HTTP ' + r2.status + ')';
+        await new Promise(function(res) { setTimeout(res, 400 * (attempt + 1)); });
+        continue;
+      }
+      // Bad/expired token or insufficient scope — drop it so the next attempt re-prompts.
+      if (r2.status === 401 || r2.status === 403) {
+        clearToken();
+        var pe = await r2.json().catch(function() { return {}; });
+        throw new Error(
+          (pe.message || 'HTTP ' + r2.status) +
+          '\n\n→ Token สิทธิ์ไม่พอ/หมดอายุ ลบให้แล้ว ครั้งหน้าจะถามใหม่\n' +
+          '   ใช้ classic token scope "repo" (หรือ public_repo) หรือ fine-grained ที่ให้ Contents = Read and write กับ repo นี้'
+        );
+      }
+      var e = await r2.json();
+      throw new Error(e.message || 'HTTP ' + r2.status);
+    }
+    if (!r2.ok) {
+      throw new Error((lastErr || 'conflict') + ' — มีการแก้ไฟล์พร้อมกัน ลองกดบันทึกอีกครั้ง หรือ refresh หน้าก่อนบันทึก');
+    }
+
+    dirty = false;
+    publishing = false;
+    btn.textContent = '✅ บันทึกแล้ว!';
+    btn.style.background = 'var(--pass)';
+    setTimeout(function() {
+      btn.style.background = '';
+      btn.disabled = false;
+      updateIndicator();
+    }, 3000);
+  } catch (err) {
+    publishing = false;
+    if (!auto) alert('❌ บันทึกไม่สำเร็จ: ' + err.message);
+    btn.disabled = false;
+    updateIndicator();
+  }
+}
+
+document.getElementById('btn-publish').addEventListener('click', function() { publishToGH(false); });
+
+// ── Dirty tracking / unsaved indicator ──
+function autoOn() {
+  var c = document.getElementById('chk-autosave');
+  return c ? c.checked : false;
+}
+function updateIndicator() {
+  var s = document.getElementById('save-status');
+  var b = document.getElementById('btn-publish');
+  if (dirty) {
+    if (s) { s.textContent = '● ยังไม่ได้บันทึก'; s.style.color = 'var(--hold)'; }
+    if (b && !b.disabled && b.textContent.indexOf('✅') < 0) b.textContent = '☁️ บันทึกขึ้น GitHub *';
+  } else {
+    if (s) { s.textContent = '✓ ตรงกับ GitHub'; s.style.color = 'var(--muted)'; }
+    if (b && !b.disabled && b.textContent.indexOf('✅') < 0) b.textContent = '☁️ บันทึกขึ้น GitHub';
+  }
+}
+function markDirty() {
+  dirty = true;
+  updateIndicator();
+  // Auto-publish after the user stops editing — only once a token exists,
+  // so we never interrupt with a token prompt mid-edit.
+  if (autoOn() && localStorage.getItem('gh_pat')) {
+    if (autoTimer) clearTimeout(autoTimer);
+    autoTimer = setTimeout(function() { autoTimer = null; publishToGH(true); }, 5000);
+  }
+}
+window.addEventListener('beforeunload', function(e) {
+  if (dirty) { e.preventDefault(); e.returnValue = 'มีงานที่ยังไม่ได้บันทึกขึ้น GitHub'; return e.returnValue; }
+});
+
+// ── Re-render every badge from the store (used after pulling remote) ──
+function applyAllStatuses() {
+  document.querySelectorAll('.opt.sel').forEach(function(o) { o.classList.remove('sel'); });
+  document.querySelectorAll('tr.trow td.status .stb').forEach(function(s) {
+    s.className = 'stb pending'; s.textContent = 'รอเทส';
+  });
+  Object.keys(store).forEach(function(uid) {
+    var st = store[uid] && store[uid].st;
+    if (st && SMAP[st]) {
+      var cell = document.querySelector('tr.trow td.status[data-uid="' + uid + '"] .stb');
+      if (cell) { cell.className = 'stb ' + SMAP[st][0]; cell.textContent = SMAP[st][1]; }
+      var opt = document.querySelector('.opt[data-uid="' + uid + '"][data-st="' + st + '"]');
+      if (opt) opt.classList.add('sel');
+    }
+    if (store[uid] && store[uid].actual) {
+      document.querySelectorAll('tr.detail').forEach(function(d) {
+        if (!d.querySelector('.opt[data-uid="' + uid + '"]')) return;
+        var box = d.querySelector('.actualbox');
+        if (box) { box.value = store[uid].actual; box.classList.toggle('filled', !!store[uid].actual); }
+      });
+    }
+  });
+}
+
+// ── Pull latest results from GitHub (remote wins on overlap; keeps local-only) ──
+async function pullLatest() {
+  var rbtn = document.getElementById('btn-refresh');
+  if (dirty && !confirm('มีงานที่ยังไม่ได้บันทึก — การดึงล่าสุดจะใช้สถานะจาก GitHub ทับเฉพาะรายการที่ซ้ำกัน ต้องการต่อ?')) return;
+  if (rbtn) { rbtn.disabled = true; rbtn.textContent = '⏳ กำลังดึง…'; }
+  try {
+    var token = localStorage.getItem('gh_pat');
+    var html;
+    if (token) {
+      var r = await fetch(GH_API + '?ref=' + GH_BRANCH + '&t=' + Date.now(),
+        { cache: 'no-store', headers: { Authorization: 'token ' + token, Accept: 'application/vnd.github+json' } });
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      html = decodeURIComponent(escape(atob(((await r.json()).content || '').replace(/\s/g, ''))));
+    } else {
+      var rr = await fetch('https://raw.githubusercontent.com/' + GH_OWNER + '/' + GH_REPO + '/' + GH_BRANCH + '/' + GH_PATH + '?t=' + Date.now(),
+        { cache: 'no-store' });
+      if (!rr.ok) throw new Error('HTTP ' + rr.status);
+      html = await rr.text();
+    }
+    var m = html.match(/<script id="store-data"[^>]*>([\s\S]*?)<\/script>/);
+    var rs = m ? JSON.parse((m[1] || '{}').trim() || '{}') : {};
+    Object.keys(rs).forEach(function(uid) { store[uid] = rs[uid]; });
+    save();
+    applyAllStatuses();
+    recount();
+    dirty = false;
+    updateIndicator();
+    if (rbtn) { rbtn.textContent = '✅ ดึงแล้ว'; setTimeout(function() { rbtn.textContent = '🔄 ดึงล่าสุด'; rbtn.disabled = false; }, 2000); }
+  } catch (err) {
+    alert('❌ ดึงล่าสุดไม่สำเร็จ: ' + err.message);
+    if (rbtn) { rbtn.textContent = '🔄 ดึงล่าสุด'; rbtn.disabled = false; }
+  }
+}
+document.getElementById('btn-refresh').addEventListener('click', pullLatest);
+
+// ── Set / change GitHub token (one click to escape a bad/expired token) ──
+document.getElementById('btn-token').addEventListener('click', function() {
+  clearToken();
+  var t = ghToken();   // prompts for a fresh token
+  if (t) {
+    alert('บันทึก token แล้ว ✅\nลองกดเปลี่ยนสถานะ TC สัก 1 อัน — ปุ่มควรเด้ง "✅ บันทึกแล้ว!" ใน ~5 วิ');
+    updateIndicator();
+  }
+});
+
+// ── Download file (offline backup) ──
+document.getElementById('btn-save-file').addEventListener('click', function() {
+  save();
+  var html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+  var blob = new Blob([html], { type: 'text/html; charset=utf-8' });
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'takra-insight-ui-journey-alerts-settings-nov-ui-test-cases.html';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(a.href);
+});
+
+document.getElementById('btn-reset').addEventListener('click', function() {
+  if (!confirm('ล้างผลทดสอบทั้งหมด?')) return;
+  store = {};
+  save();
+  dirty = false;
+  location.reload();
+});
+
+// Set TC-AD.1 default to BLOCKED
+(function() {
+  if (!store['tc-29'] || !store['tc-29'].st) {
+    store['tc-29'] = { st: 'block' };
+    save();
+  }
+})();
+
+// Footer date
+var gd = document.getElementById('gen-date');
+if (gd) gd.textContent = document.lastModified || '';
+
+recount();
+updateIndicator();
+
+// Jira / Bug links (per test case · multiple)
+function jiraLabel(u){var m=String(u).match(/([A-Za-z]+-\d+)/);return m?m[1].toUpperCase():u;}
+function normJira(u){u=(u||'').trim();if(!u)return'';if(!/^https?:\/\//i.test(u)){var m=u.match(/^[A-Za-z]+-\d+$/);if(m)return'https://kitdi.atlassian.net/browse/'+u.toUpperCase();}return u;}
+function renderJira(uid){var box=document.querySelector('.jira-list[data-uid="'+uid+'"]');if(!box)return;var arr=(store[uid]&&store[uid].jira)||[];box.innerHTML='';arr.forEach(function(url,i){var row=document.createElement('div');row.className='jira-item';var a=document.createElement('a');a.href=url;a.target='_blank';a.rel='noopener';a.textContent=jiraLabel(url);var del=document.createElement('span');del.className='jira-del';del.textContent='✕';del.title='ลบลิงก์';del.addEventListener('click',function(){store[uid].jira.splice(i,1);if(!store[uid].jira.length)delete store[uid].jira;save();markDirty();renderJira(uid);});row.appendChild(a);row.appendChild(del);box.appendChild(row);});var cell=document.querySelector('td.jira-cell[data-uid="'+uid+'"]');if(cell){cell.innerHTML='';arr.forEach(function(url){var a2=document.createElement('a');a2.href=url;a2.target='_blank';a2.rel='noopener';a2.className='jira-chip';a2.textContent=jiraLabel(url);a2.addEventListener('click',function(e){e.stopPropagation();});cell.appendChild(a2);});}}
+function addJira(uid,val){var url=normJira(val);if(!url)return;store[uid]=store[uid]||{};store[uid].jira=store[uid].jira||[];store[uid].jira.push(url);save();markDirty();renderJira(uid);}
+document.querySelectorAll('.jira-btn').forEach(function(b){b.addEventListener('click',function(e){e.stopPropagation();var u=b.dataset.uid;var inp=document.querySelector('.jira-input[data-uid="'+u+'"]');addJira(u,inp.value);inp.value='';});});
+document.querySelectorAll('.jira-input').forEach(function(inp){inp.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();addJira(inp.dataset.uid,inp.value);inp.value='';}});inp.addEventListener('click',function(e){e.stopPropagation();});});
+document.querySelectorAll('.jira-list').forEach(function(box){renderJira(box.dataset.uid);});
+function applyFeatColor(e,owner){var cls=owner==='Wanlee T (Ice)'?'owner-ice':(owner==='Kachain B (Moss)'?'owner-moss':'');var er=document.querySelector('tr.featrow[data-featkey="'+e+'"]');if(!er)return;er.classList.remove('owner-ice','owner-moss');if(cls)er.classList.add(cls);var s=er.querySelector('.feat-owner');if(s){s.classList.remove('owner-ice','owner-moss');if(cls)s.classList.add(cls);}var n=er.nextElementSibling;while(n&&!n.classList.contains('featrow')&&!n.classList.contains('epicrow')){n.classList.remove('sec-ice','sec-moss');if(cls)n.classList.add(cls==='owner-ice'?'sec-ice':'sec-moss');n=n.nextElementSibling;}}
+document.querySelectorAll('.feat-owner').forEach(function(sel){var e=sel.dataset.featkey,k='feat-'+e;var cur=(store[k]&&store[k].owner)||'';sel.value=cur;applyFeatColor(e,cur);sel.addEventListener('click',function(ev){ev.stopPropagation();});sel.addEventListener('change',function(){var v=sel.value;if(v){store[k]=store[k]||{};store[k].owner=v;}else if(store[k]){delete store[k].owner;if(!Object.keys(store[k]).length)delete store[k];}save();markDirty();applyFeatColor(e,v);});});
+</script>
+
+
+
+<script>
+/* Status แยก Mac (store[uid].st) / Windows (store[uid].stw) */
+(function(){
+  var SW = { pass:['pass','PASS'], fail:['fail','FAIL'], hold:['hold','HOLD'], block:['block','BLOCKED'], skip:['skip','SKIP'] };
+  var DONE = { pass:1, fail:1, hold:1, block:1 };
+  function paintWin(uid){
+    var st = (store[uid] || {}).stw;
+    var cell = document.querySelector('td.status-win[data-uid="' + uid + '"] .stb');
+    if (cell) {
+      if (st && SW[st]) { cell.className = 'stb ' + SW[st][0]; cell.textContent = SW[st][1]; }
+      else { cell.className = 'stb pending'; cell.textContent = 'รอเทส'; }
+    }
+    document.querySelectorAll('.optw[data-uid="' + uid + '"]').forEach(function(x){ x.classList.toggle('sel', !!st && x.dataset.stw === st); });
+  }
+  function paintAllWin(){ document.querySelectorAll('td.status-win[data-uid]').forEach(function(c){ paintWin(c.dataset.uid); }); }
+  document.querySelectorAll('.optw').forEach(function(o){
+    o.addEventListener('click', function(e){
+      e.stopPropagation();
+      var uid = o.dataset.uid, st = o.dataset.stw;
+      store[uid] = store[uid] || {};
+      if (store[uid].stw === st) { delete store[uid].stw; } else { store[uid].stw = st; }
+      if (!Object.keys(store[uid]).length) delete store[uid];
+      save(); markDirty(); paintWin(uid); applyFilters();
+    });
+  });
+  function stOf(row, sel){ var b = row.querySelector(sel + ' .stb'); return b ? b.className.replace('stb','').trim().split(' ')[0] : 'pending'; }
+  /* ตัวกรองสถานะ: ระบบใดระบบหนึ่งตรงก็พอ */
+  var _af = applyFilters;
+  applyFilters = function(){
+    _af.apply(this, arguments);
+    if (filters.status.size) {
+      document.querySelectorAll('tr.trow').forEach(function(row){
+        if (!row.classList.contains('hide')) return;
+        var ok = true;
+        if (filters.feat.size  && !filters.feat.has(row.dataset.feat))   ok = false;
+        if (filters.level.size && !filters.level.has(row.dataset.level)) ok = false;
+        if (filters.prio.size  && !filters.prio.has(row.dataset.prio))   ok = false;
+        if (ok && !filters.status.has(stOf(row, 'td.status-win'))) ok = false;
+        if (!ok) return;
+        row.classList.remove('hide');
+        var d = row.nextElementSibling;
+        if (d && d.classList.contains('detail')) d.classList.remove('hide');
+      });
+      ['tr.featrow', 'tr.epicrow'].forEach(function(sel){
+        document.querySelectorAll(sel).forEach(function(hr){
+          var n = hr.nextElementSibling, any = false, stop = sel === 'tr.epicrow' ? ['epicrow'] : ['featrow','epicrow'];
+          while (n && !stop.some(function(c){ return n.classList.contains(c); })) {
+            if (n.classList.contains('trow') && !n.classList.contains('hide')) { any = true; break; }
+            n = n.nextElementSibling;
+          }
+          hr.classList.toggle('hide', !any);
+        });
+      });
+    }
+    osRecount();
+  };
+  /* สรุปผล: PASS/FAIL/… นับรวมผลของทั้ง 2 ระบบ (1 เคส = 2 ผล) พร้อมแยก 🍎/🪟 ·
+     % ทดสอบแล้ว: เคสนับว่าเสร็จเมื่อครบทั้ง Mac และ Windows */
+  function osRecount(){
+    var done = 0, testable = 0, skip = 0;
+    var cm = { pass:0, fail:0, hold:0, block:0, skip:0, pending:0 }, cw = { pass:0, fail:0, hold:0, block:0, skip:0, pending:0 };
+    document.querySelectorAll('tr.trow').forEach(function(row){
+      var mac = stOf(row, 'td.status'), win = stOf(row, 'td.status-win');
+      cm[cm.hasOwnProperty(mac) ? mac : 'pending']++;
+      cw[cw.hasOwnProperty(win) ? win : 'pending']++;
+      if (mac === 'skip' || win === 'skip') { skip++; return; }
+      testable++;
+      if (DONE[mac] && DONE[win]) done++;
+    });
+    ['pass','fail','hold','block','skip','pending'].forEach(function(k){
+      var e = document.getElementById('sum-' + k);
+      if (e) {
+        e.textContent = cm[k] + cw[k];
+        var sm = document.getElementById('sum-os-' + k);
+        if (!sm) { sm = document.createElement('small'); sm.id = 'sum-os-' + k; sm.style.cssText = 'font-weight:600;opacity:.75;margin-left:4px'; e.parentNode.appendChild(sm); }
+        sm.textContent = '🍎' + cm[k] + ' · 🪟' + cw[k];
+      }
+      var h = document.getElementById('hdr-' + k); if (h) h.textContent = cm[k] + cw[k];
+    });
+    var pct = testable ? Math.round(done / testable * 100) : 0;
+    var bar = document.getElementById('sumbar'); if (bar) bar.style.width = pct + '%';
+    var pctEl = document.getElementById('sumpct');
+    if (pctEl) pctEl.textContent = pct + '% ทดสอบแล้ว ครบ 2 ระบบ (' + done + '/' + testable + ')' + (skip ? ' · ข้าม ' + skip : '');
+  }
+  var _rc = recount;
+  recount = function(){ _rc.apply(this, arguments); osRecount(); };
+  var _aas = applyAllStatuses;
+  applyAllStatuses = function(){ _aas.apply(this, arguments); paintAllWin(); applyFilters(); };
+  paintAllWin();
+  applyFilters();
+})();
+</script>
+</body></html>
