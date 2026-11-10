@@ -15,6 +15,7 @@ harness (CSS + JS ปุ่ม ☁️ เซฟ/ตัวกรอง/Jira/owner
       insightai = insight_mvp2_ai_insights_cases.py (TAKRA Insight · MVP-2 Epic 6 AI Insights · rework PR #595)
       lrready = insight_live_readiness_cases.py (TAKRA Insight · Live Readiness คุณภาพบนไลฟ์จริง)
       insightm3 = insight_m3_features_cases.py (TAKRA Insight · ฟีเจอร์ใหม่ พ.ย. — Shopee · คลิป · Telegram · เสียงหาย · จับคำ)
+      insightui = insight_ui_nov_cases.py (TAKRA Insight · UI ใหม่ re-design พ.ย. — วิเคราะห์ย้อนหลัง · แท็ก · คลิป · ตั้งค่า · แจ้งเตือนไลฟ์)
       rerunquality = rerun_quality_cases.py (TAKRA Rerun · คุณภาพ/ประสิทธิภาพการไลฟ์รีรัน)
       rerunbanner = rerun_banner_cases.py (TAKRA Rerun · แบนเนอร์โปรโมชันจาก Hub · TAK-836)
       radarci = radar_ci_cases.py (TAKRA Radar · ความเสถียรเทสต์ api ใน CI · TKRD-520 · ไม่มีหน้าจอ)
@@ -47,7 +48,7 @@ MODULES = {'mvp1': 'hub_cases', 'mvp2': 'hub_mvp2_cases', 'mvp2rbac': 'hub_mvp2_
            'insightmem': 'insight_mvp2_membership_cases',
            'insightai': 'insight_mvp2_ai_insights_cases',
            'lrready': 'insight_live_readiness_cases',
-           'insightm3': 'insight_m3_features_cases',
+           'insightm3': 'insight_m3_features_cases', 'insightui': 'insight_ui_nov_cases',
            'rerunquality': 'rerun_quality_cases',
            'rerunbanner': 'rerun_banner_cases', 'aibanner': 'ai_banner_cases', 'radarci': 'radar_ci_cases', 'radarslip': 'radar_slip_verify_cases', 'radarext': 'radar_ext_cases',
            'aiquality': 'ai_quality_cases',
