@@ -964,9 +964,11 @@
       var href = tr.getAttribute('data-href') || '';
       var isTestCase = tr.getAttribute('data-type') === 'test'
                     && /-test-cases-table[\w-]*\.html($|[?#])/.test(href);  // also -mac / -windows variants
-      if(isTestCase){
+      // ผลรัน E2E อัตโนมัติ (data-e2e) ไม่มี store-data — สถานะอยู่ที่ data-st ของแต่ละแถว
+      var isE2E = tr.hasAttribute('data-e2e') && /\.html($|[?#])/.test(href);
+      if(isTestCase || isE2E){
         td.innerHTML = '<span class="stt-load">…</span>';
-        jobs.push({ td: td, href: href });
+        jobs.push({ td: td, href: href, e2e: isE2E });
       } else {
         td.innerHTML = '<span class="stt-na">—</span>';    // DoD / Summary / Note = no % status
       }
@@ -999,11 +1001,31 @@
       var st = store[k] && store[k].st;
       if(st && c.hasOwnProperty(st)) c[st]++;
     });
+    return summarize(c, total);
+  }
+
+  // ผลรัน E2E: นับจาก <tr class="trow" data-uid=".." data-st=".."> (ข้ามแถว detail)
+  // flaky = ตกแล้วผ่านตอนรันซ้ำ → นับเป็นผ่าน แต่บอกจำนวนใน tooltip
+  function parseE2E(text){
+    var c = { pass:0, fail:0, hold:0, block:0, skip:0 }, flaky = 0, total = 0, seen = {};
+    var rx = /<tr class="trow[^"]*" data-uid="([^"]+)" data-st="(\w+)"/g, mm;
+    while((mm = rx.exec(text))){
+      if(seen[mm[1]]) continue;
+      seen[mm[1]] = 1; total++;
+      var st = mm[2];
+      if(st === 'flaky'){ flaky++; c.pass++; }
+      else if(c.hasOwnProperty(st)) c[st]++;
+    }
+    if(!total) return null;
+    return summarize(c, total, flaky);
+  }
+
+  function summarize(c, total, flaky){
     var done = c.pass + c.fail + c.hold + c.block;
     var testable = Math.max(0, total - c.skip);
     var pct = testable > 0 ? Math.round(done / testable * 100) : 0;
     var label = pct + '% ทดสอบแล้ว (' + done + '/' + testable + ')'
-              + ' · ผ่าน ' + c.pass + ' · ไม่ผ่าน ' + c.fail
+              + ' · ผ่าน ' + c.pass + (flaky ? ' (flaky ' + flaky + ')' : '') + ' · ไม่ผ่าน ' + c.fail
               + (c.hold ? ' · พัก ' + c.hold : '')
               + (c.block ? ' · ติดบล็อก ' + c.block : '')
               + (c.skip ? ' · ข้าม ' + c.skip : '')
@@ -1053,7 +1075,7 @@
     if(!cache[url]){
       cache[url] = fetch(url, { cache:'no-store' })
         .then(function(r){ return r.text(); })
-        .then(parse)
+        .then(job.e2e ? parseE2E : parse)
         .catch(function(){ return null; });
     }
     cache[url].then(function(d){ render(job.td, d); });
