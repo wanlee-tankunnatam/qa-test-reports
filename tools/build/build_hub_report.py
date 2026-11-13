@@ -18,6 +18,7 @@ harness (CSS + JS ปุ่ม ☁️ เซฟ/ตัวกรอง/Jira/owner
       insightuiclip / insightuipast / insightuialert = insight_ui_nov_cases.py (TAKRA Insight · UI ใหม่ พ.ย. แบบ journey — แยกชีต A คลิป · B ย้อนดู + แท็ก · C ไลฟ์มีปัญหา + ตั้งค่า)
       rerunquality = rerun_quality_cases.py (TAKRA Rerun · คุณภาพ/ประสิทธิภาพการไลฟ์รีรัน)
       rerunbanner = rerun_banner_cases.py (TAKRA Rerun · แบนเนอร์โปรโมชันจาก Hub · TAK-836)
+      rerunfb = rerun_facebook_cases.py (TAKRA Rerun · เชื่อมเพจ Facebook · Epic 42 · TAK-902)
       radarci = radar_ci_cases.py (TAKRA Radar · ความเสถียรเทสต์ api ใน CI · TKRD-520 · ไม่มีหน้าจอ)
       radarslip = radar_slip_verify_cases.py (TAKRA Radar · ตรวจสลิปอัตโนมัติด้วย GoSaaS · TKRD-532)
       radarreceipt = radar_receipt_form_cases.py (TAKRA Radar · ฟอร์มขอใบเสร็จ / ใบกำกับภาษี · TKRD-579)
@@ -51,7 +52,7 @@ MODULES = {'mvp1': 'hub_cases', 'mvp2': 'hub_mvp2_cases', 'mvp2rbac': 'hub_mvp2_
            'lrready': 'insight_live_readiness_cases',
            'insightm3': 'insight_m3_features_cases', 'insightuiclip': 'insight_ui_nov_cases:clip', 'insightuipast': 'insight_ui_nov_cases:past', 'insightuialert': 'insight_ui_nov_cases:alert',
            'rerunquality': 'rerun_quality_cases',
-           'rerunbanner': 'rerun_banner_cases', 'aibanner': 'ai_banner_cases', 'radarci': 'radar_ci_cases', 'radarslip': 'radar_slip_verify_cases', 'radarreceipt': 'radar_receipt_form_cases', 'radarext': 'radar_ext_cases',
+           'rerunbanner': 'rerun_banner_cases', 'rerunfb': 'rerun_facebook_cases', 'aibanner': 'ai_banner_cases', 'radarci': 'radar_ci_cases', 'radarslip': 'radar_slip_verify_cases', 'radarreceipt': 'radar_receipt_form_cases', 'radarext': 'radar_ext_cases',
            'aiquality': 'ai_quality_cases',
            'lipsync': 'lipsync_cases',
            'radar': 'radar_cases', 'radar404': 'radar_tkrd404_cases', 'radar403': 'radar_tkrd403_cases',
