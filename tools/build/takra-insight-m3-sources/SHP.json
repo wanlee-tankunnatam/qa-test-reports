@@ -136,7 +136,7 @@
       },
       {
        "id": "TC-SHP-A.6",
-       "title": "ลิงก์ Shopee ที่รูปแบบไม่ครบ (ไม่มีเลข session · session ไม่ใช่ตัวเลข · ลิงก์สั้นไม่มีโค้ด) — ไม่เปิดไลฟ์",
+       "title": "ลิงก์ Shopee ที่รูปแบบไม่ครบ (ไม่มีเลข session · session ไม่ใช่ตัวเลข · ลิงก์สั้นไม่มีโค้ด) — ไม่เปิดไลฟ์ · ลิงก์ http ที่ session เป็นตัวเลขรับได้",
        "prio": "P1",
        "kind": "boundary",
        "level": "ui",
@@ -145,21 +145,22 @@
         "เปิดแอปเดสก์ท็อป TAKRA Insight (บิลด์ UAT) แล้วเข้าสู่ระบบด้วยบัญชีเจ้าของ",
         "ไปที่เมนู \"หน้าหลัก\"",
         "วางลิงก์ทีละลิงก์ตามข้อมูลทดสอบลงในช่องลิงก์ไลฟ์ แล้วกด \"เปิดดูไลฟ์\" ทุกครั้ง",
-        "สังเกตข้อความใต้ช่องลิงก์ของแต่ละลิงก์"
+        "สังเกตข้อความใต้ช่องลิงก์ของแต่ละลิงก์ · ลิงก์ http ให้ดูใน takra-main.log ด้วยว่า view โหลด URL อะไร"
        ],
        "data": [
-        "https://live.shopee.co.th/share",
-        "https://live.shopee.co.th/share?session=",
-        "https://live.shopee.co.th/share?session=abc",
-        "https://live.shopee.co.th/share?session=123456789012345678901 (21 หลัก)",
-        "http://live.shopee.co.th/share?session=31480027 (http ไม่ใช่ https)",
-        "https://th.shp.ee/"
+        "ต้องถูกปฏิเสธ: https://live.shopee.co.th/share",
+        "ต้องถูกปฏิเสธ: https://live.shopee.co.th/share?session=",
+        "ต้องถูกปฏิเสธ: https://live.shopee.co.th/share?session=abc",
+        "ต้องถูกปฏิเสธ: https://live.shopee.co.th/share?session=123456789012345678901 (21 หลัก)",
+        "ต้องถูกปฏิเสธ: https://th.shp.ee/",
+        "รับได้: http://live.shopee.co.th/share?session=31480027 (http ไม่ใช่ https — มติ TI-723)"
        ],
        "expected": [
-        "ทุกลิงก์ไม่เปิดหน้าก่อนเริ่ม และขึ้นข้อความ \"ลิงก์นี้เป็นหน้าสินค้าหรือหน้าร้านของ Shopee ไม่ใช่ไลฟ์ — เปิดไลฟ์ที่ต้องการในแอป Shopee แล้วกด “แชร์” เพื่อคัดลอกลิงก์ไลฟ์\"",
+        "5 ลิงก์ในกลุ่ม \"ต้องถูกปฏิเสธ\" ไม่เปิดหน้าก่อนเริ่ม และขึ้นข้อความ \"ลิงก์นี้เป็นหน้าสินค้าหรือหน้าร้านของ Shopee ไม่ใช่ไลฟ์ — เปิดไลฟ์ที่ต้องการในแอป Shopee แล้วกด “แชร์” เพื่อคัดลอกลิงก์ไลฟ์\"",
+        "ลิงก์ http ที่ session เป็นตัวเลข: รับได้ · ไม่มีข้อความปฏิเสธใต้ช่องลิงก์ · view โหลดเป็น https://live.shopee.co.th/share?session=31480027 (แอปเปลี่ยน http → https เอง ดูใน takra-main.log) · เปิดหน้าก่อนเริ่ม",
         "ลิงก์ที่ session เป็นตัวเลข 1–20 หลักยังเปิดได้ตามปกติ (เทียบกับ TC-SHP-A.2)"
        ],
-       "src": "ที่มา: TI-683 D3 (session = ตัวเลข 1–20 หลัก) · D13 · AC7 · th.js liveLink.notShopeeLive · shopee-live-url.vectors.js",
+       "src": "ที่มา: TI-683 D3 (session = ตัวเลข 1–20 หลัก) · D13 · AC7 · th.js liveLink.notShopeeLive · shopee-live-url.vectors.js · TI-723 มติเจ้าของงาน 12 พ.ย. 2569 ข้อ (ข): ลิงก์ http ที่ host/path/session ถูกต้องเป็นลิงก์ไลฟ์ที่รับได้ (PR #892 แก้เอกสาร TI-683 AC7)",
        "note": "ข้อความที่ได้อ้างตารางทดสอบในโค้ด (ลิงก์ Shopee ไทยที่ไม่ใช่ไลฟ์ → ข้อความหน้าร้าน/สินค้า) — สเปกไม่ได้เขียนข้อความเฉพาะสำหรับลิงก์รูปแบบเสีย ถ้าบนจอได้ข้อความอื่นให้บันทึกไว้"
       },
       {
