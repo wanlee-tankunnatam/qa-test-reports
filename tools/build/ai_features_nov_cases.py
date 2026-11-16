@@ -70,9 +70,13 @@ STOP = 'กด "หยุดไลฟ์" แล้วกด "บังคับ
 SETTINGS = 'กดรูปโปรไฟล์มุมขวาบน → "การตั้งค่า" แล้วที่กลุ่ม "พื้นที่ทำงาน" กด'
 
 
+# เคสที่ไม่ต้องเปิดไลฟ์จริง — ที่เหลือทุกเคสติดป้าย 🔴 ไลฟ์จริง (manual)
+NO_LIVE = {'TC-NOV-D.1', 'TC-NOV-D.2', 'TC-NOV-H.1', 'TC-NOV-H.2'}
+
+
 def C(id_, title, prio, kind, steps, expected, src, pre=(), data=(), note=None, level='e2e'):
     return dict(id=id_, title=title, prio=prio, kind=kind, level=level, ui=True, pre=list(pre), steps=list(steps),
-                data=list(data), expected=list(expected), src=src, note=note)
+                data=list(data), expected=list(expected), src=src, note=note, live=id_ not in NO_LIVE)
 
 
 FEATS = [

@@ -111,6 +111,7 @@ EXTRA_CSS = """
 .kd-data{color:#1d4ed8;background:#eff6ff;border-color:#bfdbfe}
 .kd-reg{color:#475569;background:#f8fafc;border-color:#cbd5e1}
 .chk{margin-top:4px;padding:6px 8px;border-left:3px solid #16a34a;background:rgba(22,163,74,.07)}
+.livetag{display:inline-block;margin-left:6px;padding:0 6px;border-radius:4px;font-size:9.5px;font-weight:700;vertical-align:middle;color:#9f1239;background:#ffe4e6;border:1px solid #fda4af;white-space:nowrap}
 .noui{display:inline-block;margin-left:6px;padding:0 6px;border-radius:4px;font-size:9.5px;font-weight:700;vertical-align:middle;color:#991b1b;background:#fee2e2;border:1px solid #fca5a5;white-space:nowrap}
 """
 
@@ -152,9 +153,11 @@ def case_html(c, uid, epic_key, epic_title_short, epic_jira=None):
     kind = c['kind']
     in_ui = c.get('ui', True)
     noui = '' if in_ui else f' <span class="noui">{NOUI_BADGE}</span>'
-    head = f'''<tr class="trow" data-feat="{epic_key}" data-level="{lvl}" data-prio="{c['prio']}" data-kind="{kind}" data-ui="{'yes' if in_ui else 'no'}" onclick="tg(this)">
+    # เคสที่ต้องเปิดไลฟ์จริง (manual) — ตั้ง live=True ในเคส · รายงานที่ไม่ใส่ = ไม่มีป้าย
+    live = ' <span class="livetag" title="ต้องเปิดไลฟ์จริง · ทดสอบด้วยมือเท่านั้น">🔴 ไลฟ์จริง</span>' if c.get('live') else ''
+    head = f'''<tr class="trow" data-feat="{epic_key}" data-level="{lvl}" data-prio="{c['prio']}" data-kind="{kind}" data-ui="{'yes' if in_ui else 'no'}"{' data-live="yes"' if c.get('live') else ''} onclick="tg(this)">
   <td><span class="tog">▸</span></td><td class="cid">{esc(c['id'])}</td>
-  <td class="ctitle">{esc(c['title'])} {kind_tag(kind)}{noui}</td>
+  <td class="ctitle">{esc(c['title'])} {kind_tag(kind)}{live}{noui}</td>
   <td class="lvl">{lv_html}</td>
   <td><span class="prio {PRIO_CLS[c['prio']]}">{c['prio']}</span></td>
   <td class="status" data-uid="{u}"><span class="stb pending">รอเทส</span></td>
@@ -492,6 +495,7 @@ def build():
     total = 0
     e2e_n = 0
     noui_n = 0
+    live_n = 0
     for e in EPICS:
         n = sum(len(f['cases']) for f in e['feats'])
         chips.append(f'<button class="fchip" data-f="feat" data-v="{e["key"]}">{e["chip"]} ({n})</button>')
@@ -522,6 +526,8 @@ def build():
                     noui_n += 1
                 if c.get('level') == 'e2e':
                     e2e_n += 1
+                if c.get('live'):
+                    live_n += 1
     ui_n = total - e2e_n
     kind_pill = ' · '.join(f'{k.capitalize()} {kind_counts[k]}' for k in KINDS)
     kind_chips = ''.join(f'<button class="fchip" data-f="kind" data-v="{k}" title="{esc(v[1])}">{v[0]} ({kind_counts[k]})</button>' for k, v in KINDS.items())
@@ -535,6 +541,7 @@ def build():
     </div>
 ''')
     noui_pill = f'<span class="pill">{NOUI_BADGE} {noui_n} · พร้อมเทส {total - noui_n}</span>' if noui_n else ''
+    live_pill = f'<span class="pill">🔴 ไลฟ์จริง {live_n} · ไม่ต้องไลฟ์ {total - live_n}</span>' if live_n else ''
     # META['noui_ready'] = True: เคส ui=False เทสได้เลย (ไม่ใช่ "ยังไม่มีหน้าจอ") → ไม่โชว์ "พร้อมเทส N" / ตัวกรองสถานะ UI
     if META.get('noui_ready'):
         ui_row = ''
@@ -546,7 +553,7 @@ def build():
   <div class="meta">
     <span class="pill">{ui_n} เคส + E2E {e2e_n} = {total}</span>
     <span class="pill">{META['groups_label']}</span>
-    <span class="pill">UI + E2E · manual</span>{noui_pill}
+    <span class="pill">UI + E2E · manual</span>{live_pill}{noui_pill}
     <span class="pill">P0 {counts['P0']} · P1 {counts['P1']} · P2 {counts['P2']}</span>
     <span class="pill">ประเภท: {kind_pill}</span>
   </div>
