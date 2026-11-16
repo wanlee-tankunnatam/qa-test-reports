@@ -124,7 +124,7 @@ footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--line);color:v
 <body>
 <div class="wrap">
   <h1>บั๊กค้างรอบส่งงาน</h1>
-  <p class="sub">บั๊กที่ยังไม่ปิดจากทุกโปรเจกต์ใน Jira แยกตามรอบส่ง แล้วแยกตามผู้รับผิดชอบ · ในแต่ละคนเรียงตามขั้นที่ลูกค้าเจอใน user journey · ข้อมูล ณ 15 พ.ย. 2026 09:00 น. (อัปเดตอัตโนมัติ 09:00 / 13:00 หรือกดปุ่มดึงข้อมูลจาก Jira)</p>
+  <p class="sub">บั๊กที่ยังไม่ปิดจากทุกโปรเจกต์ใน Jira แยกตามรอบส่ง แล้วแยกตามผู้รับผิดชอบ · ในแต่ละคนเรียงตามขั้นที่ลูกค้าเจอใน user journey · ข้อมูล ณ 16 พ.ย. 2026 13:00 น. (อัปเดตอัตโนมัติ 09:00 / 13:00 หรือกดปุ่มดึงข้อมูลจาก Jira)</p>
   <div class="sync"><button type="button" class="f" id="sync">ดึงข้อมูลจาก Jira</button><span id="syncat"></span><span id="syncmsg" role="status"></span></div>
   <div class="proj" id="fj" role="group" aria-label="โปรเจกต์"></div>
   <div class="tot" id="tot"></div>
@@ -413,7 +413,6 @@ const ROWS = [
 ["ยังไม่มีรอบ", "No", "TAKRA-1650", "High", "[BE] BYOK: TTS ไม่เคยใช้คีย์ MiniMax ของร้าน — Nest ฉีดตัวเก็บคีย์เป็น undefined ⇒ ทุกร้านพูดด้วยบัญชีเรา (ต่อจาก TAKRA-1576)", "READY TO TEST"],
 ["ยังไม่มีรอบ", "No", "TAKRA-1655", "Medium", "TAKRA Live - แอปบนเครื่องไม่มีกลไกอัปเดตโปรแกรมเลย: ขอทำแบบ Takra Rerun ทั้งชุด (ดาวน์โหลดเบื้องหลัง · การ์ดมุมขวาล่าง · ผู้ใช้เลือกเวลารีสตาร์ท · ห้ามตัดกลางไลฟ์)", "READY TO TEST"],
 ["ยังไม่มีรอบ", "Boat", "TAKRA-1656", "Medium", "TAKRA Live - เพิ่มบัญชี TikTok: กด \"ยอมรับและล็อกอิน TikTok\" แล้วหน้าต่างที่เปิดมาเป็นหน้าโฆษณา TikTok Shop LIVE ต้องกดต่อหลายขั้นกว่าจะถึงหน้าล็อกอินจริง", "READY TO TEST"],
-["ยังไม่มีรอบ", "Boat", "TAKRA-1657", "Medium", "[Defect][BE][FE] sync สินค้า TikTok: สินค้าที่ขายไม่ได้แล้วบางตัวถูกนับเป็นปกติ ใส่ตะกร้าได้ และข้อความไม่บอกว่าแต่ละสินค้าต้องทำอะไรต่อ", "READY TO TEST"],
 ["ยังไม่มีรอบ", "Berm", "TKRD-516", "Medium", "[เช็คจอ › ลิงก์สินค้า] วางลิงก์ที่อ่านไม่ออก (ไม่พบสินค้า) แล้วหัว \"ผลเช็คจอ\" ขึ้น \"เสร็จ 1 / 1\" พร้อมแถบสีเขียวเต็ม และแถว \"ไม่พบสินค้า\" อ่านไม่ออกว่าลิงก์ใช้ไม่ได้", "To Do"],
 ["ยังไม่มีรอบ", "Berm", "TKRD-517", "Medium", "[เช็คจอ › ลิงก์สินค้า] ข้อความ \"วันนี้เช็คครบ 50 รายการแล้ว หรือชุดนี้จะเกินจำนวนที่เหลือ…\" แสดงเป็นตัวอักษรสีดำธรรมดา — ไม่รู้ว่าเป็นข้อผิดพลาด validate", "To Do"],
 ["ยังไม่มีรอบ", "Berm", "TKRD-521", "Low", "[เช็คจอ › ลิงก์สินค้า] toast \"เช็คจอครบแล้ว N ลิงก์\" นับไม่ครบ — ไม่นับแถวที่ใช้ผลเดิมภายใน 10 นาที และหลังรีเฟรชนับเฉพาะแถวที่จบหลังรีเฟรช", "To Do"],
@@ -467,15 +466,13 @@ const ROWS = [
 ["ยังไม่มีรอบ", "Boat", "TAKRA-1737", "Low", "[Windows][Defect][BE] ด่านการขายกันคำตอบปฏิเสธเรื่องโปรโมชันที่ AI ทวนคำถามก่อน (\"มีของแถมไหมเหรอคะ ยังไม่มีข้อมูล…\") — ตกเป็นคำปฏิเสธสำรอง", "READY TO TEST"],
 ["ยังไม่มีรอบ", "Boat", "TAKRA-1740", "Medium", "[Windows][Defect][FE] Live Studio ขั้นตรวจและเริ่ม: กล่องเตือน \"อยู่ใต้ UI ของแพลตฟอร์ม\" บังปุ่มสลับ \"ตั้งเวลา\" — กดไม่ติดจนกว่าจะปิดกล่องเตือน", "READY TO TEST"],
 ["ยังไม่มีรอบ", "Boat", "TAKRA-1742", "Low", "[Windows][Defect][Renderer] เทสต์ของ TAKRA-1705 ไม่เฝ้าจุดที่แก้ — ย้อนให้ mp_face วัดตาบนพิกัดที่หารขนาดเฟรม หรือคืน EYES_CLOSED = 0.12 แล้วเทสต์ยังเขียว", "READY TO TEST"],
-["ยังไม่มีรอบ", "Boat", "TAKRA-1743", "Medium", "[Windows][Defect][FE] ตัวช่วย \"เขียนด้วย AI\" ในหน้าสคริปต์เลือกสินค้าที่นำไปไลฟ์ไม่ได้ (โปรไฟล์ถูกลบ · สต็อก 0 · ไม่มีจำหน่าย · ไม่อยู่ในโชว์เคส) ได้โดยไม่มีคำเตือน", "READY TO TEST"],
-["ยังไม่มีรอบ", "Boat", "TAKRA-1744", "Medium", "[Windows][Defect][BE] sync สินค้า TikTok รอบที่อ่านหน้าสินค้าไม่ได้ (captcha/เครือข่ายถูกบล็อก) ล้างสต็อก 0 เป็น null — สินค้าขายไม่ได้กลับมาใส่ตะกร้าได้", "READY TO TEST"],
 ["ยังไม่มีรอบ", "Boat", "TAKRA-1746", "Low", "[Defect][FE][A11y][Windows] หน้า \"ร่างไลฟ์\" (/live/projects) ตัวกรองแท็บมี aria-controls ชี้ไป id ที่ไม่มีจริง — axe aria-valid-attr-value (critical)", "READY TO TEST"],
 ["ยังไม่มีรอบ", "Boat", "TAKRA-1747", "Medium", "[Defect][FS] ตั้งค่า › API Keys ขึ้น \"ใช้ key ของคุณ\" ทั้งที่ระบบอ่าน key ที่บันทึกไว้ไม่ได้ — ผู้ใช้รู้ตอนกดใช้ AI เท่านั้น", "READY TO TEST"],
 ["ยังไม่มีรอบ", "ไม่มีคนรับ", "TAK-982", "Medium", "[Defect] Edge case ทุกสถานะของ Takra Rerun หลังรีดีไซน์ (TAK-979 · ขั้น 5)", "To Do"],
 ["ยังไม่มีรอบ", "Boat", "TAKRA-1752", "Medium", "[Defect][FE][test] use-block-back-navigation.spec \"still catches a real Back press after a re-arm\" ตกสุ่มบน CI — onBlocked ถูกเรียก 2 ครั้งแทน 1", "READY TO TEST"],
 ["ยังไม่มีรอบ", "No", "TAKRA-1762", "Medium", "แอป desktop: เปิดหน้าต่างใหม่ (ไลฟ์อีกบัญชีพร้อมกัน) แล้วไลฟ์ที่ออกอากาศอยู่กระตุกหนัก", "READY TO TEST"],
 ["ยังไม่มีรอบ", "Ice", "TI-766", "Medium", "[Defect][QA] e2e desktop 4 เทสแดงเพราะตัวเทสเอง — AC9 regex จับ GET /recordings · @manual ไม่ skip บน build ที่ไม่ใช่ uat · d5neg01 รอ lane เสียงที่ไม่ required", "To Do"],
-["ยังไม่มีรอบ", "Gong", "TKRD-574", "Medium", "[Defect][FE] แบนเนอร์ข้อตกลงการใช้งาน: จอมือถือ ปุ่ม × ทับข้อความ \"มีผลตั้งแต่ …\" ที่ความกว้าง 320–440px", "To Do"],
+["ยังไม่มีรอบ", "Gong", "TKRD-574", "Medium", "[Defect][FE] แบนเนอร์ข้อตกลงการใช้งาน: จอมือถือ ปุ่ม × ทับข้อความ \"มีผลตั้งแต่ …\" ที่ความกว้าง 320–440px", "IN REVIEW"],
 ["ยังไม่มีรอบ", "Gong", "TKRD-580", "Medium", "[Prod] radar ตอบ 503 ราว 3,500 ครั้ง/สัปดาห์ที่ GET /api/v1/watchlist/items — ClickHouse (trendora-dw) memory เต็ม 7 GiB เป็นช่วงๆ", "READY TO TEST"],
 ["ยังไม่มีรอบ", "No", "TAKRA-1770", "Medium", "[BE] เสียงในเครื่อง (VoxCPM2) พูดเร็วกว่าที่ระบบคิด ~1.6 เท่า — ป้ายเวลาฉาก / armed / replyPlan คลาดทั้งหมด", "To Do"],
 ["ยังไม่มีรอบ", "No", "TAKRA-1771", "Medium", "flaky test: start-broadcast.service.spec.ts ตกสลับบน CI — วัดด้วยนาฬิกาจริงแล้วคลาด 1 มิลลิวินาที (บล็อก merge จริงมาแล้ว)", "To Do"],
@@ -491,6 +488,8 @@ const ROWS = [
 ["ยังไม่มีรอบ", "Boat", "TI-772", "Medium", "[Defect][FE][Electron] สลับบัญชีกลางไลฟ์แล้วแอปเริ่มบันทึกไลฟ์ใหม่เองใต้บัญชีใหม่ โดยไม่มีใครกดเริ่ม และ session นั้นไม่มีภาพ", "To Do"],
 ["ยังไม่มีรอบ", "James", "TI-773", "Low", "[Defect][FE][Electron] unit test อีก 4 ไฟล์ (5 เทส) ยังตกบน Windows เพราะเทียบ path แบบ \"/\" — นอก 5 ไฟล์ที่ TI-768 แก้ (BrandDashboard · SessionDetail.viewers · spike-capture-log · user-scope)", "To Do"],
 ["ยังไม่มีรอบ", "James", "TI-774", "Medium", "[Defect][BE] mem_floor_probe.py: SIGTERM ที่มาหลัง ramp หยุดเองแล้ว ทำให้สคริปต์ล้มด้วย exit 130 และไม่เขียนไฟล์ --out", "To Do"],
+["ยังไม่มีรอบ", "No", "TKH-328", "High", "[Bug][BE] Admin Console › ตรวจสลิป: กด \"ยืนยันการชำระเงิน\" ไม่ได้ ทั้งที่ใบอยู่สถานะรอตรวจ — ขึ้น \"รายการนี้ยืนยันไม่ได้ (ต้องอยู่สถานะรอตรวจ)\"", "To Do"],
+["ยังไม่มีรอบ", "Berm", "TKRD-587", "High", "Takra Radar - [Bug][BE] เช็คจอ · ลิงก์สินค้า ค้าง \"กำลังเช็ค…\" นาน 20 นาทีขึ้นไป ลูกค้ายกเลิกหรือส่งรอบใหม่ไม่ได้", "To Do"],
 ];
 // Projects: the Jira key prefix decides the project, so rows from another project
 // show up here as soon as they are added to ROWS. Add a line to PROJECTS to give it a name.
@@ -569,7 +568,7 @@ ROWS.forEach(r=>{const s=JOURNEY[r[2]]; r[7]=s?s:(r[2].startsWith("TAKRA-")?99:0
 const scCls=v=>v===SCOPE_LABEL.ui?"c-ui":v===SCOPE_LABEL.sys?"c-sys":"c-tool";
 
 // เวลาที่ดึงจาก Jira ล่าสุดรายโปรเจกต์ — ตัวซิงก์ (update_open_bugs.py) เขียนบรรทัดนี้เอง ต้องอยู่บรรทัดเดียว
-const SYNCED = {"TAKRA": "15 พ.ย. 2026 09:00", "TI": "15 พ.ย. 2026 09:00", "TAK": "15 พ.ย. 2026 09:00", "TKRD": "15 พ.ย. 2026 09:00", "TF": "15 พ.ย. 2026 09:00", "TKH": "15 พ.ย. 2026 09:00"};
+const SYNCED = {"TAKRA": "16 พ.ย. 2026 13:00", "TI": "16 พ.ย. 2026 13:00", "TAK": "16 พ.ย. 2026 13:00", "TKRD": "16 พ.ย. 2026 13:00", "TF": "16 พ.ย. 2026 13:00", "TKH": "16 พ.ย. 2026 13:00"};
 const PROJECTS={
   TAKRA:{name:"Takra AI", jira:"https://kitdi.atlassian.net"},
   TI:{name:"Takra Insight", jira:"https://kitdi.atlassian.net"},
