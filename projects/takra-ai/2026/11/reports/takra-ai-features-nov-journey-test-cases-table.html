@@ -1,0 +1,1355 @@
+<!DOCTYPE html>
+<html lang="th"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TAKRA AI — ฟีเจอร์ใหม่ พ.ย. แบบ User Journey (สลับฉาก · ยอดขาย · Telegram · การใช้งาน · ส่งข้อความ · อัปเดตแอป · คำอ่าน · ซ้อมถาม-ตอบ) · Manual Test Cases</title>
+<style>
+:root{
+  --bg:#f5f6f8;--card:#fff;--card2:#f0f2f5;--line:#dce0e7;
+  --txt:#1f2430;--muted:#6b7280;--accent:#2563eb;
+  --p0:#dc2626;--p1:#ea7a18;--p2:#2563eb;--p3:#94a3b8;
+  --pass:#16a34a;--fail:#dc2626;--hold:#d97706;--skip:#9ca3af;--block:#7c3aed;
+  --lv-ui:#db2777;--lv-e2e:#ea580c;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--txt);font-family:"Segoe UI","Sarabun",system-ui,sans-serif;line-height:1.5;font-size:13px}
+a{color:var(--accent)}
+header.top{padding:20px 28px 14px;border-bottom:1px solid var(--line);background:linear-gradient(135deg,#1e3a8a,#2563eb);color:#fff}
+header.top h1{margin:0 0 4px;font-size:20px}
+header.top .sub{font-size:12.5px;opacity:.88}
+header.top .meta{margin-top:10px;display:flex;flex-wrap:wrap;gap:8px}
+.pill{display:inline-block;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:600;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.35);color:#fff}
+.wrap{padding:16px 22px 80px;max-width:1280px;margin:0 auto}
+.counts{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 12px}
+.cnt{font-size:12px;font-weight:700;padding:5px 12px;border-radius:8px;border:1px solid var(--line);background:#fff}
+.cnt b{font-size:14px}
+.cnt.pass{color:var(--pass);border-color:#bbf7d0}.cnt.fail{color:var(--fail);border-color:#fecaca}
+.cnt.hold{color:var(--hold);border-color:#fde68a}.cnt.block{color:var(--block);border-color:#e9d5ff}
+.cnt.pending{color:var(--muted)}.cnt.skip{color:var(--skip)}
+.runsum{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin:0 0 14px}
+.runsum h3{margin:0 0 8px;font-size:13px}
+.sumchips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px}
+.progress{height:10px;background:var(--card2);border-radius:6px;overflow:hidden;border:1px solid var(--line)}
+.progressbar{height:100%;background:var(--pass);width:0;transition:width .3s}
+.hint{color:var(--muted);font-size:12px}
+.toolbar{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;margin:0 0 12px}
+.btn{font-size:12px;font-weight:600;padding:5px 12px;border-radius:7px;border:1px solid var(--line);background:#fff;color:var(--txt);cursor:pointer}
+.btn:hover{border-color:var(--accent);color:var(--accent)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.btn.primary:hover{opacity:.88}
+.filters{background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:0 0 14px}
+.filters .row{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:3px 0}
+.filters label{font-size:11px;font-weight:700;color:var(--muted);min-width:60px}
+.fchip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:3px 11px;font-size:11.5px;cursor:pointer;color:var(--txt)}
+.fchip:hover{border-color:var(--accent);color:var(--accent)}
+.fchip.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.clearbtn{font-size:11px;padding:3px 10px;border:1px solid var(--line);border-radius:6px;background:#fff;color:var(--muted);cursor:pointer;margin-left:4px}
+.clearbtn:hover{color:var(--fail);border-color:var(--fail)}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:#fff}
+table.tc{border-collapse:collapse;width:100%;min-width:900px;background:#fff}
+table.tc th,table.tc td{padding:8px 10px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+table.tc thead th{position:sticky;top:0;background:var(--card2);color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.4px;z-index:3;border-bottom:2px solid var(--line)}
+tr.epicrow td{background:#1e3a8a;color:#fff;font-weight:700;font-size:13px;padding:9px 12px}
+tr.epicrow .rp{font-weight:400;font-size:11px;opacity:.75;margin-left:6px}
+tr.featrow td{background:#eaf1fb;color:#1d4ed8;font-weight:700;font-size:12px}
+tr.featrow .rp{font-weight:500;font-size:11px;color:#3b6fc4;margin-left:8px}
+tr.trow{cursor:pointer}tr.trow:hover{background:#f7f9fc}tr.trow.open{background:#eef4fe}
+.tog{display:inline-block;width:14px;color:var(--muted);transition:transform .15s;font-size:11px}
+tr.trow.open .tog{transform:rotate(90deg);color:var(--accent)}
+.cid{font-family:monospace;font-size:10px;color:var(--muted);white-space:nowrap}
+td.jira{white-space:nowrap}td.jira a{font-family:monospace;font-size:10.5px;font-weight:700;color:var(--accent);text-decoration:none}td.jira a:hover{text-decoration:underline}
+.ctitle{font-weight:600;font-size:12.5px;max-width:400px}
+td.lvl{white-space:nowrap}
+.lv{font-size:10px;font-weight:700;padding:2px 7px;border-radius:5px;border:1px solid;background:#fff;display:inline-block;vertical-align:middle}
+.lv.lvl-ui{color:var(--lv-ui);border-color:var(--lv-ui)}
+.lv.lvl-e2e{color:var(--lv-e2e);border-color:var(--lv-e2e)}
+.ac{font-size:10px;color:var(--muted);font-family:monospace;margin-left:4px}
+.prio{font-weight:800;font-size:10px;padding:3px 7px;border-radius:5px;color:#fff;display:inline-block;white-space:nowrap}
+.p0{background:var(--p0)}.p1{background:var(--p1)}.p2{background:var(--p2)}
+td.status{white-space:nowrap}
+.stb{font-weight:700;font-size:10px;padding:3px 8px;border-radius:5px;display:inline-block}
+.stb.pending{background:#fff;border:1px solid var(--line);color:var(--muted)}
+.stb.pass{background:var(--pass);color:#fff}.stb.fail{background:var(--fail);color:#fff}
+.stb.hold{background:var(--hold);color:#fff}.stb.block{background:var(--block);color:#fff}
+.stb.skip{background:var(--skip);color:#fff}
+tr.detail{display:none}tr.detail.show{display:table-row}
+tr.detail>td{background:#fafbfc;padding:0;border-bottom:2px solid var(--line)}
+.card{padding:16px 20px}
+.card .h-title{font-size:14px;font-weight:700;margin:0 0 3px}
+.card .h-prio{font-size:12px;color:var(--muted);margin:0 0 12px}
+.card .sec{margin:0 0 12px}.card .sec:last-child{margin-bottom:0}
+.card .sec h4{margin:0 0 5px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.3px;color:#374151}
+.card .sec ol,.card .sec ul{margin:0;padding-left:18px}
+.card .sec li{margin:2px 0;font-size:12.5px}
+.card .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:760px){.card .grid{grid-template-columns:1fr}}
+.actualbox{display:block;width:100%;box-sizing:border-box;background:#fff;border:1px dashed var(--line);border-radius:7px;padding:7px 11px;color:var(--txt);font:inherit;font-size:12px;line-height:1.55;min-height:78px;resize:vertical}
+.actualbox::placeholder{color:var(--muted);font-style:italic}
+.actualbox:focus{outline:none;border-style:solid;border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,99,235,.13)}
+.actualbox.filled{border-style:solid;border-color:var(--accent)}
+.statusrow{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.opt{font-size:11px;font-weight:700;padding:4px 11px;border-radius:6px;border:1px solid var(--line);background:#fff;color:var(--muted);cursor:pointer}
+.opt:hover{opacity:.8}
+.opt.pass{border-color:var(--pass)}.opt.fail{border-color:var(--fail)}
+.opt.hold{border-color:var(--hold)}.opt.block{border-color:var(--block)}.opt.skip{border-color:var(--skip)}
+.opt.sel.pass{background:var(--pass);color:#fff}
+.opt.sel.fail{background:var(--fail);color:#fff}
+.opt.sel.hold{background:var(--hold);color:#fff}
+.opt.sel.block{background:var(--block);color:#fff}
+.opt.sel.skip{background:var(--skip);color:#fff}
+tr.trow.hide,tr.detail.hide{display:none!important}
+tr.epicrow.hide,tr.featrow.hide{display:none!important}
+.note-box{background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:8px 12px;font-size:12px;color:#92400e;margin:0 0 12px}
+footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
+@media print{.tablewrap{overflow:visible}table.tc{min-width:0}tr.detail{display:table-row!important}.toolbar,.filters,.runsum{display:none}}
+/* Jira per-case links */
+.jira-sec .jira-list{display:flex;flex-direction:column;gap:4px;margin-bottom:6px}
+.jira-item{display:flex;align-items:center;gap:8px;font-size:12px}
+.jira-item a{color:var(--accent);text-decoration:none;font-family:monospace;font-weight:700}
+.jira-item a:hover{text-decoration:underline}
+.jira-del{cursor:pointer;color:var(--fail);font-weight:700;font-size:11px;user-select:none}
+.jira-add{display:flex;gap:6px}
+.jira-input{flex:1;min-width:0;padding:5px 8px;border:1px solid var(--line);border-radius:6px;font-size:12px;font-family:inherit;background:#fff;color:var(--txt)}
+.jira-btn{white-space:nowrap}
+.edge-badge{display:inline-block;margin-left:6px;padding:0 6px;border-radius:4px;font-size:9.5px;font-weight:700;color:#92400e;background:#fef3c7;border:1px solid #fde68a;vertical-align:middle}
+.jira-cell{white-space:normal}
+.jira-chip{display:inline-block;margin:1px 3px 1px 0;padding:1px 6px;border:1px solid var(--line);border-radius:5px;font-family:monospace;font-size:10.5px;font-weight:700;color:var(--accent);text-decoration:none;background:var(--card2)}
+.jira-chip:hover{text-decoration:underline}
+/* Epic assignee + section color */
+.epic-owner-wrap{margin-left:12px;font-weight:400;font-size:11px}
+.feat-owner{font-size:11px;padding:2px 6px;border:1px solid var(--line);border-radius:5px;background:#fff;color:var(--txt);cursor:pointer}
+tr.featrow.owner-ice td{background:#60a5fa;border-left:4px solid #1d4ed8}
+tr.featrow.owner-moss td{background:#a78bfa;border-left:4px solid #6d28d9}
+tr.sec-ice>td:first-child{box-shadow:inset 5px 0 0 #2563eb}
+tr.sec-moss>td:first-child{box-shadow:inset 5px 0 0 #7c3aed}
+.feat-owner.owner-ice{border-color:#2563eb;color:#2563eb;font-weight:700}
+.feat-owner.owner-moss{border-color:#7c3aed;color:#7c3aed;font-weight:700}
+
+/* ประเภทเคส (kind) */
+.kd{display:inline-block;margin-left:6px;padding:0 6px;border-radius:4px;font-size:9.5px;font-weight:700;vertical-align:middle;border:1px solid;white-space:nowrap}
+.kd-happy{color:#15803d;background:#f0fdf4;border-color:#bbf7d0}
+.kd-neg{color:#b91c1c;background:#fef2f2;border-color:#fecaca}
+.kd-bnd{color:#b45309;background:#fffbeb;border-color:#fde68a}
+.kd-val{color:#6d28d9;background:#f5f3ff;border-color:#ddd6fe}
+.kd-exc{color:#be123c;background:#fff1f2;border-color:#fecdd3}
+.kd-perm{color:#0f766e;background:#f0fdfa;border-color:#99f6e4}
+.kd-data{color:#1d4ed8;background:#eff6ff;border-color:#bfdbfe}
+.kd-reg{color:#475569;background:#f8fafc;border-color:#cbd5e1}
+.chk{margin-top:4px;padding:6px 8px;border-left:3px solid #16a34a;background:rgba(22,163,74,.07)}
+.noui{display:inline-block;margin-left:6px;padding:0 6px;border-radius:4px;font-size:9.5px;font-weight:700;vertical-align:middle;color:#991b1b;background:#fee2e2;border:1px solid #fca5a5;white-space:nowrap}
+
+/* ป้าย epic (Jira) */
+.epic-tag{display:inline-block;margin-left:6px;padding:0 6px;border-radius:4px;font-size:9.5px;font-weight:700;vertical-align:middle;white-space:nowrap;color:#1e3a8a;background:#eef2ff;border:1px solid #c7d2fe;text-decoration:none}
+.epic-tag:hover{background:#e0e7ff;text-decoration:underline}
+.epicrow .epic-tag{font-size:11px;margin-left:8px}
+</style>
+</head>
+<body>
+<a id="hub-back-btn" href="https://wanlee-tankunnatam.github.io/qa-test-reports/?project=ai" title="กลับไปหน้ารวมรายงาน (Hub)" style="position:fixed;top:12px;right:14px;z-index:99999;display:inline-flex;align-items:center;gap:7px;padding:10px 18px;border-radius:999px;background:#ffffff;color:#1e3a8a;font-size:14px;font-weight:800;text-decoration:none;box-shadow:0 4px 16px rgba(0,0,0,.35);border:2px solid #1e3a8a;font-family:'Segoe UI','Sarabun',system-ui,sans-serif">🏠 รายงานทั้งหมด</a>
+
+
+<script id="store-data" type="application/json">
+{}
+</script>
+
+<header class="top">
+  <h1>🆕 TAKRA AI — ฟีเจอร์ใหม่ พ.ย. แบบ User Journey (สลับฉาก · ยอดขาย · Telegram · การใช้งาน · ส่งข้อความ · อัปเดตแอป · คำอ่าน · ซ้อมถาม-ตอบ) · Manual Test Cases</h1>
+  <div class="sub">เทสด้วยมือแบบ user journey (เดินครบเส้นทางข้ามหลายหน้า) · แอป Takra Live บน Windows · 8 ฟีเจอร์ใหม่ พ.ย. · โค้ด <b>uat @ 65cef7c5</b> (15 พ.ย. 2569) · เฉพาะ P0 + P1 · Target: แอป Takra Live (UAT)</div>
+  <div class="meta">
+    <span class="pill">0 เคส + E2E 18 = 18</span>
+    <span class="pill">8 กลุ่ม (A–H)</span>
+    <span class="pill">UI + E2E · manual</span>
+    <span class="pill">P0 10 · P1 8 · P2 0</span>
+    <span class="pill">ประเภท: Happy 7 · Negative 3 · Boundary 1 · Exception 3 · Data 4</span>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="note-box">🖥️ <b>Test target:</b> แอปเดสก์ท็อป <b>Takra Live</b> ช่อง UAT บน Windows ที่มีโค้ด uat @ 65cef7c5 ขึ้นไป · ทดสอบในโปรแกรมเท่านั้น (ไม่พิมพ์ URL บนเบราว์เซอร์)<br>👥 <b>ตัวละคร:</b> <b>เจ้าของ</b> = บัญชี UAT เจ้าของ workspace (เข้าสู่ระบบผ่านหน้า TAKRA Hub ที่เปิดในแอป) · <b>TT-A</b> = บัญชีไลฟ์ TikTok ของ QA ที่เชื่อม TikTok Shop แล้ว · <b>TT-B</b> = บัญชีไลฟ์ TikTok ของ QA ที่ไม่มี TikTok Shop · <b>ผู้ชม</b> = บัญชี TikTok อีกบัญชีบนมือถือ ใช้ดูไลฟ์ คอมเมนต์ และกดซื้อ · <b>ร่าง R1</b> = ร่างไลฟ์ของ TT-A ที่มี 4 ฉาก (ฉาก 1–3 มีสคริปต์ · ฉาก 4 "Flash Sale" มีแค่รูป ไม่มีสคริปต์ และเปิดสวิตช์ "ฉากคั่น — ไม่เล่นในลำดับอัตโนมัติ" ใน Studio) มีสินค้า TikTok Shop ในตะกร้า และเตรียมเสร็จแล้ว (แถวในเมนู "ร่างไลฟ์" มีปุ่ม "เริ่มไลฟ์")<br>🪟 <b>Windows เท่านั้น:</b> อัปเดตในแอป (กลุ่ม F) ทำงานเฉพาะแอปที่ติดตั้งบน Windows — บน Mac การ์ดมีแค่ปุ่ม "ดาวน์โหลด" ไม่มีรีสตาร์ท<br>🔴 <b>ไลฟ์จริง = ทดสอบด้วยมือ:</b> ห้ามใช้ห้องไลฟ์ TikTok เดียวกับรอบทดสอบอื่นพร้อมกัน · ใช้บัญชีของ QA เท่านั้น · หยุดไลฟ์ทุกครั้งหลังจบเคส<br>📨 <b>Telegram:</b> ใช้ bot ทดสอบที่ QA สร้างเองและกลุ่มทดสอบของ QA เท่านั้น ห้ามใช้กลุ่มลูกค้า/กลุ่มทีมจริง<br>🧭 <b>Journey:</b> 1 เคส = ผู้ใช้ทำงานจริง 1 เป้าหมาย เดินครบเส้นทาง · Expected 1 ข้อ = 1 จุดตรวจ (เรียงตามขั้น) — จุดไหนไม่ผ่านให้ลง FAIL และบอกจุดนั้นใน Actual<br>🎫 <b>ใบงาน:</b> <a href="https://kitdi.atlassian.net/browse/TAKRA-1514" target="_blank">TAKRA-1514</a> · <a href="https://kitdi.atlassian.net/browse/TAKRA-1515" target="_blank">TAKRA-1515</a> · <a href="https://kitdi.atlassian.net/browse/TAKRA-1516" target="_blank">TAKRA-1516</a> · <a href="https://kitdi.atlassian.net/browse/TAKRA-1731" target="_blank">TAKRA-1731</a> · <a href="https://kitdi.atlassian.net/browse/TAKRA-1732" target="_blank">TAKRA-1732</a> · <a href="https://kitdi.atlassian.net/browse/TAKRA-598" target="_blank">TAKRA-598</a> · <a href="https://kitdi.atlassian.net/browse/TAKRA-1720" target="_blank">TAKRA-1720</a> · <a href="https://kitdi.atlassian.net/browse/TAKRA-1722" target="_blank">TAKRA-1722</a> · <a href="https://kitdi.atlassian.net/browse/TAKRA-1723" target="_blank">TAKRA-1723</a> · <a href="https://kitdi.atlassian.net/browse/TAKRA-1655" target="_blank">TAKRA-1655</a> · <a href="https://kitdi.atlassian.net/browse/TAKRA-1738" target="_blank">TAKRA-1738</a> · <a href="https://kitdi.atlassian.net/browse/TAKRA-1745" target="_blank">TAKRA-1745</a> · <a href="https://kitdi.atlassian.net/browse/TAKRA-1717" target="_blank">TAKRA-1717</a> · <a href="https://kitdi.atlassian.net/browse/TAKRA-1718" target="_blank">TAKRA-1718</a> · <a href="https://kitdi.atlassian.net/browse/TAKRA-1513" target="_blank">TAKRA-1513</a><br>🚫 <b>ไม่อยู่ในชีตนี้:</b> ลบข้อมูลเก่าตามระยะเก็บข้อมูลของแพ็กเกจ (TAKRA-1731 ข้อ 3 — ต้องมีข้อมูลอายุเกิน 180 วัน ทำบนจอไม่ได้) · ปล่อยอัปเดตทีละสัดส่วน (TAKRA-1738 — เครื่องที่ยังไม่ถึงคิวจะเงียบ ไม่มีอะไรให้เห็นบนจอ)<br>📎 <b>ที่มา:</b> คำบนจอลอกจาก i18n th ของ <code>apps/web/src/i18n/locales/th/*.ts</code> (uat) · Expected ยึด AC ในใบ Jira</div>
+
+  <div class="runsum">
+    <h3>📊 สรุปผล Manual Test</h3>
+    <div class="sumchips">
+      <span class="cnt pass">PASS <b id="sum-pass">0</b></span>
+      <span class="cnt fail">FAIL <b id="sum-fail">0</b></span>
+      <span class="cnt hold">HOLD <b id="sum-hold">0</b></span>
+      <span class="cnt block">BLOCKED <b id="sum-block">0</b></span>
+      <span class="cnt skip">SKIP <b id="sum-skip">0</b></span>
+      <span class="cnt pending">รอเทส <b id="sum-pending">18</b></span>
+    </div>
+    <div class="progress"><div id="sumbar" class="progressbar" style="width:0%"></div></div>
+    <div class="hint" id="sumpct" style="margin-top:5px">0% ทดสอบแล้ว (0/18)</div>
+  </div>
+
+  <div class="toolbar">
+    <button class="btn" onclick="toggleAll(true)">▸ กางทั้งหมด</button>
+    <button class="btn" onclick="toggleAll(false)">▾ ยุบทั้งหมด</button>
+    <span class="hint">💡 คลิกแถว → ดู Steps / Expected (UI only)</span>
+    <span style="margin-left:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+      <span id="save-status" class="hint" style="white-space: nowrap; color: var(--muted);">✓ ตรงกับ GitHub</span>
+      <label class="hint" style="display:flex;gap:4px;align-items:center;white-space:nowrap;cursor:pointer" title="บันทึกขึ้น GitHub อัตโนมัติหลังหยุดแก้ ~5 วินาที"><input type="checkbox" id="chk-autosave" checked=""> auto-save</label>
+      <button class="btn" id="btn-token" title="ใส่/เปลี่ยน GitHub token (ถ้าเซฟไม่ขึ้น/token เสีย กดอันนี้)">🔑 Token</button>
+      <button class="btn" id="btn-refresh" title="ดึงผลล่าสุดจาก GitHub มา merge (ไม่ต้อง reload)">🔄 ดึงล่าสุด</button>
+      <button class="btn primary" id="btn-publish" style="">☁️ บันทึกขึ้น GitHub</button>
+      <button class="btn" id="btn-save-file" title="ดาวน์โหลด HTML ไว้ใช้ offline">💾 ดาวน์โหลด</button>
+      <button class="btn" style="color:var(--fail)" id="btn-reset">🗑 ล้างผล</button>
+    </span>
+  </div>
+
+  <div class="filters">
+    <div class="row"><label>กลุ่ม</label>
+      <button class="fchip" data-f="feat" data-v="m-nov">🆕 ฟีเจอร์ใหม่ พ.ย. (18)</button>
+      <button class="clearbtn" data-clear="feat">✕</button>
+    </div>
+    <div class="row"><label>ประเภท</label>
+      <button class="fchip" data-f="kind" data-v="happy" title="flow ปกติ">Happy Path (7)</button><button class="fchip" data-f="kind" data-v="negative" title="ข้อมูลผิด / action ผิด">Negative (3)</button><button class="fchip" data-f="kind" data-v="boundary" title="ก่อนขอบ · ตรงขอบ · เกินขอบ (เพดานแพ็กเกจ)">Boundary (1)</button><button class="fchip" data-f="kind" data-v="exception" title="ระหว่างไลฟ์ · ระบบภายนอกผิดปกติ">Exception (3)</button><button class="fchip" data-f="kind" data-v="data" title="ไม่มีข้อมูล · ซ้ำ · ตัวเลขตรงกันทุกหน้า">Data (4)</button>
+      <button class="clearbtn" data-clear="kind">✕</button>
+    </div>
+    <div class="row"><label>Priority</label>
+      <button class="fchip" data-f="prio" data-v="P0">P0</button>
+      <button class="fchip" data-f="prio" data-v="P1">P1</button>
+      <button class="fchip" data-f="prio" data-v="P2">P2</button>
+      <button class="clearbtn" data-clear="prio">✕</button>
+    </div>
+    <div class="row"><label>สถานะ</label>
+      <button class="fchip" data-f="status" data-v="pass">✅ PASS</button>
+      <button class="fchip" data-f="status" data-v="fail">❌ FAIL</button>
+      <button class="fchip" data-f="status" data-v="hold">⏸ HOLD</button>
+      <button class="fchip" data-f="status" data-v="block">🚫 BLOCKED</button>
+      <button class="fchip" data-f="status" data-v="skip">⏭ SKIP</button>
+      <button class="fchip" data-f="status" data-v="pending">⏳ รอเทส</button>
+      <button class="clearbtn" data-clear="status">✕</button>
+    </div>
+  </div>
+
+  <div class="tablewrap">
+  <table class="tc" id="main-table">
+    <thead><tr><th style="width:22px"></th><th style="width:130px">TC ID</th><th>Test Case</th><th style="width:74px">Level</th><th style="width:55px">Pri</th><th style="width:80px">Status</th><th style="width:120px">Jira</th></tr></thead>
+    <tbody>
+
+<!-- m-nov -->
+<tr class="epicrow" data-epic="m-nov"><td colspan="7">🆕 ฟีเจอร์ใหม่ พ.ย. 2569 ของ Takra Live — user journey ครบลูป <span class="rp">(18 เคส)</span> <a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1514" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1514 ใน Jira">🧩 Epic TAKRA-1514</a></td></tr>
+<tr class="featrow" data-featkey="nov-a"><td colspan="7">📁 A · สลับฉาก / แทรกฉาก / เปลี่ยนพื้นหลังระหว่างไลฟ์ <span class="rp"> <span class="lv lvl-e2e">🔄 3</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="nov-a"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow" data-feat="m-nov" data-level="e2e" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-NOV-A.1</td>
+  <td class="ctitle">ระหว่างไลฟ์แทรกฉาก Flash Sale แล้วกลับฉากเดิม และสลับไปฉากอื่น → ผู้ชมเห็นตามลำดับ ไม่มีจอดำ <span class="kd kd-happy">Happy Path</span></td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-23601"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-23601"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ระหว่างไลฟ์แทรกฉาก Flash Sale แล้วกลับฉากเดิม และสลับไปฉากอื่น → ผู้ชมเห็นตามลำดับ ไม่มีจอดำ</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1514" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1514 ใน Jira">🧩 Epic TAKRA-1514</a> · Priority: <b>P0</b> · E2E · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · ฟีเจอร์ใหม่ พ.ย. 2569 ของ Takra Live — user journey ครบลูป</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #d97706;background:rgba(217,119,6,.07)">📌 <b>หมายเหตุ:</b> FAIL ถ้าผู้ชมเห็นจอดำ/ภาพค้างตอนสลับ หรืออวาตาร์ถูกตัดกลางประโยคทั้งที่ไม่ได้ติ๊ก "สลับทันที"</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>ร่าง R1 พร้อมไลฟ์ · บัญชี TT-A เข้าสู่ระบบในแอปแล้ว</li><li>ฉาก 3 ของร่าง R1 ตั้งจำนวนรอบไว้ (ไม่วนจนจบไลฟ์)</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป Takra Live (UAT) แล้วเข้าสู่ระบบด้วยบัญชีเจ้าของ ไปที่เมนู "ร่างไลฟ์" กด "เริ่มไลฟ์" ที่แถวร่าง R1 กด "ไปหน้าเริ่มไลฟ์" ในหน้าต่างที่ขึ้น แล้วกด "เริ่มออกอากาศ" รอจนผู้ชมเห็นอวาตาร์บนมือถือ</li><li>เลื่อนลงไปที่การ์ด "สลับฉาก" ในหน้าเริ่มไลฟ์ ชี้เมาส์ที่ปุ่ม "สลับไป" และ "แทรก" อ่านคำอธิบาย</li><li>ระหว่างอยู่ฉาก 1 กด "แทรก" ที่แถวฉาก 4 สังเกตกล่องข้อความใต้หัวการ์ดและจอผู้ชม รอจนฉาก 4 ขึ้นจอ แล้วกด "กลับฉากเดิม"</li><li>กด "สลับไป" ที่แถวฉาก 3 แล้วดูจอผู้ชมจนจบฉาก 3</li><li>กด "หยุดไลฟ์" แล้วกด "บังคับปิดไลฟ์" และยืนยันในหน้าต่าง "บังคับปิดไลฟ์นี้?" (จบรอบจริง) แล้วสังเกตหน้าเริ่มไลฟ์</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>คำอธิบายปุ่ม: "สลับไป" บอกว่าเริ่มสคริปต์แรกของฉากนั้นแล้วเล่นต่อ ไม่กลับฉากเดิม · "แทรก" บอกว่าเล่นฉากนั้น 1 รอบแล้วกลับไปต่อตรงที่ค้างไว้ · มีกล่อง "วิธีใช้" พร้อมตัวอย่างลำดับฉาก</li><li>ฉาก 4 ที่ตั้งเป็นฉากคั่นไม่ขึ้นเองในลำดับอัตโนมัติ (ฉาก 1 → 2 → 3)</li><li>กด "แทรก" แล้วขึ้นกล่อง "จะสลับไป “Flash Sale” เมื่อพูดประโยคนี้จบ" · อวาตาร์พูดประโยคเดิมจนจบก่อน แล้วผู้ชมเห็นฉาก 4 ทันที ไม่มีจอดำ</li><li>ระหว่างฉาก 4 แถวนั้นมีป้าย "แทรกอยู่" และปุ่ม "กลับฉากเดิม" ขึ้นที่หัวการ์ด · ฉาก 4 มีแค่รูป จึงค้างบนจอจนกด "กลับฉากเดิม"</li><li>กด "กลับฉากเดิม" แล้วขึ้น "จะกลับฉากเดิมเมื่อพูดประโยคนี้จบ" แล้วกลับมาฉาก 1 ต่อจากบรรทัดถัดจากที่ค้างไว้ (ไม่เริ่มฉาก 1 ใหม่)</li><li>กด "สลับไป" ฉาก 3 แล้วป้าย "กำลังออกอากาศ" ย้ายไปฉาก 3 · ผู้ชมได้ยินสคริปต์แรกของฉาก 3 · จบฉาก 3 แล้วไม่กลับไปฉาก 1 หรือ 2</li><li>หลังหยุดไลฟ์ การ์ด "สลับฉาก" หายไป</li></ul><div class="hint" style="margin-top:6px">ที่มา: TAKRA-1514 · FR66</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-23601" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-23601" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-23601" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-23601" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-23601" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-23601"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-23601" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-23601">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="m-nov" data-level="e2e" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-NOV-A.2</td>
+  <td class="ctitle">เปลี่ยนพื้นหลังทุกฉากด้วยรูปจากคลังระหว่างไลฟ์ แล้วกลับไปใช้พื้นหลังเดิม → ผู้ชมเห็นทันที ไม่มีขอบเขียว <span class="kd kd-happy">Happy Path</span></td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-23602"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-23602"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">เปลี่ยนพื้นหลังทุกฉากด้วยรูปจากคลังระหว่างไลฟ์ แล้วกลับไปใช้พื้นหลังเดิม → ผู้ชมเห็นทันที ไม่มีขอบเขียว</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1514" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1514 ใน Jira">🧩 Epic TAKRA-1514</a> · Priority: <b>P0</b> · E2E · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · ฟีเจอร์ใหม่ พ.ย. 2569 ของ Takra Live — user journey ครบลูป</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #d97706;background:rgba(217,119,6,.07)">📌 <b>หมายเหตุ:</b> เทียบกับรอบที่ร้านยังไม่มีรูปในคลังสื่อ: หน้าต่างต้องขึ้น "ยังไม่มีรูปภาพในคลังสื่อของร้าน — อัปโหลดรูปในคลังก่อน"</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>คลัง "สื่อประกอบ" ของร้านมีรูป QA-BG-1 (แนวตั้ง 9:16) และวิดีโออย่างน้อย 1 ไฟล์</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป Takra Live (UAT) แล้วเข้าสู่ระบบด้วยบัญชีเจ้าของ ไปที่เมนู "ร่างไลฟ์" กด "เริ่มไลฟ์" ที่แถวร่าง R1 กด "ไปหน้าเริ่มไลฟ์" ในหน้าต่างที่ขึ้น แล้วกด "เริ่มออกอากาศ" รอจนผู้ชมเห็นอวาตาร์บนมือถือ</li><li>ที่การ์ด "สลับฉาก" ส่วน "พื้นหลังทุกฉาก" กด "เลือกภาพพื้นหลัง" อ่านคำอธิบายในหน้าต่าง "เลือกภาพพื้นหลังทุกฉาก" เลือกรูป QA-BG-1 แล้วกด "ใช้ภาพนี้"</li><li>ดูจอผู้ชมจนอวาตาร์ย้ายไปฉากถัดไป แล้วกด "แทรก" ฉาก 4 รอจนขึ้นจอ แล้วกด "กลับฉากเดิม"</li><li>กด "กลับไปใช้พื้นหลังเดิมของฉาก" แล้วดูจอผู้ชม</li><li>กด "หยุดไลฟ์" แล้วกด "บังคับปิดไลฟ์" และยืนยันในหน้าต่าง "บังคับปิดไลฟ์นี้?" (จบรอบจริง)</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>หน้าต่างบอกว่าเลือกได้เฉพาะรูปภาพจากคลังสื่อของร้าน (ไม่รองรับวิดีโอ) · ในรายการไม่มีวิดีโอ · ปุ่ม "ใช้ภาพนี้" กดได้หลังเลือกรูปแล้วเท่านั้น</li><li>กด "ใช้ภาพนี้" แล้วหน้าต่างปิด · ผู้ชมเห็นพื้นหลังเป็น QA-BG-1 ทันที อวาตาร์ไม่มีขอบเขียว ไม่มีจอดำ · การ์ดขึ้นรูปย่อพร้อม "ทุกฉากใช้ภาพนี้อยู่"</li><li>ฉากถัดไปและฉาก 4 ที่แทรกก็ใช้พื้นหลัง QA-BG-1 เหมือนกัน</li><li>กดกลับแล้วผู้ชมเห็นพื้นหลังเดิมของแต่ละฉาก · การ์ดขึ้น "ใช้พื้นหลังเดิมของแต่ละฉากอยู่" และปุ่ม "กลับไปใช้พื้นหลังเดิมของฉาก" กดไม่ได้</li></ul><div class="hint" style="margin-top:6px">ที่มา: TAKRA-1514</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-23602" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-23602" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-23602" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-23602" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-23602" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-23602"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-23602" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-23602">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="m-nov" data-level="e2e" data-prio="P1" data-kind="exception" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-NOV-A.3</td>
+  <td class="ctitle">ติ๊ก "สลับทันที" แล้วสลับฉากกลางประโยค → ตัดเสียงแล้วสลับเลย <span class="kd kd-exc">Exception</span></td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-23603"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-23603"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ติ๊ก "สลับทันที" แล้วสลับฉากกลางประโยค → ตัดเสียงแล้วสลับเลย</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1514" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1514 ใน Jira">🧩 Epic TAKRA-1514</a> · Priority: <b>P1</b> · E2E · ประเภท: <b>Exception</b> <span class="hint">(ระหว่างไลฟ์ · ระบบภายนอกผิดปกติ)</span> · ฟีเจอร์ใหม่ พ.ย. 2569 ของ Takra Live — user journey ครบลูป</div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป Takra Live (UAT) แล้วเข้าสู่ระบบด้วยบัญชีเจ้าของ ไปที่เมนู "ร่างไลฟ์" กด "เริ่มไลฟ์" ที่แถวร่าง R1 กด "ไปหน้าเริ่มไลฟ์" ในหน้าต่างที่ขึ้น แล้วกด "เริ่มออกอากาศ" รอจนผู้ชมเห็นอวาตาร์บนมือถือ</li><li>ที่การ์ด "สลับฉาก" ติ๊ก "สลับทันที (ตัดประโยคที่กำลังพูด)"</li><li>ระหว่างอวาตาร์พูดประโยคยาวกลางฉาก 1 กด "สลับไป" ที่แถวฉาก 2 แล้วฟังเสียงบนมือถือผู้ชม</li><li>กด "สลับไป" อีกครั้งเร็ว ๆ 2 ครั้งติดกันที่แถวฉาก 3 แล้วสังเกตปุ่มในการ์ด</li><li>กด "หยุดไลฟ์" แล้วกด "บังคับปิดไลฟ์" และยืนยันในหน้าต่าง "บังคับปิดไลฟ์นี้?" (จบรอบจริง)</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ไม่ต้องรอประโยคจบ: เสียงประโยคเดิมหยุดทันที แล้วขึ้นฉาก 2 พร้อมสคริปต์แรกของฉาก 2 ภายในไม่กี่วินาที ไม่มีจอดำ</li><li>กดรัวแล้วไม่สลับซ้อน (ปุ่ม "สลับไป" / "แทรก" กดไม่ได้ชั่วขณะระหว่างส่งคำสั่ง) · สุดท้ายอยู่ฉาก 3 ป้าย "กำลังออกอากาศ" ถูกแถว</li><li>ไม่มีแจ้งเตือน "สลับฉากไม่สำเร็จ"</li></ul><div class="hint" style="margin-top:6px">ที่มา: TAKRA-1514 (AC การสลับฉากไม่ตัดกลางประโยค หรือระบุ policy ให้ชัด)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-23603" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-23603" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-23603" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-23603" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-23603" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-23603"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-23603" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-23603">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="featrow" data-featkey="nov-b"><td colspan="7">📁 B · ยอดขาย TikTok Shop ระหว่างไลฟ์และหลังไลฟ์ <span class="rp"> <span class="lv lvl-e2e">🔄 2</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="nov-b"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow" data-feat="m-nov" data-level="e2e" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-NOV-B.1</td>
+  <td class="ctitle">ผู้ชมซื้อสินค้าระหว่างไลฟ์ → การ์ดยอดขายอัปเดต และตัวเลขตรงกันในสรุปไลฟ์กับรายการไลฟ์ของฉัน <span class="kd kd-happy">Happy Path</span></td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-23604"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-23604"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ผู้ชมซื้อสินค้าระหว่างไลฟ์ → การ์ดยอดขายอัปเดต และตัวเลขตรงกันในสรุปไลฟ์กับรายการไลฟ์ของฉัน</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1514" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1514 ใน Jira">🧩 Epic TAKRA-1514</a> · Priority: <b>P0</b> · E2E · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · ฟีเจอร์ใหม่ พ.ย. 2569 ของ Takra Live — user journey ครบลูป</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #d97706;background:rgba(217,119,6,.07)">📌 <b>หมายเหตุ:</b> ยอดในหน้าสรุปอาจสูงกว่าการ์ดตอนกดจบ เพราะระบบดึงยอดต่ออีก 15 นาที ไม่ใช่ FAIL · บรรทัดเทียบไลฟ์ก่อนหน้าใช้รอบล่าสุดที่มียอดใน workspace (ไม่แยกบัญชี) · ยกเลิกคำสั่งซื้อทดสอบหลังจบเคส</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>ร่าง R1 พร้อมไลฟ์ · TT-A ไลฟ์ขายของได้ · สินค้า A และ B ราคาไม่เท่ากัน และปักตะกร้าในไลฟ์แล้ว</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป Takra Live (UAT) แล้วเข้าสู่ระบบด้วยบัญชีเจ้าของ ไปที่เมนู "ร่างไลฟ์" กด "เริ่มไลฟ์" ที่แถวร่าง R1 กด "ไปหน้าเริ่มไลฟ์" ในหน้าต่างที่ขึ้น แล้วกด "เริ่มออกอากาศ" รอจนผู้ชมเห็นอวาตาร์บนมือถือ</li><li>ในหน้าเริ่มไลฟ์ดูการ์ด "ยอดขาย TikTok Shop" ก่อนมีคนซื้อ</li><li>ให้ผู้ชมกดตะกร้าในไลฟ์แล้วซื้อสินค้า A 2 ชิ้น และสินค้า B 1 ชิ้น (ชำระเงินจริงหรือเก็บเงินปลายทาง) รอประมาณ 1–2 นาที แล้วดูการ์ดอีกครั้ง</li><li>กด "หยุดไลฟ์" แล้วกด "บังคับปิดไลฟ์" และยืนยันในหน้าต่าง "บังคับปิดไลฟ์นี้?" (จบรอบจริง) รอ 15 นาที (ระบบดึงยอดต่ออีก 15 นาทีหลังจบ) แล้วไปที่เมนู "ไลฟ์ของฉัน" แท็บ "ที่ผ่านมา" ดูแถวไลฟ์นี้ แล้วกด "ดูสรุป"</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ก่อนมีคนซื้อ: การ์ดขึ้น "กำลังรอยอดจาก TikTok…" หรือยอดเป็นตัวเลขจริง ("—" ถ้ายังไม่รู้ค่า ห้ามเป็น 0 ที่ไม่ได้มาจาก TikTok) และไม่มีข้อความยังไม่เชื่อมร้าน</li><li>หลังซื้อ: "ยอดขาย (GMV)" เพิ่มเท่าราคาที่ผู้ชมจ่าย (รูปแบบ ฿1,234.5) · "ชิ้นที่ขายได้" เพิ่ม 3 · "ออเดอร์" เป็นตัวเลข หรือ "—" พร้อมคำอธิบายว่า TikTok ยังไม่ส่งจำนวนออเดอร์</li><li>"ยอดรายสินค้า" แถวที่ยอดเงินสูงกว่าอยู่บน แต่ละแถวมีจำนวนชิ้นและยอดเงิน · บรรทัด "อัปเดตจาก TikTok ล่าสุด …" เวลาเดินตาม · ไลฟ์ไม่สะดุดระหว่างดึงยอด</li><li>"ไลฟ์ของฉัน" แท็บ "ที่ผ่านมา": แถวไลฟ์นี้แสดง "ยอดขาย (GMV)" และ "ชิ้นที่ขายได้ 3" ตรงกับยอดในหน้าคำสั่งซื้อของ TikTok Seller Center</li><li>หน้าสรุปไลฟ์มีการ์ด "ยอดขาย TikTok Shop" ยอดรวมและยอดรายสินค้าตรงกับแถวใน "ไลฟ์ของฉัน" · ถ้ามีไลฟ์รอบก่อนหน้าใน workspace ที่มียอด จะมีบรรทัด "เทียบกับไลฟ์ก่อนหน้า …" บอกส่วนต่างเป็น +฿ หรือ −฿</li></ul><div class="hint" style="margin-top:6px">ที่มา: TAKRA-1515</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-23604" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-23604" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-23604" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-23604" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-23604" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-23604"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-23604" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-23604">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="m-nov" data-level="e2e" data-prio="P1" data-kind="data" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-NOV-B.2</td>
+  <td class="ctitle">ไลฟ์ด้วยบัญชีที่ไม่มี TikTok Shop → การ์ดบอกให้ไปเชื่อม ไลฟ์ยังทำงานปกติ <span class="kd kd-data">Data</span></td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-23605"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-23605"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ไลฟ์ด้วยบัญชีที่ไม่มี TikTok Shop → การ์ดบอกให้ไปเชื่อม ไลฟ์ยังทำงานปกติ</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1514" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1514 ใน Jira">🧩 Epic TAKRA-1514</a> · Priority: <b>P1</b> · E2E · ประเภท: <b>Data</b> <span class="hint">(ไม่มีข้อมูล · ซ้ำ · ตัวเลขตรงกันทุกหน้า)</span> · ฟีเจอร์ใหม่ พ.ย. 2569 ของ Takra Live — user journey ครบลูป</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #d97706;background:rgba(217,119,6,.07)">📌 <b>หมายเหตุ:</b> อย่ากดลิงก์ในการ์ดระหว่างไลฟ์ — ลิงก์พาออกจากหน้าเริ่มไลฟ์โดยไม่ถาม ซึ่งอาจตัดไลฟ์ (ถ้าลองแล้วไลฟ์ถูกตัด ให้แจ้งเป็นบั๊กแยก)</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>มีร่างไลฟ์ที่ใช้บัญชี TT-B พร้อมไลฟ์</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป Takra Live (UAT) แล้วเข้าสู่ระบบด้วยบัญชีเจ้าของ ไปที่เมนู "ร่างไลฟ์" กด "เริ่มไลฟ์" ที่แถวร่างไลฟ์ของ TT-B กด "ไปหน้าเริ่มไลฟ์" ในหน้าต่างที่ขึ้น แล้วกด "เริ่มออกอากาศ" รอจนผู้ชมเห็นอวาตาร์บนมือถือ</li><li>ในหน้าเริ่มไลฟ์ดูการ์ด "ยอดขาย TikTok Shop" (ยังไม่กดลิงก์) ไลฟ์ไว้ 3 นาที</li><li>กด "หยุดไลฟ์" แล้วกด "บังคับปิดไลฟ์" และยืนยันในหน้าต่าง "บังคับปิดไลฟ์นี้?" (จบรอบจริง) แล้วไปที่เมนู "ไลฟ์ของฉัน" แท็บ "ที่ผ่านมา" ดูแถวไลฟ์นี้ แล้วกด "ดูสรุป"</li><li>ในหน้าสรุปกดลิงก์ในการ์ด "ยอดขาย TikTok Shop" สังเกตหน้าที่เปิด</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>การ์ดขึ้นกล่อง "บัญชี TikTok ที่ใช้ไลฟ์นี้ไม่มี TikTok Shop" (หรือ "ยังไม่เชื่อม TikTok Shop — …") พร้อมลิงก์ "ไปเชื่อม TikTok Shop" · ไม่ขึ้นยอดเป็น 0 · ไลฟ์ออกอากาศปกติตลอด</li><li>แถวใน "ไลฟ์ของฉัน" แสดง "ยอดขาย (GMV)" เป็น "—" และ "ชิ้นที่ขายได้ —" ไม่ใช่ ฿0</li><li>หน้าสรุปไลฟ์มีกล่องเดียวกับระหว่างไลฟ์ พร้อมลิงก์ "ไปเชื่อม TikTok Shop"</li><li>กดลิงก์แล้วไปหน้า "ตั้งค่า" ส่วนเชื่อมบัญชี TikTok</li></ul><div class="hint" style="margin-top:6px">ที่มา: TAKRA-1515 (AC ร้านที่ยังไม่เชื่อมแสดงสถานะ + ปุ่มไปเชื่อม)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-23605" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-23605" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-23605" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-23605" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-23605" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-23605"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-23605" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-23605">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="featrow" data-featkey="nov-c"><td colspan="7">📁 C · แจ้งเตือนสถานะไลฟ์ผ่าน Telegram <span class="rp"> <span class="lv lvl-e2e">🔄 2</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="nov-c"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow" data-feat="m-nov" data-level="e2e" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-NOV-C.1</td>
+  <td class="ctitle">เชื่อม bot ของร้านเข้ากลุ่ม Telegram แล้วไลฟ์ 1 รอบ → ได้ข้อความทดสอบ ไลฟ์เริ่ม จบ และสรุปหลังไลฟ์ อย่างละครั้ง <span class="kd kd-happy">Happy Path</span></td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-23606"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-23606"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">เชื่อม bot ของร้านเข้ากลุ่ม Telegram แล้วไลฟ์ 1 รอบ → ได้ข้อความทดสอบ ไลฟ์เริ่ม จบ และสรุปหลังไลฟ์ อย่างละครั้ง</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1514" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1514 ใน Jira">🧩 Epic TAKRA-1514</a> · Priority: <b>P0</b> · E2E · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · ฟีเจอร์ใหม่ พ.ย. 2569 ของ Takra Live — user journey ครบลูป</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #d97706;background:rgba(217,119,6,.07)">📌 <b>หมายเหตุ:</b> โค้ด uat @ 65cef7c5 ส่งบรรทัด "ยอดขาย: —" เสมอ — ถ้าเจอให้ลง FAIL ข้อสรุปหลังไลฟ์ (สเปกให้ใส่ยอดขายเมื่อเชื่อมร้านแล้ว)</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>บัญชี Telegram ของ QA เป็นแอดมินกลุ่มทดสอบ QA</li><li>ร่าง R1 พร้อมไลฟ์</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>ใน Telegram คุยกับ @BotFather สั่ง /newbot สร้าง bot ทดสอบ คัดลอก token แล้วเพิ่ม bot เข้ากลุ่มทดสอบ QA และพิมพ์ /start ในกลุ่ม 1 ครั้ง</li><li>เปิดแอป Takra Live (UAT) แล้วเข้าสู่ระบบด้วยบัญชีเจ้าของ กดรูปโปรไฟล์มุมขวาบน → "การตั้งค่า" แล้วที่กลุ่ม "พื้นที่ทำงาน" กด "Telegram" วาง token ในช่อง "Bot token" กดไอคอนตาดู token แล้วกด "ตรวจ token และค้นหาแชท"</li><li>เลือกกลุ่มทดสอบในรายการ "เลือกแชทที่ @… จะส่งแจ้งเตือนไป" ดูรายการ "เหตุการณ์ที่จะแจ้ง" แล้วกด "บันทึกการเชื่อมต่อ" และกด "ส่งข้อความทดสอบ"</li><li>ออกจากหน้าแล้วกลับเข้า "การตั้งค่า" ส่วน "Telegram" อีกครั้ง สังเกตข้อมูลที่แสดง</li><li>ไปที่เมนู "ร่างไลฟ์" เริ่มไลฟ์ร่าง R1 จนออกอากาศ ไลฟ์ไว้ 3 นาทีแล้ว กด "หยุดไลฟ์" แล้วกด "บังคับปิดไลฟ์" และยืนยันในหน้าต่าง "บังคับปิดไลฟ์นี้?" (จบรอบจริง) แล้วดูข้อความในกลุ่ม Telegram</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ช่อง "Bot token" ซ่อนตัวอักษรไว้ กดไอคอนตาแล้วเห็น · พบกลุ่มทดสอบในรายการพร้อมชนิด "กลุ่ม"</li><li>"เหตุการณ์ที่จะแจ้ง" มี 5 ข้อ ติ๊กไว้ทั้งหมด: ไลฟ์เริ่ม/จบ · ไลฟ์หลุด · เช็คความพร้อมไม่ผ่าน · credit/quota ใกล้หมด · สรุปหลังไลฟ์</li><li>กดบันทึกแล้วกลุ่มได้ "🔗 เชื่อมต่อ TAKRA กับแชทนี้แล้ว ✅ …" · กดส่งข้อความทดสอบแล้วจอขึ้น "ส่งข้อความทดสอบแล้ว — ดูในแชท Telegram" และกลุ่มได้ "🧪 ข้อความทดสอบจาก TAKRA …" ภายในไม่กี่วินาที</li><li>กลับเข้าหน้าแล้วเห็น Bot @ชื่อ bot · Token เป็น •••• ตามด้วย 4 ตัวท้ายเท่านั้น (ไม่เห็น token เต็ม) · แชทเป็นชื่อกลุ่มทดสอบ</li><li>ไลฟ์เริ่ม: ได้ "🟢 ไลฟ์ "&lt;ชื่อไลฟ์&gt;" เริ่มแล้ว (โดย …)" พร้อมลิงก์ดูไลฟ์ 1 ข้อความ · หยุดไลฟ์: ได้ "⏹️ ไลฟ์ "&lt;ชื่อไลฟ์&gt;" จบแล้ว (…)" 1 ข้อความ</li><li>สรุปหลังไลฟ์: ได้ "📊 สรุปไลฟ์ …" มีเวลา คนดูสูงสุดพร้อมกัน คนดูทั้งหมด คอมเมนต์ จำนวนที่ AI ตอบ ยอดขาย (เพราะ TT-A เชื่อมร้านแล้ว) และลิงก์ดูสรุปฉบับเต็ม · ตัวเลขตรงกับหน้าสรุปไลฟ์ ค่าที่ไม่ได้วัดเป็น "—"</li><li>ไม่มีข้อความซ้ำ — เหตุการณ์ละ 1 ข้อความ</li></ul><div class="hint" style="margin-top:6px">ที่มา: TAKRA-1516</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-23606" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-23606" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-23606" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-23606" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-23606" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-23606"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-23606" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-23606">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="m-nov" data-level="e2e" data-prio="P1" data-kind="negative" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-NOV-C.2</td>
+  <td class="ctitle">ใส่ token ผิด / ลืม /start แล้วแก้ตามที่แอปบอก → เชื่อมได้ · ยกเลิกการเชื่อมแล้วไม่ได้ข้อความอีก <span class="kd kd-neg">Negative</span></td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-23607"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-23607"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ใส่ token ผิด / ลืม /start แล้วแก้ตามที่แอปบอก → เชื่อมได้ · ยกเลิกการเชื่อมแล้วไม่ได้ข้อความอีก</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1514" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1514 ใน Jira">🧩 Epic TAKRA-1514</a> · Priority: <b>P1</b> · E2E · ประเภท: <b>Negative</b> <span class="hint">(ข้อมูลผิด / action ผิด)</span> · ฟีเจอร์ใหม่ พ.ย. 2569 ของ Takra Live — user journey ครบลูป</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #d97706;background:rgba(217,119,6,.07)">📌 <b>หมายเหตุ:</b> ลบ bot ทดสอบทั้ง 2 ตัวใน @BotFather หลังจบเคส</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>workspace ยังไม่ได้เชื่อม Telegram (ถ้าทำ C.1 แล้ว ให้กด "ยกเลิกการเชื่อมต่อ" ก่อน)</li></ul></div>
+  <div class="sec"><h4>Test Data</h4><ul><li>bot ทดสอบตัวที่ 2 ที่สร้างจาก @BotFather แต่ยังไม่เพิ่มเข้ากลุ่มใด</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป Takra Live (UAT) แล้วเข้าสู่ระบบด้วยบัญชีเจ้าของ กดรูปโปรไฟล์มุมขวาบน → "การตั้งค่า" แล้วที่กลุ่ม "พื้นที่ทำงาน" กด "Telegram" วาง token ที่ลบตัวท้ายออก 3 ตัว แล้วกด "ตรวจ token และค้นหาแชท"</li><li>วาง token ที่ถูกต้องของ bot ใหม่ที่ยังไม่ได้เพิ่มเข้ากลุ่มใด แล้วกด "ตรวจ token และค้นหาแชท" อ่านข้อความ</li><li>ใน Telegram เพิ่ม bot เข้ากลุ่มทดสอบแล้วพิมพ์ /start ในกลุ่ม กลับมากด "ค้นหาแชทอีกครั้ง" เลือกกลุ่ม เอาติ๊ก "ไลฟ์เริ่ม / จบ" ออก แล้วกด "บันทึกการเชื่อมต่อ"</li><li>เริ่มไลฟ์ร่าง R1 ไลฟ์ไว้ 1 นาทีแล้วหยุดไลฟ์ ดูกลุ่ม Telegram</li><li>กลับไป "การตั้งค่า" ส่วน "Telegram" กด "ยกเลิกการเชื่อมต่อ" อ่านหน้าต่างแล้วกด "ยกเลิกการเชื่อม" จากนั้นเริ่มไลฟ์และหยุดไลฟ์อีก 1 รอบ แล้วดูกลุ่ม</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>token ผิด: ขึ้น "bot token นี้ใช้ไม่ได้ — คัดลอก token จาก @BotFather ใหม่อีกครั้ง" · ยังไม่เชื่อม</li><li>ยังไม่ /start: ขึ้น "ยังไม่เจอแชทไหนเลย — เพิ่ม @… เข้ากลุ่ม … แล้วพิมพ์ /start …" ชื่อ bot ถูกต้อง</li><li>หลัง /start กด "ค้นหาแชทอีกครั้ง" แล้วเจอกลุ่ม · บันทึกสำเร็จ</li><li>ไลฟ์รอบนี้ไม่ได้ข้อความไลฟ์เริ่ม/จบ (เอาติ๊กออกแล้ว) แต่ยังได้ "📊 สรุปไลฟ์ …" · ไลฟ์ไม่สะดุด</li><li>หน้าต่างขึ้น "ยกเลิกการเชื่อมต่อ Telegram?" พร้อมปุ่ม "ยกเลิกการเชื่อม" / "ไม่ใช่ตอนนี้" · หลังยกเลิก ส่วน Telegram กลับเป็นช่องใส่ token และไลฟ์รอบหลังไม่มีข้อความเข้ากลุ่มเลย</li></ul><div class="hint" style="margin-top:6px">ที่มา: TAKRA-1516</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-23607" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-23607" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-23607" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-23607" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-23607" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-23607"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-23607" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-23607">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="featrow" data-featkey="nov-d"><td colspan="7">📁 D · หน้าการใช้งาน + เพดานแพ็กเกจจาก Hub <span class="rp"> <span class="lv lvl-e2e">🔄 3</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="nov-d"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow" data-feat="m-nov" data-level="e2e" data-prio="P0" data-kind="data" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-NOV-D.1</td>
+  <td class="ctitle">ดูการใช้งานจากเมนูล่างซ้าย ตั้งค่า และแดชบอร์ด → แสดงอวาตาร์ ผู้ใช้ พื้นที่ cloud เทียบเพดานแพ็กเกจ ตัวเลขตรงกันทุกที่ <span class="kd kd-data">Data</span></td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-23608"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-23608"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ดูการใช้งานจากเมนูล่างซ้าย ตั้งค่า และแดชบอร์ด → แสดงอวาตาร์ ผู้ใช้ พื้นที่ cloud เทียบเพดานแพ็กเกจ ตัวเลขตรงกันทุกที่</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1514" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1514 ใน Jira">🧩 Epic TAKRA-1514</a> · Priority: <b>P0</b> · E2E · ประเภท: <b>Data</b> <span class="hint">(ไม่มีข้อมูล · ซ้ำ · ตัวเลขตรงกันทุกหน้า)</span> · ฟีเจอร์ใหม่ พ.ย. 2569 ของ Takra Live — user journey ครบลูป</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #d97706;background:rgba(217,119,6,.07)">📌 <b>หมายเหตุ:</b> ทดสอบเพิ่มที่หน้าต่างแอปขนาดเล็ก (1366×768) — หน้าต่าง "การใช้งาน" และกระดิ่งต้องไม่ล้นจอ</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>workspace มีแพ็กเกจ TAKRA AI ที่ใช้งานได้ใน Hub · มีอวาตาร์ของร้านอย่างน้อย 1 ตัว และไฟล์ในคลังสื่ออย่างน้อย 1 ไฟล์</li><li>บัญชีเจ้าของไม่ใช่แอดมินแพลตฟอร์ม (ไม่งั้นจะเห็นปุ่มทดสอบ "รีเซ็ตเครดิต AI ร่างสคริปต์ (QA)" เพิ่ม)</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป Takra Live (UAT) แล้วเข้าสู่ระบบด้วยบัญชีเจ้าของ ไปที่เมนู "แดชบอร์ด" ดูการ์ด "การใช้งานแพ็กเกจ"</li><li>ขยายแถบเมนูซ้าย (ถ้าย่ออยู่) แล้วกดปุ่ม "การใช้งาน" ที่มุมล่างซ้าย ดูหน้าต่างที่เปิด แล้วปิด · กดกระดิ่งที่แถบบน ดูหน้าต่าง "ศูนย์การแจ้งเตือน" แล้วปิด</li><li>กดรูปโปรไฟล์มุมขวาบน → "การตั้งค่า" แล้วที่กลุ่ม "พื้นที่ทำงาน" กด "แพ็กเกจและการใช้งาน" ดูการ์ดแพ็กเกจและส่วน "การใช้งาน"</li><li>เปิด TAKRA Hub (UAT) ด้วยบัญชีเจ้าของ ดูแพ็กเกจ TAKRA AI ของ workspace แล้วเทียบเพดานกับในแอป</li><li>ในแอปกด "จัดการแพ็กเกจที่ Takra Hub" แล้วสังเกตหน้าที่เปิด</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ทั้ง 3 ที่มี 3 แถวเรียงกัน: "อวาตาร์ที่มี" (ตัว) · "ผู้ใช้" (คน) · "พื้นที่ cloud" (GB หรือ MB) แบบ "ใช้ / เพดาน" เช่น "2 / 3 ตัว" · ไม่มีชั่วโมงอวาตาร์ เครดิต AI หรือคอมเมนต์ที่ดึงมา และไม่มีบรรทัด "รีเซ็ต &lt;วันที่&gt;"</li><li>ตัวเลขในการ์ดแดชบอร์ด หน้าต่าง "การใช้งาน" และหน้าตั้งค่า ตรงกันทุกแถว · ปุ่มล่างซ้ายแสดง % ของแถวที่ใช้มากที่สุด</li><li>หน้าต่าง "การใช้งาน" เปิดทางขวาของแถบเมนูชิดล่าง และหน้าต่าง "ศูนย์การแจ้งเตือน" เปิดใต้กระดิ่ง — ทั้งสองอยู่ในจอทั้งหมด ไม่ล้นขอบ</li><li>การ์ดแพ็กเกจในตั้งค่ามี "อวาตาร์" (ตัว) · "ไลฟ์พร้อมกัน" (ห้อง) · "ที่นั่งทีม" (คน) ไม่มีชั่วโมงอวาตาร์ · เพดานทุกตัวและเพดานพื้นที่ในแถว "พื้นที่ cloud" เท่ากับแพ็กเกจใน Hub (Basic 3 อวาตาร์ · 1 ไลฟ์ · 25 GB / Standard 8 · 3 · 100 GB / Pro 20 · 9 · 300 GB) · ค่าไม่จำกัดขึ้น "ไม่จำกัด" ในการ์ดแพ็กเกจและการ์ดแดชบอร์ด และขึ้น "∞" ในแถวการใช้งาน</li><li>ลิงก์เปิดหน้าบริการของ TAKRA Hub</li></ul><div class="hint" style="margin-top:6px">ที่มา: TAKRA-1731 · TAKRA-598 · ปรับหน้าการใช้งาน (commit f32a1eb6 · 2147ad89)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-23608" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-23608" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-23608" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-23608" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-23608" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-23608"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-23608" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-23608">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="m-nov" data-level="e2e" data-prio="P0" data-kind="data" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-NOV-D.2</td>
+  <td class="ctitle">อัปโหลดแล้วลบไฟล์ในคลังสื่อ → ตัวเลขพื้นที่ cloud เพิ่ม/ลดตามขนาดไฟล์จริง <span class="kd kd-data">Data</span></td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-23609"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-23609"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">อัปโหลดแล้วลบไฟล์ในคลังสื่อ → ตัวเลขพื้นที่ cloud เพิ่ม/ลดตามขนาดไฟล์จริง</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1514" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1514 ใน Jira">🧩 Epic TAKRA-1514</a> · Priority: <b>P0</b> · E2E · ประเภท: <b>Data</b> <span class="hint">(ไม่มีข้อมูล · ซ้ำ · ตัวเลขตรงกันทุกหน้า)</span> · ฟีเจอร์ใหม่ พ.ย. 2569 ของ Takra Live — user journey ครบลูป</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #d97706;background:rgba(217,119,6,.07)">📌 <b>หมายเหตุ:</b> หน้าต่าง "การใช้งาน" มุมล่างซ้ายอ่านตัวเลขครั้งเดียวตอนเปิดแอป — ถ้าไม่อัปเดตจนกว่าจะเปิดแอปใหม่ ให้บันทึกเป็นข้อสังเกต ไม่ใช่ FAIL ของเคสนี้</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>"พื้นที่ cloud" ของ workspace ใช้ไปไม่เกินประมาณ 900 MB (ตัวเลขยังแสดงเป็น MB จึงเห็นการเปลี่ยน 50 MB ชัด)</li></ul></div>
+  <div class="sec"><h4>Test Data</h4><ul><li>วิดีโอ QA-SIZE-50MB.mp4 ขนาด 50 MB (ดูขนาดใน Windows Explorer ก่อน)</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป Takra Live (UAT) แล้วเข้าสู่ระบบด้วยบัญชีเจ้าของ ไปที่เมนู "แดชบอร์ด" จดตัวเลข "พื้นที่ cloud" ในการ์ด "การใช้งานแพ็กเกจ"</li><li>ไปที่เมนู "คลัง" แท็บ "สื่อประกอบ" อัปโหลดวิดีโอ QA-SIZE-50MB</li><li>กลับไปเมนู "แดชบอร์ด" จดตัวเลข "พื้นที่ cloud" แล้วปิดเปิดแอปใหม่ กดปุ่ม "การใช้งาน" ที่มุมล่างซ้าย ดูตัวเลข</li><li>กลับไปแท็บ "สื่อประกอบ" ลบวิดีโอ QA-SIZE-50MB แล้วดูตัวเลขที่ "แดชบอร์ด" อีกครั้ง</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>หลังอัปโหลด "พื้นที่ cloud" เพิ่มประมาณ 50 MB (ต่างไม่เกิน 1 MB) · ต่ำกว่า 1 GB แสดงเป็น MB</li><li>หลังลบ ตัวเลขกลับมาเท่าก่อนอัปโหลด</li><li>หลังเปิดแอปใหม่ หน้าต่าง "การใช้งาน" แสดงตัวเลขเดียวกับแดชบอร์ด</li></ul><div class="hint" style="margin-top:6px">ที่มา: TAKRA-598 (ตัวเลขพื้นที่ตรงกับไฟล์จริง)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-23609" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-23609" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-23609" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-23609" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-23609" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-23609"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-23609" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-23609">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="m-nov" data-level="e2e" data-prio="P1" data-kind="boundary" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-NOV-D.3</td>
+  <td class="ctitle">ชนเพดานแพ็กเกจ: อวาตาร์ครบ → สร้างเพิ่มไม่ได้ · ไลฟ์พร้อมกันครบ → เริ่มรอบใหม่ไม่ได้ · เสียงโคลนเพิ่มได้ไม่จำกัด <span class="kd kd-bnd">Boundary</span></td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-23610"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-23610"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ชนเพดานแพ็กเกจ: อวาตาร์ครบ → สร้างเพิ่มไม่ได้ · ไลฟ์พร้อมกันครบ → เริ่มรอบใหม่ไม่ได้ · เสียงโคลนเพิ่มได้ไม่จำกัด</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1514" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1514 ใน Jira">🧩 Epic TAKRA-1514</a> · Priority: <b>P1</b> · E2E · ประเภท: <b>Boundary</b> <span class="hint">(ก่อนขอบ · ตรงขอบ · เกินขอบ (เพดานแพ็กเกจ))</span> · ฟีเจอร์ใหม่ พ.ย. 2569 ของ Takra Live — user journey ครบลูป</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #d97706;background:rgba(217,119,6,.07)">📌 <b>หมายเหตุ:</b> ถ้า workspace ทดสอบไม่ใช่ Basic ให้ใช้เพดานตามแพ็กเกจจริงใน Hub · ลบเสียงที่ 4 หลังจบเคส</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>workspace ใช้แพ็กเกจ Basic (อวาตาร์ 3 · ไลฟ์พร้อมกัน 1) และมีอวาตาร์ของร้านครบ 3 ตัว (นับตัวที่สร้างไม่สำเร็จด้วย)</li><li>มีเสียงของร้าน 3 เสียง · ร่าง R1 และร่างของ TT-B พร้อมไลฟ์</li></ul></div>
+  <div class="sec"><h4>Test Data</h4><ul><li>ไฟล์เสียงพูดภาษาไทยของ QA ยาว 30 วินาที</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป Takra Live (UAT) แล้วเข้าสู่ระบบด้วยบัญชีเจ้าของ ไปที่เมนู "คลัง" แท็บ "โฮสไลฟ์" ดูตัวนับข้าง "อวาตาร์ของร้าน" และปุ่ม "สร้างอวาตาร์จากวิดีโอ"</li><li>ที่ส่วน "เสียงของฉัน" กด "อัปโหลดเสียง" แล้วอัปโหลดไฟล์เสียงจนมีเสียงของร้าน 4 เสียง</li><li>ไปที่เมนู "ร่างไลฟ์" เริ่มไลฟ์ร่าง R1 จนออกอากาศ แล้วเปิดเมนู "ร่างไลฟ์" อีกครั้ง กด "เริ่มไลฟ์" ที่แถวร่างของ TT-B → "ไปหน้าเริ่มไลฟ์" → "เริ่มออกอากาศ" โดยไม่หยุดรอบแรก</li><li>กดรูปโปรไฟล์มุมขวาบน → "การตั้งค่า" แล้วที่กลุ่ม "พื้นที่ทำงาน" กด "แพ็กเกจและการใช้งาน" ดูส่วน "การใช้งาน" แล้วกลับไปปิดไลฟ์รอบแรก (กด "หยุดไลฟ์" แล้วกด "บังคับปิดไลฟ์" และยืนยันในหน้าต่าง "บังคับปิดไลฟ์นี้?" (จบรอบจริง))</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>อวาตาร์: ตัวนับขึ้น "3/3" · ปุ่ม "สร้างอวาตาร์จากวิดีโอ" กดไม่ได้ และมีกล่องเหลือง "ครบ 3 ตัวแล้ว — ลบตัวเดิมก่อนจึงจะสร้างใหม่ได้" (เลขตรงกับแพ็กเกจใน Hub ไม่ใช่ 5 แบบเดิม)</li><li>เสียงที่ 4 อัปโหลดสำเร็จ ขึ้น "อัปโหลดเสียงแล้ว" · หัว "เสียงของฉัน" แสดงจำนวนอย่างเดียว ไม่มี "/3" ปุ่ม "อัปโหลดเสียง" ยังกดได้ และไม่มีข้อความเสียงครบ</li><li>ไลฟ์รอบที่ 2: หน้าเริ่มไลฟ์ขึ้นหัวข้อ "เพดานไลฟ์พร้อมกันเต็มแล้ว" และ "มีไลฟ์ทำงานครบจำนวนสูงสุดแล้ว (สูงสุด 1 ไลฟ์ต่อทีม) — หยุดไลฟ์ที่กำลังทำงานอยู่ก่อน แล้วค่อยเริ่มใหม่" · รอบแรกยังออกอากาศปกติ</li><li>"อวาตาร์ที่มี" เต็ม 100%: มีกล่องแดง "อวาตาร์ที่มี เต็มตามแพ็กเกจแล้ว — อัปเกรดแพ็กเกจเพื่อเพิ่ม" และแถบสีแดง</li></ul><div class="hint" style="margin-top:6px">ที่มา: TAKRA-1731 · TAKRA-1732</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-23610" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-23610" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-23610" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-23610" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-23610" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-23610"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-23610" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-23610">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="featrow" data-featkey="nov-e"><td colspan="7">📁 E · ส่งข้อความให้อวาตาร์พูด + สถานะยังไม่อ่าน / กำลังอ่าน / อ่านแล้ว <span class="rp"> <span class="lv lvl-e2e">🔄 2</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="nov-e"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow" data-feat="m-nov" data-level="e2e" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-NOV-E.1</td>
+  <td class="ctitle">ปิด AI ตอบคอมเมนต์แล้วพิมพ์ข้อความให้อวาตาร์พูด → ขึ้นในคอมเมนต์สด สถานะเปลี่ยนตามที่ได้ยินจริง <span class="kd kd-happy">Happy Path</span></td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-23611"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-23611"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ปิด AI ตอบคอมเมนต์แล้วพิมพ์ข้อความให้อวาตาร์พูด → ขึ้นในคอมเมนต์สด สถานะเปลี่ยนตามที่ได้ยินจริง</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1514" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1514 ใน Jira">🧩 Epic TAKRA-1514</a> · Priority: <b>P0</b> · E2E · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · ฟีเจอร์ใหม่ พ.ย. 2569 ของ Takra Live — user journey ครบลูป</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #d97706;background:rgba(217,119,6,.07)">📌 <b>หมายเหตุ:</b> FAIL ถ้าสถานะเป็น "กำลังอ่าน" หรือ "อ่านแล้ว" ก่อนที่จะได้ยินอวาตาร์พูดข้อความนี้</div></div>
+  <div class="sec"><h4>Test Data</h4><ul><li>ข้อความ: "ขอบคุณทุกคนที่เข้ามาดูนะคะ วันนี้มีโปรพิเศษถึงสองทุ่ม"</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป Takra Live (UAT) แล้วเข้าสู่ระบบด้วยบัญชีเจ้าของ ไปที่เมนู "ร่างไลฟ์" กด "เริ่มไลฟ์" ที่แถวร่าง R1 กด "ไปหน้าเริ่มไลฟ์" ในหน้าต่างที่ขึ้น แล้วกด "เริ่มออกอากาศ" รอจนผู้ชมเห็นอวาตาร์บนมือถือ</li><li>ที่หน้าเริ่มไลฟ์ ปิดสวิตช์ "ให้ AI ตอบคอมเมนต์ในรอบนี้" แล้วเลื่อนไปการ์ด "ส่งข้อความให้อวาตาร์พูด"</li><li>พิมพ์ข้อความทดสอบในช่อง "พิมพ์สิ่งที่อยากให้อวาตาร์พูด" แล้วกด "ส่งให้อวาตาร์พูด"</li><li>ดูการ์ด "คอมเมนต์สด" พร้อมฟังเสียงบนมือถือผู้ชม จนอวาตาร์พูดข้อความนี้จบ</li><li>กด "หยุดไลฟ์" แล้วกด "บังคับปิดไลฟ์" และยืนยันในหน้าต่าง "บังคับปิดไลฟ์นี้?" (จบรอบจริง)</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ปิดสวิตช์แล้วขึ้น "ปิดการตอบคอมเมนต์แล้ว" · การ์ดยังมีช่องพิมพ์และปุ่มส่ง (ไม่มีรายการ "คอมเมนต์ที่รอแอดมินตอบ") · ปุ่ม "ส่งให้อวาตาร์พูด" กดไม่ได้ตอนช่องว่าง</li><li>กดส่งแล้วขึ้น "ส่งให้อวาตาร์แล้ว — จะพูดหลังจบประโยคที่กำลังพูด" และช่องพิมพ์ว่าง</li><li>"คอมเมนต์สด" มีแถวข้อความนี้พร้อม "แอดมินให้อวาตาร์พูด · …" ไม่นับเป็นคอมเมนต์ผู้ชม · สถานะเริ่มที่ "อวาตาร์ยังไม่อ่าน"</li><li>อวาตาร์เริ่มพูดข้อความนี้ (หลังจบประโยคเดิม) แล้วสถานะเปลี่ยนเป็น "อวาตาร์กำลังอ่าน" ตอนที่ได้ยินเสียง ไม่ใช่ตอนกดส่ง</li><li>พูดจบแล้วเปลี่ยนเป็น "อวาตาร์อ่านแล้ว" (เครื่องหมายถูกสีเขียว) · ผู้ชมไม่เห็นข้อความนี้เป็นคอมเมนต์ใน TikTok</li></ul><div class="hint" style="margin-top:6px">ที่มา: TAKRA-1720 · TAKRA-1722 · TAKRA-1723</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-23611" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-23611" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-23611" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-23611" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-23611" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-23611"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-23611" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-23611">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="m-nov" data-level="e2e" data-prio="P1" data-kind="negative" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-NOV-E.2</td>
+  <td class="ctitle">เปิด AI ตอบแล้วตอบคอมเมนต์ที่รอแอดมินตอบ + ข้อความผิดกฎ → สถานะแยกกันถูกต้อง ข้อความผิดกฎถูกปฏิเสธ <span class="kd kd-neg">Negative</span></td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-23612"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-23612"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">เปิด AI ตอบแล้วตอบคอมเมนต์ที่รอแอดมินตอบ + ข้อความผิดกฎ → สถานะแยกกันถูกต้อง ข้อความผิดกฎถูกปฏิเสธ</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1514" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1514 ใน Jira">🧩 Epic TAKRA-1514</a> · Priority: <b>P1</b> · E2E · ประเภท: <b>Negative</b> <span class="hint">(ข้อมูลผิด / action ผิด)</span> · ฟีเจอร์ใหม่ พ.ย. 2569 ของ Takra Live — user journey ครบลูป</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #d97706;background:rgba(217,119,6,.07)">📌 <b>หมายเหตุ:</b> ถ้า AI ตอบคำถามต่างประเทศได้ ให้ลองคำถามอื่นที่ไม่มีในข้อมูลสินค้าจนมีคอมเมนต์ขึ้นในรายการรอตอบ · ประโยคที่ผิดกฎการขายจะขึ้น "ผิดกฎการขาย: …" แทน — ใช้คำต้องห้ามล้วน ๆ · คอมเมนต์ที่ AI ไม่ได้ตอบ (ถูกบล็อก/ปิด AI ตอบ) ต้องไม่มีเครื่องหมายสถานะ</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>คลัง "คำเสี่ยง" มีคำต้องห้ามระดับบล็อกอย่างน้อย 1 คำ</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป Takra Live (UAT) แล้วเข้าสู่ระบบด้วยบัญชีเจ้าของ ไปที่เมนู "ร่างไลฟ์" กด "เริ่มไลฟ์" ที่แถวร่าง R1 กด "ไปหน้าเริ่มไลฟ์" ในหน้าต่างที่ขึ้น แล้วกด "เริ่มออกอากาศ" รอจนผู้ชมเห็นอวาตาร์บนมือถือ</li><li>เปิดสวิตช์ "ให้ AI ตอบคอมเมนต์ในรอบนี้" ให้ผู้ชมคอมเมนต์ "ราคาเท่าไหร่คะ" และคำถามที่ไม่มีในข้อมูลสินค้า เช่น "ส่งไปต่างประเทศได้ไหม"</li><li>ดูคำตอบ AI ใน "คอมเมนต์สด" แล้วที่การ์ด "ส่งข้อความให้อวาตาร์พูด" กดเลือกคอมเมนต์ในรายการ "คอมเมนต์ที่รอแอดมินตอบ" พิมพ์คำตอบแล้วกด "ส่งให้อวาตาร์พูด"</li><li>พิมพ์ประโยคธรรมดาที่มีคำต้องห้ามจากคลัง "คำเสี่ยง" (ไม่มีคำอวดอ้างการขาย) แล้วกด "ส่งให้อวาตาร์พูด"</li><li>กด "หยุดไลฟ์" แล้วกด "บังคับปิดไลฟ์" และยืนยันในหน้าต่าง "บังคับปิดไลฟ์นี้?" (จบรอบจริง)</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>คำตอบ AI ใต้คอมเมนต์มี "สคริปต์ที่ AI พูด (อ่านอย่างเดียว)" และสถานะ "อวาตาร์ยังไม่อ่าน" → "อวาตาร์กำลังอ่าน" → "อวาตาร์อ่านแล้ว" ตามเสียงจริง</li><li>คอมเมนต์ที่ AI ตอบไม่ได้ขึ้นในรายการ "คอมเมนต์ที่รอแอดมินตอบ" พร้อมตัวนับ · กดแล้วแถวถูกเลือก</li><li>ส่งแล้วใต้คอมเมนต์ขึ้น "แอดมินส่งคำตอบใหม่แล้ว · รออวาตาร์พูด" → เมื่อระบบรับคำตอบเปลี่ยนเป็น "แอดมินตอบใหม่แล้ว (อวาตาร์พูดแทน)" · คำตอบนี้มีสถานะของตัวเอง แยกจากคำตอบ AI และเป็น "อวาตาร์อ่านแล้ว" เมื่อได้ยินอวาตาร์พูดจบเท่านั้น · คอมเมนต์นี้หายจากรายการรอตอบ</li><li>ข้อความที่มีคำต้องห้ามขึ้นกล่องแดง "มีคำต้องห้าม: …" อวาตาร์ไม่พูด และไม่ขึ้นแถวใหม่ใน "คอมเมนต์สด"</li></ul><div class="hint" style="margin-top:6px">ที่มา: TAKRA-1720 · TAKRA-1722 · TAKRA-1723</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-23612" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-23612" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-23612" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-23612" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-23612" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-23612"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-23612" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-23612">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="featrow" data-featkey="nov-f"><td colspan="7">📁 F · อัปเดตแอป Takra Live โดยไม่รบกวนไลฟ์ <span class="rp"> <span class="lv lvl-e2e">🔄 2</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="nov-f"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow" data-feat="m-nov" data-level="e2e" data-prio="P0" data-kind="exception" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-NOV-F.1</td>
+  <td class="ctitle">มีเวอร์ชันใหม่ค้างอยู่ตอนกำลังไลฟ์ → แอปไม่รีสตาร์ทกลางไลฟ์ เตือนเมื่อไลฟ์จบ แล้วอัปเดตสำเร็จ <span class="kd kd-exc">Exception</span></td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-23613"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-23613"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">มีเวอร์ชันใหม่ค้างอยู่ตอนกำลังไลฟ์ → แอปไม่รีสตาร์ทกลางไลฟ์ เตือนเมื่อไลฟ์จบ แล้วอัปเดตสำเร็จ</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1514" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1514 ใน Jira">🧩 Epic TAKRA-1514</a> · Priority: <b>P0</b> · E2E · ประเภท: <b>Exception</b> <span class="hint">(ระหว่างไลฟ์ · ระบบภายนอกผิดปกติ)</span> · ฟีเจอร์ใหม่ พ.ย. 2569 ของ Takra Live — user journey ครบลูป</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #d97706;background:rgba(217,119,6,.07)">📌 <b>หมายเหตุ:</b> หน้าต่าง "มีอะไรใหม่" ไม่ผูกกับการอัปเดต — ขึ้นที่ "แดชบอร์ด" เมื่อบัญชีมีรายการที่ยังไม่เห็น · ปล่อยแบบทีละสัดส่วน (TAKRA-1738) อาจทำให้เครื่องนี้ยังไม่ได้รับรุ่นใหม่ — ถ้ารอ 30 นาทียังไม่มีการ์ด ให้ dev ยืนยันว่าเปิดให้ 100% แล้ว</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เครื่อง Windows ติดตั้งแอป Takra Live (UAT) รุ่นเก่ากว่ารุ่นล่าสุดบนช่อง UAT 1 รุ่น (นัด dev ปล่อยรุ่นใหม่บนช่อง UAT ก่อนเริ่ม)</li><li>ร่าง R1 พร้อมไลฟ์</li><li>บัญชีเจ้าของยังไม่เคยกด "รับทราบ" รายการ "มีอะไรใหม่" ล่าสุด (ถ้าเคยกดแล้ว ข้ามข้อ "มีอะไรใหม่")</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป Takra Live (UAT) แล้วเข้าสู่ระบบด้วยบัญชีเจ้าของ แล้วรอจนการ์ด "มีเวอร์ชันใหม่พร้อมใช้งาน" ขึ้นที่มุมขวาล่าง (ไม่ต้องกดปุ่มใด)</li><li>ไปที่เมนู "ร่างไลฟ์" เริ่มไลฟ์ร่าง R1 จนออกอากาศ แล้วดูการ์ดมุมขวาล่าง</li><li>กด "รีสตาร์ทเลย" ในการ์ด อ่านหน้าต่างที่ขึ้น แล้วกด "เตือนเมื่อไลฟ์จบ" ไลฟ์ต่ออีก 2 นาทีแล้วดูจอผู้ชม</li><li>กด "หยุดไลฟ์" แล้วกด "บังคับปิดไลฟ์" และยืนยันในหน้าต่าง "บังคับปิดไลฟ์นี้?" (จบรอบจริง) แล้วดูการ์ดมุมขวาล่าง กด "รีสตาร์ทเลย"</li><li>หลังแอปเปิดใหม่ เข้าสู่ระบบ (ถ้าถาม) แล้วดูการ์ดมุมขวาล่าง · ไปที่เมนู "แดชบอร์ด" ดูหน้าต่าง "มีอะไรใหม่" กด "รับทราบ" แล้วปิดเปิดแอปอีกครั้งกลับมาที่ "แดชบอร์ด"</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ก่อนไลฟ์: การ์ดเป็นการ์ดลอยมุมขวาล่าง (ไม่บังทั้งจอ) บอก "เวอร์ชันที่ใช้อยู่ … → เวอร์ชันใหม่ …" พร้อมปุ่ม "รีสตาร์ทเลย" และ "ภายหลัง"</li><li>ระหว่างไลฟ์: การ์ดเปลี่ยนเป็น "ยังมีไลฟ์ทำงานอยู่ 1 รายการ" และ "กำลังไลฟ์อยู่ ระบบจะยังไม่อัปเดต กดรีสตาร์ทอีกครั้งเมื่อจบไลฟ์" — แอปไม่รีสตาร์ทเอง</li><li>กด "รีสตาร์ทเลย" ระหว่างไลฟ์: ขึ้นหน้าต่าง "ยังมีไลฟ์ทำงานอยู่ 1 รายการ" · "หากอัปเดตตอนนี้ ระบบจะหยุดไลฟ์ทั้งหมดก่อนรีสตาร์ท …" พร้อมปุ่ม "หยุดไลฟ์แล้วอัปเดต" / "เตือนเมื่อไลฟ์จบ" (ไม่เงียบ ไม่ติดตั้ง)</li><li>กด "เตือนเมื่อไลฟ์จบ" แล้วการ์ดหายระหว่างไลฟ์ · ไลฟ์ไม่สะดุด ภาพและเสียงผู้ชมปกติ</li><li>หยุดไลฟ์แล้วการ์ดกลับมาเองพร้อม "ไลฟ์จบแล้ว — รีสตาร์ทเพื่อติดตั้งอัปเดตได้เลย" · กดรีสตาร์ทแล้วขึ้น "กำลังรีสตาร์ท…" และแอปปิดแล้วเปิดใหม่เอง</li><li>แอปเปิดใหม่: การ์ด "อัปเดตสำเร็จ" "ตอนนี้ใช้เวอร์ชัน … แล้ว (จาก …)" · ชื่อหน้าต่างแอปเป็นเวอร์ชันใหม่</li><li>หน้าต่าง "มีอะไรใหม่" ขึ้นที่ "แดชบอร์ด" ครั้งเดียว มีหัวข้อ วันที่ และรายละเอียด · กด "รับทราบ" แล้วเปิดแอปใหม่ไม่ขึ้นอีก</li></ul><div class="hint" style="margin-top:6px">ที่มา: TAKRA-1655 · TAKRA-1745</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-23613" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-23613" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-23613" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-23613" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-23613" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-23613"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-23613" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-23613">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="m-nov" data-level="e2e" data-prio="P1" data-kind="exception" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-NOV-F.2</td>
+  <td class="ctitle">รุ่นใหม่ออกระหว่างไลฟ์ → ไม่ดาวน์โหลดจนไลฟ์จบ · กด "ภายหลัง" แล้วไม่เด้งซ้ำ · อัปเดตจากเมนู "ช่วยเหลือ" ได้ <span class="kd kd-exc">Exception</span></td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-23614"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-23614"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">รุ่นใหม่ออกระหว่างไลฟ์ → ไม่ดาวน์โหลดจนไลฟ์จบ · กด "ภายหลัง" แล้วไม่เด้งซ้ำ · อัปเดตจากเมนู "ช่วยเหลือ" ได้</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1514" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1514 ใน Jira">🧩 Epic TAKRA-1514</a> · Priority: <b>P1</b> · E2E · ประเภท: <b>Exception</b> <span class="hint">(ระหว่างไลฟ์ · ระบบภายนอกผิดปกติ)</span> · ฟีเจอร์ใหม่ พ.ย. 2569 ของ Takra Live — user journey ครบลูป</div>
+  <div class="sec"><h4>Precondition</h4><ul><li>เครื่อง Windows ติดตั้งแอปรุ่นล่าสุดบนช่อง UAT · นัด dev ปล่อยรุ่นถัดไประหว่างเคส</li><li>ร่าง R1 พร้อมไลฟ์</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป Takra Live (UAT) แล้วเข้าสู่ระบบด้วยบัญชีเจ้าของ ไปที่เมนู "ร่างไลฟ์" กด "เริ่มไลฟ์" ที่แถวร่าง R1 กด "ไปหน้าเริ่มไลฟ์" ในหน้าต่างที่ขึ้น แล้วกด "เริ่มออกอากาศ" รอจนผู้ชมเห็นอวาตาร์บนมือถือ</li><li>ระหว่างไลฟ์ให้ dev ปล่อยรุ่นใหม่บนช่อง UAT แล้วไลฟ์ต่ออย่างน้อย 35 นาที (แอปเช็กรุ่นใหม่ทุก 30 นาที) ดูมุมขวาล่างเป็นระยะ</li><li>กด "หยุดไลฟ์" แล้วกด "บังคับปิดไลฟ์" และยืนยันในหน้าต่าง "บังคับปิดไลฟ์นี้?" (จบรอบจริง) รอจนการ์ดอัปเดตขึ้น แล้วกด "ภายหลัง" จากนั้นปิดแอปแล้วเปิดใหม่ รอ 30 นาที</li><li>ที่แถบเมนูของหน้าต่างแอป กด "ช่วยเหลือ" → "เกี่ยวกับ Takra AI Live" อ่านข้อความ แล้วกด "อัปเดตและเปิดใหม่"</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ระหว่างไลฟ์: ไม่มีการ์ด "กำลังดาวน์โหลดอัปเดต" และไลฟ์ไม่สะดุด</li><li>หลังหยุดไลฟ์: ขึ้น "กำลังดาวน์โหลดอัปเดต" พร้อม % แล้วเปลี่ยนเป็น "มีเวอร์ชันใหม่พร้อมใช้งาน"</li><li>กด "ภายหลัง" แล้วการ์ด "มีเวอร์ชันใหม่พร้อมใช้งาน" ของเวอร์ชันนี้ไม่เด้งซ้ำ ทั้งหลังเปิดแอปใหม่และผ่านไป 30 นาที (การ์ด "กำลังดาวน์โหลดอัปเดต" ขึ้นสั้น ๆ หลังเปิดแอปใหม่ได้) · แอปไม่ติดตั้งเองตอนปิดแอป</li><li>หน้าต่างเกี่ยวกับแอปบอก "เวอร์ชันของเครื่องนี้: …" และรุ่นที่โหลดไว้แล้วรอติดตั้ง · กดอัปเดตแล้วแอปเปิดใหม่เป็นเวอร์ชันใหม่และขึ้น "อัปเดตสำเร็จ"</li></ul><div class="hint" style="margin-top:6px">ที่มา: TAKRA-1655</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-23614" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-23614" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-23614" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-23614" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-23614" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-23614"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-23614" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-23614">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="featrow" data-featkey="nov-g"><td colspan="7">📁 G · ลากครอบคำในหน้าเริ่มไลฟ์เพื่อเพิ่มคำอ่าน <span class="rp"> <span class="lv lvl-e2e">🔄 2</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="nov-g"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow" data-feat="m-nov" data-level="e2e" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-NOV-G.1</td>
+  <td class="ctitle">ได้ยินอวาตาร์อ่านผิดระหว่างไลฟ์ → ลากครอบคำในสคริปต์ที่พูดแล้ว ทดสอบเสียง แล้วเพิ่มคำอ่านได้ทันที <span class="kd kd-happy">Happy Path</span></td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-23615"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-23615"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ได้ยินอวาตาร์อ่านผิดระหว่างไลฟ์ → ลากครอบคำในสคริปต์ที่พูดแล้ว ทดสอบเสียง แล้วเพิ่มคำอ่านได้ทันที</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1514" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1514 ใน Jira">🧩 Epic TAKRA-1514</a> · Priority: <b>P0</b> · E2E · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · ฟีเจอร์ใหม่ พ.ย. 2569 ของ Takra Live — user journey ครบลูป</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #d97706;background:rgba(217,119,6,.07)">📌 <b>หมายเหตุ:</b> ลบคำอ่าน QA-WORD ในเมนู "คลัง" แท็บ "คำอ่าน" หลังจบเคส ถ้าไม่ได้ใช้ในเคส G.2</div></div>
+  <div class="sec"><h4>Test Data</h4><ul><li>QA-WORD = คำที่อวาตาร์อ่านผิดในสคริปต์ของร่าง R1 เช่น ชื่อแบรนด์ภาษาอังกฤษ "Oxygrid" · คำอ่าน "ออก-ซี-กริด"</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป Takra Live (UAT) แล้วเข้าสู่ระบบด้วยบัญชีเจ้าของ ไปที่เมนู "ร่างไลฟ์" กด "เริ่มไลฟ์" ที่แถวร่าง R1 กด "ไปหน้าเริ่มไลฟ์" ในหน้าต่างที่ขึ้น แล้วกด "เริ่มออกอากาศ" รอจนผู้ชมเห็นอวาตาร์บนมือถือ</li><li>ที่การ์ด "รอบนี้ใช้อะไรบ้าง" ส่วน "สคริปต์ทั้งรอบ" รอจนอวาตาร์พูดบรรทัดที่มีคำ QA-WORD แล้วชี้เมาส์ค้างในกล่องบรรทัดที่พูดแล้ว</li><li>ลากเมาส์ครอบคำ QA-WORD ในบรรทัดนั้นแล้วปล่อยเมาส์ รอให้อวาตาร์พูดบรรทัดใหม่ 1–2 บรรทัดโดยไม่เลื่อนหน้า แล้วกดปุ่ม "เพิ่มคำอ่าน "…"" ที่ขึ้นใต้คำ</li><li>ในการ์ด "คำอ่าน" เลือกเสียงใน "เสียงพูดสำหรับทดสอบ" พิมพ์ช่อง "AI จะอ่านว่า" กด "ทดสอบเสียง" แล้วกด "เพิ่มคำอ่าน"</li><li>กดตัวกรอง "เพิ่มในไลฟ์นี้" แล้วกด "หยุดไลฟ์" แล้วกด "บังคับปิดไลฟ์" และยืนยันในหน้าต่าง "บังคับปิดไลฟ์นี้?" (จบรอบจริง)</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>ชี้ค้างแล้วขึ้นคำแนะนำ "คลิกหรือลากคลุมคำ เพื่อเพิ่มคำอ่าน"</li><li>ปล่อยเมาส์แล้วขึ้นปุ่ม "เพิ่มคำอ่าน "QA-WORD"" ใต้คำ · เมื่ออวาตาร์พูดบรรทัดใหม่ กล่องสคริปต์ไม่เลื่อนเอง และปุ่มไม่หายเพราะบรรทัดใหม่เข้ามา</li><li>กดปุ่มแล้วหน้าเลื่อนไปการ์ด "คำอ่าน" ช่อง "คำ" เป็น QA-WORD ตรงตามที่ลาก (ไม่มีแท็กเสียงติดมา) และเคอร์เซอร์อยู่ช่อง "AI จะอ่านว่า"</li><li>กด "ทดสอบเสียง" แล้วได้ยินคำตามที่เขียนก่อน แล้วตามด้วยคำอ่านใหม่ · ใต้ตัวเลือกเสียงบอกว่าใช้ตอนทดสอบเท่านั้น ไม่เปลี่ยนเสียงในไลฟ์</li><li>กด "เพิ่มคำอ่าน" แล้วขึ้น "เพิ่มคำแล้ว" · ตัวกรอง "เพิ่มในไลฟ์นี้" แสดงคำนี้ · มีหมายเหตุว่ามีผลกับไลฟ์ถัดไป</li></ul><div class="hint" style="margin-top:6px">ที่มา: TAKRA-1717 · TAKRA-1718</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-23615" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-23615" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-23615" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-23615" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-23615" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-23615"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-23615" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-23615">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="m-nov" data-level="e2e" data-prio="P1" data-kind="data" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-NOV-G.2</td>
+  <td class="ctitle">คลิกคำเดียวที่มีคำอ่านอยู่แล้ว → ขึ้นว่ามีในคลังแล้ว · ไลฟ์ถัดไปอวาตาร์อ่านตามคำอ่านใหม่ <span class="kd kd-data">Data</span></td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-23616"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-23616"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">คลิกคำเดียวที่มีคำอ่านอยู่แล้ว → ขึ้นว่ามีในคลังแล้ว · ไลฟ์ถัดไปอวาตาร์อ่านตามคำอ่านใหม่</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1514" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1514 ใน Jira">🧩 Epic TAKRA-1514</a> · Priority: <b>P1</b> · E2E · ประเภท: <b>Data</b> <span class="hint">(ไม่มีข้อมูล · ซ้ำ · ตัวเลขตรงกันทุกหน้า)</span> · ฟีเจอร์ใหม่ พ.ย. 2569 ของ Takra Live — user journey ครบลูป</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #d97706;background:rgba(217,119,6,.07)">📌 <b>หมายเหตุ:</b> คำทับศัพท์ภาษาไทย (เช่น เซรั่ม) การคลิกครั้งเดียวอาจได้คำไม่ครบ — ใช้วิธีลากครอบแทน ไม่นับเป็น FAIL ของเคสนี้</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>ทำ TC-NOV-G.1 แล้ว (QA-WORD มีคำอ่านในคลัง)</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป Takra Live (UAT) แล้วเข้าสู่ระบบด้วยบัญชีเจ้าของ ไปที่เมนู "ร่างไลฟ์" กด "เริ่มไลฟ์" ที่แถวร่าง R1 กด "ไปหน้าเริ่มไลฟ์" ในหน้าต่างที่ขึ้น แล้วกด "เริ่มออกอากาศ" รอจนผู้ชมเห็นอวาตาร์บนมือถือ</li><li>ที่ส่วน "สคริปต์ทั้งรอบ" คลิกครั้งเดียวที่คำ QA-WORD (ไม่ลาก) แล้วกดปุ่ม "เพิ่มคำอ่าน "…""</li><li>ในการ์ด "คำอ่าน" สังเกตปุ่ม "เพิ่มคำอ่าน" และข้อความใต้ช่อง แล้วเลื่อนหน้าขึ้นลงหลังเลือกคำอื่น</li><li>กด "หยุดไลฟ์" แล้วกด "บังคับปิดไลฟ์" และยืนยันในหน้าต่าง "บังคับปิดไลฟ์นี้?" (จบรอบจริง) แล้วเริ่มไลฟ์ร่าง R1 อีกรอบ ฟังบรรทัดที่มี QA-WORD</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>คลิกครั้งเดียวแล้วระบบเลือกคำไทย/คำทั้งคำให้เอง และขึ้นปุ่ม "เพิ่มคำอ่าน "QA-WORD""</li><li>ปุ่ม "เพิ่มคำอ่าน" กดไม่ได้ และขึ้น "มีคำนี้ในคลังแล้ว แก้คำอ่านได้จาก ⋯ ของคำนั้น"</li><li>เลื่อนหน้าแล้วปุ่มลอยหายไป (ไม่ค้างลอยผิดที่)</li><li>ไลฟ์รอบใหม่อวาตาร์อ่าน QA-WORD ตามคำอ่านที่เพิ่มใน G.1</li></ul><div class="hint" style="margin-top:6px">ที่มา: TAKRA-1717</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-23616" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-23616" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-23616" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-23616" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-23616" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-23616"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-23616" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-23616">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="featrow" data-featkey="nov-h"><td colspan="7">📁 H · ซ้อมถาม-ตอบก่อนไลฟ์ <span class="rp"> <span class="lv lvl-e2e">🔄 2</span></span> <span class="epic-owner-wrap">👤 <select class="feat-owner" data-featkey="nov-h"><option value="">— ผู้รับผิดชอบ —</option><option>Wanlee T (Ice)</option><option>Kachain B (Moss)</option></select></span></td></tr>
+<tr class="trow" data-feat="m-nov" data-level="e2e" data-prio="P0" data-kind="happy" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-NOV-H.1</td>
+  <td class="ctitle">ซ้อมถามราคาก่อนไลฟ์ → เห็นหัวข้อที่ระบบจับได้ ฟังเสียงพร้อมหยุด/เล่นต่อ/เล่นใหม่ และให้ความเห็นคำตอบได้ <span class="kd kd-happy">Happy Path</span></td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
+  <td><span class="prio p0">P0</span></td>
+  <td class="status" data-uid="tc-23617"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-23617"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ซ้อมถามราคาก่อนไลฟ์ → เห็นหัวข้อที่ระบบจับได้ ฟังเสียงพร้อมหยุด/เล่นต่อ/เล่นใหม่ และให้ความเห็นคำตอบได้</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1514" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1514 ใน Jira">🧩 Epic TAKRA-1514</a> · Priority: <b>P0</b> · E2E · ประเภท: <b>Happy Path</b> <span class="hint">(flow ปกติ)</span> · ฟีเจอร์ใหม่ พ.ย. 2569 ของ Takra Live — user journey ครบลูป</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #d97706;background:rgba(217,119,6,.07)">📌 <b>หมายเหตุ:</b> การกดส่งและกดฟังนับรวมในโควตาซ้อมต่อวัน — ทั้งเคสใช้ไม่ถึง 10 ครั้ง</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>ร่าง R1 ฉากแรกมีสินค้าที่กรอกสีไว้แล้ว · บัญชี MiniMax ของทีมเตรียมเสียงของร่าง R1 แล้ว</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป Takra Live (UAT) แล้วเข้าสู่ระบบด้วยบัญชีเจ้าของ ไปที่เมนู "ร่างไลฟ์" ที่แถวร่าง R1 กดปุ่มสามจุด แล้วเลือก "ซ้อมถาม-ตอบ"</li><li>ที่ "สมมติว่ากำลังอยู่ฉาก…" เลือกฉากแรกของร่าง (ตามชื่อฉาก) พิมพ์ "มีสีอะไรบ้าง" แล้วกด "ส่ง"</li><li>กด "ฟังเสียง" ใต้คำตอบ ระหว่างเล่นกด "หยุดชั่วคราว" → "เล่นต่อ" → "เล่นใหม่ตั้งแต่ต้น" ฟังจนจบ แล้วกด "ฟังเสียง" อีกครั้ง</li><li>ส่งคำถามที่สอง "ราคาเท่าไหร่คะ" รอคำตอบ แล้วกด "ฟังเสียง" ของคำตอบแรก และระหว่างที่เล่นอยู่กด "ฟังเสียง" ของคำตอบที่ 2</li><li>กด "คำตอบดี" ที่คำตอบแรก และ "คำตอบไม่ดี" ที่คำตอบที่ 2 (ถ้ามีปุ่ม) แล้วกดลิงก์ที่ขึ้น</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>หน้าต่าง "ซ้อมถาม-ตอบคอมเมนต์" เปิดทางขวา · ก่อนส่งมี "ยังไม่มีข้อความ — ลองพิมพ์คำถามที่ลูกค้ามักถาม"</li><li>ส่งแล้วขึ้น "กำลังคิดคำตอบ…" แล้วได้คำตอบใต้ป้าย "อวาตาร์" พร้อม "หัวข้อที่ระบบจับได้: สี" · สีในคำตอบตรงกับข้อมูลสินค้าของฉากแรก</li><li>คำถามราคา: "หัวข้อที่ระบบจับได้: ราคา" · คำตอบชวนไปดูราคาที่ตะกร้า ไม่บอกตัวเลขราคา (ถ้าระบบกันไว้ จะขึ้นเป็น "อวาตาร์ · ประโยคแทน (ในไลฟ์จริง)" แทน)</li><li>กดฟังเสียงแล้วขึ้นวงหมุน "กำลังสร้างเสียง…" แล้วเล่นพร้อมคลื่นเสียง · หยุดชั่วคราว/เล่นต่อ/เล่นใหม่ทำงานถูก · เสียงไม่อ่านแท็กเสียงออกมา · กดฟังรอบสองเล่นทันทีไม่ต้องสร้างใหม่</li><li>กดฟังคำตอบที่ 2 แล้วคำตอบแรกหยุดเอง (ขึ้นปุ่ม "เล่นต่อ") — เล่นพร้อมกันได้ทีละเสียง</li><li>"คำตอบดี": ปุ่มหายและขึ้น "ขอบคุณ — คำตอบนี้ใช้ได้" · "คำตอบไม่ดี": ขึ้นกล่องบอกว่า AI ตอบจากข้อมูลสินค้าและ FAQ พร้อมลิงก์ "แก้ข้อมูลสินค้า / FAQ" ที่เปิดหน้าแก้ไขสินค้าของฉากนั้น (ถ้าคำตอบราคาเป็นประโยคแทน ให้กด "คำตอบไม่ดี" กับคำถามอื่นแทน เช่น "ผิวแพ้ง่ายใช้ได้ไหม")</li><li>ไม่มีอะไรออกอากาศ และไม่นับในสถิติ/รายงานไลฟ์จริง</li></ul><div class="hint" style="margin-top:6px">ที่มา: TAKRA-1513</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-23617" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-23617" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-23617" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-23617" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-23617" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-23617"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-23617" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-23617">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+<tr class="trow" data-feat="m-nov" data-level="e2e" data-prio="P1" data-kind="negative" data-ui="yes" onclick="tg(this)">
+  <td><span class="tog">▸</span></td><td class="cid">TC-NOV-H.2</td>
+  <td class="ctitle">ซ้อมด้วยคำถามติดคำเสี่ยง → เห็นประโยคแทนที่อวาตาร์จะพูดในไลฟ์จริง ฟังได้เฉพาะประโยคแทน <span class="kd kd-neg">Negative</span></td>
+  <td class="lvl"><span class="lv lvl-e2e">E2E</span></td>
+  <td><span class="prio p1">P1</span></td>
+  <td class="status" data-uid="tc-23618"><span class="stb pending">รอเทส</span></td>
+  <td class="jira-cell" data-uid="tc-23618"></td>
+</tr>
+<tr class="detail"><td colspan="7"><div class="card">
+  <div class="h-title">ซ้อมด้วยคำถามติดคำเสี่ยง → เห็นประโยคแทนที่อวาตาร์จะพูดในไลฟ์จริง ฟังได้เฉพาะประโยคแทน</div>
+  <div class="h-prio"><a class="epic-tag" href="https://kitdi.atlassian.net/browse/TAKRA-1514" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Epic TAKRA-1514 ใน Jira">🧩 Epic TAKRA-1514</a> · Priority: <b>P1</b> · E2E · ประเภท: <b>Negative</b> <span class="hint">(ข้อมูลผิด / action ผิด)</span> · ฟีเจอร์ใหม่ พ.ย. 2569 ของ Takra Live — user journey ครบลูป</div>
+  <div class="sec"><div class="hint" style="padding:6px 8px;border-left:3px solid #d97706;background:rgba(217,119,6,.07)">📌 <b>หมายเหตุ:</b> AC บอกว่า "ไม่มีคำตอบ" แต่โค้ด uat แสดงประโยคแทน (ขอโทษ) ที่ไลฟ์จริงจะพูด — ถือว่าผ่านถ้าไม่มีคำตอบของ AI ให้ฟัง · ถ้าขึ้นว่าเสียงยังไม่ได้เตรียมในบัญชี MiniMax ไม่ใช่บั๊กของหน้าซ้อม — ไปที่เสียงนั้นในคลังแล้วกด "เตรียมเสียงใหม่" ก่อน</div></div>
+  <div class="sec"><h4>Precondition</h4><ul><li>คลัง "คำเสี่ยง" มีคำต้องห้ามระดับบล็อกอย่างน้อย 1 คำ</li></ul></div>
+  <div class="sec"><h4>Test Steps</h4><ol><li>เปิดแอป Takra Live (UAT) แล้วเข้าสู่ระบบด้วยบัญชีเจ้าของ ไปที่เมนู "ร่างไลฟ์" กดปุ่ม ⋯ ที่แถวร่าง R1 แล้วเลือก "แก้ไข" (เปิด Studio) แล้วไปขั้น "ตอบคอมเมนต์" ที่การ์ด "ซ้อมถาม-ตอบคอมเมนต์"</li><li>พิมพ์ชื่อในช่อง "ชื่อผู้ชม (คุณ)" แล้วพิมพ์คำถามที่มีคำต้องห้ามจากคลัง "คำเสี่ยง" แล้วกด "ส่ง"</li><li>กด "ฟังเสียง" ที่คำตอบนั้น</li><li>วางข้อความยาว 350 ตัวอักษรในช่องคำถาม แล้วสังเกตจำนวนตัวอักษรที่รับ</li></ol></div>
+  <div class="grid">
+    <div class="sec"><h4>Expected Result</h4><ul><li>คำตอบขึ้นป้าย "อวาตาร์ · ประโยคแทน (ในไลฟ์จริง)" พร้อมเหตุผล "ไลฟ์จริงจะไม่ตอบ — คอมเมนต์นี้มีคำเสี่ยง “&lt;คำ&gt;” …" ที่บอกคำที่ติด · ไม่มีปุ่ม "คำตอบดี" / "คำตอบไม่ดี"</li><li>กดฟังเสียงแล้วได้ยินเฉพาะประโยคแทน (ประโยคขอโทษ) ไม่ได้ยินคำต้องห้าม</li><li>ช่องคำถามรับได้แค่ 300 ตัวอักษร ส่วนเกินถูกตัด</li></ul><div class="hint" style="margin-top:6px">ที่มา: TAKRA-1513 (AC คอมเมนต์ที่มีคำเสี่ยงแสดงว่าถูกบล็อก ไม่มีคำตอบ)</div></div>
+    <div class="sec"><h4>Actual Result</h4><textarea class="actualbox" rows="4" placeholder="— บันทึกผลตอนทดสอบ —"></textarea></div>
+  </div>
+  <div class="sec"><h4>Status</h4><div class="statusrow">
+    <span class="opt pass" data-uid="tc-23618" data-st="pass">PASS</span>
+    <span class="opt fail" data-uid="tc-23618" data-st="fail">FAIL</span>
+    <span class="opt hold" data-uid="tc-23618" data-st="hold">HOLD</span>
+    <span class="opt block" data-uid="tc-23618" data-st="block">BLOCKED</span>
+    <span class="opt skip" data-uid="tc-23618" data-st="skip">SKIP</span>
+  </div></div>
+  <div class="sec jira-sec"><h4>🐞 Jira / Bug (ใส่ได้หลายลิงก์)</h4>
+    <div class="jira-list" data-uid="tc-23618"></div>
+    <div class="jira-add"><input type="text" class="jira-input" data-uid="tc-23618" placeholder="วางลิงก์ Jira หรือพิมพ์ TKH-123 แล้ว Enter"><button class="btn jira-btn" data-uid="tc-23618">+ เพิ่มลิงก์</button></div>
+  </div>
+
+</div></td></tr>
+
+</tbody>
+  </table>
+  </div>
+
+</div>
+<footer>TAKRA AI — ฟีเจอร์ใหม่ พ.ย. แบบ User Journey (สลับฉาก · ยอดขาย · Telegram · การใช้งาน · ส่งข้อความ · อัปเดตแอป · คำอ่าน · ซ้อมถาม-ตอบ) · Manual Test Cases · 0 UI + 18 E2E = 18 TCs · UI only (manual) · TAKRA AI · ฟีเจอร์ใหม่ พ.ย. 2569 · user journey</footer>
+
+<script>
+// ── Load store from embedded JSON ──
+var storeEl = document.getElementById('store-data');
+var store = {};
+try { store = JSON.parse(storeEl.textContent || '{}'); } catch(_) {}
+
+var SMAP = {
+  pass:  ['pass',  'PASS'],
+  fail:  ['fail',  'FAIL'],
+  hold:  ['hold',  'HOLD'],
+  block: ['block', 'BLOCKED'],
+  skip:  ['skip',  'SKIP'],
+};
+
+// Restore saved statuses
+Object.keys(store).forEach(function(uid) {
+  var st = store[uid] && store[uid].st;
+  if (!st || !SMAP[st]) return;
+  // badge
+  var rowStatus = document.querySelector('tr.trow td.status[data-uid="' + uid + '"]');
+  if (rowStatus) {
+    var stb = rowStatus.querySelector('.stb');
+    if (stb) { stb.className = 'stb ' + SMAP[st][0]; stb.textContent = SMAP[st][1]; }
+  }
+  // opt button
+  var opt = document.querySelector('.opt[data-uid="' + uid + '"][data-st="' + st + '"]');
+  if (opt) opt.classList.add('sel');
+  // also restore actual result text
+  if (store[uid].actual || store[uid].actualw) {
+    var boxes = document.querySelectorAll('tr.detail');
+    boxes.forEach(function(d) {
+      var badge = d.querySelector('.opt[data-uid="' + uid + '"]');
+      if (!badge) return;
+      d.querySelectorAll('.actualbox').forEach(function(box) {
+        var field = box.dataset.os === 'win' ? 'actualw' : 'actual';
+        if (store[uid][field]) { box.value = store[uid][field]; box.classList.add('filled'); }
+      });
+    });
+  }
+});
+
+// ── Toggle row expand ──
+function tg(row) {
+  var detail = row.nextElementSibling;
+  var isOpen = row.classList.contains('open');
+  row.classList.toggle('open', !isOpen);
+  if (detail && detail.classList.contains('detail')) {
+    detail.classList.toggle('show', !isOpen);
+  }
+}
+function toggleAll(open) {
+  document.querySelectorAll('tr.trow').forEach(function(r) {
+    if (r.classList.contains('hide')) return;
+    r.classList.toggle('open', open);
+    var d = r.nextElementSibling;
+    if (d && d.classList.contains('detail')) d.classList.toggle('show', open);
+  });
+}
+
+// ── Save store back into the embedded script tag ──
+function save() {
+  storeEl.textContent = '\n' + JSON.stringify(store, null, 2).replace(/</g, '\\u003c') + '\n';
+}
+
+// ── Status opt buttons ──
+document.querySelectorAll('.opt').forEach(function(o) {
+  o.addEventListener('click', function(e) {
+    e.stopPropagation();
+    var uid = o.dataset.uid, st = o.dataset.st;
+    var allOpts = document.querySelectorAll('.opt[data-uid="' + uid + '"]');
+    var alreadySel = o.classList.contains('sel');
+    allOpts.forEach(function(x) { x.classList.remove('sel'); });
+    store[uid] = store[uid] || {};
+    if (alreadySel) {
+      delete store[uid].st;
+    } else {
+      o.classList.add('sel');
+      store[uid].st = st;
+    }
+    var rowStatus = document.querySelector('tr.trow td.status[data-uid="' + uid + '"]');
+    if (rowStatus) {
+      var stb = rowStatus.querySelector('.stb');
+      if (stb) {
+        if (!alreadySel && SMAP[st]) { stb.className = 'stb ' + SMAP[st][0]; stb.textContent = SMAP[st][1]; }
+        else { stb.className = 'stb pending'; stb.textContent = 'รอเทส'; }
+      }
+    }
+    save();
+    applyFilters();   // re-filter (recounts too) so an active สถานะ filter updates live
+    markDirty();
+  });
+});
+
+// ── Actual result editable on blur ──
+document.querySelectorAll('.actualbox').forEach(function(box) {
+  // a <textarea> — clicking/typing must not bubble up to the row toggle
+  box.addEventListener('click', function(ev) { ev.stopPropagation(); });
+  box.addEventListener('input', function() { box.classList.toggle('filled', box.value.trim() !== ''); });
+  box.addEventListener('blur', function() {
+    // find uid from nearest .opt
+    var opts = box.closest('tr.detail').querySelectorAll('.opt');
+    if (!opts.length) return;
+    var uid = opts[0].dataset.uid;
+    var field = box.dataset.os === 'win' ? 'actualw' : 'actual';
+    var txt = box.value.trim();
+    var prev = (store[uid] && store[uid][field]) || '';
+    if (txt === prev) return;   // nothing typed → don't dirty the file
+    store[uid] = store[uid] || {};
+    if (txt) { store[uid][field] = txt; }
+    else { delete store[uid][field]; if (!Object.keys(store[uid]).length) delete store[uid]; }
+    save();
+    markDirty();
+  });
+});
+
+// ── Filters ──
+var filters = { feat: new Set(), level: new Set(), prio: new Set(), status: new Set(), kind: new Set(), ui: new Set() };
+document.querySelectorAll('.fchip').forEach(function(c) {
+  c.addEventListener('click', function() {
+    var f = c.dataset.f, v = c.dataset.v;
+    if (filters[f].has(v)) { filters[f].delete(v); c.classList.remove('active'); }
+    else { filters[f].add(v); c.classList.add('active'); }
+    applyFilters();
+  });
+});
+document.querySelectorAll('.clearbtn').forEach(function(b) {
+  b.addEventListener('click', function() {
+    var key = b.dataset.clear;
+    filters[key].clear();
+    document.querySelectorAll('.fchip[data-f="' + key + '"]').forEach(function(c) { c.classList.remove('active'); });
+    applyFilters();
+  });
+});
+function applyFilters() {
+  document.querySelectorAll('tr.trow').forEach(function(row) {
+    var ok = true;
+    if (filters.feat.size  && !filters.feat.has(row.dataset.feat))   ok = false;
+    if (filters.level.size && !filters.level.has(row.dataset.level)) ok = false;
+    if (filters.prio.size  && !filters.prio.has(row.dataset.prio))   ok = false;
+    if (filters.kind.size  && !filters.kind.has(row.dataset.kind))   ok = false;
+    if (filters.ui.size    && !filters.ui.has(row.dataset.ui))       ok = false;
+    if (filters.status.size) {
+      var stb = row.querySelector('td.status .stb');
+      var scls = stb ? stb.className.replace('stb', '').trim().split(' ')[0] : 'pending';
+      if (!filters.status.has(scls)) ok = false;
+    }
+    row.classList.toggle('hide', !ok);
+    var d = row.nextElementSibling;
+    if (d && d.classList.contains('detail')) d.classList.toggle('hide', !ok);
+  });
+  document.querySelectorAll('tr.featrow').forEach(function(fr) {
+    var n = fr.nextElementSibling, any = false;
+    while (n && !n.classList.contains('featrow') && !n.classList.contains('epicrow')) {
+      if (n.classList.contains('trow') && !n.classList.contains('hide')) { any = true; break; }
+      n = n.nextElementSibling;
+    }
+    fr.classList.toggle('hide', !any);
+  });
+  document.querySelectorAll('tr.epicrow').forEach(function(er) {
+    var n = er.nextElementSibling, any = false;
+    while (n && !n.classList.contains('epicrow')) {
+      if (n.classList.contains('trow') && !n.classList.contains('hide')) { any = true; break; }
+      n = n.nextElementSibling;
+    }
+    er.classList.toggle('hide', !any);
+  });
+  recount();
+}
+
+function recount() {
+  var c = { pass:0, fail:0, hold:0, block:0, skip:0, pending:0 };
+  document.querySelectorAll('tr.trow').forEach(function(row) {
+    var stb = row.querySelector('td.status .stb');
+    if (!stb) return;
+    var cls = stb.className.replace('stb','').trim().split(' ')[0];
+    if (c.hasOwnProperty(cls)) c[cls]++; else c.pending++;
+  });
+  var total    = c.pass + c.fail + c.hold + c.block + c.skip + c.pending;
+  var done     = c.pass + c.fail + c.hold + c.block;
+  var testable = total - c.skip;               // SKIP = ตั้งใจข้าม ไม่นับเป็นเป้าที่ต้องทดสอบ
+  var pct      = testable ? Math.round(done / testable * 100) : 0;
+  ['pass','fail','hold','block','skip'].forEach(function(k) {
+    var e = document.getElementById('sum-'+k); if (e) e.textContent = c[k];
+    var h = document.getElementById('hdr-'+k); if (h) h.textContent = c[k];
+  });
+  var ep = document.getElementById('sum-pending'); if (ep) ep.textContent = c.pending;
+  var hp = document.getElementById('hdr-pending'); if (hp) hp.textContent = c.pending;
+  var bar = document.getElementById('sumbar'); if (bar) bar.style.width = pct + '%';
+  var pctEl = document.getElementById('sumpct');
+  if (pctEl) pctEl.textContent = pct + '% ทดสอบแล้ว (' + done + '/' + testable + ')' + (c.skip ? ' · ข้าม ' + c.skip : '');
+}
+
+// ── GitHub publish config ──
+var GH_OWNER  = 'wanlee-tankunnatam';
+var GH_REPO   = 'qa-test-reports';
+var GH_PATH   = 'projects/takra-ai/2026/11/reports/takra-ai-features-nov-journey-test-cases-table.html';
+var GH_BRANCH = 'master';
+var GH_API    = 'https://api.github.com/repos/' + GH_OWNER + '/' + GH_REPO + '/contents/' + GH_PATH;
+
+// ── Save state (dirty tracking + auto-publish) ──
+var dirty = false;
+var autoTimer = null;
+var publishing = false;
+
+function ghToken() {
+  var t = localStorage.getItem('gh_pat');
+  if (!t) {
+    t = prompt(
+      'ใส่ GitHub Personal Access Token (ใส่ครั้งเดียว จำไว้ในเบราว์เซอร์นี้)\n\n' +
+      'สร้าง token:\n' +
+      'github.com → Settings → Developer settings →\n' +
+      'Personal access tokens → Tokens (classic) → Generate new token (classic)\n' +
+      '→ ติ๊ก scope: repo  (หรือ public_repo เพราะ repo นี้ public)\n\n' +
+      'หรือ Fine-grained token: เลือก repo "qa-test-reports" →\n' +
+      'Permissions → Contents = Read and write'
+    );
+    if (t) localStorage.setItem('gh_pat', t.trim());
+  }
+  return t ? t.trim() : null;
+}
+function clearToken() { localStorage.removeItem('gh_pat'); }
+
+async function publishToGH(auto) {
+  if (publishing) return;
+  var btn = document.getElementById('btn-publish');
+  var token = auto ? localStorage.getItem('gh_pat') : ghToken();
+  if (!token) return;          // auto-save stays quiet until a token exists
+  publishing = true;
+  if (autoTimer) { clearTimeout(autoTimer); autoTimer = null; }
+
+  btn.disabled = true;
+  btn.textContent = '⏳ กำลังบันทึก…';
+  save();
+
+  var API = 'https://api.github.com/repos/' + GH_OWNER + '/' + GH_REPO + '/contents/' + GH_PATH;
+
+  // Serialize the page with the button forced to its idle/enabled state, so the
+  // committed file is never frozen mid-save (otherwise reopening it shows a
+  // permanently-disabled "⏳ กำลังบันทึก…" button).
+  function buildEncoded() {
+    var dis = btn.disabled, txt = btn.textContent;
+    btn.disabled = false;
+    btn.textContent = '☁️ บันทึกขึ้น GitHub';
+    var html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+    btn.disabled = dis;
+    btn.textContent = txt;
+    return btoa(unescape(encodeURIComponent(html)));
+  }
+
+  // Fetch current remote file (sha + content), bypassing any cache.
+  async function fetchRemote() {
+    var r = await fetch(
+      API + '?ref=' + GH_BRANCH + '&t=' + Date.now(),
+      { cache: 'no-store', headers: { Authorization: 'token ' + token, Accept: 'application/vnd.github+json' } }
+    );
+    if (!r.ok) {
+      if (r.status === 401) { localStorage.removeItem('gh_pat'); }
+      throw new Error('ดึงไฟล์ไม่ได้ (HTTP ' + r.status + ') — ตรวจ token หรือ branch');
+    }
+    var j = await r.json();
+    if (!j.content && j.sha) {
+      var rr = await fetch(
+        API + '?ref=' + GH_BRANCH + '&t=' + Date.now(),
+        { cache: 'no-store', headers: { Authorization: 'token ' + token, Accept: 'application/vnd.github.raw' } }
+      );
+      if (!rr.ok) throw new Error('ดึงไฟล์ไม่ได้ (HTTP ' + rr.status + ') — ลองบันทึกใหม่อีกครั้ง');
+      var raw = await rr.text();
+      if (!/<script id="store-data"/.test(raw)) throw new Error('ไฟล์บน GitHub อ่านไม่ครบ — ยังไม่บันทึก ลองใหม่อีกครั้ง');
+      j.content = btoa(unescape(encodeURIComponent(raw)));
+    }
+    return j;
+  }
+
+  // Merge statuses that exist on the remote copy but NOT locally, so a
+  // teammate's concurrent edit is not silently overwritten (local always wins
+  // for keys we changed; we only add keys we don't have).
+  function mergeRemote(remote) {
+    try {
+      var remoteHtml = decodeURIComponent(escape(atob((remote.content || '').replace(/\s/g, ''))));
+      var m = remoteHtml.match(/<script id="store-data"[^>]*>([\s\S]*?)<\/script>/);
+      if (!m) return;
+      var rs = JSON.parse((m[1] || '{}').trim() || '{}');
+      var added = 0;
+      Object.keys(rs).forEach(function(uid) {
+        if (uid in store) return;
+        store[uid] = rs[uid];
+        added++;
+        var st = rs[uid] && rs[uid].st;
+        if (st && SMAP[st]) {
+          var cell = document.querySelector('tr.trow td.status[data-uid="' + uid + '"] .stb');
+          if (cell) { cell.className = 'stb ' + SMAP[st][0]; cell.textContent = SMAP[st][1]; }
+          var opt = document.querySelector('.opt[data-uid="' + uid + '"][data-st="' + st + '"]');
+          if (opt) opt.classList.add('sel');
+        }
+      });
+      if (added) { save(); recount(); }
+    } catch (_) {}
+  }
+
+  // Commit content = the LATEST remote file with ONLY its store-data block
+  // swapped for our (merged) results. This makes auto-save a results-only
+  // overlay: a stale tab can never overwrite the repo's structure/layout —
+  // it always publishes on top of whatever structure is currently on GitHub.
+  function buildFromRemote(remote) {
+    try {
+      var remoteHtml = decodeURIComponent(escape(atob((remote.content || '').replace(/\s/g, ''))));
+      if (!/<script id="store-data"[^>]*>[\s\S]*?<\/script>/.test(remoteHtml)) return buildEncoded();
+      var json = '\n' + JSON.stringify(store, null, 2).replace(/</g, '\\u003c') + '\n';
+      var replaced = remoteHtml.replace(
+        /(<script id="store-data"[^>]*>)[\s\S]*?(<\/script>)/,
+        function(_m, o, c) { return o + json + c; }
+      );
+      return btoa(unescape(encodeURIComponent(replaced)));
+    } catch (_) {
+      return buildEncoded();   // fallback: serialize local DOM
+    }
+  }
+
+  async function commit(remote) {
+    var ts = new Date().toISOString().slice(0, 16).replace('T', ' ');
+    return fetch(API, {
+      method: 'PUT',
+      headers: { Authorization: 'token ' + token, Accept: 'application/vnd.github+json', 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        message: 'chore(qa): update test results ' + ts,
+        content: buildFromRemote(remote),
+        sha: remote.sha,
+        branch: GH_BRANCH
+      })
+    });
+  }
+
+  try {
+    var r2, lastErr;
+    // Up to 4 attempts. Re-fetch the SHA and merge remote statuses each time;
+    // a stale SHA returns 409/422 ("does not match …") which we retry.
+    for (var attempt = 0; attempt < 4; attempt++) {
+      var remote = await fetchRemote();
+      mergeRemote(remote);
+      r2 = await commit(remote);
+      if (r2.ok) break;
+      if (r2.status === 409 || r2.status === 422) {
+        lastErr = 'SHA ชนกัน (HTTP ' + r2.status + ')';
+        await new Promise(function(res) { setTimeout(res, 400 * (attempt + 1)); });
+        continue;
+      }
+      // Bad/expired token or insufficient scope — drop it so the next attempt re-prompts.
+      if (r2.status === 401 || r2.status === 403) {
+        clearToken();
+        var pe = await r2.json().catch(function() { return {}; });
+        throw new Error(
+          (pe.message || 'HTTP ' + r2.status) +
+          '\n\n→ Token สิทธิ์ไม่พอ/หมดอายุ ลบให้แล้ว ครั้งหน้าจะถามใหม่\n' +
+          '   ใช้ classic token scope "repo" (หรือ public_repo) หรือ fine-grained ที่ให้ Contents = Read and write กับ repo นี้'
+        );
+      }
+      var e = await r2.json();
+      throw new Error(e.message || 'HTTP ' + r2.status);
+    }
+    if (!r2.ok) {
+      throw new Error((lastErr || 'conflict') + ' — มีการแก้ไฟล์พร้อมกัน ลองกดบันทึกอีกครั้ง หรือ refresh หน้าก่อนบันทึก');
+    }
+
+    dirty = false;
+    publishing = false;
+    btn.textContent = '✅ บันทึกแล้ว!';
+    btn.style.background = 'var(--pass)';
+    setTimeout(function() {
+      btn.style.background = '';
+      btn.disabled = false;
+      updateIndicator();
+    }, 3000);
+  } catch (err) {
+    publishing = false;
+    if (!auto) alert('❌ บันทึกไม่สำเร็จ: ' + err.message);
+    btn.disabled = false;
+    updateIndicator();
+  }
+}
+
+document.getElementById('btn-publish').addEventListener('click', function() { publishToGH(false); });
+
+// ── Dirty tracking / unsaved indicator ──
+function autoOn() {
+  var c = document.getElementById('chk-autosave');
+  return c ? c.checked : false;
+}
+function updateIndicator() {
+  var s = document.getElementById('save-status');
+  var b = document.getElementById('btn-publish');
+  if (dirty) {
+    if (s) { s.textContent = '● ยังไม่ได้บันทึก'; s.style.color = 'var(--hold)'; }
+    if (b && !b.disabled && b.textContent.indexOf('✅') < 0) b.textContent = '☁️ บันทึกขึ้น GitHub *';
+  } else {
+    if (s) { s.textContent = '✓ ตรงกับ GitHub'; s.style.color = 'var(--muted)'; }
+    if (b && !b.disabled && b.textContent.indexOf('✅') < 0) b.textContent = '☁️ บันทึกขึ้น GitHub';
+  }
+}
+function markDirty() {
+  dirty = true;
+  updateIndicator();
+  // Auto-publish after the user stops editing — only once a token exists,
+  // so we never interrupt with a token prompt mid-edit.
+  if (autoOn() && localStorage.getItem('gh_pat')) {
+    if (autoTimer) clearTimeout(autoTimer);
+    autoTimer = setTimeout(function() { autoTimer = null; publishToGH(true); }, 5000);
+  }
+}
+window.addEventListener('beforeunload', function(e) {
+  if (dirty) { e.preventDefault(); e.returnValue = 'มีงานที่ยังไม่ได้บันทึกขึ้น GitHub'; return e.returnValue; }
+});
+
+// ── Re-render every badge from the store (used after pulling remote) ──
+function applyAllStatuses() {
+  document.querySelectorAll('.opt.sel').forEach(function(o) { o.classList.remove('sel'); });
+  document.querySelectorAll('tr.trow td.status .stb').forEach(function(s) {
+    s.className = 'stb pending'; s.textContent = 'รอเทส';
+  });
+  Object.keys(store).forEach(function(uid) {
+    var st = store[uid] && store[uid].st;
+    if (st && SMAP[st]) {
+      var cell = document.querySelector('tr.trow td.status[data-uid="' + uid + '"] .stb');
+      if (cell) { cell.className = 'stb ' + SMAP[st][0]; cell.textContent = SMAP[st][1]; }
+      var opt = document.querySelector('.opt[data-uid="' + uid + '"][data-st="' + st + '"]');
+      if (opt) opt.classList.add('sel');
+    }
+    if (store[uid] && store[uid].actual) {
+      document.querySelectorAll('tr.detail').forEach(function(d) {
+        if (!d.querySelector('.opt[data-uid="' + uid + '"]')) return;
+        var box = d.querySelector('.actualbox');
+        if (box) { box.value = store[uid].actual; box.classList.toggle('filled', !!store[uid].actual); }
+      });
+    }
+  });
+}
+
+// ── Pull latest results from GitHub (remote wins on overlap; keeps local-only) ──
+async function pullLatest() {
+  var rbtn = document.getElementById('btn-refresh');
+  if (dirty && !confirm('มีงานที่ยังไม่ได้บันทึก — การดึงล่าสุดจะใช้สถานะจาก GitHub ทับเฉพาะรายการที่ซ้ำกัน ต้องการต่อ?')) return;
+  if (rbtn) { rbtn.disabled = true; rbtn.textContent = '⏳ กำลังดึง…'; }
+  try {
+    var token = localStorage.getItem('gh_pat');
+    var html;
+    if (token) {
+      var r = await fetch(GH_API + '?ref=' + GH_BRANCH + '&t=' + Date.now(),
+        { cache: 'no-store', headers: { Authorization: 'token ' + token, Accept: 'application/vnd.github+json' } });
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      html = decodeURIComponent(escape(atob(((await r.json()).content || '').replace(/\s/g, ''))));
+    } else {
+      var rr = await fetch('https://raw.githubusercontent.com/' + GH_OWNER + '/' + GH_REPO + '/' + GH_BRANCH + '/' + GH_PATH + '?t=' + Date.now(),
+        { cache: 'no-store' });
+      if (!rr.ok) throw new Error('HTTP ' + rr.status);
+      html = await rr.text();
+    }
+    var m = html.match(/<script id="store-data"[^>]*>([\s\S]*?)<\/script>/);
+    var rs = m ? JSON.parse((m[1] || '{}').trim() || '{}') : {};
+    Object.keys(rs).forEach(function(uid) { store[uid] = rs[uid]; });
+    save();
+    applyAllStatuses();
+    recount();
+    dirty = false;
+    updateIndicator();
+    if (rbtn) { rbtn.textContent = '✅ ดึงแล้ว'; setTimeout(function() { rbtn.textContent = '🔄 ดึงล่าสุด'; rbtn.disabled = false; }, 2000); }
+  } catch (err) {
+    alert('❌ ดึงล่าสุดไม่สำเร็จ: ' + err.message);
+    if (rbtn) { rbtn.textContent = '🔄 ดึงล่าสุด'; rbtn.disabled = false; }
+  }
+}
+document.getElementById('btn-refresh').addEventListener('click', pullLatest);
+
+// ── Set / change GitHub token (one click to escape a bad/expired token) ──
+document.getElementById('btn-token').addEventListener('click', function() {
+  clearToken();
+  var t = ghToken();   // prompts for a fresh token
+  if (t) {
+    alert('บันทึก token แล้ว ✅\nลองกดเปลี่ยนสถานะ TC สัก 1 อัน — ปุ่มควรเด้ง "✅ บันทึกแล้ว!" ใน ~5 วิ');
+    updateIndicator();
+  }
+});
+
+// ── Download file (offline backup) ──
+document.getElementById('btn-save-file').addEventListener('click', function() {
+  save();
+  var html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+  var blob = new Blob([html], { type: 'text/html; charset=utf-8' });
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'takra-ai-features-nov-journey-test-cases.html';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(a.href);
+});
+
+document.getElementById('btn-reset').addEventListener('click', function() {
+  if (!confirm('ล้างผลทดสอบทั้งหมด?')) return;
+  store = {};
+  save();
+  dirty = false;
+  location.reload();
+});
+
+// Set TC-AD.1 default to BLOCKED
+(function() {
+  if (!store['tc-29'] || !store['tc-29'].st) {
+    store['tc-29'] = { st: 'block' };
+    save();
+  }
+})();
+
+// Footer date
+var gd = document.getElementById('gen-date');
+if (gd) gd.textContent = document.lastModified || '';
+
+recount();
+updateIndicator();
+
+// Jira / Bug links (per test case · multiple)
+function jiraLabel(u){var m=String(u).match(/([A-Za-z]+-\d+)/);return m?m[1].toUpperCase():u;}
+function normJira(u){u=(u||'').trim();if(!u)return'';if(!/^https?:\/\//i.test(u)){var m=u.match(/^[A-Za-z]+-\d+$/);if(m)return'https://kitdi.atlassian.net/browse/'+u.toUpperCase();}return u;}
+function renderJira(uid){var box=document.querySelector('.jira-list[data-uid="'+uid+'"]');if(!box)return;var arr=(store[uid]&&store[uid].jira)||[];box.innerHTML='';arr.forEach(function(url,i){var row=document.createElement('div');row.className='jira-item';var a=document.createElement('a');a.href=url;a.target='_blank';a.rel='noopener';a.textContent=jiraLabel(url);var del=document.createElement('span');del.className='jira-del';del.textContent='✕';del.title='ลบลิงก์';del.addEventListener('click',function(){store[uid].jira.splice(i,1);if(!store[uid].jira.length)delete store[uid].jira;save();markDirty();renderJira(uid);});row.appendChild(a);row.appendChild(del);box.appendChild(row);});var cell=document.querySelector('td.jira-cell[data-uid="'+uid+'"]');if(cell){cell.innerHTML='';arr.forEach(function(url){var a2=document.createElement('a');a2.href=url;a2.target='_blank';a2.rel='noopener';a2.className='jira-chip';a2.textContent=jiraLabel(url);a2.addEventListener('click',function(e){e.stopPropagation();});cell.appendChild(a2);});}}
+function addJira(uid,val){var url=normJira(val);if(!url)return;store[uid]=store[uid]||{};store[uid].jira=store[uid].jira||[];store[uid].jira.push(url);save();markDirty();renderJira(uid);}
+document.querySelectorAll('.jira-btn').forEach(function(b){b.addEventListener('click',function(e){e.stopPropagation();var u=b.dataset.uid;var inp=document.querySelector('.jira-input[data-uid="'+u+'"]');addJira(u,inp.value);inp.value='';});});
+document.querySelectorAll('.jira-input').forEach(function(inp){inp.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();addJira(inp.dataset.uid,inp.value);inp.value='';}});inp.addEventListener('click',function(e){e.stopPropagation();});});
+document.querySelectorAll('.jira-list').forEach(function(box){renderJira(box.dataset.uid);});
+function applyFeatColor(e,owner){var cls=owner==='Wanlee T (Ice)'?'owner-ice':(owner==='Kachain B (Moss)'?'owner-moss':'');var er=document.querySelector('tr.featrow[data-featkey="'+e+'"]');if(!er)return;er.classList.remove('owner-ice','owner-moss');if(cls)er.classList.add(cls);var s=er.querySelector('.feat-owner');if(s){s.classList.remove('owner-ice','owner-moss');if(cls)s.classList.add(cls);}var n=er.nextElementSibling;while(n&&!n.classList.contains('featrow')&&!n.classList.contains('epicrow')){n.classList.remove('sec-ice','sec-moss');if(cls)n.classList.add(cls==='owner-ice'?'sec-ice':'sec-moss');n=n.nextElementSibling;}}
+document.querySelectorAll('.feat-owner').forEach(function(sel){var e=sel.dataset.featkey,k='feat-'+e;var cur=(store[k]&&store[k].owner)||'';sel.value=cur;applyFeatColor(e,cur);sel.addEventListener('click',function(ev){ev.stopPropagation();});sel.addEventListener('change',function(){var v=sel.value;if(v){store[k]=store[k]||{};store[k].owner=v;}else if(store[k]){delete store[k].owner;if(!Object.keys(store[k]).length)delete store[k];}save();markDirty();applyFeatColor(e,v);});});
+</script>
+
+
+</body></html>

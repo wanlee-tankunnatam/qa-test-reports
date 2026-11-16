@@ -90,6 +90,8 @@ repo นี้เก็บรายงาน manual test case (UI) ของท�
 >
 > **takra-ai แบนเนอร์โปรโมชันจาก Hub บนแดชบอร์ด** (4 พ.ย. 2026) — TAKRA-1492/1596 · ชีตแยกตามที่ผู้ใช้สั่ง (ย้ายออกจาก aimenu TC-DASH-H — uid 21453– ในชุด aimenu เลิกใช้) · full loop เริ่มที่ Hub → แอป Takra Live (Windows) · happy path 4 เคส TC-BN-A.1–B.2 · เคสที่ `tools/build/takra-ai-banner-sources/cases.json` · uid 22601– (`tools/build/ai_banner_cases.py` → `python3 tools/build/build_hub_report.py aibanner`)
 >
+> **takra-ai ฟีเจอร์ใหม่ พ.ย. แบบ User Journey** (16 พ.ย. 2026) — ผู้ใช้วางรายการฟีเจอร์แล้วเลือก "User journey" · โค้ด uat @ 65cef7c5 · 8 กลุ่ม 18 เคส (P0 10 · P1 8) ทดสอบในโปรแกรม Takra Live · A สลับ/แทรกฉาก + พื้นหลัง (TAKRA-1514) · B ยอดขาย TikTok Shop (1515) · C Telegram (1516) · D หน้าการใช้งาน + เพดานแพ็กเกจจาก Hub + โคลนเสียงไม่จำกัด (1731 · 1732 · 598) · E ส่งข้อความให้อวาตาร์พูด + สถานะอ่าน (1720 · 1722 · 1723) · F อัปเดตแอปไม่รบกวนไลฟ์ (1655 · 1745 · ต้องนัด dev ปล่อยรุ่นบนช่อง UAT) · G ลากครอบคำเพิ่มคำอ่าน (1717 · 1718) · H ซ้อมถาม-ตอบ (1513) · ตัวละคร เจ้าของ/TT-A/TT-B/ผู้ชม/ร่าง R1 อยู่หัวชีต · Expected ยึด AC ใน Jira (จุดที่โค้ดไม่ตรง AC บอกใน note) · เคสเขียนเป็น Python ในโมดูล (`APP` · `golive()`) · uid 23601– ตรึงใน `takra-ai-features-nov-sources/uid_map.json` (`tools/build/ai_features_nov_cases.py` → `python3 tools/build/build_hub_report.py aifeatnov`)
+>
 > **takra-rerun คุณภาพ/ประสิทธิภาพการไลฟ์รีรัน** (9 ก.ย. 2026) — 14 เคส 3 รอบ อยู่ที่ `tools/build/rerun_quality_cases.py` → `python3 tools/build/build_hub_report.py rerunquality`
 >
 > **takra-insight Live Readiness** (9 ก.ย. 2026) — เคสคุณภาพข้าม epic 33 เคส 8 มิติ อยู่ที่ `tools/build/insight_live_readiness_cases.py` → `python3 tools/build/build_hub_report.py lrready`
