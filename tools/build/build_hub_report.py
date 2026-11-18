@@ -24,6 +24,7 @@ harness (CSS + JS ปุ่ม ☁️ เซฟ/ตัวกรอง/Jira/owner
       radarreceipt = radar_receipt_form_cases.py (TAKRA Radar · ฟอร์มขอใบเสร็จ / ใบกำกับภาษี · TKRD-579)
       radarext = radar_ext_cases.py (TAKRA Radar · ส่วนขยาย Chrome ค่าคอมสด · TKRD-563)
       aibanner = ai_banner_cases.py (TAKRA AI · แบนเนอร์โปรโมชันจาก Hub บนแดชบอร์ด · TAKRA-1492)
+      lipsyncp0 = lipsync_p0_cases.py (TAKRA Lip-Sync · เคส P0 ตามแอปปัจจุบัน uat 0.2.38)
       aifeatnov = ai_features_nov_cases.py (TAKRA AI · ฟีเจอร์ใหม่ พ.ย. แบบ user journey · TAKRA-1513–1516 · 1655 · 1717–1723 · 1731)
       aiquality = ai_quality_cases.py (TAKRA AI · คุณภาพไลฟ์รีรัน ท่อส่ง+เนื้อหา)
       ai1223 … ai1230 = ai_tickets_1223_cases.py (TAKRA AI · 1 ไฟล์ต่อ 1 ใบงาน TAKRA-1223–1230)
@@ -55,7 +56,7 @@ MODULES = {'mvp1': 'hub_cases', 'mvp2': 'hub_mvp2_cases', 'mvp2rbac': 'hub_mvp2_
            'rerunquality': 'rerun_quality_cases',
            'rerunbanner': 'rerun_banner_cases', 'rerunfb': 'rerun_facebook_cases', 'aibanner': 'ai_banner_cases', 'aifeatnov': 'ai_features_nov_cases', 'radarci': 'radar_ci_cases', 'radarslip': 'radar_slip_verify_cases', 'radarreceipt': 'radar_receipt_form_cases', 'radarext': 'radar_ext_cases',
            'aiquality': 'ai_quality_cases',
-           'lipsync': 'lipsync_cases',
+           'lipsync': 'lipsync_cases', 'lipsyncp0': 'lipsync_p0_cases',
            'radar': 'radar_cases', 'radar404': 'radar_tkrd404_cases', 'radar403': 'radar_tkrd403_cases',
            'regradar': 'reg_radar_oct_cases', 'regfarm': 'reg_farm_oct_cases', 'farmtf155': 'farm_tf155_cases',
            'regai1': 'reg_ai_happy_oct_cases', 'regai2': 'reg_ai_failfeat_oct_cases', 'regaimenu': 'reg_ai_bymenu_oct_cases', 'aiprod': 'ai_prod_smoke_cases', 'aidesktop': 'ai_desktop_cases', 'aimenu': 'ai_bymenu_ui_cases',
