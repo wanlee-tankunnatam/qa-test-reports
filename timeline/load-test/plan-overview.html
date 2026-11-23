@@ -1,0 +1,79 @@
+<!doctype html><html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>แผนการทดสอบ Load Test ภาพรวม</title><style>
+:root{--bg:#f7f8fa;--fg:#1c2230;--mut:#5b6475;--card:#fff;--bd:#dfe3ea;--ac:#2563eb;--warn:#b45309;--warnbg:#fef3c7;--hd:#eef2fb}
+@media (prefers-color-scheme:dark){:root{--bg:#12151c;--fg:#e6e9f0;--mut:#9aa3b5;--card:#1b1f29;--bd:#2c3240;--ac:#6ea0ff;--warn:#fbbf24;--warnbg:#3a2f0f;--hd:#232a3b}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.6 -apple-system,"Sukhumvit Set","Noto Sans Thai",sans-serif}
+main{max-width:1180px;margin:0 auto;padding:20px 16px 80px}
+h1{font-size:1.6rem;margin:.2em 0}
+h2{font-size:1.25rem;margin:2.2em 0 .3em;padding:.35em .7em;background:var(--hd);border-left:5px solid var(--ac);border-radius:4px}
+h3{font-size:1rem;margin:1.2em 0 .3em;color:var(--ac)}
+.sub,.mut{color:var(--mut);margin:.2em 0}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:10px 16px;margin:10px 0}
+.warn{background:var(--warnbg);border-color:var(--warn)}
+.tw{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:820px;font-size:.9rem;background:var(--card)}
+th,td{border:1px solid var(--bd);padding:6px 9px;text-align:left;vertical-align:top}
+th{background:var(--hd);white-space:nowrap}
+td.c{text-align:center;white-space:nowrap}
+code{background:var(--bg);border:1px solid var(--bd);border-radius:4px;padding:0 4px;font-size:.86em}
+nav{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:8px 16px;margin:14px 0;position:sticky;top:0;z-index:2}
+nav a{color:var(--ac);margin-right:12px;white-space:nowrap;text-decoration:none}
+ul{margin:.2em 0;padding-left:1.3em}
+input[type=checkbox]{width:18px;height:18px}
+tr.done td{opacity:.5;text-decoration:line-through}
+.b{font-weight:600}
+td ul{margin:0;padding-left:1.2em}td ul li{margin:.15em 0}.new{background:var(--warnbg)}.menu{display:flex;flex-direction:column;gap:6px;position:sticky;top:0;z-index:5;background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:8px 10px;margin:12px 0;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.menu .mr{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.menu .mh{font-size:.75rem;font-weight:700;letter-spacing:.06em;color:var(--mut);padding:0 8px 0 4px;border-right:2px solid var(--bd);margin-right:4px;min-width:84px}
+.menu a{margin:0;padding:5px 12px;border-radius:8px;border:1px solid var(--bd);background:var(--bg);color:var(--fg);text-decoration:none;font-size:.88rem;white-space:nowrap}
+.menu a:hover{border-color:var(--ac);color:var(--ac)}
+.menu a.on{background:var(--ac);border-color:var(--ac);color:#fff;font-weight:600}
+.bar{top:calc(var(--menuh,0px) + 8px)!important}
+</style></head><body><main>
+<nav class="menu" aria-label="เมนูเอกสาร"><div class="mr"><span class="mh">เมนู</span><a href="index.html">หน้ารวม</a><a href="timeline.html">ไทม์ไลน์</a><a href="survey-rerun-clip.html">ผลสำรวจ route Rerun/Clip</a><a class="on" href="plan-overview.html">แผนภาพรวม</a><a href="matrix.html">ตารางโปรเจกต์ × กลุ่มที่ต้องยิง</a><a href="checklist.html">เช็คลิสต์โหลดเทส</a><a href="desktop-perf-checklist.html">เช็คลิสต์ประสิทธิภาพบนเครื่อง</a></div><div class="mr"><span class="mh">รายโปรเจกต์</span><a href="00-prep.html">เตรียมร่วม</a><a href="01-hub.html">Hub</a><a href="02-radar.html">Radar</a><a href="03-rerun.html">Rerun</a><a href="04-ai.html">AI</a><a href="05-insight.html">Insight</a><a href="06-clip.html">Clip</a><a href="07-cross.html">ข้ามระบบ</a></div></nav>
+<h1>แผนการทดสอบ Load Test (ภาพรวม)</h1>
+<p class="sub"><b>วัตถุประสงค์:</b> ประเมินประสิทธิภาพ ความสามารถในการรองรับผู้ใช้ และความเสถียรของระบบภายใต้ภาระงานต่างๆ เพื่อค้นหาขีดจำกัดและจุดที่อาจเกิดปัญหาก่อนเปิดให้บริการจริง · หัวข้อ 1–7 ตามแม่แบบที่ให้มา หัวข้อ 8 ขึ้นไปเป็นส่วนที่เพิ่ม (พื้นสีเหลือง)</p>
+
+<h2>1. วัตถุประสงค์ของการทดสอบ</h2>
+<div class="card"><ul><li>ตรวจสอบความสามารถรองรับผู้ใช้พร้อมกัน (Concurrent Users)</li><li>ตรวจสอบความเร็วในการตอบสนอง (Response Time)</li><li>ตรวจสอบความสามารถในการประมวลผลคำขอ (Throughput)</li><li>ตรวจสอบความถูกต้องและครบถ้วนของข้อมูลเมื่อใช้งานพร้อมกัน</li><li>ตรวจสอบความเสถียรเมื่อได้รับโหลดสูงต่อเนื่อง</li><li>ค้นหาขีดจำกัดของระบบ (System Capacity) และจุดคอขวด (Bottleneck)</li><li>ตรวจสอบการฟื้นตัวหลังเกิดโหลดสูงหรือหยุดการทดสอบ</li></ul></div>
+
+<h2>2. ขอบเขตการทดสอบ (Scope)</h2>
+<div class="tw"><table><tr><th>หัวข้อ</th><th>รายละเอียด</th></tr><tr><td>Concurrent Users</td><td>ทดสอบผู้ใช้พร้อมกันหลายระดับ</td></tr><tr><td>API Performance</td><td>ทดสอบประสิทธิภาพ API</td></tr><tr><td>Database</td><td>ทดสอบการอ่านและเขียนข้อมูลพร้อมกัน</td></tr><tr><td>Response Time</td><td>ตรวจสอบระยะเวลาตอบสนอง</td></tr><tr><td>Throughput</td><td>ตรวจสอบจำนวน Request ต่อวินาที</td></tr><tr><td>Error Rate</td><td>ตรวจสอบอัตราการเกิดข้อผิดพลาด</td></tr><tr><td>Resource Usage</td><td>ตรวจสอบ CPU, RAM และ Database</td></tr><tr><td>System Stability</td><td>ตรวจสอบความเสถียรของระบบ</td></tr></table></div>
+
+<h2>3. ประเภทการทดสอบ</h2>
+<div class="tw"><table><tr><th>ประเภท</th><th>วัตถุประสงค์</th></tr><tr><td>Load Test</td><td>ทดสอบภายใต้โหลดที่คาดว่าจะเกิดจริง</td></tr><tr><td>Stress Test</td><td>หาขีดจำกัดสูงสุดของระบบ</td></tr><tr><td>Spike Test</td><td>ทดสอบเมื่อผู้ใช้เพิ่มขึ้นอย่างรวดเร็ว</td></tr><tr><td>Soak Test</td><td>ทดสอบความเสถียรเมื่อใช้งานต่อเนื่องนาน</td></tr><tr><td>Scalability Test</td><td>ตรวจสอบการรองรับโหลดที่เพิ่มขึ้นเมื่อขยายทรัพยากร</td></tr></table></div>
+
+<h2>4. เครื่องมือที่ใช้</h2>
+<div class="tw"><table><tr><th>Tool</th><th>วัตถุประสงค์</th><th>หมายเหตุจากการสำรวจ</th></tr><tr><td>k6</td><td>จำลองผู้ใช้ Load/Stress/Spike/Soak</td><td>ติดตั้งเครื่องยิง (<code>brew install k6</code>) · ใช้ harness ของ <a href="https://github.com/Real-Factory/Takra-GitOps/tree/main/loadtest">Takra-GitOps/loadtest</a> เป็นฐาน (scenario site/insight/hub/central + <code>mint-*.sh</code> + <code>lib/config.js</code>) · k6 ยิง WebRTC/RTSP ไม่ได้ ใช้ ffmpeg กับแทร็ก media ของ ai</td></tr><tr><td>Grafana</td><td>แสดงผล Metrics</td><td>มีแล้ว: dashboard "Takra — Load Test (k6 + cluster) TAKRA-583" ในไฟล์ <code>bases/monitoring/dashboards/takra-loadtest-k6.json</code> (k6 RPS/latency + CPU/throttle/memory/restarts) · ต้องขอสิทธิ์เข้าดู</td></tr><tr><td>Prometheus</td><td>จัดเก็บ Metrics จากระบบ</td><td>k6 ส่งเข้า Prometheus ผ่าน remote-write (ที่ DevOps ตั้งไว้) ต้อง port-forward และตั้ง <code>K6_PROMETHEUS_RW_TREND_STATS="p(95),p(99),avg,max"</code> ไม่งั้นกราฟ latency ว่าง · takra-ai มี <code>observability/metrics.ts</code> ต้องตรวจว่าเปิดดูบน UAT ได้ไหม</td></tr><tr><td>Postman</td><td>ตรวจ API และเตรียม Request</td><td>ใช้ตอนสำรวจ/ลอง request ก่อนเขียนสคริปต์ ไม่ใช้ยิงโหลด</td></tr><tr><td>Server Monitoring</td><td>CPU, RAM, ทรัพยากรเซิร์ฟเวอร์</td><td>ต้องดู <code>container_cpu_cfs_throttled_periods_total</code> ด้วย (CPU limit เป็นโควตาต่อ 100ms ทำให้ latency tail ทั้งที่ CPU ต่ำ) · เก็บระหว่างรัน ไม่ใช่หลังรัน · ถ้าไม่มี dashboard ใช้ <code>docker stats</code>/<code>top</code> เป็นขั้นต่ำ</td></tr></table></div>
+
+<h2>5. ตัวชี้วัดผลการทดสอบ</h2>
+<div class="tw"><table><tr><th>Metric</th><th>วัตถุประสงค์</th></tr><tr><td>Response Time</td><td>ระยะเวลาตอบสนองของระบบ</td></tr><tr><td>Average Response Time</td><td>เวลาเฉลี่ย (ใช้ประกอบ ไม่ใช้ตัดสินผ่าน/ไม่ผ่าน)</td></tr><tr><td>P95 / P99</td><td>เวลาตอบสนองของกลุ่มที่ช้า (ใช้ตัดสินหลัก)</td></tr><tr><td>Throughput (RPS)</td><td>Request ต่อวินาที</td></tr><tr><td>Error Rate</td><td>อัตราผิดพลาด (แยก 4xx/5xx/429)</td></tr><tr><td>CPU Usage</td><td>การใช้ CPU</td></tr><tr><td>Memory Usage</td><td>การใช้ RAM</td></tr><tr><td>Database Connections</td><td>จำนวน connection ของ DB</td></tr><tr><td>Timeout Rate</td><td>อัตราการเกิด Timeout</td></tr></table></div>
+
+<h2>6. ผลลัพธ์ที่คาดหวัง</h2>
+<div class="card"><ul><li>ทราบจำนวนผู้ใช้พร้อมกันที่ระบบรองรับได้</li><li>ทราบประสิทธิภาพและความเร็วในการตอบสนอง</li><li>ทราบจุดที่ทำให้ระบบช้าหรือเกิดข้อผิดพลาด</li><li>ทราบขีดจำกัดของทรัพยากร Server และ Database</li><li>ระบุ Bottleneck และนำไปปรับปรุงได้</li><li>มั่นใจว่าระบบเสถียรพอก่อนเปิดใช้งานจริง</li></ul></div>
+
+<h2>7. สิ่งที่ต้องส่งมอบ</h2>
+<div class="card"><ul><li>Test Plan และ Test Scenario → ไฟล์ชุดนี้ + เคสในเคสกลางของแต่ละโปรเจกต์</li><li>Load Test Script → สคริปต์ k6 ต่อฟีเจอร์ แท็ก <code>@load</code></li><li>ผลการทดสอบแต่ละระดับโหลด → ชีตรายงานใน hub</li><li>Performance Report พร้อมกราฟ</li><li>รายการปัญหาและ Bottleneck ที่พบ → ตั๋วบั๊กใน Jira</li><li>ข้อเสนอแนะในการปรับปรุงระบบ</li><li>สรุปผล PASS / FAIL → ต้องมีเกณฑ์ตัวเลขล่วงหน้า (หัวข้อ 9)</li></ul></div>
+
+<h2 class="new">8. ขอบเขตรายโปรเจกต์ (เพิ่ม)</h2>
+<p class="mut">แม่แบบนี้เป็นภาพรวมระบบเดียว ส่วนงานของเรามี 8 ระบบที่ต้องทดสอบแยกกัน (hub, site, central, radar, rerun, ai, insight, clip)</p>
+<div class="tw"><table><tr><th>ลำดับ</th><th>โปรเจกต์</th><th>จุดเน้น</th><th>แผนละเอียด</th></tr><tr><td>1</td><td>takra-hub</td><td>ล็อกอินกลาง/ตรวจสิทธิ์ (ทุกระบบพึ่ง) · auth แบบ PKCE</td><td><a href='01-hub.html'>01-hub</a></td></tr><tr><td>1.1</td><td>takra-site</td><td>เว็บสาธารณะผ่าน Cloudflare · GitOps วัดแล้ว</td><td><a href='08-site.html'>08-site</a></td></tr><tr><td>1.2</td><td>takra-central</td><td>Go/chi · โหลดได้แค่ /v1/me ต้องขอ Hub membership</td><td><a href='09-central.html'>09-central</a></td></tr><tr><td>2</td><td>takra-radar</td><td>query หนัก ClickHouse, คิว</td><td><a href='02-radar.html'>02-radar</a></td></tr><tr><td>3</td><td>takra-rerun</td><td>session mock พร้อมกัน</td><td><a href='03-rerun.html'>03-rerun</a></td></tr><tr><td>4</td><td>takra-ai</td><td>SSE/WS ห้องไลฟ์ (mock), rate limit + แทร็ก media (ffmpeg)</td><td><a href='04-ai.html'>04-ai</a></td></tr><tr><td>5</td><td>takra-insight</td><td>ingest, WebSocket</td><td><a href='05-insight.html'>05-insight</a></td></tr><tr><td>6</td><td>takra-clip</td><td>อัปโหลด/คิวตัดคลิป</td><td><a href='06-clip.html'>06-clip</a></td></tr><tr><td>7</td><td>ข้ามระบบ</td><td>โหลดรวมผ่าน Hub</td><td><a href='07-cross.html'>07-cross</a></td></tr></table></div>
+
+<h2 class="new">9. เกณฑ์ผ่าน/ไม่ผ่าน (เพิ่ม — จำเป็นสำหรับ PASS/FAIL)</h2>
+<p class="mut">ค่าตั้งต้น ต้องให้ owner ยืนยันหรือปรับตาม SLA จริง · SLO ใน <code>lib/config.js</code> ของ GitOps ต้องตรงกับตารางนี้ (GitOps ระบุว่าต้องให้ PM ยืนยันก่อนรัน)</p>
+<div class="tw"><table><tr><th>ชนิด endpoint</th><th>p95</th><th>p99</th><th>error</th></tr><tr><td>อ่านเบา (me, catalog, health)</td><td>&lt; 300 ms</td><td>&lt; 800 ms</td><td>&lt; 0.5%</td></tr><tr><td>CRUD ทั่วไป</td><td>&lt; 800 ms</td><td>&lt; 2 s</td><td>&lt; 1%</td></tr><tr><td>query หนัก (dashboard, ค้นหา)</td><td>&lt; 2 s</td><td>&lt; 5 s</td><td>&lt; 1%</td></tr><tr><td>อีเวนต์ realtime (SSE/WS)</td><td>&lt; 1 s</td><td>&lt; 3 s</td><td>หลุดไม่เกิน 1%</td></tr></table></div>
+<div class="card"><ul><li>ทุกรอบ: ไม่มี 5xx ที่ไม่ใช่ 429, ไม่มี container crash/restart</li><li>หลังหยุดโหลด: ระบบ คิว และ connection กลับค่าปกติโดยไม่ต้อง restart</li><li>soak: memory โตไม่เกิน 10% จากต้นถึงท้าย</li><li>เกิน 80% ของเกณฑ์ = ผ่านแบบมีความเสี่ยง</li></ul></div>
+
+<h2 class="new">10. สภาพแวดล้อมและกฎเหล็ก (เพิ่ม)</h2>
+<div class="card"><ul><li>ยิงเฉพาะ UAT หรือ stack ในเครื่อง <b>ห้าม prod</b> และไม่กระทบ dev app/รอบทดสอบอื่น</li><li><b>ห้ามเปิดไลฟ์จริง</b> ห้ามยิงห้อง TikTok/RTMP จริง ใช้ stack mock เท่านั้น</li><li>ห้ามยิงช่อง/UAT เดียวกันซ้อนกัน 2 รอบ</li><li>ห้ามยิงส่วนที่เสียเงิน (LLM, TTS, ตรวจสลิป, ชำระเงิน) หรือส่งถึงคนจริง (อีเมล, Telegram) ให้ mock</li><li>ห้ามแก้โค้ด dev ถ้าต้องปรับ rate limit ให้ขอ DEV ผ่าน env</li><li>ตัวสร้างโหลดอยู่คนละเครื่องกับเซิร์ฟเวอร์ที่ทดสอบ (ควรเป็น VM ไม่ใช่แล็ปท็อป) และ CPU ไม่เกิน 70%</li><li>ไม่ยุ่งกับ prod เลย (ไม่ยิงแม้แต่ baseline อ่านอย่างเดียว) · รอบ destructive ทำบน uat นอกเวลางาน เพราะ uat กับ prod ใช้ node ร่วมกัน</li></ul></div>
+
+<h2 class="new">11. ข้อมูลและบัญชีทดสอบ (เพิ่ม)</h2>
+<div class="card"><ul><li>บัญชีทดสอบหลายบัญชี ไม่ใช้บัญชีจริงของลูกค้า</li><li>ปริมาณข้อมูลใน UAT ใกล้ของจริง ไม่งั้น query ดูเร็วเกินจริง</li><li>ติด prefix ข้อมูลที่โหลดสร้าง และล้างหลังรอบ</li><li>เก็บ credential ในไฟล์ git-ignore ห้ามใส่รายงาน/Jira</li></ul></div>
+
+<h2 class="new">12. ตารางเวลาโดยประมาณ (เพิ่ม)</h2>
+<div class="tw"><table><tr><th>เฟส</th><th>งาน</th><th>ประมาณ</th></tr><tr><td>0</td><td>ตัดสินใจ 7 ข้อ, ติดตั้ง k6, helper, ขอ DEV, จองช่วง UAT</td><td>2–4 วัน</td></tr><tr><td>1–6</td><td>รายโปรเจกต์ ตามลำดับ Hub → Site → Central → Radar → Rerun → AI (k6 + media) → Insight → Clip</td><td>1–8 วัน/โปรเจกต์ (site 1–2 · central 2–3 · ai 7–8)</td></tr><tr><td>7</td><td>โหลดข้ามระบบ + สรุปรวม</td><td>2–3 วัน</td></tr></table></div>
+<p class="mut">รวมประมาณ 30–40 วัน-คน ≈ 6–8 สัปดาห์ถ้าทำคนเดียว (เดิมเขียน 4–5 สัปดาห์ ซึ่งต่ำกว่าผลรวมของแต่ละหน้า) · ส่วน central ทับกับ RR-C ของ rerun อาจลดได้ราว 1 วัน · เป็นการประมาณ ไม่ใช่ข้อผูกมัด</p>
+
+<h2 class="new">13. ความเสี่ยง (เพิ่ม)</h2>
+<div class="tw"><table><tr><th>ความเสี่ยง</th><th>วิธีลด</th></tr><tr><td>โหลดกระทบคนอื่นที่ใช้ UAT</td><td>นัดเวลา แจ้งล่วงหน้า หลีกเลี่ยงรอบ e2e อัตโนมัติ</td></tr><tr><td>Hub ล่ม กระทบทุกโปรเจกต์</td><td>ไล่โหลดทีละขั้น มี abort threshold</td></tr><tr><td>เสียเงิน/ส่งถึงคนจริงโดยไม่ตั้งใจ</td><td>mock + helper ตรวจก่อนรัน</td></tr><tr><td>Rate limit บิดผลวัด</td><td>แยกวัด 2 แบบ: ปล่อย limiter / ขอ DEV ขยาย</td></tr><tr><td>CPU limit แบบโควตาต่อ 100ms ทำให้ latency tail ที่ไม่เห็นใน CPU graph</td><td>เช็ก throttled periods ก่อนเชื่อผล (G.8) · ผลหลังเปลี่ยน limit ถือเป็นคนละเครื่อง</td></tr><tr><td>uat เป็น single-replica แต่ prod มี HPA ทำให้เทียบผลตรงๆ ไม่ได้</td><td>สรุปเป็นเพดานต่อ pod แล้วค่อยประมาณจำนวน replica ของ prod</td></tr><tr><td>stress บน uat ไปแย่ง node กับ prod</td><td>รันนอกเวลางาน จองช่วงเวลาใน G.7 · มี abort threshold</td></tr><tr><td>สคริปต์ radar/clip แยกอยู่คนละ repo กับ harness ใน GitOps ทำให้ helper/SLO อาจเพี้ยนจากกัน</td><td>คัดลอกเฉพาะที่จำเป็นและจดว่ามาจากเวอร์ชันไหนของ GitOps · เกณฑ์ผ่าน/ไม่ผ่านอ้างจากเคสกลางของ repo นั้น · ไม่แก้ไฟล์ของ dev</td></tr><tr><td>ผลเทียบก่อน/หลังไม่ได้</td><td>เก็บ build, ขนาดข้อมูล, config โหลด ไว้ทุกรอบ</td></tr></table></div>
+</main><script>(function(){var n=document.querySelector(".menu");if(!n)return;function f(){document.documentElement.style.setProperty("--menuh",n.offsetHeight+"px")}f();addEventListener("resize",f)})();</script></body></html>
