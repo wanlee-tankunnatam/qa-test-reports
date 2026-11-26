@@ -124,7 +124,7 @@ footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--line);color:v
 <body>
 <div class="wrap">
   <h1>บั๊กค้างรอบส่งงาน</h1>
-  <p class="sub">บั๊กที่ยังไม่ปิดจากทุกโปรเจกต์ใน Jira แยกตามรอบส่ง แล้วแยกตามผู้รับผิดชอบ · ในแต่ละคนเรียงตามขั้นที่ลูกค้าเจอใน user journey · ข้อมูล ณ 25 พ.ย. 2026 13:00 น. (อัปเดตอัตโนมัติ 09:00 / 13:00 หรือกดปุ่มดึงข้อมูลจาก Jira)</p>
+  <p class="sub">บั๊กที่ยังไม่ปิดจากทุกโปรเจกต์ใน Jira แยกตามรอบส่ง แล้วแยกตามผู้รับผิดชอบ · ในแต่ละคนเรียงตามขั้นที่ลูกค้าเจอใน user journey · ข้อมูล ณ 26 พ.ย. 2026 09:05 น. (อัปเดตอัตโนมัติ 09:00 / 13:00 หรือกดปุ่มดึงข้อมูลจาก Jira)</p>
   <div class="sync"><button type="button" class="f" id="sync">ดึงข้อมูลจาก Jira</button><span id="syncat"></span><span id="syncmsg" role="status"></span></div>
   <div class="proj" id="fj" role="group" aria-label="โปรเจกต์"></div>
   <div class="tot" id="tot"></div>
@@ -405,7 +405,6 @@ const ROWS = [
 ["ยังไม่มีรอบ", "No", "TAKRA-1880", "Medium", "🔴 คิวการ์ดคุมได้แค่ในโปรเซสเดียว — ตัวถอดเสียง (ASR) เป็นโปรเซสแยกจึงโหลดทับงานเรนเดอร์ได้", "To Do"],
 ["ยังไม่มีรอบ", "No", "TAKRA-1882", "Medium", "🔴 ชุดเทสต์เว็บแกว่งใน CI — แดงคนละไฟล์กันสองครั้งในวันเดียว ทั้งที่ PR ไม่ได้แตะ apps/web เลย", "To Do"],
 ["ยังไม่มีรอบ", "No", "TAKRA-1884", "High", "เสียงตอบคอมเมนต์เพี้ยนแล้วไม่มีใครรู้ — /say ไม่มีด่านและไม่มี log เลย", "READY TO TEST"],
-["ยังไม่มีรอบ", "Moss", "TAK-1012", "Medium", "Takra Rerun [Bug] ลูกค้าแนบสลิปไม่ได้ — ขึ้น \"อัปโหลดสลิปไม่สำเร็จ\" เพราะอัปไฟล์ขึ้น S3 ไม่ผ่าน", "To Do"],
 ["ยังไม่มีรอบ", "No", "TAKRA-1890", "High", "การ์ด 16 GB ล้นตอนเปิดเสียงในเครื่อง — เตรียมคลิปช้า 4–20 เท่า · แก้ด้วย BATCH 10 + max_split_size_mb", "READY TO TEST"],
 ["ยังไม่มีรอบ", "Boat", "TAKRA-1896", "Medium", "[Defect][FE] ซิงก์สินค้า: กล่องเตือน \"ขายบน TikTok ไม่ได้\" / \"ดึงรายละเอียดไม่ได้\" อยู่ใต้รายการ — สินค้าดูเหมือนอยู่ในกล่องข้างบน", "READY TO TEST"],
 ["ยังไม่มีรอบ", "No", "TKH-331", "Low", "[Bug][FE] เน็ตสะดุดชั่วขณะบน iPhone ทำให้ขึ้นหน้าเต็ม \"โหลดข้อมูลไม่สำเร็จ\" และแจ้ง Sentry เป็น error (TypeError: Load failed)", "To Do"],
@@ -427,9 +426,14 @@ const ROWS = [
 ["ยังไม่มีรอบ", "No", "TAKRA-1919", "Medium", "[Electron] ตัววัด VRAM อ่านค่าผิด — \"NVIDIA Overlay.exe 1623.5 GB\" บนการ์ด 16 GB ⇒ แอปคิดว่าเหลือ VRAM 0 GB", "READY TO TEST"],
 ["ยังไม่มีรอบ", "No", "TAKRA-1920", "Medium", "[Electron] ป้าย \"พร้อมไลฟ์\" ขึ้นทั้งที่เครื่องยังเรนเดอร์อยู่ (หลังสุ่มบทใหม่ · แอป 0.1.34)", "READY TO TEST"],
 ["ยังไม่มีรอบ", "Boat", "TAKRA-1921", "Highest", "[Defect][BE] หลังถอด Realfact (#1778) ไลฟ์อวาตาร์ในเครื่องเริ่มไม่ได้ — preflight ค้าง \"ยังไม่ได้รับสถานะจากแอป desktop\"", "In Progress"],
-["ยังไม่มีรอบ", "Book", "TF-278", "High", "[Defect][FlowRunner] TikTok หน้าเพิ่มสินค้า: ชื่อสินค้ามีตัวอักษรที่ TikTok ไม่รับ (เช่น \"|\") ทำให้กดเพิ่มไม่ได้ สินค้าไม่ถูกแนบ", "To Do"],
-["ยังไม่มีรอบ", "Gong", "TKRD-604", "Medium", "[Bug][BE] หยิบงานจากคิวเกิน limit ต่อรอบได้ เมื่อ Postgres รัน subquery ที่เลือกแถวซ้ำ (CRM sync · partner delivery · backfill TKRD-592)", "READY TO TEST"],
+["ยังไม่มีรอบ", "Book", "TF-278", "High", "[Defect][FlowRunner] TikTok หน้าเพิ่มสินค้า: ชื่อสินค้ามีตัวอักษรที่ TikTok ไม่รับ (เช่น \"|\") ทำให้กดเพิ่มไม่ได้ สินค้าไม่ถูกแนบ", "READY TO TEST"],
 ["ยังไม่มีรอบ", "Gong", "TKRD-605", "Medium", "[Defect][BE] CRM sync: ปลดระงับบัญชีแล้ว subscription ค้าง \"ระงับชั่วคราว\" และลูกค้าไม่เคยขึ้น suspended (TKRD-430 AC4)", "To Do"],
+["ยังไม่มีรอบ", "Boat", "TAKRA-1923", "Medium", "[Defect][FS] หน้าต่างเริ่มไลฟ์ในร่างไลฟ์เปิดสวิตช์ \"ปักตะกร้าตามฉาก\" ได้ ทั้งที่บัญชีไม่มี TikTok Shop หรือร่างใช้สคริปต์ของบัญชีอื่น", "In Progress"],
+["ยังไม่มีรอบ", "Boat", "TAKRA-1924", "High", "[Defect][BE] ไลฟ์ที่ไม่ปักตะกร้าไม่ซิงก์คำเสี่ยงไปรายการ \"คำที่บล็อก\" ของ TikTok ⇒ คอมเมนต์คำเสี่ยงยังขึ้นให้ผู้ชมเห็น", "In Progress"],
+["ยังไม่มีรอบ", "Boat", "TAKRA-1926", "Medium", "[Defect][BE] อวาตาร์อ่านตัวเลขที่คั่นลูกน้ำเป็นจำนวนเดียว — \"สีใหม่ 60,210,555\" อ่านเป็น \"หกสิบล้านสองแสน…\"", "In Progress"],
+["ยังไม่มีรอบ", "Boat", "TAKRA-1927", "Low", "[Defect][FE] การ์ดสลับฉาก \"รอมาแล้ว\" ค้าง 0:00 ช่วงแรกหลังกดสลับ/แทรก", "In Progress"],
+["ยังไม่มีรอบ", "Boat", "TAKRA-1928", "High", "[Defect][Electron] ไลฟ์ถูกตัดหลังสลับฉาก เพราะการ์ดจอหน่วยความจำเต็มจนตัวเรนเดอร์ล้มค้าง (CUDA out of memory) + ภาพอวาตาร์ค้างแต่เสียงยังพูด", "To Do"],
+["ยังไม่มีรอบ", "James", "TI-798", "Medium", "[Defect][FE][Electron] แจ้งเตือน \"กิน\" ไม่ขึ้นตอนคนไลฟ์กินขนมจริง แต่เตือนผิดตอนไม่ได้กิน (ตัวตรวจจับ COCO มองไม่เห็นขนมในมือ)", "In Progress"],
 ];
 // Projects: the Jira key prefix decides the project, so rows from another project
 // show up here as soon as they are added to ROWS. Add a line to PROJECTS to give it a name.
@@ -508,7 +512,7 @@ ROWS.forEach(r=>{const s=JOURNEY[r[2]]; r[7]=s?s:(r[2].startsWith("TAKRA-")?99:0
 const scCls=v=>v===SCOPE_LABEL.ui?"c-ui":v===SCOPE_LABEL.sys?"c-sys":"c-tool";
 
 // เวลาที่ดึงจาก Jira ล่าสุดรายโปรเจกต์ — ตัวซิงก์ (update_open_bugs.py) เขียนบรรทัดนี้เอง ต้องอยู่บรรทัดเดียว
-const SYNCED = {"TAKRA": "25 พ.ย. 2026 13:00", "TI": "25 พ.ย. 2026 13:00", "TAK": "25 พ.ย. 2026 13:00", "TKRD": "25 พ.ย. 2026 13:00", "TF": "25 พ.ย. 2026 13:00", "TKH": "25 พ.ย. 2026 13:00"};
+const SYNCED = {"TAKRA": "26 พ.ย. 2026 09:05", "TI": "26 พ.ย. 2026 09:05", "TAK": "26 พ.ย. 2026 09:05", "TKRD": "26 พ.ย. 2026 09:05", "TF": "26 พ.ย. 2026 09:05", "TKH": "26 พ.ย. 2026 09:05"};
 const PROJECTS={
   TAKRA:{name:"Takra AI", jira:"https://kitdi.atlassian.net"},
   TI:{name:"Takra Insight", jira:"https://kitdi.atlassian.net"},
